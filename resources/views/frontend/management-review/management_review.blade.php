@@ -219,7 +219,7 @@
                             <!--
     @endif -->
                         @elseif(
-                            ($data->stage == 5 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
+                            ($data->stage == 5 && Helpers::check_roles($data->division_id, 'Management Review', 5)) || Helpers::check_roles($data->division_id, 'Management Review', 4) ||
                                 in_array(Auth::user()->id, $valuesArray))
                             <!-- @if (!$hodcftCompleteUser)
     -->
@@ -5411,7 +5411,7 @@
                                                     value='Yes'>
                                                     Yes</option>
                                                 <option @if ($data1->ProductionLiquid_Review == 'Yes') selected @endif
-                                                    value='Yes'>
+                                                    value='No'>
                                                     No</option>
                                                     <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>
                                             </select>

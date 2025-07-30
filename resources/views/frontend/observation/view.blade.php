@@ -191,14 +191,14 @@
                                 href="{{ route('ShowObservationAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_code, 'Observation', 12))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_code, 'Observation', 12) || Helpers::check_roles($data->division_id, 'Observation', 18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Report Issued
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-model">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_code, 'Observation', 11))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_code, 'Observation', 11) || Helpers::check_roles($data->division_id, 'Observation', 18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -211,7 +211,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_code, 'Observation', 13) || Helpers::check_roles($data->division_code, 'Observation', 7) || Helpers::check_roles($data->division_code, 'Observation', 66)))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_code, 'Observation', 13) || Helpers::check_roles($data->division_code, 'Observation', 7) || Helpers::check_roles($data->division_code, 'Observation', 66) || Helpers::check_roles($data->division_id, 'Observation', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Response Reviewed
                             </button>
