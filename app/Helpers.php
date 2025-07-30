@@ -1924,7 +1924,7 @@ class Helpers
 //     return in_array($requiredRoleId, $roles);
 // }
 
-public static function check_initiator_role_with_process($userId, $allowedRoles = [3, 7, 66], $processMatch = ['Internal Audit', 'External Audit'])
+public static function check_initiator_role_with_process($userId, $allowedRoles = [3, 7, 66, 12], $processMatch = ['Internal Audit', 'External Audit','Observation'])
 {
     $user = User::find($userId);
 
@@ -1954,11 +1954,11 @@ public static function check_initiator_role_with_process($userId, $allowedRoles 
         return true; 
     }
 
-    if (in_array(7, $userRoles) || in_array(66, $userRoles)) {
+    if (in_array(7, $userRoles) || in_array(66, $userRoles) || in_array(12, $userRoles)) {
         $allowed = DB::table('user_roles')
             ->where('user_id', $userId)
             ->whereIn('q_m_s_processes_id', $processes)
-            ->whereIn('q_m_s_roles_id', [7, 66])
+            ->whereIn('q_m_s_roles_id', [7, 66, 12,])
             ->exists();
 
         return $allowed;
