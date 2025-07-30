@@ -905,8 +905,11 @@
                                 <div class="calenderauditee">
                                     <input type="text" id="incident_date_analysis_gi" readonly
                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date_analysis_gi) }}"/>
-                                    <input type="date" name="incident_date_analysis_gi" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }}  class="hide-input"
+                                    <input type="date" name="incident_date_analysis_gi"
+                                        {{ $data->stage == 0 || $data->stage >= 2 ? 'readonly' : ($data->stage == 1 && empty($data->incident_date_analysis_gi) ? 'required' : '') }}
+                                        class="hide-input"
                                         oninput="handleDateInput(this, 'incident_date_analysis_gi')" />
+
                                 </div>
                             </div>
                         </div>
@@ -982,8 +985,11 @@
                                 <div class="calenderauditee">
                                     <input type="text" id="incident_date_incidence_gi" readonly
                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date_incidence_gi) }}"/>
-                                    <input type="date" name="incident_date_incidence_gi" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }} class="hide-input"
-                                        oninput="handleDateInput(this, 'incident_date_incidence_gi')" />
+                                   <input type="date" name="incident_date_incidence_gi"
+                                    {{ $data->stage == 0 || $data->stage >= 2 ? 'readonly' : ($data->stage == 1 && empty($data->incident_date_incidence_gi) ? 'required' : '') }}
+                                    class="hide-input"
+                                    oninput="handleDateInput(this, 'incident_date_incidence_gi')" />
+
                                 </div>
                             </div>
                         </div>
