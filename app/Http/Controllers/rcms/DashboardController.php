@@ -1024,6 +1024,7 @@ class DashboardController extends Controller
         }
         elseif ($type == "Extension") {
             $data = extension_new::find($id);
+            $data->record = $data->record_number;
             $single = "singleReportNew/" .$data->id;
             $audit = "extensionAuditReport/" .$data->id;
             $division = QMSDivision::find($data->site_location_code);

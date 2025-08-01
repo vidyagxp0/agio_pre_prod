@@ -315,7 +315,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                     @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                     @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Change Control', 39) || Helpers::check_roles($data->division_id, 'Change Control', 43) || Helpers::check_roles($data->division_id, 'Change Control', 42) || Helpers::check_roles($data->division_id, 'Change Control', 9) || Helpers::check_roles($data->division_id, 'Change Control', 65)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
@@ -370,7 +370,7 @@
                             </button>
 
 
-                @elseif($data->stage == 12 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                @elseif($data->stage == 12 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42) || Helpers::check_roles($data->division_id, 'Change Control', 9) || Helpers::check_roles($data->division_id, 'Change Control', 43) || Helpers::check_roles($data->division_id, 'Change Control', 65)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-post-implementation">
                                 Closure Approved
                             </button>

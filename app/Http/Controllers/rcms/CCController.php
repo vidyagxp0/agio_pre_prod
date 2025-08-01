@@ -10249,7 +10249,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
 
 
-                $changeControl->stage = "5";
+                $changeControl->stage = "7";
                 $changeControl->status = "QA/CQA Final Review";
 
 
