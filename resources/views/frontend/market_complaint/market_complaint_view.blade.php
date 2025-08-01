@@ -297,8 +297,8 @@
                             </button> </a>
                         @if (
                             $data->stage == 1 &&
-                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
-                                    Helpers::check_roles($data->division_id, 'Resampling', 66) ||
+                                (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 66) ||
                                     Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
@@ -312,8 +312,11 @@
                            
                         @elseif(
                             $data->stage == 2 &&
-                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
-                                    Helpers::check_roles($data->division_id, 'Resampling', 65) ||
+                                (Helpers::check_roles($data->division_id, 'Market Complaint', 9) ||
+                                 Helpers::check_roles($data->division_id, 'Market Complaint', 42) ||
+                                  Helpers::check_roles($data->division_id, 'Market Complaint', 43) ||
+                                  Helpers::check_roles($data->division_id, 'Market Complaint', 39) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 65) ||
                                     Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#rejection-modal">
@@ -332,8 +335,8 @@
                             </button>
                         @elseif(
                             $data->stage == 3 &&
-                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
-                                    Helpers::check_roles($data->division_id, 'Resampling', 66) ||
+                                (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 66) ||
                                     Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#rejection-modal">
@@ -370,8 +373,8 @@
     @endif -->
                         @elseif(
                             $data->stage == 5 &&
-                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
-                                    Helpers::check_roles($data->division_id, 'Resampling', 66) ||
+                                (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 66) ||
                                     Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
@@ -386,8 +389,11 @@
                             </button>
                         @elseif(
                             $data->stage == 6 &&
-                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
-                                    Helpers::check_roles($data->division_id, 'Resampling', 65) ||
+                                (Helpers::check_roles($data->division_id, 'Market Complaint', 9) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 39) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 42) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 43) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 65) ||
                                     Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
@@ -402,8 +408,8 @@
                             </button>
                         @elseif(
                             $data->stage == 7 &&
-                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
-                                    Helpers::check_roles($data->division_id, 'Resampling', 66) ||
+                                (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 66) ||
                                     Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
@@ -418,8 +424,8 @@
                             </button>
                         @elseif(
                             $data->stage == 8 &&
-                                (Helpers::check_roles($data->division_id, 'Resampling', 7) ||
-                                    Helpers::check_roles($data->division_id, 'Resampling', 66) ||
+                                (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 66) ||
                                     Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             {{-- <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Send Letter
@@ -1427,9 +1433,9 @@
                                             '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + indexDetail +
                                             '_info_mfg_date\').click();" />' +
                                             '<input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]"' +
-                                            ' id="date_' + indexDetail + '_info_mfg_date" class="hide-input show_date"' +
-                                            ' style="position: absolute; top: 0; left: 0; opacity: 0;"' +
-                                            ' onchange="handleDateInput(this, \'text_date_' + indexDetail + '_info_mfg_date\')" />' +
+                                                'id="date_' + indexDetail + '_info_mfg_date" class="hide-input show_date"' +
+                                                ' style="position: absolute; top: 0; left: 0; opacity: 0;"' +
+                                                'onchange="handleDateInput(this, \'text_date_' + indexDetail + '_info_mfg_date\'); setExpiryMinDateDynamic(' + indexDetail + ');" />' +
                                             '</div></div></div></td>' +
                                             '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
                                             '<input id="text_date_' + indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' + indexDetail +
@@ -1500,6 +1506,27 @@
                                     const endDateInputId = `date_${index}_info_expiry_date`;
                                     startDateInput.addEventListener('change', () => handleStartDateChange(startDateInput, endDateInputId));
                                 });
+                            </script>
+                            <script>
+                                function setExpiryMinDateDynamic(index) {
+                                    const mfgDateInput = document.getElementById('date_' + index + '_info_mfg_date');
+                                    const expiryDateInput = document.getElementById('date_' + index + '_info_expiry_date');
+
+                                    if (mfgDateInput && expiryDateInput) {
+                                        const mfgDate = mfgDateInput.value;
+                                        if (mfgDate) {
+                                            expiryDateInput.min = mfgDate;
+
+                                            // Optional: reset expiry if it's before MFG
+                                            if (expiryDateInput.value && expiryDateInput.value < mfgDate) {
+                                                expiryDateInput.value = '';
+                                                const visibleExpiryInput = document.getElementById('text_date_' + index + '_info_expiry_date');
+                                                if (visibleExpiryInput) visibleExpiryInput.value = '';
+                                            }
+                                        }
+                                    }
+                                }
+
                             </script>
 
 
@@ -2312,7 +2339,7 @@
                     id="date_{{ $index }}_mfg_date_pmd_ca"
                     class="hide-input show_date"
                     style="position: absolute; top: 0; left: 0; opacity: 0;"
-                    onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca');" />
+                    onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca'); setExpiryMinDate('{{ $index }}');" />
             </div>
         </div>
     </div>
@@ -2399,7 +2426,7 @@
                                         '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
                                         '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
                                         '<input id="text_date_' + productserialno + '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + productserialno + '_mfg_date_pmd_ca\').click();"/>' +
-                                        '<input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" value="" id="date_' + productserialno + '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' + productserialno + '_mfg_date_pmd_ca\')"/>' +
+                                        '<input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" value="" id="date_' + productserialno + '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' + productserialno + '_mfg_date_pmd_ca\'); setExpiryMinDate(' + productserialno + ');"/>'+
                                         '</div></div></div></td>' +
                                         '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
                                         '<input id="text_date_' + productserialno + '_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + productserialno + '_expiry_date_pmd_ca\').click();"/>' +
@@ -2424,6 +2451,19 @@
 
 
 
+                            <script>
+                                function setExpiryMinDate(index) {
+                                    const mfgDateInput = document.getElementById('date_' + index + '_mfg_date_pmd_ca');
+                                    const expiryDateInput = document.getElementById('date_' + index + '_expiry_date_pmd_ca');
+
+                                    if (mfgDateInput && expiryDateInput) {
+                                        const mfgDate = mfgDateInput.value;
+                                        if (mfgDate) {
+                                            expiryDateInput.min = mfgDate;
+                                        }
+                                    }
+                                }
+                                </script>
 
 
 
@@ -10001,9 +10041,7 @@
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea  name="qa_cqa_comments" 
-                                        {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->qa_cqa_comments }}
-                                    </textarea>
+                                    <textarea  name="qa_cqa_comments" {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->qa_cqa_comments }}</textarea>
                                 </div>
                             @else
                                 <div class="group-input">
@@ -10383,9 +10421,7 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea  name="closure_comment_c" 
-                                    {{ $data->stage == 7 ? '' : 'readonly' }}>{{ $data->closure_comment_c }}
-                                    </textarea>
+                                    <textarea  name="closure_comment_c"{{ $data->stage == 7 ? '' : 'readonly' }}>{{ $data->closure_comment_c }}</textarea>
                                 </div>
                             </div>
                         @else

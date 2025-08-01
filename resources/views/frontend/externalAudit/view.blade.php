@@ -365,7 +365,7 @@
                         @elseif(
                             $data->stage == 4 &&
                                 (Helpers::check_roles($data->division_id, 'External Audit', 66) ||
-                                    Helpers::check_roles($data->division_id, 'External Audit', 43) ||
+                                    Helpers::check_roles($data->division_id, 'External Audit', 43) || Helpers::check_roles($data->division_id, 'External Audit', 9) ||
                                     Helpers::check_roles($data->division_id, 'External Audit', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approval Complete
@@ -382,7 +382,7 @@
                         @elseif(
                             $data->stage == 5 &&
                                 (Helpers::check_roles($data->division_id, 'External Audit', 66) ||
-                                    Helpers::check_roles($data->division_id, 'External Audit', 43) ||
+                                    Helpers::check_roles($data->division_id, 'External Audit', 43) ||  Helpers::check_roles($data->division_id, 'External Audit', 9) ||
                                     Helpers::check_roles($data->division_id, 'External Audit', 18)))
                             <button class="button_theme1"> <a class="text-white" href="{{ url('auditee') }}">
                                     Reopen
