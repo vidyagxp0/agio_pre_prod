@@ -4861,7 +4861,8 @@ if ($areIniAttachmentsSame2 != true) {
                 if (
                     !empty($auditorview->data) &&
                     is_iterable($auditorview->data)
-                ) {
+                )
+                {
                     foreach ($auditorview->data as $audditor) {
                         if (
                             isset($audditor['auditornew'], $audditor['designation']) &&
@@ -4930,103 +4931,75 @@ if ($areIniAttachmentsSame2 != true) {
                 toastr()->success('Document Sent');
                 return back();
             }
+            //for lead auditor
 
             if($changeControl->stage == 2){
-                $responseData = InternalAuditResponse::where('ia_id', $id)->orderBy('id', 'desc')
-                            ->first();
+                $responseData = InternalAuditResponse::where('ia_id', $id)->orderBy('id', 'desc')->first();
+                $stageCheck = new InternalAuditResponse();
 
-                // if($changeControl->Auditee_comment && Auth::user()->id == $changeControl->assign_to && $responseData->person_role != "Auditee"){
-                    if(
-                        $changeControl->Auditee_comment &&
-                        Auth::user()->id == $changeControl->assign_to &&
-                        (!isset($responseData) || $responseData->person_role != "Auditee")
-                    ){
+                $userId = Auth::user()->id;
+                $userName = Auth::user()->name;
+                $userRoleName = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $now = Carbon::now()->format('d-M-Y');
 
-                    $stageCheck = new InternalAuditResponse();
-                    $stageCheck->ia_id = $id;
-                    $stageCheck->user_id = Auth::user()->id;
-                    $stageCheck->person_role = "Auditee";
-                    if($responseData && $responseData->person_role == "Lead Auditor"){
-                        $stageCheck->status = 'Complete';
+                $auditorview = InternalAuditorGrid::where(['auditor_id' => $id, 'identifier' => 'Auditors'])->first();
+
+                $isLeadAuditor = false;
+                if (!empty($auditorview->data) && is_iterable($auditorview->data)) {
+                    foreach ($auditorview->data as $auditor) {
+                        if (
+                            isset($auditor['auditornew'], $auditor['designation']) &&
+                            $auditor['auditornew'] == $userId &&
+                            $auditor['designation'] === 'Lead Auditor'
+                        ) {
+                            $isLeadAuditor = true;
+                            break;
+                        }
                     }
-                    else{
-                        $stageCheck->status = 'In-Progress';
-
-                        $changeControl->audit_preparation_completed_by = Auth::user()->name;
-                        $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
-                        $changeControl->acknowledge_commnet = $request->comment;
-
-                                $history = new InternalAuditTrial();
-                                $history->InternalAudit_id = $id;
-                                $history->activity_type = 'Acknowledgement By, Acknowledgement On';
-                                if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
-                                    $history->previous = "Not Applicable";
-                                } else {
-                                    $history->previous = $lastDocument->audit_preparation_completed_by . ' , ' . $lastDocument->audit_preparation_completed_on;
-                                }
-                                $history->current = $changeControl->audit_preparation_completed_by . ' , ' . $changeControl->audit_preparation_completed_on;
-                                $history->action='Acknowledgement';
-                                // $history->current = $changeControl->audit_preparation_completed_by;
-                                $history->comment = $request->comment;
-                                $history->user_id = Auth::user()->id;
-                                $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                $history->origin_state = $lastDocument->status;
-                                $history->change_to = " Audit";
-                                $history->change_from = $lastDocument->status;
-                                $history->stage = " Audit";
-                                if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
-                                    $history->action_name = 'New';
-                                } else {
-                                    $history->action_name = 'Update';
-                                }
-                                $history->save();
-                        $changeControl->update();
-                    
-                    }
-                    $stageCheck->save();
-                                
-                       
                 }
 
-                if($stageCheck->status == 'Complete'){
-                    $changeControl->stage = "3";
-                    $changeControl->status = "Audit";
-                    $changeControl->audit_preparation_completed_by = Auth::user()->name;
-                    $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
-                    $changeControl->acknowledge_commnet = $request->comment;
-                    $history = new InternalAuditTrial();
-                                $history->InternalAudit_id = $id;
-                                $history->activity_type = 'Acknowledgement By, Acknowledgement On';
-                                if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
-                                    $history->previous = "Not Applicable";
-                                } else {
-                                    $history->previous = $lastDocument->audit_preparation_completed_by . ' , ' . $lastDocument->audit_preparation_completed_on;
-                                }
-                                $history->current = $changeControl->audit_preparation_completed_by . ' , ' . $changeControl->audit_preparation_completed_on;
-                                $history->action='Acknowledgement';
-                                // $history->current = $changeControl->audit_preparation_completed_by;
-                                $history->comment = $request->comment;
-                                $history->user_id = Auth::user()->id;
-                                $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                $history->origin_state = $lastDocument->status;
-                                $history->change_to = " Audit";
-                                $history->change_from = $lastDocument->status;
-                                $history->stage = " Audit";
-                                if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
-                                    $history->action_name = 'New';
-                                } else {
-                                    $history->action_name = 'Update';
-                                }
-                                $history->save();
+                // Determine role
+                $personRole = $isLeadAuditor ? 'Lead Auditor' : 'Auditee';
+                $commentField = $isLeadAuditor ? 'Auditor_comment' : 'Auditee_comment';
+                // Check if comment is filled in DB field
+                if (empty($changeControl->$commentField)) {
+                    toastr()->error('Please fill the comment before e-signing.');
+                    return back();
+                }
+                if (
+                    $changeControl->$commentField &&
+                    (!isset($responseData) || $responseData->person_role != $personRole)
+                ) {
+                    // Create response
+                    $stageCheck->ia_id = $id;
+                    $stageCheck->user_id = $userId;
+                    $stageCheck->person_role = $personRole;
+                    $stageCheck->status = ($responseData && $responseData->person_role != $personRole) ? 'Complete' : 'In-Progress';
+                    $stageCheck->save();
+
+                    // Update change control based on role
+                    if ($isLeadAuditor) {
+                        $changeControl->audit_preparation_completed_by_lead_auditor = $userName;
+                        $changeControl->audit_preparation_completed_on_lead_auditor = $now;
+                        $changeControl->acknowledge_commnet_lead_auditor = $request->comment;
+                    } else {
+                        $changeControl->audit_preparation_completed_by = $userName;
+                        $changeControl->audit_preparation_completed_on = $now;
+                        $changeControl->acknowledge_commnet = $request->comment;
+                    }
+
                     $changeControl->update();
 
-                    toastr()->success('Document Sent');
-                    return back();
+                    // Save audit trail
+                    $this->saveAuditHistory($id, $request->comment, $personRole, $lastDocument, $now);
 
-                }
-                else{
+                    // Check if both roles have completed
+                    if ($this->isAuditPreparationComplete($id)) {
+                        $changeControl->stage = 3;
+                        $changeControl->status = 'Audit';
+                        $changeControl->update();
+                    }
+
                     toastr()->success('Document Sent');
                     return back();
                 }
@@ -5221,6 +5194,41 @@ if ($areIniAttachmentsSame2 != true) {
             return back();
         }
     }
+    private function saveAuditHistory($id, $comment, $role, $lastDocument, $now)
+    {
+        $fieldPrefix = $role === 'Lead Auditor' ? 'lead_auditor' : '';
+
+        $previousName = $lastDocument->{'audit_preparation_completed_by' . ($fieldPrefix ? '_' . $fieldPrefix : '')};
+        $previousDate = $lastDocument->{'audit_preparation_completed_on' . ($fieldPrefix ? '_' . $fieldPrefix : '')};
+
+        $history = new InternalAuditTrial();
+        $history->InternalAudit_id = $id;
+        $history->activity_type = 'Acknowledgement By, Acknowledgement On';
+        $history->previous = ($previousName) ? $previousName . ' , ' . $previousDate : 'Not Applicable';
+        $history->current = Auth::user()->name . ' , ' . $now;
+        $history->action = 'Acknowledgement';
+        $history->comment = $comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $lastDocument->status;
+        $history->change_to = "Audit";
+        $history->change_from = $lastDocument->status;
+        $history->stage = "Audit";
+        $history->action_name = $previousName ? 'Update' : 'New';
+        $history->save();
+    }
+
+    private function isAuditPreparationComplete($id)
+    {
+        $responses = InternalAuditResponse::where('ia_id', $id)->get();
+
+        $auditorDone = $responses->where('person_role', 'Lead Auditor')->first();
+        $auditeeDone = $responses->where('person_role', 'Auditee')->first();
+
+        return $auditorDone && $auditeeDone;
+    }
+
     public function InternalAuditStateChangeLeadAuditor(Request $request, $id)
     {
         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
@@ -5250,101 +5258,98 @@ if ($areIniAttachmentsSame2 != true) {
             if($changeControl->stage == 2){
                 $responseData = InternalAuditResponse::where('ia_id', $id)->orderBy('id', 'desc')
                             ->first();
+                    $stageCheck = new InternalAuditResponse();
                     if(
                         $changeControl->Auditor_comment &&
                         $isCommentEditable &&
                         (!isset($responseData) || $responseData->person_role != "Lead Auditor")
                     ){
 
-                    $stageCheck = new InternalAuditResponse();
-                    $stageCheck->ia_id = $id;
-                    $stageCheck->user_id = Auth::user()->id;
-                    $stageCheck->person_role = "Lead Auditor";
-                    if($responseData && $responseData->person_role == "Auditee"){
-                        $stageCheck->status = 'Complete';
+                        $stageCheck->ia_id = $id;
+                        $stageCheck->user_id = Auth::user()->id;
+                        $stageCheck->person_role = "Lead Auditor";
+                        if($responseData && $responseData->person_role == "Auditee"){
+                            $stageCheck->status = 'Complete';
+                        }
+                        else{
+                            $stageCheck->status = 'In-Progress';
+                                
+                                $changeControl->audit_preparation_completed_by_lead_auditor = Auth::user()->name;
+                                $changeControl->audit_preparation_completed_on_lead_auditor = Carbon::now()->format('d-M-Y');
+                                $changeControl->acknowledge_commnet_lead_auditor = $request->comment;
+                                $history = new InternalAuditTrial();
+                                            $history->InternalAudit_id = $id;
+                                            $history->activity_type = 'Acknowledgement By, Acknowledgement On';
+                                            if (is_null($lastDocument->audit_preparation_completed_by_lead_auditor) || $lastDocument->audit_preparation_completed_by_lead_auditor === '') {
+                                                $history->previous = "Not Applicable";
+                                            } else {
+                                                $history->previous = $lastDocument->audit_preparation_completed_by_lead_auditor . ' , ' . $lastDocument->audit_preparation_completed_on_lead_auditor;
+                                            }
+                                            $history->current = $changeControl->audit_preparation_completed_by_lead_auditor . ' , ' . $changeControl->audit_preparation_completed_on;
+                                            $history->action='Acknowledgement';
+                                            // $history->current = $changeControl->audit_preparation_completed_by;
+                                            $history->comment = $request->comment;
+                                            $history->user_id = Auth::user()->id;
+                                            $history->user_name = Auth::user()->name;
+                                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                            $history->origin_state = $lastDocument->status;
+                                            $history->change_to = " Audit";
+                                            $history->change_from = $lastDocument->status;
+                                            $history->stage = " Audit";
+                                            if (is_null($lastDocument->audit_preparation_completed_by_lead_auditor) || $lastDocument->audit_preparation_completed_by_lead_auditor === '') {
+                                                $history->action_name = 'New';
+                                            } else {
+                                                $history->action_name = 'Update';
+                                            }
+                                            $history->save();
+                                $changeControl->update();
+                        }
+                        $stageCheck->save();
+                    }
+
+                    if($responseData && $stageCheck->status == 'Complete'){
+                        $changeControl->stage = "3";
+                        $changeControl->status = "Audit";
+                        $changeControl->audit_preparation_completed_by_lead_auditor = Auth::user()->name;
+                        $changeControl->audit_preparation_completed_on_lead_auditor = Carbon::now()->format('d-M-Y');
+                        $changeControl->acknowledge_commnet_lead_auditor = $request->comment;
+                        $history = new InternalAuditTrial();
+                                    $history->InternalAudit_id = $id;
+                                    $history->activity_type = 'Acknowledgement By, Acknowledgement On';
+                                    if (is_null($lastDocument->audit_preparation_completed_by_lead_auditor) || $lastDocument->audit_preparation_completed_by_lead_auditor === '') {
+                                        $history->previous = "Not Applicable";
+                                    } else {
+                                        $history->previous = $lastDocument->audit_preparation_completed_by_lead_auditor . ' , ' . $lastDocument->audit_preparation_completed_on_lead_auditor;
+                                    }
+                                    $history->current = $changeControl->audit_preparation_completed_by_lead_auditor . ' , ' . $changeControl->audit_preparation_completed_on;
+                                    $history->action='Acknowledgement';
+                                    // $history->current = $changeControl->audit_preparation_completed_by;
+                                    $history->comment = $request->comment;
+                                    $history->user_id = Auth::user()->id;
+                                    $history->user_name = Auth::user()->name;
+                                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $history->origin_state = $lastDocument->status;
+                                    $history->change_to = " Audit";
+                                    $history->change_from = $lastDocument->status;
+                                    $history->stage = " Audit";
+                                    if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
+                                        $history->action_name = 'New';
+                                    } else {
+                                        $history->action_name = 'Update';
+                                    }
+                                    $history->save();
+                        $changeControl->update();
+
+                        toastr()->success('Document Sent');
+                        return back();
+
                     }
                     else{
-                        $stageCheck->status = 'In-Progress';
-                            
-                            $changeControl->audit_preparation_completed_by_lead_auditor = Auth::user()->name;
-                            $changeControl->audit_preparation_completed_on_lead_auditor = Carbon::now()->format('d-M-Y');
-                            $changeControl->acknowledge_commnet_lead_auditor = $request->comment;
-                            $history = new InternalAuditTrial();
-                                        $history->InternalAudit_id = $id;
-                                        $history->activity_type = 'Acknowledgement By, Acknowledgement On';
-                                        if (is_null($lastDocument->audit_preparation_completed_by_lead_auditor) || $lastDocument->audit_preparation_completed_by_lead_auditor === '') {
-                                            $history->previous = "Not Applicable";
-                                        } else {
-                                            $history->previous = $lastDocument->audit_preparation_completed_by_lead_auditor . ' , ' . $lastDocument->audit_preparation_completed_on_lead_auditor;
-                                        }
-                                        $history->current = $changeControl->audit_preparation_completed_by_lead_auditor . ' , ' . $changeControl->audit_preparation_completed_on;
-                                        $history->action='Acknowledgement';
-                                        // $history->current = $changeControl->audit_preparation_completed_by;
-                                        $history->comment = $request->comment;
-                                        $history->user_id = Auth::user()->id;
-                                        $history->user_name = Auth::user()->name;
-                                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                        $history->origin_state = $lastDocument->status;
-                                        $history->change_to = " Audit";
-                                        $history->change_from = $lastDocument->status;
-                                        $history->stage = " Audit";
-                                        if (is_null($lastDocument->audit_preparation_completed_by_lead_auditor) || $lastDocument->audit_preparation_completed_by_lead_auditor === '') {
-                                            $history->action_name = 'New';
-                                        } else {
-                                            $history->action_name = 'Update';
-                                        }
-                                        $history->save();
-                            $changeControl->update();
+
+                        toastr()->success('Document Sent');
+                        return back();
                     }
-                    $stageCheck->save();
-
-
-
                 }
-
-                if($responseData && $stageCheck->status == 'Complete'){
-                    $changeControl->stage = "3";
-                    $changeControl->status = "Audit";
-                    $changeControl->audit_preparation_completed_by_lead_auditor = Auth::user()->name;
-                    $changeControl->audit_preparation_completed_on_lead_auditor = Carbon::now()->format('d-M-Y');
-                    $changeControl->acknowledge_commnet_lead_auditor = $request->comment;
-                    $history = new InternalAuditTrial();
-                                $history->InternalAudit_id = $id;
-                                $history->activity_type = 'Acknowledgement By, Acknowledgement On';
-                                if (is_null($lastDocument->audit_preparation_completed_by_lead_auditor) || $lastDocument->audit_preparation_completed_by_lead_auditor === '') {
-                                    $history->previous = "Not Applicable";
-                                } else {
-                                    $history->previous = $lastDocument->audit_preparation_completed_by_lead_auditor . ' , ' . $lastDocument->audit_preparation_completed_on_lead_auditor;
-                                }
-                                $history->current = $changeControl->audit_preparation_completed_by_lead_auditor . ' , ' . $changeControl->audit_preparation_completed_on;
-                                $history->action='Acknowledgement';
-                                // $history->current = $changeControl->audit_preparation_completed_by;
-                                $history->comment = $request->comment;
-                                $history->user_id = Auth::user()->id;
-                                $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                $history->origin_state = $lastDocument->status;
-                                $history->change_to = " Audit";
-                                $history->change_from = $lastDocument->status;
-                                $history->stage = " Audit";
-                                if (is_null($lastDocument->audit_preparation_completed_by) || $lastDocument->audit_preparation_completed_by === '') {
-                                    $history->action_name = 'New';
-                                } else {
-                                    $history->action_name = 'Update';
-                                }
-                                $history->save();
-                    $changeControl->update();
-
-                    toastr()->success('Document Sent');
-                    return back();
-
-                }
-                else{
-
-                    toastr()->success('Document Sent');
-                    return back();
-                }
-            }
 
 
 

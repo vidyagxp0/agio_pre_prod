@@ -250,7 +250,6 @@
                                                 $userHasAllowedRole = in_array(1, $userRoles);
                                             @endphp
 
-                                            @if (!$hideRecord || $userHasAllowedRole)
                                                 <tr>
                                                     <td>
                                                         @if ($datas->type == 'Change-Control')
@@ -710,7 +709,6 @@
                                                     </td>
 
                                                 </tr>
-                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

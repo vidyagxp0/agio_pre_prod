@@ -2,7 +2,6 @@
 @section('container')
     @php
         $users = DB::table('users')->select('id', 'name')->get();
-
     @endphp
     <style>
         textarea.note-codable {
@@ -411,24 +410,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         @endphp
-
-                        <button class="button_theme1"> <a class="text-white"
-                                href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
-
-                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Internal Audit', 7)|| Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Schedule Audit
-                            </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> --}}
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button>
-
-
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Internal Audit', 11))
-                            @php
+                        @php
                             // Default to not editable
                             $isCommentEditable = false;
 
@@ -457,12 +439,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             // Safely extract role if exists
                             $personRole = $responseData->person_role ?? null;
+
                         @endphp
 
+                        <button class="button_theme1"> <a class="text-white"
+                                href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
+
+                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Internal Audit', 7)|| Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Schedule Audit
+                            </button>
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
+                        @elseif($data->stage == 2)
+                            
                         {{-- Button for Lead Auditor --}}
                         @if($isCommentEditable && (!$personRole || $personRole != "Lead Auditor"))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal222">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledgement by Lead Auditor
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More info Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
                             </button>
                         @endif
 
@@ -471,13 +475,14 @@ document.addEventListener("DOMContentLoaded", function () {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledgement by Auditee
                             </button>
-                        @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
+                        @endif
+                            
                         @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Internal Audit', 12))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">

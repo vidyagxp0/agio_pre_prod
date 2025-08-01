@@ -6141,7 +6141,7 @@ class OOCController extends Controller
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $parentRecord = OutOfCalibration::where('id', $id)->value('record');
 
-                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record','parentRecord','data_record','data'));
+                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record','parentRecord','data_record','data',));
 
             }
 
@@ -6232,6 +6232,7 @@ class OOCController extends Controller
                $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+               $parent_division_id = OutOfCalibration::where('id', $id)->value('division_id');
                $parent_initiator_id = $id;
 
 
@@ -6247,7 +6248,14 @@ class OOCController extends Controller
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                 $count = Helpers::getChildData($id, $parent_type);
                 $countData = $count + 1;
-                return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData'));
+
+                 $parent_due_date = "";
+                $parent_name = $request->parent_name;
+                if ($request->due_date) {
+               $parent_due_date = $request->due_date;
+                                         }
+
+                return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData','parent_division_id','parent_due_date'));
 
             }
             if ($request->revision == "Action-child") {
@@ -6265,7 +6273,7 @@ class OOCController extends Controller
             $data = new \stdClass();   // Create an empty object
             $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
 
-            return view('frontend.action-item.action-item', compact('record','record_number','old_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','data_record','data'));
+            return view('frontend.action-item.action-item', compact('record','record_number','old_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','data_record','data','parent_division_id'));
 
         }
     }
