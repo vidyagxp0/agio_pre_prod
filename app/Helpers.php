@@ -1742,6 +1742,7 @@ class Helpers
             'division_id' => $division_id,
             'process_name' => $process_name
         ])->first();
+        
 
         $roleExists = DB::table('user_roles')->where([
             'user_id' => $user_id ? $user_id : Auth::user()->id,
@@ -1911,20 +1912,7 @@ class Helpers
     public static function getNameById($id){
         return   Employee::where('id',$id)->value('employee_name');
     }
-//     public static function check_roles_initiatorcheck($requiredRoleId, $userId)
-// {
-//     $user = User::find($userId);
-
-//     if (!$user || empty($user->role)) {
-//         return false;
-//     }
-
-//     $roles = array_map('trim', explode(',', $user->role));
-
-//     return in_array($requiredRoleId, $roles);
-// }
-
-public static function check_initiator_role_with_process($userId, $allowedRoles = [3, 7, 66, 12], $processMatch = ['Internal Audit', 'External Audit','Observation'])
+    public static function check_roles_initiatorcheck($requiredRoleId, $userId)
 {
     $user = User::find($userId);
 
@@ -1932,40 +1920,11 @@ public static function check_initiator_role_with_process($userId, $allowedRoles 
         return false;
     }
 
-    $userRoles = array_map('trim', explode(',', $user->role));
+    $roles = array_map('trim', explode(',', $user->role));
 
-    $processes = QMSProcess::whereIn('process_name', $processMatch)->pluck('id');
-
-    if ($processes->isEmpty()) {
-        return false;
-    }
-
-    if (in_array(3, $userRoles)) {
-        $blocked = DB::table('user_roles')
-            ->where('user_id', $userId)
-            ->whereIn('q_m_s_processes_id', $processes)
-            ->where('q_m_s_roles_id', 3)
-            ->exists();
-
-        if ($blocked) {
-            return false;
-        }
-
-        return true; 
-    }
-
-    if (in_array(7, $userRoles) || in_array(66, $userRoles) || in_array(12, $userRoles)) {
-        $allowed = DB::table('user_roles')
-            ->where('user_id', $userId)
-            ->whereIn('q_m_s_processes_id', $processes)
-            ->whereIn('q_m_s_roles_id', [7, 66, 12,])
-            ->exists();
-
-        return $allowed;
-    }
-
-    return false;
+    return in_array($requiredRoleId, $roles);
 }
+
 
 
 

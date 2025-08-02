@@ -352,16 +352,14 @@
                                                     </div>
                                                 </div>
 
-                                    <!-- <div class="col-lg-6 new-date-data-field">
+                                    {{-- <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Due Date"> Due Date</label>
                                             <div class="calenderauditee">
-                                                {{-- Display the formatted date or placeholder --}}
                                                 <input type="text" id="due_date_display" readonly
                                                     placeholder="DD-MMM-YYYY"
                                                     value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
 
-                                                {{-- Date input field --}}
                                                 <input type="date" name="due_date"
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('Y-m-d') : '' }}"
@@ -369,7 +367,7 @@
                                                     onchange="handleDateInput(this, 'due_date_display')" />
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div> --}}
 
                                     <script>
                                         function handleDateInput(dateInput, displayId) {

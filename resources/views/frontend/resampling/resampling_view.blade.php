@@ -91,7 +91,7 @@
                                 Cancel
                             </button></a>
 
-                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Resampling', 42) || Helpers::check_roles($data->division_id, 'Resampling', 43) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Resampling', 18)))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Resampling', 42) || Helpers::check_roles($data->division_id, 'Resampling', 9) || Helpers::check_roles($data->division_id, 'Resampling', 39) || Helpers::check_roles($data->division_id, 'Resampling', 43) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Resampling', 18)))
         
                            <a > <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required

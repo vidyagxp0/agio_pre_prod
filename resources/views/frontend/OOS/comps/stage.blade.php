@@ -30,7 +30,7 @@
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal"> HOD Primary Review Complete </button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
-             @elseif($data->stage == 3 && (in_array(39, $userRoleIds) || in_array(9, $userRoleIds) || in_array(43, $userRoleIds)  || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 3 && (in_array(39, $userRoleIds) || in_array(9, $userRoleIds) || in_array(43, $userRoleIds) || in_array(42, $userRoleIds)  || in_array(18, $userRoleIds)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">Cancel</button>
  
              @elseif($data->stage == 4 && (in_array(39, $userRoleIds) || in_array(9, $userRoleIds) || in_array(43, $userRoleIds) || in_array(42, $userRoleIds) || in_array(65, $userRoleIds) || in_array(18, $userRoleIds)))

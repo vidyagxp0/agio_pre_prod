@@ -145,7 +145,7 @@
                                 More Info Required
                             </button>
 
-                        @elseif($extensionNew->stage == 3 && (Helpers::check_roles($extensionNew->site_location_code, 'Extension', 67) || Helpers::check_roles($extensionNew->site_location_code, 'Extension', 66)) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18))
+                        @elseif($extensionNew->stage == 3 && (Helpers::check_roles($extensionNew->site_location_code, 'Extension', 67) || Helpers::check_roles($extensionNew->site_location_code, 'Extension', 64)) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18))
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
                                 Approved
