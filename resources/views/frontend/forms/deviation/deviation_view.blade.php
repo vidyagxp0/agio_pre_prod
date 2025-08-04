@@ -743,11 +743,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Initiator Updated Complete
                             </button>
-                            @if(Helpers::getChildData($data->id, 'Deviation') < 3)
+                            {{-- @if(Helpers::getChildData($data->id, 'Deviation') < 3) --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            @endif
+                            {{-- @endif --}}
                         @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Deviation', 4))
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Opened
@@ -821,7 +821,7 @@
 
                 </div>
                 <div class="status">
-                    <div class="head">Current Status</div>
+                    <div class="head">Current Status</div>a
                     @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
@@ -3061,13 +3061,13 @@
                                                     value='yes'>
                                                     Yes</option> --}}
                                                     <option
-                                                @if (empty($data1->Production_Table_Review) || $data1->Production_Table_Review == 'yes') selected @endif
+                                                @if ( $data1->Production_Table_Review == 'yes') selected @endif
                                                 value="yes">Yes</option>
 
                                                 <option @if ($data1->Production_Table_Review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                <option @if ($data1->Production_Table_Review == 'NA') selected @endif
+                                                <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review) ) selected @endif
                                                     value='NA'>
                                                     NA</option>
 

@@ -170,18 +170,16 @@
                                 Child
                             </button> --}}
                         @elseif($data->stage == 4 &&  (Helpers::check_roles($data->division_id, 'CAPA', 67) ||
-                            Helpers::check_roles($data->division_id, 'CAPA', 64) ||
-                           
-                            ))
+                            Helpers::check_roles($data->division_id, 'CAPA', 64) ))
                           <a href="#signature-modal">  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Approved
                             </button></a>
-                            @if(Helpers::getChildData($data->id, 'CAPA') < 3)
+                            {{-- @if(Helpers::getChildData($data->id, 'CAPA') < 3) --}}
                             <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#child-modal">
                                 Child
                             </button></a>
-                            @endif
+                            {{-- @endif --}}
                             <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                  More Info Required
                               </button></a>
@@ -224,12 +222,12 @@
                              <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                   More Info Required
                                </button></a>
-                               @if(Helpers::getChildData($data->id, 'CAPA') < 3)
+                               {{-- @if(Helpers::getChildData($data->id, 'CAPA') < 3) --}}
                                <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#child-modal">
                                 Child
                             </button></a>
-                           @endif
+                           {{-- @endif --}}
                             @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'CAPA', 9) || Helpers::check_roles($data->division_id, 'CAPA',39 ) || Helpers::check_roles($data->division_id, 'CAPA',42 ) || Helpers::check_roles($data->division_id, 'CAPA',43 ) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 65)))
 
@@ -249,12 +247,12 @@
 
                            @elseif($data->stage == 9&& (Helpers::check_roles($data->division_id, 'CAPA', 9) || Helpers::check_roles($data->division_id, 'CAPA',39 ) || Helpers::check_roles($data->division_id, 'CAPA',42 ) || Helpers::check_roles($data->division_id, 'CAPA',43 ) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 65) || in_array(18, $userRoleIds)))
-                           @if(Helpers::getChildData($data->id, 'CAPA') < 3)
+                           {{-- @if(Helpers::getChildData($data->id, 'CAPA') < 3) --}}
                          <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                              data-bs-target="#child-modal1l">
                              Child
                          </button></a>
-                         @endif
+                         {{-- @endif --}}
                         @endif
                          <a class="button_theme1 text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a>

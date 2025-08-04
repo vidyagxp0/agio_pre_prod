@@ -6425,10 +6425,21 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 return back();
             }
             if ($changeControl->stage == 2) {
-                $extensionchild = extension_new::where('parent_id', $id)->first();
-               if ($extensionchild) {
-                $extensionchildStatus = trim(strtolower($extensionchild->status));
-                   if ($extensionchildStatus !== 'closed - done') {
+                // $extensionchild = extension_new::where('parent_id', $id)->where('parent_type', 'LabIncident')->first();
+                 $extensionchilds = extension_new::where('parent_id', $id)
+                ->where('parent_type', 'LabIncident')
+                ->get();
+                    $hasPending = false;
+                foreach ($extensionchilds as $ext) {
+                        $extensionchildStatus = trim(strtolower($ext->status));
+                        if ($extensionchildStatus !== 'closed - done') {
+                            $hasPending = true;
+                            break;
+                        }
+                    }
+               if ($hasPending) {
+                // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                   if ($hasPending) {
                        Session::flash('swal', [
                            'title' => 'Extension Child Pending!',
                            'message' => 'You cannot proceed until Extension Child is Closed-Done.',
@@ -6517,12 +6528,22 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
             if ($changeControl->stage == 3) {
 
-                $extensionchild = extension_new::where('parent_id', $id)->first();
+                // $extensionchild = extension_new::where('parent_id', $id)->where('parent_type', 'LabIncident')->first();
 
-                // dd($extensionchild->id);
-               if ($extensionchild) {
-                $extensionchildStatus = trim(strtolower($extensionchild->status));
-                   if ($extensionchildStatus !== 'closed - done') {
+                 $extensionchild = extension_new::where('parent_id', $id)
+                ->where('parent_type', 'LabIncident')
+                ->get();
+                    $hasPending2 = false;
+                foreach ($extensionchild as $ext) {
+                        $extensionchildStatus = trim(strtolower($ext->status));
+                        if ($extensionchildStatus !== 'closed - done') {
+                            $hasPending2 = true;
+                            break;
+                        }
+                    }
+
+               if ($hasPending2) {
+                // $extensionchildStatus = trim(strtolower($extensionchild->status));
                        Session::flash('swal', [
                            'title' => 'Extension Child Pending!',
                            'message' => 'You cannot proceed until Extension Child is Closed-Done.',
@@ -6530,7 +6551,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                        ]);
 
                    return redirect()->back();
-                   }
+                
                } else {
                    // Flash message for success (when the form is filled correctly)
                    Session::flash('swal', [

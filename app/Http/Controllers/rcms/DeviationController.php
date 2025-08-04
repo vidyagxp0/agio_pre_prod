@@ -12,6 +12,7 @@ use App\Models\{EffectivenessCheck,LaunchExtension,DeviationGridQrms};
 use App\Models\CC;
 use App\Models\ActionItem;
 use App\Models\Deviation;
+use App\Models\extension_new;
 use App\Models\Extension;
 use App\Models\DeviationAuditTrail;
 use App\Models\DeviationGrid;
@@ -10441,6 +10442,37 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             'message' => 'Sent for QA/CQA initial  Assessment Tab'
                         ]);
                     }
+                    // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Deviation')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                     $deviation->stage = "3";
                     $deviation->status = "QA/CQA Initial Assessment";
@@ -10540,6 +10572,37 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             'message' => 'Sent for CFT review state'
                         ]);
                     }
+                     $extensionchild = extension_new::where('parent_id', $id)
+                ->where('parent_type', 'Deviation')
+                ->get();
+                    $hasPending2 = false;
+                foreach ($extensionchild as $ext) {
+                        $extensionchildStatus = trim(strtolower($ext->status));
+                        if ($extensionchildStatus !== 'closed - done') {
+                            $hasPending2 = true;
+                            break;
+                        }
+                    }
+
+               if ($hasPending2) {
+                // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                       Session::flash('swal', [
+                           'title' => 'Extension Child Pending!',
+                           'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Sent for Next Stage',
+                       'type' => 'success',
+                   ]);
+               }
+
 
                     $getCftData = DeviationCft::where('deviation_id', $id)->first();
 
@@ -10686,6 +10749,38 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     //         'message' => 'Sent to CFT Review State'
                     //     ]);
                     // }
+
+                       // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Deviation')
+                    ->get();
+                        $hasPending3 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending3 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending3) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                     $userId = Auth::user()->name;
                     $userAssignments = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
@@ -11532,6 +11627,39 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                             'message' => 'Sent for QA/CQA Head/Manager Designee Approval'
                         ]);
                     }
+
+                     // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Deviation')
+                    ->get();
+                        $hasPending4 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending4 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending4) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
 
 
                     $deviation->stage = "6";

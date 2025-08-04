@@ -11,6 +11,7 @@ use App\Models\CapaAuditTrial;
 use App\Models\RoleGroup;
 use App\Models\CapaGrid;
 use App\Models\Extension;
+use App\Models\extension_new;
 use App\Models\CC;
 use App\Models\Division;
 use Carbon\Carbon;
@@ -3779,6 +3780,39 @@ class CapaController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                 // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'CAPA')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $capa->stage = "3";
                 $capa->status = "QA/CQA Review";
                 $capa->hod_review_completed_by = Auth::user()->name;
@@ -3875,6 +3909,39 @@ class CapaController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'CAPA')
+                    ->get();
+                        $hasPending2 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending2 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending2) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $capa->stage = "4";
                 $capa->status = "QA/CQA Approval";
                 $capa->qa_review_completed_by = Auth::user()->name;
@@ -3969,6 +4036,38 @@ class CapaController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'CAPA')
+                    ->get();
+                        $hasPending3 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending3 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending3) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $capa->stage = "5";
                 $capa->status = "CAPA In progress";
                 $capa->approved_by = Auth::user()->name;
@@ -4045,6 +4144,39 @@ class CapaController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'CAPA')
+                    ->get();
+                        $hasPending4 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending4 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending4) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $capa->stage = "6";
                 $capa->status = "HOD Final Review";
                 $capa->completed_by = Auth::user()->name;
@@ -4120,6 +4252,39 @@ class CapaController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'CAPA')
+                    ->get();
+                        $hasPending5 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending5 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending5) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $capa->stage = "7";
                 $capa->status = "QA/CQA Closure Review";
                 $capa->hod_final_review_completed_by = Auth::user()->name;
@@ -4215,6 +4380,39 @@ class CapaController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'CAPA')
+                    ->get();
+                        $hasPending6 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending6 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending6) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $capa->stage = "8";
                 $capa->status = "QA/CQA Approval ";
                 $capa->qa_closure_review_completed_by = Auth::user()->name;
@@ -4291,6 +4489,38 @@ class CapaController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'CAPA')
+                    ->get();
+                        $hasPending7 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending7 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending7) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $capa->stage = "9";
                 $capa->status = "Closed - Done";
                 $capa->qah_approval_completed_by = Auth::user()->name;
