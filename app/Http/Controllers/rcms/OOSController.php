@@ -310,6 +310,39 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                  // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                    // dd($extensionchild);
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "4";
                 $changestage->status = "CQA/QA Head Primary Review";
                 $changestage->HOD_Primary_Review_Complete_By = Auth::user()->name;
@@ -415,6 +448,40 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                 // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending4 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending4 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending4) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
+
                 $changestage->stage = "7";
                 $changestage->status = "Phase IA QA/CQA Review ";
                 $changestage->Phase_IA_HOD_Review_Complete_By = Auth::user()->name;
@@ -493,6 +560,38 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending5 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending5 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending5) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "8";
                 $changestage->status = "Phase IA CQAH/QAH Review";
                 $changestage->Phase_IA_QA_Review_Complete_By = Auth::user()->name;
@@ -583,6 +682,38 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending6 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending6 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending6) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "10";
                 $changestage->status = "Phase IB HOD Primary Review";
                 $changestage->Phase_IB_Investigation_By = Auth::user()->name;
@@ -648,6 +779,37 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                 // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending7 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending7 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending7) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "11";
                 $changestage->status = "Phase IB QA Review";
                 $changestage->Phase_IB_HOD_Review_Complete_By= Auth::user()->name;
@@ -727,6 +889,37 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                 // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending8 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending8 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending8) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "12";
                 $changestage->status = "P-IB CQAH/QAH Review";
                 $changestage->Phase_IB_QA_Review_Complete_By = Auth::user()->name;
@@ -832,6 +1025,38 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                 // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending9 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending9 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending9) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "13";
                 $changestage->status = "Under Phase-II A Investigation";
                 $changestage->P_I_B_Assignable_Cause_Not_Found_By= Auth::user()->name;
@@ -898,6 +1123,37 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                  // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending11 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending11 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending11) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "15";
                 $changestage->status = "Phase II A CQA/QA Review";
                 $changestage->Phase_II_A_HOD_Review_Complete_By= Auth::user()->name;
@@ -977,6 +1233,37 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                 // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending12 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending12 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending12) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "16";
                 $changestage->status = "P-II A QAH/CQAH Review";
                 $changestage->Phase_II_A_QA_Review_Complete_By= Auth::user()->name;
@@ -1057,6 +1344,37 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                 // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending12 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending12 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending12) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "17";
                 $changestage->status = "Under Phase-II B Investigation";
                 $changestage->P_II_A_Assignable_Cause_Not_Found_By= Auth::user()->name;
@@ -1122,6 +1440,37 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                 // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending13 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending13 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending13) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "18";
                 $changestage->status = "Phase II B HOD Primary Review";
                 $changestage->Phase_II_B_Investigation_By= Auth::user()->name;
@@ -1188,6 +1537,38 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+// exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending14 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending14 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending14) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changestage->stage = "19";
                 $changestage->status = "Phase II B QA/CQA Review";
                 $changestage->Phase_II_B_HOD_Review_Complete_By= Auth::user()->name;
@@ -1267,6 +1648,38 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending15 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending15 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending15) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changestage->stage = "20";
                 $changestage->status = "P-II B CQAH/QAH Review";
                 $changestage->Phase_II_B_QA_Review_Complete_By= Auth::user()->name;
@@ -2699,6 +3112,38 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                 // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending2 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending2 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending2) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "5";
                 $changestage->status = "Under Phase-IA Investigation";
                 $changestage->CQA_Head_Primary_Review_Complete_By= Auth::user()->name;
@@ -2808,6 +3253,38 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                 // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending3 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending3 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending3) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                 $changestage->stage = "6";
                 $changestage->status = "Phase IA HOD Primary Review";
@@ -2942,6 +3419,37 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                 // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending10 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending10 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending10) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "14";
                 $changestage->status = "Phase II A HOD Primary Review";
                 $changestage->Phase_II_A_Investigation_By= Auth::user()->name;
@@ -3369,7 +3877,8 @@ class OOSController extends Controller
     {
         $cft = [];
         $Form_type = OOS::where('id', $id)->value('Form_type');
-        $parent_id = OOS::find($id)->record;
+        // $parent_id = OOS::find($id)->record;
+        $parent_id = $id;
         if ($Form_type === 'OOS_Chemical') {
             $parent_type = 'OOS Chemical';
         } elseif ($Form_type === 'OOS_Micro') {

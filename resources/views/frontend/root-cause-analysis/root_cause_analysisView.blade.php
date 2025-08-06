@@ -431,7 +431,7 @@
                                 Final QA/CQA Review Complete
                             </button>
                         @elseif(
-                            ($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)|| Helpers::check_roles($data->division_id,'Root Cause Analysis',66) || Helpers::check_roles($data->division_id, 'Observation', 18))))
+                            ($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)|| Helpers::check_roles($data->division_id,'Root Cause Analysis',43) || Helpers::check_roles($data->division_id,'Root Cause Analysis',39) || Helpers::check_roles($data->division_id,'Root Cause Analysis',9)  || Helpers::check_roles($data->division_id,'Root Cause Analysis',65) || Helpers::check_roles($data->division_id, 'Observation', 18))))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information
                                 Required

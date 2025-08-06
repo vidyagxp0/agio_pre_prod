@@ -29,6 +29,7 @@
              @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal"> HOD Primary Review Complete </button>
+                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
              @elseif($data->stage == 3 && (in_array(39, $userRoleIds) || in_array(9, $userRoleIds) || in_array(43, $userRoleIds) || in_array(42, $userRoleIds)  || in_array(18, $userRoleIds)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">Cancel</button>
@@ -480,9 +481,16 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="group-input">
-                        <label style="display: flex; align-items: baseline;" for="major">
+                        {{-- <label style="display: flex; align-items: baseline;" for="major">
+                        <input style="width: 10px;" type="radio" name="child_type" value="Action_Item">Action Item
+                        </label> --}}
+
+                         @if($data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7  || $data->stage == 8 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 14 || $data->stage == 15 || $data->stage == 16 || $data->stage == 18 || $data->stage == 19 || $data->stage == 20)
+                                
+                                 <label style="display: flex; align-items: baseline;" for="major">
                         <input style="width: 10px;" type="radio" name="child_type" value="Action_Item">Action Item
                         </label>
+                            @endif
                         @if($chemical_count >= 3 || $micro_count >= 3 || $oot_count >= 3)
                         @else
                         <label style="display: flex; align-items: baseline;" for="major">
