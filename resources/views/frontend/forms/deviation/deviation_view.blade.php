@@ -656,7 +656,7 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('DeviationAuditTrial', $data->id) }}">Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Deviation', 3))
+                        @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Deviation', 3)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>

@@ -2158,7 +2158,6 @@ if (is_array($request->action) && !empty($request->action)) {
     public function observation_send_stage(Request $request, $id)
     {
 
-
         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changestage = Observation::find($id);
             $lastDocument = Observation::find($id);
@@ -2289,7 +2288,9 @@ if (is_array($request->action) && !empty($request->action)) {
                         empty($changestage->actual_start_date) ||
                         empty($changestage->actual_end_date) ||
                         empty($changestage->action_taken) ||
-                        empty($changestage->response_summary)
+                        empty($changestage->response_summary) ||
+                         empty($changestage->impact_analysis) ||
+                         is_null($changestage->impact_analysis)
                     ) {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -2393,7 +2394,10 @@ if (is_array($request->action) && !empty($request->action)) {
                     return back();
                 }
             } else {
+                
                 if ($changestage->stage == 2) {
+
+                
                     if (
                         empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']) ||
                         empty($grid_Data3->data) || !is_array($grid_Data3->data) || empty($grid_Data3->data[0]['corrective_action']) ||
@@ -2402,7 +2406,9 @@ if (is_array($request->action) && !empty($request->action)) {
                         empty($changestage->actual_start_date) ||
                         empty($changestage->actual_end_date) ||
                         empty($changestage->action_taken) ||
-                        empty($changestage->response_summary)
+                        empty($changestage->response_summary) || 
+                            empty($changestage->impact_analysis) ||
+                         is_null($changestage->impact_analysis)
                     )
                     {
                         Session::flash('swal', [
@@ -3061,6 +3067,8 @@ if (is_array($request->action) && !empty($request->action)) {
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
+        $parent_division_id = Observation::where('id', $id)->value('division_code');
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -3071,7 +3079,7 @@ if (is_array($request->action) && !empty($request->action)) {
         // if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
+            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record','parent_division_id'));
         }
         if ($request->revision == "Action-Item") {
             $data = Observation::find($id);
@@ -3083,7 +3091,7 @@ if (is_array($request->action) && !empty($request->action)) {
         }
         if ($request->revision == "RCA") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','parent_division_id'));
 
         }
 

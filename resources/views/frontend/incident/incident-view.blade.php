@@ -756,7 +756,7 @@
                                 {{--@php
                                 dd($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                                 @endphp--}}
-                                @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Submit
                                     </button>
@@ -788,7 +788,7 @@
                                         Child
                                     </button>
 
-                                @elseif($data->stage == 4 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 4 && (in_array(42, $userRoleIds) || in_array(43, $userRoleIds)|| in_array(39, $userRoleIds) || in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -834,7 +834,7 @@
                                         Child
                                     </button>
                                      @endif
-                                @elseif($data->stage == 8 && (in_array(42, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 8 && (in_array(42, $userRoleIds) || in_array(43, $userRoleIds) ||  in_array(39, $userRoleIds) || in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Approved                            </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">

@@ -211,7 +211,7 @@
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
 
 
-                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Change Control', 3)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
+                        @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || (Helpers::check_roles($data->division_id, 'Change Control', 3) || Helpers::check_roles($data->division_id, 'Change Control', 18))))
 
 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">

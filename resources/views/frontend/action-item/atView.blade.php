@@ -96,7 +96,7 @@
                         {{-- {{ dd($data->stage);}} --}}
                         <a class="button_theme1 text-white" href="{{ url('rcms/action-item-audittrialshow', $data->id) }}">
                             Audit Trail </a>
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Action Item', 3) || Helpers::check_roles($data->division_id, 'Action Item', 18))
+                        @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Action Item', 3) || Helpers::check_roles($data->division_id, 'Action Item', 18)))
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Submit
@@ -226,7 +226,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input type="hidden" name="record_number">
-                                        <input disabled type="text"
+                                        <input disabled type="text"a
                                             value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
 
                                     </div>

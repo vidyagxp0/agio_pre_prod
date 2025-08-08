@@ -19,6 +19,7 @@ use App\Models\EffectivenessCheck;
 use App\Models\CC;
 use App\Models\ActionItem;
 use App\Models\Extension;
+use App\Models\extension_new;
 use App\Models\AuditReviewersDetails;
 use App\Models\UserRole;
 use App\Models\Capa;
@@ -6921,7 +6922,37 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             'type' => 'success',
                         ]);
                     }
+                      // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Incident')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
 
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
 
 
@@ -7033,6 +7064,37 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         ]);
                     }
 
+                     // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Incident')
+                    ->get();
+                        $hasPending2 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending2 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending2) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                     //dd($incident->stage);
                     $incident->stage = "4";
@@ -7141,6 +7203,37 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             'message' => 'Sent for Pending Initiator Update state'
                         ]);
                     }
+                        // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Incident')
+                    ->get();
+                        $hasPending3 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending3 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending3) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                     $incident->stage = "5";
                     $incident->status = "Pending Initiator Update";
                     $incident->QAH_Designee_Approval_Complete_By = Auth::user()->name;
@@ -7243,7 +7336,37 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 if ($incident->stage == 5) {
                         //  dd(!$incident->QA_Feedbacks);
                     // CFT review state update form_progress
+                        // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Incident')
+                    ->get();
+                        $hasPending2 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending2 = true;
+                                break;
+                            }
+                        }
 
+                    if ($hasPending2) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                     if(empty($incident->capa_implementation) || empty($incident->check_points) || empty($incident->corrective_actions) || empty($incident->batch_release) || empty($incident->affected_documents) || empty($incident->QA_Feedbacks)) {
                         // Flash message for warning (field not filled)
                         Session::flash('swal', [
@@ -7484,6 +7607,37 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         return redirect()->back();
                     }
 
+                        // exetnsion child validation
+                     $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Incident')
+                    ->get();
+                        $hasPending3 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending3 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending3) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                     $incident->stage = "7";
                     $incident->status = "QA Final Review";
@@ -7590,19 +7744,51 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         ]);
                     }
 
-                    $extension = Extension::where('parent_id', $incident->id)->first();
+                    // $extension = Extension::where('parent_id', $incident->id)->first();
 
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
 
-                    if ($extension && $extension->status !== 'Closed-Done') {
-                        Session::flash('swal', [
-                            'title' => 'Extension record pending!',
-                            'message' => 'There is an Extension record which is yet to be closed/done!',
-                            'type' => 'warning',
-                        ]);
+                    // if ($extension && $extension->status !== 'Closed-Done') {
+                    //     Session::flash('swal', [
+                    //         'title' => 'Extension record pending!',
+                    //         'message' => 'There is an Extension record which is yet to be closed/done!',
+                    //         'type' => 'warning',
+                    //     ]);
+
+                    //     return redirect()->back();
+                    // }
+                      // exetnsion child validation
+                     $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Incident')
+                    ->get();
+                        $hasPending4 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending4 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending4) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
 
                         return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
                     }
+
 
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
@@ -7812,6 +7998,38 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         ]);
                     }
 
+
+                      // exetnsion child validation
+                     $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Incident')
+                    ->get();
+                        $hasPending5 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending5 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending5) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
 
 

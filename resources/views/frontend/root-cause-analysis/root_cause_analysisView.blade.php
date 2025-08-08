@@ -357,8 +357,12 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rootAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
+                                {{-- @php
 
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3) || Helpers::check_roles($data->division_id, 'root_cause_analysisView', 18))
+dd($data->initiator_id , Auth::user()->id);
+
+@endphp --}}
+                        @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3) || Helpers::check_roles($data->division_id, 'root_cause_analysisView', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge
                             </button>

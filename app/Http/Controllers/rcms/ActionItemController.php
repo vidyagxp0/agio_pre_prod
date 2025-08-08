@@ -97,6 +97,9 @@ class ActionItemController extends Controller
         if (is_array($request->related_records)) {
             $openState->related_records = implode(',', $request->related_records);
         }
+        else{
+            $openState->related_records = $request->related_records;
+        }
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
        // $openState->hod_preson = json_encode($request->hod_preson);
@@ -1452,12 +1455,13 @@ class ActionItemController extends Controller
 
 
             if ($changeControl->stage == 1) {
-                if (empty($changeControl->related_records) && empty($changeControl->description) )
+                // dd($changeControl->related_records,$changeControl->description,$changeControl->assign_to,$changeControl->hod_preson);
+            if (empty($changeControl->related_records) || empty($changeControl->description) || empty($changeControl->assign_to) || empty($changeControl->hod_preson)) 
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'General Information Tab Action Item Related Records and Description is yet to be filled'
+                        'message' => 'General Information Tab Assigned To, Action Item Related Records,HOD Persons and Description is yet to be filled'
                     ]);
 
                     return redirect()->back();
@@ -1625,7 +1629,7 @@ class ActionItemController extends Controller
             }
             if ($changeControl->stage == 3) {
 
-                if (empty($changeControl->action_taken))
+                if (empty($changeControl->action_taken) || empty($changeControl->start_date) || empty($changeControl->end_date) || empty($changeControl->comments)  )
                 {
                     Session::flash('swal', [
                         'type' => 'warning',

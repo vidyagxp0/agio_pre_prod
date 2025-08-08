@@ -122,7 +122,7 @@
                                 Audit Trail
                             </a>
 
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'CAPA', 3))
+                        @if ($data->stage == 1 && ( ($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'CAPA', 3)))
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button> </a>

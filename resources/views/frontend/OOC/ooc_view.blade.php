@@ -264,7 +264,7 @@
                                 <button class="button_theme1"> <a class="text-white"
                                         href="{{ route('audittrialooc', $ooc->id) }}"> Audit Trail </a> </button>
 
-                                @if ($ooc->stage == 1 && Helpers::check_roles($ooc->division_id, 'OOC', 3))
+                                @if ($ooc->stage == 1 && ( ($data->initiator_id == Auth::user()->id) ||Helpers::check_roles($ooc->division_id, 'OOC', 3)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Submit
                                     </button>
@@ -299,7 +299,7 @@
                                             Child
                                         </button>
                                     @endif
-                                @elseif($ooc->stage == 4 && Helpers::check_roles($ooc->division_id, 'OOC', 3))
+                                @elseif($ooc->stage == 4 && ( ($data->initiator_id == Auth::user()->id) || Helpers::check_roles($ooc->division_id, 'OOC', 3)))
                                     <button class="button_theme1" name="assignable_cause_identification"
                                         data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Phase IA Investigation
@@ -363,7 +363,7 @@
                                     </button>
                                 @elseif($ooc->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
 
-                                @elseif($ooc->stage == 10 && Helpers::check_roles($ooc->division_id, 'OOC', 3))
+                                @elseif($ooc->stage == 10 && ( ($data->initiator_id == Auth::user()->id)||Helpers::check_roles($ooc->division_id, 'OOC', 3)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Phase IB Investigation
                                     </button>

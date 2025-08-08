@@ -6367,7 +6367,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for QA Initial Review state'
+                        'message' => 'Sent for QC Head/HOD Initial Review state'
                     ]);
                 }
                 $changeControl->stage = "2";

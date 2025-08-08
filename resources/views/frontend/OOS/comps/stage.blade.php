@@ -23,7 +23,7 @@
             @endphp
            
              <button class="button_theme1"> <a class="text-white" href="{{ route('oos.audit_trial', $data->id) }}"> Audit Trail </a> </button>
-             @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+             @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
              @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -39,7 +39,7 @@
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">CQA/QA Head Primary Review Complete</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
  
-             @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 5 && ( ($data->initiator_id == Auth::user()->id) ||in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Phase IA Investigation</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
@@ -59,7 +59,7 @@
 
              @elseif($data->stage == 23 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
 
-             @elseif($data->stage == 9 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 9 && (($data->initiator_id == Auth::user()->id) || in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB Investigation</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
@@ -99,7 +99,7 @@
 
              @elseif($data->stage == 25 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
 
-             @elseif($data->stage == 17 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 17 && (($data->initiator_id == Auth::user()->id) || in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Investigation</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>

@@ -2248,27 +2248,46 @@ class AuditProgramController extends Controller
             }
             if ($changeControl->stage == 2) {
 
-                $mandatoryFields = [
-                    'cqa_qa_comment'
-               ];
+            //     $mandatoryFields = [
+            //         'cqa_qa_comment'
+            //    ];
                
-               foreach ($mandatoryFields as $field) {
-                   if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
-                       Session::flash('swal', [
-                           'type' => 'warning',
-                           'title' => 'Mandatory Fields!',
-                           'message' => "Please fill all required fields before proceeding. Missing: $field"
-                       ]);
-                       return redirect()->back();
-                   }
-               }
+            //    foreach ($mandatoryFields as $field) {
+            //        if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
+            //            Session::flash('swal', [
+            //                'type' => 'warning',
+            //                'title' => 'Mandatory Fields!',
+            //                'message' => "Please fill all required fields before proceeding. Missing: $field"
+            //            ]);
+            //            return redirect()->back();
+            //        }
+            //    }
                
-               // If all fields are filled, proceed
-               Session::flash('swal', [
-                   'type' => 'success',
-                   'title' => 'Success',
-                   'message' => 'Document Sent'
-               ]);
+            //    // If all fields are filled, proceed
+            //    Session::flash('swal', [
+            //        'type' => 'success',
+            //        'title' => 'Success',
+            //        'message' => 'Document Sent'
+            //    ]);
+            // dd($changeControl->cqa_qa_comment);
+
+             if (empty($changeControl->cqa_qa_comment))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => "Please fill all required fields before proceeding. Missing:"
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Document Sent'
+                    ]);
+                }
 
 
 
@@ -2661,8 +2680,9 @@ class AuditProgramController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
+        $parent_division_id = AuditProgram::where('id', $id)->value('division_id');
         if ($request->child_type == "Internal_Audit") {
-            return view('frontend.forms.audit', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.audit', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id'));
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";
@@ -2672,7 +2692,7 @@ class AuditProgramController extends Controller
             }
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
+            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date','parent_division_id'));
         }
         else {
             return view('frontend.forms.auditee', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));

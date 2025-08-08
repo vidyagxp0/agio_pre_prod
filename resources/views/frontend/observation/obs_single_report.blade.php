@@ -290,7 +290,7 @@
                     <strong>Observation No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{ Helpers::getDivisionName($data->division_code) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -327,16 +327,24 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             @if ($data->record)
-                            {{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
+                            {{ Helpers::getDivisionName($data->division_code) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
 
-                        <th class="w-20">Site/Location Code</th>
+                        {{-- <th class="w-20">Site/Location Code</th>
                         <td class="w-30">
                             @if (Helpers::getDivisionName(session()->get('division')))
                                 {{ Helpers::getDivisionName(session()->get('division')) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> --}}
+                         <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">
+                            @if (Helpers::getDivisionName($data->division_code))
+                                {{ Helpers::getDivisionName($data->division_code) }}
                             @else
                                 Not Applicable
                             @endif
@@ -347,7 +355,7 @@
                         <td class="w-30">{{ $data->originator }}</td>
 
                         <th class="w-20">Date Of Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->intiation_date) }}</td>
                     </tr>
 
                     <tr>
@@ -734,7 +742,6 @@
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
                                         <div class="table-containers">
-                                        {!! strip_tags($data->action_taken, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -765,7 +772,6 @@
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
                                         <div class="table-containers">
-                                            {!! strip_tags($data->response_summary, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         </div>
                                     </div>
                                 </div>
