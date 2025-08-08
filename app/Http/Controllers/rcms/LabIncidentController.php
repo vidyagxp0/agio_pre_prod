@@ -6480,7 +6480,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'QC Head Review Tab is yet to be filled'
+                        'message' => 'QC Head /HOD Initial Review Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();
