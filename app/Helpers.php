@@ -1924,7 +1924,21 @@ class Helpers
 
     return in_array($requiredRoleId, $roles);
 }
+public static function check_roles_qms_new($role_id, $process_name)
+    {
+        $processIds = QMSProcess::where([
+            'division_id' => Auth::user()->division_id,
+            'process_name' => $process_name
+        ])->pluck('id');
 
+        $roleExists = DB::table('user_roles')
+                ->where('user_id', Auth::user()->id)
+                ->whereIn('q_m_s_processes_id', $processIds)
+                ->where('q_m_s_roles_id', $role_id)
+                ->exists();
+
+        return $roleExists ? true : false;
+    }
 
 
 

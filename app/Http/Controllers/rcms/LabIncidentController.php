@@ -6276,9 +6276,28 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $labstate = LabIncident::find($id);
             $lastDocument =  LabIncident::find($id);
+            $labstate2 = Labincident_Second::find($id);
+            $lastDocument2 =  Labincident_Second::find($id);
 
 
            if( $labstate->stage == 7){
+             if (empty($labstate2->qa_hear_remark_c || $labstate2->closure_incident_c))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Closure Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Closed - Done state'
+                    ]);
+                }
             $labstate->stage = "11";
             $labstate->no_assignable_cause_by = Auth::user()->name;
             $labstate->no_assignable_cause_on = Carbon::now()->format('d-M-Y');
@@ -6858,9 +6877,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 //toastr()->success('Document Sent');
                 return back();
             }
-
             if ($changeControl->stage == 7) {
-                if (empty($changeControl->qa_hear_remark_c && $changeControl->closure_incident_c))
+                if (empty($changeControl->qa_hear_remark_c || $changeControl->closure_incident_c))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',

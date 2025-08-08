@@ -122,7 +122,7 @@
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/audit_trailNew', $extensionNew->id) }}">Audit Trail</a> </button>
-                        @if ($extensionNew->stage == 1 && (($data->initiator == Auth::user()->id) || Helpers::check_roles($extensionNew->site_location_code, 'Extension', 3) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18)))
+                        @if ($extensionNew->stage == 1 && (($extensionNew->initiator == Auth::user()->id) || Helpers::check_roles($extensionNew->site_location_code, 'Extension', 3) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -823,6 +823,8 @@
                         </div>
                     </div>
                 </div>
+
+                        
 
                 <!-- reviewer content -->
                 <div id="CCForm2" class="inner-block cctabcontent">
