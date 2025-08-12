@@ -153,8 +153,11 @@
                         @elseif(
                             $showdata->stage == 4 &&
                                 (Helpers::check_roles($showdata->division_id, 'ERRATA', 65) ||
-                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 7) ||
-                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18)|| Helpers::check_roles($showdata->division_id, 'ERRATA', 9)|| Helpers::check_roles($showdata->division_id, 'ERRATA', 43)))
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 42) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 43) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 39) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 9) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
                                 Reject
@@ -188,8 +191,11 @@
                             </button>
                         @elseif(
                             $showdata->stage == 7 &&
-                                (Helpers::check_roles($showdata->division_id, 'ERRATA', 7) ||
-                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 65) ||
+                                ( Helpers::check_roles($showdata->division_id, 'ERRATA', 65) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 42) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 43) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 39) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 9) ||
                                     Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-opened-modal">
                                 Sent To Opened State

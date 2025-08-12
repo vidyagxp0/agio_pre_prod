@@ -160,8 +160,8 @@
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
-                            </button>a
-                        @elseif($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 42) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 39d) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65)))
+                            </button>
+                        @elseif($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 42) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 39) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#not-effective-child-model">
                                 Child

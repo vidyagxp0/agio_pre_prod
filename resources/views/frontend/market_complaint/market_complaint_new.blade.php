@@ -734,47 +734,37 @@
                                                         <td><input type="text"
                                                                 name="serial_number_gi[0][info_batch_no]"></td>
 
+                                <!-- MFG Date -->
                                                         <td>
                                                             <div class="new-date-data-field">
                                                                 <div class="group-input input-date">
                                                                     <div class="calenderauditee">
-                                                                        <input id="date_0_date_display" type="text"
+                                                                        <input id="date_0_info_mfg_date_display" type="text"
                                                                             name="serial_number_gi[0][info_mfg_date]"
-                                                                            placeholder="DD-MMM-YYYY" value=""
-                                                                            readonly
-                                                                            onclick="document.getElementById('date_0_date_input').click();" />
-                                                                        <!-- Hidden date input field for actual date handling -->
-                                                                        <input type="date"
-                                                                            name="serial_number_gi[0][info_mfg_date]"
-
-                                                                            {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}} value=""
-                                                                            id="date_0_date_input"
+                                                                            placeholder="DD-MMM-YYYY" readonly
+                                                                            onclick="document.getElementById('date_0_info_mfg_date_input').click();" />
+                                                                        <input type="date" value="" id="date_0_info_mfg_date_input"
                                                                             class="hide-input show_date"
                                                                             style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                            onchange="handleDateInput(this, 'date_0_date_display')" />
+                                                                            oninput="handleMfgDateInput(this, 'date_0_info_expiry_date_input', 'date_0_info_mfg_date_display')" />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </td>
+
+                                                        <!-- Exp Date -->
                                                         <td>
                                                             <div class="new-date-data-field">
                                                                 <div class="group-input input-date">
                                                                     <div class="calenderauditee">
-                                                                        <input id="date_0_expiry_date_display"
-                                                                            type="text"
+                                                                        <input id="date_0_info_expiry_date_display" type="text"
                                                                             name="serial_number_gi[0][info_expiry_date]"
-                                                                            placeholder="DD-MMM-YYYY" value=""
-                                                                            readonly
-                                                                            onclick="document.getElementById('date_0_expiry_date_input').click();" />
-                                                                        <!-- Hidden date input field for actual date handling -->
-                                                                        <input type="date"
-                                                                            name="serial_number_gi[0][info_expiry_date]"
-                                                                            value=""
-                                                                           
-                                                                            id="date_0_expiry_date_input"
+                                                                            placeholder="DD-MMM-YYYY" readonly
+                                                                            onclick="document.getElementById('date_0_info_expiry_date_input').click();" />
+                                                                        <input type="date" value="" id="date_0_info_expiry_date_input"
                                                                             class="hide-input show_date"
                                                                             style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                            onchange="handleDateInput(this, 'date_0_expiry_date_display')" />
+                                                                            oninput="handleExpDateInput(this, 'date_0_info_expiry_date_display')" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -816,29 +806,29 @@
                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]"></td>' +
                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_no]"></td>' +
 
-                    // MFG Date
-                    '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
-                    '<input id="date_' + serialNumber + '_info_mfg_date_display" type="text" readonly ' +
-                    'name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY" ' +
-                    'onclick="document.getElementById(\'date_' + serialNumber + '_info_mfg_date_input\').click();" />' +
+                     // MFG Date
+                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                '<input id="date_' + serialNumber + '_info_mfg_date_display" type="text" readonly ' +
+                'name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY" ' +
+                'onclick="document.getElementById(\'date_' + serialNumber + '_info_mfg_date_input\').click();" />' +
 
-                    '<input type="date" value="" id="date_' + serialNumber + '_info_mfg_date_input" ' +
-                    'class="hide-input show_date" ' +
-                    'style="position: absolute; top: 0; left: 0; opacity: 0;" ' +
-                    'oninput="handleDateInput(this, \'date_' + serialNumber + '_info_mfg_date_display\')" />' +
-                    '</div></div></div></td>' +
+                '<input type="date" value="" id="date_' + serialNumber + '_info_mfg_date_input" ' +
+                'class="hide-input show_date" ' +
+                'style="position: absolute; top: 0; left: 0; opacity: 0;" ' +
+                'oninput="handleMfgDateInput(this, \'date_' + serialNumber + '_info_expiry_date_input\', \'date_' + serialNumber + '_info_mfg_date_display\')" />' +
+                '</div></div></div></td>' +
 
-                    // Expiry Date
-                    '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
-                    '<input id="date_' + serialNumber + '_info_expiry_date_display" type="text" readonly ' +
-                    'name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY" ' +
-                    'onclick="document.getElementById(\'date_' + serialNumber + '_info_expiry_date_input\').click();" />' +
+                // Expiry Date
+                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                '<input id="date_' + serialNumber + '_info_expiry_date_display" type="text" readonly ' +
+                'name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY" ' +
+                'onclick="document.getElementById(\'date_' + serialNumber + '_info_expiry_date_input\').click();" />' +
 
-                    '<input type="date" value="" id="date_' + serialNumber + '_info_expiry_date_input" ' +
-                    'class="hide-input show_date" ' +
-                    'style="position: absolute; top: 0; left: 0; opacity: 0;" ' +
-                    'oninput="handleDateInput(this, \'date_' + serialNumber + '_info_expiry_date_display\')" />' +
-                    '</div></div></div></td>' +
+                '<input type="date" value="" id="date_' + serialNumber + '_info_expiry_date_input" ' +
+                'class="hide-input show_date" ' +
+                'style="position: absolute; top: 0; left: 0; opacity: 0;" ' +
+                'oninput="handleExpDateInput(this, \'date_' + serialNumber + '_info_expiry_date_display\')" />' +
+                '</div></div></div></td>' +
 
                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]"></td>' +
                     '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]"></td>' +
@@ -857,16 +847,59 @@
         });
     });
 
-    // Converts date from YYYY-MM-DD to DD-MMM-YYYY
-    function handleDateInput(dateInput, textInputId) {
-        const selectedDate = new Date(dateInput.value);
-        const formattedDate = selectedDate.toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric'
-        }).replace(/ /g, '-');
-        document.getElementById(textInputId).value = formattedDate;
+    // // Converts date from YYYY-MM-DD to DD-MMM-YYYY
+    // function handleDateInput(dateInput, textInputId) {
+    //     const selectedDate = new Date(dateInput.value);
+    //     const formattedDate = selectedDate.toLocaleDateString('en-GB', {
+    //         day: '2-digit',
+    //         month: 'short',
+    //         year: 'numeric'
+    //     }).replace(/ /g, '-');
+    //     document.getElementById(textInputId).value = formattedDate;
+    // }
+    // MFG Date → Exp Date Restriction
+function handleMfgDateInput(mfgInput, expInputId, mfgTextId) {
+    const selectedDate = new Date(mfgInput.value);
+
+    if (!mfgInput.value) {
+        document.getElementById(mfgTextId).value = "";
+        return;
     }
+
+    const formattedDate = selectedDate.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+    }).replace(/ /g, '-');
+    document.getElementById(mfgTextId).value = formattedDate;
+
+    const expInput = document.getElementById(expInputId);
+    let minDate = new Date(selectedDate);
+    minDate.setDate(minDate.getDate() + 1);
+    expInput.min = minDate.toISOString().split('T')[0];
+
+    if (expInput.value && new Date(expInput.value) <= selectedDate) {
+        expInput.value = "";
+        let expDisplayId = expInputId.replace("_input", "_display");
+        document.getElementById(expDisplayId).value = "";
+    }
+}
+
+function handleExpDateInput(expInput, expTextId) {
+    if (!expInput.value) {
+        document.getElementById(expTextId).value = "";
+        return;
+    }
+
+    const selectedDate = new Date(expInput.value);
+    const formattedDate = selectedDate.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+    }).replace(/ /g, '-');
+    document.getElementById(expTextId).value = formattedDate;
+}
+
 </script>
 
                                 <script>

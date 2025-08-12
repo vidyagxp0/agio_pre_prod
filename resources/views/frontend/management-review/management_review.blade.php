@@ -183,7 +183,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Management Review', 42))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Management Review', 42) || Helpers::check_roles($data->division_id, 'Management Review', 43) || Helpers::check_roles($data->division_id, 'Management Review', 39) || Helpers::check_roles($data->division_id, 'Management Review', 9)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -238,7 +238,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
-                        @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Management Review', 42))
+                        @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Management Review', 42) || Helpers::check_roles($data->division_id, 'Management Review', 43) || Helpers::check_roles($data->division_id, 'Management Review', 39) || Helpers::check_roles($data->division_id, 'Management Review', 9)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button>
