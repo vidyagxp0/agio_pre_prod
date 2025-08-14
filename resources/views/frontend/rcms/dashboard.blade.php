@@ -253,6 +253,11 @@
                                                 <tr>
                                                     <td>
                                                         @if ($datas->type == 'Change-Control')
+                                                         @php 
+                                                            DB::table('c_c_s')
+                                                            ->where('id', $datas->id)
+                                                            ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                        @endphp
                                                             <a href="{{ route('CC.show', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -282,6 +287,11 @@
                                                             @endif
                                                             {{-- market complaint --}}
                                                         @elseif ($datas->type == 'Market Complaint')
+                                                        @php 
+                                                            DB::table('marketcompalints')
+                                                            ->where('id', $datas->id)
+                                                            ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                        @endphp
                                                             <a href="{{ route('marketcomplaint.marketcomplaint_view', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -297,6 +307,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'Risk-Assesment')
+                                                        @php 
+                                                            DB::table('risk_management')
+                                                            ->where('id', $datas->id)
+                                                            ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                        @endphp
                                                             <a href="{{ route('showRiskManagement', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -312,6 +327,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'Lab-Incident')
+                                                            @php 
+                                                                DB::table('lab_incidents')
+                                                                ->where('id', $datas->id)
+                                                                ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                            @endphp
                                                             <a href="{{ route('ShowLabIncident', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -327,6 +347,12 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'Incident')
+                                                                @php 
+                                                                DB::table('incidents')
+                                                                ->where('id', $datas->id)
+                                                                ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
+
                                                             <a href="{{ route('incident-show', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -342,6 +368,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'Out Of Calibration')
+                                                            @php 
+                                                                DB::table('out_of_calibrations')
+                                                                ->where('id', $datas->id)
+                                                                ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('ShowOutofCalibration', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -357,6 +388,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'External-Audit')
+                                                                @php 
+                                                                    DB::table('auditees')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('showExternalAudit', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -372,6 +408,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'Audit-Program')
+                                                                @php 
+                                                                    DB::table('audit_programs')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp 
                                                             <a href="{{ route('ShowAuditProgram', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -387,6 +428,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif ($datas->type == 'Observation')
+                                                                @php 
+                                                                    DB::table('observations')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp 
                                                             <a href="{{ route('showobservation', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -402,6 +448,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Action-Item')
+                                                                @php 
+                                                                    DB::table('action_items')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('actionItem.show', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -417,6 +468,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Extension')
+                                                                @php 
+                                                                    DB::table('extension_news')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ url('extension_newshow', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -430,6 +486,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Effectiveness-Check')
+                                                                @php 
+                                                                    DB::table('effectiveness_checks')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('effectiveness.show', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -445,6 +506,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Capa')
+                                                                @php 
+                                                                    DB::table('capas')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('capashow', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -460,6 +526,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'OOS/OOT')
+                                                                @php 
+                                                                    DB::table('o_o_s')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('oos.oos_view', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -485,6 +556,11 @@
                                                         </a>
                                                     @endif --}}
                                                         @elseif($datas->type == 'ERRATA')
+                                                             @php 
+                                                                    DB::table('erratas')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('errata.show', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -511,6 +587,11 @@
                                                         </a>
                                                     @endif --}}
                                                         @elseif($datas->type == 'ERRATA')
+                                                                @php 
+                                                                    DB::table('erratas')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('errata.show', $datas->id) }}">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
                                                             </a>
@@ -525,6 +606,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Management-Review')
+                                                                @php 
+                                                                    DB::table('management_reviews')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('manageshow', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -540,6 +626,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Deviation')
+                                                                @php 
+                                                                    DB::table('deviations')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('devshow', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -555,6 +646,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Deviation')
+                                                                @php 
+                                                                    DB::table('deviations')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('devshow', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -570,6 +666,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Failure Investigation')
+                                                                @php 
+                                                                    DB::table('failure_investigations')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('failure-investigation-show', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -585,6 +686,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Non Conformance')
+                                                                @php 
+                                                                    DB::table('non_conformances')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('non-conformance-show', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -600,6 +706,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Root-Cause-Analysis')
+                                                                @php 
+                                                                    DB::table('root_cause_analyses')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ route('root_show', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -630,6 +741,11 @@
                                                                 </a>
                                                             @endif
                                                         @elseif($datas->type == 'Resampling')
+                                                               @php 
+                                                                    DB::table('resamplings')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
                                                             <a href="{{ url('resampling_view', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -644,15 +760,62 @@
                                                             @endif
                                                         @endif
                                                     </td>
-                                                    @if ($datas->parent_id != null)
-                                                        <td>
-                                                            {{ str_pad($datas->parent_id, 4, '0', STR_PAD_LEFT) }}
-                                                        </td>
+                                                          </td>
+                                               @php
+                                                    $findRecord = null;
+                                                @endphp
+
+                                                @if ($datas->parent_type == 'Change Control')
+                                                    @php
+                                                        $findRecord = DB::table('c_c_s')->find($datas->parent_id);
+                                                    @endphp
+                                                @elseif ($datas->parent_type == 'Lab Incident')
+                                                    @php
+                                                        $findRecord = DB::table('lab_incidents')->find($datas->parent_id);
+                                                    @endphp
+                                                
+                                                @elseif ($datas->parent_type == 'CAPA')
+                                                    @php
+                                                        $findRecord = DB::table('capas')->find($datas->parent_id);
+                                                    @endphp
+                                                    @elseif ($datas->parent_type == 'RCA')
+                                                    @php
+                                                        $findRecord = DB::table('root_cause_analyses')->find($datas->parent_id);
+                                                    @endphp
+                                                    @elseif ($datas->parent_type == 'Deviation')
+                                                    @php
+                                                        $findRecord = DB::table('deviations')->find($datas->parent_id);
+                                                    @endphp
+                                                    @elseif ($datas->parent_type == 'EffectivenessCheck')
+                                                    @php
+                                                        $findRecord = DB::table('effectiveness_checks')->find($datas->parent_id);
+                                                    @endphp
+                                                    @elseif ($datas->parent_type == 'Observation')
+                                                    @php
+                                                        $findRecord = DB::table('observations')->find($datas->parent_id);
+                                                    @endphp
+                                                    @elseif ($datas->parent_type == 'Audit_Program')
+                                                    @php
+                                                        $findRecord = DB::table('audit_programs')->find($datas->parent_id);
+                                                    @endphp
+                                                    @elseif ($datas->parent_type == 'Market Complaint')
+                                                    @php
+                                                        $findRecord = DB::table('marketcompalints')->find($datas->parent_id);
+                                                    @endphp
+                                                    @elseif ($datas->parent_type == 'Risk Assessment')
+                                                    @php
+                                                        $findRecord = DB::table('risk_management')->find($datas->parent_id);
+                                                    @endphp
+                                                @endif
+
+                                                <td>
+                                                    @if ($findRecord) 
+                                                        {{ str_pad($findRecord->dashboard_unique_id, 4, '0', STR_PAD_LEFT) }}
                                                     @else
-                                                        <td>
-                                                            -
-                                                        </td>
+                                                        -
                                                     @endif
+                                                </td>
+
                                                     <td class="viewdetails" data-id="{{ $datas->id }}"
                                                         data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                         data-bs-target="#record-modal">

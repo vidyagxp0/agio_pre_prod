@@ -1391,8 +1391,7 @@
                                         <label for="Description Failure Investigation">Description of Failure Investigation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Description_failure_investigation[]" id="summernote-1" required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Description_failure_investigation[]" id="summernote-1" required></textarea>
                                     </div>
                                     @error('Description_failure_investigation[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1410,8 +1409,7 @@
                                         <label for="Immediate Action">Immediate Action (if any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"required></textarea>
                                     </div>
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1428,8 +1426,7 @@
                                         <label for="Preliminary Impact">Preliminary Impact of Failure Investigation </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required>
-                                    </textarea>
+                                        <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required></textarea>
                                     </div>
                                     @error('Preliminary_Impact')
                                         <div class="text-danger">{{ $message }}</div>

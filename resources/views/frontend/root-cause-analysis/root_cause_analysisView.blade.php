@@ -723,11 +723,11 @@ dd($data->initiator_id , Auth::user()->id);
                                     <div class="col-lg-6">
                                         <div class="group-input" id="initiated_through_req" style="display: none;">
                                             <label for="If Other">Others <span class="text-danger">*</span></label>
-                                            <textarea {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
+                                            <textarea id="initiated_if_other"  {{$data->stage != 1 ? "readonly" : "" }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
                                         </div>
                                     </div>
 
-                                    <script>
+                                    {{-- <script>
                                         function toggleOtherField() {
                                             const selectBox = document.getElementById("initiated_through");
                                             const otherField = document.getElementById("initiated_through_req");
@@ -747,8 +747,30 @@ dd($data->initiator_id , Auth::user()->id);
                                         document.addEventListener("DOMContentLoaded", function () {
                                             toggleOtherField();
                                         });
-                                    </script>
+                                    </script> --}}
 
+                                    <script>
+                                        function toggleOtherField() {
+                                            const selectBox = document.getElementById("initiated_through");
+                                            const otherFieldWrapper = document.getElementById("initiated_through_req");
+                                            const otherTextarea = document.getElementById("initiated_if_other");
+
+                                            const selectedValue = selectBox.value;
+
+                                            if (selectedValue === "others") {
+                                                otherFieldWrapper.style.display = "block";
+                                                if ({{ $data->stage == 1 ? 'true' : 'false' }}) {
+                                                    otherTextarea.setAttribute("required", "required");
+                                                }
+                                            } else {
+                                                otherFieldWrapper.style.display = "none";
+                                                otherTextarea.removeAttribute("required");
+                                            }
+                                        }
+
+                                        document.addEventListener("DOMContentLoaded", toggleOtherField);
+
+                                    </script>
 
                                 
 
