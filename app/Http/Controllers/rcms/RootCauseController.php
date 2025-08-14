@@ -4608,7 +4608,7 @@ class RootCauseController extends Controller
         $parent_initiator_id = RootCauseAnalysis::where('id', $id)->value('initiator_id');
         $parent_division_id = RootCauseAnalysis::where('id', $id)->value('division_id');
 
-        $parent_type = "Action-Item";
+        $parent_type = "RCA";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $parent_record = $record_number;
@@ -4630,7 +4630,7 @@ class RootCauseController extends Controller
         $cc = RootCauseAnalysis::find($id);
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Capa";
+        $parent_type = "RCA";
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
