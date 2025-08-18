@@ -11,6 +11,7 @@ use App\Models\RootCauseAnalysis;
 use App\Models\RootCauseAnalysesGrid;
 use App\Models\RootCauseAnalysisHistory;
 use App\Models\Capa;
+use App\Models\extension_new;
 use App\Models\OpenStage;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
@@ -3382,7 +3383,38 @@ class RootCauseController extends Controller
                         'title' => 'Success',
                         'message' => 'Sent for Initial QA/CQA Review state'
                     ]);
-                }
+                } 
+                 // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'RCA')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $root->stage = "3";
                 $root->status = 'Initial QA/CQA Review';
                 $root->HOD_Review_Complete_By = Auth::user()->name;

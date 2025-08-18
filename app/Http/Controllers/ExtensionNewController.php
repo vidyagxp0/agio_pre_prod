@@ -1859,7 +1859,6 @@ class ExtensionNewController extends Controller
                 $lastDocument = extension_new::find($id);
 
                 if ($extensionNew->stage == 3) {
-
                     $extensionNew->stage = "5";
                     $extensionNew->status = "In CQA Approval";
 
@@ -1990,24 +1989,23 @@ class ExtensionNewController extends Controller
                 $lastDocument = extension_new::find($id);
 
                 if ($extensionNew->stage == 3) {
-                    // if (empty($extensionNew->approver_remarks))
-                    // {
-                    //     dd($extensionNew->approver_remarks);
-                    //     Session::flash('swal', [
-                    //         'type' => 'warning',
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'QA/CQA Approval Tab is yet to be filled'
-                    //     ]);
+                    if (empty($extensionNew->approver_remarks))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QA/CQA Approval Tab is yet to be filled'
+                        ]);
     
-                    //     return redirect()->back();
-                    // }
-                    //  else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for Closed - Done state'
-                    //     ]);
-                    // }
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for Closed - Done state'
+                        ]);
+                    }
                     $extensionNew->stage = "6";
                     $extensionNew->status = "Closed - Done";
 
