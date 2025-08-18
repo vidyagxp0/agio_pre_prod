@@ -209,8 +209,8 @@
                                 More Info Required
                             </button> --}}
                         @elseif(
-                            ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Management Review', 5)) ||
-                                in_array(Auth::user()->id, $valuesArray))
+                            $data->stage == 4 && (Helpers::check_roles($data->division_id, 'Management Review', 5) ||
+                                in_array(Auth::user()->id, $valuesArray)))
                             <!-- @if (!$cftCompleteUser)
     -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -219,8 +219,8 @@
                             <!--
     @endif -->
                         @elseif(
-                            ($data->stage == 5 && Helpers::check_roles($data->division_id, 'Management Review', 5)) || Helpers::check_roles($data->division_id, 'Management Review', 4) ||
-                                in_array(Auth::user()->id, $valuesArray))
+                            $data->stage == 5 && (Helpers::check_roles($data->division_id, 'Management Review', 5) || Helpers::check_roles($data->division_id, 'Management Review', 4) ||
+                                in_array(Auth::user()->id, $valuesArray)))
                             <!-- @if (!$hodcftCompleteUser)
     -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">

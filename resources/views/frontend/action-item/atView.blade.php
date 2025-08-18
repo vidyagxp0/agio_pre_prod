@@ -126,7 +126,7 @@
                                 More Information Required
                             </button></a> --}}
                             @endif
-                        @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Action Item', 7) || Helpers::check_roles($data->division_id, 'Action Item', 66)) || Helpers::check_roles($data->division_id, 'Action Item', 18))
+                        @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Action Item', 7) || Helpers::check_roles($data->division_id, 'Action Item', 66) || Helpers::check_roles($data->division_id, 'Action Item', 18)))
                             <a href="#last-stage-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#last-stage-modal">
                                     Verification Complete

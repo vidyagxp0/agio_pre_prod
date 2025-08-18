@@ -386,8 +386,8 @@
                                 ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Risk Assessment', 5)) ||
                                     in_array(Auth::user()->id, $valuesArray)) --}}
                                     @elseif(
-                            ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Risk Assessment', 5)) ||
-                                in_array(Auth::user()->id, $valuesArray))
+                            $data->stage == 3 && (Helpers::check_roles($data->division_id, 'Risk Assessment', 5) ||
+                                in_array(Auth::user()->id, $valuesArray)))
                                      <!-- @if (!$cftCompleteUser )
     -->
 

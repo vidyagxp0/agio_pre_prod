@@ -351,8 +351,8 @@
                                 Child
                             </button>
                         @elseif(
-                            ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Market Complaint', 5)) ||
-                                in_array(Auth::user()->id, $valuesArray))
+                            $data->stage == 4 && (Helpers::check_roles($data->division_id, 'Market Complaint', 5) ||
+                                in_array(Auth::user()->id, $valuesArray)))
                             <!-- @if (!$cftCompleteUser)
     -->
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"

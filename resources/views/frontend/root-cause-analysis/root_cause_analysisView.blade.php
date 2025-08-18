@@ -370,7 +370,7 @@ dd($data->initiator_id , Auth::user()->id);
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4)|| Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4)|| Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -393,7 +393,7 @@ dd($data->initiator_id , Auth::user()->id);
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Review Complete
                             </button>
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3) ||  Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18))
+                        @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3) ||  Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -407,7 +407,7 @@ dd($data->initiator_id , Auth::user()->id);
                                 Child
                             </button>
 
-                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4)||  Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18))
+                        @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4)||  Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
 

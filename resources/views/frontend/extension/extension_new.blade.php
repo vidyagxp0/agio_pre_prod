@@ -286,7 +286,7 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
             <input readonly type="text" name="related_records"
                 value="{{ $extension_record }}">
             @else
-            <input type="text" name="related_records_edits" value="">
+            <input type="text" name="related_records_edits"  disabled>
             @endif
         </div>
 

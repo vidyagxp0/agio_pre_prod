@@ -129,7 +129,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-required-modal">
                                 Cancel
                             </button>
-                        @elseif($extensionNew->stage == 2 && Helpers::check_roles($extensionNew->site_location_code, 'Extension', 4) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18))
+                        @elseif($extensionNew->stage == 2 && (Helpers::check_roles($extensionNew->site_location_code, 'Extension', 4) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18)))
 
                             @if($extensionNew->count == 3)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-reviewed-modal">
@@ -145,7 +145,7 @@
                                 More Info Required
                             </button>
 
-                        @elseif($extensionNew->stage == 3 && (Helpers::check_roles($extensionNew->site_location_code, 'Extension', 67) || Helpers::check_roles($extensionNew->site_location_code, 'Extension', 64)) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18))
+                        @elseif($extensionNew->stage == 3 && (Helpers::check_roles($extensionNew->site_location_code, 'Extension', 67) || Helpers::check_roles($extensionNew->site_location_code, 'Extension', 64) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18)))
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
                                 Approved
@@ -255,7 +255,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                        @elseif($extensionNew->stage == 5 && Helpers::check_roles($extensionNew->site_location_code, 'Extension', 64) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18))
+                        @elseif($extensionNew->stage == 5 && (Helpers::check_roles($extensionNew->site_location_code, 'Extension', 64) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                 CQA Approval Complete
                             </button>
@@ -616,7 +616,7 @@
                                                 value="{{ $extensionNew->related_records }}">
                                         @else
                                             <input type="text" name="related_records_edits"
-                                                value="{{ $extensionNew->related_records_edits }}">
+                                                value="{{ $extensionNew->related_records_edits }}" readonly>
                                         @endif
                                     </div>
                                 </div>

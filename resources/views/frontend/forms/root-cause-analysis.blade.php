@@ -997,13 +997,13 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="comments">Initial QA/CQA Review  Comments</label>
-                                        <textarea name="cft_comments_new"></textarea>
+                                        <label for="comments">Initial QA/CQA Review Comments</label>
+                                        <textarea name="cft_comments_new" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Initial QA/CQA Review  Attachment</label>
+                                        <label for="Inv Attachments">Initial QA/CQA Review Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -1014,7 +1014,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="cft_attchament_new[]"
-                                                    oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
+                                                    oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -1726,7 +1726,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="comments">HOD Review Comment </label>
-                                        <textarea name="hod_comments"></textarea>
+                                        <textarea name="hod_comments" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -1742,7 +1742,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="hod_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
+                                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>

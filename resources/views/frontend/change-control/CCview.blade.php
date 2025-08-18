@@ -263,8 +263,8 @@
                             </button>  --}}
 
                             @elseif(
-                                ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Change Control', 5)) ||
-                                in_array(Auth::user()->id, $valuesArray))
+                                $data->stage == 4 && (Helpers::check_roles($data->division_id, 'Change Control', 5) ||
+                                in_array(Auth::user()->id, $valuesArray)))
                                  <!-- @if (!$cftCompleteUser)
     -->
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
