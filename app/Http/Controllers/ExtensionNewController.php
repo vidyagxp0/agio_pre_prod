@@ -326,6 +326,22 @@ class ExtensionNewController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+         if (!empty($request->data_number)) {
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Extension Number';
+            $history->previous = "Null";
+            $history->current = $extensionNew->data_number;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $extensionNew->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
         if (!empty($request->count)) {
             $history = new ExtensionNewAuditTrail();
@@ -835,6 +851,27 @@ class ExtensionNewController extends Controller
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->short_description) || $lastDocument->short_description === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+         if ($lastDocument->data_number != $extensionNew->data_number) {
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Extension Number';
+            $history->previous = $lastDocument->data_number;
+            $history->current = $extensionNew->data_number;
+            $history->comment = $request->data_number_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->data_number) || $lastDocument->data_number === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";

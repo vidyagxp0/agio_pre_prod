@@ -821,7 +821,7 @@
 
                 </div>
                 <div class="status">
-                    <div class="head">Current Status</div>a
+                    <div class="head">Current Status</div>
                     @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
@@ -1130,7 +1130,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                            <input readonly type="text" value="{{ date('d-M-Y') }}"
+                                            <input readonly type="text" value="{{ $data->intiation_date }}"
                                                 name="intiation_date" id="initiation_date"
                                                 style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
                                             <input type="hidden" value="{{ date('Y-m-d') }}"
