@@ -224,7 +224,22 @@ class ActionItemController extends Controller
         $history->action_name = "Create";
         $history->save();
         }
-
+             if (!empty($openState->record)) {
+                    $history = new ActionItemHistory();
+                    $history->cc_id =  $openState->id;
+                    $history->activity_type = 'Record Number';
+                    $history->previous = "Null";
+                    $history->current = Helpers::getDivisionName(session()->get('division')) . "/AI/" . Helpers::year($openState->created_at) . "/" . str_pad($openState->record, 4, '0', STR_PAD_LEFT);
+                    $history->comment = "Not Applicable";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $openState->status;
+                    $history->change_to = "Opened";
+                    $history->change_from = "Initiation";
+                    $history->action_name = "Create";
+                    $history->save();
+                }
 
         if (!empty($openState->short_description)) {
             $history = new ActionItemHistory();
@@ -327,22 +342,7 @@ class ActionItemController extends Controller
                     $history->save();
                     }
 
-                if (!empty($openState->record)) {
-                    $history = new ActionItemHistory();
-                    $history->cc_id =  $openState->id;
-                    $history->activity_type = 'Record Number';
-                    $history->previous = "Null";
-                    $history->current = Helpers::getDivisionName(session()->get('division')) . "/AI/" . Helpers::year($openState->created_at) . "/" . str_pad($openState->record, 4, '0', STR_PAD_LEFT);
-                    $history->comment = "Not Applicable";
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $openState->status;
-                    $history->change_to = "Opened";
-                    $history->change_from = "Initiation";
-                    $history->action_name = "Create";
-                    $history->save();
-                    }
+              
 
 
             if (!empty($openState->related_records)) {

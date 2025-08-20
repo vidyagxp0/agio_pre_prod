@@ -153,6 +153,7 @@ class ExtensionNewController extends Controller
         $extensionNew->QAapprover_remarks = $request->QAapprover_remarks;
         $extensionNew->file_attachment_approver = $request->file_attachment_approver;
         $extensionNew->data_number = $request->data_number;
+        $extensionNew->count_data = $request->count_data;
         $extensionNew->related_records_edits = $request->related_records_edits;
 
         $counter = DB::table('record_numbers')->value('counter');
@@ -326,12 +327,12 @@ class ExtensionNewController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-         if (!empty($request->data_number)) {
+         if (!empty($request->count_data)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'Extension Number';
             $history->previous = "Null";
-            $history->current = $extensionNew->data_number;
+            $history->current = $extensionNew->count_data;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -858,29 +859,8 @@ class ExtensionNewController extends Controller
             $history->save();
         }
 
-         if ($lastDocument->data_number != $extensionNew->data_number) {
-            $history = new ExtensionNewAuditTrail();
-            $history->extension_id = $extensionNew->id;
-            $history->activity_type = 'Extension Number';
-            $history->previous = $lastDocument->data_number;
-            $history->current = $extensionNew->data_number;
-            $history->comment = $request->data_number_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->data_number) || $lastDocument->data_number === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
 
-
-        if ($lastDocument->count != $extensionNew->count) {
+        if (($lastDocument->count != $extensionNew->count)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
             $history->activity_type = 'Extension Number';
@@ -915,6 +895,27 @@ class ExtensionNewController extends Controller
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
             if (is_null($lastDocument->Extension) || $lastDocument->Extension === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        
+        if ($lastDocument->count_data != $extensionNew->count_data) {
+            $history = new ExtensionNewAuditTrail();
+            $history->extension_id = $extensionNew->id;
+            $history->activity_type = 'Extension Number';
+            $history->previous = $lastDocument->count_data;
+            $history->current = $extensionNew->count_data;
+            $history->comment = $request->count_data;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->count_data) || $lastDocument->count_data === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";

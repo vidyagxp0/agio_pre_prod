@@ -193,11 +193,11 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
                         @if(!empty($countData))
                         <input id="docname" type="text" value="{{ $countData }}" readonly>
                         @else
-                        <select name="data_number" id="countSelect">
+                        <select name="count_data" id="countSelect">
                             <option value="">--Select Extension Number--</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                            <option value="number1">1</option>
+                            <option value="number2">2</option>
+                            <option value="number3">3</option>
                         </select>
                         @endif
                     </div>

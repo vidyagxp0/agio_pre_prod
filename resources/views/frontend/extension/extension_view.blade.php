@@ -495,12 +495,12 @@
                                         <label for="Extension Number">
                                             Extension Number<span class="text-danger"></span>
                                         </label>
-                                            @if (empty($extensionNew->parent_type) || $extensionNew->parent_type == 'number' || $extensionNew->parent_type == 'number1' || $extensionNew->parent_type == 'number2')
+                                            @if (empty($extensionNew->parent_type) || $extensionNew->parent_type == 'number3' || $extensionNew->parent_type == 'number1' || $extensionNew->parent_type == 'number2')
                                                 <select name="count_data" id="" {{$extensionNew->stage == 1 ? '' : 'readonly'}}>
                                                     <option value="">--Select Extension Number--</option>
-                                                    <option value="number1" @if ($extensionNew->count_data == 'number1' || $extensionNew->data_number == '1') selected @endif>1</option>
+                                                    <option value="number1" @if ( $extensionNew->count_data == 'number1' || $extensionNew->data_number == '1') selected @endif>1</option>
                                                     <option value="number2" @if ($extensionNew->count_data == 'number2' || $extensionNew->data_number == '2') selected @endif>2</option>
-                                                    <option value="number" @if ($extensionNew->count_data == 'number' || $extensionNew->data_number == '3') selected @endif>3</option>
+                                                    <option value="number3" @if ($extensionNew->count_data == 'number3' || $extensionNew->data_number == '3') selected @endif>3</option>
                                                 </select>
                                             @else
                                                 <!-- <select name="count" id="" disabled>

@@ -703,7 +703,7 @@
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="root-cause-methodology">Root Cause Methodology</label>
-                                            <select name="root_cause_methodology[]" multiple data-search="false"
+                                            <select name="root_cause_methodology[]" multiple data-search="false" disabled
                                                 data-silent-initial-value-set="true" id="root-cause-methodology">
                                                 <option value="Why-Why Chart">Why-Why Chart</option>
                                                 <option value="Failure Mode and Effect Analysis">Failure Mode and Effect
@@ -1221,14 +1221,14 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Risk Assessment Summary</label>
-                                            <textarea name="investigation_summary"></textarea>
+                                            <textarea name="investigation_summary" disabled></textarea>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Risk Assessment Conclusion</label>
-                                            <textarea name="r_a_conclussion"></textarea>
+                                            <textarea name="r_a_conclussion" disabled></textarea>
                                         </div>
                                     </div>
 
@@ -1295,7 +1295,7 @@
                                             <div class="file-attachment-list" id="risk_ana_attach"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="risk_ana_attach[]"
+                                                <input type="file" id="myfile" name="risk_ana_attach[]" disabled
                                                     oninput="addMultipleFiles(this, 'risk_ana_attach')" multiple>
                                             </div>
                                         </div>
