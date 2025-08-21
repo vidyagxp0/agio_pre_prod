@@ -264,7 +264,7 @@
                                 <button class="button_theme1"> <a class="text-white"
                                         href="{{ route('audittrialooc', $ooc->id) }}"> Audit Trail </a> </button>
 
-                                @if ($ooc->stage == 1 && ( ($data->initiator_id == Auth::user()->id) ||Helpers::check_roles($ooc->division_id, 'OOC', 3)))
+                                @if ($ooc->stage == 1 && ( ($ooc->initiator_id == Auth::user()->id) ||Helpers::check_roles($ooc->division_id, 'OOC', 3)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Submit
                                     </button>
@@ -286,7 +286,7 @@
                                             Child
                                         </button>
                                     @endif
-                                @elseif($ooc->stage == 3 && Helpers::check_roles($ooc->division_id, 'OOC', 43))
+                                @elseif($ooc->stage == 3 && (Helpers::check_roles($ooc->division_id, 'OOC', 43) || Helpers::check_roles($ooc->division_id, 'OOC', 42) || Helpers::check_roles($ooc->division_id, 'OOC', 39) || Helpers::check_roles($ooc->division_id, 'OOC', 9)))
                                     <button class="button_theme1" name="assignable_cause_identification"
                                         data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         QA Head Primary Review Complete
@@ -299,7 +299,7 @@
                                             Child
                                         </button>
                                     @endif
-                                @elseif($ooc->stage == 4 && ( ($data->initiator_id == Auth::user()->id) || Helpers::check_roles($ooc->division_id, 'OOC', 3)))
+                                @elseif($ooc->stage == 4 && ( ($ooc->initiator_id == Auth::user()->id) || Helpers::check_roles($ooc->division_id, 'OOC', 3)))
                                     <button class="button_theme1" name="assignable_cause_identification"
                                         data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Phase IA Investigation
@@ -325,7 +325,7 @@
                                     {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button> --}}
-                                @elseif($ooc->stage == 6 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($ooc->stage == 6 && (Helpers::check_roles($data->division_id, 'OOC', 3) || Helpers::check_roles($data->division_id, 'OOC', 18)  ))
                                     {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 Extended Inv. Complete
             </button>
@@ -347,7 +347,7 @@
                                     <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal1">
                                                                         Cause Not Identification
                                                                     </button> -->
-                                @elseif($ooc->stage == 8 && Helpers::check_roles($ooc->division_id, 'OOC', 43))
+                                @elseif($ooc->stage == 8 && (Helpers::check_roles($ooc->division_id, 'OOC', 43) || Helpers::check_roles($ooc->division_id, 'OOC', 42) || Helpers::check_roles($ooc->division_id, 'OOC', 39) || Helpers::check_roles($ooc->division_id, 'OOC', 9)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Assignable Cause Found
                                     </button>
@@ -363,7 +363,7 @@
                                     </button>
                                 @elseif($ooc->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
 
-                                @elseif($ooc->stage == 10 && ( ($data->initiator_id == Auth::user()->id)||Helpers::check_roles($ooc->division_id, 'OOC', 3)))
+                                @elseif($ooc->stage == 10 && ( ($ooc->initiator_id == Auth::user()->id)||Helpers::check_roles($ooc->division_id, 'OOC', 3)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Phase IB Investigation
                                     </button>
@@ -398,7 +398,7 @@
                                             Child
                                         </button>
                                     @endif
-                                @elseif($ooc->stage == 13 && Helpers::check_roles($ooc->division_id, 'OOC', 43))
+                                @elseif($ooc->stage == 13 && (Helpers::check_roles($ooc->division_id, 'OOC', 43) || Helpers::check_roles($ooc->division_id, 'OOC', 42) || Helpers::check_roles($ooc->division_id, 'OOC', 39) || Helpers::check_roles($ooc->division_id, 'OOC', 9)))
                                     <button class="button_theme1" data-bs-toggle="modal"
                                         data-bs-target="#signature-modal">
                                         Approved
@@ -418,7 +418,7 @@
                                     @endif
                                 @elseif($ooc->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
 
-                                @elseif($ooc->stage == 15 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                                @elseif($ooc->stage == 15 && ( Helpers::check_roles($data->division_id, 'OOC', 9) || Helpers::check_roles($data->division_id, 'OOC', 18) || Helpers::check_roles($data->division_id, 'OOC', 7)))
                                     <button class="button_theme1" data-bs-toggle="modal"
                                         data-bs-target="#signature-modal">
                                         Phase II A Investigation
@@ -430,7 +430,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button>
-                                @elseif($ooc->stage == 16 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                                @elseif($ooc->stage == 16 && (Helpers::check_roles($data->division_id, 'OOC', 9) || Helpers::check_roles($data->division_id, 'OOC', 7) || Helpers::check_roles($data->division_id, 'OOC', 18) ))
                                     <button class="button_theme1" data-bs-toggle="modal"
                                         data-bs-target="#signature-modal">
                                         Phase II A HOD Review Complete
@@ -442,7 +442,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
-                                @elseif($ooc->stage == 17 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                                @elseif($ooc->stage == 17 && (Helpers::check_roles($data->division_id, 'OOC', 9) || Helpers::check_roles($data->division_id, 'OOC', 18) || Helpers::check_roles($data->division_id, 'OOC', 7) ))
                                     <button class="button_theme1" data-bs-toggle="modal"
                                         data-bs-target="#signature-modal">
                                         Phase II A QA Review Complete
@@ -454,7 +454,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
-                                @elseif($ooc->stage == 18 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                                @elseif($ooc->stage == 18 && ( Helpers::check_roles($data->division_id, 'OOC', 9) || Helpers::check_roles($data->division_id, 'OOC', 18) || Helpers::check_roles($data->division_id, 'OOC', 7) ))
                                     <button class="button_theme1" data-bs-toggle="modal"
                                         data-bs-target="#signature-modal">
                                         P-II A Assignable Cause Found

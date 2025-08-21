@@ -26,101 +26,101 @@
              @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
-             @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 4) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal"> HOD Primary Review Complete </button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
-             @elseif($data->stage == 3 && (in_array(39, $userRoleIds) || in_array(9, $userRoleIds) || in_array(43, $userRoleIds) || in_array(42, $userRoleIds)  || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">Cancel</button>
  
-             @elseif($data->stage == 4 && (in_array(39, $userRoleIds) || in_array(9, $userRoleIds) || in_array(43, $userRoleIds) || in_array(42, $userRoleIds) || in_array(65, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 4 && ( Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">CQA/QA Head Primary Review Complete</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
  
-             @elseif($data->stage == 5 && ( ($data->initiator_id == Auth::user()->id) ||in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 5 && ( ($data->initiator_id == Auth::user()->id) ||(Helpers::check_roles($data->division_id, 'OOS/OOT', 3) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18))))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Phase IA Investigation</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-             @elseif($data->stage == 6 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 6 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 4) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IA HOD Review Complete </button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 7 && (in_array(7, $userRoleIds) || in_array(66, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 7) || Helpers::check_roles($data->division_id, 'OOS/OOT', 66) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IA QA Review Complete</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(43, $userRoleIds) || in_array(42, $userRoleIds) || in_array(9, $userRoleIds) || in_array(65, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal">Assignable Cause Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
 
-             @elseif($data->stage == 23 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 23 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
 
-             @elseif($data->stage == 9 && (($data->initiator_id == Auth::user()->id) || in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 9 && (($data->initiator_id == Auth::user()->id) || ( Helpers::check_roles($data->division_id, 'OOS/OOT', 3) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18))))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB Investigation</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-             @elseif($data->stage == 10 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 10 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 4) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB HOD Review Complete</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 11 && (in_array(7, $userRoleIds)||  in_array(66, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 11 && ( Helpers::check_roles($data->division_id, 'OOS/OOT', 7) || Helpers::check_roles($data->division_id, 'OOS/OOT', 66) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IB CQA/QA Review Complete</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 12 && (in_array(39, $userRoleIds) || in_array(42, $userRoleIds) || in_array(43, $userRoleIds)  || in_array(9, $userRoleIds) || in_array(65, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 12 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal1">Phase IB Assignable Cause Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-I B Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
 
-             @elseif($data->stage == 24 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 24 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
 
-             @elseif($data->stage == 13 && (in_array(22, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 13 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 22) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause"> Phase II A Investigation </button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-             @elseif($data->stage == 14 && (in_array(61, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 14 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 61) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A HOD Review Complete</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 15 && (in_array(7, $userRoleIds) || in_array(66, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 15 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 7) || Helpers::check_roles($data->division_id, 'OOS/OOT', 66) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A CQA/QA Review Complete</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 16 && (in_array(39, $userRoleIds) || in_array(42, $userRoleIds)  || in_array(43, $userRoleIds) || in_array(9, $userRoleIds) || in_array(65, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 16 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#Done-modal2">Phase II A Assignable Cause Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II A Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
 
-             @elseif($data->stage == 25 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 25 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
 
-             @elseif($data->stage == 17 && (($data->initiator_id == Auth::user()->id) || in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 17 && (($data->initiator_id == Auth::user()->id) || (Helpers::check_roles($data->division_id, 'OOS/OOT', 3) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18))))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Investigation</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-             @elseif($data->stage == 18 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 18 && ( Helpers::check_roles($data->division_id, 'OOS/OOT', 4) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B HOD Review Complete</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 19 && (in_array(7, $userRoleIds) || in_array(66, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 19 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 7) || Helpers::check_roles($data->division_id, 'OOS/OOT', 66) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B CQA/QA Review Complete</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 20 && (in_array(39, $userRoleIds) || in_array(42, $userRoleIds) || in_array(43, $userRoleIds) || in_array(9, $userRoleIds)  || in_array(65, $userRoleIds)|| in_array(18, $userRoleIds)))
+             @elseif($data->stage == 20 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Not Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
-             @elseif($data->stage == 21 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds)))
+             @elseif($data->stage == 21 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 4) ))
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">PIhase II Investigation Applicable/Not Applicable</button>
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button> --}}
-             @elseif($data->stage == 22 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+             @elseif($data->stage == 22 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) || Helpers::check_roles($data->division_id, 'OOS/OOT', 7)))
                 
              <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
              </a> </button>

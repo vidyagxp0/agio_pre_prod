@@ -2352,7 +2352,54 @@
 
             </script> --}}
 
-    <script>
+            <script>
+    $('#summernote').summernote({
+      toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear', 'italic']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+      ]
+  });
+
+  $('.summernote').summernote({
+    toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear', 'italic']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+    ],
+        callbacks: {
+            onPaste: function (e) {
+                let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
+
+                bufferText = bufferText.replace(/<table/g, '<table border="1"');
+
+                setTimeout(function () {
+                    $('.summernote').summernote('pasteHTML', bufferText);
+                }, 10);
+                
+                e.preventDefault();
+            }
+        }
+    });
+     var stage = @json($data->stage); // PHP se JS me stage bhejna
+
+    if (stage != 3) {
+        $('.summernote').summernote('disable');  // non-editable
+    } else {
+        $('.summernote').summernote('enable');   // editable
+    }
+
+  </script>
+
+    {{-- <script>
          var editor = new FroalaEditor('.summernote', {
             key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
             imageUploadParam: 'image_param',
@@ -2367,7 +2414,7 @@
          });
          
         $(".summernote-disabled").FroalaEditor("edit.off");
-    </script>
+    </script> --}}
 
     
     <style>

@@ -756,14 +756,14 @@
                                 {{--@php
                                 dd($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                                 @endphp--}}
-                                @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))))
+                                @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || (Helpers::check_roles($data->division_id, 'Incident', 4) || Helpers::check_roles($data->division_id, 'Incident', 18))))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Submit
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                         Cancel
                                     </button>
-                                @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Incident', 4)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -777,7 +777,7 @@
                                         Child
                                     </button>
 
-                                @elseif($data->stage == 3 && (in_array(48, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Incident', 48) || Helpers::check_roles($data->division_id, 'Incident', 18)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -788,7 +788,7 @@
                                         Child
                                     </button>
 
-                                @elseif($data->stage == 4 && (in_array(42, $userRoleIds) || in_array(43, $userRoleIds)|| in_array(39, $userRoleIds) || in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 4 && ( Helpers::check_roles($data->division_id, 'Incident', 42) || Helpers::check_roles($data->division_id, 'Incident', 43) || Helpers::check_roles($data->division_id, 'Incident', 39) || Helpers::check_roles($data->division_id, 'Incident', 9) || Helpers::check_roles($data->division_id, 'Incident', 18)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -800,7 +800,7 @@
                                         Child
                                     </button>
                                     @endif
-                                @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 5 && ( Helpers::check_roles($data->division_id, 'Incident', 3) || Helpers::check_roles($data->division_id, 'Incident', 18) ))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Pending Initiator Update Complete
                                     </button>
@@ -810,7 +810,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button>
-                                @elseif($data->stage == 6 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 6 && ( Helpers::check_roles($data->division_id, 'Incident', 4) || Helpers::check_roles($data->division_id, 'Incident', 18)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         HOD Final Review Complete
                                     </button>
@@ -822,7 +822,7 @@
                                         Child
                                     </button>
                                     @endif
-                                @elseif($data->stage == 7 && (in_array(48, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Incident', 48) || Helpers::check_roles($data->division_id, 'Incident', 18)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -834,7 +834,7 @@
                                         Child
                                     </button>
                                      @endif
-                                @elseif($data->stage == 8 && (in_array(42, $userRoleIds) || in_array(43, $userRoleIds) ||  in_array(39, $userRoleIds) || in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'Incident', 42) || Helpers::check_roles($data->division_id, 'Incident', 43) || Helpers::check_roles($data->division_id, 'Incident', 39) || Helpers::check_roles($data->division_id, 'Incident', 9) || Helpers::check_roles($data->division_id, 'Incident', 18) ))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Approved                            </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
