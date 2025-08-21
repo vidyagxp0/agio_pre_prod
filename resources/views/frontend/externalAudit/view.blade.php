@@ -2258,14 +2258,17 @@
                                                         @if ($data->stage == 3) disabled @endif>
                                                         <option value="">-- Select --</option>
                                                        
-                                                        <option @if ($data1->Production_Table_Review == 'yes' || empty($data1->Production_Table_Review)) selected @endif value='yes'>Yes</option>
+                                                        {{-- <option @if ($data1->Production_Table_Review == 'yes' || empty($data1->Production_Table_Review)) selected @endif value='yes'>Yes</option> --}}
+                                                        <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>
+                                                            Yes</option>
                                                         <option @if ($data1->Production_Table_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
+                                                        <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>  
 
-                                                        <option @if ($data1->Production_Table_Review == 'NA') selected @endif
+                                                        {{-- <option @if ($data1->Production_Table_Review == 'NA') selected @endif
                                                             value='NA'>
-                                                            NA</option>
+                                                            NA</option> --}}
                                                     </select>
 
                                                 </div>
