@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Capa;
 use App\Models\OpenStage;
+use App\Models\extension_new;
 
 
 
@@ -4472,6 +4473,38 @@ class OOCController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $oocchange->stage = "3";
                 $oocchange->initial_phase_i_investigation_completed_by = Auth::user()->name;
                 $oocchange->initial_phase_i_investigation_completed_on = Carbon::now()->format('d-M-Y');
@@ -4546,6 +4579,37 @@ class OOCController extends Controller
                     ]);
                 }
 
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPending2 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending2 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending2) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                 $oocchange->stage = "4";
                 $oocchange->assignable_cause_f_completed_by = Auth::user()->name;
@@ -4621,6 +4685,38 @@ class OOCController extends Controller
                     ]);
                 }
 
+                 // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPending3 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending3 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending3) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $oocchange->stage = "5";
                 $oocchange->cause_f_completed_by = Auth::user()->name;
                 $oocchange->cause_f_completed_on = Carbon::now()->format('d-M-Y');
@@ -4695,8 +4791,38 @@ class OOCController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                 // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPending4 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending4 = true;
+                                break;
+                            }
+                        }
 
+                    if ($hasPending4) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
 
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+                
                 $oocchange->stage = "7";
                 $oocchange->obvious_r_completed_by = Auth::user()->name;
                 $oocchange->obvious_r_completed_on = Carbon::now()->format('d-M-Y');
@@ -4770,6 +4896,37 @@ class OOCController extends Controller
                     ]);
                 }
 
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPending5 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending5 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending5) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $oocchange->stage = "8";
                 $oocchange->cause_i_completed_by = Auth::user()->name;
                 $oocchange->cause_i_completed_on = Carbon::now()->format('d-M-Y');
@@ -4846,7 +5003,37 @@ class OOCController extends Controller
                     ]);
                 }
 
+                 // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPending7 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending7 = true;
+                                break;
+                            }
+                        }
 
+                    if ($hasPending7) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $oocchange->stage = "9";
                 $oocchange->approved_ooc_completed_by = Auth::user()->name;
                 $oocchange->approved_ooc_completed_on = Carbon::now()->format('d-M-Y');
@@ -4935,6 +5122,37 @@ class OOCController extends Controller
                 //         'type' => 'success',
                 //     ]);
                 // }
+                  // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPending8 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending8 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending8) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $oocchange->stage = "11";
                 $oocchange->correction_ooc_completed_by = Auth::user()->name;
                 $oocchange->correction_ooc_completed_on = Carbon::now()->format('d-M-Y');
@@ -5006,6 +5224,38 @@ class OOCController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPending8 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending8 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending8) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $oocchange->stage = "12";
                 $oocchange->Phase_IB_HOD_Review_Completed_BY = Auth::user()->name;
                 $oocchange->Phase_IB_HOD_Review_Completed_ON = Carbon::now()->format('d-M-Y');
@@ -5079,6 +5329,37 @@ class OOCController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPendin9 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPendin9 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPendin9) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                 $oocchange->stage = "13";
                 $oocchange->Phase_IB_QA_Review_Complete_12_by = Auth::user()->name;
@@ -5150,6 +5431,38 @@ class OOCController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                   // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPendin10 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPendin10 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPendin10) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $oocchange->stage = "14";
                 $oocchange->P_IB_Assignable_Cause_Found_by = Auth::user()->name;
                 $oocchange->P_IB_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
@@ -5235,6 +5548,37 @@ class OOCController extends Controller
                     ]);
                 }
 
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'OOC')
+                    ->get();
+                        $hasPending6 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending6 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending6) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $oocchange->stage = "10";
                 $oocchange->correction_r_completed_by = Auth::user()->name;
                 $oocchange->correction_r_completed_on = Carbon::now()->format('d-M-Y');
