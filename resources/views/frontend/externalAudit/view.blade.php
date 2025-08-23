@@ -336,9 +336,8 @@
                             </button>
                         @elseif(
                             ($data->stage == 3 &&
-                                (Helpers::check_roles($data->division_id, 'External Audit', 5) ||
-                                    Helpers::check_roles($data->division_id, 'External Audit', 18))) ||
-                                in_array(Auth::user()->id, $valuesArray))
+                                (Helpers::check_roles($data->division_id, 'External Audit', 5)  ||
+                                in_array(Auth::user()->id, $valuesArray))))
                             @if (!$CompleteUser)
    
 

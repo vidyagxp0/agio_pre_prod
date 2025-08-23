@@ -439,13 +439,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             // Safely extract role if exists
                             $personRole = $responseData->person_role ?? null;
+                          $selectedAuditorIds = collect($auditorview->data)->pluck('auditornew')->toArray();
 
                         @endphp
-
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Internal Audit', 7)|| Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)))
+                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Internal Audit', 7)|| Helpers::check_roles($data->division_id, 'Internal Audit', 66)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Schedule Audit
                             </button>
@@ -483,7 +483,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             </button>
                         @endif
                             
-                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Internal Audit', 12))
+                        @elseif($data->stage == 3 && (in_array(Auth::id(), $selectedAuditorIds) || Helpers::check_roles($data->division_id, 'Internal Audit', 12)))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
                                 More info Required
@@ -2225,7 +2225,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         name="audit_start_date"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                                         value="{{ $data->audit_start_date }}" class="hide-input"
-                                                        oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
+                                                        oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" {{ $data->stage !=3 ? 'disabled' : ''  }}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -2241,7 +2241,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         name="audit_end_date"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                                         value="{{ $data->audit_end_date }}" class="hide-input"
-                                                        oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
+                                                        oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" {{ $data->stage !=3 ? 'disabled' : ''  }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -2549,7 +2549,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                                     // dd($selectedDepartments);
                                                 @endphp
-                                                <select multiple id="checklists" class="abc" name="checklists[]" {{ $data->stage != 3 ? 'readonly' : 'required' }}>
+                                                <select multiple id="checklists" class="abc" name="checklists[]" {{ $data->stage != 3 ? 'disabled' : 'required' }}>
                                                     <option value="1"
                                                         @if (in_array('1', $selectedChecklist)) selected @endif>Checklist - Production (Tablet Dispensing & Tablet Granulation)</option>
                                                     <option value="2"
@@ -2637,7 +2637,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                            {{ $data->stage !=3 ? 'disabled' : ''  }}
                                                             type="file" id="myfile"
                                                             name="file_attachment_guideline[]"
                                                             oninput="addMultipleFiles(this, 'file_attachment_guideline')"
@@ -3810,7 +3810,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response_1" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                                         <option value="">Select an Option</option>
                                                                         <option value="Yes"
                                                                             {{ $data->response_1 == 'Yes' ? 'selected' : '' }}>

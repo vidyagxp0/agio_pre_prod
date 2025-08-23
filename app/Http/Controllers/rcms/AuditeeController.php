@@ -16,6 +16,7 @@ use App\Models\InternalAuditGrid;
 use App\Models\AuditTrialExternal;
 use App\Models\ExternalAuditCFT;
 use App\Models\ExternalAuditCFTResponse;
+use App\Models\extension_new;
 use Carbon\Carbon;
 use App\Models\User;
 use PDF;
@@ -46,7 +47,7 @@ class AuditeeController extends Controller
         //$request->dd();
         //  return $request->audit_start_date;
         //  die;
-
+        
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
@@ -6913,6 +6914,24 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             //             'message' => 'Sent for CFT review state'
             //         ]);
             //     }
+        $oocgrid = SummaryGrid::where('summary_id',$id)->first();
+            
+               if (empty($oocgrid->data))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Summary and Response/CFT Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for CFT review state'
+                    ]);
+                }
                          if (!$Cft->Production_Table_Review|| !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review  || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
@@ -6929,6 +6948,37 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                                 'message' => 'CFT Reviews'
                             ]);
                         }
+                        // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'External Audit')
+                    ->get();
+                        $hasPendin11 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPendin11 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPendin11) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                 $changeControl->stage = "3";
                 $changeControl->status = "CFT Review";
@@ -7065,7 +7115,37 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                 //         'message' => 'Sent for QA/CQA Head Approval state'
                 //     ]);
                 // }
+                        // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'External Audit')
+                    ->get();
+                        $hasPendin111 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPendin111 = true;
+                                break;
+                            }
+                        }
 
+                    if ($hasPendin111) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                 $IsCFTRequired = ExternalAuditCFTResponse::where(['is_required' => 1, 'external_audit_id' => $id])->latest()->first();
                 $cftUsers = DB::table('external_audit_c_f_t_s')->where(['external_audit_id' => $id])->first();
@@ -7932,6 +8012,37 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         'message' => 'Sent for Closed - Done state'
                     ]);
                 }
+                                        // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'External Audit')
+                    ->get();
+                        $hasPendin13 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPendin13 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPendin13) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changeControl->stage = "5";
                 $changeControl->status = "Closed - Done";
                 $changeControl->approval_complete_by = Auth::user()->name;
