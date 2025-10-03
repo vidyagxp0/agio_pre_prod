@@ -1148,7 +1148,7 @@
                                         <label for="Initiator"><b>Initiator</b></label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                         <input disabled type="text" name="division_code"
-                                            value="{{ Auth::user()->name }}">
+                                            value="{{ $ooc->initiator_name }}">
                                     </div>
                                 </div>
 
@@ -2325,8 +2325,8 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 5%;">Sr.No.</th>
-                                                        <th style="width: 30%;">Question</th>
-                                                        <th>Response</th>
+                                                        <th style="width: 30%;">Parameter</th>
+                                                        <th>Observation</th>
                                                         <th>Remarks</th>
                                                     </tr>
                                                 </thead>

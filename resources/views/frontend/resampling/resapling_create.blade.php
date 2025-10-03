@@ -192,9 +192,7 @@
                                     </div>
                                 </div>  --}}
 
-
-
-                                <div class="col-6">
+                                {{-- <div class="col-6">
                                     <div class="group-input">
                                         <label for="related_records">Related Records<span
                                                 class="text-danger">*</span></label>
@@ -228,7 +226,36 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
+                                </div> --}}
+
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="related_records">
+                                            Related Records <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select multiple name="related_records[]" id="related_records" 
+                                            placeholder="Select Reference Records"
+                                            data-silent-initial-value-set="true"
+                                            required>
+                                            
+                                            @if (!empty($relatedRecords))
+                                                @foreach ($relatedRecords as $records)
+                                                    @php
+                                                        $recordValue = Helpers::getDivisionName(
+                                                            $records->division_id ?? $records->division ?? $records->division_code ?? $records->site_location_code
+                                                        ) . '/' . $records->process_name . '/' . date('Y') . '/' . Helpers::recordFormat($records->record);
+                                                    @endphp
+
+                                                    <option value="{{ $recordValue }}">
+                                                        {{ $recordValue }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
                                 </div>
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
