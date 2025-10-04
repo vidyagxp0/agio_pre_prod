@@ -144,6 +144,13 @@
         border-bottom: 2px solid #4274da;
         margin-bottom: 10px;
         color: #4274da;
+    }.inner-block .block-head {
+        font-weight: bold;
+        font-size: 1.1rem;
+        padding-bottom: 5px;
+        border-bottom: 2px solid #4274da;
+        margin-bottom: 10px;
+        color: #4274da;
     }
 
     .inner-block th,
@@ -749,25 +756,25 @@
                 @endphp
 
                 {{-- <div style="font-weight: 200">Checklist</div> --}}
-                <div class="border-table">
+                {{-- <div class="border-table">
                     <table>
                         <thead>
                             <tr class="table_bg">
-                                <th class="w-20" style="width: 20px;">Sr.No.</th>
-                                <th class="w-20" style="width: 55%;">Question</th>
-                                <th class="w-20" style="width: 100px;">Response</th>
-                                <th class="w-20" style="width: 100px;">Remarks</th>
+                                <th  style="width: 2px;">Sr.No.</th>
+                                <th  style="width: 50px;">Parameter</th>
+                                <th  style="width: 50px;">Observation</th>
+                                <th  style="width: 50px;">Remarks</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($oocevaluations as $index => $item)
                                 @if (isset($oocevolution->data[$index]))
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $item }}</td>
-                                        <td>{{ $oocevolution->data[$index]['response'] }}</td>
-                                        <td>{{ $oocevolution->data[$index]['remarks'] }}</td>
-                                    </tr>
+                                     <tr>
+                        <td style="text-align: center; vertical-align: middle; padding: 5px 10px;">{{ $index + 1 }}</td>
+                        <td style="text-align: left; vertical-align: middle; padding: 5px 10px;">{{ $item }}</td>
+                        <td style="text-align: left; vertical-align: middle; padding: 5px 10px;">{{ $oocevolution->data[$index]['response'] }}</td>
+                        <td style="text-align: left; vertical-align: middle; padding: 5px 10px;">{{ $oocevolution->data[$index]['remarks'] }}</td>
+                    </tr>
                                 @else
                                     <tr>
                                         <td colspan="4">No data available</td>
@@ -777,7 +784,36 @@
                         </tbody>
                     </table>
                 </div>
-                <br>
+                <br> --}}
+                <div style="width:100%; overflow-x:auto;">
+                    <table style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:12px; border:1px solid #ccc;">
+                        <thead>
+                            <tr style="background-color:#f0f0f0;">
+                                <th style="width:5%; border:1px solid   #4274da; padding:5px;  background: #4274da57; text-align:center; vertical-align:middle;">Sr.No.</th>
+                                <th style="width:35%; border:1px solid  #4274da; padding:5px;  background: #4274da57; text-align:left; vertical-align:middle;">Parameter</th>
+                                <th style="width:30%; border:1px solid  #4274da; padding:5px; background: #4274da57; text-align:left; vertical-align:middle;">Observation</th>
+                                <th style="width:30%; border:1px solid  #4274da; padding:5px; background: #4274da57; text-align:left; vertical-align:middle;">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($oocevaluations as $index => $item)
+                                @if (isset($oocevolution->data[$index]))
+                                    <tr>
+                                        <td style="border:1px solid #ccc; padding:5px; text-align:center; vertical-align:middle;">{{ $index + 1 }}</td>
+                                        <td style="border:1px solid #ccc; padding:5px; text-align:left; vertical-align:middle;">{{ $item }}</td>
+                                        <td style="border:1px solid #ccc; padding:5px; text-align:left; vertical-align:middle;">{{ $oocevolution->data[$index]['response'] }}</td>
+                                        <td style="border:1px solid #ccc; padding:5px; text-align:left; vertical-align:middle;">{{ $oocevolution->data[$index]['remarks'] }}</td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td colspan="4" style="border:1px solid #ccc; padding:5px; text-align:center; vertical-align:middle;">No data available</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
 
                 <table>
                     
@@ -1829,6 +1865,35 @@
                         </td>
 
                         <th class="w-20">HOD Primary Review Complete Comment:</th>
+                        <td class="w-30">
+                            @if ($data->initial_phase_i_investigation_comment)
+                                {!! $data->initial_phase_i_investigation_comment !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">More Information Required By:</th>
+                        <td class="w-30">
+                            @if ($data->initial_phase_i_investigation_completed_by)
+                                {!! $data->initial_phase_i_investigation_completed_by !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                        <th class="w-20">More Information Required On:</th>
+                        <td class="w-30">
+                            @if ($data->initial_phase_i_investigation_completed_on)
+                                {{ $data->initial_phase_i_investigation_completed_on }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                        <th class="w-20">More Information Required Comment:</th>
                         <td class="w-30">
                             @if ($data->initial_phase_i_investigation_comment)
                                 {!! $data->initial_phase_i_investigation_comment !!}
