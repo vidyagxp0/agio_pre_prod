@@ -1765,11 +1765,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            @if (!empty($oocgrid) && !empty($oocgrid->data))
+                                              @if (!empty($oocgridDecoded) && !empty($oocgridDecoded->data))
                                                 @php
                                                     $serialNumber = 1;
                                                 @endphp
-                                                @foreach ($oocgrid->data as $oogrid)
+                                                @foreach ($oocgridDecoded->data as $oogrid)
                                                     <tr>
                                                         <td>{{ $serialNumber++ }}</td>
                                                         <td>

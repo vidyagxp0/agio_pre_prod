@@ -2084,10 +2084,19 @@ class OOCController extends Controller
         $ooc->assign_to_name = User::where('id', $ooc->assign_id)->value('name');
         $ooc->initiator_name = User::where('id', $ooc->initiator_id)->value('name');
 
-        $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
+       // $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
+
+ $oocgrid = OOC_Grid::where(['ooc_id'=> $id,'identifier'=>'Instrument Details'])->first();
+        $oocgridDecoded = [];
+        if ($oocgrid && $oocgrid->data) {
+            $oocgridDecoded = is_string($oocgrid->data)
+                ? json_decode($oocgrid->data, true)
+                : $oocgrid->data;
+        }
+
         $oocEvolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
 
-        return view('frontend.OOC.ooc_view' , compact('ooc','oocgrid','oocEvolution'));
+        return view('frontend.OOC.ooc_view' , compact('ooc','oocgrid','oocEvolution','oocgridDecoded'));
     }
 
     public function updateOutOfCalibration(Request $request,$id )
@@ -4292,13 +4301,90 @@ class OOCController extends Controller
         // =============================================Update Grid ================================//
         $oocGrid = $ooc->id;
         // if($request->has('instrumentDetail')){
-        if (!empty($request->instrumentdetails)) {
-        $instrumentDetail = OOC_Grid::where(['ooc_id' => $oocGrid, 'identifier' => 'Instrument Details'])->firstOrNew();
-        $instrumentDetail->ooc_id = $oocGrid;
-        $instrumentDetail->identifier = 'Instrument Details';
-        $instrumentDetail->data = $request->instrumentdetails;
-        $instrumentDetail->save();
+        // if (!empty($request->instrumentdetails)) {
+        // $instrumentDetail = OOC_Grid::where(['ooc_id' => $oocGrid, 'identifier' => 'Instrument Details'])->firstOrNew();
+        // $instrumentDetail->ooc_id = $oocGrid;
+        // $instrumentDetail->identifier = 'Instrument Details';
+        // $instrumentDetail->data = $request->instrumentdetails;
+        // dd($instrumentDetail);
+        // $instrumentDetail->save();
+        // }
+
+
+        ////////////////////////////////////////////////////////////////////////////////////
+
+             
+        if (!empty($request->instrumentdetails)) 
+        {
+            // dd($request->capa_closure_tab1);
+            $existingInitialdetails = OOC_Grid::where(['ooc_id' => $oocGrid, 'identifier' => 'Instrument Details'])->first();
+            $existingAuditorData = $existingInitialdetails ? $existingInitialdetails->data : [];
+
+                        $CapaDetailGrid = OOC_Grid::firstOrNew(['ooc_id' => $oocGrid, 'identifier' => 'Instrument Details',]);
+                        $CapaDetailGrid->ooc_id = $oocGrid;
+                        $CapaDetailGrid->identifier = 'Instrument Details';
+                        $CapaDetailGrid->data = $request->instrumentdetails;
+                        $CapaDetailGrid->save();
+
+
+                        $fieldNames = [
+                            'instrument_name' => 'Instrument Name ',
+                            'instrument_id' => 'Instrument ID',
+                            'remarks' => 'Remarks',
+                            'calibration' => 'Calibration Parameter',
+                            'acceptancecriteria' => 'Acceptance Criteria',
+                            'results' => 'Results',
+                        ];
+
+            // Track audit trail changes
+            if (is_array($request->instrumentdetails)) {
+                foreach ($request->instrumentdetails as $index => $newAuditor) {
+                    $previousAuditor = $existingAuditorData[$index] ?? [];
+
+                    // Track changes for each field
+                    $fieldsToTrack = ['instrument_name', 'instrument_id', 'remarks','calibration','acceptancecriteria','results'];
+                    foreach ($fieldsToTrack as $field) {
+                        $oldValue = $previousAuditor[$field] ?? 'Null';
+                        $newValue = $newAuditor[$field] ?? 'Null';
+
+                        // If there's a change, add an entry to the audit trail
+                        if ($oldValue !== $newValue) {
+                            $history = new OOCAuditTrail();
+                            $history->ooc_id = $oocGrid;
+                            $history->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
+                            $history->previous = $oldValue;
+                            $history->current = $newValue;
+                            $history->comment = "";
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocumentOoc->status;
+                            $history->change_to = $lastDocumentOoc->status;
+                            $history->change_from = $lastDocumentOoc->status;
+                            $history->action_name = $oldValue == 'Null' ? "New" : "Update";
+                            $history->save();
+                        }
+                    }
+                }
+            }
+        
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////
 
         //    if($request->has('oocevoluation')){
         if (!empty($request->instrumentdetails)) {
@@ -4895,6 +4981,11 @@ class OOCController extends Controller
                         'type' => 'success',
                     ]);
                 }
+ 
+                
+
+
+
 
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
@@ -5711,7 +5802,9 @@ class OOCController extends Controller
         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password))
          {
             $ooc = OutOfCalibration::find($id);
-
+          
+            $lastDocument = OutOfCalibration::find($id);
+           
 
             if ($ooc->stage == 2) {
                 $ooc->stage = "1";
@@ -5737,6 +5830,25 @@ class OOCController extends Controller
                 //     // }
                 // }
 
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
+
                 $ooc->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5745,9 +5857,9 @@ class OOCController extends Controller
             if ($ooc->stage == 3) {
                 $ooc->stage = "2";
                 $ooc->status = "HOD Primary Review";
-                $ooc->new_stage_reject_HOD_by = Auth::user()->name;
-                $ooc->new_stage_reject_HOD_on = Carbon::now()->format('d-M-Y');
-                $ooc->new_stage_reject_HOD_comment = $request->comment;
+                $ooc->stagethird_more_by = Auth::user()->name;
+                $ooc->stagethird_more_on = Carbon::now()->format('d-M-Y');
+                $ooc->stagethird_more_comment = $request->comment;
 
                 // $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
                 // foreach ($list as $u) {
@@ -5765,6 +5877,25 @@ class OOCController extends Controller
                 //         }
                 //     // }
                 // }
+
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "HOD Primary Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
 
                 $ooc->update();
                 toastr()->success('Document Sent');
@@ -5794,6 +5925,26 @@ class OOCController extends Controller
                 //     // }
                 // }
 
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "QA Head Primary Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
+
+
 
                 $ooc->update();
                 toastr()->success('Document Sent');
@@ -5822,6 +5973,25 @@ class OOCController extends Controller
                 //         }
                 //     // }
                 // }
+
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Under Phase-IA Investigation";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
                 $ooc->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5849,6 +6019,25 @@ class OOCController extends Controller
                 //         }
                 //     // }
                 // }
+
+                $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase IA HOD Primary Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
                 $ooc->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5876,6 +6065,25 @@ class OOCController extends Controller
                 //         }
                 //     // }
                 // }
+
+                 $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase IA QA Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
                 $ooc->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5903,6 +6111,26 @@ class OOCController extends Controller
                 //         }
                 //     // }
                 // }
+
+
+                 $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "P-IA QAH Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
                 $ooc->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5930,6 +6158,25 @@ class OOCController extends Controller
                 //         }
                 //     // }
                 // }
+
+                 $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Under Phase-IB Investigation";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
                 $ooc->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5957,6 +6204,27 @@ class OOCController extends Controller
                 //         }
                 //     // }
                 // }
+
+                
+                 $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase IB HOD Primary Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
+
                 $ooc->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5984,6 +6252,25 @@ class OOCController extends Controller
                 //         }
                 //     // }
                 // }
+
+                  $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "Phase IB QA Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
                 $ooc->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -6013,6 +6300,25 @@ class OOCController extends Controller
                 //         }
                 //     // }
                 // }
+
+                  $history = new OOCAuditTrail();
+                $history->ooc_id = $id;
+                
+                $history->activity_type = 'Not Applicable';
+                $history->previous = 'Not Applicable';
+                $history->action_name = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->current = 'Not Applicable';
+                $history->action = 'More Info Required';
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to = "P-IB QAH Review";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Plan Proposed';
+                $history->save();
                 $ooc->update();
                 toastr()->success('Document Sent');
                 return back();
