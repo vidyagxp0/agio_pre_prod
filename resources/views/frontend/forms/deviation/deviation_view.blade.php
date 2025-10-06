@@ -1,5 +1,5 @@
-@extends('frontend.layout.main')
-@section('container')
+@extends('frontend.rcms.layout.main_rcms')
+@section('rcms_container')
     @php
         $users = DB::table('users')->select('id', 'name')->get();
     @endphp
@@ -8,18 +8,17 @@
             display: none !important;
         }
 
-        header {
+       header .header_rcms_bottom {
             display: none;
         }
+
     </style>
     <style>
         textarea.note-codable {
             display: none !important;
         }
 
-        header {
-            display: none;
-        }
+       
 
         .sub-main-head {
             display: flex;

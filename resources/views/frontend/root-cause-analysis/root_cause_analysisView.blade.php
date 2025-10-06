@@ -1,5 +1,6 @@
-@extends('frontend.layout.main')
-@section('container')
+@extends('frontend.rcms.layout.main_rcms')
+@section('rcms_container')
+
 <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
         type='text/css' />
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
@@ -9,7 +10,10 @@
             display: none !important;
         }
 
-        header {
+        /* header {
+            display: none;
+        } */
+          header .header_rcms_bottom {
             display: none;
         }
     </style>
@@ -209,9 +213,7 @@
             display: none !important;
         }
 
-        header {
-            display: none;
-        }
+       
 
         .sub-main-head {
             display: flex;

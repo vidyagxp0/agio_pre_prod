@@ -1,37 +1,58 @@
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
+    @php
+        $users = DB::table('users')->select('id', 'name')->get();
+
+    @endphp
+
     <style>
-        header {
+        #step-form>div {
+            display: none
+        }
+
+        #step-form>div:nth-child(1) {
+            display: block;
+        }
+
+        .hide-input {
+            display: none !important;
+        }
+
+        .remove-file{
+            cursor: pointer;
+        }
+   
+        header .header_rcms_bottom {
             display: none;
         }
+
         .calenderauditee {
-        position: relative;
-    }
+            position: relative;
+        }
 
-    .new-date-data-field .input-date input.hide-input {
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-    }
+        .new-date-data-field .input-date input.hide-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
 
-    .new-date-data-field input {
-        border: 1px solid grey;
-        border-radius: 5px;
-        padding: 5px 15px;
-        display: block;
-        width: 100%;
-        background: white;
-    }
+        .new-date-data-field input {
+            border: 1px solid grey;
+            border-radius: 5px;
+            padding: 5px 15px;
+            display: block;
+            width: 100%;
+            background: white;
+        }
 
-    .calenderauditee input::-webkit-calendar-picker-indicator {
-        width: 100%;
-    }
-.new-moreinfo{
-    width: 100%;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
+        .calenderauditee input::-webkit-calendar-picker-indicator {
+            width: 100%;
+        }
+        .form-control{
+            margin-bottom: 20px;
+        }
+        
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"

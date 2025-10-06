@@ -1,8 +1,50 @@
-@extends('frontend.layout.main')
-@section('container')
+@extends('frontend.rcms.layout.main_rcms')
+@section('rcms_container')
     @php
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->select('id', 'name')->get();
+
     @endphp
+    <style>
+          
+        #step-form>div {
+            display: none
+        }
+
+        #step-form>div:nth-child(1) {
+            display: block;
+        }
+        
+        textarea.note-codable {
+            display: none !important;
+        }
+        .hide-input {
+            display: none;
+        }
+                                    
+
+        /* header {
+            display: none;
+        } */
+        .remove-file  {
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .remove-file :hover {
+            color: white;
+        }
+         header .header_rcms_bottom {
+            display: none;
+        }
+         .calenderauditee {
+            position: relative;
+        }
+         .form-control{
+            margin-bottom: 20px;
+        }
+
+    </style>
      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
          integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
@@ -14,24 +56,7 @@
                  "{{ Session::get('swal')['type'] }}")
          </script>
      @endif
-    <style>
-        textarea.note-codable {
-            display: none !important;
-        }
-
-        header {
-            display: none;
-        }
-        .remove-file  {
-            color: white;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .remove-file :hover {
-            color: white;
-        }
-    </style>
+    
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -94,10 +119,21 @@
         });
     </script>
 
-    <div class="form-field-head">
+    {{-- <div class="form-field-head">
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
             {{ Helpers::getDivisionName($data->division_id) }}/ CAPA
+        </div>
+    </div> --}}
+     <div id="rcms_form-head">
+        <div class="container-fluid">
+            <div class="inner-block">
+                {{-- <div class="head">PR-0001</div> --}}
+                <div class="slogan">
+                    <strong>Site Division/Project :</strong>
+                    {{ Helpers::getDivisionName($data->division_id) }} / CAPA
+                </div>
+            </div>
         </div>
     </div>
 
@@ -482,11 +518,7 @@
                                     });
                                     </script>
 
-                                    <style>
-                                    .hide-input {
-                                        display: none;
-                                    }
-                                    </style>
+                                    
 
                                         {{-- <div class="col-lg-6">
                                             <div class="group-input">
@@ -2782,15 +2814,7 @@
                 </div>
             </div>
 
-            <style>
-                #step-form>div {
-                    display: none
-                }
-
-                #step-form>div:nth-child(1) {
-                    display: block;
-                }
-            </style>
+          
 
             <script>
                 VirtualSelect.init({

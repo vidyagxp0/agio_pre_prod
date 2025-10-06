@@ -1,11 +1,14 @@
-@extends('frontend.layout.main')
-@section('container')
+@extends('frontend.rcms.layout.main_rcms')
+@section('rcms_container')
     <style>
         textarea.note-codable {
             display: none !important;
         }
 
-        header {
+        /* header {
+            display: none;
+        } */
+          header .header_rcms_bottom {
             display: none;
         }
     </style>

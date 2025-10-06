@@ -62,7 +62,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group" id="roleGroup">
+                {{-- <div class="form-group" id="roleGroup">
                     <label for="roles">Roles (Ctrl (windows) or Command (Mac) button to select multiple options)<span style="color: red">*</span></label>
                     <select class="form-control2 @error('roles') is-invalid @enderror" id="roles" name="roles[]" multiple required onchange="updateSelectedOptions()">
                         @foreach ($group as $role)
@@ -84,7 +84,44 @@
                         }
                         document.getElementById("selectedOptions").innerHTML = "Selected roles: <br>" + selectedOptions.join("<br>");
                     }
+                </script> --}}
+                <div class="form-group" id="roleGroup">
+                    <label for="roles">
+                        Roles (Click to select multiple options)<span style="color: red">*</span>
+                    </label>
+                    <select class="form-control2 @error('roles') is-invalid @enderror" 
+                            id="roles" name="roles[]" multiple required>
+                        @foreach ($group as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div id="selectedOptions"></div>
+
+                <script>
+                    const selectElement = document.getElementById("roles");
+
+                    for (let i = 0; i < selectElement.options.length; i++) {
+                        selectElement.options[i].addEventListener("mousedown", function (e) {
+                            e.preventDefault(); 
+                            this.selected = !this.selected; 
+                            updateSelectedOptions();
+                        });
+                    }
+
+                    function updateSelectedOptions() {
+                        let selectedOptions = [];
+                        for (let i = 0; i < selectElement.options.length; i++) {
+                            if (selectElement.options[i].selected) {
+                                selectedOptions.push(selectElement.options[i].text);
+                            }
+                        }
+                        document.getElementById("selectedOptions").innerHTML =
+                            "Selected roles: <br>" + selectedOptions.join("<br>");
+                    }
                 </script>
+
 
             </div>
 

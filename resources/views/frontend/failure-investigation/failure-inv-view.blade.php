@@ -1,6 +1,6 @@
 
-@extends('frontend.layout.main')
-@section('container')
+@extends('frontend.rcms.layout.main_rcms')
+@section('rcms_container')
     @php
         $users = DB::table('users')->select('id', 'name')->get();
     @endphp
@@ -8,19 +8,18 @@
         textarea.note-codable {
             display: none !important;
         }
+         header .header_rcms_bottom {
+                    display: none !important;
+                }
 
-        header {
+        /* header {
             display: none;
-        }
-    </style>
-    <style>
+        } */
+    
         textarea.note-codable {
             display: none !important;
         }
-
-        header {
-            display: none;
-        }
+       
 
         .sub-main-head {
             display: flex;
@@ -106,6 +105,13 @@
 
         .swal-icon {
             scale: 0.8 !important;
+        }
+        #step-form>div {
+            display: none
+        }
+
+        #step-form>div:nth-child(1) {
+            display: block;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -13986,15 +13992,7 @@
 
     <!-- -----------------------------------------------------end---------------------- -->
 
-    <style>
-        #step-form>div {
-            display: none
-        }
-
-        #step-form>div:nth-child(1) {
-            display: block;
-        }
-    </style>
+    
     <script>
         document.getElementById('myfile').addEventListener('change', function() {
             var fileListDiv = document.querySelector('.file-list');

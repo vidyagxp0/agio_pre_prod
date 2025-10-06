@@ -6,7 +6,10 @@
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
     </script>
     <style>
-        header {
+        /* header {
+            display: none;
+        } */
+          header .header_rcms_bottom {
             display: none;
         }
 

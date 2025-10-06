@@ -57,7 +57,7 @@
                     @endforeach
                     </select>
                 </div>
-                <div class="form-group" id="roleGroup">
+                {{-- <div class="form-group" id="roleGroup">
                     <label for="exampleInputName1">Roles (Ctrl (windows) or Command (Mac) button to select multiple options)<span style="color: red">*</span></label>
                     <select class="form-control2" id="roles" name="roles[]" multiple required onchange="updateSelectedOptions()">
                         @foreach ($group as $role)
@@ -79,6 +79,45 @@
                         }
                         document.getElementById("selectedOptions").innerHTML = "Selected roles: <br>" + selectedOptions.join("<br>");
                     }
+                </script> --}}
+                <div class="form-group" id="roleGroup">
+                    <label for="exampleInputName1">
+                        Roles (Click to select multiple options)<span style="color: red">*</span>
+                    </label>
+                    <select class="form-control2" id="roles" name="roles[]" multiple required>
+                        @foreach ($group as $role)
+                            <option value="{{ $role->id }}" {{ in_array($role->id, $userRoles) ? 'selected' : '' }}>
+                                {{ $role->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div id="selectedOptions"></div>
+
+                <script>
+                    const selectElement = document.getElementById("roles");
+
+                    for (let i = 0; i < selectElement.options.length; i++) {
+                        selectElement.options[i].addEventListener("mousedown", function (e) {
+                            e.preventDefault(); // stop default deselect behavior
+                            this.selected = !this.selected; // toggle selection
+                            updateSelectedOptions();
+                        });
+                    }
+
+                    function updateSelectedOptions() {
+                        let selectedOptions = [];
+                        for (let i = 0; i < selectElement.options.length; i++) {
+                            if (selectElement.options[i].selected) {
+                                selectedOptions.push(selectElement.options[i].text);
+                            }
+                        }
+                        document.getElementById("selectedOptions").innerHTML =
+                            "Selected roles: <br>" + selectedOptions.join("<br>");
+                    }
+
+                    updateSelectedOptions();
                 </script>
 
             </div>

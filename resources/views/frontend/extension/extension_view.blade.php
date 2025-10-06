@@ -1,5 +1,6 @@
-@extends('frontend.layout.main')
-@section('container')
+@extends('frontend.rcms.layout.main_rcms')
+@section('rcms_container')
+
     @php
         $users = DB::table('users')->select('id', 'name')->where('active', 1)->get();
         $userRoles = DB::table('user_roles')->select('user_id')->where('q_m_s_roles_id', 4)->distinct()->get();
@@ -32,10 +33,12 @@
             display: none !important;
         }
 
-        header {
+        /* header {
+            display: none;
+        } */
+        header .header_rcms_bottom {
             display: none;
         }
-
         .remove-file {
             color: white;
             cursor: pointer;
@@ -68,6 +71,14 @@
 
         #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
             border-radius: 20px 0px 0px 20px;
+        }
+        #change-control-fields .inner-block .main-head{
+                padding: 15px;
+                color: black;
+                background: white;
+                margin-bottom: 0;
+                font-weight: bold;
+                font-size: 1.2rem;
         }
 
         /* #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(4) {

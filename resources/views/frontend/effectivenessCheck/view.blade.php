@@ -4,7 +4,10 @@
         $users = DB::table('users')->get();
     @endphp
     <style>
-        header {
+        /* header {
+            display: none;
+        } */
+          header .header_rcms_bottom {
             display: none;
         }
 

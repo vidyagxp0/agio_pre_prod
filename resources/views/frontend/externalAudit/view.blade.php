@@ -1,5 +1,5 @@
-@extends('frontend.layout.main')
-@section('container')
+@extends('frontend.rcms.layout.main_rcms')
+@section('rcms_container')
     @php
        
         $users = DB::table('users')->select('id', 'name')->get();
@@ -10,7 +10,10 @@
             display: none !important;
         }
 
-        header {
+        /* header {
+            display: none;
+        } */
+          header .header_rcms_bottom {
             display: none;
         }
 
