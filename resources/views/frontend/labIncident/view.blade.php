@@ -1818,7 +1818,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Root Cause">Root Cause  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
+                                        <label for="Root Cause">Probable Root Cause  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
                                         <textarea name="Root_Cause" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{ $data->Root_Cause }}</textarea>
                                     </div>
                                 </div>
@@ -1884,12 +1884,7 @@
                                     });
                                 </script>
 
-                                <div class="col-12">
-                                <div class="group-input">
-                                    <label for="detail investigation ">Detail Investigation / Probable Root Cause   @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                                <textarea name="details_investigation_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->details_investigation_ia}}</textarea>
-                            </div>
-                        </div>
+                               
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="proposed corrective action ">Proposed Corrective Action/Corrective Action Taken  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
@@ -1917,6 +1912,13 @@
                     <textarea name="result_of_repeat_analysis_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->result_of_repeat_analysis_ia}}</textarea>
                 </div>
             </div>
+
+                        <div class="col-12">
+                                <div class="group-input">
+                                    <label for="detail investigation ">Root Cause   @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
+                                <textarea name="details_investigation_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->details_investigation_ia}}</textarea>
+                            </div>
+                        </div>
             <div class="col-12">
                 <div class="group-input">
                     <label for="Corrective and Preventive Action">Corrective and Preventive Action  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
