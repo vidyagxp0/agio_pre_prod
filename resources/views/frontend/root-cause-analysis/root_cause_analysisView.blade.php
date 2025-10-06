@@ -1,5 +1,5 @@
-@extends('frontend.rcms.layout.main_rcms')
-@section('rcms_container')
+@extends('frontend.layout.main')
+@section('container')
 
 <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
         type='text/css' />
@@ -13,7 +13,7 @@
         /* header {
             display: none;
         } */
-          header .header_rcms_bottom {
+           header .header_rcms_bottom ,.container-fluid.header-bottom,.search-bar{
             display: none;
         }
     </style>
@@ -376,9 +376,11 @@ dd($data->initiator_id , Auth::user()->id);
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
+                            @if(Helpers::getChildData($data->id, 'RCA') < 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Review Complete
                             </button>
@@ -388,9 +390,9 @@ dd($data->initiator_id , Auth::user()->id);
                                 More Info Required
                             </button>
 
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button>
+                            </button> --}}
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Review Complete
@@ -404,7 +406,6 @@ dd($data->initiator_id , Auth::user()->id);
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>

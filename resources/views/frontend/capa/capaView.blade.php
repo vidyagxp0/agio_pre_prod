@@ -1,5 +1,5 @@
-@extends('frontend.rcms.layout.main_rcms')
-@section('rcms_container')
+@extends('frontend.layout.main')
+@section('container')
     @php
         $users = DB::table('users')->select('id', 'name')->get();
 
@@ -34,7 +34,7 @@
         .remove-file :hover {
             color: white;
         }
-         header .header_rcms_bottom {
+          header .header_rcms_bottom ,.container-fluid.header-bottom,.search-bar{
             display: none;
         }
          .calenderauditee {

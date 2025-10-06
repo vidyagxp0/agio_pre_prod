@@ -7,7 +7,7 @@
         /* header {
             display: none;
         } */
-          header .header_rcms_bottom {
+           header .header_rcms_bottom ,.container-fluid.header-bottom,.search-bar{
             display: none;
         }
 

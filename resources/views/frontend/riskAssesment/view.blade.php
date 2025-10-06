@@ -1,5 +1,5 @@
-@extends('frontend.rcms.layout.main_rcms')
-@section('rcms_container')
+@extends('frontend.layout.main')
+@section('container')
 
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
         type='text/css' />
@@ -270,9 +270,9 @@
         /* header {
             display: none;
         } */
-        header .header_rcms_bottom {
-            display: none;
-        }
+       header .header_rcms_bottom ,.container-fluid.header-bottom,.search-bar{
+                    display: none;
+                }
         .main-danger-block {
             display: flex;
         }

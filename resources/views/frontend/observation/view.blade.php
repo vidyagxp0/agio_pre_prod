@@ -2391,7 +2391,7 @@
     });
      var stage = @json($data->stage); // PHP se JS me stage bhejna
 
-    if (stage != 3) {
+    if (stage != 2) {
         $('.summernote').summernote('disable');  // non-editable
     } else {
         $('.summernote').summernote('enable');   // editable

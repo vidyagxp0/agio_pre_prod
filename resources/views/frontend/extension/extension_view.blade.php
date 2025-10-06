@@ -1,5 +1,5 @@
-@extends('frontend.rcms.layout.main_rcms')
-@section('rcms_container')
+@extends('frontend.layout.main')
+@section('container')
 
     @php
         $users = DB::table('users')->select('id', 'name')->where('active', 1)->get();
@@ -36,9 +36,10 @@
         /* header {
             display: none;
         } */
-        header .header_rcms_bottom {
+        header .header_rcms_bottom ,.container-fluid.header-bottom,.search-bar{
             display: none;
         }
+      
         .remove-file {
             color: white;
             cursor: pointer;
@@ -90,6 +91,7 @@
             border-radius: 5px;
             margin-bottom: 13px;
         }
+        
     </style>
     </style>
 

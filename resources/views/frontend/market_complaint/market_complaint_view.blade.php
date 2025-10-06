@@ -1,13 +1,13 @@
-@extends('frontend.rcms.layout.main_rcms')
-@section('rcms_container')
+@extends('frontend.layout.main')
+@section('container')
     <style>
         textarea.note-codable {
             display: none !important;
         }
 
-         header .header_rcms_bottom {
-            display: none;
-        }
+        header .header_rcms_bottom ,.container-fluid.header-bottom,.search-bar{
+                    display: none;
+                }
 
         #change-control-fields>div.container-fluid>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div.bg-danger {
             border-radius: 0px 20px 20px 0px;
