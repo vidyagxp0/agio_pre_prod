@@ -4,7 +4,9 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use App\Models\Labincident_Second;
+use App\Models\ActionItem;
 use App\Models\QMSDivision;
+use App\Models\Resampling;
 use Illuminate\Http\Request;
 use App\Models\Capa;
 use Illuminate\Support\Facades\DB;
@@ -6094,7 +6096,31 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-                return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data_record','parent_due_date','parent_division_id'));
+              
+                           $count = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Lab Incident')
+                    ->count();
+
+             $countData = $count + 1;
+
+         if ($request->revision == "Extension"){
+            $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'Lab Incident')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'closed-reject'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }   
+               return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data_record','parent_due_date','parent_division_id'));
 
             }
 
@@ -6116,13 +6142,13 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
            }
 
-
+////////////////////////////////////////////////////////////////////
            public function lab_incident_extension_child(Request $request, $id)
            {
                $cc = LabIncident::find($id);
                $cft = [];
                $parent_id = $id;
-               $parent_type = "LabIncident";
+               $parent_type = "Lab Incident";
                $old_records = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -6146,7 +6172,31 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                    $data=LabIncident::find($id);
                    $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                     $count = Helpers::getChildData($id, $parent_type);
-                    $countData = $count + 1;
+                 
+                    
+             $count = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Lab Incident')
+                    ->count();
+
+             $countData = $count + 1;
+
+         if ($request->revision == "Extension"){
+            $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'Lab Incident')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'closed-reject'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }           
                    return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'countData', 'extension_record','parent_division_id','parent_due_date'));
 
                }
@@ -6651,6 +6701,176 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 return back();
             }
                 if ($changeControl->stage == 4) {
+
+
+                    ///////////////////////////////////////////////////////////////////////////
+
+
+
+                    $Resamplingchilds = Resampling::where('parent_id', $id)
+                            ->where('parent_type', 'Lab Incident')
+                            ->get();
+                                $hasPendingResampling = false;
+                            foreach ($Resamplingchilds as $ext) {
+                                    $Resamplingchildstatus = trim(strtolower($ext->status));
+                                    if ($Resamplingchildstatus !== 'closed - done') {
+                                        $hasPendingResampling = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPendingResampling) {
+                            // $Resamplingchildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPendingResampling) {
+                                Session::flash('swal', [
+                                    'title' => 'Resampling Child Pending!',
+                                    'message' => 'You cannot proceed until Resampling Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
+
+                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                            ->where('parent_type', 'Lab Incident')
+                            ->get();
+                                $hasPendingRCA = false;
+                            foreach ($rcachilds as $ext) {
+                                    $rcachildstatus = trim(strtolower($ext->status));
+                                    if ($rcachildstatus !== 'closed - done') {
+                                        $hasPendingRCA = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPendingRCA) {
+                            // $rcachildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPendingRCA) {
+                                Session::flash('swal', [
+                                    'title' => 'RCA Child Pending!',
+                                    'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                                ->where('parent_type', 'Lab Incident')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($actionchilds as $ext) {
+                                        $actionchildstatus = trim(strtolower($ext->status));
+                                        if ($actionchildstatus !== 'closed - done') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Action Item Child Pending!',
+                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
+
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
+                    $capachilds = Capa::where('parent_id', $id)
+                                    ->where('parent_type', 'Lab Incident')
+                                    ->get();
+                                        $hasPending = false;
+                                    foreach ($capachilds as $ext) {
+                                            $capachildstatus = trim(strtolower($ext->status));
+                                            if ($capachildstatus !== 'closed - done') {
+                                                $hasPending = true;
+                                                break;
+                                            }
+                                        }
+                                if ($hasPending) {
+                                    // $capachildstatus = trim(strtolower($extensionchild->status));
+                                    if ($hasPending) {
+                                        Session::flash('swal', [
+                                            'title' => 'CAPA Child Pending!',
+                                            'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                            'type' => 'warning',
+                                        ]);
+
+                                    return redirect()->back();
+                                    }
+                                } else {
+                                    // Flash message for success (when the form is filled correctly)
+                                    Session::flash('swal', [
+                                        'title' => 'Success!',
+                                        'message' => 'Document Sent',
+                                        'type' => 'success',
+                                    ]);
+                                }
+
+                 $Extensionchilds = extension_new::where('parent_id', $id)
+                                    ->where('parent_type', 'Lab Incident')
+                                    ->get();
+                                        $hasPending = false;
+                                    foreach ($Extensionchilds as $ext) {
+                                            $capachildstatus = trim(strtolower($ext->status));
+                                            if ($capachildstatus !== 'closed - done') {
+                                                $hasPending = true;
+                                                break;
+                                            }
+                                        }
+                                if ($hasPending) {
+                                    // $capachildstatus = trim(strtolower($extensionchild->status));
+                                    if ($hasPending) {
+                                        Session::flash('swal', [
+                                            'title' => 'Extension Child Pending!',
+                                            'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                            'type' => 'warning',
+                                        ]);
+
+                                    return redirect()->back();
+                                    }
+                                } else {
+                                    // Flash message for success (when the form is filled correctly)
+                                    Session::flash('swal', [
+                                        'title' => 'Success!',
+                                        'message' => 'Document Sent',
+                                        'type' => 'success',
+                                    ]);
+                                }
+
+
+                    ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
                     if (empty($changeControl->Investigation_Details && $changeControl->Action_Taken
                      && $changeControl->Root_Cause && $changeControl->details_investigation_ia
                      && $changeControl->proposed_correctivei_ia && $changeControl->repeat_analysis_plan_ia
@@ -6673,6 +6893,9 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                             'message' => ' Sent for QC Head/HOD Secondary Review state'
                         ]);
                     }
+
+
+                  
                     $changeControl->stage = "5";
                     $changeControl->status = "QC Head/HOD Secondary Review";
                     $changeControl->all_activities_completed_comment =$request->comment;
