@@ -1567,9 +1567,9 @@ class Helpers
 
     public static function getChildData($id, $parent_type){
         $count = 0;
-        if($parent_type == 'LabIncident')
+        if($parent_type == 'Lab Incident')
        {
-        $count = extension_new::where('parent_type', 'LabIncident')
+        $count = extension_new::where('parent_type', 'Lab Incident')
         ->where('parent_id', $id)
         ->count();
        }
