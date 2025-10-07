@@ -2534,7 +2534,7 @@ class EffectivenessCheckController extends Controller
                 $effective->status = 'Opened';
                 $effective->effectiveness_check_complete_moreinfo_by =  Auth::user()->name;
                 $effective->effectiveness_check_complete_moreinfo_on = Carbon::now()->format('d-M-Y');
-                $effective->effectiveness_check_complete_moreinfo_comment = $request->effectiveness_check_complete_moreinfo_comment;
+                $effective->effectiveness_check_complete_moreinfo_comment = $request->comment;
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->extension_id = $id;
@@ -2624,7 +2624,7 @@ class EffectivenessCheckController extends Controller
                 $effective->status = 'Acknowledge';
                 $effective->hod_review_complete_moreinfo_by =  Auth::user()->name;
                 $effective->hod_review_complete_moreinfo_on = Carbon::now()->format('d-M-Y');
-                $effective->hod_review_complete_moreinfo_comment = $request->effectiveness_check_complete_moreinfo_comment;
+                $effective->hod_review_complete_moreinfo_comment = $request->comment;
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->extension_id = $id;
@@ -2637,7 +2637,7 @@ class EffectivenessCheckController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
-                $history->change_to = "HOD Review";
+                $history->change_to = "Acknowledge";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
                 $history->action_name = 'Not Applicable';
                 $history->save();
@@ -2710,7 +2710,7 @@ class EffectivenessCheckController extends Controller
                 $effective->status = 'QA/CQA Review';
                 $effective->final_moreinfo_by =  Auth::user()->name;
                 $effective->final_moreinfo_on = Carbon::now()->format('d-M-Y');
-                $effective->final_moreinfo_comment = $request->effectiveness_check_complete_moreinfo_comment;
+                $effective->final_moreinfo_comment = $request->comment;
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->extension_id = $id;
@@ -2796,9 +2796,9 @@ class EffectivenessCheckController extends Controller
             if ($effective->stage == 6) {
                 $effective->stage = '5';
                 $effective->status = 'QA/CQA Review';
-                $effective->final_moreinfo_by =  Auth::user()->name;
-                $effective->final_moreinfo_on = Carbon::now()->format('d-M-Y');
-                $effective->final_moreinfo_comment = $request->effectiveness_check_complete_moreinfo_comment;
+                $effective->more_info_effective_by =  Auth::user()->name;
+                $effective->more_info_effective_on = Carbon::now()->format('d-M-Y');
+                $effective->more_info_effective_comment = $request->comment;
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->extension_id = $id;
@@ -2836,7 +2836,7 @@ class EffectivenessCheckController extends Controller
                 $effective->status = 'Work Completion ';
                 $effective->final_moreinfo_by =  Auth::user()->name;
                 $effective->final_moreinfo_on = Carbon::now()->format('d-M-Y');
-                $effective->final_moreinfo_comment = $request->effectiveness_check_complete_moreinfo_comment;
+                $effective->final_moreinfo_comment = $request->comment;
 
                 $history = new EffectivenessCheckAuditTrail();
                 $history->extension_id = $id;
@@ -2849,7 +2849,7 @@ class EffectivenessCheckController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status; // Corrected variable name here
-                $history->change_to = "QA/CQA Review";
+                $history->change_to = "Work Completion";
                 $history->change_from = $lastopenState->status; // Corrected variable name here
                 $history->action_name = 'Not Applicable';
                 // $history->stage = '6';
