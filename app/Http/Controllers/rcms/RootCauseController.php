@@ -12,6 +12,7 @@ use App\Models\RootCauseAnalysesGrid;
 use App\Models\RootCauseAnalysisHistory;
 use App\Models\Capa;
 use App\Models\extension_new;
+use App\Models\ActionItem;
 use App\Models\OpenStage;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
@@ -3284,9 +3285,8 @@ class RootCauseController extends Controller
             $root = RootCauseAnalysis::find($id);
             $lastDocument =  RootCauseAnalysis::find($id);
             
-
             if ($root->stage == 1) {
-                if (!$root->short_description) {
+                if (!$root->short_description || empty($root->assign_to) ||  empty($root->qa_reviewer) || empty($root->due_date) || empty($root->initiated_through) || empty($root->department) ) {
 
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
@@ -3391,7 +3391,7 @@ class RootCauseController extends Controller
                         $hasPending1 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                 $hasPending1 = true;
                                 break;
                             }
@@ -3401,7 +3401,7 @@ class RootCauseController extends Controller
                         // $extensionchildStatus = trim(strtolower($extensionchild->status));
                             Session::flash('swal', [
                                 'title' => 'Extension Child Pending!',
-                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'message' => 'You cannot proceed — Extension Child is still pending.',
                                 'type' => 'warning',
                             ]);
 
@@ -3597,6 +3597,97 @@ class RootCauseController extends Controller
                         'message' => 'Sent for HOD Final Review state'
                     ]);
                 }
+                  $capachilds = Capa::where('parent_id', $id)
+                ->where('parent_type', 'RCA')
+                ->get();
+                    $hasPending = false;
+                foreach ($capachilds as $ext) {
+                        $capachildstatus = trim(strtolower($ext->status));
+                        if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled') {
+                            $hasPending = true;
+                            break;
+                        }
+                    }
+               if ($hasPending) {
+                // $capachildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPending) {
+                       Session::flash('swal', [
+                           'title' => 'CAPA Child Pending!',
+                           'message' => 'You cannot proceed — some Capa Child is still pending.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
+                $actionchilds = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'RCA')
+                ->get();
+                    $hasPendingaction = false;
+                foreach ($actionchilds as $ext) {
+                        $actionchildstatus = trim(strtolower($ext->status));
+                        if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled') {
+                            $hasPendingaction = true;
+                            break;
+                        }
+                    }
+               if ($hasPendingaction) {
+                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPendingaction) {
+                       Session::flash('swal', [
+                           'title' => 'Action Item Child Pending!',
+                           'message' => 'You cannot proceed — some Action Item Child is still pending.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
+               // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'RCA')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed — some Extension Child is still pending.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $root->stage = "5";
                 $root->status = 'HOD Final Review';
                 $root->submitted_by = Auth::user()->name;
@@ -3744,6 +3835,37 @@ class RootCauseController extends Controller
                         'message' => 'Sent for Final QA/CQA Review state'
                     ]);
                 }
+                 // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'RCA')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child .',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $root->stage = "6";
                 $root->status = "Final QA/CQA Review";
                 $root->HOD_Final_Review_Complete_By = Auth::user()->name;
@@ -3843,6 +3965,37 @@ class RootCauseController extends Controller
                         'message' => 'Sent for QAH/CQAH/designee Final Review state'
                     ]);
                 }
+                 // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'RCA')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $root->stage = "7";
                 $root->status = "QAH/CQAH Final Approval";
                 $root->Final_QA_Review_Complete_By = Auth::user()->name;
@@ -3946,6 +4099,37 @@ class RootCauseController extends Controller
                         'message' => 'Sent for Closed - Done'
                     ]);
                 }
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'RCA')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $root->stage = "8";
                 $root->status = "Closed - Done";
                 $root->evaluation_complete_by = Auth::user()->name;
