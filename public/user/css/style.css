@@ -478,7 +478,7 @@ header .header-bottom.bottom-pr-links {
 
 #helpdesk-personnel .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     border-radius: 0px;
     background: #ffffff;
     overflow: hidden;
@@ -529,7 +529,7 @@ header .header-bottom.bottom-pr-links {
 #dashboard .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -1540,7 +1540,7 @@ select.goog-te-combo {
 #document .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -2331,7 +2331,7 @@ section#pdf-page .watermark {
 #my-dms .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -2662,7 +2662,7 @@ section#pdf-page .watermark {
 #tms-dashboard .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
