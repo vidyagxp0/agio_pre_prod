@@ -5,6 +5,7 @@ namespace App\Http\Controllers\rcms;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\ActionItem;
+use App\Models\Capa;
 use App\Models\AdditionalInformation;
 use App\Models\{CC,ChangeControlCftResponse};
 use App\Models\RecordNumber;
@@ -2700,7 +2701,8 @@ class CCController extends Controller
         $info = AdditionalInformation::where('cc_id', $id)->first();
         $comments = GroupComments::where('cc_id', $id)->first();
         $data1  = ChangeControlComment::where('cc_id', $id)->first();
-        // dd($data1);
+        $dataMore  = ChangeControlComment::where('cc_id', $id)->first();
+        //  dd($dataMore);
 
         // $assessment = RiskAssessment::where('cc_id', $id)->first();
         $approcomments = QaApprovalComments::where('cc_id', $id)->first();
@@ -2731,6 +2733,7 @@ class CCController extends Controller
             'cc_cfts',
             'comments',
             'impactassement',
+            'dataMore',
             // 'assessment',
             'approcomments',
             'closure',
@@ -9305,6 +9308,40 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     ]);
                 }
 
+
+                    //Action Item
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'CC')
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
                      // exetnsion child validation
                         $extensionchild = extension_new::where('parent_id', $id)
                         ->where('parent_type', 'CC')
@@ -10276,6 +10313,11 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $changeControl->RA_review_required_on = Carbon::now()->format('d-M-Y');
                 $changeControl->RA_review_required_comment = $request->comments;
 
+                //   $changeControl->QA_final_review_by = Auth::user()->name;
+                //     $changeControl->QA_final_review_on = Carbon::now()->format('d-M-Y');
+                //     $changeControl->QA_final_review_comment = $request->comments;
+
+
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
                 $history->activity_type = 'RA Approval By, RA Approval On';
@@ -10409,6 +10451,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                 $changeControl->stage = "7";
                 $changeControl->status = "QA/CQA Final Review";
+             
 
 
                 $changeControl->RA_review_completed_by = Auth::user()->name;
@@ -11035,6 +11078,38 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             if ($changeControl->stage == 7) {
 
 
+                  // exetnsion child validation
+                        $extensionchild = extension_new::where('parent_id', $id)
+                        ->where('parent_type', 'CC')
+                        ->get();
+                            $hasPending6 = false;
+                        foreach ($extensionchild as $ext) {
+                                $extensionchildStatus = trim(strtolower($ext->status));
+                                if ($extensionchildStatus !== 'closed - done') {
+                                    $hasPending6 = true;
+                                    break;
+                                }
+                            }
+
+                        if ($hasPending6) {
+                            // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                                Session::flash('swal', [
+                                    'title' => 'Extension Child Pending!',
+                                    'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Sent for Next Stage',
+                                'type' => 'success',
+                            ]);
+                        }
+                   
 
                 if (!empty($updateCFT->qa_cqa_comments) )
                 {
@@ -11687,6 +11762,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             if ($changeControl->stage == 7) {
 
 
+             
+
                 if (is_null($updateCFT->qa_cqa_comments))
                 {
                     Session::flash('swal', [
@@ -11784,6 +11861,106 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
 
             if ($changeControl->stage == 9) {
+
+
+
+                        $extensionchild = extension_new::where('parent_id', $id)
+                        ->where('parent_type', 'CC')
+                        ->get();
+                            $hasPending9 = false;
+                        foreach ($extensionchild as $ext) {
+                                $extensionchildStatus = trim(strtolower($ext->status));
+                                if ($extensionchildStatus !== 'closed - done') {
+                                    $hasPending9 = true;
+                                    break;
+                                }
+                            }
+
+                        if ($hasPending9) {
+                            // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                                Session::flash('swal', [
+                                    'title' => 'Extension Child Pending!',
+                                    'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Sent for Next Stage',
+                                'type' => 'success',
+                            ]);
+                        }
+
+                 //Action Item Child
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                            ->where('parent_type', 'CC')
+                            ->get();
+                                $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                    $actionchildstatus = trim(strtolower($ext->status));
+                                    if ($actionchildstatus !== 'closed - done') {
+                                        $hasPendingaction = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPendingaction) {
+                            // $actionchildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPendingaction) {
+                                Session::flash('swal', [
+                                    'title' => 'Action Item Child Pending!',
+                                    'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
+
+
+             //CAPA Child
+
+             $capachilds = Capa::where('parent_id', $id)
+                ->where('parent_type', 'CC')
+                ->get();
+                    $hasPending = false;
+                foreach ($capachilds as $ext) {
+                        $capachildstatus = trim(strtolower($ext->status));
+                        if ($capachildstatus !== 'closed - done') {
+                            $hasPending = true;
+                            break;
+                        }
+                    }
+               if ($hasPending) {
+                // $capachildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPending) {
+                       Session::flash('swal', [
+                           'title' => 'CAPA Child Pending!',
+                           'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
                 if (is_null($updateCFT->intial_update_comments))
                 {
                     Session::flash('swal', [
@@ -11951,6 +12128,38 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
 
             if ($changeControl->stage == 10) {
+
+                
+                        $extensionchild = extension_new::where('parent_id', $id)
+                        ->where('parent_type', 'CC')
+                        ->get();
+                            $hasPending9 = false;
+                        foreach ($extensionchild as $ext) {
+                                $extensionchildStatus = trim(strtolower($ext->status));
+                                if ($extensionchildStatus !== 'closed - done') {
+                                    $hasPending9 = true;
+                                    break;
+                                }
+                            }
+
+                        if ($hasPending9) {
+                            // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                                Session::flash('swal', [
+                                    'title' => 'Extension Child Pending!',
+                                    'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Sent for Next Stage',
+                                'type' => 'success',
+                            ]);
+                        }
                 if (is_null($updateCFT->hod_final_review_comment))
                 {
                     Session::flash('swal', [
@@ -12043,6 +12252,38 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         }
 
         if ($changeControl->stage == 11) {
+
+
+              $extensionchild = extension_new::where('parent_id', $id)
+                        ->where('parent_type', 'CC')
+                        ->get();
+                            $hasPending9 = false;
+                        foreach ($extensionchild as $ext) {
+                                $extensionchildStatus = trim(strtolower($ext->status));
+                                if ($extensionchildStatus !== 'closed - done') {
+                                    $hasPending9 = true;
+                                    break;
+                                }
+                            }
+
+                        if ($hasPending9) {
+                            // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                                Session::flash('swal', [
+                                    'title' => 'Extension Child Pending!',
+                                    'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Sent for Next Stage',
+                                'type' => 'success',
+                            ]);
+                        }
             if (is_null($updateCFT->implementation_verification_comments))
             {
                 Session::flash('swal', [
@@ -12161,36 +12402,36 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         }
 
         // exetnsion child validation
-                        $extensionchild = extension_new::where('parent_id', $id)
-                        ->where('parent_type', 'CC')
-                        ->get();
-                            $hasPending10 = false;
-                        foreach ($extensionchild as $ext) {
-                                $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
-                                    $hasPending10 = true;
-                                    break;
-                                }
-                            }
+                        // $extensionchild = extension_new::where('parent_id', $id)
+                        // ->where('parent_type', 'CC')
+                        // ->get();
+                        //     $hasPending10 = false;
+                        // foreach ($extensionchild as $ext) {
+                        //         $extensionchildStatus = trim(strtolower($ext->status));
+                        //         if ($extensionchildStatus !== 'closed - done') {
+                        //             $hasPending10 = true;
+                        //             break;
+                        //         }
+                        //     }
 
-                        if ($hasPending10) {
-                            // $extensionchildStatus = trim(strtolower($extensionchild->status));
-                                Session::flash('swal', [
-                                    'title' => 'Extension Child Pending!',
-                                    'message' => 'You cannot proceed until Extension Child is Closed-Done.',
-                                    'type' => 'warning',
-                                ]);
+                        // if ($hasPending10) {
+                        //     // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                        //         Session::flash('swal', [
+                        //             'title' => 'Extension Child Pending!',
+                        //             'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                        //             'type' => 'warning',
+                        //         ]);
 
-                            return redirect()->back();
+                        //     return redirect()->back();
                             
-                        } else {
-                            // Flash message for success (when the form is filled correctly)
-                            Session::flash('swal', [
-                                'title' => 'Success!',
-                                'message' => 'Sent for Next Stage',
-                                'type' => 'success',
-                            ]);
-                        }
+                        // } else {
+                        //     // Flash message for success (when the form is filled correctly)
+                        //     Session::flash('swal', [
+                        //         'title' => 'Success!',
+                        //         'message' => 'Sent for Next Stage',
+                        //         'type' => 'success',
+                        //     ]);
+                        // }
         $changeControl->stage = "13";
         $changeControl->status = "Closed Done";
 
@@ -12289,9 +12530,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             if ($changeControl->stage == 12) {
                 $changeControl->stage = "11";
                 $changeControl->status = "QA/CQA Closure Approval";
-                $changeControl->QaClouseToPostImplementationBy = Auth::user()->name;
-                $changeControl->QaClouseToPostImplementationOn = Carbon::now()->format('d-M-Y');
-                $changeControl->QaClouseToPostImplementationComment = $request->comments;
+                $comment->cc_id =$id;
+                $comment->QaClouseToPostImplementationBy = Auth::user()->name;
+                $comment->QaClouseToPostImplementationOn = Carbon::now()->format('d-M-Y');
+                $comment->QaClouseToPostImplementationComment = $request->comments;
+                $comment->save();
+                
 
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
@@ -12318,7 +12562,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "QA Closure Approval";
+                $history->change_to = "Implementation Verification by QA/CQA";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
@@ -12371,9 +12615,18 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             if ($changeControl->stage == 11) {
                 $changeControl->stage = "9";
                 $changeControl->status = "Pending Initiator Update";
-                $changeControl->QaClouseToPostImplementationBy = Auth::user()->name;
-                $changeControl->QaClouseToPostImplementationOn = Carbon::now()->format('d-M-Y');
-                $changeControl->QaClouseToPostImplementationComment = $request->comments;
+                // $changeControl->QaClouseToPostImplementationBy = Auth::user()->name;
+                // $changeControl->QaClouseToPostImplementationOn = Carbon::now()->format('d-M-Y');
+                // $changeControl->QaClouseToPostImplementationComment = $request->comments;
+
+
+                
+                $comment->cc_id =$id;
+                $comment->send_to_pending_initiator_by = Auth::user()->name;
+                $comment->send_to_pending_initiator_on = Carbon::now()->format('d-M-Y');
+                $comment->send_to_pending_initiator_comment = $request->comments;
+
+                $comment->save();
 
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
@@ -12922,6 +13175,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $comment->HodToOpenedBy = Auth::user()->name;
                 $comment->HodToOpenedOn = Carbon::now()->format('d-M-Y');
                 $comment->HodToOpenedComment = $request->comments;
+
                 $comment->save();
 
                 $history = new RcmDocHistory();
@@ -13309,6 +13563,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $changeControl->qa_final_to_qainital_on = Carbon::now()->format('d-M-Y');
         $changeControl->qa_final_to_qainital_comment = $request->comments;
 
+
         $history = new RcmDocHistory();
         $history->cc_id = $id;
 
@@ -13487,6 +13742,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'CC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1; 
+          
             return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
         }
         if ($request->revision == "New Document") {
