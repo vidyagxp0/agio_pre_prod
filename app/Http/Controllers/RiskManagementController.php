@@ -7,6 +7,8 @@ use App\Models\RiskAuditTrail;
 use App\Models\RiskManagement;
 use App\Models\RiskAssesmentGrid;
 use App\Models\RoleGroup;
+use App\Models\ActionItem;
+use App\Models\Capa;
 use App\Models\User;
 use App\Models\RiskManagmentCft;
 use App\Models\RiskAssesmentCftResponce;
@@ -10336,6 +10338,96 @@ class RiskManagementController extends Controller
                         ]);
                     }
 
+                     $capachilds = Capa::where('parent_id', $id)
+                ->where('parent_type', 'Risk Assesment')
+                ->get();
+                    $hasPending = false;
+                foreach ($capachilds as $ext) {
+                        $capachildstatus = trim(strtolower($ext->status));
+                        if ($capachildstatus !== 'closed - done') {
+                            $hasPending = true;
+                            break;
+                        }
+                    }
+               if ($hasPending) {
+                // $capachildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPending) {
+                       Session::flash('swal', [
+                           'title' => 'CAPA Child Pending!',
+                           'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
+                $actionchilds = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'Risk Assesment')
+                ->get();
+                    $hasPendingaction = false;
+                foreach ($actionchilds as $ext) {
+                        $actionchildstatus = trim(strtolower($ext->status));
+                        if ($actionchildstatus !== 'closed - done') {
+                            $hasPendingaction = true;
+                            break;
+                        }
+                    }
+               if ($hasPendingaction) {
+                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPendingaction) {
+                       Session::flash('swal', [
+                           'title' => 'Action Item Child Pending!',
+                           'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
+               $ccchilds = CC::where('parent_id', $id)
+                ->where('parent_type', 'Risk Assesment')
+                ->get();
+                    $hasPending = false;
+                foreach ($ccchilds as $ext) {
+                        $ccchildstatus = trim(strtolower($ext->status));
+                        if ($ccchildstatus !== 'closed - done') {
+                            $hasPending = true;
+                            break;
+                        }
+                    }
+               if ($hasPending) {
+                // $ccchildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPending) {
+                       Session::flash('swal', [
+                           'title' => 'Change Control Child Pending!',
+                           'message' => 'You cannot proceed until Change Control Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
                     $riskAssement->stage = "5";
                     $riskAssement->status = "In Approval";
                     $riskAssement->QA_Initial_Review_Complete_By = Auth::user()->name;
