@@ -292,8 +292,7 @@
                                         @elseif($process == 'OOS/OOT')
                                         {{ Helpers::getDateFormat($data->due_date) }}    
                                         @else
-                                        Not Applicable
-                                        @endif
+                                        {{ $data->due_date ?  Helpers::getDateFormat($data->due_date) : 'Not Applicable' }}                                        @endif
                                     </td>
                                     <td>{{ $data->status }}</td>
                                 </tr>
