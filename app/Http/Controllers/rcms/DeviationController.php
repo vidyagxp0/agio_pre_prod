@@ -11629,30 +11629,29 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }
 
                      // exetnsion child validation
-                      $extensionchild = extension_new::where('parent_id', $id)
-                    ->where('parent_type', 'Deviation')
-                    ->get();
-                        $hasPending4 = false;
+                    $extensionchild = extension_new::where('parent_id', $id)
+                        ->where('parent_type', 'Deviation')
+                        ->get();
+
+                    $hasPending4 = false;
                     foreach ($extensionchild as $ext) {
-                            $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
-                                $hasPending4 = true;
-                                break;
-                            }
+                        $extensionchildStatus = trim(strtolower($ext->status));
+                        // Allow 'closed - done', 'reject', and 'cancel' as processed statuses
+                        if (!in_array($extensionchildStatus, ['closed - done', 'closed - r
+                        eject'])) {
+                            $hasPending4 = true;
+                            break;
                         }
+                    }
 
                     if ($hasPending4) {
-                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
-                            Session::flash('swal', [
-                                'title' => 'Extension Child Pending!',
-                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
-
+                        Session::flash('swal', [
+                            'title' => 'Extension Child Pending!',
+                            'message' => 'You cannot proceed until Extension Child is Closed-Done, Rejected, or Cancelled.',
+                            'type' => 'warning',
+                        ]);
                         return redirect()->back();
-                        
                     } else {
-                        // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
                             'title' => 'Success!',
                             'message' => 'Sent for Next Stage',
