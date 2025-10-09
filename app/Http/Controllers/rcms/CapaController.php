@@ -4,6 +4,7 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use App\Models\Capa;
+use App\Models\ActionItem;
 use App\Models\CapaHistory;
 use App\Models\RecordNumber;
 use App\Models\User;
@@ -3763,6 +3764,7 @@ class CapaController extends Controller
                 return back();
             }
             if ($capa->stage == 2) {
+                
                 if (!$capa->hod_remarks) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
@@ -3788,7 +3790,7 @@ class CapaController extends Controller
                         $hasPending1 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                           if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
                                 $hasPending1 = true;
                                 break;
                             }
@@ -3909,7 +3911,38 @@ class CapaController extends Controller
                         'type' => 'success',
                     ]);
                 }
+                //Action child
 
+                   $actionchilds = ActionItem::where('parent_id', $id)
+                                ->where('parent_type', 'CAPA')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($actionchilds as $ext) {
+                                        $actionchildstatus = trim(strtolower($ext->status));
+                                       if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Action Item Child Pending!',
+                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
+
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CAPA')
@@ -3917,7 +3950,7 @@ class CapaController extends Controller
                         $hasPending2 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                 $hasPending2 = true;
                                 break;
                             }
@@ -4037,6 +4070,39 @@ class CapaController extends Controller
                     ]);
                 }
 
+                //Action Item Child
+
+                   $actionchilds = ActionItem::where('parent_id', $id)
+                                ->where('parent_type', 'CAPA')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($actionchilds as $ext) {
+                                        $actionchildstatus = trim(strtolower($ext->status));
+                                        if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Action Item Child Pending!',
+                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
+
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
+
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CAPA')
@@ -4044,7 +4110,7 @@ class CapaController extends Controller
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                             if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -4145,6 +4211,38 @@ class CapaController extends Controller
                     ]);
                 }
 
+                //Action item child
+                   $actionchilds = ActionItem::where('parent_id', $id)
+                                ->where('parent_type', 'CAPA')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($actionchilds as $ext) {
+                                        $actionchildstatus = trim(strtolower($ext->status));
+                                         if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Action Item Child Pending!',
+                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
+
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
+
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CAPA')
@@ -4152,7 +4250,7 @@ class CapaController extends Controller
                         $hasPending4 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                             if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                 $hasPending4 = true;
                                 break;
                             }
@@ -4253,6 +4351,9 @@ class CapaController extends Controller
                     ]);
                 }
 
+
+               
+
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CAPA')
@@ -4260,7 +4361,7 @@ class CapaController extends Controller
                         $hasPending5 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
                                 $hasPending5 = true;
                                 break;
                             }
@@ -4381,6 +4482,38 @@ class CapaController extends Controller
                     ]);
                 }
 
+
+                 //Action item child
+                   $actionchilds = ActionItem::where('parent_id', $id)
+                                ->where('parent_type', 'CAPA')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($actionchilds as $ext) {
+                                        $actionchildstatus = trim(strtolower($ext->status));
+                                         if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Action Item Child Pending!',
+                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
+
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CAPA')
@@ -4388,7 +4521,7 @@ class CapaController extends Controller
                         $hasPending6 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                 $hasPending6 = true;
                                 break;
                             }
@@ -4497,7 +4630,7 @@ class CapaController extends Controller
                         $hasPending7 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                 $hasPending7 = true;
                                 break;
                             }

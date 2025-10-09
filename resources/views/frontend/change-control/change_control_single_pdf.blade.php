@@ -3940,20 +3940,40 @@ Not Applicable
                 </tr>
 
 
+             @if($data->QA_final_review_by)
+
+
                 <tr>
-                    <th class="w-20">RA Approval Required By  </th>
+                    <th class="w-20"> QA/CQA Final Review Complete By </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->QA_final_review_by ?? 'Not Applicable'  }}</div>
+                    </td>
+                    <th class="w-20"> QA/CQA Final Review Complete On </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->QA_final_review_on ?? 'Not Applicable'  }}</div>
+                    </td>
+                    <th class="w-20">QA/CQA Final Review Complete Comment </th>
+                    <td class="w-30">
+                        <div class="static">{{ $data->QA_final_review_comment ?? 'Not Applicable' }}</div>
+                    </td>
+                </tr>
+            @else    
+                 <tr>
+                    <th class="w-20">QA/CQA Final Review Complete By  </th>
                     <td class="w-30">
                         <div class="static">{{ $data->RA_review_required_by  ?? 'Not Applicable' }}</div>
                     </td>
-                    <th class="w-20">RA Approval Required On </th>
+                    <th class="w-20">QA/CQA Final Review Complete On </th>
                     <td class="w-30">
                         <div class="static">{{ $data->RA_review_required_on ?? 'Not Applicable'  }}</div>
                     </td>
-                    <th class="w-20">RA Approval Required Comment</th>
+                    <th class="w-20">QA/CQA Final Review Complete Comment</th>
                     <td class="w-30">
                         <div class="static">{{ $data->RA_review_required_comment ?? 'Not Applicable'  }}</div>
                     </td>
                 </tr>
+            @endif
+               
 
                 
 
@@ -3972,20 +3992,7 @@ Not Applicable
                     </td>
                 </tr>
 
-                <tr>
-                    <th class="w-20"> QA/CQA Final Review Complete By </th>
-                    <td class="w-30">
-                        <div class="static">{{ $data->QA_final_review_by ?? 'Not Applicable'  }}</div>
-                    </td>
-                    <th class="w-20"> QA/CQA Final Review Complete On </th>
-                    <td class="w-30">
-                        <div class="static">{{ $data->QA_final_review_on ?? 'Not Applicable'  }}</div>
-                    </td>
-                    <th class="w-20">QA/CQA Final Review Complete Comment </th>
-                    <td class="w-30">
-                        <div class="static">{{ $data->QA_final_review_comment ?? 'Not Applicable' }}</div>
-                    </td>
-                </tr>
+               
 
                
 

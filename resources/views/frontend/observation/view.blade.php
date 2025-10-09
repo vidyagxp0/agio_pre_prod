@@ -1666,11 +1666,11 @@
                                             </div>
                                         </div>
 
-                                        {{-- <div class="col-12">
+                                        <div class="col-12">
                                             <div class="sub-head">More Info Required</div>
-                                        </div> --}}
+                                        </div>
 
-                                        {{-- <div class="col-lg-4">
+                                        <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required By">More Info Required By</label>
                                                 @if ($data->more_info_required_by)
@@ -1679,8 +1679,8 @@
                                                     Not Applicable
                                                 @endif
                                             </div>
-                                        </div> --}}
-                                        {{-- <div class="col-lg-4">
+                                        </div>
+                                        <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required On">More Info Required On</label>
                                                 @if ($data->more_info_required_on)
@@ -1689,8 +1689,8 @@
                                                     Not Applicable
                                                 @endif
                                             </div>
-                                        </div> --}}
-                                        {{-- <div class="col-lg-4">
+                                        </div>
+                                        <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">More Info Required Comment</label>
                                                 @if ($data->more_info_required_comment)
@@ -1699,7 +1699,7 @@
                                                     Not Applicable
                                                 @endif
                                             </div>
-                                        </div> --}}
+                                        </div>
 
                                         <div class="col-12">
                                             <div class="sub-head">CAPA Plan Proposed</div>

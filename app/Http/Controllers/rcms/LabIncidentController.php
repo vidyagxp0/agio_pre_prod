@@ -6501,7 +6501,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     $hasPending = false;
                 foreach ($extensionchilds as $ext) {
                         $extensionchildStatus = trim(strtolower($ext->status));
-                        if ($extensionchildStatus !== 'closed - done') {
+                       if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                             $hasPending = true;
                             break;
                         }
@@ -6605,7 +6605,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     $hasPending2 = false;
                 foreach ($extensionchild as $ext) {
                         $extensionchildStatus = trim(strtolower($ext->status));
-                        if ($extensionchildStatus !== 'closed - done') {
+                        if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                             $hasPending2 = true;
                             break;
                         }
@@ -6643,7 +6643,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for Pending Initiator Update state'
+                            'message' => 'Sent for Next Stage'
                         ]);
                     }
                 $changeControl->stage = "4";
@@ -6713,7 +6713,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                                 $hasPendingResampling = false;
                             foreach ($Resamplingchilds as $ext) {
                                     $Resamplingchildstatus = trim(strtolower($ext->status));
-                                    if ($Resamplingchildstatus !== 'closed - done') {
+                                    if ($Resamplingchildstatus !== 'closed - done' && $extensionchildStatus !== 'closed-cancelled') {
                                         $hasPendingResampling = true;
                                         break;
                                     }
@@ -6744,7 +6744,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                                 $hasPendingRCA = false;
                             foreach ($rcachilds as $ext) {
                                     $rcachildstatus = trim(strtolower($ext->status));
-                                    if ($rcachildstatus !== 'closed - done') {
+                                   if($rcachildstatus !== 'closed - done'  && $rcachildstatus !== 'closed-cancelled'){
                                         $hasPendingRCA = true;
                                         break;
                                     }
@@ -6774,7 +6774,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                                     $hasPendingaction = false;
                                 foreach ($actionchilds as $ext) {
                                         $actionchildstatus = trim(strtolower($ext->status));
-                                        if ($actionchildstatus !== 'closed - done') {
+                                       if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled')  {
                                             $hasPendingaction = true;
                                             break;
                                         }
@@ -6804,7 +6804,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                                         $hasPending = false;
                                     foreach ($capachilds as $ext) {
                                             $capachildstatus = trim(strtolower($ext->status));
-                                            if ($capachildstatus !== 'closed - done') {
+                                            if($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
                                                 $hasPending = true;
                                                 break;
                                             }
@@ -6835,7 +6835,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                                         $hasPending = false;
                                     foreach ($Extensionchilds as $ext) {
                                             $capachildstatus = trim(strtolower($ext->status));
-                                            if ($capachildstatus !== 'closed - done') {
+                                           if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                                 $hasPending = true;
                                                 break;
                                             }
