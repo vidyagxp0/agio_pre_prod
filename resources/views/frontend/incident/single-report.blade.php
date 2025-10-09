@@ -290,7 +290,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20"> Incident Observed On (Date)</th>
+                        <th class="w-20">Incident Observed On (Date)</th>
                         <td class="w-30">
                             @if ($data->incident_date)
                                 {{ Helpers::getdateFormat($data->incident_date) }}
@@ -298,7 +298,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20"> Incident Observed On (Time)</th>
+                        <th class="w-20">Incident Observed On (Time)</th>
                         <td class="w-30">
                             @if ($data->incident_time)
                                 {{ $data->incident_time }}

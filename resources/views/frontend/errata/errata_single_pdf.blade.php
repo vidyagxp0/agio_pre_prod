@@ -286,8 +286,6 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
                         <th class="w-20">Department Code</th>
                         <td class="w-30">
                             @if ($data->department_code)
@@ -296,8 +294,8 @@
                                 Not Applicable
                             @endif
                         </td>
-
-
+                    </tr>
+                    <tr>
                         <th class="w-20">Document Type</th>
                         <td class="w-80">
                             @if ($data->document_type)
@@ -307,9 +305,7 @@
                             @endif
                         </td>
 
-                    </tr>
-                    <tr>
-                          <th class="w-20">Others</th>
+                        <th class="w-20">Others</th>
                         <td class="w-80">
                             @if ($data->document_type_others)
                                 {{ $data->document_type_others }}
@@ -384,17 +380,17 @@
                 <table>
                     <tr>
 
-                    <th class="w-20">Parent Record Number</th>
-                <td class="w-30">
-                    @if ($data->reference)
-                        {{ str_replace(',', ', ', $data->reference) }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
+                        <th class="w-20">Parent Record Number</th>
+                        <td class="w-30">
+                            @if ($data->reference)
+                                {{ str_replace(',', ', ', $data->reference) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                  
                         <th class="w-20">Error Observed on Page No.</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->Observation_on_Page_No)
                                 {{ $data->Observation_on_Page_No }}
                             @else
@@ -402,6 +398,7 @@
                             @endif
                         </td>
                     </tr>
+
                     <tr>
                         <th class="w-20">Brief Description of error</th>
                         <td class="w-80">
@@ -411,18 +408,17 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                    
-                            <th class="w-20">Document title</th>
-                            <td class="w-80">
-                                @if ($data->document_title)
-                                    {{ $data->document_title }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </td>
-                   
                     </tr>
+                    <tr>
+                        <th class="w-20">Document title</th>
+                        <td class="w-80">
+                            @if ($data->document_title)
+                                {{ $data->document_title }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                   </tr>
 
                 </table>
 
