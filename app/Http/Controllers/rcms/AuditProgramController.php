@@ -672,7 +672,7 @@ class AuditProgramController extends Controller
         if (!empty($data->cqa_qa_review_comment)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'CQA/QA Review Comments';
+            $history->activity_type = 'CQA/QA Review Comment';
             $history->previous = "Null";
             $history->current = $data->cqa_qa_review_comment;
             $history->comment ="Not Applicable";
@@ -1473,11 +1473,11 @@ class AuditProgramController extends Controller
 
         if($lastDocument->cqa_qa_review_comment !=$data->cqa_qa_review_comment || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'CQA/QA Review Comments')
+                            ->where('activity_type', 'CQA/QA Review Comment')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'CQA/QA Review Comments';
+            $history->activity_type = 'CQA/QA Review Comment';
             $history->previous =  $lastDocument->cqa_qa_review_comment;
             $history->current = $data->cqa_qa_review_comment;
             $history->comment = $request->comments_comment;
@@ -1513,11 +1513,11 @@ class AuditProgramController extends Controller
 
         if($lastDocument->cqa_qa_review_Attached_File !=$data->cqa_qa_review_Attached_File || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'CQA/QA Attached Files')
+                            ->where('activity_type', 'CQA/QA Review Attachment')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'CQA/QA Attached Files';
+            $history->activity_type = 'CQA/QA Review Attachment';
             $history->previous =  $lastDocument->cqa_qa_review_Attached_File;
             $history->current = $data->cqa_qa_review_Attached_File;
             $history->comment = $request->comments_comment;
@@ -2695,6 +2695,13 @@ class AuditProgramController extends Controller
             return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date','parent_division_id'));
         }
         else {
+            $parent_name = $request->parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
+            $parent_type = "Audit_Program";
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             return view('frontend.forms.auditee', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));
         }
     }

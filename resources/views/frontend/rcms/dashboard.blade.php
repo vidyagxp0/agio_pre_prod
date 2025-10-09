@@ -271,6 +271,11 @@
                                                             </a>
                                                             {{-- -----------------------by pankaj-------------------- --}}
                                                         @elseif ($datas->type == 'Internal-Audit')
+                                                         @php 
+                                                            DB::table('internal_audits')
+                                                            ->where('id', $datas->id)
+                                                            ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                        @endphp
                                                             <a href="{{ route('showInternalAudit', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -805,6 +810,11 @@
                                                     @elseif ($datas->parent_type == 'Risk Assessment')
                                                     @php
                                                         $findRecord = DB::table('risk_management')->find($datas->parent_id);
+                                                    @endphp
+                                                    @elseif ($datas->parent_type == 'Internal-Audit')
+
+                                                    @php
+                                                        $findRecord = DB::table('internal_audits')->find($datas->parent_id);
                                                     @endphp
                                                 @endif
 
