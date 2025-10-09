@@ -173,10 +173,10 @@
                 <header>
                     <table>
                         <tr>
-                            <div class="logo" style="text-align: center;">
+                            <!-- <div class="logo" style="text-align: center;">
                                 <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
                                 style="max-height: 55px; max-width: 40px;">
-                            </div>
+                            </div> -->
 
                         </tr>
                     </table>

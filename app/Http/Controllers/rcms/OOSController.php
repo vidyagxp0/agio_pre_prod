@@ -180,7 +180,7 @@ class OOSController extends Controller
         //     return redirect()->back();
         // }
 
-        //dd($request->all());
+        // dd($request->all());
         $res = Helpers::getDefaultResponse();
 
         try {
@@ -274,20 +274,20 @@ class OOSController extends Controller
                                 $history->save();
 
 
-                                // $list = Helpers::getHodUserList($changestage->division_id);
-                                // foreach ($list as $u) {
-                                //    $email = Helpers::getUserEmail($u->user_id);
-                                //        if ($email !== null) {
-                                //        Mail::send(
-                                //            'mail.view-mail',
-                                //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                //            function ($message) use ($email, $changestage) {
-                                //                $message->to($email)
-                                //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                                //            }
-                                //        );
-                                //    }
-                                // }
+                                $list = Helpers::getHodUserList($changestage->division_id);
+                                foreach ($list as $u) {
+                                   $email = Helpers::getUserEmail($u->user_id);
+                                       if ($email !== null) {
+                                       Mail::send(
+                                           'mail.view-mail',
+                                           ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           function ($message) use ($email, $changestage) {
+                                               $message->to($email)
+                                               ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                           }
+                                       );
+                                   }
+                                }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -372,35 +372,35 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    //             foreach ($list as $u) {
-                    //                $email = Helpers::getUserEmail($u->user_id);
-                    //                    if ($email !== null) {
-                    //                    Mail::send(
-                    //                        'mail.view-mail',
-                    //                        ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //                        function ($message) use ($email, $changestage) {
-                    //                            $message->to($email)
-                    //                            ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //                        }
-                    //                    );
-                    //                }
-                    //             }
+                            $list = Helpers::getQAUserList($changestage->division_id);
+                                foreach ($list as $u) {
+                                   $email = Helpers::getUserEmail($u->user_id);
+                                       if ($email !== null) {
+                                       Mail::send(
+                                           'mail.view-mail',
+                                           ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           function ($message) use ($email, $changestage) {
+                                               $message->to($email)
+                                               ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                           }
+                                       );
+                                   }
+                                }
 
-                    //             $list = Helpers::getCQAUsersList($changestage->division_id);
-                    //             foreach ($list as $u) {
-                    //                $email = Helpers::getUserEmail($u->user_id);
-                    //                    if ($email !== null) {
-                    //                    Mail::send(
-                    //                        'mail.view-mail',
-                    //                        ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //                        function ($message) use ($email, $changestage) {
-                    //                            $message->to($email)
-                    //                            ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //                        }
-                    //                    );
-                    //                }
-                    //             }
+                                // $list = Helpers::getCQAUsersList($changestage->division_id);
+                                // foreach ($list as $u) {
+                                //    $email = Helpers::getUserEmail($u->user_id);
+                                //        if ($email !== null) {
+                                //        Mail::send(
+                                //            'mail.view-mail',
+                                //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                //            function ($message) use ($email, $changestage) {
+                                //                $message->to($email)
+                                //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                //            }
+                                //        );
+                                //    }
+                                // }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -542,20 +542,20 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                     // $list = Helpers::getCQAUsersList($changestage->division_id);
                     // foreach ($list as $u) {
                     //    $email = Helpers::getUserEmail($u->user_id);
@@ -698,20 +698,20 @@ class OOSController extends Controller
                 //            );
                 //        }
                 //     }
-                //     $list = Helpers::getQAHeadUserList($changestage->division_id);
-                //     foreach ($list as $u) {
-                //        $email = Helpers::getUserEmail($u->user_id);
-                //            if ($email !== null) {
-                //            Mail::send(
-                //                'mail.view-mail',
-                //                ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                //                function ($message) use ($email, $changestage) {
-                //                    $message->to($email)
-                //                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                //                }
-                //            );
-                //        }
-                //     }
+                    $list = Helpers::getQAHeadUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -840,7 +840,7 @@ class OOSController extends Controller
                             'type' => 'success',
                         ]);
                     }
-                        $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
                         ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
                         ->get();
                             $hasPendingRCA = false;
@@ -871,28 +871,28 @@ class OOSController extends Controller
                         ]);
                     }
 
-                $resampling = Resampling::where('parent_id', $id)->first();
+                    $resampling = Resampling::where('parent_id', $id)->first();
 
-                if ($resampling) { // Check only if a child (resampling) exists
-                    $resamplingStatus = trim(strtolower($resampling->status));
+                    if ($resampling) { // Check only if a child (resampling) exists
+                        $resamplingStatus = trim(strtolower($resampling->status));
 
-                    if ($resamplingStatus !== 'closed - done') {
+                        if ($resamplingStatus !== 'closed - done') {
+                            Session::flash('swal', [
+                                'title' => 'Resampling Pending!',
+                                'message' => 'You cannot proceed until Resampling is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
-                            'title' => 'Resampling Pending!',
-                            'message' => 'You cannot proceed until Resampling is Closed-Done.',
-                            'type' => 'warning',
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
                         ]);
-
-                        return redirect()->back();
                     }
-                } else {
-                    // Flash message for success (when the form is filled correctly)
-                    Session::flash('swal', [
-                        'title' => 'Success!',
-                        'message' => 'Sent for Next Stage',
-                        'type' => 'success',
-                    ]);
-                }
 
 
                 $changestage->stage = "10";
@@ -923,20 +923,20 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getCQAUsersList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -991,6 +991,38 @@ class OOSController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changestage->stage = "11";
                 $changestage->status = "Phase IB QA Review";
                 $changestage->Phase_IB_HOD_Review_Complete_By= Auth::user()->name;
@@ -1033,20 +1065,20 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1071,7 +1103,7 @@ class OOSController extends Controller
                     ]);
                 }
                  // exetnsion child validation
-                    $extensionchild = extension_new::where('parent_id', $id)
+                $extensionchild = extension_new::where('parent_id', $id)
                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
                     ->get();
                         $hasPending8 = false;
@@ -1101,6 +1133,38 @@ class OOSController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changestage->stage = "12";
                 $changestage->status = "P-IB CQAH/QAH Review";
                 $changestage->Phase_IB_QA_Review_Complete_By = Auth::user()->name;
@@ -1143,20 +1207,20 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getCQAUsersList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1238,6 +1302,38 @@ class OOSController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changestage->stage = "13";
                 $changestage->status = "Under Phase-II A Investigation";
                 $changestage->P_I_B_Assignable_Cause_Not_Found_By= Auth::user()->name;
@@ -1266,20 +1362,20 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getProductionUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getProductionUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1335,6 +1431,38 @@ class OOSController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changestage->stage = "15";
                 $changestage->status = "Phase II A CQA/QA Review";
                 $changestage->Phase_II_A_HOD_Review_Complete_By= Auth::user()->name;
@@ -1377,20 +1505,20 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1445,6 +1573,38 @@ class OOSController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changestage->stage = "16";
                 $changestage->status = "P-II A QAH/CQAH Review";
                 $changestage->Phase_II_A_QA_Review_Complete_By= Auth::user()->name;
@@ -1473,20 +1633,20 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getCQAUsersList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                     // $list = Helpers::getQAHeadUserList($changestage->division_id);
                     // foreach ($list as $u) {
                     //    $email = Helpers::getUserEmail($u->user_id);
@@ -1556,6 +1716,37 @@ class OOSController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
                 $changestage->stage = "17";
                 $changestage->status = "Under Phase-II B Investigation";
                 $changestage->P_II_A_Assignable_Cause_Not_Found_By= Auth::user()->name;
@@ -1584,20 +1775,20 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getInitiatorUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1652,6 +1843,123 @@ class OOSController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                $capachilds = Capa::where('parent_id', $id)
+                ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                ->get();
+                    $hasPending = false;
+                    foreach ($capachilds as $ext) {
+                        $capachildstatus = trim(strtolower($ext->status));
+                        if ($capachildstatus !== 'closed - done') {
+                            $hasPending = true;
+                            break;
+                        }
+                    }
+                if ($hasPending) {
+                // $capachildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPending) {
+                       Session::flash('swal', [
+                           'title' => 'CAPA Child Pending!',
+                           'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Document Sent',
+                        'type' => 'success',
+                    ]);
+                }
+
+                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                ->get();
+                    $hasPendingRCA = false;
+                    foreach ($rcachilds as $ext) {
+                        $rcachildstatus = trim(strtolower($ext->status));
+                        if ($rcachildstatus !== 'closed - done') {
+                            $hasPendingRCA = true;
+                            break;
+                        }
+                    }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    $resampling = Resampling::where('parent_id', $id)->first();
+
+                    if ($resampling) { // Check only if a child (resampling) exists
+                        $resamplingStatus = trim(strtolower($resampling->status));
+
+                        if ($resamplingStatus !== 'closed - done') {
+                            Session::flash('swal', [
+                                'title' => 'Resampling Pending!',
+                                'message' => 'You cannot proceed until Resampling is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changestage->stage = "18";
                 $changestage->status = "Phase II B HOD Primary Review";
                 $changestage->Phase_II_B_Investigation_By= Auth::user()->name;
@@ -1680,20 +1988,20 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getHodUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getHodUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1718,7 +2026,7 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
-// exetnsion child validation
+          // exetnsion child validation
                     $extensionchild = extension_new::where('parent_id', $id)
                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
                     ->get();
@@ -1750,6 +2058,38 @@ class OOSController extends Controller
                         ]);
                     }
 
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+
                 $changestage->stage = "19";
                 $changestage->status = "Phase II B QA/CQA Review";
                 $changestage->Phase_II_B_HOD_Review_Complete_By= Auth::user()->name;
@@ -1778,20 +2118,20 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                     // $list = Helpers::getCQAUsersList($changestage->division_id);
                     // foreach ($list as $u) {
                     //    $email = Helpers::getUserEmail($u->user_id);
@@ -1834,9 +2174,9 @@ class OOSController extends Controller
                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
                     ->get();
                         $hasPending15 = false;
-                    foreach ($extensionchild as $ext) {
+                        foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed-cancelled') {
                                 $hasPending15 = true;
                                 break;
                             }
@@ -1860,6 +2200,38 @@ class OOSController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
 
                 $changestage->stage = "20";
                 $changestage->status = "P-II B CQAH/QAH Review";
@@ -1903,20 +2275,20 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                    // $list = Helpers::getQAHeadUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAHeadUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1941,6 +2313,71 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
+                $extensionchild = extension_new::where('parent_id', $id)
+                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                        $hasPending15 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending15 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending15) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+
+
                 $changestage->stage = "21";
                 $changestage->status = "Closed - Done";
                 $changestage->P_II_B_Assignable_Cause_Not_Found_By= Auth::user()->name;
@@ -2012,20 +2449,20 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                    // $list = Helpers::getHodUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getHodUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3386,20 +3823,20 @@ class OOSController extends Controller
                                 $history->action_name = 'Update';
                             }
                             $history->save();
-                            // $list = Helpers::getQAUserList($changestage->division_id);
-                            // foreach ($list as $u) {
-                            //    $email = Helpers::getUserEmail($u->user_id);
-                            //        if ($email !== null) {
-                            //        Mail::send(
-                            //            'mail.view-mail',
-                            //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                            //            function ($message) use ($email, $changestage) {
-                            //                $message->to($email)
-                            //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                            //            }
-                            //        );
-                            //    }
-                            // }
+                            $list = Helpers::getQAUserList($changestage->division_id);
+                            foreach ($list as $u) {
+                               $email = Helpers::getUserEmail($u->user_id);
+                                   if ($email !== null) {
+                                   Mail::send(
+                                       'mail.view-mail',
+                                       ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                       function ($message) use ($email, $changestage) {
+                                           $message->to($email)
+                                           ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                       }
+                                   );
+                               }
+                            }
                             // $list = Helpers::getCQAUsersList($changestage->division_id);
                             // foreach ($list as $u) {
                             //    $email = Helpers::getUserEmail($u->user_id);
@@ -3623,20 +4060,20 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getInitiatorUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3825,6 +4262,123 @@ class OOSController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->get();
+                            $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                $capachilds = Capa::where('parent_id', $id)
+                ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                ->get();
+                    $hasPending = false;
+                    foreach ($capachilds as $ext) {
+                        $capachildstatus = trim(strtolower($ext->status));
+                        if ($capachildstatus !== 'closed - done') {
+                            $hasPending = true;
+                            break;
+                        }
+                    }
+                if ($hasPending) {
+                // $capachildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPending) {
+                       Session::flash('swal', [
+                           'title' => 'CAPA Child Pending!',
+                           'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Document Sent',
+                        'type' => 'success',
+                    ]);
+                }
+
+                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                ->get();
+                    $hasPendingRCA = false;
+                    foreach ($rcachilds as $ext) {
+                        $rcachildstatus = trim(strtolower($ext->status));
+                        if ($rcachildstatus !== 'closed - done') {
+                            $hasPendingRCA = true;
+                            break;
+                        }
+                    }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    $resampling = Resampling::where('parent_id', $id)->first();
+
+                    if ($resampling) { // Check only if a child (resampling) exists
+                        $resamplingStatus = trim(strtolower($resampling->status));
+
+                        if ($resamplingStatus !== 'closed - done') {
+                            Session::flash('swal', [
+                                'title' => 'Resampling Pending!',
+                                'message' => 'You cannot proceed until Resampling is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changestage->stage = "14";
                 $changestage->status = "Phase II A HOD Primary Review";
                 $changestage->Phase_II_A_Investigation_By= Auth::user()->name;
@@ -4298,7 +4852,7 @@ class OOSController extends Controller
             $parentRecord = OOS::where('id', $id)->value('record');
             $actionchild->actionchild = $record_number;
             $actionchild->save();
-// dd($data->due_date);
+        // dd($data->due_date);
             return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'data_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data'));
         }
         elseif ($request->child_type == "Resampling")

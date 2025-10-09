@@ -1044,27 +1044,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required By</b></label>
-                        @if( $data->effectiveness_check_complete_moreinfo_by ) {{ $data->effectiveness_check_complete_moreinfo_by }}  @else Not Applicable @endif
-                    </div>
-                </div>
-                <div class="col-lg-4 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required On</b></label>
-                        @if( $data->effectiveness_check_complete_moreinfo_on ) {{ $data->effectiveness_check_complete_moreinfo_on }}  @else Not Applicable @endif
-                        {{-- <div class="static">{{ $data->work_complition_on }}</div> --}}
-                    </div>
-                </div>
-                <div class="col-lg-3 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required Comment</b></label>
-                        @if( $data->effectiveness_check_complete_moreinfo_comment ) {{ $data->effectiveness_check_complete_moreinfo_comment }}  @else Not Applicable @endif
-                        {{-- <div class="static">{{ $data->work_complition_comment }}</div> --}}
-                    </div>
-                </div>
-
+            
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="HOD Review Complete by"><b> Complete By</b></label>
@@ -1088,27 +1068,7 @@
                 </div>
 
                 
-                <div class="col-lg-4 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required By</b></label>
-                        @if( $data->hod_review_complete_moreinfo_by ) {{ $data->hod_review_complete_moreinfo_by }}  @else Not Applicable @endif
-                    </div>
-                </div>
-                <div class="col-lg-4 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required On</b></label>
-                        @if( $data->hod_review_complete_moreinfo_on ) {{ $data->hod_review_complete_moreinfo_on }}  @else Not Applicable @endif
-                        {{-- <div class="static">{{ $data->work_complition_on }}</div> --}}
-                    </div>
-                </div>
-                <div class="col-lg-3 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required Comment</b></label>
-                        @if( $data->hod_review_complete_moreinfo_comment ) {{ $data->hod_review_complete_moreinfo_comment }}  @else Not Applicable @endif
-                        {{-- <div class="static">{{ $data->work_complition_comment }}</div> --}}
-                    </div>
-                </div>
-
+                
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="HOD Review Complete by"><b>HOD Review Complete By</b></label>
@@ -1131,27 +1091,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required By</b></label>
-                        @if( $data->final_moreinfo_by ) {{ $data->final_moreinfo_by }}  @else Not Applicable @endif
-                    </div>
-                </div>
-                <div class="col-lg-4 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required On</b></label>
-                        @if( $data->final_moreinfo_on ) {{ $data->final_moreinfo_on }}  @else Not Applicable @endif
-                        {{-- <div class="static">{{ $data->work_complition_on }}</div> --}}
-                    </div>
-                </div>
-                <div class="col-lg-3 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required Comment</b></label>
-                        @if( $data->final_moreinfo_comment ) {{ $data->final_moreinfo_comment }}  @else Not Applicable @endif
-                        {{-- <div class="static">{{ $data->work_complition_comment }}</div> --}}
-                    </div>
-                </div>
-
+            
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Not Effective By"><b>Not Effective By</b></label>
@@ -1240,28 +1180,6 @@
                         {{-- <div class="static">{{ $data->effective_approval_complete_comment }}</div> --}}
                     </div>
                 </div>
-
-                <div class="col-lg-4 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required By</b></label>
-                        @if( $data->more_info_effective_by ) {{ $data->more_info_effective_by }}  @else Not Applicable @endif
-                    </div>
-                </div>
-                <div class="col-lg-4 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required On</b></label>
-                        @if( $data->more_info_effective_on ) {{ $data->more_info_effective_on }}  @else Not Applicable @endif
-                        {{-- <div class="static">{{ $data->work_complition_on }}</div> --}}
-                    </div>
-                </div>
-                <div class="col-lg-3 new-head">
-                    <div class="group-input">
-                        <label for="More Info Required by"><b>More Info Required Comment</b></label>
-                        @if( $data->more_info_effective_comment ) {{ $data->more_info_effective_comment }}  @else Not Applicable @endif
-                        {{-- <div class="static">{{ $data->work_complition_comment }}</div> --}}
-                    </div>
-                </div>
-
 
             </div>
 
