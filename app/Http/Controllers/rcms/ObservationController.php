@@ -2554,7 +2554,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     $hasPendingRCA = false;
                 foreach ($rcachilds as $ext) {
                         $rcachildstatus = trim(strtolower($ext->status));
-                        if ($rcachildstatus !== 'closed - done'  && $capachildstatus !== 'closed-cancelled') {
+                        if ($rcachildstatus !== 'closed - done'  && $rcachildstatus !== 'closed-cancelled') {
                             $hasPendingRCA = true;
                             break;
                         }
