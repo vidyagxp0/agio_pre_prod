@@ -672,7 +672,7 @@ class AuditProgramController extends Controller
         if (!empty($data->cqa_qa_review_comment)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'CQA/QA Review Comments';
+            $history->activity_type = 'CQA/QA Review Comment';
             $history->previous = "Null";
             $history->current = $data->cqa_qa_review_comment;
             $history->comment ="Not Applicable";
@@ -1473,11 +1473,11 @@ class AuditProgramController extends Controller
 
         if($lastDocument->cqa_qa_review_comment !=$data->cqa_qa_review_comment || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'CQA/QA Review Comments')
+                            ->where('activity_type', 'CQA/QA Review Comment')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'CQA/QA Review Comments';
+            $history->activity_type = 'CQA/QA Review Comment';
             $history->previous =  $lastDocument->cqa_qa_review_comment;
             $history->current = $data->cqa_qa_review_comment;
             $history->comment = $request->comments_comment;
@@ -1513,11 +1513,11 @@ class AuditProgramController extends Controller
 
         if($lastDocument->cqa_qa_review_Attached_File !=$data->cqa_qa_review_Attached_File || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
-                            ->where('activity_type', 'CQA/QA Attached Files')
+                            ->where('activity_type', 'CQA/QA Review Attachment')
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'CQA/QA Attached Files';
+            $history->activity_type = 'CQA/QA Review Attachment';
             $history->previous =  $lastDocument->cqa_qa_review_Attached_File;
             $history->current = $data->cqa_qa_review_Attached_File;
             $history->comment = $request->comments_comment;
@@ -2271,7 +2271,7 @@ class AuditProgramController extends Controller
             //    ]);
             // dd($changeControl->cqa_qa_comment);
 
-             if (empty($changeControl->cqa_qa_comment))
+            if (empty($changeControl->cqa_qa_comment))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
@@ -2288,8 +2288,6 @@ class AuditProgramController extends Controller
                         'message' => 'Document Sent'
                     ]);
                 }
-
-
 
                 $changeControl->stage = "3";
                 $changeControl->status = "Pending Audit";
@@ -2339,46 +2337,63 @@ class AuditProgramController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+     
+            $Internal_Auditchild = InternalAudit::where('parent_id', $id)
+                ->where('parent_type', 'Audit_Program')
+                ->get();
+
+            $hasPendingChild = false;
+            foreach ($Internal_Auditchild as $ext) {
+                $status = trim(strtolower($ext->status));
+               
+                if (!in_array($status, ['closed - done', 'reject', 'cancel'])) {
+                    $hasPendingChild = true;
+                    break;
+                }
+            }
+
+            if ($hasPendingChild) {
+                Session::flash('swal', [
+                    'title' => 'Child Records Pending!',
+                    'message' => 'You cannot proceed until all child records are Closed-Done, Rejected, or Cancelled.',
+                    'type' => 'warning',
+                ]);
+                return redirect()->back();
+            }
+
+       
             if ($changeControl->stage == 3) {
+                $mandatoryFields = ['cqa_qa_review_comment'];
 
-                $mandatoryFields = [
-                    'cqa_qa_review_comment'
-               ];
-               
-               foreach ($mandatoryFields as $field) {
-                   if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
-                       Session::flash('swal', [
-                           'type' => 'warning',
-                           'title' => 'Mandatory Fields!',
-                           'message' => "Please fill all required fields before proceeding. Missing: $field"
-                       ]);
-                       return redirect()->back();
-                   }
-               }
-               
-               // If all fields are filled, proceed
-               Session::flash('swal', [
-                   'type' => 'success',
-                   'title' => 'Success',
-                   'message' => 'Document Sent'
-               ]);
+                foreach ($mandatoryFields as $field) {
+                    if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => "Please fill all required fields before proceeding. Missing: $field"
+                        ]);
+                        return redirect()->back();
+                    }
+                }
 
-
-
+                
                 $changeControl->stage = "4";
                 $changeControl->status = "Closed - Done";
                 $changeControl->Audit_Completed_By = Auth::user()->name;
                 $changeControl->Audit_Completed_On = Carbon::now()->format('d-M-Y');
-                $changeControl->Audit_Completed_comment  = $request->comment;
+                $changeControl->Audit_Completed_comment = $request->comment;
+
                 $history = new AuditProgramAuditTrial();
                 $history->AuditProgram_id = $id;
-                $history->activity_type = 'Audit Completed On , Audit Completed By ';
-                $history->action ='Audit Completed';
+                $history->activity_type = 'Audit Completed On, Audit Completed By';
+                $history->action = 'Audit Completed';
 
                 if (is_null($lastDocument->Audit_Completed_By) || $lastDocument->Audit_Completed_By === '') {
                     $history->previous = "Null";
+                    $history->action_name = 'New';
                 } else {
                     $history->previous = $lastDocument->Audit_Completed_By . ' , ' . $lastDocument->Audit_Completed_On;
+                    $history->action_name = 'Update';
                 }
 
                 $history->current = $changeControl->Audit_Completed_By . ' , ' . $changeControl->Audit_Completed_On;
@@ -2388,30 +2403,12 @@ class AuditProgramController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Audit Completed';
-                $history->change_to= "Closed - Done";
-                $history->change_from= $lastDocument->status;
-                $history->action_name ='Not Applicable';
-                if (is_null($lastDocument->Audit_Completed_By) || $lastDocument->Audit_Completed_By === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                $history->change_to = "Closed - Done";
+                $history->change_from = $lastDocument->status;
                 $history->save();
-                // $list = Helpers::getCftUserList($changeControl->division_id);
-                // foreach ($list as $u) {
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "AP", 'history' => "Audit Completed", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                 function ($message) use ($email, $changeControl) {
-                //                     $message->to($email)
-                //                     ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Completed");
-                //                 }
-                //             );
-                //         }
-                // }
+
                 $changeControl->update();
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -2588,55 +2585,57 @@ class AuditProgramController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-           if ($changeControl->stage == 3) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancelled_by   = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                $changeControl->Cancelled_comment  = $request->comment;
-                $history = new AuditProgramAuditTrial();
-                $history->AuditProgram_id = $id;
-                $history->activity_type = 'Cancel By, Cancel On';
-                $history->action ='Cancel';
-                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
-                    $history->previous = "Null";
-                    } else {
-                    $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
-                    }
-                    $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'Cancel';
-                $history->change_to= "Closed-Cancel ";
-                $history->change_from= $lastDocument->status;
-                $history->action_name ='Not Applicable';
-                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                $history->save();
-    //             $list = Helpers::getHodUserList($changeControl->division_id);
-    //                 foreach ($list as $u) {
-    //                         $email = Helpers::getUserEmail($u->user_id);
-    //                             if ($email !== null) {
-    //                             Mail::send(
-    //                                 'mail.view-mail',
-    //                                 ['data' => $changeControl, 'site' => "AP", 'history' => "Cancel", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-    //                                 function ($message) use ($email, $changeControl) {
-    //                                     $message->to($email)
-    //                                     ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
-    //                                 }
-    //                             );
-    //                         }
-    //                 }
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+          if ($changeControl->stage == 3) {
+    $changeControl->stage = "0";
+    $changeControl->status = "Closed - Cancelled";
+    $changeControl->cancelled_by = Auth::user()->name;
+    $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+    $changeControl->Cancelled_comment = $request->comment;
+
+    $Internal_Auditchild = InternalAudit::where('parent_id', $id)
+        ->where('parent_type', 'Audit_Program')
+        ->get();
+
+    foreach ($Internal_Auditchild as $child) {
+        $child->stage = "0";
+        $child->status = "Closed - Cancelled";
+        $child->cancelled_by = Auth::user()->name;
+        $child->cancelled_on = Carbon::now()->format('d-M-Y');
+        $child->save();
+    }
+
+    // Save parent cancel history (your existing code)
+    $history = new AuditProgramAuditTrial();
+    $history->AuditProgram_id = $id;
+    $history->activity_type = 'Cancel By, Cancel On';
+    $history->action = 'Cancel';
+    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+        $history->previous = "Null";
+    } else {
+        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+    }
+    $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
+    $history->comment = $request->comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->stage = 'Cancel';
+    $history->change_to = "Closed-Cancel ";
+    $history->change_from = $lastDocument->status;
+    $history->action_name = (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') ? 'New' : 'Update';
+    $history->save();
+
+    // Update the parent record
+    $changeControl->update();
+
+    // Now update all related InternalAudit children to Closed - Cancelled
+
+
+    toastr()->success('Document Sent and all related child audits cancelled successfully');
+    return back();
+}
+
         }
     }
 
@@ -2695,6 +2694,13 @@ class AuditProgramController extends Controller
             return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date','parent_division_id'));
         }
         else {
+            $parent_name = $request->parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
+            $parent_type = "Audit_Program";
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             return view('frontend.forms.auditee', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));
         }
     }

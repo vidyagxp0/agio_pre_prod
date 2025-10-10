@@ -1143,7 +1143,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <option value="Failure Mode and Effect Analysis" {{ in_array('Failure Mode and Effect Analysis', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Failure Mode and Effect Analysis</option>
                                             <option value="Fishbone or Ishikawa Diagram" {{ in_array('Fishbone or Ishikawa Diagram', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Fishbone or Ishikawa Diagram</option>
                                             <option value="Is/Is Not Analysis" {{ in_array('Is/Is Not Analysis', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Is/Is Not Analysis</option>
-                                            <option value="Rootcauseothers" {{ in_array('Rootcauseothers', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Others</option>
+                                            {{-- <option value="Rootcauseothers" {{ in_array('Rootcauseothers', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Others</option> --}}
                                         </select>
 
                                         @error('root_cause_methodology')
@@ -1156,7 +1156,8 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endforeach
                                         @endif
                                     </div>
-                                </div><div class="col-12 mb-4" id="fmea-section" style="display:none;">
+                                </div>
+                                <div class="col-12 mb-4" id="fmea-section" style="display:none;">
                                     <div class="group-input">
                                         <label for="agenda">
                                             Failure Mode and Effect Analysis
