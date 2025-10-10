@@ -760,7 +760,7 @@
                                                             @endif
                                                         @endif
                                                     </td>
-                                                          </td>
+                                                          
                                                @php
                                                     $findRecord = null;
                                                 @endphp
@@ -769,6 +769,10 @@
                                                     @php
                                                         $findRecord = DB::table('c_c_s')->find($datas->parent_id);
                                                     @endphp
+                                                 @elseif ($datas->parent_type == 'CC')
+                                                    @php
+                                                        $findRecord = DB::table('c_c_s')->find($datas->parent_id);
+                                                    @endphp    
                                                 @elseif ($datas->parent_type == 'Lab Incident')
                                                     @php
                                                         $findRecord = DB::table('lab_incidents')->find($datas->parent_id);
