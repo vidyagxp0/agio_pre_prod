@@ -11,6 +11,9 @@ use App\Models\OpenStage;
 use App\Models\Capa;
 use App\Models\ActionItem;
 use App\Models\RootCauseAnalysis;
+use App\Models\ActionItemHistory;
+use App\Models\RootAuditTrial;
+use App\Models\CapaAuditTrial;
 use Carbon\Carbon;
 use Helpers;
 use App\Models\RoleGroup;
@@ -2862,6 +2865,138 @@ if (is_array($request->action) && !empty($request->action)) {
                 $changeControl->cancel_by = Auth::user()->name;
                 $changeControl->cancel_on = Carbon::now()->format('d-M-Y');
                 $changeControl->cancel_comment = $request->comment;
+
+                
+
+                $childCapas = Capa::where('parent_id', $id)
+                ->where('parent_type', 'Observation')
+                ->get();
+
+            if ($childCapas->count() > 0) {
+
+                foreach ($childCapas as $capa) {
+                    $lastDocument = clone $capa; // save old state for history
+
+                    // 🔹 2. Update CAPA fields
+                    $childCapas->stage = "0";
+                    $childCapas->status = "Closed-Cancelled";
+                    $childCapas->cancelled_by = Auth::user()->name;
+                    $childCapas->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $childCapas->cancel_comment = $request->comment;
+                    $childCapas->save();
+
+                    // 🔹 3. Create Audit Trail
+                    $history = new CapaAuditTrial();
+                    $history->capa_id = $capa->id;
+                    $history->activity_type = 'Cancel By, Cancel On';
+                    $history->action = 'Cancel';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_from = $lastDocument->status;
+                    $history->change_to = "Closed-Cancelled";
+                    $history->stage = 'Cancelled';
+
+                    // Previous / Current audit info
+                    $history->previous = $lastDocument->cancelled_by
+                        ? $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on
+                        : '';
+                    $history->current = $capa->cancelled_by . ' , ' . $capa->cancelled_on;
+                    $history->action_name = $lastDocument->cancelled_by ? 'Update' : 'New';
+
+                    $history->save();
+                }
+            }
+
+                $childActionItems = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'Observation')
+                ->get();
+
+            if ($childActionItems->count() > 0) {
+                foreach ($childActionItems as $actionItem) {
+                    $lastopenState = clone $actionItem; // save previous values before update
+
+                    // 🔹 Update fields
+                    $childActionItems->stage = "0";
+                    $childActionItems->status = "Closed-Cancelled";
+                    $childActionItems->cancelled_by = Auth::user()->name;
+                    $childActionItems->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $childActionItems->cancelled_comment =$request->comment;
+                    $childActionItems->save();
+
+                    // 🔹 Create history record
+                    $history = new ActionItemHistory();
+                    $history->cc_id = $actionItem->id;
+                    $history->action = "Cancel";
+                    $history->activity_type = 'Cancel By, Cancel On';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastopenState->status;
+                    $history->change_from = $lastopenState->status;
+                    $history->change_to = "Closed-Cancelled";
+                    $history->stage = "Cancelled";
+
+                    // 🔹 Previous & Current info
+                    $history->previous = $lastopenState->cancelled_by
+                        ? $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on
+                        : '';
+                    $history->current = $actionItem->cancelled_by . ' , ' . $actionItem->cancelled_on;
+                    $history->action_name = $lastopenState->cancelled_by ? 'Update' : 'New';
+
+                    $history->save();
+                }
+            }
+                 $childroot = RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', 'Observation')
+                ->get();
+
+            if ($childroot->count() > 0) {
+                foreach ($childroot as $actionItem) {
+                    $lastopenState = clone $actionItem; // save previous values before update
+
+                    // 🔹 Update fields
+                    $childroot->stage = "0";
+                    $childroot->status = "Closed-Cancelled";
+                    $childroot->cancelled_by = Auth::user()->name;
+                    $childroot->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $childroot->cancel_comment = $request->comment;
+                    $childroot->save();
+
+                    // 🔹 Create history record
+                    $history = new RootAuditTrial();
+                    $history->root_id = $id;
+                    $history->activity_type = 'Cancelled By,Cancelled On';
+                    // $history->previous = $lastDocument->cancelled_by;
+                    $history->previous = "";
+                    $history->current = $root->cancelled_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->action = "Cancel";
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Closed-Cancelled";
+                    $history->change_from = $lastDocument->status;
+
+                    $history->stage = 'Cancelled ';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $root->cancelled_by . ' , ' . $root->cancelled_on;
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+
+            }
 
                 $list = Helpers::getLeadAuditeeUsersList($changeControl->division_code); // Notify CFT Person
 
