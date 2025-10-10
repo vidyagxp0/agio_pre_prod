@@ -3553,29 +3553,6 @@ class RootCauseController extends Controller
                 $history->save();
 
 
-               
-                // $list = Helpers::getInitiatorUserList($root->division_id);
-                // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             try {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $root, 'site'=>"RCA", 'history' => "QA/CQA Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                     function ($message) use ($email, $root) {
-                //                         $message->to($email)
-                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Review Complete Performed");
-                //                     }
-                //                 );
-                //             } catch(\Exception $e) {
-                //                 info('Error sending mail', [$e]);
-                //             }
-                //         }
-                //     // }
-                // }
-
-
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
