@@ -163,53 +163,6 @@ class OOSService
 
             // ============ OOS Chemical: Start  Audit Trail ==================
 
-            $fieldNames = [
-                'info_product_code' => 'Product Code',
-                'info_batch_no' => 'Batch No',
-                'info_mfg_date' => 'Mfg Date',
-                'info_expiry_date' => 'Expiry Date',
-                'info_label_claim' => 'Label Claim',
-                'info_pack_size' => 'Pack Size',
-                'info_analyst_name' => 'Analyst Name',
-                'info_others_specify' => 'Others Specify',
-                'info_process_sample_stage' => 'In-Process Sample Stage',
-                'info_packing_material_type' => 'Packing Material Type',
-                'info_stability_for' => 'Stability For',
-            ];
-
-            $existingGridData = json_decode($oos->info_product_material ?? '[]', true);
-            $newGridData = $request->info_product_material ?? [];
-
-            if (is_array($newGridData)) {
-                foreach ($newGridData as $index => $newRow) {
-                    $previousRow = $existingGridData[$index] ?? [];
-
-                    foreach ($fieldNames as $field => $label) {
-                        $oldValue = $previousRow[$field] ?? 'Null';
-                        $newValue = $newRow[$field] ?? 'Null';
-
-                        if ($oldValue !== $newValue) {
-                            $auditTrail = new OosAuditTrial();
-                            $auditTrail->oos_id = $oos->id;
-                            $auditTrail->activity_type = $label . ' (' . ($index + 1) . ')';
-                            $auditTrail->previous = $oldValue;
-                            $auditTrail->current = $newValue;
-                            $auditTrail->comment = "";
-                            $auditTrail->user_id = Auth::user()->id;
-                            $auditTrail->user_name = Auth::user()->name;
-                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $auditTrail->origin_state = $oos->status;
-                            $auditTrail->change_to = $oos->status;
-                            $auditTrail->change_from = $oos->status;
-                            $auditTrail->action_name = ($oldValue == 'Null' && $newValue != 'Null') ? 'New' : 'Update';
-                            $auditTrail->save();
-                        }
-                    }
-                }
-            }
-
-
-
             if(!empty($request->initiator_id)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
@@ -1171,6 +1124,227 @@ class OOSService
                 $history->current = $oos->manufacture_vendor;
                 $history->save();
             }
+
+            // grid start 
+            $fieldNames = [
+                'info_product_code' => 'Product Code',
+                'info_batch_no' => 'Batch No',
+                'info_mfg_date' => 'Mfg Date',
+                'info_expiry_date' => 'Expiry Date',
+                'info_label_claim' => 'Label Claim',
+                'info_pack_size' => 'Pack Size',
+                'info_analyst_name' => 'Analyst Name',
+                'info_others_specify' => 'Others Specify',
+                'info_process_sample_stage' => 'In-Process Sample Stage',
+                'info_packing_material_type' => 'Packing Material Type',
+                'info_stability_for' => 'Stability For',
+            ];
+
+            $existingGridData = json_decode($oos->info_product_material ?? '[]', true);
+            $newGridData = $request->info_product_material ?? [];
+
+            if (is_array($newGridData)) {
+                foreach ($newGridData as $index => $newRow) {
+                    $previousRow = $existingGridData[$index] ?? [];
+
+                    foreach ($fieldNames as $field => $label) {
+                        $oldValue = $previousRow[$field] ?? 'Null';
+                        $newValue = $newRow[$field] ?? 'Null';
+
+                        if ($oldValue !== $newValue) {
+                            $auditTrail = new OosAuditTrial();
+                            $auditTrail->oos_id = $oos->id;
+                            $auditTrail->activity_type = $label . ' (' . ($index + 1) . ')';
+                            $auditTrail->previous = $oldValue;
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $oos->status;
+                            $auditTrail->change_to = $oos->status;
+                            $auditTrail->change_from = $oos->status;
+                            $auditTrail->action_name = ($oldValue == 'Null' && $newValue != 'Null') ? 'New' : 'Update';
+                            $auditTrail->save();
+                        }
+                    }
+                }
+            }
+
+            $fieldNames = [
+                'stability_study_arnumber' => 'AR Number',
+                'stability_study_condition_temprature_rh' => 'Condition (Temp & RH)',
+                'stability_study_Interval' => 'Interval',
+                'stability_study_orientation' => 'Orientation',
+                'stability_study_pack_details' => 'Pack Details (if Any)',
+                'stability_study_specification_no' => 'Specification No.',
+                'stability_study_sample_description' => 'Sample Description',
+            ];
+
+            $existingStabilityData = json_decode($oos->details_stability ?? '[]', true);
+            $newStabilityData = $request->details_stability ?? [];
+
+            if (is_array($newStabilityData)) {
+                foreach ($newStabilityData as $index => $newRow) {
+                    $previousRow = $existingStabilityData[$index] ?? [];
+                    // Compare each field
+                    foreach ($fieldNames as $field => $label) {
+                        $oldValue = $previousRow[$field] ?? 'Null';
+                        $newValue = $newRow[$field] ?? 'Null';
+
+                        if ($oldValue !== $newValue) {
+                            $auditTrail = new OosAuditTrial();
+                            $auditTrail->oos_id = $oos->id;
+                            $auditTrail->activity_type = 'Details of Stability Study - ' . $label . ' (Row ' . ($index + 1) . ')';
+                            $auditTrail->previous = $oldValue;
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $oos->status;
+                            $auditTrail->change_to = $oos->status;
+                            $auditTrail->change_from = $oos->status;
+                            $auditTrail->action_name = ($oldValue == 'Null' && $newValue != 'Null') ? 'New' : 'Update';
+                            $auditTrail->save();
+                        }
+                    }
+                }
+            }
+
+            //grid 3
+            $existingOosData = json_decode($oos->oos_detail ?? '[]', true);
+            $newOosData = $request->oos_detail ?? [];
+
+            $fieldNames = [
+                'oos_arnumber' => 'AR Number',
+                'oos_test_name' => 'Test Name of OOS/OOT',
+                'oos_results_obtained' => 'Results Obtained',
+                'oos_specification_limit' => 'Specification Limit',
+                'oos_file_attachment' => 'File Attachment',
+                'oos_submit_by' => 'Submitted By',
+                'oos_submit_on' => 'Submitted On',
+            ];
+
+            if (is_array($newOosData)) {
+                foreach ($newOosData as $index => $newRow) {
+                    $previousRow = $existingOosData[$index] ?? [];
+
+                    foreach ($fieldNames as $field => $label) {
+                        $oldValue = $previousRow[$field] ?? 'Null';
+                        $newValue = $newRow[$field] ?? 'Null';
+
+                        // Convert attachments to JSON string for comparison clarity
+                        if (is_array($oldValue)) $oldValue = json_encode($oldValue);
+                        if (is_array($newValue)) $newValue = json_encode($newValue);
+
+                        if ($oldValue !== $newValue) {
+                            $auditTrail = new OosAuditTrial();
+                            $auditTrail->oos_id = $oos->id;
+                            $auditTrail->activity_type = 'OOS/OOT Details - ' . $label . ' (Row ' . ($index + 1) . ')';
+                            $auditTrail->previous = $oldValue;
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $oos->status;
+                            $auditTrail->change_to = $oos->status;
+                            $auditTrail->change_from = $oos->status;
+                            $auditTrail->action_name = ($oldValue == 'Null' && $newValue != 'Null') ? 'New' : 'Update';
+                            $auditTrail->save();
+                        }
+                    }
+                }
+            }
+
+
+            //grid 4
+            $fieldNames = [
+                'product_name'   => 'Name of Product',
+                'product_AR_No'  => 'A.R.No',
+                'sampled_on'     => 'Sampled On',
+                'sample_by'      => 'Sampled By',
+                'analyzed_on'    => 'Analyzed On',
+                'observed_on'    => 'Observed On',
+            ];
+            $existingProductData = json_decode($oos->products_details ?? '[]', true);
+            $newProductData = $request->products_details ?? [];
+
+            if (is_array($newProductData)) {
+                foreach ($newProductData as $index => $newRow) {
+                    $previousRow = $existingProductData[$index] ?? [];
+
+                    foreach ($fieldNames as $field => $label) {
+                        $oldValue = $previousRow[$field] ?? 'Null';
+                        $newValue = $newRow[$field] ?? 'Null';
+
+                        if (is_array($oldValue)) $oldValue = json_encode($oldValue);
+                        if (is_array($newValue)) $newValue = json_encode($newValue);
+
+                        if ($oldValue !== $newValue) {
+                            $auditTrail = new OosAuditTrial();
+                            $auditTrail->oos_id = $oos->id;
+                            $auditTrail->activity_type = 'Products Details - ' . $label . ' (Row ' . ($index + 1) . ')';
+                            $auditTrail->previous = $oldValue;
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $oos->status;
+                            $auditTrail->change_to = $oos->status;
+                            $auditTrail->change_from = $oos->status;
+                            $auditTrail->action_name = ($oldValue == 'Null' && $newValue != 'Null') ? 'New' : 'Update';
+                            $auditTrail->save();
+                        }
+                    }
+                }
+            }
+
+
+            $fieldNames = [
+                'instrument_name'        => 'Name of Instrument',
+                'instrument_id_number'   => 'Instrument ID Number',
+                'calibrated_on'          => 'Calibrated On',
+                'calibratedduedate_on'   => 'Calibrated Due Date',
+            ];
+
+            $existingInstrumentData = json_decode($oos->instrument_detail ?? '[]', true);
+            $newInstrumentData = $request->instrument_detail ?? [];
+
+            if (is_array($newInstrumentData)) {
+                foreach ($newInstrumentData as $index => $newRow) {
+                    $previousRow = $existingInstrumentData[$index] ?? [];
+
+                    foreach ($fieldNames as $field => $label) {
+                        $oldValue = $previousRow[$field] ?? 'Null';
+                        $newValue = $newRow[$field] ?? 'Null';
+
+                        // Convert array values to JSON for proper comparison
+                        if (is_array($oldValue)) $oldValue = json_encode($oldValue);
+                        if (is_array($newValue)) $newValue = json_encode($newValue);
+
+                        if ($oldValue !== $newValue) {
+                            $auditTrail = new OosAuditTrial();
+                            $auditTrail->oos_id = $oos->id;
+                            $auditTrail->activity_type = 'Instrument Details - ' . $label . ' (Row ' . ($index + 1) . ')';
+                            $auditTrail->previous = $oldValue;
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $oos->status;
+                            $auditTrail->change_to = $oos->status;
+                            $auditTrail->change_from = $oos->status;
+                            $auditTrail->action_name = ($oldValue == 'Null' && $newValue != 'Null') ? 'New' : 'Update';
+                            $auditTrail->save();
+                        }
+                    }
+                }
+            }
+            // grid end 
 
 
             //HOD 1
@@ -4404,7 +4578,7 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = $lastOosRecod->status;
             $history->change_from = $lastOosRecod->status;
         if (is_null($lastOosRecod->STP_details) || $lastOosRecod->STP_details === '') {
                 $history->action_name = "New";
@@ -4429,9 +4603,9 @@ class OOSService
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastOosRecod->status;
             $history->stage = $lastOosRecod->stage;
-            $history->change_to =   "Not Applicable";
+            $history->change_to = $lastOosRecod->status;
             $history->change_from = $lastOosRecod->status;
-        if (is_null($lastOosRecod->manufacture_vendor) || $lastOosRecod->manufacture_vendor === '') {
+            if (is_null($lastOosRecod->manufacture_vendor) || $lastOosRecod->manufacture_vendor === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4439,10 +4613,69 @@ class OOSService
             $history->save();
         }
 
+
+                    // grid data in audit trail
+        if($lastOosRecod->stage == 1){            
+            $gridRecord = $oos->grids()->where('identifier', 'info_product_material')->first();
+            $previousData = [];
+            if ($gridRecord) {
+                $previousData = $gridRecord->data;
+            }
+            // dd($previousData);
+
+            $fieldNames = [
+                'info_product_code' => 'Product Code',
+                'info_batch_no' => 'Batch No',
+                'info_mfg_date' => 'Mfg Date',
+                'info_expiry_date' => 'Expiry Date',
+                'info_label_claim' => 'Label Claim',
+                'info_pack_size' => 'Pack Size',
+                'info_analyst_name' => 'Analyst Name',
+                'info_others_specify' => 'Others Specify',
+                'info_process_sample_stage' => 'In-Process Sample Stage',
+                'info_packing_material_type' => 'Packing Material Type',
+                'info_stability_for' => 'Stability For',
+            ];
+
+            // Existing data from DB
+            // $existingGridData = json_decode($oos->info_product_material ?? '[]', true);
+
+            // New data from user input
+            $newGridData = $request->info_product_material ?? [];
+           // dd($previousData, $newGridData);
+            if (is_array($newGridData)) {
+                foreach ($newGridData as $index => $newRow) {
+                    $previousRow = $previousData[$index] ?? [];
+
+                    foreach ($fieldNames as $field => $label) {
+                        $oldValue = $previousRow[$field] ?? null;
+                        $newValue = $newRow[$field] ?? null;
+                        // Only store if value actually changed
+                        if ($oldValue !== $newValue) {
+                            $auditTrail = new OosAuditTrial();
+                            $auditTrail->oos_id = $oos->id;
+                            $auditTrail->activity_type = $label . ' (' . ($index + 1) . ')';
+                            $auditTrail->previous = $oldValue;
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $oos->status;
+                            $auditTrail->change_from = $oos->status;
+                            $auditTrail->change_to = $oos->status;
+                            $auditTrail->action_name = ($oldValue === null || $oldValue === '') ? "New" : "Update";
+                            $auditTrail->save();
+                        }
+                    }
+                }
+            }
+        }
+
             //HOD 1
 
-            if ($lastOosRecod->hod_remark1 !=  $request->hod_remark1 || !empty($request->hod_remark1_comment)) {
-                $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
+        if ($lastOosRecod->hod_remark1 !=  $request->hod_remark1 || !empty($request->hod_remark1_comment)) {
+            $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'HOD Remark')
                         ->exists();
             $history = new OosAuditTrial();
@@ -4458,7 +4691,7 @@ class OOSService
             $history->stage = $lastOosRecod->stage;
             $history->change_to = "HOD Primary Review";
             $history->change_from = $lastOosRecod->status;
-        if (is_null($lastOosRecod->hod_remark1) || $lastOosRecod->hod_remark1 === '') {
+            if (is_null($lastOosRecod->hod_remark1) || $lastOosRecod->hod_remark1 === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4485,7 +4718,7 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =  "Not Applicable";
                 $history->change_from = $lastOosRecod->status;
-               if (is_null($lastOosRecod->QA_Head_remark1) || $lastOosRecod->QA_Head_remark1 === '') {
+                if (is_null($lastOosRecod->QA_Head_remark1) || $lastOosRecod->QA_Head_remark1 === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
@@ -4512,7 +4745,7 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to = "CQA/QA Head Primary Review";
                 $history->change_from = $lastOosRecod->status;
-               if (is_null($lastOosRecod->QA_Head_primary_remark1) || $lastOosRecod->QA_Head_primary_remark1 === '') {
+                if (is_null($lastOosRecod->QA_Head_primary_remark1) || $lastOosRecod->QA_Head_primary_remark1 === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
@@ -4538,7 +4771,7 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to =   "Under Phase-IA Investigation";
                 $history->change_from = $lastOosRecod->status;
-               if (is_null($lastOosRecod->Comments_plidata) || $lastOosRecod->Comments_plidata === '') {
+                if (is_null($lastOosRecod->Comments_plidata) || $lastOosRecod->Comments_plidata === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
@@ -4587,7 +4820,7 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to = "Under Phase-IA Investigation";
                 $history->change_from = $lastOosRecod->status;
-               if (is_null($lastOosRecod->justify_if_no_field_alert_pli) || $lastOosRecod->justify_if_no_field_alert_pli === '') {
+                if (is_null($lastOosRecod->justify_if_no_field_alert_pli) || $lastOosRecod->justify_if_no_field_alert_pli === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
@@ -4611,7 +4844,7 @@ class OOSService
             $history->stage = $lastOosRecod->stage;
             $history->change_to = "Under Phase-IA Investigation";
             $history->change_from = $lastOosRecod->status;
-           if (is_null($lastOosRecod->root_comment) || $lastOosRecod->root_comment === '') {
+            if (is_null($lastOosRecod->root_comment) || $lastOosRecod->root_comment === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4636,7 +4869,7 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to = "Under Phase-IA Investigation";
                 $history->change_from = $lastOosRecod->status;
-               if (is_null($lastOosRecod->justify_if_no_analyst_int_pli) || $lastOosRecod->justify_if_no_analyst_int_pli === '') {
+                if (is_null($lastOosRecod->justify_if_no_analyst_int_pli) || $lastOosRecod->justify_if_no_analyst_int_pli === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
@@ -4660,7 +4893,7 @@ class OOSService
             $history->stage = $lastOosRecod->stage;
             $history->change_to = "Under Phase-IA Investigation";
             $history->change_from = $lastOosRecod->status;
-           if (is_null($lastOosRecod->analyst_interview_pli) || $lastOosRecod->analyst_interview_pli === '') {
+            if (is_null($lastOosRecod->analyst_interview_pli) || $lastOosRecod->analyst_interview_pli === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4685,7 +4918,7 @@ class OOSService
         $history->stage = $lastOosRecod->stage;
         $history->change_to = "Under Phase-IA Investigation";
         $history->change_from = $lastOosRecod->status;
-       if (is_null($lastOosRecod->Any_other_cause) || $lastOosRecod->Any_other_cause === '') {
+        if (is_null($lastOosRecod->Any_other_cause) || $lastOosRecod->Any_other_cause === '') {
             $history->action_name = "New";
         } else {
             $history->action_name = "Update";
@@ -4710,7 +4943,7 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to = "Under Phase-IA Investigation";
                 $history->change_from = $lastOosRecod->status;
-            if (is_null($lastOosRecod->Any_other_batches) || $lastOosRecod->Any_other_batches === '') {
+                if (is_null($lastOosRecod->Any_other_batches) || $lastOosRecod->Any_other_batches === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
@@ -4718,7 +4951,7 @@ class OOSService
                 $history->save();
             }
 
-            if ($lastOosRecod->details_of_trend !=  $request->details_of_trend || !empty($request->details_of_trend_comment)) {
+        if ($lastOosRecod->details_of_trend !=  $request->details_of_trend || !empty($request->details_of_trend_comment)) {
                 $lastDataAudittrail  = OosAuditTrial::where('oos_id', $request->id)
                         ->where('activity_type', 'Details of trend')
                         ->exists();
@@ -4735,7 +4968,7 @@ class OOSService
             $history->stage = $lastOosRecod->stage;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastOosRecod->status;
-        if (is_null($lastOosRecod->details_of_trend) || $lastOosRecod->details_of_trend === '') {
+            if (is_null($lastOosRecod->details_of_trend) || $lastOosRecod->details_of_trend === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -4833,7 +5066,7 @@ class OOSService
                 $history->stage = $lastOosRecod->stage;
                 $history->change_to = "Under Phase-IA Investigation";
                 $history->change_from = $lastOosRecod->status;
-               if (is_null($lastOosRecod->summary_of_prelim_investiga_plic) || $lastOosRecod->summary_of_prelim_investiga_plic === '') {
+                if (is_null($lastOosRecod->summary_of_prelim_investiga_plic) || $lastOosRecod->summary_of_prelim_investiga_plic === '') {
                     $history->action_name = "New";
                 } else {
                     $history->action_name = "Update";
@@ -4856,7 +5089,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Not Applicable";
+                $history->change_to = $lastOosRecod->status;
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->root_cause_identified_plic) || $lastOosRecod->root_cause_identified_plic === '') {
                     $history->action_name = "New";
@@ -4906,7 +5139,7 @@ class OOSService
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastOosRecod->status;
                 $history->stage = $lastOosRecod->stage;
-                $history->change_to =   "Not Applicable";
+                $history->change_to = $lastOosRecod->status;
                 $history->change_from = $lastOosRecod->status;
                if (is_null($lastOosRecod->root_cause_details_plic) || $lastOosRecod->root_cause_details_plic === '') {
                     $history->action_name = "New";
