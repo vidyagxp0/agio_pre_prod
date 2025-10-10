@@ -148,9 +148,9 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Parent Record Number</b></label>
-                                        @if (!empty($data_record))
+                                        @if (!empty($record_number_full))
                                         <input readonly type="text" name="parent_record_number"
-                                            value="{{ $data_record }}">
+                                            value="{{ $record_number_full }}">
                                         @else
                                         <input readonly type="text" name="parent_record_number"
                                         value="">

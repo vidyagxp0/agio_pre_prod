@@ -9381,15 +9381,18 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $Capachild->save();
 
             return view('frontend.forms.capa', compact('parent_id','relatedRecords','record_number', 'parent_record','parent_type', 'record',  'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name','reference_record', 'parent_division_id', 'parent_record', 'old_records', 'cft','parent_due_date',));
-        } elseif ($request->child_type == "Action_Item")
-         {
+            } elseif ($request->child_type == "Action_Item") {
             $parent_name = "Action Item";
             $actionchild = Deviation::find($id);
-            $actionchild->actionchild = $record_number;
+
+            $record_number_full = Helpers::getDivisionName($actionchild->division_id)
+                . '/' . 'DEV' . '/' . date('Y') . '/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
+
+            $actionchild->actionchild = $record_number_full;
             $actionchild->save();
 
-
-            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'parent_id', 'parent_type','parent_due_date',));
+// dd( $parent_name, $actionchild, $record_number_full);
+            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'parent_id', 'parent_type','parent_due_date','record_number_full'));
         }
 
         elseif ($request->child_type == "effectiveness_check")
@@ -11145,7 +11148,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
                             $history = new DeviationAuditTrail();
                             $history->deviation_id = $id;
-$history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
+                        $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     if(is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == ''){
                         $history->previous = "";
                     }else{
@@ -11629,30 +11632,29 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     }
 
                      // exetnsion child validation
-                      $extensionchild = extension_new::where('parent_id', $id)
-                    ->where('parent_type', 'Deviation')
-                    ->get();
-                        $hasPending4 = false;
+                    $extensionchild = extension_new::where('parent_id', $id)
+                        ->where('parent_type', 'Deviation')
+                        ->get();
+
+                    $hasPending4 = false;
                     foreach ($extensionchild as $ext) {
-                            $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
-                                $hasPending4 = true;
-                                break;
-                            }
+                        $extensionchildStatus = trim(strtolower($ext->status));
+                        // Allow 'closed - done', 'reject', and 'cancel' as processed statuses
+                        if (!in_array($extensionchildStatus, ['closed - done', 'closed - r
+                        eject'])) {
+                            $hasPending4 = true;
+                            break;
                         }
+                    }
 
                     if ($hasPending4) {
-                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
-                            Session::flash('swal', [
-                                'title' => 'Extension Child Pending!',
-                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
-
+                        Session::flash('swal', [
+                            'title' => 'Extension Child Pending!',
+                            'message' => 'You cannot proceed until Extension Child is Closed-Done, Rejected, or Cancelled.',
+                            'type' => 'warning',
+                        ]);
                         return redirect()->back();
-                        
                     } else {
-                        // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
                             'title' => 'Success!',
                             'message' => 'Sent for Next Stage',
@@ -11814,85 +11816,135 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($deviation->stage == 7) {
+                    if ($deviation->stage == 7) {
 
+                            $extension = Extension::where('parent_id', $deviation->id)->first();
 
+                            $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
 
-                    $extension = Extension::where('parent_id', $deviation->id)->first();
-
-                    $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
-
-                    // if ($extension && $extension->status !== 'Closed-Done') {
-                    //     Session::flash('swal', [
-                    //         'title' => 'Extension record pending!',
-                    //         'message' => 'There is an Extension record which is yet to be closed/done!',
-                    //         'type' => 'warning',
-                    //     ]);
-
-                    //     return redirect()->back();
-                    // }
-
-                    // if ($rca && $rca->status !== 'Closed-Done') {
-                    //     Session::flash('swal', [
-                    //         'title' => 'RCA record pending!',
-                    //         'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
-                    //         'type' => 'warning',
-                    //     ]);
-
-                    //     return redirect()->back();
-                    // }
-
-                    // working code ;
-                    // if ((empty($deviation->Discription_Event) && empty($changeControl->objective)
-                    // && empty($deviation->scope) &&  empty($deviation->imidiate_action) &&  empty($deviation->Detail_Of_Root_Cause) &&
-                    // empty($deviation->Detail_Of_Root_Cause))){
-                    //    Session::flash('swal', [
-                    //        'title' => 'Mandatory Fields Required!',
-                    //        'message' => 'Investingation tab is yet to be filled!',
-                    //        'type' => 'warning',
-                    //    ]);
-
-                    //    return redirect()->back();
-                    $selectedApproaches = explode(',', $deviation->investigation_approach);
+                            $selectedApproaches = explode(',', $deviation->investigation_approach);
                             $errors = [];
 
                             if (in_array('Why-Why Chart', $selectedApproaches) && empty($deviation->why_problem_statement)) {
                                 $errors[] = 'Why-Why Chart requires Root Cause details.';
                             }
-                            // if (in_array('Category Of Human Error', $selectedApproaches) && empty($deviation->human_error_category)) {
-                            //     $errors[] = 'Human Error Category is required.';
-                            // }
-                            // if (in_array('Fishbone or Ishikawa Diagram', $selectedApproaches) && empty($deviation->fishbone_details)) {
-                            //     $errors[] = 'Fishbone details are required.';
-                            // }
-                            // if (in_array('Is/Is Not Analysis', $selectedApproaches) && empty($deviation->is_is_not)) {
-                            //     $errors[] = 'Is/Is Not Analysis details are required.';
-                            // }
 
-                            // if (in_array('Failure Mode and Effect Analysis', $selectedApproaches)
-                            //     && (!is_array($request->risk_factor_1) || count(array_filter($request->risk_factor_1)) === 0)
-                            // ) {
-                            //     $errors[] = 'FMEA details are required.';
-                            // }
-                            
-                            
                             if (in_array('Others', $selectedApproaches) && empty($deviation->others_data)) {
                                 $errors[] = 'Please specify details for "Others" Investigation Approach.';
                             }
 
-                        if ($deviation->Investigation_required == 'Yes'){
-                            if (
-                                (empty($deviation->Discription_Event) && empty($changeControl->objective)
-                                && empty($deviation->scope) && empty($deviation->imidiate_action)
-                                && empty($deviation->Detail_Of_Root_Cause)) || !empty($errors)
-                            ) {
+                            $childModels = [
+                                \App\Models\extension_new::class,
+                                \App\Models\RootCauseAnalysis::class,
+                                \App\Models\Capa::class,
+                                \App\Models\ActionItem::class
+                            ];
+
+                            $hasPending1 = false;
+                            $totalChildren = 0; // 👈 count total child records
+
+                            $allowedStatuses = ['closed - done', 'closed - reject', 'cancel'];
+
+                            foreach ($childModels as $model) {
+                                $extensionChildren = $model::where('parent_id', $deviation->id)
+                                    ->where('parent_type', 'Deviation') // only Deviation parent type
+                                    ->get();
+
+                                $totalChildren += $extensionChildren->count(); // 👈 accumulate total count
+
+                                foreach ($extensionChildren as $ext) {
+                                    $extensionchildStatus = trim(strtolower($ext->status));
+                                    if (!in_array($extensionchildStatus, $allowedStatuses)) {
+                                        $hasPending1 = true;
+                                        break 2; // break both loops
+                                    }
+                                }
+                            }
+
+                            // ✅ Block only if child exists AND has pending ones
+                            if ($totalChildren > 0 && $hasPending1) {
                                 Session::flash('swal', [
-                                    'title' => 'Mandatory Fields Required!',
-                                    'message' => !empty($errors) ? implode("\n", $errors) : 'Investigation tab is yet to be filled!',
+                                    'title' => 'Extension Child Pending!',
+                                    'message' => 'You cannot proceed until all Extension Child records are Closed-Done / Closed-Reject / Cancel.',
                                     'type' => 'warning',
                                 ]);
                                 return redirect()->back();
-                            
+                            }
+
+                            if ($deviation->Investigation_required == 'Yes') {
+                                if (
+                                    (empty($deviation->Discription_Event) && empty($changeControl->objective)
+                                    && empty($deviation->scope) && empty($deviation->imidiate_action)
+                                    && empty($deviation->Detail_Of_Root_Cause)) || !empty($errors)
+                                ) {
+                                    Session::flash('swal', [
+                                        'title' => 'Mandatory Fields Required!',
+                                        'message' => !empty($errors) ? implode("\n", $errors) : 'Investigation tab is yet to be filled!',
+                                        'type' => 'warning',
+                                    ]);
+                                    return redirect()->back();
+
+                                } else {
+                                    Session::flash('swal', [
+                                        'type' => 'success',
+                                        'title' => 'Success',
+                                        'message' => 'Sent for HOD Final Review state'
+                                    ]);
+                                }
+                            }
+
+                            $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)
+                                ->where('type', "effect_analysis")
+                                ->latest()
+                                ->first();
+
+                            if ($deviation->qrm_required == 'Yes') {
+
+                                $riskData = $riskEffectAnalysis ? unserialize($riskEffectAnalysis->initial_detectability) : [];
+                                if (empty($riskData)) {
+                                    Session::flash('swal', [
+                                        'title' => 'Mandatory Fields Required!',
+                                        'message' => 'QRM tab is yet to be filled!',
+                                        'type' => 'warning',
+                                    ]);
+                                    return redirect()->back();
+                                } else {
+                                    Session::flash('swal', [
+                                        'type' => 'success',
+                                        'title' => 'Success',
+                                        'message' => 'Sent for HOD Final Review state'
+                                    ]);
+                                }
+                            }
+
+                            if ($deviation->capa_required == 'yes') {
+                                if (empty($deviation->capa_root_cause)) {
+
+                                    Session::flash('swal', [
+                                        'title' => 'Mandatory Fields Required!',
+                                        'message' => 'CAPA tab is yet to be filled!',
+                                        'type' => 'warning',
+                                    ]);
+
+                                    return redirect()->back();
+                                } else {
+                                    Session::flash('swal', [
+                                        'type' => 'success',
+                                        'title' => 'Success',
+                                        'message' => 'Sent for HOD Final Review state'
+                                    ]);
+                                }
+                            }
+
+                            if (!$deviation->Pending_initiator_update) {
+
+                                Session::flash('swal', [
+                                    'title' => 'Mandatory Fields Required!',
+                                    'message' => 'Pending Initiator Update is yet to be filled!',
+                                    'type' => 'warning',
+                                ]);
+
+                                return redirect()->back();
                             } else {
                                 Session::flash('swal', [
                                     'type' => 'success',
@@ -11900,86 +11952,9 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                                     'message' => 'Sent for HOD Final Review state'
                                 ]);
                             }
-                        }
 
-                $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
 
-                if ($deviation->qrm_required == 'Yes') {
-
-                    $riskData = $riskEffectAnalysis ? unserialize($riskEffectAnalysis->initial_detectability) : [];
-                    if (empty($riskData))  {
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => 'QRM tab is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for HOD Final Review state'
-                        ]);
-                    }
-                }
-                
-                //   dd($deviation->capa_root_cause);
-                if($deviation->capa_required == 'yes'){
-                  if (empty($deviation->capa_root_cause)) {
-
-                     Session::flash('swal', [
-                         'title' => 'Mandatory Fields Required!',
-                         'message' => 'CAPA  tab is yet to be filled!',
-                         'type' => 'warning',
-                     ]);
-
-                     return redirect()->back();
-                 } else {
-                     Session::flash('swal', [
-                         'type' => 'success',
-                         'title' => 'Success',
-                         'message' => 'Sent for HOD Final Review state'
-                     ]);
-                 }
-                }
-                    // for QRM tab 
-                
-                    // if(empty($deviation->Immediate_Action_Take) ) {
-
-                    //     Session::flash('swal', [
-                    //         'title' => 'Mandatory Fields Required!',
-                    //         'message' => 'QRM tab is yet to be filled!',
-                    //         'type' => 'warning',
-                    //     ]);
-
-                    //     return redirect()->back();
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Sent for HOD Final Review state'
-                    //     ]);
-                    // }
-                
-
-                    if (!$deviation->Pending_initiator_update) {
-
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => 'Pending Initiator Update is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
-
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for HOD Final Review state'
-                        ]);
-                    }
-                    // if (!$deviation->Discription_Event) {
-
+                    
 
                     $deviation->stage = "8";
                     $deviation->status = "HOD Final Review";
@@ -12012,26 +11987,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getHodUserList($deviation->division_id);
-                    // foreach ($list as $u) {
-                    //     // if($u->q_m_s_divisions_id == $deviation->division_id){
-                    //         $email = Helpers::getUserEmail($u->user_id);
-                    //             if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $deviation, 'site'=>"DEV", 'history' => "Initiator Update Completed", 'process' => 'Deviation', 'comment' => $deviation->pending_initiator_approved_comment, 'user'=> Auth::user()->name],
-                    //                     function ($message) use ($email, $deviation) {
-                    //                         $message->to($email)
-                    //                         ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Initiator Update Completed Performed");
-                    //                     }
-                    //                 );
-                    //             } catch(\Exception $e) {
-                    //                 info('Error sending mail', [$e]);
-                    //             }
-                    //         }
-                    //     // }
-                    // }
+                  
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
