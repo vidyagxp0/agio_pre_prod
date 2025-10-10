@@ -271,6 +271,11 @@
                                                             </a>
                                                             {{-- -----------------------by pankaj-------------------- --}}
                                                         @elseif ($datas->type == 'Internal-Audit')
+                                                         @php 
+                                                            DB::table('internal_audits')
+                                                            ->where('id', $datas->id)
+                                                            ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                        @endphp
                                                             <a href="{{ route('showInternalAudit', $datas->id) }}"
                                                                 style="color: blue">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
@@ -769,6 +774,10 @@
                                                     @php
                                                         $findRecord = DB::table('c_c_s')->find($datas->parent_id);
                                                     @endphp
+                                                 @elseif ($datas->parent_type == 'CC')
+                                                    @php
+                                                        $findRecord = DB::table('c_c_s')->find($datas->parent_id);
+                                                    @endphp    
                                                 @elseif ($datas->parent_type == 'Lab Incident')
                                                     @php
                                                         $findRecord = DB::table('lab_incidents')->find($datas->parent_id);
@@ -806,9 +815,10 @@
                                                     @php
                                                         $findRecord = DB::table('risk_management')->find($datas->parent_id);
                                                     @endphp
-                                                    @elseif ($datas->parent_type == 'Risk Assesment')
+                                                    @elseif ($datas->parent_type == 'Internal-Audit')
+
                                                     @php
-                                                        $findRecord = DB::table('risk_management')->find($datas->parent_id);
+                                                        $findRecord = DB::table('internal_audits')->find($datas->parent_id);
                                                     @endphp
                                                 @endif
 

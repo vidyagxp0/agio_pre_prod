@@ -9147,7 +9147,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending1 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                               if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
                                     $hasPending1 = true;
                                     break;
                                 }
@@ -9349,7 +9349,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending2 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                             if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                     $hasPending2 = true;
                                     break;
                                 }
@@ -9499,7 +9499,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending3 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                                if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                     $hasPending3 = true;
                                     break;
                                 }
@@ -10282,7 +10282,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending4 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                               if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                     $hasPending4 = true;
                                     break;
                                 }
@@ -10424,7 +10424,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending5 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                                if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                     $hasPending5 = true;
                                     break;
                                 }
@@ -10577,7 +10577,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending6 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                                if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
                                     $hasPending6 = true;
                                     break;
                                 }
@@ -11085,7 +11085,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending6 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                                if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                     $hasPending6 = true;
                                     break;
                                 }
@@ -11228,7 +11228,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending7 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                              if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                     $hasPending7 = true;
                                     break;
                                 }
@@ -11437,7 +11437,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending8 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                                if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
                                     $hasPending8 = true;
                                     break;
                                 }
@@ -11573,7 +11573,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending9 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                                if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                     $hasPending9 = true;
                                     break;
                                 }
@@ -11756,6 +11756,9 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
+            $lastdata = ChangeControlComment::where('cc_id', $id)->first();
+     
+       
             $comments = ChangeControlComment::where('cc_id', $id)->firstOrCreate();
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
@@ -11870,7 +11873,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending9 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                                if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
                                     $hasPending9 = true;
                                     break;
                                 }
@@ -11903,7 +11906,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                 $hasPendingaction = false;
                             foreach ($actionchilds as $ext) {
                                     $actionchildstatus = trim(strtolower($ext->status));
-                                    if ($actionchildstatus !== 'closed - done') {
+                                 if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
                                         $hasPendingaction = true;
                                         break;
                                     }
@@ -11937,7 +11940,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     $hasPending = false;
                 foreach ($capachilds as $ext) {
                         $capachildstatus = trim(strtolower($ext->status));
-                        if ($capachildstatus !== 'closed - done') {
+                        if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' )
+                         {
                             $hasPending = true;
                             break;
                         }
@@ -12136,7 +12140,9 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending9 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+
+                                 if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' )    
+                                    {
                                     $hasPending9 = true;
                                     break;
                                 }
@@ -12260,7 +12266,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $hasPending9 = false;
                         foreach ($extensionchild as $ext) {
                                 $extensionchildStatus = trim(strtolower($ext->status));
-                                if ($extensionchildStatus !== 'closed - done') {
+                                  if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' &&  $extensionchildStatus !== 'closed cancelled') {
                                     $hasPending9 = true;
                                     break;
                                 }
@@ -12402,36 +12408,37 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         }
 
         // exetnsion child validation
-                        // $extensionchild = extension_new::where('parent_id', $id)
-                        // ->where('parent_type', 'CC')
-                        // ->get();
-                        //     $hasPending10 = false;
-                        // foreach ($extensionchild as $ext) {
-                        //         $extensionchildStatus = trim(strtolower($ext->status));
-                        //         if ($extensionchildStatus !== 'closed - done') {
-                        //             $hasPending10 = true;
-                        //             break;
-                        //         }
-                        //     }
+                        $extensionchild = extension_new::where('parent_id', $id)
+                        ->where('parent_type', 'CC')
+                        ->get();
+                            $hasPending10 = false;
+                        foreach ($extensionchild as $ext) {
+                                $extensionchildStatus = trim(strtolower($ext->status));
+                                if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' &&  $extensionchildStatus !== 'closed cancelled') {
+                                    $hasPending10 = true;
+                                    break;
+                                }
+                            }
+                           
 
-                        // if ($hasPending10) {
-                        //     // $extensionchildStatus = trim(strtolower($extensionchild->status));
-                        //         Session::flash('swal', [
-                        //             'title' => 'Extension Child Pending!',
-                        //             'message' => 'You cannot proceed until Extension Child is Closed-Done.',
-                        //             'type' => 'warning',
-                        //         ]);
+                        if ($hasPending10) {
+                            // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                                Session::flash('swal', [
+                                    'title' => 'Extension Child Pending!',
+                                    'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
 
-                        //     return redirect()->back();
+                            return redirect()->back();
                             
-                        // } else {
-                        //     // Flash message for success (when the form is filled correctly)
-                        //     Session::flash('swal', [
-                        //         'title' => 'Success!',
-                        //         'message' => 'Sent for Next Stage',
-                        //         'type' => 'success',
-                        //     ]);
-                        // }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Sent for Next Stage',
+                                'type' => 'success',
+                            ]);
+                        }
         $changeControl->stage = "13";
         $changeControl->status = "Closed Done";
 
@@ -12447,13 +12454,13 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->cc_id = $id;
 
         $history->activity_type = 'QA/CQA Closure Approval By, Closure Approval On';
-        if (is_null($lastDocument->closure_approved_by) || $lastDocument->closure_approved_by === '') {
+        if (is_null($lastdata->closure_approved_by) || $lastdata->closure_approved_by === '') {
             $history->previous = "NULL";
         } else {
-            $history->previous = $lastDocument->closure_approved_by . ' , ' . $lastDocument->closure_approved_on;
+            $history->previous = $lastdata->closure_approved_by . ' , ' . $lastdata->closure_approved_on;
         }
         $history->current = $comments->closure_approved_by . ' , ' . $changeControl->closure_approved_on;
-        if (is_null($lastDocument->closure_approved_by) || $lastDocument->closure_approved_on === '') {
+        if (is_null($lastdata->closure_approved_by) || $lastdata->closure_approved_on === '') {
             $history->action_name = 'New';
         } else {
             $history->action_name = 'Update';
@@ -12464,7 +12471,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
+        $history->origin_state = $lastdata->status;
         $history->change_to = "Closed Done";
         $history->change_from = $lastDocument->status;
         $history->stage = 'Plan Proposed';

@@ -303,7 +303,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Problem Description</th>
-                        <td class="w-30">@if($data->problem_description){{ $data->problem_description }}@else Not Applicable @endif</td>
+                        <td class="w-80" colspan="5">@if($data->problem_description){{ $data->problem_description }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">CAPA Team</th>
@@ -323,7 +323,7 @@
                         </tr>
                         <tr>
                             <th class="w-20"> Initial Observation</th>
-                            <td class="w-30">
+                            <td class="w-80" colspan="80">
                             @if($data->initial_observation){{ $data->initial_observation}}@else Not Applicable @endif </td>
                     </tr>
                 </table>
