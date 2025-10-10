@@ -773,7 +773,10 @@
                                                     @php
                                                         $findRecord = DB::table('lab_incidents')->find($datas->parent_id);
                                                     @endphp
-                                                
+                                                @elseif (in_array($datas->parent_type, ['OOS Chemical', 'OOS Micro', 'OOT']))
+                                                    @php
+                                                        $findRecord = DB::table('o_o_s')->find($datas->parent_id);
+                                                    @endphp
                                                 @elseif ($datas->parent_type == 'CAPA')
                                                     @php
                                                         $findRecord = DB::table('capas')->find($datas->parent_id);
@@ -806,6 +809,11 @@
                                                     @php
                                                         $findRecord = DB::table('risk_management')->find($datas->parent_id);
                                                     @endphp
+                                                    @elseif ($datas->parent_type == 'Incident')
+                                                    @php
+                                                        $findRecord = DB::table('incidents')->find($datas->parent_id);
+                                                    @endphp
+                                                    
                                                 @endif
 
                                                 <td>

@@ -4451,33 +4451,72 @@ class OOSController extends Controller
         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = OOS::find($id);
             $lastDocument = OOS::find($id);
-            // $data->stage = "0";
-            // $data->status = "Closed-Cancelled";
-            // $data->cancelled_by = Auth::user()->name;
-            // $data->cancelled_on = Carbon::now()->format('d-M-Y');
-            // $data->comment_cancle = $request->comment;
-            //         $history = new OosAuditTrial();
-            //         $history->oos_id = $id;
-            //         $history->activity_type = 'Activity Log';
-            //         $history->previous ="";
-            //         $history->comment = $request->comment;
-            //         $history->user_id = Auth::user()->id;
-            //         $history->user_name = Auth::user()->name;
-            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //         $history->origin_state =  $data->status;
-            //         $history->action = 'Closed-Cancelled';
-            //         $history->change_from = $lastDocument->status;
-            //         $history->change_to =   "Closed-Cancelled";
-            //         $history->action_name = 'Update';
-            //         $history->save();
-            // $data->update();
-            // toastr()->success('Document Sent');
-            // return back();
+            
             $data->stage = "0";
             $data->status = "Closed-Cancelled";
             $data->cancelled_by = Auth::user()->name;
             $data->cancelled_on = Carbon::now()->format('d-M-Y');
             $data->cancelled_Comment = $request->comment;
+
+                $Capachild = Capa::where('parent_id', $id)
+                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                    ->get();
+
+                foreach ($Capachild as $child) {
+                    $child->stage = "0";
+                    $child->status = "Closed - Cancelled";
+                    // $child->cancelled_by = Auth::user()->name;
+                    // $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $child->save();
+                }
+
+                $ExtensionChild = extension_new::where('parent_id', $id)
+                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                    ->get();
+
+                foreach ($ExtensionChild as $child) {
+                    $child->stage = "0";
+                    $child->status = "Closed - Cancelled";
+                    // $child->cancelled_by = Auth::user()->name;
+                    // $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $child->save();
+                }
+
+                $ActionChild = ActionItem::where('parent_id', $id)
+                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                    ->get();
+
+                foreach ($ActionChild as $child) {
+                    $child->stage = "0";
+                    $child->status = "Closed - Cancelled";
+                    // $child->cancelled_by = Auth::user()->name;
+                    // $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $child->save();
+                }
+
+                $RCAChild = RootCauseAnalysis::where('parent_id', $id)
+                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                    ->get();
+
+                foreach ($RCAChild as $child) {
+                    $child->stage = "0";
+                    $child->status = "Closed - Cancelled";
+                    // $child->cancelled_by = Auth::user()->name;
+                    // $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $child->save();
+                }
+
+                $ResamplingChild = Resampling::where('parent_id', $id)
+                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                    ->get();
+
+                foreach ($ResamplingChild as $child) {
+                    $child->stage = "0";
+                    $child->status = "Closed - Cancelled";
+                    // $child->cancelled_by = Auth::user()->name;
+                    // $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $child->save();
+                }
 
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
@@ -4504,16 +4543,16 @@ class OOSController extends Controller
                     }
                     $history->save();
 
-                    $list = Helpers::getQAUserList($changestage->division_id);
+                    $list = Helpers::getQAUserList($data->division_id);
                     foreach ($list as $u) {
                        $email = Helpers::getUserEmail($u->user_id);
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                               function ($message) use ($email, $changestage) {
+                               ['data' => $data, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $data) {
                                    $message->to($email)
-                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($data->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
                                }
                            );
                        }
@@ -4918,7 +4957,6 @@ class OOSController extends Controller
            $data=OOS::find($id);
            $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
            $actionchild->save();
-
            return view('frontend.extension.extension_new', compact('relatedRecords','extension_record', 'parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type','parent_due_date'));
        }
 
