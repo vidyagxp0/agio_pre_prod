@@ -1236,7 +1236,7 @@
                                  "Was mobile phase maintained in recommended storage condition as per SOP/STP?",
                                  "Was mobile phase sonicated before start of analysis?",
                                  "Was sonication performed with appropriate time line or as per mentioned in STP?",
-                                 "Was mobile phase ration maintained as per STP?",
+                                 "Was mobile phase ratio maintained as per STP?",
                                  "Was Mobile phase prepared as per mentioned in STP?",
                                  "Was buffer/ mobile phase pH as per STP?",
                                  "Was mobile phase degassed before start of analysis?",
@@ -1264,7 +1264,7 @@
                                  "Is there any hump interfering to peak integration, spilt peak observed?",
                                  "Is peak integrated properly?",
                                  "Is there any anomalous chromatographic elution pattern observed?",
-                                 "Were environmental condition within properly?",
+                                 "Were environmental conditions within the proper limits (Temperature/Humidity)?",
                                  "Is Instrument calibrated state ?  ",
                                  "Was cylinder level good before start of analysis?",
                                  "Was instrument connected to properly during analysis?(Communication failure)",
@@ -7908,13 +7908,6 @@
                                                                 <option value="No" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'No' ? 'selected' : '' }}>No</option>
                                                                 <option value="N/A" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                             </select>
-
-                                                                {{--<select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
-                                                                    <option value="">Select an Option</option>
-                                                                    <option value="Yes" {{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                                    <option value="No" {{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                                    <option value="N/A" {{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
-                                                                </select>--}}
                                                             </div>
                                                         </td>
                                                         <td style="vertical-align: middle;">
@@ -7925,8 +7918,6 @@
                                                             @endphp
 
                                                             <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? 'required' : 'readonly' }}>{{ $remark }}</textarea>
-
-                                                                {{--<textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'remark') }}</textarea>--}}
                                                             </div>
                                                         </td>
                                                     </tr>
