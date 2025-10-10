@@ -1723,8 +1723,8 @@ class InternalauditController extends Controller
         $lastDocument = InternalAudit::find($id);
         $internalAudit = InternalAudit::find($id);
 
-        $internalAudit->parent_id = $request->parent_id;
-        $internalAudit->parent_type = $request->parent_type;
+        // $internalAudit->parent_id = $request->parent_id;
+        // $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date= $request->due_date;
