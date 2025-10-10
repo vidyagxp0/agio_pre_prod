@@ -2271,7 +2271,7 @@ class AuditProgramController extends Controller
             //    ]);
             // dd($changeControl->cqa_qa_comment);
 
-             if (empty($changeControl->cqa_qa_comment))
+            if (empty($changeControl->cqa_qa_comment))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
@@ -2288,8 +2288,6 @@ class AuditProgramController extends Controller
                         'message' => 'Document Sent'
                     ]);
                 }
-
-
 
                 $changeControl->stage = "3";
                 $changeControl->status = "Pending Audit";
@@ -2339,46 +2337,63 @@ class AuditProgramController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+     
+            $Internal_Auditchild = InternalAudit::where('parent_id', $id)
+                ->where('parent_type', 'Audit_Program')
+                ->get();
+
+            $hasPendingChild = false;
+            foreach ($Internal_Auditchild as $ext) {
+                $status = trim(strtolower($ext->status));
+               
+                if (!in_array($status, ['closed - done', 'reject', 'cancel'])) {
+                    $hasPendingChild = true;
+                    break;
+                }
+            }
+
+            if ($hasPendingChild) {
+                Session::flash('swal', [
+                    'title' => 'Child Records Pending!',
+                    'message' => 'You cannot proceed until all child records are Closed-Done, Rejected, or Cancelled.',
+                    'type' => 'warning',
+                ]);
+                return redirect()->back();
+            }
+
+       
             if ($changeControl->stage == 3) {
+                $mandatoryFields = ['cqa_qa_review_comment'];
 
-                $mandatoryFields = [
-                    'cqa_qa_review_comment'
-               ];
-               
-               foreach ($mandatoryFields as $field) {
-                   if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
-                       Session::flash('swal', [
-                           'type' => 'warning',
-                           'title' => 'Mandatory Fields!',
-                           'message' => "Please fill all required fields before proceeding. Missing: $field"
-                       ]);
-                       return redirect()->back();
-                   }
-               }
-               
-               // If all fields are filled, proceed
-               Session::flash('swal', [
-                   'type' => 'success',
-                   'title' => 'Success',
-                   'message' => 'Document Sent'
-               ]);
+                foreach ($mandatoryFields as $field) {
+                    if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => "Please fill all required fields before proceeding. Missing: $field"
+                        ]);
+                        return redirect()->back();
+                    }
+                }
 
-
-
+                
                 $changeControl->stage = "4";
                 $changeControl->status = "Closed - Done";
                 $changeControl->Audit_Completed_By = Auth::user()->name;
                 $changeControl->Audit_Completed_On = Carbon::now()->format('d-M-Y');
-                $changeControl->Audit_Completed_comment  = $request->comment;
+                $changeControl->Audit_Completed_comment = $request->comment;
+
                 $history = new AuditProgramAuditTrial();
                 $history->AuditProgram_id = $id;
-                $history->activity_type = 'Audit Completed On , Audit Completed By ';
-                $history->action ='Audit Completed';
+                $history->activity_type = 'Audit Completed On, Audit Completed By';
+                $history->action = 'Audit Completed';
 
                 if (is_null($lastDocument->Audit_Completed_By) || $lastDocument->Audit_Completed_By === '') {
                     $history->previous = "Null";
+                    $history->action_name = 'New';
                 } else {
                     $history->previous = $lastDocument->Audit_Completed_By . ' , ' . $lastDocument->Audit_Completed_On;
+                    $history->action_name = 'Update';
                 }
 
                 $history->current = $changeControl->Audit_Completed_By . ' , ' . $changeControl->Audit_Completed_On;
@@ -2388,30 +2403,12 @@ class AuditProgramController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Audit Completed';
-                $history->change_to= "Closed - Done";
-                $history->change_from= $lastDocument->status;
-                $history->action_name ='Not Applicable';
-                if (is_null($lastDocument->Audit_Completed_By) || $lastDocument->Audit_Completed_By === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
+                $history->change_to = "Closed - Done";
+                $history->change_from = $lastDocument->status;
                 $history->save();
-                // $list = Helpers::getCftUserList($changeControl->division_id);
-                // foreach ($list as $u) {
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "AP", 'history' => "Audit Completed", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                 function ($message) use ($email, $changeControl) {
-                //                     $message->to($email)
-                //                     ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Completed");
-                //                 }
-                //             );
-                //         }
-                // }
+
                 $changeControl->update();
+
                 toastr()->success('Document Sent');
                 return back();
             }
