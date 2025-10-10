@@ -812,6 +812,7 @@ class DashboardController extends Controller
                         "stage" => $data2->status,
                         "date_open" => $data2->create,
                         "date_close" => $data2->updated_at,
+                        "dashboard_unique_id" => $data->dashboard_unique_id,
                     ]
                 );
             }
@@ -868,7 +869,7 @@ class DashboardController extends Controller
                         "id" => $data2->id,
                         "parent" => $data2->parent_record ? $data2->parent_record : "-",
                         "record" => $data2->record,
-                        "type" => "Audit-Program",
+                        "type" => "Audit_Program",
                         "parent_id" => $data2->parent_id,
                         "parent_type" => $data2->parent_type,
                         "division_id" => $data2->division_id,
@@ -878,6 +879,7 @@ class DashboardController extends Controller
                         "stage" => $data2->status,
                         "date_open" => $data2->create,
                         "date_close" => $data2->updated_at,
+                        "dashboard_unique_id" => $data->dashboard_unique_id,
                     ]
                 );
             }
