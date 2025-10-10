@@ -441,7 +441,7 @@
                             @else
                                 <div class="">QA/CQA Final Review</div>-
                             @endif
-                            @if (($data->stage > 6 || $data->status == 'QA/CQA Final Review') )
+                            @if (($data->stage > 6 || $data->status == 'Pending RA Approval') )
     <div id="pending-ra-stage" class="active">Pending RA Approval</div>
 @else
     <div id="pending-ra-stage" class="">Pending RA Approval</div>
@@ -9317,6 +9317,14 @@
                             </div>
                         </div>
 
+
+
+
+                     
+
+
+                        
+
                         <div class="sub-head">HOD Assessment Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -9336,6 +9344,28 @@
                                 <div class="">{{ $data->hod_review_comment ?? 'Not Applicable' }}</div>
                             </div>
                         </div>
+
+                      
+                    {{--
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit by">More Info Require By :-</label>
+                                <div class="">{{ $dataMore->HodToOpenedBy ?? 'Not Applicable'  }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Info Require On :-</label>
+                                <div class="">{{ $dataMore->HodToOpenedOn ?? 'Not Applicable'  }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                                <label for="submit comment">More Info Require Comment :-</label>
+                                <div class="">{{ $dataMore->HodToOpenedComment ?? 'Not Applicable' }}</div>
+                            </div>
+                        </div>
+                    --}}
 
 
 
@@ -9405,6 +9435,28 @@
                             </div>
                         </div>
 
+                        {{-- 
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit by">More Info Require By :-</label>
+                                <div class="">{{ $dataMore->QaInitialToHodBy ?? 'Not Applicable'  }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Info Require On :-</label>
+                                <div class="">{{ $dataMore->QaInitialToHodOn ?? 'Not Applicable'  }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                                <label for="submit comment">More Info Require Comment :-</label>
+                                <div class="">{{ $dataMore->QaInitialToHodComment ?? 'Not Applicable' }}</div>
+                            </div>
+                        </div>
+                         --}}
+
+
                         {{--  <div class="sub-head">Sent to HOD (From QA Initial)</div>
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -9446,6 +9498,27 @@
                         </div>
 
 
+                    {{-- 
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit by">More Info Require By :-</label>
+                                <div class="">{{ $dataMore->cftToQaInitialBy ?? 'Not Applicable'  }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">More Info Require On :-</label>
+                                <div class="">{{ $dataMore->cftToQaInitialOn ?? 'Not Applicable'  }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                                <label for="submit comment">More Info Require Comment :-</label>
+                                <div class="">{{ $dataMore->cftToQaInitialComment ?? 'Not Applicable' }}</div>
+                            </div>
+                        </div>
+                     --}}
+
                         {{--  <div class="sub-head">Sent to QA Initial (From CFT)</div>
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -9466,7 +9539,96 @@
                             </div>
                         </div>  --}}
 
-                        <div class="sub-head">RA Approval Required</div>
+                        <div class="sub-head">QA/CQA Final Review</div>
+                       {{-- <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete By">Sent To QA/CQA Initial By :-</label>
+                                <div class="">{{ $data->qa_final_to_qainital_by ?? 'Not Applicable' }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete On">Sent To QA/CQA Initial On :-</label>
+                                <div class="">{{ $data->qa_final_to_qainital_on  ?? 'Not Applicable'}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="CFT Review Comments">Sent To QA/CQA Initial Comment :-</label>
+                                <div class="">{{ $data->qa_final_to_qainital_comment ?? 'Not Applicable' }}</div>
+                            </div>
+                        </div>
+
+                       
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete By">Sent To Send Hod By :-</label>
+                                <div class="">{{ $data->qa_final_to_HOD_by ?? 'Not Applicable' }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete On">Sent To  Send Hod On :-</label>
+                                <div class="">{{ $data->qa_final_to_HOD_on  ?? 'Not Applicable'}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="CFT Review Comments">Sent To  Send Hod Comment :-</label>
+                                <div class="">{{ $data->qa_final_to_HOD_comment ?? 'Not Applicable' }}</div>
+                            </div>
+                        </div>
+                        --}}
+
+                          <!-- <div class="sub-head"> QA/CQA Final Review Complete</div> -->
+                        @if($data->QA_final_review_by)
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="QA Final Review Complete By">QA/CQA Final Review Complete By :-</label>
+                                    <div>{{ $data->QA_final_review_by ?? 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="QA Final Review Complete On">QA/CQA Final Review Complete On :-</label>
+                                    <div>{{ $data->QA_final_review_on ?? 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                                    <label for="QA Final Review Comments">QA/CQA Final Review Comment :-</label>
+                                    <div>{{ $data->QA_final_review_comment ?? 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+                        @else
+                            <!-- <div class="sub-head">QA/CQA Final Review Complete Required</div> -->
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="CFT Review Complete By">QA/CQA Final Review Complete By :-</label>
+                                    <div>{{ $data->RA_review_required_by ?? 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="CFT Review Complete On">QA/CQA Final Review Complete On :-</label>
+                                    <div>{{ $data->RA_review_required_on ?? 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                                    <label for="CFT Review Comments">QA/CQA Final Review Complete Comment :-</label>
+                                    <div>{{ $data->RA_review_required_comment ?? 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+                        @endif
+
+
+                      {{--  <div class="sub-head">RA Approval Required</div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="CFT Review Complete By">RA Approval Required By :-</label>
@@ -9485,7 +9647,7 @@
                                 <div class="">{{ $data->RA_review_required_comment ?? 'Not Applicable' }}</div>
                             </div>
                         </div>
-
+                      --}}
 
 
 
@@ -9511,29 +9673,10 @@
 
 
 
-                        <div class="sub-head"> QA/CQA Final Review Complete</div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="QA Final Review Complete By"> QA/CQA Final Review Complete By :-</label>
-                                <div class="">{{ $data->QA_final_review_by ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="QA Final Review Complete On"> QA/CQAFinal Review Complete On :-</label>
-                                <div class="">{{ $data->QA_final_review_on ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments"> QA/CQA Final Review Comment :-</label>
-                                <div class="">{{ $data->QA_final_review_comment ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
+                      
 
 
-
-                        <div class="sub-head"> Approved </div>
+                        <div class="sub-head"> QA/CQA Head/Manager Designee Approval </div>
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Final Review Complete By">  Approved  By :-</label>
@@ -9553,8 +9696,28 @@
                             </div>
                         </div>
 
+                         {{--  
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete By">  More Info Required  By :-</label>
+                                <div class="">{{ $dataMore->QaHeadToQaFinalBy ?? 'Not Applicable' }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete On">More Info Required On :-</label>
+                                <div class="">{{ $dataMore->QaHeadToQaFinalOn ?? 'Not Applicable' }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="QA Final Review Comments"> More Info Required Comment :-</label>
+                                <div class="">{{ $dataMore->QaHeadToQaFinalComment  ?? 'Not Applicable'}}</div>
+                            </div>
+                        </div>
+                        --}}
 
-                        <div class="sub-head"> Rejected </div>
+                        <!-- <div class="sub-head"> Rejected </div> -->
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="HOD Review Complete By">Rejected By :-</label>
@@ -9580,7 +9743,7 @@
                         $commnetData = DB::table('change_control_comments')->where('cc_id', $data->id)->first();
                     @endphp
 
-                    <div class="sub-head">Initiator Updated Completed</div>
+                    <div class="sub-head">Pending Initiator Update</div>
 
                     <div class="col-lg-3">
                         <div class="group-input">
@@ -9609,6 +9772,35 @@
                         </div>
                     </div>
 
+                   {{--
+                     <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete By">More Info Required By :-</label>
+                            <div class="">
+                                {{ isset($data->QaClouseToPostImplementationBy) ? $data->QaClouseToPostImplementationBy : 'Not Applicable' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete On">More Info Required On :-</label>
+                            <div class="">
+                                {{ isset($data->QaClouseToPostImplementationOn) ? $data->QaClouseToPostImplementationOn : 'Not Applicable' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                            <label for="QA Final Review Comments">More Info Required Comment :-</label>
+                            <div class="">
+                                {{ isset($data->QaClouseToPostImplementationComment) ? $data->QaClouseToPostImplementationComment : 'Not Applicable' }}
+                            </div>
+                        </div>
+                    </div>
+
+                   --}}
 
 
                         <div class="sub-head">HOD Final Review Complete
@@ -9633,7 +9825,7 @@
                    </div>
 
 
-                        <div class="sub-head">Send For Final QA/CQA Head Approval
+                        <div class="sub-head">Implementation Verification by QA/CQA
                             </div>
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -9655,7 +9847,39 @@
                         </div>
 
 
-                        <div class="sub-head">Closure Approved
+                     {{--
+                     <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete By">More Info Required By :-</label>
+                            <div class="">
+                                {{ isset($data->QaClouseToPostImplementationBy) ? $data->QaClouseToPostImplementationBy : 'Not Applicable' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="group-input">
+                            <label for="QA Final Review Complete On">More Info Required On :-</label>
+                            <div class="">
+                                {{ isset($data->QaClouseToPostImplementationBy) ? $data->QaClouseToPostImplementationBy : 'Not Applicable' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                            <label for="QA Final Review Comments">More Info Required Comment :-</label>
+                            <div class="">
+                                {{ isset($data->QaClouseToPostImplementationComment) ? $data->QaClouseToPostImplementationComment : 'Not Applicable' }}
+                            </div>
+                        </div>
+                    </div>
+                    --}}
+
+
+
+
+                        <div class="sub-head">QA/CQA Closure Approval
 
                         </div>
                     <div class="col-lg-3">

@@ -2112,6 +2112,9 @@
                             <div id="CCForm6" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
+                                         <div class="col-12">
+                                            <div class="sub-head">Submit</div>
+                                        </div> 
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Proposed By">Propose Plan By</label>
@@ -2133,6 +2136,9 @@
                                                 <div class="static">{{ $data->comment ? $data->comment:" Not Applicable" }}</div>
                                             </div>
                                         </div>
+                                         <div class="col-12">
+                                            <div class="sub-head">Cancel</div>
+                                        </div> 
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancel By</label>
@@ -2154,6 +2160,10 @@
                                                 <div class="static">{{ $data->cancel_comment ?$data->cancel_comment :" Not Applicable" }} </div>
                                             </div>
                                         </div>
+
+                                         <div class="col-12">
+                                            <div class="sub-head">HOD Review</div>
+                                        </div> 
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">HOD Review Complete By</label>
@@ -2176,30 +2186,35 @@
                                                 <div class="static">{{ $data->hod_comment ? $data->hod_comment :" Not Applicable" }}</div>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-4">
+                                     {{-- 
+                                        <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="QA More Info Required By"> More Info Required
                                                     By</label>
                                                 <input type="hidden" name="more_info_required_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->more_info_required_by }}</div>
                                             </div>
-                                        </div> --}}
-                                        {{-- <div class="col-lg-4">
+                                        </div>
+                                     <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="QA More Info Required On">More Info Required
                                                     On</label>
                                                 <input type="hidden" name="more_info_required_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->more_info_required_on }}</div>
                                             </div>
-                                        </div> --}}
-                                        {{-- <div class="col-lg-4">
+                                        </div>
+                                     <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Comment</label>
                                                 <input type="hidden" name="hod_comment1"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->hod_comment1 }}</div>
                                             </div>
-                                        </div> --}}
+                                        </div>--}}
 
+
+                                         <div class="col-12">
+                                            <div class="sub-head">QA/CQA Review</div>
+                                        </div> 
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Completed By">QA/CQA Review Complete By</label>
@@ -2221,7 +2236,7 @@
                                                 <div class="static">{{ $data->qa_comment ? $data->qa_comment :" Not Applicable"}}</div>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-4">
+                                        {{--<div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="QA More Info Required By"> More Info Required
                                                     By</label>
@@ -2236,14 +2251,19 @@
                                                 <input type="hidden" name="qa_more_info_required_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_more_info_required_on }}</div>
                                             </div>
-                                        </div> --}}
-                                        {{-- <div class="col-lg-4">
+                                        </div> 
+                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Comment</label>
                                                 <input type="hidden" name="qa_commenta"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_commenta }}</div>
                                             </div>
                                         </div> --}}
+
+
+                                         <div class="col-12">
+                                            <div class="sub-head">QA/CQA Approval</div>
+                                        </div> 
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Approved By">Approved By</label>
@@ -2266,7 +2286,8 @@
                                                 <div class="static">{{ $data->approved_comment ? $data->approved_comment :" Not Applicable"}}</div>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-4">
+                                {{--
+                                   <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="QA More Info Required By"> More Info Required
                                                     By</label>
@@ -2281,14 +2302,18 @@
                                                 <input type="hidden" name="app_more_info_required_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->app_more_info_required_on }}</div>
                                             </div>
-                                        </div> --}}
-                                        {{-- <div class="col-lg-4">
+                                        </div> 
+                                       <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Comment</label>
                                                 <input type="hidden" name="app_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->app_comment }}</div>
                                             </div>
-                                        </div> --}}
+                                        </div> 
+                                        --}}
+                                         <div class="col-12">
+                                            <div class="sub-head">Complete</div>
+                                        </div> 
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Rejected By">Complete By</label>
@@ -2310,6 +2335,11 @@
                                                 <div class="static">{{ $data->com_comment ? $data->com_comment:" Not Applicable"}}</div>
                                             </div>
                                         </div>
+                                         <div class="col-12">
+                                            <div class="sub-head">HOD Final Review</div>
+                                        </div> 
+
+
                                         {{-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="QA More Info Required By"> More Info Required
@@ -2354,7 +2384,7 @@
                                         <div class="static">{{ $data->final_comment ? $data->final_comment :" Not Applicable"}}</div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-4">
+                               {{--  <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="QA More Info Required By"> More Info Required By</label>
                                         <input type="hidden" name="hod_more_info_required_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
@@ -2367,14 +2397,19 @@
                                         <input type="hidden" name="hod_more_info_required_on"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                         <div class="static">{{ $data->hod_more_info_required_on }}</div>
                                     </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-4">
+                                </div> 
+                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Plan Approved By">Comment</label>
                                         <input type="hidden" name="final_hod_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                        <div class="static">{{ $data->hod_comment }}</div>
+                                        <div class="static">{{ $data->final_hod_comment }}</div>
                                     </div>
-                                </div> --}}
+                                </div> 
+                                --}}
+
+                                 <div class="col-12">
+                                            <div class="sub-head">QA/CQA Closure Review</div>
+                                </div> 
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Rejected By">QA/CQA Closure Review Complete By</label>
@@ -2396,7 +2431,9 @@
                                     <div class="static">{{ $data->qa_closure_comment ? $data->qa_closure_comment :" Not Applicable"}}</div>
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-4">
+
+                            {{--
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="QA More Info Required By"> More Info Required By</label>
                                     <input type="hidden" name="closure_more_info_required_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
@@ -2416,7 +2453,11 @@
                                     <input type="hidden" name="closure_qa_comment"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
                                     <div class="static">{{ $data->closure_qa_comment }}</div>
                                 </div>
-                            </div> --}}
+                            </div> 
+                            --}}
+                             <div class="col-12">
+                                            <div class="sub-head">QAH/CQA Approval</div>
+                            </div> 
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected By">QAH/CQA Head Approval Complete By</label>
@@ -2438,7 +2479,8 @@
                                 <div class="static">{{ $data->qah_comment ?  $data->qah_comment:" Not Applicable"}}</div>
                             </div>
                         </div>
-                        {{-- <div class="col-lg-4">
+                        
+                        {{--<div class="col-lg-4">
                             <div class="group-input">
                                 <label for="QA More Info Required By"> More Info Required By</label>
                                 <input type="hidden" name="qah_more_info_required_by"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
@@ -2458,7 +2500,8 @@
                                 <input type="hidden" name="qah_comment1"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                 <div class="static">{{ $data->qah_comment1 }}</div>
                             </div>
-                        </div> --}}
+                        </div> 
+                        --}}
 
                                     <div class="button-block">
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
