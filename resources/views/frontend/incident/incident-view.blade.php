@@ -8562,86 +8562,79 @@
                                 <div class="group-input">
                                     @if ($data->stage == 2)
 
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="rca">
-                                        RCA
-                                    </label>
-
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="capa">
-                                        CAPA
-                                    </label>
-
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value=" Action_Item">
-                                        Action-Item
-                                    </label>
-                                    
-                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                        <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="extension">
-                                                Extension
-                                        </label>
-                                    @endif
-
-                               @endif
-
-                                    {{-- @if ($data->stage == 3)
-                                        <label for="major">
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value="rca">
                                             RCA
-                                        </label>
-                                        <br>
-                                        <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="extension">
-                                            Extension
-                                        </label>
-                                    @endif --}}
+                                        </div>
+
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="Capa">
+                                            CAPA
+                                        </div>
+
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major"  value="Action_Item">
+                                            Action-Item
+                                        </div>
+                                        
+                                        @if(Helpers::getChildData($data->id, 'Incident') < 3)
+                                            <div for="major">
+                                                <input type="radio" name="child_type" id="major" value="extension">
+                                                    Extension
+                                            </div>
+                                        @endif
+
+                                    @endif
 
                                     @if ($data->stage == 3)
 
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="rca">
-                                        RCA
-                                    </label>
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="rca">
+                                            RCA
+                                        </div>
 
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="capa">
-                                        CAPA
-                                    </label>
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value=" Action_Item">
-                                        Action-Item
-                                    </label>
-                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="extension">
-                                            Extension
-                                    </label>
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="Capa">
+                                            CAPA
+                                        </div>
+
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value=
+                                            "Action_Item">
+                                            Action-Item
+                                        </div>
+
+                                        @if(Helpers::getChildData($data->id, 'Incident') < 3)
+                                            <div for="major">
+                                                <input type="radio" name="child_type" id="major" value="extension">
+                                                    Extension
+                                            </div>
+                                        @endif
+
                                     @endif
-
-                                @endif
 
                                     @if ($data->stage == 5)
 
-                                        <label for="major">
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value="rca">
                                             RCA
-                                        </label>
+                                        </div>
 
-                                        <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="capa">
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="Capa">
                                             CAPA
-                                        </label>
-                                        <label for="major">
+                                        </div>
+
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value=" Action_Item">
                                             Action-Item
-                                        </label>
+                                        </div>
+
                                         @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                        <label for="major">
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value="extension">
                                                 Extension
-                                        </label>
+                                        </div>
                                         @endif
 
                                     @endif
