@@ -1368,9 +1368,9 @@ dd($pre);
                                         <label for="audit type">Incident Related To </label>
                                         <select multiple name="audit_type[]" id="audit_type">
                                             {{-- <option value="">Enter Your Selection Here</option> --}}
-                                            <option value="Equipment/Instrument">Equipment/Instrument/System </option>
-                                            <option value="Material_System">Material</option>
-                                            <option value="process">Process</option>
+                                            <option value="Equipment/Instrument/System">Equipment/Instrument/System </option>
+                                            <option value="Material">Material</option>
+                                            <option value="Process">Process</option>
                                             <option value="Anyother(specify)">Any other (specify) </option>
                                             {{-- <option value="Documentationerror">Documentation error </option>
                                             <option value="STP/ADS_instruction">STP/ADS instruction </option>

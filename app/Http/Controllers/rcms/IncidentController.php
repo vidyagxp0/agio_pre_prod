@@ -52,7 +52,9 @@ class IncidentController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $pre = Incident::all();
-//dd($pre);
+
+        //dd($pre);
+
         return response()->view('frontend.incident.incident-new', compact('formattedDate','data', 'due_date', 'old_record', 'pre'));
     }
 
@@ -566,82 +568,7 @@ class IncidentController extends Controller
 
 
 
-            $data3 = new IncidentGrid();
-            $data3->incident_grid_id = $incident->id;
-            $data3->type = "Incident";
-
-            if (!empty($request->facility_name)) {
-                $data3->facility_name = serialize($request->facility_name);
-            }
-            if (!empty($request->IDnumber)) {
-                $data3->IDnumber = serialize($request->IDnumber);
-            }
-
-            if (!empty($request->Remarks)) {
-                $data3->Remarks = serialize($request->Remarks);
-            }
-            $data3->save();
-
-                $fieldNames = [
-                    'facility_name' => 'Name',
-                    'IDnumber' => 'ID Number',
-                    'Remarks' => 'Remarks'
-                ];
-
-                // Check if facility_name is not empty and is an array
-                if (!empty($request->facility_name) && is_array($request->facility_name)) {
-                    foreach ($request->facility_name as $index => $facility_name) {
-                        // Ensure the necessary arrays are present and have corresponding values
-                        $IDnumber = $request->IDnumber[$index] ?? null;
-                        $Remarks = $request->Remarks[$index] ?? null;
-
-                        // Since this is a new entry, there are no previous details
-                        $previousDetails = [
-                            'facility_name' => null,
-                            'IDnumber' => null,
-                            'Remarks' => null,
-                        ];
-
-                        // Current fields values from the request
-                        $fields = [
-                            'facility_name' => $facility_name,
-                            'IDnumber' => $IDnumber,
-                            'Remarks' => $Remarks,
-                        ];
-
-                        foreach ($fields as $key => $currentValue) {
-                            // Log changes for new rows (no previous value to compare)
-                            if (!empty($currentValue)) {
-                                // Only create an audit trail entry for new values
-                                $history = new IncidentAuditTrail();
-                                $history->incident_id = $incident->id;
-
-                                // Set activity type to include field name and row index using the fieldNames array
-                                $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-
-                                // Since this is a new entry, 'Previous' value is null
-                                $history->previous = 'null'; // Previous value or 'null'
-
-                                // Assign 'Current' value, which is the new value
-                                $history->current = $currentValue; // New value
-
-                                // Comments and user details
-                                $history->comment = $request->equipment_comments[$index] ?? '';
-                                $history->user_id = Auth::user()->id;
-                                $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
-                                $history->change_to = "Opened";
-                                $history->change_from = "Initiation";
-                                $history->action_name = "Create";
-
-                                // Save the history record
-                                $history->save();
-                            }
-                        }
-                    }
-                }
-
+           
 
             //// Define an associative array to map the field keys to display names
             //$fieldNames = [
@@ -699,82 +626,7 @@ class IncidentController extends Controller
 
 
 
-            $data4 = new IncidentGrid();
-            $data4->incident_grid_id = $incident->id;
-            $data4->type = "Document ";
-
-            if (!empty($request->Number)) {
-                $data4->Number = serialize($request->Number);
-                }
-            if (!empty($request->ReferenceDocumentName)) {
-                $data4->ReferenceDocumentName = serialize($request->ReferenceDocumentName);
-            }
-
-            if (!empty($request->Document_Remarks)) {
-                $data4->Document_Remarks = serialize($request->Document_Remarks);
-            }
-             $data4->save();
-
-            // Define an associative array to map the field keys to display names
-            $fieldNames = [
-                'Number' => 'Document Number',
-                'ReferenceDocumentName' => 'Document Name',
-                'Document_Remarks' => 'Remarks'
-            ];
-
-            // Check if $request->Number is an array and not null
-            if (!empty($request->Number) && is_array($request->Number)) {
-                foreach ($request->Number as $index => $Number) {
-                    // Ensure the necessary arrays are present and have corresponding values
-                    $ReferenceDocumentName = $request->ReferenceDocumentName[$index] ?? null;
-                    $Document_Remarks = $request->Document_Remarks[$index] ?? null;
-
-                    // Since this is a new entry, there are no previous details
-                    $previousDetails = [
-                        'Number' => null,
-                        'ReferenceDocumentName' => null,
-                        'Document_Remarks' => null,
-                    ];
-
-                    // Current fields values from the request
-                    $fields = [
-                        'Number' => $Number,
-                        'ReferenceDocumentName' => $ReferenceDocumentName,
-                        'Document_Remarks' => $Document_Remarks,
-                    ];
-
-                    foreach ($fields as $key => $currentValue) {
-                        // Log changes for new rows (no previous value to compare)
-                        if (!empty($currentValue)) {
-                            // Only create an audit trail entry for new values
-                            $history = new IncidentAuditTrail();
-                            $history->incident_id = $incident->id;
-
-                            // Set activity type to include field name and row index using the fieldNames array
-                            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-
-                            // Since this is a new entry, 'Previous' value is null
-                            $history->previous = 'null'; // Previous value or 'null'
-
-                            // Assign 'Current' value, which is the new value
-                            $history->current = $currentValue; // New value
-
-                            // Comments and user details
-                            $history->comment = $request->equipment_comments[$index] ?? '';
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
-                            $history->change_to = "Opened";
-                            $history->change_from = "Initiation";
-                            $history->action_name = "Create";
-
-                            // Save the history record
-                            $history->save();
-                        }
-                    }
-                }
-            }
+           
 
 
             //// Define an associative array to map the field keys to display names
@@ -832,82 +684,7 @@ class IncidentController extends Controller
             //}
 
 
-            $data5 = new IncidentGrid();
-            $data5->incident_grid_id = $incident->id;
-            $data5->type = "Product ";
 
-            if (!empty($request->product_name)) {
-                $data5->product_name = serialize($request->product_name);
-            }
-            if (!empty($request->product_stage)) {
-                $data5->product_stage = serialize($request->product_stage);
-            }
-
-            if (!empty($request->batch_no)) {
-                $data5->batch_no = serialize($request->batch_no);
-            }
-            $data5->save();
-
-            // Define an associative array to map the field keys to display names
-            $fieldNames = [
-                'product_name' => 'Product / Material',
-                'product_stage' => 'Stage',
-                'batch_no' => 'A.R.No. / Batch No'
-            ];
-
-            // Check if $request->product_name is an array and not null
-            if (!empty($request->product_name) && is_array($request->product_name)) {
-                foreach ($request->product_name as $index => $product_name) {
-                    // Ensure the necessary arrays are present and have corresponding values
-                    $product_stage = $request->product_stage[$index] ?? null;
-                    $batch_no = $request->batch_no[$index] ?? null;
-
-                    // Since this is a new entry, there are no previous details
-                    $previousDetails = [
-                        'product_name' => null,
-                        'product_stage' => null,
-                        'batch_no' => null,
-                    ];
-
-                    // Current fields values from the request
-                    $fields = [
-                        'product_name' => $product_name,
-                        'product_stage' => $product_stage,
-                        'batch_no' => $batch_no,
-                    ];
-
-                    foreach ($fields as $key => $currentValue) {
-                        // Log changes for new rows (no previous value to compare)
-                        if (!empty($currentValue)) {
-                            // Only create an audit trail entry for new values
-                            $history = new IncidentAuditTrail();
-                            $history->incident_id = $incident->id;
-
-                            // Set activity type to include field name and row index using the fieldNames array
-                            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
-
-                            // Since this is a new entry, 'Previous' value is null
-                            $history->previous = 'null'; // Previous value or 'null'
-
-                            // Assign 'Current' value, which is the new value
-                            $history->current = $currentValue; // New value
-
-                            // Comments and user details
-                            $history->comment = $request->equipment_comments[$index] ?? '';
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
-                            $history->change_to = "Opened";
-                            $history->change_from = "Initiation";
-                            $history->action_name = "Create";
-
-                            // Save the history record
-                            $history->save();
-                        }
-                    }
-                }
-            }
 
 
             //// Define an associative array to map the field keys to display names
@@ -1313,9 +1090,56 @@ class IncidentController extends Controller
 
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/INC/" . Helpers::year($incident->created_at) . "/" . str_pad($incident->record, 4, '0', STR_PAD_LEFT);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+
+            if (!empty ($request->division_id)){
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Site/Location Code';
+                $history->previous = "Null";
+                $history->current = Helpers::getDivisionName(session()->get('division'));
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $incident->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiator";
+                $history->action_name = 'Create';
+                $history->save();
+            }
+
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
             $history->current = Auth::user()->name;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Date of Initiation';
+            $history->previous = "Null";
+            $history->current = Carbon::now()->format('d-M-Y');
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1343,55 +1167,60 @@ class IncidentController extends Controller
             $history->save();
          }
 
+
+
+            // if (!empty($request->record)){
+            //     $history = new IncidentAuditTrail();
+            //     $history->incident_id = $incident->id;
+            //     $history->activity_type = 'Record Number';
+            //     $history->activity_type = 'Record ';
+            //     $history->previous = "Null";
+            //     $history->current = Helpers::getDivisionName(session()->get('division')) . "/INC/" . Helpers::year($incident->created_at) . "/" . str_pad($incident->record, 4, '0', STR_PAD_LEFT);
+            //     $history->comment = "Not Applicable";
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $incident->status;
+            //     $history->change_to = "Opened";
+            //     $history->change_from = "Initiator";
+            //     $history->action_name = 'Create';
+            //     $history->save();
+            // }
+
+        if (!empty ($request->Initiator_Group)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Date of Initiation';
+            $history->activity_type = 'Initiation Department';
             $history->previous = "Null";
-            $history->current = Carbon::now()->format('d-M-Y');
+            // $history->current = Helpers::getFullDepartmentName($incident->Initiator_Group);
+            $history->current =  Helpers::getUsersDepartmentName(Auth::user()->departmentid) ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $incident->status;
-            $history->change_to = "Opened";
+            $history->change_to =   "Opened";
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
+        }
 
-            if (!empty($request->record)){
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Record Number';
-                $history->activity_type = 'Record ';
-                $history->previous = "Null";
-                $history->current = Helpers::getDivisionName(session()->get('division')) . "/INC/" . Helpers::year($incident->created_at) . "/" . str_pad($incident->record, 4, '0', STR_PAD_LEFT);
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $incident->status;
-                $history->change_to = "Opened";
-                $history->change_from = "Initiator";
-                $history->action_name = 'Create';
-                $history->save();
-            }
-
-             if (!empty ($request->division_id)){
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Site/Location Code';
-                $history->previous = "Null";
-                $history->current = Helpers::getDivisionName(session()->get('division'));
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $incident->status;
-                $history->change_to = "Opened";
-                $history->change_from = "Initiator";
-                $history->action_name = 'Create';
-                $history->save();
-            }
+        if (!empty ($request->Initiator_Group)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Initiation Department Code';
+            $history->previous = "Null";
+            $history->current = $incident->Initiator_Group;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
         if (!empty ($request->short_description)){
             $history = new IncidentAuditTrail();
@@ -1409,6 +1238,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+
 
         if (!empty ($request->short_description_required)){
             $history = new IncidentAuditTrail();
@@ -1511,13 +1341,12 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if (!empty ($request->Initiator_Group)){
+        if (!empty($request->incident_reported_date)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Initiation Department';
+            $history->activity_type = 'Incident Reported on';
             $history->previous = "Null";
-            // $history->current = Helpers::getFullDepartmentName($incident->Initiator_Group);
-            $history->current =  Helpers::getUsersDepartmentName(Auth::user()->departmentid) ;
+            $history->current = Helpers::getdateFormat($incident->incident_reported_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1529,12 +1358,12 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if (!empty ($request->Initiator_Group)){
+        if ($request->audit_type[0] !== null){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Initiation Department Code';
+            $history->activity_type = 'Incident Related To';
             $history->previous = "Null";
-            $history->current = $incident->Initiator_Group;
+            $history->current = $incident->audit_type;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1546,12 +1375,29 @@ class IncidentController extends Controller
             $history->save();
         }
 
-        if (!empty ($request->immediate_correction)){
+        if (!empty ($request->others)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Immediate Corrective Action';
+            $history->activity_type = 'Others';
             $history->previous = "Null";
-            $history->current = $incident->immediate_correction;
+            $history->current = $incident->others;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->action_name = 'Create';
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->save();
+        }
+
+        if (!empty($request->department_head)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Department Head';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorName($incident->department_head);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1579,12 +1425,13 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (!empty($request->department_head)){
+
+        if (!empty ($request->Facility_Equipment)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Department Head';
+            $history->activity_type = 'Facility/Equipment/Instrument/System Details Required?';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorName($incident->department_head);
+            $history->current = $incident->Facility_Equipment;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1595,6 +1442,341 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
+
+         $data3 = new IncidentGrid();
+            $data3->incident_grid_id = $incident->id;
+            $data3->type = "Incident";
+
+            if (!empty($request->facility_name)) {
+                $data3->facility_name = serialize($request->facility_name);
+            }
+            if (!empty($request->IDnumber)) {
+                $data3->IDnumber = serialize($request->IDnumber);
+            }
+
+            if (!empty($request->Remarks)) {
+                $data3->Remarks = serialize($request->Remarks);
+            }
+            $data3->save();
+
+                $fieldNames = [
+                    'facility_name' => 'Name',
+                    'IDnumber' => 'ID Number',
+                    'Remarks' => 'Remarks'
+                ];
+
+                // Check if facility_name is not empty and is an array
+                if (!empty($request->facility_name) && is_array($request->facility_name)) {
+                    foreach ($request->facility_name as $index => $facility_name) {
+                        // Ensure the necessary arrays are present and have corresponding values
+                        $IDnumber = $request->IDnumber[$index] ?? null;
+                        $Remarks = $request->Remarks[$index] ?? null;
+
+                        // Since this is a new entry, there are no previous details
+                        $previousDetails = [
+                            'facility_name' => null,
+                            'IDnumber' => null,
+                            'Remarks' => null,
+                        ];
+
+                        // Current fields values from the request
+                        $fields = [
+                            'facility_name' => $facility_name,
+                            'IDnumber' => $IDnumber,
+                            'Remarks' => $Remarks,
+                        ];
+
+                        foreach ($fields as $key => $currentValue) {
+                            // Log changes for new rows (no previous value to compare)
+                            if (!empty($currentValue)) {
+                                // Only create an audit trail entry for new values
+                                $history = new IncidentAuditTrail();
+                                $history->incident_id = $incident->id;
+
+                                // Set activity type to include field name and row index using the fieldNames array
+                                $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                                // Since this is a new entry, 'Previous' value is null
+                                $history->previous = 'null'; // Previous value or 'null'
+
+                                // Assign 'Current' value, which is the new value
+                                $history->current = $currentValue; // New value
+
+                                // Comments and user details
+                                $history->comment = $request->equipment_comments[$index] ?? '';
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                                $history->change_to = "Opened";
+                                $history->change_from = "Initiation";
+                                $history->action_name = "Create";
+
+                                // Save the history record
+                                $history->save();
+                            }
+                        }
+                    }
+                }
+
+        if (!empty ($request->Document_Details_Required)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Document Details Required';
+            $history->previous = "Null";
+            $history->current = $incident->Document_Details_Required;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+         $data4 = new IncidentGrid();
+            $data4->incident_grid_id = $incident->id;
+            $data4->type = "Document ";
+
+            if (!empty($request->Number)) {
+                $data4->Number = serialize($request->Number);
+                }
+            if (!empty($request->ReferenceDocumentName)) {
+                $data4->ReferenceDocumentName = serialize($request->ReferenceDocumentName);
+            }
+
+            if (!empty($request->Document_Remarks)) {
+                $data4->Document_Remarks = serialize($request->Document_Remarks);
+            }
+             $data4->save();
+
+            // Define an associative array to map the field keys to display names
+            $fieldNames = [
+                'Number' => 'Document Number',
+                'ReferenceDocumentName' => 'Document Name',
+                'Document_Remarks' => 'Remarks'
+            ];
+
+            // Check if $request->Number is an array and not null
+            if (!empty($request->Number) && is_array($request->Number)) {
+                foreach ($request->Number as $index => $Number) {
+                    // Ensure the necessary arrays are present and have corresponding values
+                    $ReferenceDocumentName = $request->ReferenceDocumentName[$index] ?? null;
+                    $Document_Remarks = $request->Document_Remarks[$index] ?? null;
+
+                    // Since this is a new entry, there are no previous details
+                    $previousDetails = [
+                        'Number' => null,
+                        'ReferenceDocumentName' => null,
+                        'Document_Remarks' => null,
+                    ];
+
+                    // Current fields values from the request
+                    $fields = [
+                        'Number' => $Number,
+                        'ReferenceDocumentName' => $ReferenceDocumentName,
+                        'Document_Remarks' => $Document_Remarks,
+                    ];
+
+                    foreach ($fields as $key => $currentValue) {
+                        // Log changes for new rows (no previous value to compare)
+                        if (!empty($currentValue)) {
+                            // Only create an audit trail entry for new values
+                            $history = new IncidentAuditTrail();
+                            $history->incident_id = $incident->id;
+
+                            // Set activity type to include field name and row index using the fieldNames array
+                            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                            // Since this is a new entry, 'Previous' value is null
+                            $history->previous = 'null'; // Previous value or 'null'
+
+                            // Assign 'Current' value, which is the new value
+                            $history->current = $currentValue; // New value
+
+                            // Comments and user details
+                            $history->comment = $request->equipment_comments[$index] ?? '';
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                            $history->change_to = "Opened";
+                            $history->change_from = "Initiation";
+                            $history->action_name = "Create";
+
+                            // Save the history record
+                            $history->save();
+                        }
+                    }
+                }
+            }
+
+        if (!empty ($request->Product_Details_Required)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Product/Material details Required';
+            $history->previous = "Null";
+            $history->current = $incident->Product_Details_Required;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+            $data5 = new IncidentGrid();
+            $data5->incident_grid_id = $incident->id;
+            $data5->type = "Product ";
+
+            if (!empty($request->product_name)) {
+                $data5->product_name = serialize($request->product_name);
+            }
+            if (!empty($request->product_stage)) {
+                $data5->product_stage = serialize($request->product_stage);
+            }
+
+            if (!empty($request->batch_no)) {
+                $data5->batch_no = serialize($request->batch_no);
+            }
+            $data5->save();
+
+            // Define an associative array to map the field keys to display names
+            $fieldNames = [
+                'product_name' => 'Product / Material',
+                'product_stage' => 'Stage',
+                'batch_no' => 'A.R.No. / Batch No'
+            ];
+
+            // Check if $request->product_name is an array and not null
+            if (!empty($request->product_name) && is_array($request->product_name)) {
+                foreach ($request->product_name as $index => $product_name) {
+                    // Ensure the necessary arrays are present and have corresponding values
+                    $product_stage = $request->product_stage[$index] ?? null;
+                    $batch_no = $request->batch_no[$index] ?? null;
+
+                    // Since this is a new entry, there are no previous details
+                    $previousDetails = [
+                        'product_name' => null,
+                        'product_stage' => null,
+                        'batch_no' => null,
+                    ];
+
+                    // Current fields values from the request
+                    $fields = [
+                        'product_name' => $product_name,
+                        'product_stage' => $product_stage,
+                        'batch_no' => $batch_no,
+                    ];
+
+                    foreach ($fields as $key => $currentValue) {
+                        // Log changes for new rows (no previous value to compare)
+                        if (!empty($currentValue)) {
+                            // Only create an audit trail entry for new values
+                            $history = new IncidentAuditTrail();
+                            $history->incident_id = $incident->id;
+
+                            // Set activity type to include field name and row index using the fieldNames array
+                            $history->activity_type = $fieldNames[$key] . ' (' . ($index + 1) . ')';
+
+                            // Since this is a new entry, 'Previous' value is null
+                            $history->previous = 'null'; // Previous value or 'null'
+
+                            // Assign 'Current' value, which is the new value
+                            $history->current = $currentValue; // New value
+
+                            // Comments and user details
+                            $history->comment = $request->equipment_comments[$index] ?? '';
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = "Not Applicable"; // For new entries, set an appropriate status
+                            $history->change_to = "Opened";
+                            $history->change_from = "Initiation";
+                            $history->action_name = "Create";
+
+                            // Save the history record
+                            $history->save();
+                        }
+                    }
+                }
+            }
+
+        if (!empty($request->Description_incident)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Description of Incident';
+            $history->previous = "Null";
+            $history->current = strip_tag($incident->Description_incident);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if (!empty($request->investigation)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Investigation';
+            $history->previous = "Null";
+            $history->current = strip_tag($incident->investigation);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+        
+        if (!empty ($request->immediate_correction)){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Immediate Corrective Action';
+            $history->previous = "Null";
+            $history->current = $incident->immediate_correction;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+        if ($request->Audit_file){
+            $history = new IncidentAuditTrail();
+            $history->incident_id = $incident->id;
+            $history->activity_type = 'Initial Attachment';
+            $history->previous = "Null";
+            $history->current = $incident->Audit_file;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $incident->status;
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
+
+
         // if (!empty ($request->incident_date)){
         //     $history = new IncidentAuditTrail();
         //     $history->incident_id = $incident->id;
@@ -1627,153 +1809,6 @@ class IncidentController extends Controller
         //    $history->action_name = 'Create';
         //    $history->save();
         //}
-        if (!empty($request->incident_reported_date)){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Incident Reported on';
-            $history->previous = "Null";
-            $history->current = Helpers::getdateFormat($incident->incident_reported_date);
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if ($request->audit_type[0] !== null){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Incident Related To';
-            $history->previous = "Null";
-            $history->current = $incident->audit_type;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if (!empty ($request->others)){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Others';
-            $history->previous = "Null";
-            $history->current = $incident->others;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->action_name = 'Create';
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->save();
-        }
-        if (!empty ($request->Facility_Equipment)){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Facility/Equipment/Instrument/System Details Required?';
-            $history->previous = "Null";
-            $history->current = $incident->Facility_Equipment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if (!empty ($request->Document_Details_Required)){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Document Details Required';
-            $history->previous = "Null";
-            $history->current = $incident->Document_Details_Required;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        if (!empty ($request->Product_Details_Required)){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Product/Material details Required';
-            $history->previous = "Null";
-            $history->current = $incident->Product_Details_Required;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->action_name = 'Create';
-            $history->save();
-        }
-
-        if (!empty($request->Description_incident)){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Description of Incident';
-            $history->previous = "Null";
-            $history->current = $incident->Description_incident;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->action_name = 'Create';
-            $history->save();
-        }
-
-        if (!empty($request->investigation)){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Investigation';
-            $history->previous = "Null";
-            $history->current = $incident->investigation;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->action_name = 'Create';
-            $history->save();
-        }
-
-        if ($request->Audit_file){
-            $history = new IncidentAuditTrail();
-            $history->incident_id = $incident->id;
-            $history->activity_type = 'Initial Attachment';
-            $history->previous = "Null";
-            $history->current = $incident->Audit_file;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiator";
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $incident->status;
-            $history->action_name = 'Create';
-            $history->save();
-        }
 
         if (!empty($request->review_of_verific)){
             $history = new IncidentAuditTrail();
@@ -3561,29 +3596,29 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         // }
 
         // Closure Attachments logic
-if (!empty($request->closure_attachment) || !empty($request->deleted_closure_attachment)) {
-    $existingFiles = json_decode($incident->closure_attachment, true) ?? [];
+        if (!empty($request->closure_attachment) || !empty($request->deleted_closure_attachment)) {
+            $existingFiles = json_decode($incident->closure_attachment, true) ?? [];
 
-    // Handle deleted files
-    if (!empty($request->deleted_closure_attachment)) {
-        $filesToDelete = explode(',', $request->deleted_closure_attachment);
-        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-            return !in_array($file, $filesToDelete);
-        });
-    }
+            // Handle deleted files
+            if (!empty($request->deleted_closure_attachment)) {
+                $filesToDelete = explode(',', $request->deleted_closure_attachment);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
 
-    $newFiles = [];
-    if ($request->hasFile('closure_attachment')) {
-        foreach ($request->file('closure_attachment') as $file) {
-            $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('upload/'), $name);
-            $newFiles[] = $name;
+            $newFiles = [];
+            if ($request->hasFile('closure_attachment')) {
+                foreach ($request->file('closure_attachment') as $file) {
+                    $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $incident->closure_attachment = json_encode($allFiles);
         }
-    }
-
-    $allFiles = array_merge($existingFiles, $newFiles);
-    $incident->closure_attachment = json_encode($allFiles);
-}
 
         if($incident->stage > 0){
 
@@ -3659,6 +3694,309 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
         $incident->update();
 
             // grid
+
+
+
+            if($lastIncident->due_date != $incident->due_date || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Due Date')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Due Date';
+                $history->previous =  Helpers::getdateFormat($lastIncident->due_date);
+                $history->current =  Helpers::getdateFormat($incident->due_date);
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+            
+            if($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Initiation Department')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Initiation Department';
+                $history->previous =  Helpers::getFullDepartmentName($lastIncident->Initiator_Group);
+                $history->current = Helpers::getFullDepartmentName($incident->Initiator_Group);
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Initiation Department Code')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Initiation Department Code';
+                $history->previous =  $lastIncident->Initiator_Group;
+                $history->current = $incident->Initiator_Group;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->short_description != $incident->short_description || !empty      ($request->comment)){
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Short Description')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Short Description';
+                $history->previous =  $lastIncident->short_description;
+                $history->current = $incident->short_description;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->short_description_required != $incident->short_description_required ||  !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Repeat Incident')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Repeat Incident?';
+                $history->previous =  $lastIncident->short_description_required;
+                $history->current = $incident->short_description_required;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->nature_of_repeat != $incident->nature_of_repeat || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Repeat Nature')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Repeat Nature';
+                $history->previous =  $lastIncident->nature_of_repeat;
+                $history->current = $incident->nature_of_repeat;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->incident_date != $incident->incident_date || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Incident Observed On (Date)')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Incident Observed On (Date)';
+                $history->previous =  Helpers::getdateFormat($lastIncident->incident_date);
+                $history->current = Helpers::getdateFormat($incident->incident_date);
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->incident_time != $incident->incident_time || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Incident Observed On (Time)')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Incident Observed On (Time)';
+                $history->previous =  $lastIncident->incident_time;
+                $history->current = $incident->incident_time;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->Facility != $incident->Facility || !empty($request->Delay_Justification_comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Incident Observed By')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Incident Observed By';
+                $history->previous =  $lastIncident->Facility;
+                $history->current = $incident->Facility;
+                $history->comment = $request->Delay_Justification_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->incident_reported_date != $incident->incident_reported_date || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Incident Reported On')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Incident Reported On';
+                $history->previous =  Helpers::getdateFormat($lastIncident->incident_reported_date);
+                $history->current = Helpers::getdateFormat($incident->incident_reported_date);
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->audit_type != $incident->audit_type || !empty($request->audit_type_comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Incident Related To')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Incident Related To';
+                $history->previous =  $lastIncident->audit_type;
+                $history->current = $incident->audit_type;
+                $history->comment = $request->audit_type_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->others != $incident->others || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Others')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Others';
+                $history->previous =  $lastIncident->others;
+                $history->current = $incident->others;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->department_head != $incident->department_head || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Department Head')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Department Head';
+                $history->previous =  Helpers::getInitiatorName($lastIncident->department_head);
+                $history->current = Helpers::getInitiatorName($incident->department_head);
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->qa_reviewer != $incident->qa_reviewer || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'QA Reviewer')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'QA Reviewer';
+                $history->previous = Helpers::getInitiatorName($lastIncident->qa_reviewer);
+                $history->current = Helpers::getInitiatorName($incident->qa_reviewer);
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->Facility_Equipment != $incident->Facility_Equipment || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Facility/ Equipment/ Instrument/ System Details Required')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Facility/Equipment/Instrument/System Details Required';
+                $history->previous =  $lastIncident->Facility_Equipment;
+                $history->current = $incident->Facility_Equipment;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
             // Fetch the existing record from the database based on the incident ID
             $data3 = IncidentGrid::where('incident_grid_id', $incident->id)
             ->where('type', "Incident")
@@ -3759,7 +4097,25 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 }
             }
 
-
+            if($lastIncident->Document_Details_Required != $incident->Document_Details_Required || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Document Details Required')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Document Details Required';
+                $history->previous =  $lastIncident->Document_Details_Required;
+                $history->current = $incident->Document_Details_Required;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
 
             $data4 = IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Document")->first();
 
@@ -3858,9 +4214,27 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 }
             }
 
+            if($lastIncident->Product_Details_Required != $incident->Product_Details_Required || !empty($request->comment)) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Product / Material Details Required')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Product / Material Details Required';
+                $history->previous =  $lastIncident->Product_Details_Required;
+                $history->current = $incident->Product_Details_Required;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
 
-
-            $data5 = IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Product")->first();
+                $data5 = IncidentGrid::where('incident_grid_id', $incident->id)->where('type', "Product")->first();
 
                 // Store the previous details for comparison before making updates
                 $previousDetails = [
@@ -3957,16 +4331,15 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     }
                 }
 
-
-            if($lastIncident->short_description != $incident->short_description || !empty($request->comment)) {
+            if($lastIncident->Description_incident != $incident->Description_incident || !empty ($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Short Description')
+                                ->where('activity_type', 'Description of Incident')
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'Short Description';
-                $history->previous =  $lastIncident->short_description;
-                $history->current = $incident->short_description;
+                $history->activity_type = 'Description of Incident';
+                $history->previous =  $lastIncident->Description_incident;
+                $history->current = $incident->Description_incident;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3978,167 +4351,26 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->short_description_required != $incident->short_description_required || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Repeat Incident')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Repeat Incident?';
-                $history->previous =  $lastIncident->short_description_required;
-                $history->current = $incident->short_description_required;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-            if($lastIncident->nature_of_repeat != $incident->nature_of_repeat || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Repeat Nature')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Repeat Nature';
-                $history->previous =  $lastIncident->nature_of_repeat;
-                $history->current = $incident->nature_of_repeat;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-            if($lastIncident->incident_date != $incident->incident_date || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Incident Observed On (Date)')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Incident Observed On (Date)';
-                $history->previous =  Helpers::getdateFormat($lastIncident->incident_date);
-                $history->current = Helpers::getdateFormat($incident->incident_date);
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-            if($lastIncident->incident_time != $incident->incident_time || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Incident Observed On (Time)')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Incident Observed On (Time)';
-                $history->previous =  $lastIncident->incident_time;
-                $history->current = $incident->incident_time;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-            if($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Initiation Department')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Initiation Department';
-                $history->previous =  Helpers::getFullDepartmentName($lastIncident->Initiator_Group);
-                $history->current = Helpers::getFullDepartmentName($incident->Initiator_Group);
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-            if($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Initiation Department Code')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Initiation Department Code';
-                $history->previous =  $lastIncident->Initiator_Group;
-                $history->current = $incident->Initiator_Group;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-            if($lastIncident->others != $incident->others || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Others')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Others';
-                $history->previous =  $lastIncident->others;
-                $history->current = $incident->others;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-
-            if($lastIncident->due_date != $incident->due_date || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Due Date')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Due Date';
-                $history->previous =  Helpers::getdateFormat($lastIncident->due_date);
-                $history->current =  Helpers::getdateFormat($incident->due_date);
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
+            if($lastIncident->investigation != $incident->investigation || !empty($request->comment)) {
+                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                 ->where('activity_type', 'investigation')
+                                 ->exists();
+                 $history = new IncidentAuditTrail();
+                 $history->incident_id = $incident->id;
+                 $history->activity_type = 'Investigation';
+                 $history->previous =  $lastIncident->investigation;
+                 $history->current = $incident->investigation;
+                 $history->comment = $request->comment;
+                 $history->user_id = Auth::user()->id;
+                 $history->user_name = Auth::user()->name;
+                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                 $history->origin_state = $lastIncident->status;
+                 $history->change_to = "Not Applicable";
+                 $history->change_from = $lastIncident->status;
+                 $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                 $history->save();
+             }
+             
             if($lastIncident->immediate_correction != $incident->immediate_correction || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Immediate Corrective Action')
@@ -4148,6 +4380,26 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->activity_type = 'Immediate Corrective Action';
                 $history->previous =  $lastIncident->immediate_correction;
                 $history->current = $incident->immediate_correction;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastIncident->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastIncident->status;
+                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
+                $history->save();
+            }
+
+            if($lastIncident->Audit_file != $incident->Audit_file) {
+                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
+                                ->where('activity_type', 'Initial Attachment')
+                                ->exists();
+                $history = new IncidentAuditTrail();
+                $history->incident_id = $incident->id;
+                $history->activity_type = 'Initial Attachment';
+                $history->previous =  $lastIncident->Audit_file;
+                $history->current = $incident->Audit_file;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4358,45 +4610,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->department_head != $incident->department_head || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Department Head')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Department Head';
-                $history->previous =  Helpers::getInitiatorName($lastIncident->department_head);
-                $history->current = Helpers::getInitiatorName($incident->department_head);
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
 
-            if($lastIncident->qa_reviewer != $incident->qa_reviewer || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'QA Reviewer')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'QA Reviewer';
-                $history->previous = Helpers::getInitiatorName($lastIncident->qa_reviewer);
-                $history->current = Helpers::getInitiatorName($incident->qa_reviewer);
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
+
+
 
 
             // if($lastIncident->Initiator_Group !=$incident->Initiator_Group || !empty($request->Initiator_Group)) {
@@ -4439,46 +4655,6 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             //    $history->save();
             //}
 
-            if($lastIncident->incident_reported_date != $incident->incident_reported_date || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Incident Reported On')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Incident Reported On';
-                $history->previous =  Helpers::getdateFormat($lastIncident->incident_reported_date);
-                $history->current = Helpers::getdateFormat($incident->incident_reported_date);
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-
-            if($lastIncident->audit_type != $incident->audit_type || !empty($request->audit_type_comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Incident Related To')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Incident Related To';
-                $history->previous =  $lastIncident->audit_type;
-                $history->current = $incident->audit_type;
-                $history->comment = $request->audit_type_comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
 
             if($lastIncident->Delay_Justification != $incident->Delay_Justification || !empty($request->Delay_Justification_comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
@@ -4501,128 +4677,19 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
 
 
-            if($lastIncident->Facility != $incident->Facility || !empty($request->Delay_Justification_comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Incident Observed By')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Incident Observed By';
-                $history->previous =  $lastIncident->Facility;
-                $history->current = $incident->Facility;
-                $history->comment = $request->Delay_Justification_comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-            if($lastIncident->Facility_Equipment != $incident->Facility_Equipment || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Facility/ Equipment/ Instrument/ System Details Required')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Facility/Equipment/Instrument/System Details Required';
-                $history->previous =  $lastIncident->Facility_Equipment;
-                $history->current = $incident->Facility_Equipment;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-
-            if($lastIncident->Document_Details_Required != $incident->Document_Details_Required || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Document Details Required')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Document Details Required';
-                $history->previous =  $lastIncident->Document_Details_Required;
-                $history->current = $incident->Document_Details_Required;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-            if($lastIncident->Product_Details_Required != $incident->Product_Details_Required || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Product / Material Details Required')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Product / Material Details Required';
-                $history->previous =  $lastIncident->Product_Details_Required;
-                $history->current = $incident->Product_Details_Required;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
-
-            if($lastIncident->Description_incident != $incident->Description_incident || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Description of Incident')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Description of Incident';
-                $history->previous =  $lastIncident->Description_incident;
-                $history->current = $incident->Description_incident;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
 
 
 
-             if($lastIncident->investigation != $incident->investigation || !empty($request->comment)) {
-                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                 ->where('activity_type', 'investigation')
-                                 ->exists();
-                 $history = new IncidentAuditTrail();
-                 $history->incident_id = $incident->id;
-                 $history->activity_type = 'Investigation';
-                 $history->previous =  $lastIncident->investigation;
-                 $history->current = $incident->investigation;
-                 $history->comment = $request->comment;
-                 $history->user_id = Auth::user()->id;
-                 $history->user_name = Auth::user()->name;
-                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                 $history->origin_state = $lastIncident->status;
-                 $history->change_to = "Not Applicable";
-                 $history->change_from = $lastIncident->status;
-                 $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                 $history->save();
-             }
+
+
+
+
+
+
+
+
+
+
 
             // if($lastIncident->Preliminary_Impact !=$incident->Preliminary_Impact || !empty($request->comment)) {
             //     $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
@@ -5249,25 +5316,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->save();
             }
 
-            if($lastIncident->Audit_file != $incident->Audit_file) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Initial Attachment')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Initial Attachment';
-                $history->previous =  $lastIncident->Audit_file;
-                $history->current = $incident->Audit_file;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
+
 
             if($lastIncident->review_of_verific != $incident->review_of_verific || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
@@ -5587,9 +5636,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             if ($incident->stage == 2) {
                 $incident->stage = "1";
                 $incident->status = "Opened";
-                $incident->more_info_req_by = Auth::user()->name;
-                $incident->more_info_req_on = Carbon::now()->format('d-M-Y');
-                $incident->more_info_req_cmt = $request->comment;
+                $incident->hod_more_info_required_by = Auth::user()->name;
+                $incident->hod_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->hod_more_info_required_comment = $request->comment;
 
                 $history = new IncidentAuditTrail();
 
@@ -5609,51 +5658,51 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'HOD Initial Review';
 
-                    //$list = Helpers::getInitiatorUserList($incident->division_id);
+                    $list = Helpers::getInitiatorUserList($incident->division_id);
 
-                    //$userIds = collect($list)->pluck('user_id')->toArray();
-                    //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    //$userId = $users->pluck('id')->implode(',');
-                    //if(!empty($users)){
-                    //    try {
-                    //        $history = new IncidentAuditTrail();
-                    //        $history->incident_id = $id;
-                    //        $history->activity_type = "Not Applicable";
-                    //        $history->previous = "Not Applicable";
-                    //        $history->current = "Not Applicable";
-                    //        $history->action = 'Notification';
-                    //        $history->comment = "";
-                    //        $history->user_id = Auth::user()->id;
-                    //        $history->user_name = Auth::user()->name;
-                    //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //        $history->origin_state = "Not Applicable";
-                    //        $history->change_to = "Not Applicable";
-                    //        $history->change_from = "HOD Initial Review";
-                    //        $history->stage = "";
-                    //        $history->action_name = "";
-                    //        $history->mailUserId = $userId;
-                    //        $history->role_name = "Initiator";
-                    //        $history->save();
-                    //    } catch (\Throwable $e) {
-                    //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    //    }
-                    //}
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                       try {
+                           $history = new IncidentAuditTrail();
+                           $history->incident_id = $id;
+                           $history->activity_type = "Not Applicable";
+                           $history->previous = "Not Applicable";
+                           $history->current = "Not Applicable";
+                           $history->action = 'Notification';
+                           $history->comment = "";
+                           $history->user_id = Auth::user()->id;
+                           $history->user_name = Auth::user()->name;
+                           $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                           $history->origin_state = "Not Applicable";
+                           $history->change_to = "Not Applicable";
+                           $history->change_from = "HOD Initial Review";
+                           $history->stage = "";
+                           $history->action_name = "";
+                           $history->mailUserId = $userId;
+                           $history->role_name = "Initiator";
+                           $history->save();
+                       } catch (\Throwable $e) {
+                           \Log::error('Mail failed to send: ' . $e->getMessage());
+                       }
+                    }
 
-                    //foreach ($list as $u) {
-                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if ($email !== null) {
-                    //            Mail::send(
-                    //                'mail.view-mail',
-                    //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //                function ($message) use ($email, $incident) {
-                    //                    $message->to($email)
-                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                    //                }
-                    //            );
-                    //        }
-                    //    // }
-                    //}
+                    foreach ($list as $u) {
+                       // if($u->q_m_s_divisions_id == $incident->division_id){
+                           $email = Helpers::getUserEmail($u->user_id);
+                               if ($email !== null) {
+                               Mail::send(
+                                   'mail.view-mail',
+                                   ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                   function ($message) use ($email, $incident) {
+                                       $message->to($email)
+                                       ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                   }
+                               );
+                           }
+                       // }
+                    }
 
           //new Monika
 
@@ -5706,9 +5755,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $incident->stage = "2";
                 $incident->status = "HOD Initial Review";
                 $incident->form_progress = 'hod';
-                $incident->Qa_more_info_req_by = Auth::user()->name;
-                $incident->Qa_more_info_req_on = Carbon::now()->format('d-M-Y');
-                $incident->Qa_more_info_req_cmt = $request->comment;
+                $incident->qa_more_info_required_by = Auth::user()->name;
+                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->qa_more_info_required_comment = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Not Applicable';
@@ -5745,51 +5794,51 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
 
-                //$list = Helpers::getHodUserList($incident->division_id);
+                $list = Helpers::getHodUserList($incident->division_id);
 
-                //$userIds = collect($list)->pluck('user_id')->toArray();
-                //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                //$userId = $users->pluck('id')->implode(',');
-                //if(!empty($users)){
-                //    try {
-                //        $history = new IncidentAuditTrail();
-                //        $history->incident_id = $id;
-                //        $history->activity_type = "Not Applicable";
-                //        $history->previous = "Not Applicable";
-                //        $history->current = "Not Applicable";
-                //        $history->action = 'Notification';
-                //        $history->comment = "";
-                //        $history->user_id = Auth::user()->id;
-                //        $history->user_name = Auth::user()->name;
-                //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //        $history->origin_state = "Not Applicable";
-                //        $history->change_to = "Not Applicable";
-                //        $history->change_from = "QA Initial Review";
-                //        $history->stage = "";
-                //        $history->action_name = "";
-                //        $history->mailUserId = $userId;
-                //        $history->role_name = "Initiator";
-                //        $history->save();
-                //    } catch (\Throwable $e) {
-                //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                //    }
-                //}
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                   try {
+                       $history = new IncidentAuditTrail();
+                       $history->incident_id = $id;
+                       $history->activity_type = "Not Applicable";
+                       $history->previous = "Not Applicable";
+                       $history->current = "Not Applicable";
+                       $history->action = 'Notification';
+                       $history->comment = "";
+                       $history->user_id = Auth::user()->id;
+                       $history->user_name = Auth::user()->name;
+                       $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                       $history->origin_state = "Not Applicable";
+                       $history->change_to = "Not Applicable";
+                       $history->change_from = "QA Initial Review";
+                       $history->stage = "";
+                       $history->action_name = "";
+                       $history->mailUserId = $userId;
+                       $history->role_name = "Initiator";
+                       $history->save();
+                   } catch (\Throwable $e) {
+                       \Log::error('Mail failed to send: ' . $e->getMessage());
+                   }
+                }
 
-                //foreach ($list as $u) {
-                //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                //        $email = Helpers::getUserEmail($u->user_id);
-                //            if ($email !== null) {
-                //            Mail::send(
-                //                'mail.view-mail',
-                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                //                function ($message) use ($email, $incident) {
-                //                    $message->to($email)
-                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                }
-                //            );
-                //        }
-                //    // }
-                //}
+                foreach ($list as $u) {
+                   // if($u->q_m_s_divisions_id == $incident->division_id){
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $incident) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                               }
+                           );
+                       }
+                   // }
+                }
 
 
           //new Monika
@@ -5822,9 +5871,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $incident->status = "QA Initial Review";
                 $incident->form_progress = 'qa';
 
-                $incident->Pending_more_info_req_by = Auth::user()->name;
-                $incident->Pending_more_info_req_on = Carbon::now()->format('d-M-Y');
-                $incident->Pending_more_info_req_cmt = $request->comment;
+                $incident->qah_more_info_required_by = Auth::user()->name;
+                $incident->qah_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->qah_more_info_required_comment = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Not Applicable';
@@ -5839,7 +5888,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
                 $history->change_to = "QA Initial Review";
-                $history->change_from = $lastDocument->status;
+                $history->change_from = "QAH/Designee Approval";
                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -5850,52 +5899,52 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
 
-                //$list = Helpers::getQAReviewerUserList($incident->division_id);
+                $list = Helpers::getQAReviewerUserList($incident->division_id);
 
-                //$userIds = collect($list)->pluck('user_id')->toArray();
-                //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                //$userId = $users->pluck('id')->implode(',');
-                //if(!empty($users)){
-                //    try {
-                //        $history = new IncidentAuditTrail();
-                //        $history->incident_id = $id;
-                //        $history->activity_type = "Not Applicable";
-                //        $history->previous = "Not Applicable";
-                //        $history->current = "Not Applicable";
-                //        $history->action = 'Notification';
-                //        $history->comment = "";
-                //        $history->user_id = Auth::user()->id;
-                //        $history->user_name = Auth::user()->name;
-                //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //        $history->origin_state = "Not Applicable";
-                //        $history->change_to = "Not Applicable";
-                //        $history->change_from = "QAH/Designee Approval";
-                //        $history->stage = "";
-                //        $history->action_name = "";
-                //        $history->mailUserId = $userId;
-                //        $history->role_name = "Initiator";
-                //        $history->save();
-                //    } catch (\Throwable $e) {
-                //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                //    }
-                //}
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                   try {
+                       $history = new IncidentAuditTrail();
+                       $history->incident_id = $id;
+                       $history->activity_type = "Not Applicable";
+                       $history->previous = "Not Applicable";
+                       $history->current = "Not Applicable";
+                       $history->action = 'Notification';
+                       $history->comment = "";
+                       $history->user_id = Auth::user()->id;
+                       $history->user_name = Auth::user()->name;
+                       $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                       $history->origin_state = "Not Applicable";
+                       $history->change_to = "Not Applicable";
+                       $history->change_from = "QAH/Designee Approval";
+                       $history->stage = "";
+                       $history->action_name = "";
+                       $history->mailUserId = $userId;
+                       $history->role_name = "Initiator";
+                       $history->save();
+                   } catch (\Throwable $e) {
+                       \Log::error('Mail failed to send: ' . $e->getMessage());
+                   }
+                }
 
 
-                //foreach ($list as $u) {
-                //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                //        $email = Helpers::getUserEmail($u->user_id);
-                //            if ($email !== null) {
-                //            Mail::send(
-                //                'mail.view-mail',
-                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                //                function ($message) use ($email, $incident) {
-                //                    $message->to($email)
-                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                }
-                //            );
-                //        }
-                //    // }
-                //}
+                foreach ($list as $u) {
+                   // if($u->q_m_s_divisions_id == $incident->division_id){
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $incident) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                               }
+                           );
+                       }
+                   // }
+                }
 
                 //new Monika
 
@@ -5925,11 +5974,11 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
             if ($incident->stage == 5) {
                 $incident->stage = "4";
-                $incident->status = "Pending Initiator Update";
+                $incident->status = "QAH/Designee Approval";
                 $incident->form_progress = 'capa';
-                $incident->Hod_more_info_req_by = Auth::user()->name;
-                $incident->Hod_more_info_req_on = Carbon::now()->format('d-M-Y');
-                $incident->Hod_more_info_req_cmt = $request->comment;
+                $incident->initiator_more_info_required_by = Auth::user()->name;
+                $incident->initiator_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->initiator_more_info_required_comment = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Not Applicable';
@@ -5942,8 +5991,8 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
-                $history->change_to =   "Pending Initiator Update";
-                $history->change_from = $lastDocument->status;
+                $history->change_to =   "QAH/Designee Approval";
+                $history->change_from = "Pending Initiator Update";
                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -5954,51 +6003,51 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
 
-                //$list = Helpers::getQAHeadUserList($incident->division_id);
+                $list = Helpers::getQAHeadUserList($incident->division_id);
 
-                //$userIds = collect($list)->pluck('user_id')->toArray();
-                //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                //$userId = $users->pluck('id')->implode(',');
-                //if(!empty($users)){
-                //    try {
-                //        $history = new IncidentAuditTrail();
-                //        $history->incident_id = $id;
-                //        $history->activity_type = "Not Applicable";
-                //        $history->previous = "Not Applicable";
-                //        $history->current = "Not Applicable";
-                //        $history->action = 'Notification';
-                //        $history->comment = "";
-                //        $history->user_id = Auth::user()->id;
-                //        $history->user_name = Auth::user()->name;
-                //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //        $history->origin_state = "Not Applicable";
-                //        $history->change_to = "Not Applicable";
-                //        $history->change_from = "Pending Initiator Update";
-                //        $history->stage = "";
-                //        $history->action_name = "";
-                //        $history->mailUserId = $userId;
-                //        $history->role_name = "Initiator";
-                //        $history->save();
-                //    } catch (\Throwable $e) {
-                //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                //    }
-                //}
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                   try {
+                       $history = new IncidentAuditTrail();
+                       $history->incident_id = $id;
+                       $history->activity_type = "Not Applicable";
+                       $history->previous = "Not Applicable";
+                       $history->current = "Not Applicable";
+                       $history->action = 'Notification';
+                       $history->comment = "";
+                       $history->user_id = Auth::user()->id;
+                       $history->user_name = Auth::user()->name;
+                       $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                       $history->origin_state = "Not Applicable";
+                       $history->change_to = "Not Applicable";
+                       $history->change_from = "Pending Initiator Update";
+                       $history->stage = "";
+                       $history->action_name = "";
+                       $history->mailUserId = $userId;
+                       $history->role_name = "Initiator";
+                       $history->save();
+                   } catch (\Throwable $e) {
+                       \Log::error('Mail failed to send: ' . $e->getMessage());
+                   }
+                }
 
-                //foreach ($list as $u) {
-                //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                //        $email = Helpers::getUserEmail($u->user_id);
-                //            if ($email !== null) {
-                //            Mail::send(
-                //                'mail.view-mail',
-                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                //                function ($message) use ($email, $incident) {
-                //                    $message->to($email)
-                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                }
-                //            );
-                //        }
-                //    // }
-                //}
+                foreach ($list as $u) {
+                   // if($u->q_m_s_divisions_id == $incident->division_id){
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $incident) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                               }
+                           );
+                       }
+                   // }
+                }
 
                //new Monika end
 
@@ -6031,12 +6080,12 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
             if ($incident->stage == 6) {
                 $incident->stage = "5";
-                $incident->status = "HOD Final Review";
+                $incident->status = "Pending Initiator Update";
                 $incident->form_progress = 'capa';
 
-                $incident->Qa_final_more_info_req_by = Auth::user()->name;
-                $incident->Qa_final_more_info_req_on = Carbon::now()->format('d-M-Y');
-                $incident->Qa_final_more_info_req_cmt = $request->comment;
+                $incident->hod_final_more_info_required_by = Auth::user()->name;
+                $incident->hod_final_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->hod_final_more_info_required_comment = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Not Applicable';
@@ -6050,54 +6099,54 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
-                $history->change_to =   "HOD Final Review";
-                $history->change_from = $lastDocument->status;
+                $history->change_to =   "Pending Initiator Update";
+                $history->change_from = "HOD Final Review";
 
-                //$list = Helpers::getInitiatorUserList($incident->division_id);
+                $list = Helpers::getInitiatorUserList($incident->division_id);
 
-                //$userIds = collect($list)->pluck('user_id')->toArray();
-                //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                //$userId = $users->pluck('id')->implode(',');
-                //if(!empty($users)){
-                //    try {
-                //        $history = new IncidentAuditTrail();
-                //        $history->incident_id = $id;
-                //        $history->activity_type = "Not Applicable";
-                //        $history->previous = "Not Applicable";
-                //        $history->current = "Not Applicable";
-                //        $history->action = 'Notification';
-                //        $history->comment = "";
-                //        $history->user_id = Auth::user()->id;
-                //        $history->user_name = Auth::user()->name;
-                //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //        $history->origin_state = "Not Applicable";
-                //        $history->change_to = "Not Applicable";
-                //        $history->change_from = "HOD Final Review";
-                //        $history->stage = "";
-                //        $history->action_name = "";
-                //        $history->mailUserId = $userId;
-                //        $history->role_name = "Initiator";
-                //        $history->save();
-                //    } catch (\Throwable $e) {
-                //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                //    }
-                //}
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                   try {
+                       $history = new IncidentAuditTrail();
+                       $history->incident_id = $id;
+                       $history->activity_type = "Not Applicable";
+                       $history->previous = "Not Applicable";
+                       $history->current = "Not Applicable";
+                       $history->action = 'Notification';
+                       $history->comment = "";
+                       $history->user_id = Auth::user()->id;
+                       $history->user_name = Auth::user()->name;
+                       $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                       $history->origin_state = "Not Applicable";
+                       $history->change_to = "Not Applicable";
+                       $history->change_from = "HOD Final Review";
+                       $history->stage = "";
+                       $history->action_name = "";
+                       $history->mailUserId = $userId;
+                       $history->role_name = "Initiator";
+                       $history->save();
+                   } catch (\Throwable $e) {
+                       \Log::error('Mail failed to send: ' . $e->getMessage());
+                   }
+                }
 
-                //foreach ($list as $u) {
-                //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                //        $email = Helpers::getUserEmail($u->user_id);
-                //            if ($email !== null) {
-                //            Mail::send(
-                //                'mail.view-mail',
-                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                //                function ($message) use ($email, $incident) {
-                //                    $message->to($email)
-                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                }
-                //            );
-                //        }
-                //    // }
-                //}
+                foreach ($list as $u) {
+                   // if($u->q_m_s_divisions_id == $incident->division_id){
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $incident) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                               }
+                           );
+                       }
+                   // }
+                }
 
                //new Monika end
 
@@ -6137,12 +6186,13 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             }
             if ($incident->stage == 7) {
                 $incident->stage = "6";
-                $incident->status = "QA Final Review";
+                $incident->status = "HOD Final Review";
                 $incident->form_progress = 'capa';
 
-                $incident->approved_more_info_req_by = Auth::user()->name;
-                $incident->approved_more_info_req_on = Carbon::now()->format('d-M-Y');
-                 $incident->approved_more_info_req_cmt = $request->comment;
+                $incident->Hod_more_info_req_by = Auth::user()->name;
+                $incident->Hod_more_info_req_on = Carbon::now()->format('d-M-Y');
+                $incident->Hod_more_info_req_cmt = $request->comment;
+
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Not Applicable';
@@ -6156,55 +6206,55 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
-                $history->change_to =   "QA Final Review";
-                $history->change_from = $lastDocument->status;
+                $history->change_to =   "HOD Final Review";
+                $history->change_from = "QA Final Review";
 
 
-                //$list = Helpers::getHodUserList($incident->division_id);
+                $list = Helpers::getHodUserList($incident->division_id);
 
-                //$userIds = collect($list)->pluck('user_id')->toArray();
-                //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                //$userId = $users->pluck('id')->implode(',');
-                //if(!empty($users)){
-                //    try {
-                //        $history = new IncidentAuditTrail();
-                //        $history->incident_id = $id;
-                //        $history->activity_type = "Not Applicable";
-                //        $history->previous = "Not Applicable";
-                //        $history->current = "Not Applicable";
-                //        $history->action = 'Notification';
-                //        $history->comment = "";
-                //        $history->user_id = Auth::user()->id;
-                //        $history->user_name = Auth::user()->name;
-                //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //        $history->origin_state = "Not Applicable";
-                //        $history->change_to = "Not Applicable";
-                //        $history->change_from = "QA Final Review";
-                //        $history->stage = "";
-                //        $history->action_name = "";
-                //        $history->mailUserId = $userId;
-                //        $history->role_name = "Initiator";
-                //        $history->save();
-                //    } catch (\Throwable $e) {
-                //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                //    }
-                //}
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                   try {
+                       $history = new IncidentAuditTrail();
+                       $history->incident_id = $id;
+                       $history->activity_type = "Not Applicable";
+                       $history->previous = "Not Applicable";
+                       $history->current = "Not Applicable";
+                       $history->action = 'Notification';
+                       $history->comment = "";
+                       $history->user_id = Auth::user()->id;
+                       $history->user_name = Auth::user()->name;
+                       $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                       $history->origin_state = "Not Applicable";
+                       $history->change_to = "Not Applicable";
+                       $history->change_from = "QA Final Review";
+                       $history->stage = "";
+                       $history->action_name = "";
+                       $history->mailUserId = $userId;
+                       $history->role_name = "Initiator";
+                       $history->save();
+                   } catch (\Throwable $e) {
+                       \Log::error('Mail failed to send: ' . $e->getMessage());
+                   }
+                }
 
-                //foreach ($list as $u) {
-                //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                //        $email = Helpers::getUserEmail($u->user_id);
-                //            if ($email !== null) {
-                //            Mail::send(
-                //                'mail.view-mail',
-                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                //                function ($message) use ($email, $incident) {
-                //                    $message->to($email)
-                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                }
-                //            );
-                //        }
-                //    // }
-                //}
+                foreach ($list as $u) {
+                   // if($u->q_m_s_divisions_id == $incident->division_id){
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $incident) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                               }
+                           );
+                       }
+                   // }
+                }
 
 
                //new Monika
@@ -6247,10 +6297,12 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             if ($incident->stage == 8) {
                 $incident->stage = "7";
                 $incident->status = "QA Final Review";
+                
                 //$incident->form_progress = 'capa';
                 $incident->approved_more_info_req_by = Auth::user()->name;
                 $incident->approved_more_info_req_on = Carbon::now()->format('d-M-Y');
-                 $incident->approved_more_info_req_cmt = $request->comment;
+                $incident->approved_more_info_req_cmt = $request->comment;
+
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Not Applicable';
@@ -6264,55 +6316,55 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Info Required';
-                $history->change_to =   "QAH Closure Approval";
-                $history->change_from = $lastDocument->status;
+                $history->change_to =   "QA Final Review";
+                $history->change_from = "QAH Closure Approval";
 
 
-                //$list = Helpers::getQAReviewerUserList($incident->division_id);
+                $list = Helpers::getQAReviewerUserList($incident->division_id);
 
-                //$userIds = collect($list)->pluck('user_id')->toArray();
-                //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                //$userId = $users->pluck('id')->implode(',');
-                //if(!empty($users)){
-                //    try {
-                //        $history = new IncidentAuditTrail();
-                //        $history->incident_id = $id;
-                //        $history->activity_type = "Not Applicable";
-                //        $history->previous = "Not Applicable";
-                //        $history->current = "Not Applicable";
-                //        $history->action = 'Notification';
-                //        $history->comment = "";
-                //        $history->user_id = Auth::user()->id;
-                //        $history->user_name = Auth::user()->name;
-                //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //        $history->origin_state = "Not Applicable";
-                //        $history->change_to = "Not Applicable";
-                //        $history->change_from = "QAH Closure Approval";
-                //        $history->stage = "";
-                //        $history->action_name = "";
-                //        $history->mailUserId = $userId;
-                //        $history->role_name = "Initiator";
-                //        $history->save();
-                //    } catch (\Throwable $e) {
-                //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                //    }
-                //}
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('id')->implode(',');
+                if(!empty($users)){
+                   try {
+                       $history = new IncidentAuditTrail();
+                       $history->incident_id = $id;
+                       $history->activity_type = "Not Applicable";
+                       $history->previous = "Not Applicable";
+                       $history->current = "Not Applicable";
+                       $history->action = 'Notification';
+                       $history->comment = "";
+                       $history->user_id = Auth::user()->id;
+                       $history->user_name = Auth::user()->name;
+                       $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                       $history->origin_state = "Not Applicable";
+                       $history->change_to = "Not Applicable";
+                       $history->change_from = "QAH Closure Approval";
+                       $history->stage = "";
+                       $history->action_name = "";
+                       $history->mailUserId = $userId;
+                       $history->role_name = "Initiator";
+                       $history->save();
+                   } catch (\Throwable $e) {
+                       \Log::error('Mail failed to send: ' . $e->getMessage());
+                   }
+                }
 
-                //foreach ($list as $u) {
-                //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                //        $email = Helpers::getUserEmail($u->user_id);
-                //            if ($email !== null) {
-                //            Mail::send(
-                //                'mail.view-mail',
-                //                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                //                function ($message) use ($email, $incident) {
-                //                    $message->to($email)
-                //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                }
-                //            );
-                //        }
-                //    // }
-                //}
+                foreach ($list as $u) {
+                   // if($u->q_m_s_divisions_id == $incident->division_id){
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $incident) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                               }
+                           );
+                       }
+                   // }
+                }
 
                 //new Monika
 
@@ -6798,8 +6850,6 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
                 if ($incident->stage == 1) {
 
-
-
                 if (empty($incident->short_description) || empty($incident->short_description_required) || empty($incident->incident_date) || empty($incident->incident_time) || empty($incident->Facility) || empty($incident->incident_reported_date) ||
                     empty($incident->audit_type) || empty($incident->Facility_Equipment) || empty($incident->Document_Details_Required) || empty($incident->Product_Details_Required) || empty($incident->Description_incident) || empty($incident->investigation) || empty($incident->immediate_correction)) {
                         // Flash message for warning (field not filled)
@@ -6854,55 +6904,56 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     }
                     $history->save();
 
-                    //$list = Helpers::getHodUserList($incident->division_id);
+                    $list = Helpers::getHodUserList($incident->division_id);
 
-                    //$userIds = collect($list)->pluck('user_id')->toArray();
-                    //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    //$userId = $users->pluck('id')->implode(',');
-                    //if(!empty($users)){
-                    //    try {
-                    //        $history = new IncidentAuditTrail();
-                    //        $history->incident_id = $id;
-                    //        $history->activity_type = "Not Applicable";
-                    //        $history->previous = "Not Applicable";
-                    //        $history->current = "Not Applicable";
-                    //        $history->action = 'Notification';
-                    //        $history->comment = "";
-                    //        $history->user_id = Auth::user()->id;
-                    //        $history->user_name = Auth::user()->name;
-                    //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //        $history->origin_state = "Not Applicable";
-                    //        $history->change_to = "Not Applicable";
-                    //        $history->change_from = "Opened";
-                    //        $history->stage = "";
-                    //        $history->action_name = "";
-                    //        $history->mailUserId = $userId;
-                    //        $history->role_name = "Initiator";
-                    //        $history->save();
-                    //    } catch (\Throwable $e) {
-                    //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    //    }
-                    //}
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                       try {
+                           $history = new IncidentAuditTrail();
+                           $history->incident_id = $id;
+                           $history->activity_type = "Not Applicable";
+                           $history->previous = "Not Applicable";
+                           $history->current = "Not Applicable";
+                           $history->action = 'Notification';
+                           $history->comment = "";
+                           $history->user_id = Auth::user()->id;
+                           $history->user_name = Auth::user()->name;
+                           $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                           $history->origin_state = "Not Applicable";
+                           $history->change_to = "Not Applicable";
+                           $history->change_from = "Opened";
+                           $history->stage = "";
+                           $history->action_name = "";
+                           $history->mailUserId = $userId;
+                           $history->role_name = "Initiator";
+                           $history->save();
+                       } catch (\Throwable $e) {
+                           \Log::error('Mail failed to send: ' . $e->getMessage());
+                       }
+                    }
 
-                    //foreach ($list as $u) {
-                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if ($email !== null) {
-                    //            Mail::send(
-                    //                'mail.view-mail',
-                    //                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
-                    //                function ($message) use ($email, $incident) {
-                    //                    $message->to($email)
-                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
-                    //                }
-                    //            );
-                    //        }
-                    //    // }
-                    //}
+                    foreach ($list as $u) {
+                       // if($u->q_m_s_divisions_id == $incident->division_id){
+                           $email = Helpers::getUserEmail($u->user_id);
+                               if ($email !== null) {
+                               Mail::send(
+                                   'mail.view-mail',
+                                   ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                                   function ($message) use ($email, $incident) {
+                                       $message->to($email)
+                                       ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                   }
+                               );
+                           }
+                       // }
+                    }
 
                     $incident->update();
                     return back();
                 }
+
                 if ($incident->stage == 2) {
 
                   if(empty($incident->review_of_verific) || empty($incident->Recommendations) || empty($incident->Impact_Assessmenta) || empty($incident->HOD_Remarks)) {
@@ -6922,14 +6973,15 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             'type' => 'success',
                         ]);
                     }
-                      // exetnsion child validation
-                      $extensionchild = extension_new::where('parent_id', $id)
+
+                    // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'Incident')
                     ->get();
                         $hasPending1 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending1 = true;
                                 break;
                             }
@@ -6950,6 +7002,104 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         Session::flash('swal', [
                             'title' => 'Success!',
                             'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    //rca child validation
+                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingRCA = false;
+                        foreach ($rcachilds as $ext) {
+                                $rcachildstatus = trim(strtolower($ext->status));
+                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 
+                                    'closed-cancelled' ) {
+                                    $hasPendingRCA = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    //action item child validation
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    //CAPA child validations 
+                    $capachilds = Capa::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                        $hasPendingcapa = false;
+                        foreach($capachilds as $ext) {
+                                $capachildstatus = trim(strtolower($ext->status));
+                                if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
+                                    $hasPendingcapa = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingcapa) {
+                        // $capachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingcapa) {
+                            Session::flash('swal', [
+                                'title' => 'CAPA Child Pending!',
+                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
                             'type' => 'success',
                         ]);
                     }
@@ -6986,55 +7136,53 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     } else {
                         $history->action_name = 'Update';
                     }
-
-
                     $history->save();
 
-                //       $list = Helpers::getQAReviewerUserList($incident->division_id);
+                      $list = Helpers::getQAReviewerUserList($incident->division_id);
 
-                //       $userIds = collect($list)->pluck('user_id')->toArray();
-                //       $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                //       $userId = $users->pluck('id')->implode(',');
-                //       if(!empty($users)){
-                //           try {
-                //               $history = new IncidentAuditTrail();
-                //               $history->incident_id = $id;
-                //               $history->activity_type = "Not Applicable";
-                //               $history->previous = "Not Applicable";
-                //               $history->current = "Not Applicable";
-                //               $history->action = 'Notification';
-                //               $history->comment = "";
-                //               $history->user_id = Auth::user()->id;
-                //               $history->user_name = Auth::user()->name;
-                //               $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                //               $history->origin_state = "Not Applicable";
-                //               $history->change_to = "Not Applicable";
-                //               $history->change_from = "HOD Review Complete";
-                //               $history->stage = "";
-                //               $history->action_name = "";
-                //               $history->mailUserId = $userId;
-                //               $history->role_name = "Initiator";
-                //               $history->save();
-                //           } catch (\Throwable $e) {
-                //               \Log::error('Mail failed to send: ' . $e->getMessage());
-                //           }
-                //       }
+                      $userIds = collect($list)->pluck('user_id')->toArray();
+                      $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                      $userId = $users->pluck('id')->implode(',');
+                      if(!empty($users)){
+                          try {
+                              $history = new IncidentAuditTrail();
+                              $history->incident_id = $id;
+                              $history->activity_type = "Not Applicable";
+                              $history->previous = "Not Applicable";
+                              $history->current = "Not Applicable";
+                              $history->action = 'Notification';
+                              $history->comment = "";
+                              $history->user_id = Auth::user()->id;
+                              $history->user_name = Auth::user()->name;
+                              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                              $history->origin_state = "Not Applicable";
+                              $history->change_to = "Not Applicable";
+                              $history->change_from = "HOD Review Complete";
+                              $history->stage = "";
+                              $history->action_name = "";
+                              $history->mailUserId = $userId;
+                              $history->role_name = "Initiator";
+                              $history->save();
+                          } catch (\Throwable $e) {
+                              \Log::error('Mail failed to send: ' . $e->getMessage());
+                          }
+                      }
 
-                //        foreach ($list as $u) {
-                //            // if($u->q_m_s_divisions_id == $incident->division_id){
-                //                $email = Helpers::getUserEmail($u->user_id);
-                //                    if ($email !== null) {
-                //                    Mail::send(
-                //                        'mail.view-mail',
-                //                        ['data' => $incident, 'site' => "view", 'history' => "HOD Initial Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
-                //                        function ($message) use ($email, $incident) {
-                //                            $message->to($email)
-                //                            ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Initial Review Complete");
-                //                        }
-                //                    );
-                //                }
-                //    // }
-                //}
+                       foreach ($list as $u) {
+                           // if($u->q_m_s_divisions_id == $incident->division_id){
+                               $email = Helpers::getUserEmail($u->user_id);
+                                   if ($email !== null) {
+                                   Mail::send(
+                                       'mail.view-mail',
+                                       ['data' => $incident, 'site' => "view", 'history' => "HOD Initial Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                                       function ($message) use ($email, $incident) {
+                                           $message->to($email)
+                                           ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Initial Review Complete");
+                                       }
+                                   );
+                               }
+                   // }
+                }
 
 
                     $incident->update();
@@ -7065,13 +7213,13 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     }
 
                      // exetnsion child validation
-                      $extensionchild = extension_new::where('parent_id', $id)
+                    $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'Incident')
                     ->get();
                         $hasPending2 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending2 = true;
                                 break;
                             }
@@ -7096,6 +7244,104 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         ]);
                     }
 
+                      //rca child validation
+                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingRCA = false;
+                        foreach ($rcachilds as $ext) {
+                                $rcachildstatus = trim(strtolower($ext->status));
+                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==   'closed-cancelled' ) {
+                                    $hasPendingRCA = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    //action item child validation
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    //CAPA child validations 
+                    $capachilds = Capa::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                        $hasPendingcapa = false;
+                        foreach($capachilds as $ext) {
+                                $capachildstatus = trim(strtolower($ext->status));
+                                if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
+                                    $hasPendingcapa = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingcapa) {
+                        // $capachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingcapa) {
+                            Session::flash('swal', [
+                                'title' => 'CAPA Child Pending!',
+                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+
                     //dd($incident->stage);
                     $incident->stage = "4";
                     $incident->status = "QAH/Designee Approval";
@@ -7112,11 +7358,11 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
-                    $history->change_to =   "Pending Initiator Update";
+                    $history->change_to =   "QAH/Designee Approval";
                     $history->change_from = $lastDocument->status;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->stage = 'Pending Initiator Update';
+                    $history->stage = 'QAH/Designee Approval';
                     if (is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_By === '') {
                         $history->previous = "";
                     } else {
@@ -7130,59 +7376,56 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     }
                     $history->save();
 
-                    //$list = Helpers::getQAHeadUserList($incident->division_id);
+                    $list = Helpers::getQAHeadUserList($incident->division_id);
 
-                    //$userIds = collect($list)->pluck('user_id')->toArray();
-                    //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    //$userId = $users->pluck('id')->implode(',');
-                    //if(!empty($users)){
-                    //    try {
-                    //        $history = new IncidentAuditTrail();
-                    //        $history->incident_id = $id;
-                    //        $history->activity_type = "Not Applicable";
-                    //        $history->previous = "Not Applicable";
-                    //        $history->current = "Not Applicable";
-                    //        $history->action = 'Notification';
-                    //        $history->comment = "";
-                    //        $history->user_id = Auth::user()->id;
-                    //        $history->user_name = Auth::user()->name;
-                    //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //        $history->origin_state = "Not Applicable";
-                    //        $history->change_to = "Not Applicable";
-                    //        $history->change_from = "QA Initial Review";
-                    //        $history->stage = "";
-                    //        $history->action_name = "";
-                    //        $history->mailUserId = $userId;
-                    //        $history->role_name = "Initiator";
-                    //        $history->save();
-                    //    } catch (\Throwable $e) {
-                    //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    //    }
-                    //}
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                       try {
+                           $history = new IncidentAuditTrail();
+                           $history->incident_id = $id;
+                           $history->activity_type = "Not Applicable";
+                           $history->previous = "Not Applicable";
+                           $history->current = "Not Applicable";
+                           $history->action = 'Notification';
+                           $history->comment = "";
+                           $history->user_id = Auth::user()->id;
+                           $history->user_name = Auth::user()->name;
+                           $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                           $history->origin_state = "Not Applicable";
+                           $history->change_to = "Not Applicable";
+                           $history->change_from = "QA Initial Review";
+                           $history->stage = "";
+                           $history->action_name = "";
+                           $history->mailUserId = $userId;
+                           $history->role_name = "Initiator";
+                           $history->save();
+                       } catch (\Throwable $e) {
+                           \Log::error('Mail failed to send: ' . $e->getMessage());
+                       }
+                    }
 
-                    //foreach ($list as $u) {
-                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if ($email !== null) {
-                    //            Mail::send(
-                    //                'mail.view-mail',
-                    //                ['data' => $incident, 'site' => "view", 'history' => "QA Initial Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
-                    //                function ($message) use ($email, $incident) {
-                    //                    $message->to($email)
-                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity:  QA Initial Review Complete");
-                    //                }
-                    //            );
-                    //        }
-                    //    // }
-                    //}
+                    foreach ($list as $u) {
+                       // if($u->q_m_s_divisions_id == $incident->division_id){
+                           $email = Helpers::getUserEmail($u->user_id);
+                               if ($email !== null) {
+                               Mail::send(
+                                   'mail.view-mail',
+                                   ['data' => $incident, 'site' => "view", 'history' => "QA Initial Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                                   function ($message) use ($email, $incident) {
+                                       $message->to($email)
+                                       ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity:  QA Initial Review Complete");
+                                   }
+                               );
+                           }
+                       // }
+                    }
 
                     $incident->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
-
-
-
 
 
                 if ($incident->stage == 4) {
@@ -7210,7 +7453,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -7261,9 +7504,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QAH/Designee Approval";
+                    $history->change_to =   "Pending Initiator Update";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'QAH/Designee Approval Complete';
+                    $history->stage = 'Pending Initiator Update';
                     if (is_null($lastDocument->QAH_Designee_Approval_Complete_By) || $lastDocument->QAH_Designee_Approval_Complete_By === '') {
                         $history->previous = "";
                     } else {
@@ -7281,51 +7524,51 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     $history->save();
 
 
-                    //$list = Helpers::getInitiatorUserList($incident->division_id);
+                    $list = Helpers::getInitiatorUserList($incident->division_id);
 
-                    //$userIds = collect($list)->pluck('user_id')->toArray();
-                    //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    //$userId = $users->pluck('id')->implode(',');
-                    //if(!empty($users)){
-                    //    try {
-                    //        $history = new IncidentAuditTrail();
-                    //        $history->incident_id = $id;
-                    //        $history->activity_type = "Not Applicable";
-                    //        $history->previous = "Not Applicable";
-                    //        $history->current = "Not Applicable";
-                    //        $history->action = 'Notification';
-                    //        $history->comment = "";
-                    //        $history->user_id = Auth::user()->id;
-                    //        $history->user_name = Auth::user()->name;
-                    //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //        $history->origin_state = "Not Applicable";
-                    //        $history->change_to = "Not Applicable";
-                    //        $history->change_from = "QAH/Designee Approval";
-                    //        $history->stage = "";
-                    //        $history->action_name = "";
-                    //        $history->mailUserId = $userId;
-                    //        $history->role_name = "Initiator";
-                    //        $history->save();
-                    //    } catch (\Throwable $e) {
-                    //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    //    }
-                    //}
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                       try {
+                           $history = new IncidentAuditTrail();
+                           $history->incident_id = $id;
+                           $history->activity_type = "Not Applicable";
+                           $history->previous = "Not Applicable";
+                           $history->current = "Not Applicable";
+                           $history->action = 'Notification';
+                           $history->comment = "";
+                           $history->user_id = Auth::user()->id;
+                           $history->user_name = Auth::user()->name;
+                           $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                           $history->origin_state = "Not Applicable";
+                           $history->change_to = "Not Applicable";
+                           $history->change_from = "QAH/Designee Approval";
+                           $history->stage = "";
+                           $history->action_name = "";
+                           $history->mailUserId = $userId;
+                           $history->role_name = "Initiator";
+                           $history->save();
+                       } catch (\Throwable $e) {
+                           \Log::error('Mail failed to send: ' . $e->getMessage());
+                       }
+                    }
 
-                    //foreach ($list as $u) {
-                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if ($email !== null) {
-                    //            Mail::send(
-                    //                'mail.view-mail',
-                    //                ['data' => $incident, 'site' => "view", 'history' => "QAH/Designee Approval Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
-                    //                function ($message) use ($email, $incident) {
-                    //                    $message->to($email)
-                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/Designee Approval Complete");
-                    //                }
-                    //            );
-                    //        }
-                    //    // }
-                    //}
+                    foreach ($list as $u) {
+                       // if($u->q_m_s_divisions_id == $incident->division_id){
+                           $email = Helpers::getUserEmail($u->user_id);
+                               if ($email !== null) {
+                               Mail::send(
+                                   'mail.view-mail',
+                                   ['data' => $incident, 'site' => "view", 'history' => "QAH/Designee Approval Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                                   function ($message) use ($email, $incident) {
+                                       $message->to($email)
+                                       ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/Designee Approval Complete");
+                                   }
+                               );
+                           }
+                       // }
+                    }
 
                     $incident->update();
                     toastr()->success('Document Sent');
@@ -7343,7 +7586,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         $hasPending2 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending2 = true;
                                 break;
                             }
@@ -7367,6 +7610,108 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             'type' => 'success',
                         ]);
                     }
+
+                      //rca child validation
+                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingRCA = false;
+                        foreach ($rcachilds as $ext) {
+                                $rcachildstatus = trim(strtolower($ext->status));
+                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==
+                                    'closed-cancelled' ) {
+                                    $hasPendingRCA = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    //action item child validation
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    //CAPA child validations 
+                    $capachilds = Capa::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                        $hasPendingcapa = false;
+                        foreach($capachilds as $ext) {
+                                $capachildstatus = trim(strtolower($ext->status));
+                                if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
+                                    $hasPendingcapa = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingcapa) {
+                        // $capachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingcapa) {
+                            Session::flash('swal', [
+                                'title' => 'CAPA Child Pending!',
+                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+
+
+
                     if(empty($incident->capa_implementation) || empty($incident->check_points) || empty($incident->corrective_actions) || empty($incident->batch_release) || empty($incident->affected_documents) || empty($incident->QA_Feedbacks)) {
                         // Flash message for warning (field not filled)
                         Session::flash('swal', [
@@ -7535,51 +7880,51 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         }
                         $history->save();
 
-                        //$list = Helpers::getHodUserList($incident->division_id);
+                        $list = Helpers::getHodUserList($incident->division_id);
 
-                        //$userIds = collect($list)->pluck('user_id')->toArray();
-                        //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                        //$userId = $users->pluck('id')->implode(',');
-                        //if(!empty($users)){
-                        //    try {
-                        //        $history = new IncidentAuditTrail();
-                        //        $history->incident_id = $id;
-                        //        $history->activity_type = "Not Applicable";
-                        //        $history->previous = "Not Applicable";
-                        //        $history->current = "Not Applicable";
-                        //        $history->action = 'Notification';
-                        //        $history->comment = "";
-                        //        $history->user_id = Auth::user()->id;
-                        //        $history->user_name = Auth::user()->name;
-                        //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        //        $history->origin_state = "Not Applicable";
-                        //        $history->change_to = "Not Applicable";
-                        //        $history->change_from = "Pending Initiator Update Complete";
-                        //        $history->stage = "";
-                        //        $history->action_name = "";
-                        //        $history->mailUserId = $userId;
-                        //        $history->role_name = "Initiator";
-                        //        $history->save();
-                        //    } catch (\Throwable $e) {
-                        //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                        //    }
-                        //}
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId = $users->pluck('id')->implode(',');
+                        if(!empty($users)){
+                           try {
+                               $history = new IncidentAuditTrail();
+                               $history->incident_id = $id;
+                               $history->activity_type = "Not Applicable";
+                               $history->previous = "Not Applicable";
+                               $history->current = "Not Applicable";
+                               $history->action = 'Notification';
+                               $history->comment = "";
+                               $history->user_id = Auth::user()->id;
+                               $history->user_name = Auth::user()->name;
+                               $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                               $history->origin_state = "Not Applicable";
+                               $history->change_to = "Not Applicable";
+                               $history->change_from = "Pending Initiator Update Complete";
+                               $history->stage = "";
+                               $history->action_name = "";
+                               $history->mailUserId = $userId;
+                               $history->role_name = "Initiator";
+                               $history->save();
+                           } catch (\Throwable $e) {
+                               \Log::error('Mail failed to send: ' . $e->getMessage());
+                           }
+                        }
 
-                        //foreach ($list as $u) {
-                        //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                        //        $email = Helpers::getUserEmail($u->user_id);
-                        //            if ($email !== null) {
-                        //            Mail::send(
-                        //                'mail.view-mail',
-                        //                ['data' => $incident, 'site' => "view", 'history' => "Pending Initiator Update Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
-                        //                function ($message) use ($email, $incident) {
-                        //                    $message->to($email)
-                        //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity:  Pending Initiator Update Complete");
-                        //                }
-                        //            );
-                        //        }
-                        //    // }
-                        //}
+                        foreach ($list as $u) {
+                           // if($u->q_m_s_divisions_id == $incident->division_id){
+                               $email = Helpers::getUserEmail($u->user_id);
+                                   if ($email !== null) {
+                                   Mail::send(
+                                       'mail.view-mail',
+                                       ['data' => $incident, 'site' => "view", 'history' => "Pending Initiator Update Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                                       function ($message) use ($email, $incident) {
+                                           $message->to($email)
+                                           ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity:  Pending Initiator Update Complete");
+                                       }
+                                   );
+                               }
+                           // }
+                        }
 
                         $incident->update();
                     }
@@ -7614,7 +7959,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -7672,51 +8017,51 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     }
                     $history->save();
 
-                    //$list = Helpers::getQAReviewerUserList($incident->division_id);
+                    $list = Helpers::getQAReviewerUserList($incident->division_id);
 
-                    //$userIds = collect($list)->pluck('user_id')->toArray();
-                    //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    //$userId = $users->pluck('id')->implode(',');
-                    //if(!empty($users)){
-                    //    try {
-                    //        $history = new IncidentAuditTrail();
-                    //        $history->incident_id = $id;
-                    //        $history->activity_type = "Not Applicable";
-                    //        $history->previous = "Not Applicable";
-                    //        $history->current = "Not Applicable";
-                    //        $history->action = 'Notification';
-                    //        $history->comment = "";
-                    //        $history->user_id = Auth::user()->id;
-                    //        $history->user_name = Auth::user()->name;
-                    //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //        $history->origin_state = "Not Applicable";
-                    //        $history->change_to = "Not Applicable";
-                    //        $history->change_from = "HOD Final Review Complete";
-                    //        $history->stage = "";
-                    //        $history->action_name = "";
-                    //        $history->mailUserId = $userId;
-                    //        $history->role_name = "Initiator";
-                    //        $history->save();
-                    //    } catch (\Throwable $e) {
-                    //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    //    }
-                    //}
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                       try {
+                           $history = new IncidentAuditTrail();
+                           $history->incident_id = $id;
+                           $history->activity_type = "Not Applicable";
+                           $history->previous = "Not Applicable";
+                           $history->current = "Not Applicable";
+                           $history->action = 'Notification';
+                           $history->comment = "";
+                           $history->user_id = Auth::user()->id;
+                           $history->user_name = Auth::user()->name;
+                           $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                           $history->origin_state = "Not Applicable";
+                           $history->change_to = "Not Applicable";
+                           $history->change_from = "HOD Final Review Complete";
+                           $history->stage = "";
+                           $history->action_name = "";
+                           $history->mailUserId = $userId;
+                           $history->role_name = "Initiator";
+                           $history->save();
+                       } catch (\Throwable $e) {
+                           \Log::error('Mail failed to send: ' . $e->getMessage());
+                       }
+                    }
 
-                    //foreach ($list as $u) {
-                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if ($email !== null) {
-                    //            Mail::send(
-                    //                'mail.view-mail',
-                    //                ['data' => $incident, 'site' => "view", 'history' => "HOD Final Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
-                    //                function ($message) use ($email, $incident) {
-                    //                    $message->to($email)
-                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity:  HOD Final Review Complete");
-                    //                }
-                    //            );
-                    //        }
-                    //    // }
-                    //}
+                    foreach ($list as $u) {
+                       // if($u->q_m_s_divisions_id == $incident->division_id){
+                           $email = Helpers::getUserEmail($u->user_id);
+                               if ($email !== null) {
+                               Mail::send(
+                                   'mail.view-mail',
+                                   ['data' => $incident, 'site' => "view", 'history' => "HOD Final Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                                   function ($message) use ($email, $incident) {
+                                       $message->to($email)
+                                       ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity:  HOD Final Review Complete");
+                                   }
+                               );
+                           }
+                       // }
+                    }
 
                     $incident->update();
                     toastr()->success('Document Sent');
@@ -7764,7 +8109,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         $hasPending4 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending4 = true;
                                 break;
                             }
@@ -7803,7 +8148,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     // return "PAUSE";
 
                     $incident->stage = "8";
-                    $incident->status = "QAH Approval";
+                    $incident->status = "QAH Closure Approval";
                     $incident->Qa_Final_Review_Complete_By = Auth::user()->name;
                     $incident->Qa_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $incident->Qa_Final_Review_Comments = $request->comment;
@@ -7819,9 +8164,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QAH Approval";
+                    $history->change_to =   "QAH Closure Approval";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'QAH Approval';
+                    $history->stage = 'QAH Closure Approval';
                     if (is_null($lastDocument->Qa_Final_Review_Complete_By) || $lastDocument->Qa_Final_Review_Complete_By === '') {
                         $history->previous = "";
                     } else {
@@ -7835,51 +8180,51 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     }
                     $history->save();
 
-                    //$list = Helpers::getQAHeadUserList($incident->division_id);
+                    $list = Helpers::getQAHeadUserList($incident->division_id);
 
-                    //$userIds = collect($list)->pluck('user_id')->toArray();
-                    //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    //$userId = $users->pluck('id')->implode(',');
-                    //if(!empty($users)){
-                    //    try {
-                    //        $history = new IncidentAuditTrail();
-                    //        $history->incident_id = $id;
-                    //        $history->activity_type = "Not Applicable";
-                    //        $history->previous = "Not Applicable";
-                    //        $history->current = "Not Applicable";
-                    //        $history->action = 'Notification';
-                    //        $history->comment = "";
-                    //        $history->user_id = Auth::user()->id;
-                    //        $history->user_name = Auth::user()->name;
-                    //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //        $history->origin_state = "Not Applicable";
-                    //        $history->change_to = "Not Applicable";
-                    //        $history->change_from = "QA Final Review Complete";
-                    //        $history->stage = "";
-                    //        $history->action_name = "";
-                    //        $history->mailUserId = $userId;
-                    //        $history->role_name = "Initiator";
-                    //        $history->save();
-                    //    } catch (\Throwable $e) {
-                    //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    //    }
-                    //}
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                       try {
+                           $history = new IncidentAuditTrail();
+                           $history->incident_id = $id;
+                           $history->activity_type = "Not Applicable";
+                           $history->previous = "Not Applicable";
+                           $history->current = "Not Applicable";
+                           $history->action = 'Notification';
+                           $history->comment = "";
+                           $history->user_id = Auth::user()->id;
+                           $history->user_name = Auth::user()->name;
+                           $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                           $history->origin_state = "Not Applicable";
+                           $history->change_to = "Not Applicable";
+                           $history->change_from = "QA Final Review Complete";
+                           $history->stage = "";
+                           $history->action_name = "";
+                           $history->mailUserId = $userId;
+                           $history->role_name = "Initiator";
+                           $history->save();
+                       } catch (\Throwable $e) {
+                           \Log::error('Mail failed to send: ' . $e->getMessage());
+                       }
+                    }
 
-                    //foreach ($list as $u) {
-                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if ($email !== null) {
-                    //            Mail::send(
-                    //                'mail.view-mail',
-                    //                ['data' => $incident, 'site' => "view", 'history' => "QA Final Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
-                    //                function ($message) use ($email, $incident) {
-                    //                    $message->to($email)
-                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Review Complete");
-                    //                }
-                    //            );
-                    //        }
-                    //    // }
-                    //}
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $incident->division_id){
+                           $email = Helpers::getUserEmail($u->user_id);
+                               if ($email !== null) {
+                               Mail::send(
+                                   'mail.view-mail',
+                                   ['data' => $incident, 'site' => "view", 'history' => "QA Final Review Complete", 'process' => 'Incident', 'comment' => $history->comments, 'user'=> Auth::user()->name],
+                                   function ($message) use ($email, $incident) {
+                                       $message->to($email)
+                                       ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Final Review Complete");
+                                   }
+                               );
+                           }
+                       // }
+                    }
 
                     $incident->update();
                     toastr()->success('Document Sent');
@@ -8006,7 +8351,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         $hasPending5 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending5 = true;
                                 break;
                             }
@@ -8093,51 +8438,51 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     }
                     $history->save();
 
-                    //$list = Helpers::getQAReviewerUserList($incident->division_id);
+                    $list = Helpers::getQAReviewerUserList($incident->division_id);
 
-                    //$userIds = collect($list)->pluck('user_id')->toArray();
-                    //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    //$userId = $users->pluck('id')->implode(',');
-                    //if(!empty($users)){
-                    //    try {
-                    //        $history = new IncidentAuditTrail();
-                    //        $history->incident_id = $id;
-                    //        $history->activity_type = "Not Applicable";
-                    //        $history->previous = "Not Applicable";
-                    //        $history->current = "Not Applicable";
-                    //        $history->action = 'Notification';
-                    //        $history->comment = "";
-                    //        $history->user_id = Auth::user()->id;
-                    //        $history->user_name = Auth::user()->name;
-                    //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    //        $history->origin_state = "Not Applicable";
-                    //        $history->change_to = "Not Applicable";
-                    //        $history->change_from = "Approved";
-                    //        $history->stage = "";
-                    //        $history->action_name = "";
-                    //        $history->mailUserId = $userId;
-                    //        $history->role_name = "Initiator";
-                    //        $history->save();
-                    //    } catch (\Throwable $e) {
-                    //        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    //    }
-                    //}
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId = $users->pluck('id')->implode(',');
+                    if(!empty($users)){
+                       try {
+                           $history = new IncidentAuditTrail();
+                           $history->incident_id = $id;
+                           $history->activity_type = "Not Applicable";
+                           $history->previous = "Not Applicable";
+                           $history->current = "Not Applicable";
+                           $history->action = 'Notification';
+                           $history->comment = "";
+                           $history->user_id = Auth::user()->id;
+                           $history->user_name = Auth::user()->name;
+                           $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                           $history->origin_state = "Not Applicable";
+                           $history->change_to = "Not Applicable";
+                           $history->change_from = "Approved";
+                           $history->stage = "";
+                           $history->action_name = "";
+                           $history->mailUserId = $userId;
+                           $history->role_name = "Initiator";
+                           $history->save();
+                       } catch (\Throwable $e) {
+                           \Log::error('Mail failed to send: ' . $e->getMessage());
+                       }
+                    }
 
-                    //foreach ($list as $u) {
-                    //    // if($u->q_m_s_divisions_id == $incident->division_id){
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if ($email !== null) {
-                    //            Mail::send(
-                    //                'mail.view-mail',
-                    //                ['data' => $incident, 'site' => "view", 'history' => "Approved", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //                function ($message) use ($email, $incident) {
-                    //                    $message->to($email)
-                    //                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-                    //                }
-                    //            );
-                    //        }
-                    //    // }
-                    //}
+                    foreach ($list as $u) {
+                       // if($u->q_m_s_divisions_id == $incident->division_id){
+                           $email = Helpers::getUserEmail($u->user_id);
+                               if ($email !== null) {
+                               Mail::send(
+                                   'mail.view-mail',
+                                   ['data' => $incident, 'site' => "view", 'history' => "Approved", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                   function ($message) use ($email, $incident) {
+                                       $message->to($email)
+                                       ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+                                   }
+                               );
+                           }
+                       // }
+                    }
 
                     //$list = Helpers::getInitiatorUserList($incident->division_id);
 
@@ -8310,8 +8655,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             if ($incident->stage == 2) {
                 $incident->stage = "1";
                 $incident->status = "Opened";
-                $incident->qa_more_info_required_by = Auth::user()->name;
-                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->hod_more_info_required_by = Auth::user()->name;
+                $incident->hod_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->hod_more_info_required_comment = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -8379,6 +8725,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $incident->status = "HOD Initial ";
                 $incident->qa_more_info_required_by = Auth::user()->name;
                 $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->qa_more_info_required_comment = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -8451,8 +8798,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             if ($incident->stage == 4) {
                 $incident->stage = "3";
                 $incident->status = "QA Initial Review";
-                $incident->qa_more_info_required_by = Auth::user()->name;
-                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->qah_more_info_required_by = Auth::user()->name;
+                $incident->qah_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->qah_more_info_required_comment = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -8503,7 +8851,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $incident->status = "QAH/Designee Approval";
                 $incident->QAH_Designee_More_Info_Required_by = Auth::user()->name;
                 $incident->QAH_Designee_More_Info_Required_on = Carbon::now()->format('d-M-Y');
-                $history->QAH_Designee_More_Info_Required_comments = $request->comment;
+                $history->QAH_Designee_More_Info_Required_comment = $request->comment;
 
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
@@ -8554,8 +8902,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             if ($incident->stage == 6) {
                 $incident->stage = "5";
                 $incident->status = "Pending Initiator Update";
-                $incident->qa_more_info_required_by = Auth::user()->name;
-                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->initiator_more_info_required_by = Auth::user()->name;
+                $incident->initiator_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->initiator_more_info_required_comment = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -8603,8 +8952,9 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             if ($incident->stage == 7) {
                 $incident->stage = "6";
                 $incident->status = "HOD Final Review";
-                $incident->qa_more_info_required_by = Auth::user()->name;
-                $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->hod_final_more_info_required_by = Auth::user()->name;
+                $incident->hod_final_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $incident->hod_final_more_info_required_comment = $request->comment;
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -8786,7 +9136,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Audit_Program";
+        $parent_type = "Incident";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -8804,7 +9154,6 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $parent_due_date = "";
             $parent_type = "Incident";
             $parent_name = $request->parent_name;
-
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $Extensionchild = Incident::find($id);
@@ -8817,11 +9166,11 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $relatedRecords = Helpers::getAllRelatedRecords();
             $Extensionchild->save();
             return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at','relatedRecords', 'extension_record','countData','parent_division_id'));
-
         }
+
         $old_record = Incident::select('id', 'division_id', 'record')->get();
         // dd($request->child_type)
-        if ($request->child_type == "capa") {
+        if ($request->child_type == "Capa") {
             $parent_name = "CAPA";
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
@@ -8873,6 +9222,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $parent_name = "Root";
             $Rootchild = Incident::find($id);
             $Rootchild->Rootchild = $record_number;
+            $parent_type = "Incident";
             $Rootchild->save();
             return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
         }

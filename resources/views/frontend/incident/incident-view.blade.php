@@ -1537,13 +1537,13 @@
                                                     <select multiple name="audit_type[]" id="audit_type" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
 
                                                         <option value="Equipment/Instrument"
-                                                            {{ strpos($data->audit_type, 'Equipment/Instrument') !== false ? 'selected' : '' }}>
+                                                            {{ strpos($data->audit_type, 'Equipment/Instrument/System') !== false ? 'selected' : '' }}>
                                                             Equipment/ Instrument/System</option>
-                                                            <option value="Material_System"
-                                                            {{ strpos($data->audit_type, 'Material_System') !== false ? 'selected' : '' }}>
+                                                            <option value="Material"
+                                                            {{ strpos($data->audit_type, 'Material') !== false ? 'selected' : '' }}>
                                                             Material </option>
-                                                            <option value="process"
-                                                            {{ strpos($data->process, 'process') !== false ? 'selected' : '' }}>
+                                                            <option value="Process"
+                                                            {{ strpos($data->process, 'Process') !== false ? 'selected' : '' }}>
                                                             Process</option>
                                                         <option value="Anyother(specify)"
                                                             {{ strpos($data->audit_type, 'Anyother(specify)') !== false ? 'selected' : '' }}>
@@ -2817,8 +2817,8 @@
                                                     <div>
                                                         <label>Product Quality Impact: <span class="text-danger">{{ $data->stage == 3 ? '*' : ''}}</span></label>
                                                     </div><div class="checkbox-group">
-                                                    <input type="checkbox" name="product_quality_imapct" value="YES" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="product_quality_imapct" value="NO" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="product_quality_imapct" value="Yes" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="product_quality_imapct" value="No" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
                                                     <input type="checkbox" name="product_quality_imapct" value="NA" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
                                                 </div>
                                                 </div>
@@ -2829,9 +2829,9 @@
                                                     <div>
                                                      <label>Process Performance Impact: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>                                                <div class="checkbox-group">
-                                                    <input type="checkbox" name="process_performance_impact" value="YES" onclick="selectOne(this)" {{ $data->process_performance_impact == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="process_performance_impact" value="NO" onclick="selectOne(this)"{{ $data->process_performance_impact == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="process_performance_impact" value="NA" onclick="selectOne(this)" {{ $data->process_performance_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="process_performance_impact" value="Yes" onclick="selectOne(this)" {{ $data->process_performance_impact == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="process_performance_impact" value="No" onclick="selectOne(this)"{{ $data->process_performance_impact == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="process_performance_impact" value="NA" onclick="selectOne(this)" {{ $data->process_performance_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> NA
                                                 </div>
                                                 </div>
                                                 <br>
@@ -2842,8 +2842,8 @@
                                                         <label>Yield Impact:<span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="yield_impact" value="YES" onclick="selectOne(this)" {{ $data->yield_impact == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="yield_impact" value="NO" onclick="selectOne(this)" {{ $data->yield_impact == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="yield_impact" value="Yes" onclick="selectOne(this)" {{ $data->yield_impact == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="yield_impact" value="No" onclick="selectOne(this)" {{ $data->yield_impact == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
                                                     <input type="checkbox" name="yield_impact" value="NA" onclick="selectOne(this)" {{ $data->yield_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
                                                 </div>
                                                 </div>
@@ -2854,9 +2854,9 @@
                                                     <div>
                                                         <label>GMP Impact: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>                                                <div class="checkbox-group">
-                                                    <input type="checkbox" name="gmp_impact" value="YES" onclick="selectOne(this)" {{ $data->gmp_impact == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="gmp_impact" value="NO" onclick="selectOne(this)" {{ $data->gmp_impact == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="gmp_impact" value="NA" onclick="selectOne(this)" {{ $data->gmp_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="gmp_impact" value="Yes" onclick="selectOne(this)" {{ $data->gmp_impact == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="gmp_impact" value="No" onclick="selectOne(this)" {{ $data->gmp_impact == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="gmp_impact" value="NA" onclick="selectOne(this)" {{ $data->gmp_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> NA
                                                   </div>
                                                 </div>
                                                 <br>
@@ -2867,9 +2867,9 @@
                                                         <label>Additional Testing Required: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="additionl_testing_required" value="YES" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="additionl_testing_required" value="NO" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="additionl_testing_required" value="NA" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="additionl_testing_required" value="Yes" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="additionl_testing_required" value="No" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="additionl_testing_required" value="NA" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> NA
                                                 </div>
                                                 </div>
                                                 <br>
@@ -2898,9 +2898,9 @@
                                                         <label>Any Similar Incident in Past:<span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="capa_require" value="YES" onclick="selectOne(this)" {{ $data->capa_require == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="capa_require" value="NO" onclick="selectOne(this)" {{ $data->capa_require == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="capa_require" value="NA" onclick="selectOne(this)" {{ $data->capa_require == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="capa_require" value="Yes" onclick="selectOne(this)" {{ $data->capa_require == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="capa_require" value="No" onclick="selectOne(this)" {{ $data->capa_require == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="capa_require" value="NA" onclick="selectOne(this)" {{ $data->capa_require == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> NA
                                                 </div>
                                                 </div>
                                                 <br>
@@ -3507,8 +3507,8 @@
                                                 <label>CAPA Implementation:<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                             <div class="checkbox-group">
-                                            <input type="checkbox" name="capa_implementation" value="YES" onclick="selectOne(this)" {{ $data->capa_implementation == 'YES' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="capa_implementation" value="NO" onclick="selectOne(this)" {{ $data->capa_implementation == 'NO' ? 'checked' : '' }}> No
+                                            <input type="checkbox" name="capa_implementation" value="Yes" onclick="selectOne(this)" {{ $data->capa_implementation == 'Yes' ? 'checked' : '' }}> Yes
+                                            <input type="checkbox" name="capa_implementation" value="No" onclick="selectOne(this)" {{ $data->capa_implementation == 'No' ? 'checked' : '' }}> No
                                             <input type="checkbox" name="capa_implementation" value="NA" onclick="selectOne(this)" {{ $data->capa_implementation == 'NA' ? 'checked' : '' }}> N/A
                                         </div>
                                         </div>
@@ -3520,8 +3520,8 @@
                                              <label>All check points compiled with (Documentary evidence shall be attached or referred to):<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                            <div class="checkbox-group">
-                                            <input type="checkbox" name="check_points" value="YES" onclick="selectOne(this)" {{ $data->check_points == 'YES' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="check_points" value="NO" onclick="selectOne(this)" {{ $data->check_points == 'NO' ? 'checked' : '' }}> No
+                                            <input type="checkbox" name="check_points" value="Yes" onclick="selectOne(this)" {{ $data->check_points == 'Yes' ? 'checked' : '' }}> Yes
+                                            <input type="checkbox" name="check_points" value="No" onclick="selectOne(this)" {{ $data->check_points == 'No' ? 'checked' : '' }}> No
                                             <input type="checkbox" name="check_points" value="NA" onclick="selectOne(this)" {{ $data->check_points == 'NA' ? 'checked' : '' }}> N/A
                                         </div>
                                         </div>
@@ -3531,8 +3531,8 @@
                                              <label>Based upon the assessment of the corrective actions planned, whether unplanned deviation is required:<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                            <div class="checkbox-group">
-                                            <input type="checkbox" name="corrective_actions" value="YES" onclick="selectOne(this)" {{ $data->corrective_actions == 'YES' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="corrective_actions" value="NO" onclick="selectOne(this)" {{ $data->corrective_actions == 'NO' ? 'checked' : '' }}> No
+                                            <input type="checkbox" name="corrective_actions" value="Yes" onclick="selectOne(this)" {{ $data->corrective_actions == 'Yes' ? 'checked' : '' }}> Yes
+                                            <input type="checkbox" name="corrective_actions" value="No" onclick="selectOne(this)" {{ $data->corrective_actions == 'No' ? 'checked' : '' }}> No
                                             <input type="checkbox" name="corrective_actions" value="NA" onclick="selectOne(this)" {{ $data->corrective_actions == 'NA' ? 'checked' : '' }}> N/A
                                         </div>
                                         </div>
@@ -3544,8 +3544,8 @@
                                                 <label>Batch release satisfactory:<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                             <div class="checkbox-group">
-                                            <input type="checkbox" name="batch_release" value="YES" onclick="selectOne(this)" {{ $data->batch_release == 'YES' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="batch_release" value="NO" onclick="selectOne(this)" {{ $data->batch_release == 'NO' ? 'checked' : '' }}> No
+                                            <input type="checkbox" name="batch_release" value="Yes" onclick="selectOne(this)" {{ $data->batch_release == 'Yes' ? 'checked' : '' }}> Yes
+                                            <input type="checkbox" name="batch_release" value="No" onclick="selectOne(this)" {{ $data->batch_release == 'No' ? 'checked' : '' }}> No
                                             <input type="checkbox" name="batch_release" value="NA" onclick="selectOne(this)" {{ $data->batch_release == 'NA' ? 'checked' : '' }}> N/A
                                         </div>
                                         </div>
@@ -3564,8 +3564,8 @@
                                                 <label>Affected documents closed: <span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                             <div class="checkbox-group">
-                                            <input type="checkbox" name="affected_documents" value="YES" onclick="selectOne(this)" {{ $data->affected_documents == 'YES' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="affected_documents" value="NO" onclick="selectOne(this)" {{ $data->affected_documents == 'NO' ? 'checked' : '' }}> No
+                                            <input type="checkbox" name="affected_documents" value="Yes" onclick="selectOne(this)" {{ $data->affected_documents == 'Yes' ? 'checked' : '' }}> Yes
+                                            <input type="checkbox" name="affected_documents" value="No" onclick="selectOne(this)" {{ $data->affected_documents == 'No' ? 'checked' : '' }}> No
                                             <input type="checkbox" name="affected_documents" value="NA" onclick="selectOne(this)" {{ $data->affected_documents == 'NA' ? 'checked' : '' }}> N/A
                                           </div>
                                         </div>
@@ -4216,7 +4216,7 @@
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="submit comment">Submit Comment :-</label>
                                         @if ($data->submit_comment)
-                                        <div class="">{{ $data->submit_comment }}</div>
+                                        <div class="static">{{ $data->submit_comment }}</div>
                                         @else
                                             Not Applicable
                                         @endif
@@ -4258,21 +4258,21 @@
                                     <div class="group-input">
                                         <label for="submit on">More Information
                                             Required By :-</label>
-                                        <div class="static">{{ $data->more_info_req_by }}</div>
+                                        <div class="static">{{ $data->hod_more_info_required_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit on">More Information
                                             Required On :-</label>
-                                        <div class="static">{{ $data->more_info_req_on }}</div>
+                                        <div class="static">{{ $data->hod_more_info_required_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submit on">More Information
                                             Required Comments-</label>
-                                        <div class="static">{{ $data->more_info_req_cmt }}</div>
+                                        <div class="static">{{ $data->hod_more_info_required_comment }}</div>
                                     </div>
                                 </div> --}}
                                 {{--<div class="sub-head">
@@ -4323,7 +4323,7 @@
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="QA Initial Review Comments">QA Initial Review Complete Comment:-</label>
                                         @if ($data->QA_Initial_Review_Comments)
-                                        <div class="">{{ $data->QA_Initial_Review_Comments }}</div>
+                                        <div class="static">{{ $data->QA_Initial_Review_Comments }}</div>
                                         @else
                                             Not Applicable
                                         @endif
@@ -4333,21 +4333,21 @@
                                     <div class="group-input">
                                         <label for="submit on">More Information
                                             Required By :-</label>
-                                        <div class="static">{{ $data->Qa_more_info_req_by }}</div>
+                                        <div class="static">{{ $data->qa_more_info_required_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit on">More Information
                                             Required On :-</label>
-                                        <div class="static">{{ $data->Qa_more_info_req_on }}</div>
+                                        <div class="static">{{ $data->qa_more_info_required_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submit on">More Information
                                             Required Comments-</label>
-                                        <div class="static">{{ $data->Qa_more_info_req_cmt }}</div>
+                                        <div class="static">{{ $data->qa_more_info_required_comment }}</div>
                                     </div>
                                 </div> --}}
 
@@ -4377,12 +4377,36 @@
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="QA Initial Review Comments">QAH/Designee Approval Complete Comment:-</label>
                                         @if ($data->QAH_Designee_Approval_Complete_Comments)
-                                        <div class="">{{ $data->QAH_Designee_Approval_Complete_Comments }}</div>
+                                        <div class="static">{{ $data->QAH_Designee_Approval_Complete_Comments }}</div>
                                         @else
                                             Not Applicable
                                         @endif
                                     </div>
                                 </div>
+
+                                {{-- <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="submit on">More Information
+                                            Required By :-</label>
+                                        <div class="static">{{ $data->qah_more_info_required_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="submit on">More Information
+                                            Required On :-</label>
+                                        <div class="static">{{ $data->qah_more_info_required_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="submit on">More Information
+                                            Required Comments-</label>
+                                        <div class="static">{{ $data->qah_more_info_required_comment }}</div>
+                                    </div>
+                                </div> --}}
+
+
 
                                 <div class="sub-head">Pending Initiator Update Complete</div>
                                 <div class="col-lg-3">
@@ -4409,7 +4433,7 @@
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="CFT Review Comments">Pending Initiator Update Complete Comment:-</label>
                                         @if ($data->Pending_Review_Comments)
-                                        <div class="">{{ $data->Pending_Review_Comments }}</div>
+                                        <div class="static">{{ $data->Pending_Review_Comments }}</div>
                                         @else
                                             Not Applicable
                                         @endif
@@ -4419,21 +4443,21 @@
                                     <div class="group-input">
                                         <label for="submit on">More Information
                                             Required By :-</label>
-                                        <div class="static">{{ $data->Pending_more_info_req_by }}</div>
+                                        <div class="static">{{ $data->initiator_more_info_required_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit on">More Information
                                             Required On :-</label>
-                                        <div class="static">{{ $data->Pending_more_info_req_on }}</div>
+                                        <div class="static">{{ $data->initiator_more_info_required_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submit on">More Information
                                             Required Comments-</label>
-                                        <div class="static">{{ $data->Pending_more_info_req_cmt }}</div>
+                                        <div class="static">{{ $data->initiator_more_info_required_comment }}</div>
                                     </div>
                                 </div> --}}
 
@@ -4441,7 +4465,7 @@
                                 <div class="sub-head">HOD Final Review Complete</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="QA Final Review Complete By"> HOD Final Review Complete By:-</label>
+                                        <label for="QA Final Review Complete By">HOD Final Review Complete By:-</label>
                                         @if ($data->Hod_Final_Review_Complete_By)
                                         <div class="static">{{ $data->Hod_Final_Review_Complete_By }}</div>
                                         @else
@@ -4451,7 +4475,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="QA Final Review Complete On"> HOD Final Review Complete On:-</label>
+                                        <label for="QA Final Review Complete On">HOD Final Review Complete On:-</label>
                                         @if ($data->Hod_Final_Review_Complete_On)
                                         <div class="static">{{ $data->Hod_Final_Review_Complete_On }}</div>
                                         @else
@@ -4463,12 +4487,36 @@
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="QA Final Review Comments">HOD Final Review Complete Comment:-</label>
                                         @if ($data->Hod_Final_Review_Comments)
-                                        <div class="">{{ $data->Hod_Final_Review_Comments }}</div>
+                                        <div class="static">{{ $data->Hod_Final_Review_Comments }}</div>
                                         @else
                                             Not Applicable
                                         @endif
                                     </div>
                                 </div>
+
+                                {{-- <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="submit on">More Information
+                                            Required By :-</label>
+                                        <div class="static">{{ $data->hod_final_more_info_required_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="submit on">More Information
+                                            Required On :-</label>
+                                        <div class="static">{{ $data->hod_final_more_info_required_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="submit on">More Information
+                                            Required Comments-</label>
+                                        <div class="static">{{ $data->hod_final_more_info_required_comment }}</div>
+                                    </div>
+                                </div> --}}
+                                
+
                                 {{--@php
                                 dd($data->QA_Final_Review_Complete_By);
                                 @endphp--}}
@@ -4497,7 +4545,7 @@
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                                         <label for="QA Final Review Comments"> QA Final Review Complete Comment:-</label>
                                         @if ($data->QA_Final_Review_Comments)
-                                        <div class="">{{ $data->QA_Final_Review_Comments}}</div>
+                                        <div class="static">{{ $data->QA_Final_Review_Comments}}</div>
                                         @else
                                             Not Applicable
                                         @endif
@@ -4576,13 +4624,14 @@
                                     <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
                                         <label for="QA Final Review Comments">Approved Comment:-</label>
                                         @if ($data->QA_head_approved_comment)
-                                        <div class="">{{ $data->QA_head_approved_comment }}</div>
+                                        <div class="static">{{ $data->QA_head_approved_comment }}</div>
                                         @else
                                             Not Applicable
                                         @endif
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-3">
+                            {{-- 
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="submit on">More Information
                                             Required By :-</label>
@@ -4690,10 +4739,10 @@
                                         <div class="static">{{ $data->more_info_req_cmt }}</div>
                                     </div>
                                 </div> --}}
-                                <div class="sub-head">cancel</div>
+                                <div class="sub-head">Cancel</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="submit by">cancel By:-</label>
+                                        <label for="submit by">Cancel By:-</label>
                                         @if ($data->Cancelled_by)
                                         <div class="static">{{ $data->Cancelled_by }}</div>
                                         @else
@@ -4703,7 +4752,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
-                                        <label for="cancelled on">cancel On:-</label>
+                                        <label for="cancelled on">Cancel On:-</label>
                                         @if ($data->Cancelled_on)
                                         <div class="static">{{ $data->Cancelled_on }}</div>
                                         @else
@@ -8513,86 +8562,79 @@
                                 <div class="group-input">
                                     @if ($data->stage == 2)
 
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="rca">
-                                        RCA
-                                    </label>
-
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="capa">
-                                        CAPA
-                                    </label>
-
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value=" Action_Item">
-                                        Action-Item
-                                    </label>
-                                    
-                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                        <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="extension">
-                                                Extension
-                                        </label>
-                                    @endif
-
-                               @endif
-
-                                    {{-- @if ($data->stage == 3)
-                                        <label for="major">
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value="rca">
                                             RCA
-                                        </label>
-                                        <br>
-                                        <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="extension">
-                                            Extension
-                                        </label>
-                                    @endif --}}
+                                        </div>
+
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="Capa">
+                                            CAPA
+                                        </div>
+
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major"  value="Action_Item">
+                                            Action-Item
+                                        </div>
+                                        
+                                        @if(Helpers::getChildData($data->id, 'Incident') < 3)
+                                            <div for="major">
+                                                <input type="radio" name="child_type" id="major" value="extension">
+                                                    Extension
+                                            </div>
+                                        @endif
+
+                                    @endif
 
                                     @if ($data->stage == 3)
 
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="rca">
-                                        RCA
-                                    </label>
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="rca">
+                                            RCA
+                                        </div>
 
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="capa">
-                                        CAPA
-                                    </label>
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value=" Action_Item">
-                                        Action-Item
-                                    </label>
-                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="extension">
-                                            Extension
-                                    </label>
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="Capa">
+                                            CAPA
+                                        </div>
+
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value=
+                                            "Action_Item">
+                                            Action-Item
+                                        </div>
+
+                                        @if(Helpers::getChildData($data->id, 'Incident') < 3)
+                                            <div for="major">
+                                                <input type="radio" name="child_type" id="major" value="extension">
+                                                    Extension
+                                            </div>
+                                        @endif
+
                                     @endif
-
-                                @endif
 
                                     @if ($data->stage == 5)
 
-                                        <label for="major">
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value="rca">
                                             RCA
-                                        </label>
+                                        </div>
 
-                                        <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="capa">
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="Capa">
                                             CAPA
-                                        </label>
-                                        <label for="major">
+                                        </div>
+
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value=" Action_Item">
                                             Action-Item
-                                        </label>
+                                        </div>
+
                                         @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                        <label for="major">
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value="extension">
                                                 Extension
-                                        </label>
+                                        </div>
                                         @endif
 
                                     @endif
