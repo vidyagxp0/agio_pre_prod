@@ -2585,55 +2585,57 @@ class AuditProgramController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-           if ($changeControl->stage == 3) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancelled_by   = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                $changeControl->Cancelled_comment  = $request->comment;
-                $history = new AuditProgramAuditTrial();
-                $history->AuditProgram_id = $id;
-                $history->activity_type = 'Cancel By, Cancel On';
-                $history->action ='Cancel';
-                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
-                    $history->previous = "Null";
-                    } else {
-                    $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
-                    }
-                    $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'Cancel';
-                $history->change_to= "Closed-Cancel ";
-                $history->change_from= $lastDocument->status;
-                $history->action_name ='Not Applicable';
-                if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
-                    $history->action_name = 'New';
-                } else {
-                    $history->action_name = 'Update';
-                }
-                $history->save();
-    //             $list = Helpers::getHodUserList($changeControl->division_id);
-    //                 foreach ($list as $u) {
-    //                         $email = Helpers::getUserEmail($u->user_id);
-    //                             if ($email !== null) {
-    //                             Mail::send(
-    //                                 'mail.view-mail',
-    //                                 ['data' => $changeControl, 'site' => "AP", 'history' => "Cancel", 'process' => 'Audit Program', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-    //                                 function ($message) use ($email, $changeControl) {
-    //                                     $message->to($email)
-    //                                     ->subject("Agio Notification: Audit Program, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
-    //                                 }
-    //                             );
-    //                         }
-    //                 }
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+          if ($changeControl->stage == 3) {
+    $changeControl->stage = "0";
+    $changeControl->status = "Closed - Cancelled";
+    $changeControl->cancelled_by = Auth::user()->name;
+    $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+    $changeControl->Cancelled_comment = $request->comment;
+
+    $Internal_Auditchild = InternalAudit::where('parent_id', $id)
+        ->where('parent_type', 'Audit_Program')
+        ->get();
+
+    foreach ($Internal_Auditchild as $child) {
+        $child->stage = "0";
+        $child->status = "Closed - Cancelled";
+        $child->cancelled_by = Auth::user()->name;
+        $child->cancelled_on = Carbon::now()->format('d-M-Y');
+        $child->save();
+    }
+
+    // Save parent cancel history (your existing code)
+    $history = new AuditProgramAuditTrial();
+    $history->AuditProgram_id = $id;
+    $history->activity_type = 'Cancel By, Cancel On';
+    $history->action = 'Cancel';
+    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+        $history->previous = "Null";
+    } else {
+        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+    }
+    $history->current = $changeControl->cancelled_by . ' , ' . $changeControl->cancelled_on;
+    $history->comment = $request->comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->stage = 'Cancel';
+    $history->change_to = "Closed-Cancel ";
+    $history->change_from = $lastDocument->status;
+    $history->action_name = (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') ? 'New' : 'Update';
+    $history->save();
+
+    // Update the parent record
+    $changeControl->update();
+
+    // Now update all related InternalAudit children to Closed - Cancelled
+
+
+    toastr()->success('Document Sent and all related child audits cancelled successfully');
+    return back();
+}
+
         }
     }
 
