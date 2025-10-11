@@ -1515,7 +1515,7 @@ class EffectivenessCheckController extends Controller
 
                     $list = Helpers:: getQAUserList();
                     foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id == $effective->division_id){
+                        // if($u->q_m_s_divisions_id == $effective->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
                              if ($email !== null) {
                                 Mail::send(
@@ -1527,7 +1527,7 @@ class EffectivenessCheckController extends Controller
                                 }
                             );
                             }
-                     }
+                    //  }
                   }
 
 
