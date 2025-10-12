@@ -4565,12 +4565,13 @@ class OOCController extends Controller
                     ->get();
                         $hasPending1 = false;
                     foreach ($extensionchild as $ext) {
-                            $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
-                                $hasPending1 = true;
-                                break;
-                            }
+                        $extensionchildStatus = trim(strtolower($ext->status));
+                        // Allow only 'closed - done' or 'cancel'
+                        if (!in_array($extensionchildStatus, ['closed - done', 'closed - cancelled'])) {
+                            $hasPending1 = true;
+                            break;
                         }
+                    }
 
                     if ($hasPending1) {
                         // $extensionchildStatus = trim(strtolower($extensionchild->status));
@@ -6563,6 +6564,18 @@ class OOCController extends Controller
             $ooc->cancelled_by = Auth::user()->name;
             $ooc->cancelled_on = Carbon::now()->format('d-M-Y');
             $ooc->cancell_comment =$request->comment;
+
+            $OOCchild = extension_new::where('parent_id', $id)
+                ->where('parent_type', 'OOC')
+                ->get();
+
+            foreach ($OOCchild as $child) {
+                $child->stage = "0";
+                $child->status = "Closed - Cancelled";
+                $child->cancelled_by = Auth::user()->name;
+                $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                $child->save();
+            }
 
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
