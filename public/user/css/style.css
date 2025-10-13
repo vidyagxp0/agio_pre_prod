@@ -478,7 +478,7 @@ header .header-bottom.bottom-pr-links {
 
 #helpdesk-personnel .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     border-radius: 0px;
     background: #ffffff;
     overflow: hidden;
@@ -928,7 +928,7 @@ header .header-bottom.bottom-pr-links {
 #basic-search .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -1952,7 +1952,7 @@ section#pdf-page .watermark {
 #document-tracker .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -2162,7 +2162,7 @@ section#pdf-page .watermark {
 #audit-trial .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -2500,7 +2500,7 @@ section#pdf-page .watermark {
     position: relative;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -2918,7 +2918,7 @@ section#pdf-page .watermark {
 #tms-question .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -2961,7 +2961,8 @@ section#pdf-page .watermark {
 }
 
 #tms-question .question-table thead th {
-    background: #4274daba;
+    background:#122752eb;
+        color: white;
 }
 
 #tms-question .question-table tbody tr {
@@ -2995,11 +2996,12 @@ section#pdf-page .watermark {
 
 #tms-question .add-question {
     text-align: center;
-    background: #4274da;
+    background: #122752eb;
     padding: 10px;
     color: white;
     font-size: 1.1rem;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 #tms-question .filter-block {
@@ -3011,8 +3013,9 @@ section#pdf-page .watermark {
     font-size: 1.1rem;
     font-weight: bold;
     padding: 10px 20px;
-    background: #4274da;
+    background: #122752eb;
     color: white;
+  
 }
 
 #tms-question .filter-block .list {
@@ -3233,7 +3236,7 @@ section#pdf-page .watermark {
 #tms-question-bank .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -3371,7 +3374,7 @@ section#pdf-page .watermark {
 #tms-head .link-list>a,
 #tms-head .link-list .tms-drop-block .drop-btn {
     position: relative;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 #tms-head .link-list .tms-drop-block {
@@ -3428,7 +3431,7 @@ section#pdf-page .watermark {
 #change-control-list .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -3485,7 +3488,7 @@ section#pdf-page .watermark {
 #change-control-view .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -3697,7 +3700,7 @@ section#pdf-page .watermark {
 #reviewer-panel .inner-block {
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
 }
 
@@ -3886,7 +3889,7 @@ section#pdf-page .watermark {
 
 #create-training-plan .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -4026,7 +4029,7 @@ section#pdf-page .watermark {
 
 #manage-training-plan .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -4090,7 +4093,7 @@ section#pdf-page .watermark {
 
 #manage-question-bank .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -4244,7 +4247,7 @@ section#pdf-page .watermark {
 
 #change-control-fields .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -4453,7 +4456,9 @@ section#pdf-page .watermark {
 
 #change-control-fields .cctabcontent#CCForm1 {
     display: block;
+    border-radius: 5px;
 }
+
 
 #change-control-fields .cctabcontent .sub-head {
     color: #4274da;
@@ -4539,7 +4544,7 @@ section#pdf-page .watermark {
 
 #manage-quizzes .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -4607,7 +4612,7 @@ section#pdf-page .watermark {
 
 #create-quiz .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -4720,7 +4725,7 @@ section#pdf-page .watermark {
 
 #training-document-view .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -4783,7 +4788,7 @@ section#pdf-page .watermark {
 
 #training-page .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -4870,7 +4875,7 @@ section#pdf-page .watermark {
 
 #training-quiz-page .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -5308,7 +5313,7 @@ section#pdf-page .watermark {
 
 #manual-notification .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -5597,7 +5602,7 @@ section#pdf-page .watermark {
 
 #edit-question .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -5873,7 +5878,7 @@ section#pdf-page .watermark {
 
 #rcms-dashboard .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
     padding: 20px;

@@ -1061,8 +1061,8 @@
                                                     <label for="record_number"><b>Record Number</b></label>
 
                                                     <input disabled type="text"
-                                                        value="{{ Helpers::getDivisionName($data->division_id) }}/INC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
-
+                                                        
+ value="{{ Helpers::getDivisionName($data->division_id) }}/INC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                                     {{-- <input disabled type="text" name="record"> --}}
 
                                                 </div>
@@ -1531,115 +1531,84 @@
 
 
                                             <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="audit type">Incident Related To<span
-                                                            class="text-danger">*</span></label>
-                                                    <select multiple name="audit_type[]" id="audit_type" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+    <div class="group-input">
+        <label for="audit_type">Incident Related To
+            <span class="text-danger">*</span>
+        </label>
+        <select multiple name="audit_type[]" id="audit_type"
+            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
 
-                                                        <option value="Equipment/Instrument"
-                                                            {{ strpos($data->audit_type, 'Equipment/Instrument/System') !== false ? 'selected' : '' }}>
-                                                            Equipment/ Instrument/System</option>
-                                                            <option value="Material"
-                                                            {{ strpos($data->audit_type, 'Material') !== false ? 'selected' : '' }}>
-                                                            Material </option>
-                                                            <option value="Process"
-                                                            {{ strpos($data->process, 'Process') !== false ? 'selected' : '' }}>
-                                                            Process</option>
-                                                        <option value="Anyother(specify)"
-                                                            {{ strpos($data->audit_type, 'Anyother(specify)') !== false ? 'selected' : '' }}>
-                                                            Other( Please specify)</option>
-                                                        {{-- <option value="Documentationerror"
-                                                            {{ strpos($data->audit_type, 'Documentationerror') !== false ? 'selected' : '' }}>
-                                                            Documentation error</option>
-                                                        <option value="STP/ADS_instruction"
-                                                            {{ strpos($data->audit_type, 'STP/ADS_instruction') !== false ? 'selected' : '' }}>
-                                                            STP/ADS instruction</option>
-                                                        <option value="Packaging&Labelling"
-                                                            {{ strpos($data->audit_type, 'Packaging&Labelling') !== false ? 'selected' : '' }}>
-                                                            Packaging & Labelling</option>
-                                                        <option value="Material_System"
-                                                            {{ strpos($data->audit_type, 'Material_System') !== false ? 'selected' : '' }}>
-                                                            Material System</option>
-                                                            <option
-                                                            value="Facility"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                            {{ strpos($data->audit_type, 'Facility') !== false ? 'selected' : '' }}>
-                                                            Facility</option>
-                                                        <option value="Laboratory_Instrument/System"
-                                                            {{ strpos($data->audit_type, 'Laboratory_Instrument/System') !== false ? 'selected' : '' }}>
-                                                            Laboratory Instrument/System</option>
-                                                        <option value="Utility_System"
-                                                            {{ strpos($data->audit_type, 'Utility_System') !== false ? 'selected' : '' }}>
-                                                            Utility System</option>
-                                                        <option value="Computer_System"
-                                                            {{ strpos($data->audit_type, 'Computer_System') !== false ? 'selected' : '' }}>
-                                                            Computer System</option> --}}
-                                                        {{-- <option value="Document"
-                                                            {{ strpos($data->audit_type, 'Document') !== false ? 'selected' : '' }}>
-                                                            Document</option> --}}
-                                                        {{-- <option value="Data integrity"
-                                                            {{ strpos($data->audit_type, 'Data integrity') !== false ? 'selected' : '' }}>
-                                                            Data integrity</option>
-                                                        <option value="SOP Instruction"
-                                                            {{ strpos($data->audit_type, 'SOP Instruction') !== false ? 'selected' : '' }}>
-                                                            SOP Instruction</option>
-                                                        <option value="BMR/ECR Instruction"
-                                                            {{ strpos($data->audit_type, 'BMR/ECR Instruction') !== false ? 'selected' : '' }}>
-                                                            BMR/ECR Instruction</option>
-                                                        <option value="Water System"
-                                                            {{ strpos($data->audit_type, 'Water System') !== false ? 'selected' : '' }}>
-                                                            Water System</option>
-                                                         --}}
-                                                    </select>
-                                                </div>
-                                                @error('audit_type')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
+            <option value="Equipment/Instrument"
+                {{ strpos($data->audit_type, 'Equipment/Instrument/System') !== false ? 'selected' : '' }}>
+                Equipment/ Instrument/System
+            </option>
+
+            <option value="Material"
+                {{ strpos($data->audit_type, 'Material') !== false ? 'selected' : '' }}>
+                Material
+            </option>
+
+            <option value="Process"
+                {{ strpos($data->audit_type, 'Process') !== false ? 'selected' : '' }}>
+                Process
+            </option>
+
+            <option value="Other"
+                {{ strpos($data->audit_type, 'Other') !== false ? 'selected' : '' }}>
+                Other 
+            </option>
+        </select>
+    </div>
+    @error('audit_type')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
+{{-- Others input --}}
+<div class="col-lg-6" id="others_block"
+    style="{{ strpos($data->audit_type, 'Other') !== false ? '' : 'display:none;' }}">
+    <div class="group-input">
+        <label for="others">Others
+             <span class="text-danger">*</span>
+        </label>
+        <input type="text" class="otherrr" name="others" id="others"
+            value="{{ $data->others }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
+        @error('others')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+    <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        var selectField = document.getElementById('audit_type');
+                                        var inputsToToggle = [];
+
+                                        // Add elements with class 'facility-name' to inputsToToggle
+                                        var facilityNameInputs = document.getElementsByClassName('others');
+                                        for (var i = 0; i < facilityNameInputs.length; i++) {
+                                            inputsToToggle.push(facilityNameInputs[i]);
+                                        }
 
 
-                                            <div class="col-lg-6" id="others_block"
-                                                @if (strpos($data->audit_type, 'Anyother(specify)')) style="display: none" @endif>
-                                                <div class="group-input">
-                                                    <label for="others">Others<span id="asteriskInOther"
-                                                            style="display: {{ $data->audit_type == 'Anyother(specify)' ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <input type="text" class="otherrr" name="others"
-                                                        id="others" value="{{ $data->others }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                    @error('others')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
+                                        selectField.addEventListener('change', function() {
+                                            // var isRequired = this.value === 'Other';
+                                            var isRequired = this.value.includes('Other');
+                                            console.log(this.value, isRequired, 'value');
 
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    var selectField = document.getElementById('audit_type');
-                                                    var inputsToToggle = [];
+                                            inputsToToggle.forEach(function(input) {
+                                                input.required = isRequired;
+                                                console.log(input.required, isRequired, 'input req');
+                                            });
 
-                                                    // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('otherrr');
-                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                        inputsToToggle.push(facilityNameInputs[i]);
-                                                    }
+                                            document.getElementById('others_block').style.display = isRequired ? 'block' : 'none';
 
-                                                    selectField.addEventListener('change', function() {
-                                                        // var isRequired = this.value === 'Anyother(specify)';
-                                                        var isRequired = this.value.includes('Anyother(specify)');
-                                                        console.log('isRequired', isRequired)
+                                            // Show or hide the asterisk icon based on the selected value
+                                            var asteriskIcon = document.getElementById('asteriskInviothers');
+                                            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                        });
+                                    });
+                                </script>
 
-                                                        inputsToToggle.forEach(function(input) {
-                                                            input.required = isRequired;
-                                                            console.log(input.required, isRequired, 'input req');
-                                                        });
-
-                                                        document.getElementById('others_block').style.display = isRequired ? 'block' : 'none';
-
-                                                        // Show or hide the asterisk icon based on the selected value
-                                                        var asteriskIcon = document.getElementById('asteriskInOther');
-                                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                    });
-                                                });
-                                            </script>
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -1669,441 +1638,314 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System
-                                                        Details Required? <span class="text-danger">*</span></label>
-                                                    <select name="Facility_Equipment"
-                                                        id="Facility_Equipment" value="{{ $data->Facility_Equipment }}" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option @if ($data->Facility_Equipment == 'yes' || old('Facility_Equipment') == 'yes') selected @endif value="yes">
-                                                            Yes</option>
-                                                        <option @if ($data->Facility_Equipment == 'no' || old('Facility_Equipment') == 'no') selected @endif value="no">
-                                                            No</option>>
-                                                    </select>
-                                                    @error('Facility_Equipment')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
+    <div class="group-input">
+        <label for="Facility_Equipment">
+            Facility/ Equipment/ Instrument/ System Details Required?
+            <span class="text-danger">*</span>
+        </label>
+        <select name="Facility_Equipment" id="Facility_Equipment"
+            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+            <option value="">-- Select --</option>
+            <option value="yes" {{ $data->Facility_Equipment == 'yes' ? 'selected' : '' }}>Yes</option>
+            <option value="no" {{ $data->Facility_Equipment == 'no' ? 'selected' : '' }}>No</option>
+        </select>
+        @error('Facility_Equipment')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
-                                            {{-- <div class="group-input" id="facilityRow"
-                                                @if ($data->Facility_Equipment == 'no') style="display: none" @endif>
+<div class="group-input" id="facilityRow"
+    style="{{ $data->Facility_Equipment == 'yes' ? '' : 'display:none;' }}">
+    <label for="audit-agenda-grid">
+        Facility/ Equipment/ Instrument/ System Details
+        <span id="asteriskInvifaci"
+            style="display: {{ $data->Facility_Equipment == 'yes' ? 'inline' : 'none' }}"
+            class="text-danger">*</span>
+        <button type="button" name="audit-agenda-grid" id="ObservationAdd"
+            {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
+    </label>
 
-                                                <label for="audit-agenda-grid">
-                                                    Facility/ Equipment/ Instrument/ System Details<span id="asteriskInvifaci"
-                                                    style="display: {{ $data->Facility_Equipment == 'yes' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="onservation-field-table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 5%">Sr. No.</th>
+                    <th style="width: 12%">Name</th>
+                    <th style="width: 16%">ID Number</th>
+                    <th style="width: 15%">Remarks</th>
+                    <th style="width: 8%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!empty($grid_data->Remarks))
+                    @foreach (unserialize($grid_data->Remarks) as $key => $temps)
+                        <tr>
+                            <td><input disabled type="text" name="serial[]" value="{{ $key + 1 }}"></td>
+                            <td><input type="text" class="facility-name" name="facility_name[]"
+                                    value="{{ unserialize($grid_data->facility_name)[$key] ?? '' }}"
+                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                            <td><input type="text" class="id-number" name="IDnumber[]"
+                                    value="{{ unserialize($grid_data->IDnumber)[$key] ?? '' }}"
+                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                            <td><input type="text" class="remarks" name="Remarks[]"
+                                    value="{{ unserialize($grid_data->Remarks)[$key] ?? '' }}"
+                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                            <td><button class="removeRowBtn" type="button">Remove</button></td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
 
-                                                    <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
-                                                    <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#observation-field-instruction-modal"
-                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                        (Launch Instruction)
-                                                    </span>
-                                                </label>
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered" id="onservation-field-table"
-                                                        style="width: 100%;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 5%">Row#</th>
-                                                                <th style="width: 12%">Name</th>
-                                                                <th style="width: 16%">ID Number</th>
-                                                                <th style="width: 15%">Remarks</th>
-                                                                <th style="width: 8%">Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @if (!empty($grid_data->Remarks))
-                                                                @foreach (unserialize($grid_data->Remarks) as $key => $temps)
-                                                                    <tr>
-                                                                        <td><input disabled type="text" name="serial[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
-                                                                        <td> <input type="text" name="facility_name[]" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}  value="{{ isset(unserialize($grid_data->facility_name)[$key]) ? unserialize($grid_data->facility_name)[$key] : '' }}"> </td>
-                                                                        <td><input class="id-number" type="text" name="IDnumber[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}  value="{{ isset(unserialize($grid_data->IDnumber)[$key]) ? unserialize($grid_data->IDnumber)[$key] : '' }}"></td>
-                                                                        <td><input class="remarks" type="text"  name="Remarks[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}  value="{{ unserialize($grid_data->Remarks)[$key] ? unserialize($grid_data->Remarks)[$key] : '' }}"> </td>
-                                                                        <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="main-danger-block">
-                                                    @error('facility_name')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                    @error('IDnumber')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div> --}}
+    <div class="main-danger-block">
+        @error('facility_name')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+        @error('IDnumber')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
-                                            <div class="group-input" id="facilityRow"
-                                                @if ($data->Facility_Equipment == 'no') style="display: none" @endif>
-                                                <label for="audit-agenda-grid">
-                                                    Facility/ Equipment/ Instrument/ System Details<span id="asteriskInvifaci"
-                                                        style="display: {{ $data->Facility_Equipment == 'yes' ? 'inline' : 'none' }}"
-                                                        class="text-danger">*</span>
-                                                    <button type="button" name="audit-agenda-grid"
-                                                        id="ObservationAdd" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                                    {{-- <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#observation-field-instruction-modal"
-                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                        (Launch Instruction)
-                                                    </span> --}}
-                                                </label>
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered" id="onservation-field-table"
-                                                        style="width: 100%;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 5%">Sr. No.</th>
-                                                                <th style="width: 12%">Name</th>
-                                                                <th style="width: 16%">ID Number</th>
-                                                                <th style="width: 15%">Remarks</th>
-                                                                <th style="width: 8%">Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @if (!empty($grid_data->Remarks))
-                                                                @foreach (unserialize($grid_data->Remarks) as $key => $temps)
-                                                                    <tr>
-                                                                        <td><input disabled type="text" name="serial[]"
-                                                                                value="{{ $key + 1 }}"></td>
-                                                                        <td><input type="text" name="facility_name[]" value="{{ isset(unserialize($grid_data->facility_name)[$key]) ? unserialize($grid_data->facility_name)[$key] : '' }}"
-                                                                            {{ $data->stage == 1 ? '' : 'disabled' }}></td>
-                                                                        <td><input class="id-number" type="text"
-                                                                                name="IDnumber[]"
-                                                                                value="{{ isset(unserialize($grid_data->IDnumber)[$key]) ? unserialize($grid_data->IDnumber)[$key] : '' }}"
-                                                                                {{ $data->stage == 1 ? '' : 'disabled' }}>
-                                                                        </td>
-                                                                        <td><input class="remarks" type="text"
-                                                                                name="Remarks[]"
-                                                                                value="{{ unserialize($grid_data->Remarks)[$key] ? unserialize($grid_data->Remarks)[$key] : '' }}"
-                                                                                {{ $data->stage == 1 ? '' : 'disabled' }}>
-                                                                        </td>
-                                                                        <td><button class="removeRowBtn">Remove</button></td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            {{-- @else
-                                                                <tr>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const selectField = document.getElementById('Facility_Equipment');
+    const facilityRow = document.getElementById('facilityRow');
+    const asterisk = document.getElementById('asteriskInvifaci');
 
-                                                                    <td><input type="text" name="facility_name[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                    </td>
-                                                                    <td><input type="text" name="IDnumber[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                    </td>
-                                                                    <td><input type="text" name="Remarks[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                    </td>
-                                                                    <td><button class="removeRowBtn">Remove</button></td>
-                                                                </tr> --}}
-                                                            @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="main-danger-block">
-                                                    @error('facility_name')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                    @error('IDnumber')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
+    function toggleFacilityRow() {
+        const isYes = selectField.value === 'yes';
 
+        // Show or hide the facility row
+        facilityRow.style.display = isYes ? 'block' : 'none';
 
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    var selectField = document.getElementById('Facility_Equipment');
-                                                    var inputsToToggle = [];
+        // Toggle required for all inputs
+        const inputs = facilityRow.querySelectorAll('.facility-name, .id-number, .remarks');
+        inputs.forEach(input => {
+            input.required = isYes;
+        });
 
-                                                    // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('facility-name');
-                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                        inputsToToggle.push(facilityNameInputs[i]);
-                                                    }
+        // Show or hide asterisk
+        asterisk.style.display = isYes ? 'inline' : 'none';
+    }
 
-                                                    // Add elements with class 'id-number' to inputsToToggle
-                                                    var idNumberInputs = document.getElementsByClassName('id-number');
-                                                    for (var j = 0; j < idNumberInputs.length; j++) {
-                                                        inputsToToggle.push(idNumberInputs[j]);
-                                                    }
+    // Run on page load (edit mode)
+    toggleFacilityRow();
 
-                                                    // Add elements with class 'remarks' to inputsToToggle
-                                                    var remarksInputs = document.getElementsByClassName('remarks');
-                                                    for (var k = 0; k < remarksInputs.length; k++) {
-                                                        inputsToToggle.push(remarksInputs[k]);
-                                                    }
+    // Run when selection changes
+    selectField.addEventListener('change', toggleFacilityRow);
+});
+</script>
 
-                                                    selectField.addEventListener('change', function() {
-                                                        var isRequired = this.value === 'yes';
-                                                        console.log(this.value, isRequired, 'value');
+                                         <div class="col-lg-12">
+    <div class="group-input">
+        <label for="Document Details Required">
+            Document Details Required? <span class="text-danger">*</span>
+        </label>
+        <select name="Document_Details_Required"
+            id="Document_Details_Required"
+            value="{{ $data->Document_Details_Required }}"
+            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+            <option value="">-- Select --</option>
+            <option value="yes" {{ $data->Document_Details_Required == 'yes' ? 'selected' : '' }}>Yes</option>
+            <option value="no" {{ $data->Document_Details_Required == 'no' ? 'selected' : '' }}>No</option>
+        </select>
+    </div>
+    @error('Document_Details_Required')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
-                                                        inputsToToggle.forEach(function(input) {
-                                                            input.required = isRequired;
-                                                            console.log(input.required, isRequired, 'input req');
-                                                        });
+{{-- ✅ Document Details Grid --}}
+<div class="group-input" id="documentsRow"
+    style="display: {{ $data->Document_Details_Required == 'yes' ? 'block' : 'none' }};">
+    <label for="audit-agenda-grid">
+        Document Details
+        <span id="asteriskInvidoc"
+            style="display: {{ $data->Document_Details_Required == 'yes' ? 'inline' : 'none' }}"
+            class="text-danger">*</span>
+        <button type="button"
+            id="ReferenceDocument" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
+    </label>
 
-                                                        // Show or hide the asterisk icon based on the selected value
-                                                        var asteriskIcon = document.getElementById('asteriskInvifaci');
-                                                        document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
-                                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                    });
-                                                });
-                                            </script>
-                                            <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Document Details Required">Document Details Required? <span
-                                                            class="text-danger">*</span></label>
-                                                    <select
-                                                        name="Document_Details_Required"
-                                                        id="Document_Details_Required"
-                                                        value="{{ $data->Document_Details_Required }}" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option @if ($data->Document_Details_Required == 'yes' || old('Document_Details_Required') == 'yes') selected @endif value="yes">
-                                                            Yes</option>
-                                                        <option @if ($data->Document_Details_Required == 'no' || old('Document_Details_Required') == 'no') selected @endif value="no">
-                                                            No</option>>
-                                                    </select>
-                                                </div>
-                                                @error('Document_Details_Required')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <div class="group-input" id="documentsRow"
-                                                @if ($data->Document_Details_Required == 'no') style="display: none" @endif>
-                                                <label for="audit-agenda-grid">
-                                                    Document Details <span id="asteriskInvidoc"
-                                                        style="display: {{ $data->Document_Details_Required == 'yes' ? 'inline' : 'none' }}"
-                                                        class="text-danger">*</span>
-                                                    <button type="button"
-                                                        name="audit-agenda-grid"
-                                                        value="audit-agenda-grid" id="ReferenceDocument" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                                    {{-- <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#observation-field-instruction-modal1"
-                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                        (Launch Instruction)
-                                                    </span> --}}
-                                                </label>
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered" id="ReferenceDocument_details"
-                                                        style="width: 100%;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 4%">Sr. No.</th>
-                                                                <th style="width: 12%">Document Number</th>
-                                                                {{--<th style="width: 16%"> Reference Document Name</th>--}}
-                                                                <th style="width: 16%">Document Name</th>
-                                                                <th style="width: 16%">Remarks</th>
-                                                                <th style="width: 8%">Action</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @if ($grid_data1->ReferenceDocumentName)
-                                                                @foreach (unserialize($grid_data1->ReferenceDocumentName) as $key => $temps)
-                                                                    <tr>
-                                                                        <td><input disabled type="text"
-                                                                                name="serial[]"
-                                                                                value="{{ $key + 1 }}"></td>
-                                                                        <td><input class="numberDetail" type="text"
-                                                                                name="Number[]"
-                                                                                value="{{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : '' }}" {{ $data->stage == 1 ? '' : 'disabled' }}>
-                                                                        </td>
-                                                                        <td><input class="ReferenceDocumentName" type="text"
-                                                                                name="ReferenceDocumentName[]"
-                                                                                value="{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : '' }}" {{ $data->stage == 1 ? '' : 'disabled' }}>
-                                                                        </td>
-                                                                        <td><input class="Document_Remarks" type="text"
-                                                                                name="Document_Remarks[]"
-                                                                                value="{{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : '' }}" {{ $data->stage == 1 ? '' : 'disabled' }}>
-                                                                        </td>
-                                                                        <td><button class="removeRowBtn">Remove</button></td>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="ReferenceDocument_details" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 4%">Sr. No.</th>
+                    <th style="width: 12%">Document Number</th>
+                    <th style="width: 16%">Document Name</th>
+                    <th style="width: 16%">Remarks</th>
+                    <th style="width: 8%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!empty($grid_data1->ReferenceDocumentName))
+                    @foreach (unserialize($grid_data1->ReferenceDocumentName) as $key => $temps)
+                        <tr>
+                            <td><input disabled type="text" name="serial[]" value="{{ $key + 1 }}"></td>
+                            <td><input class="numberDetail" type="text" name="Number[]"
+                                    value="{{ unserialize($grid_data1->Number)[$key] ?? '' }}"
+                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                            <td><input class="ReferenceDocumentName" type="text" name="ReferenceDocumentName[]"
+                                    value="{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ?? '' }}"
+                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                            <td><input class="Document_Remarks" type="text" name="Document_Remarks[]"
+                                    value="{{ unserialize($grid_data1->Document_Remarks)[$key] ?? '' }}"
+                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                            <td><button class="removeRowBtn">Remove</button></td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
 
-                                                                    </tr>
-                                                                @endforeach
-                                                            @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                @error('Number')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                                @error('ReferenceDocumentName')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    // note-codable
+{{-- ✅ JavaScript --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectField = document.getElementById('Document_Details_Required');
+        const docRow = document.getElementById('documentsRow');
+        const asterisk = document.getElementById('asteriskInvidoc');
 
-                                                    var selectField = document.getElementById('Document_Details_Required');
-                                                    var inputsToToggle = [];
+        const inputs = [
+            ...document.getElementsByClassName('numberDetail'),
+            ...document.getElementsByClassName('ReferenceDocumentName'),
+            ...document.getElementsByClassName('Document_Remarks')
+        ];
 
-                                                    // Add elements with class 'facility-name' to inputsToToggle
-                                                    var facilityNameInputs = document.getElementsByClassName('numberDetail');
-                                                    for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                        inputsToToggle.push(facilityNameInputs[i]);
-                                                    }
+        function toggleDocumentFields() {
+            const isYes = selectField.value === 'yes';
+            docRow.style.display = isYes ? 'block' : 'none';
+            asterisk.style.display = isYes ? 'inline' : 'none';
 
-                                                    // Add elements with class 'id-number' to inputsToToggle
-                                                    var idNumberInputs = document.getElementsByClassName('Document_Remarks');
-                                                    for (var j = 0; j < idNumberInputs.length; j++) {
-                                                        inputsToToggle.push(idNumberInputs[j]);
-                                                    }
+            inputs.forEach(input => {
+                input.required = isYes;
+            });
+        }
 
-                                                    // Add elements with class 'remarks' to inputsToToggle
-                                                    var remarksInputs = document.getElementsByClassName('ReferenceDocumentName');
-                                                    for (var k = 0; k < remarksInputs.length; k++) {
-                                                        inputsToToggle.push(remarksInputs[k]);
-                                                    }
-                                                    selectField.addEventListener('change', function() {
-                                                        var isRequired = this.value === 'yes';
-                                                        console.log(this.value, isRequired, 'value');
+        // ✅ Run once on page load (for edit case)
+        toggleDocumentFields();
 
-                                                        inputsToToggle.forEach(function(input) {
-                                                            input.required = isRequired;
-                                                            console.log(input.required, isRequired, 'input req');
-                                                        });
+        // ✅ Update when dropdown changes
+        selectField.addEventListener('change', toggleDocumentFields);
+    });
+</script>
 
-                                                        // Show or hide the asterisk icon based on the selected value
-                                                        document.getElementById('documentsRow').style.display = isRequired ? 'block' : 'none';
-                                                        var asteriskIcon = document.getElementById('asteriskInvidoc');
-                                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                    });
-                                                });
-                                            </script>
 
                                             <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Document Details Required">Product / Material Details Required? <span
-                                                            class="text-danger">*</span></label>
-                                                    <select
-                                                        name="Product_Details_Required"
-                                                        id="Product_Details_Required"
-                                                        value="{{ $data->Product_Details_Required }}" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option @if ($data->Product_Details_Required == 'yes' || old('Product_Details_Required') == 'yes') selected @endif value="yes">
-                                                            Yes</option>
-                                                        <option @if ($data->Product_Details_Required == 'no' || old('Product_Details_Required') == 'no') selected @endif value="no">
-                                                            No</option>>
-                                                    </select>
-                                                </div>
-                                                @error('Product_Details_Required')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
+    <div class="group-input">
+        <label for="Product Details Required">
+            Product / Material Details Required? <span class="text-danger">*</span>
+        </label>
+        <select
+            name="Product_Details_Required"
+            id="Product_Details_Required"
+            value="{{ $data->Product_Details_Required }}"
+            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+            <option value="">-- Select --</option>
+            <option value="yes" {{ $data->Product_Details_Required == 'yes' ? 'selected' : '' }}>Yes</option>
+            <option value="no" {{ $data->Product_Details_Required == 'no' ? 'selected' : '' }}>No</option>
+        </select>
+    </div>
+    @error('Product_Details_Required')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
-                                            <div class="col-lg-12">
-                                                <div class="col-lg-12">
-                                                    <div class="group-input" id="productRow"
-                                                        @if ($data->Product_Details_Required == 'no') style="display: none" @endif>
-                                                        <label for="audit-agenda-grid">
-                                                            Product / Material Details <span id="asteriskInviprod"
-                                                                style="display: {{ $data->Product_Details_Required == 'yes' ? 'inline' : 'none' }}"
-                                                                class="text-danger">*</span>
-                                                            <button type="button" name="audit-agenda-grid"
-                                                                id="Product_Details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                                            {{-- <span class="text-primary" data-bs-toggle="modal"
-                                                                data-bs-target="#observation-field-instruction-modal2"
-                                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                                (Launch Instruction)
-                                                            </span> --}}
-                                                        </label>
-                                                        <div class="table-responsive">
-                                                            <table class="table table-bordered" id="Product_Details_Details"
-                                                                style="width: 100%;">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th style="width: 4%">Sr. No.</th>
-                                                                        <th style="width: 12%">Product / Material</th>
-                                                                        <th style="width: 16%">Stage</th>
-                                                                        <th style="width: 16%">A.R.No. / Batch No</th>
-                                                                        <th style="width: 8%">Action</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @if ($grid_data2->product_name)
-                                                                        @foreach (unserialize($grid_data2->product_name) as $key => $temps)
-                                                                            <tr>
-                                                                                <td><input disabled type="text"
-                                                                                        name="serial[]"
-                                                                                        value="{{ $key + 1 }}"></td>
-                                                                                <td><input class="productName" type="text"
-                                                                                        name="product_name[]"
-                                                                                        value="{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="text" name="product_stage[]"
-                                                                                 id="product_stage"
-                                                                                        value="{{ isset(unserialize($grid_data2->product_stage)[$key]) ? unserialize($grid_data2->product_stage)[$key] : '' }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
+<div class="col-lg-12">
+    <div class="group-input" id="productRow"
+        style="display: {{ $data->Product_Details_Required == 'yes' ? 'block' : 'none' }};">
+        <label for="audit-agenda-grid">
+            Product / Material Details
+            <span id="asteriskInviprod"
+                style="display: {{ $data->Product_Details_Required == 'yes' ? 'inline' : 'none' }}"
+                class="text-danger">*</span>
+            <button type="button" id="Product_Details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
+        </label>
 
-                                                                                </td>
-                                                                                <td><input class="productBatchNo" type="text"
-                                                                                        name="batch_no[]"
-                                                                                        value="{{ isset(unserialize($grid_data2->batch_no)[$key]) ? unserialize($grid_data2->batch_no)[$key] : '' }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                                                </td>
-                                                                                <td><button class="removeRowBtn">Remove</button></td>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="Product_Details_Details" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="width: 4%">Sr. No.</th>
+                        <th style="width: 12%">Product / Material</th>
+                        <th style="width: 16%">Stage</th>
+                        <th style="width: 16%">A.R.No. / Batch No</th>
+                        <th style="width: 8%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!empty($grid_data2->product_name))
+                        @foreach (unserialize($grid_data2->product_name) as $key => $temps)
+                            <tr>
+                                <td><input disabled type="text" name="serial[]" value="{{ $key + 1 }}"></td>
+                                <td>
+                                    <input class="productName" type="text" name="product_name[]"
+                                        value="{{ unserialize($grid_data2->product_name)[$key] ?? '' }}"
+                                        {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                </td>
+                                <td>
+                                    <input class="productStage" type="text" name="product_stage[]"
+                                        value="{{ unserialize($grid_data2->product_stage)[$key] ?? '' }}"
+                                        {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                </td>
+                                <td>
+                                    <input class="productBatchNo" type="text" name="batch_no[]"
+                                        value="{{ unserialize($grid_data2->batch_no)[$key] ?? '' }}"
+                                        {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                </td>
+                                <td><button class="removeRowBtn">Remove</button></td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    @error('product_name')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                    @error('product_stage')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                    @error('batch_no')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
+    @error('product_name')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+    @error('product_stage')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+    @error('batch_no')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
-                                                <script>
-                                                    document.addEventListener('DOMContentLoaded', function() {
-                                                        // note-codable
-                                                        var selectField = document.getElementById('Product_Details_Required');
-                                                        var inputsToToggle = [];
+{{-- ✅ Script --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectField = document.getElementById('Product_Details_Required');
+        const productRow = document.getElementById('productRow');
+        const asterisk = document.getElementById('asteriskInviprod');
 
-                                                        // Add elements with class 'productName' to inputsToToggle
-                                                        var productNameInput = document.getElementsByClassName('productName');
-                                                        for (var i = 0; i < productNameInput.length; i++) {
-                                                            inputsToToggle.push(productNameInput[i]);
-                                                        }
+        const inputs = [
+            ...document.getElementsByClassName('productName'),
+            ...document.getElementsByClassName('productStage'),
+            ...document.getElementsByClassName('productBatchNo')
+        ];
 
-                                                        // Add elements with class 'productStage' to inputsToToggle
-                                                        var productStageInput = document.getElementsByClassName('productStage');
-                                                        for (var j = 0; j < productStageInput.length; j++) {
-                                                            inputsToToggle.push(productStageInput[j]);
-                                                        }
+        function toggleProductFields() {
+            const isYes = selectField.value === 'yes';
+            productRow.style.display = isYes ? 'block' : 'none';
+            asterisk.style.display = isYes ? 'inline' : 'none';
+            inputs.forEach(input => input.required = isYes);
+        }
 
-                                                        // Add elements with class 'productBatchNo' to inputsToToggle
-                                                        var batchNoInput = document.getElementsByClassName('productBatchNo');
-                                                        for (var k = 0; k < batchNoInput.length; k++) {
-                                                            inputsToToggle.push(batchNoInput[k]);
-                                                        }
+        // ✅ Run on page load (edit case)
+        toggleProductFields();
 
-                                                        selectField.addEventListener('change', function() {
-                                                            var isRequired = this.value === 'yes';
-                                                            console.log(this.value, isRequired, 'value');
+        // ✅ Update on dropdown change
+        selectField.addEventListener('change', toggleProductFields);
+    });
+</script>
 
-                                                            inputsToToggle.forEach(function(input) {
-                                                                input.required = isRequired;
-                                                                console.log(input.required, isRequired, 'input req');
-                                                            });
-
-                                                            // Show or hide the asterisk icon based on the selected value
-                                                            document.getElementById('productRow').style.display = isRequired ? 'block' : 'none';
-                                                            var asteriskIcon = document.getElementById('asteriskInviprod');
-                                                            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                        });
-                                                    });
-                                                </script>
                                             </div>
 
 
@@ -2682,7 +2524,7 @@
                                                 var qrmRequired = $('#qrm_required').val();
 
 
-                                                // Check if both conditions are met
+                                                // Check if both conditions are metCCForm9
                                                 if (investigationRequired === 'yes') {
                                                     $('#Investigation_button').show(); // Show the investigation button
                                                 } else {
@@ -4958,21 +4800,7 @@
                 <div id="CCForm9" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            {{-- @if ($investigationExtension && $investigationExtension->investigation_proposed_due_date)
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Proposed Due Date">Proposed Due  Date</label>
-                                        <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" value="{{ Helpers::getdateFormat($investigationExtension->investigation_proposed_due_date) }}" disabled>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Proposed Due Date">Proposed Due Date</label>
-                                        <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder=""  disabled>
-                                    </div>
-                                </div>
-                            @endif --}}
+                            
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Investigation Summary">Description of Event</label>
@@ -5869,7 +5697,7 @@
 
                         <div class="sub-head"> Root Cause </div>
 
-                        <div class="col-lg-12">
+                      {{--  <div class="col-lg-12">
                             <div class="group-input" id="documentsRowname">
                                 <label for="audit-agenda-grid">
                                     Root Cause
@@ -6514,6 +6342,7 @@
                                 </div>
                             </div>
                         </div>
+                        --}}
 
 
                         <div class="col-lg-6">
@@ -8562,86 +8391,79 @@
                                 <div class="group-input">
                                     @if ($data->stage == 2)
 
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="rca">
-                                        RCA
-                                    </label>
-
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="capa">
-                                        CAPA
-                                    </label>
-
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value=" Action_Item">
-                                        Action-Item
-                                    </label>
-                                    
-                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                        <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="extension">
-                                                Extension
-                                        </label>
-                                    @endif
-
-                               @endif
-
-                                    {{-- @if ($data->stage == 3)
-                                        <label for="major">
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value="rca">
                                             RCA
-                                        </label>
-                                        <br>
-                                        <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="extension">
-                                            Extension
-                                        </label>
-                                    @endif --}}
+                                        </div>
+
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="Capa">
+                                            CAPA
+                                        </div>
+
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major"  value="Action_Item">
+                                            Action-Item
+                                        </div>
+                                        
+                                        @if(Helpers::getChildData($data->id, 'Incident') < 3)
+                                            <div for="major">
+                                                <input type="radio" name="child_type" id="major" value="extension">
+                                                    Extension
+                                            </div>
+                                        @endif
+
+                                    @endif
 
                                     @if ($data->stage == 3)
 
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="rca">
-                                        RCA
-                                    </label>
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="rca">
+                                            RCA
+                                        </div>
 
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="capa">
-                                        CAPA
-                                    </label>
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value=" Action_Item">
-                                        Action-Item
-                                    </label>
-                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="extension">
-                                            Extension
-                                    </label>
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="Capa">
+                                            CAPA
+                                        </div>
+
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value=
+                                            "Action_Item">
+                                            Action-Item
+                                        </div>
+
+                                        @if(Helpers::getChildData($data->id, 'Incident') < 3)
+                                            <div for="major">
+                                                <input type="radio" name="child_type" id="major" value="extension">
+                                                    Extension
+                                            </div>
+                                        @endif
+
                                     @endif
-
-                                @endif
 
                                     @if ($data->stage == 5)
 
-                                        <label for="major">
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value="rca">
                                             RCA
-                                        </label>
+                                        </div>
 
-                                        <label for="major">
-                                            <input type="radio" name="child_type" id="major" value="capa">
+                                        <div for="major">
+                                            <input type="radio" name="child_type" id="major" value="Capa">
                                             CAPA
-                                        </label>
-                                        <label for="major">
+                                        </div>
+
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value=" Action_Item">
                                             Action-Item
-                                        </label>
+                                        </div>
+
                                         @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                        <label for="major">
+                                        <div for="major">
                                             <input type="radio" name="child_type" id="major" value="extension">
                                                 Extension
-                                        </label>
+                                        </div>
                                         @endif
 
                                     @endif

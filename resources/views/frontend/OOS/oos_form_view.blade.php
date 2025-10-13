@@ -944,6 +944,7 @@
                     "Was sufficient quantity of sample to ensure that the sensor is properly dipped?",
                     "Was electrode filling solution sufficient inside the electrode?",
                     "Were instrument properly connected at the time of analysis?",
+                    // "Was analyst verified the oil is filled up to the level before start of analysis?",
                 );
         @endphp
 
@@ -955,7 +956,7 @@
                     <div class="row">
                          <!-- Others Field -->
                       <div class="col-12">
-                        <label style="font-weight: bold; for="Audit Attachments">pH-Viscometer-MP</label>
+                        <label style="font-weight: bold;" for="Audit Attachments">pH-Viscometer-MP</label>
                         <div class="group-input">
                             <div class="why-why-chart">
                                 <table class="table table-bordered">
@@ -1004,7 +1005,7 @@
                         );
                 @endphp
                  <div class="col-12">
-                         <label style="font-weight: bold; for="Audit Attachments">Viscometer</label>
+                         <label style="font-weight: bold;" for="Audit Attachments">Viscometer</label>
                      <div class="group-input">
                          <div class="why-why-chart mx-auto" style="width: 100%">
                              <table class="table table-bordered ">
@@ -1056,10 +1057,11 @@
                              "Were instrument properly connected at the time of analysis?",
                              "Was temperature of the instrument as per STP?",
                              "Was temperature acquired during analysis?",
+                             // "Was analyst verified the oil is filled up to the level before start of analysis?",
                          );
                  @endphp
                  <div class="col-12">
-                         <label style="font-weight: bold; for="Audit Attachments">Melting Point</label>
+                         <label style="font-weight: bold;" for="Audit Attachments">Melting Point</label>
                      <div class="group-input">
                          <div class="why-why-chart mx-auto" style="width: 100%">
                              <table class="table table-bordered ">
@@ -1129,28 +1131,28 @@
                          @php
                             $Dis_solution_questions = array(
                                     "Was dissolution appartus in calibrated state?",
-                                    "Was the instrument parameter as per STP?",
-                                    "Was the bowl temperature at the start and end of analysis as per STP ?",
+                                    "Was the instrument parameter as per STP/Protocol?",
+                                    "Was the bowl temperature at the start and end of analysis as per STP/Protocol?",
                                     "Was dissolution appartus clean before analysis?",
-                                    "Were the pH of dissolution medium as per STP?",
+                                    "Were the pH of dissolution medium as per STP/Protocol?",
                                     "Was correct volume of dissolution medium used for analysis?",
-                                    "Was correct Appartus used as per STP ?",
-                                    "Was the water level of dissolution bath as per SOP/recommendation?",
+                                    "Was correct Appartus used as per STP/Protocol?",
+                                    "Was the water level of dissolution bath as per SOP/recommendation STP/Protocol?",
                                     "Was Tablet/capsule/suspention dropped manually or was placed on dispensing tablet?",
                                     "Was sampling involve profilling dissolution?",
                                     "Was sampling done manually or using auto sampler?",
                                     "Was filtration done immediately after sampling?",
                                     "Was there any dilution of sample after withdrawl of sample?",
                                     "Was correct  filter used for dilution?",
-                                    "While performing profilling ,  Does sample withdrawl at specific timeline as per STP?",
-                                    "Was Glassware used as per STP?",
+                                    "While performing profilling , Does sample withdrawl at specific timeline as per STP/Protocol?",
+                                    "Was Glassware used as per STP/Protocol?",
                                     "Was bowl temperature found 37°C ± 0.5 before start of analysis?",
                                     "Is method validation/verification available ?",
                                 );
                         @endphp
 
                      <div class="col-12">
-                             <label style="font-weight: bold; for="Audit Attachments">Dissolution Tester</label>
+                             <label style="font-weight: bold;" for="Audit Attachments">Dissolution Tester</label>
                          <div class="group-input">
                              <div class="why-why-chart mx-auto" style="width: 100%">
                                  <table class="table table-bordered ">
@@ -1167,8 +1169,9 @@
                                              @foreach ($Dis_solution_questions as $index => $Dis_solution_question)
                                                  <tr>
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                     <td><input type="text" readonly name="question[]" value="{{ $Dis_solution_question }}">
-                                                     </td>
+                                                     <!-- <td><input type="text" readonly name="question[]" value="{{ $Dis_solution_question }}"> -->
+                                                      <td style="white-space: normal; word-wrap: break-word;">{{ $Dis_solution_question }}</td>
+                                                     
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                              <select name="Dis_solution[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
@@ -1240,18 +1243,18 @@
                                  "Was Mobile phase prepared as per mentioned in STP?",
                                  "Was buffer/ mobile phase pH as per STP?",
                                  "Was mobile phase degassed before start of analysis?",
-                                 "Whether analyst used correct water for mobile phase,diluent, sample and standard preparation?",
+                                 "Whether analyst used correct water (Milli Q Water/ Purified Water/Analytical grade/other) for mobile phase, diluent, sample and standard preparation?",
                                  "Was purge valve was closed before start of analysis?",
                                  "Was the vial position as per mentioned in printed sequence?",
                                  "Was analyst used appropriate test tubes for analysis?",
                                  "Was septa of vial/fitment of septa/ filament of cap proper?",
-                                 "were capping/crimping of GC vial/HPLC Vial done properly?",
+                                 "Were capping/crimping of GC vial/HPLC Vial done properly?",
                                  "Was analyst used the Bonded septa for analysis?",
                                  "Was analyst used cleaned septa for analysis?",
                                  "Was vial labelled as per SOP?",
                                  "Is there any bubble observed inside pump port?",
                                  "Was vial filled 3/4th capacity ?",
-                                 "Is There any pressure fluctuation observed in sample and standard run ?",
+                                 "Is there any pressure fluctuation observed in sample and standard run ?",
                                  "Is it correct placebo used during the analysis?",
                                  "Was the Glassware's used for preparation of same manufacture's?",
                                  "Was standard and sample weighed & prepared as per STP?",
@@ -1265,8 +1268,8 @@
                                  "Is peak integrated properly?",
                                  "Is there any anomalous chromatographic elution pattern observed?",
                                  "Were environmental conditions within the proper limits (Temperature/Humidity)?",
-                                 "Is Instrument calibrated state ?  ",
-                                 "Was cylinder level good before start of analysis?",
+                                 "Is Instrument within calibrated state/periods?",
+                                 "Was cylinder level good/proper before start of analysis?",
                                  "Was instrument connected to properly during analysis?(Communication failure)",
                                  "Was glass liner cleaned before analysis?",
                                  "Was glass wool maintained properly? (change in color white to brown or black)",
@@ -1277,9 +1280,9 @@
                                  "Was column fitted properly before  start of analysis?(Check Ferrules and nuts)",
                                  "Was vial rack work efficiently?",
                                  "Was elevator movement up and down efficiently?",
-                                 "was column conditioning  before start of analysis?",
+                                 "Was column conditioning  before start of analysis?",
                                  "Is there any column breakage observed during analysis?",
-                                 "was there syringe blockage check before analysis?",
+                                 "Was there syringe blockage check before analysis?",
                                  "Was vial over-fitted?",
                                  "Was analyst change the rubber septa before start of analysis?",
                                  "Was chemical used of GC Grade?",
@@ -1367,7 +1370,7 @@
                                  "Was correct chemical grade used for analysis?",
                                  "Was analyst weighed the chemical as per mentioned in STP?",
                                  "Was analyst used correct Reagent/Volumentrick solution for analysis?",
-                                 "Were analyst used Cleaned and  Dried Glassware like volumetrik flask, Pippete,separating funnel & Beaker ? ",
+                                 "Were analyst used Cleaned and  Dried Glassware like volumetrik flask, Pippete,separating funnel & Beaker etc ? ",
                                  "Wheather analyst used corrected glassware's as per mentioned in STP?",
                                  "Is correct formulae used for calculation?",
                                  "Is correct response used for calculation?",
@@ -1376,14 +1379,14 @@
                                  "Is correct specification, standard analytical procedure and version number used for analysis?",
                                  "Is analyst Qualified to performed the analysis? (Qualificaition number)",
                                  "Did analyst identify any usual finding during analysis?(Eg :- sample preparation,standard preparation)",
-                                 "Was sample store as per storage condition?",
+                                 "Were samples stored as per recommended storage condition?",
                                  "Was correct sample used for analysis?",
                                  "Was there any unusual obervation with respect to description of sample?",
                                  "Was correct Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard used for analysis?",
                                  "Was potency of Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard as per COA?",
                                  "Was Working/Reference(USP,EPCRS,JP,BP,In House standard)/Party Working standard/Primary/GC standard stored as per storage conditons?",
                                  "Wheather instrument parameter as per STP?",
-                                 "Was Balance used for weighing within weighing range?",
+                                 "Was Balance used for weighing within standard weight range of analytical balance (Balance limit)?",
                                  "Was Balance used withing validity periods?",
                                  "Was standard/Sample weights as per STP?",
                                  "Was there any spillage reported by analyst during weighing and transfer?",
@@ -1482,13 +1485,13 @@
                                  "Was dried methanol used for analysis?",
                                  "Was bureate withn calibrated state?",
                                  "Was kF reagent used within validity periods?",
-                                 "Was sample quantity transfer comppletely in titration vessel ?",
+                                 "Was sample quantity transfer completely in titration vessel?",
                                  "Is there any sample spillage observed on side walls of titration vessel  or out side of titration vessel?",
                                  "Was silica found in good condition ?",
                                  "Was electrode was saturated before start of analysis?",
                                  "Was there any drift observed during analysis?",
                                  "Was correct electrode used for analysis?",
-                                 "was power plug connection secure through out analsis?",
+                                 "Was power plug connection secure throughout analysis?",
                                  "Was inlet tube found bubble free ?",
                                  "Was sample weight taken as per STP?",
                                  "Was standardization performed before start of analysis?",
@@ -7858,18 +7861,18 @@
                         </div>
                         @php
                             $IIB_inv_questions = array(
-                                    "Analyst Interview required",
-                                    "Raw data Examination (Examination of raw data, including chromatograms and spectra; any anomalous or suspect peaks or data)",
-                                    "The analyst is trained on the method.",
-                                    "Any Previous issues with this test",
-                                    "Other potentially interfering testing/activities occurring at the time of the test",
-                                    "Review of other data (Review of other data for other batches performed within the same analyst set)",
-                                    "Other OOS results (Consideration of any other OOS results obtained on the batch of material under test)",
-                                    "Assessment of method validation (Assessment of method validation and clarity of instructions in the worksheet)",
-                                    "Adequacy of instructions (Assessment of the adequacy of instructions in the STP procedure)",
-                                    "Any issues with environmental temperature/humidity within the area which the test was conducted.",
-                                    "Reoccurrence (Whether any similar occurrence(s) with the analysis earlier)",
-                                    "Observation Error (Analyst) [Any other observation Error]",
+                                    "Analyst Interview required?",
+                                    "Raw data Examination? (Examination of raw data, including chromatograms and spectra; any anomalous or suspect peaks or data)",
+                                    "The analyst is trained on the method.?",
+                                    "Any Previous issues with this test?",
+                                    "Other potentially interfering testing/activities occurring at the time of the test?",
+                                    "Review of other data ? (Review of other data for other batches performed within the same analyst set)",
+                                    "Other OOS results ? (Consideration of any other OOS results obtained on the batch of material under test)",
+                                    "Assessment of method validation ? (Assessment of method validation and clarity of instructions in the worksheet)",
+                                    "Adequacy of instructions? (Assessment of the adequacy of instructions in the STP procedure)",
+                                    "Any issues with environmental temperature/humidity within the area which the test was conducted?",
+                                    "Reoccurrence (Whether any similar occurrence(s) with the analysis earlier)?",
+                                    "Observation Error (Analyst) [Any other observation Error]?",
                                 );
                         @endphp
                         <div class="col-12">
@@ -7929,16 +7932,16 @@
 
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary Of Review <span class="text-danger">*</span></label>
-                                <textarea id="summaryy_of_review" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->summaryy_of_review }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->summaryy_of_review }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Probable Cause Identification <span class="text-danger">*</span></label>
-                                <textarea id="Probable_cause_iden" name="Probable_cause_iden" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Probable_cause_iden }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Probable_cause_iden" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Probable_cause_iden }}</textarea>
                             </div>
                         </div>
                         {{-- <div class="col-lg-6 new-time-data-field">
@@ -7977,16 +7980,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Others</label>
-                                <textarea id="proposal_for_hypothesis_others" name="proposal_for_hypothesis_others" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->proposal_for_hypothesis_others }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="proposal_for_hypothesis_others" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->proposal_for_hypothesis_others }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details Of Results (Including original OOS/OOT results for side by side comparison) <span class="text-danger">*</span></label>
-                                <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->details_of_result }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="details_of_result" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->details_of_result }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8005,16 +8008,16 @@
                                 <textarea id="Any_other_Comments" name="Any_other_Comments" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Any_other_Comments }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Proposal For Hypothesis Testing To Confirm Probable Cause Identified <span class="text-danger">*</span></label>
-                                <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary Of Hypothesis <span class="text-danger">*</span> </label>
-                                <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8048,10 +8051,10 @@
                                 <textarea id="Types_of_assignable_others" name="Types_of_assignable_others" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Types_of_assignable_others }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation Of Phase IB investigation Timeline <span class="text-danger">*</span></label>
-                                <textarea id="Evaluation_Timeline" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Evaluation_Timeline }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Evaluation_Timeline }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8096,10 +8099,10 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat Testing Plan</label>
-                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_testing_plan }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_testing_plan }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8139,28 +8142,28 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat Analysis Method/Resampling <span class="text-danger">*</span></label>
-                                <textarea id="Repeat_analysis_method" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_analysis_method }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_analysis_method }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details Of Repeat Analysis <span class="text-danger">*</span></label></label>
-                                <textarea id="Details_repeat_analysis" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Details_repeat_analysis }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Details_repeat_analysis }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Impact Assessment <span class="text-danger">*</span></label></label>
-                                <textarea id="Impact_assessment1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Impact_assessment1 }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Impact_assessment1 }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Conclusion <span class="text-danger">*</span></label></label>
-                                <textarea id="Conclusion1" name="Conclusion1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Conclusion1 }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Conclusion1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Conclusion1 }}</textarea>
                             </div>
                         </div>
 
@@ -9007,10 +9010,10 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-6 new-time-data-field">
+                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary Of Investigation<span class="text-danger">*</span></label>
-                                <textarea id="Summary_Of_Inv_IIB" name="Summary_Of_Inv_IIB" {{ $data->stage == 17 ? 'required' : 'readonly' }}>{{ $data->Summary_Of_Inv_IIB }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Summary_Of_Inv_IIB" {{ $data->stage == 17 ? 'required' : 'readonly' }}>{{ $data->Summary_Of_Inv_IIB }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -9058,29 +9061,29 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Results Of Repeat Testing IIB Inv.</label>
-                                <textarea id="result_of_rep_test_IIB" name="result_of_rep_test_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->result_of_rep_test_IIB }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="result_of_rep_test_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->result_of_rep_test_IIB }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Laboratory Investigation Hypothesis Details</label>
-                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Outcome Of Laboratory Investigation</label>
-                                <textarea id="Outcome_of_Laboratory" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
                             </div>
                         </div>
 
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation</label>
-                                <textarea id="Evaluation_IIB" name="Evaluation_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Evaluation_IIB }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="Evaluation_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Evaluation_IIB }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -9093,16 +9096,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If Assignable Cause Identified Perform Re-testing</label>
-                                <textarea id="If_assignable_cause" name="If_assignable_cause" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_cause }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="If_assignable_cause" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_cause }}</textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6 new-time-data-field">
+                        <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If Assignable Cause Is Not Identified Proceed As Per Phase III Investigation</label>
-                                <textarea id="If_assignable_error" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_error }}</textarea>
+                                <textarea class="summernote" id="summernote-1" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_error }}</textarea>
                             </div>
                         </div>
                         <div class="col-12">
