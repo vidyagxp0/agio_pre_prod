@@ -405,7 +405,7 @@
                                       <!--
     @endif -->
 
-                        @elseif($data->stage == 4 && ( Helpers::check_roles($data->division_id, 'Risk Assessment', 63) || Helpers::check_roles($data->division_id, 'Risk Assessment', 49) || Helpers::check_roles($data->division_id, 'Risk Assessment', 48) || Helpers::check_roles($data->division_id, 'Risk Assessment', 18)))
+                        @elseif($data->stage == 4 && ( Helpers::check_roles($data->division_id, 'Risk Assessment', 63) || Helpers::check_roles($data->division_id, 'Risk Assessment', 7) || Helpers::check_roles($data->division_id, 'Risk Assessment', 49) || Helpers::check_roles($data->division_id, 'Risk Assessment', 48) || Helpers::check_roles($data->division_id, 'Risk Assessment', 18)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             Request More Info
                         </button>
