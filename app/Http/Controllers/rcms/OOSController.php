@@ -483,7 +483,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -626,7 +626,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -780,7 +780,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -811,7 +811,7 @@ class OOSController extends Controller
                     }
 
                     $capachilds = Capa::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPending = false;
                         foreach ($capachilds as $ext) {
@@ -841,7 +841,7 @@ class OOSController extends Controller
                         ]);
                     }
                     $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingRCA = false;
                         foreach ($rcachilds as $ext) {
@@ -993,7 +993,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -1135,7 +1135,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -1304,7 +1304,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -1433,7 +1433,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -1575,7 +1575,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -1718,7 +1718,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -1845,7 +1845,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                             foreach ($actionchilds as $ext) {
@@ -1876,7 +1876,7 @@ class OOSController extends Controller
                     }
 
                 $capachilds = Capa::where('parent_id', $id)
-                ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                 ->get();
                     $hasPending = false;
                     foreach ($capachilds as $ext) {
@@ -1907,7 +1907,7 @@ class OOSController extends Controller
                 }
 
                 $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                 ->get();
                     $hasPendingRCA = false;
                     foreach ($rcachilds as $ext) {
@@ -2059,7 +2059,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                             foreach ($actionchilds as $ext) {
@@ -2202,7 +2202,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                             foreach ($actionchilds as $ext) {
@@ -2346,7 +2346,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                             foreach ($actionchilds as $ext) {
@@ -3779,7 +3779,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -3838,6 +3838,7 @@ class OOSController extends Controller
                                 $history->action_name = 'Update';
                             }
                             $history->save();
+                            
                             $list = Helpers::getQAUserList($changestage->division_id);
                             foreach ($list as $u) {
                                $email = Helpers::getUserEmail($u->user_id);
@@ -3852,20 +3853,20 @@ class OOSController extends Controller
                                    );
                                }
                             }
-                            $list = Helpers::getCQAUsersList($changestage->division_id);
-                            foreach ($list as $u) {
-                               $email = Helpers::getUserEmail($u->user_id);
-                                   if ($email !== null) {
-                                   Mail::send(
-                                       'mail.view-mail',
-                                       ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                       function ($message) use ($email, $changestage) {
-                                           $message->to($email)
-                                           ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                                       }
-                                   );
-                               }
-                            }
+                            // $list = Helpers::getCQAUsersList($changestage->division_id);
+                            // foreach ($list as $u) {
+                            //    $email = Helpers::getUserEmail($u->user_id);
+                            //        if ($email !== null) {
+                            //        Mail::send(
+                            //            'mail.view-mail',
+                            //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                            //            function ($message) use ($email, $changestage) {
+                            //                $message->to($email)
+                            //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                            //            }
+                            //        );
+                            //    }
+                            // }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3954,9 +3955,9 @@ class OOSController extends Controller
 
                    
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
-                            $hasPendingaction = false;
+                        $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
                                 $actionchildstatus = trim(strtolower($ext->status));
                                 if ($actionchildstatus !== 'closed - done') {
@@ -3985,7 +3986,7 @@ class OOSController extends Controller
                     }
 
                 $capachilds = Capa::where('parent_id', $id)
-                ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                 ->get();
                     $hasPending = false;
                 foreach ($capachilds as $ext) {
@@ -4015,7 +4016,7 @@ class OOSController extends Controller
                    ]);
                }
                 $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                 ->get();
                     $hasPendingRCA = false;
                 foreach ($rcachilds as $ext) {
@@ -4147,7 +4148,7 @@ class OOSController extends Controller
 
                    
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
@@ -4279,7 +4280,7 @@ class OOSController extends Controller
                     }
 
                     $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                         ->get();
                             $hasPendingaction = false;
                             foreach ($actionchilds as $ext) {
@@ -4310,7 +4311,7 @@ class OOSController extends Controller
                     }
 
                 $capachilds = Capa::where('parent_id', $id)
-                ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                 ->get();
                     $hasPending = false;
                     foreach ($capachilds as $ext) {
@@ -4341,7 +4342,7 @@ class OOSController extends Controller
                 }
 
                 $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                ->where('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                 ->get();
                     $hasPendingRCA = false;
                     foreach ($rcachilds as $ext) {
@@ -4932,12 +4933,13 @@ class OOSController extends Controller
             $actionchild = OOS::find($id);
             $data = OOS::find($id);
             // $p_record = RootCauseAnalysis::find($id);
-            $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
+            // $parent_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
+            $parent_record = Helpers::getDivisionName($actionchild->division_id) . '/' .$actionchild->Form_type . '/' .Helpers::year($actionchild->created_at) . '/' .($actionchild->record_number ? str_pad($actionchild->record_number, 4, '0', STR_PAD_LEFT) : '0001');
             $parentRecord = OOS::where('id', $id)->value('record');
             $actionchild->actionchild = $record_number;
             $actionchild->save();
         // dd($data->due_date);
-            return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'data_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data'));
+            return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data'));
         }
         elseif ($request->child_type == "Resampling")
          {

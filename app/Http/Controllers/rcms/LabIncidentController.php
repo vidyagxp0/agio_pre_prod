@@ -6,6 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Labincident_Second;
 use App\Models\ActionItem;
 use App\Models\QMSDivision;
+
+use App\Models\RootAuditTrial;
+use App\Models\ActionItemHistory;
+use App\Models\ExtensionNewAuditTrail;
+use App\Models\CapaAuditTrial;
+use App\Models\ResamplingAudittrail;
 use App\Models\Resampling;
 use Illuminate\Http\Request;
 use App\Models\Capa;
@@ -7909,6 +7915,259 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             $changeControl->cancelled_by = Auth::user()->name;
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
             $changeControl->cancell_comment =$request->comment;
+
+            
+
+
+             //child cancel if parent cancel
+
+
+
+
+
+             $childActionItems = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'Lab Incident')
+                ->get();
+
+                if ($childActionItems->count() > 0) {
+                    foreach ($childActionItems as $actionItem) {
+                        $lastopenState = clone $actionItem; // save previous values before update
+
+                        // 🔹 Update fields
+                        $actionItem->stage = "0";
+                        $actionItem->status = "Closed-Cancelled";
+                        $actionItem->cancelled_by = Auth::user()->name;
+                        $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $actionItem->cancelled_comment =$request->comment;
+                        $actionItem->save();
+
+                        // 🔹 Create history record
+                        $history = new ActionItemHistory();
+                        $history->cc_id = $actionItem->id;
+                        $history->action = "Cancel";
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->change_from = $lastopenState->status;
+                        $history->change_to = "Closed-Cancelled";
+                        $history->stage = "Cancelled";
+
+                        // 🔹 Previous & Current info
+                        $history->previous = $lastopenState->cancelled_by
+                            ? $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on
+                            : '';
+                        $history->current = $actionItem->cancelled_by . ' , ' . $actionItem->cancelled_on;
+                        $history->action_name = $lastopenState->cancelled_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
+
+
+
+
+                $childExtensions = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Lab Incident')
+                    ->get();
+
+                if ($childExtensions->count() > 0) {
+                    foreach ($childExtensions as $ext) {
+                        $lastDocument = clone $ext; // store previous values
+
+                        // 🔹 Update each child extension
+                        $ext->status = "Closed Cancelled";
+                        $ext->stage = "0";
+                        $ext->reject_by = Auth::user()->name;
+                        $ext->reject_on = Carbon::now()->format('d-M-Y');
+                        $ext->reject_comment = $request->comment;
+                        $ext->save();
+
+                        // 🔹 Add Audit Trail
+                        $history = new ExtensionNewAuditTrail();
+                        $history->extension_id = $ext->id;
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->action = 'Cancel';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_from = $lastDocument->status;
+                        $history->change_to = "Closed - Cancelled";
+                        $history->stage = 'Closed - Cancelled';
+
+                        // Previous/Current data tracking
+                        $history->previous = $lastDocument->reject_by
+                            ? $lastDocument->reject_by . ' , ' . $lastDocument->reject_on
+                            : '';
+                        $history->current = $ext->reject_by . ' , ' . $ext->reject_on;
+                        $history->action_name = $lastDocument->reject_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
+
+
+                 
+                $childCapas = Capa::where('parent_id', $id)
+                    ->where('parent_type', 'Lab Incident')
+                    ->get();
+
+                if ($childCapas->count() > 0) {
+                    foreach ($childCapas as $capa) {
+                        $lastDocument = clone $capa; // save old state for history
+
+                        // 🔹 Update individual CAPA record
+                        $capa->stage = "0";
+                        $capa->status = "Closed-Cancelled";
+                        $capa->cancelled_by = Auth::user()->name;
+                        $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $capa->cancel_comment = $request->comment;
+                        $capa->save();
+
+                        // 🔹 Create Audit Trail entry
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $capa->id;
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->action = 'Cancel';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_from = $lastDocument->status;
+                        $history->change_to = "Closed-Cancelled";
+                        $history->stage = 'Cancelled';
+
+                        // Previous / Current audit info
+                        $history->previous = $lastDocument->cancelled_by
+                            ? $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on
+                            : '';
+                        $history->current = $capa->cancelled_by . ' , ' . $capa->cancelled_on;
+                        $history->action_name = $lastDocument->cancelled_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
+
+
+
+
+             $childroot = RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', 'Lab Incident')
+                ->get();
+
+            if ($childroot->count() > 0) {
+                foreach ($childroot as $root) {
+                    $lastopenState = clone $root; // save previous values before update
+
+                    // 🔹 Update fields
+                    $root->stage = "0";
+                    $root->status = "Closed-Cancelled";
+                    $root->cancelled_by = Auth::user()->name;
+                    $root->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $root->cancel_comment = $request->comment;
+                    $root->save();
+
+                    // 🔹 Create history record
+                    $history = new RootAuditTrial();
+                    $history->root_id = $id;
+                    $history->activity_type = 'Cancelled By,Cancelled On';
+                    // $history->previous = $lastDocument->cancelled_by;
+                    $history->previous = "";
+                    $history->current = $root->cancelled_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->action = "Cancel";
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Closed-Cancelled";
+                    $history->change_from = $lastDocument->status;
+
+                    $history->stage = 'Cancelled ';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $root->cancelled_by . ' , ' . $root->cancelled_on;
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+
+            }
+        }
+
+          
+
+
+      
+
+
+        $childResamplingData = Resampling::where('parent_id', $id)
+                ->where('parent_type', 'Lab Incident')
+                ->get();
+
+            if ($childResamplingData->count() > 0) {
+                foreach ($childResamplingData as $Resampling) {
+                    $lastopenState = clone $Resampling; // save previous values before update
+
+                    // 🔹 Update fields
+                    $Resampling->stage = "0";
+                    $Resampling->status = "Closed-Cancelled";
+                    $Resampling->cancelled_by = Auth::user()->name;
+                    $Resampling->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $Resampling->cancelled_comment = $request->comment;
+                    $Resampling->save();
+
+                    // 🔹 Create history record
+                    $history = new ResamplingAudittrail();
+                    $history->resampling_id = $id;
+                    $history->activity_type = 'Cancelled By,Cancelled On';
+                    // $history->previous = $lastDocument->cancelled_by;
+                    $history->previous = "";
+                    $history->current = $Resampling->cancelled_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->action = "Cancel";
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Closed-Cancelled";
+                    $history->change_from = $lastDocument->status;
+
+                    $history->stage = 'Cancelled ';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $Resampling->cancelled_by . ' , ' . $Resampling->cancelled_on;
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+
+            }
+        }
+
+
+           
+                              
+
+                
+
+            ////////////////////////
+
             $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Cancel By, Cancel On';

@@ -1759,7 +1759,7 @@
                                                     <div class="static">{{ $data->qa_approval_without_capa_on }}</div>
                                                     @else
                                                         Not Applicable
-                                                    @endif
+                                a                    @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
