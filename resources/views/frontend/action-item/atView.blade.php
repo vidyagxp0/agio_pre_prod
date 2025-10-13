@@ -270,19 +270,20 @@
                                         <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="RLS Record Number"><b>Parent Record Number</b></label>
-                                        @if($data->parent_record_number)
-                                        <input readonly type="text" name="parent_record_number"
-                                            value="{{ $data->parent_record_number }}">
-                                        @else
-                                        <input type="text" name="parent_record_number_edit"
-                                        value="{{ $data->parent_record_number_edit }}">
-                                        @endif
+                                @if($data->parent_record_number)
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="RLS Record Number"><b>Parent Record Number</b></label>
+                                            
+                                            <input readonly type="text" name="parent_record_number"
+                                                value="{{ $data->parent_record_number }}">
+                                            {{-- @else
+                                            <input type="text" name="parent_record_number_edit"
+                                            value="{{ $data->parent_record_number_edit }}"> --}}
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+
 
 
                                
@@ -512,6 +513,43 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                {{-- <div class="col-6">
+                                        <div class="group-input">
+                                            <label for="related_records">
+                                                Action Item Related Records <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                            </label>
+                                            
+
+                                            <!-- Select Field -->
+                                            <select multiple name="related_records[]" id="related_records" placeholder="Select Reference Records"
+                                                data-silent-initial-value-set="true"
+                                                 
+                                                >
+
+                                                @if (!empty($relatedRecords))
+                                                    @foreach ($relatedRecords as $records)
+                                                        @php
+                                                            $recordValue = Helpers::getDivisionName(
+                                                                $records->division_id ?? $records->division ?? $records->division_code ?? $records->site_location_code
+                                                            ) . '/' . $records->process_name . '/' . date('Y') . '/' . Helpers::recordFormat($records->record);
+
+                                                            $selected = in_array($recordValue, explode(',', $data->related_records ?? '')) ? 'selected' : '';
+                                                        @endphp
+                                                        <option value="{{ $recordValue }}" {{ $selected }}>
+                                                            {{ $recordValue }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+
+                                            <!-- Hidden Input to Retain Values When Select is Disabled -->
+                                            @if (in_array($data->stage, [0, 2, 3, 4, 5]))
+                                                @foreach (explode(',', $data->related_records ?? '') as $record)
+                                                    <input type="hidden" name="related_records[]" value="{{ $record }}">
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div> --}}
 
                                 <div class="col-lg-6">
                                         <div class="group-input">
