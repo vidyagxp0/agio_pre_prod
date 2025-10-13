@@ -4,6 +4,11 @@ namespace App\Http\Controllers\rcms;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Models\RootAuditTrial;
+use App\Models\ActionItemHistory;
+use App\Models\ExtensionNewAuditTrail;
+use App\Models\CapaAuditTrial;
+use App\Models\RootCauseAnalysis;
 use App\Models\ActionItem;
 use App\Models\Capa;
 use App\Models\AdditionalInformation;
@@ -9095,7 +9100,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     // }
 
 
-                      $list = Helpers::getCftUserList($changeControl->division_id);
+                      $list = Helpers::getHodUserList($changeControl->division_id);
                         foreach ($list as $u) {
                                 $email = Helpers::getUserEmail($u->user_id);
                                     if ($email !== null) {
@@ -10741,6 +10746,9 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $updateCFT->RA_review_completed_by = Auth::user()->name;
                 $updateCFT->RA_review_completed_on = Carbon::now()->format('d-M-Y');
                 $updateCFT->RA_review_completed_comment = $request->comments;
+               
+                
+                 $updateCFT->save();
 
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
@@ -10769,95 +10777,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
-                // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify Initiator
-                // // foreach ($list as $u) {
-                // //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                // //         $email = Helpers::getUserEmail($u->user_id);
-                // //             if ($email !== null) {
-                // //                 try {
-                // //                     Mail::send(
-                // //                         'mail.view-mail',
-                // //                         ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                // //                         function ($message) use ($email, $changeControl) {
-                // //                             $message->to($email)
-                // //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
-                // //                         }
-                // //                     );
-                // //                 } catch(\Exception $e) {
-                // //                     info('Error sending mail', [$e]);
-                // //                 }
-                // //         }
-                // //     // }
-                // // }
-                // foreach ($list as $u) {
-                //     $email = Helpers::getUserEmail($u->user_id);
-                //     if ($email !== null) {
-                //         $data = ['data' => $changeControl, 'site'=>"CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name];
-
-                //         SendMail::dispatch($data, $email, $changeControl, 'Change Control');
-                //     }
-                // }
-
-                // $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
-                // // foreach ($list as $u) {
-                // //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                // //         $email = Helpers::getUserEmail($u->user_id);
-                // //             if ($email !== null) {
-                // //                 try {
-                // //                     Mail::send(
-                // //                         'mail.view-mail',
-                // //                         ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                // //                         function ($message) use ($email, $changeControl) {
-                // //                             $message->to($email)
-                // //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
-                // //                         }
-                // //                     );
-                // //                 } catch(\Exception $e) {
-                // //                     info('Error sending mail', [$e]);
-                // //                 }
-                // //         }
-                // //     // }
-                // // }
-
-                // foreach ($list as $u) {
-                //     $email = Helpers::getUserEmail($u->user_id);
-                //     if ($email !== null) {
-                //         $data = ['data' => $changeControl, 'site'=>"CC", 'history' => "Rejected", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name];
-
-                //         SendMail::dispatch($data, $email, $changeControl, 'Change Control');
-                //     }
-                // }
-
-                // $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
-                // // foreach ($list as $u) {
-                // //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                // //         $email = Helpers::getUserEmail($u->user_id);
-                // //             if ($email !== null) {
-                // //                 try {
-                // //                     Mail::send(
-                // //                         'mail.view-mail',
-                // //                         ['data' => $changeControl, 'site' => "CC", 'history' => "Rejected Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                // //                         function ($message) use ($email, $changeControl) {
-                // //                             $message->to($email)
-                // //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed");
-                // //                         }
-                // //                     );
-                // //                 } catch(\Exception $e) {
-                // //                     info('Error sending mail', [$e]);
-                // //                 }
-                // //         }
-                // //     // }
-                // // }
-
-                // foreach ($list as $u) {
-                //     $email = Helpers::getUserEmail($u->user_id);
-                //     if ($email !== null) {
-                //         $data = ['data' => $changeControl, 'site'=>"CC", 'history' => "Rejected Complete", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name];
-
-                //         SendMail::dispatch($data, $email, $changeControl, 'Change Control');
-                //     }
-                // }
-
+              
 
 
                 
@@ -10961,6 +10881,192 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $changeControl->Training_complete_by = Auth::user()->name;
                 $changeControl->Training_complete_on = Carbon::now()->format('d-M-Y');
                 $changeControl->Training_complete_comment = $request->comments;
+
+
+                  //child cancel if parent cancel
+
+             $childActionItems = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'CC')
+                ->get();
+
+                if ($childActionItems->count() > 0) {
+                    foreach ($childActionItems as $actionItem) {
+                        $lastopenState = clone $actionItem; // save previous values before update
+
+                        // 🔹 Update fields
+                        $actionItem->stage = "0";
+                        $actionItem->status = "Closed-Cancelled";
+                        $actionItem->cancelled_by = Auth::user()->name;
+                        $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $actionItem->cancelled_comment =$request->comment;
+                        $actionItem->save();
+
+                        // 🔹 Create history record
+                        $history = new ActionItemHistory();
+                        $history->cc_id = $actionItem->id;
+                        $history->action = "Cancel";
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->change_from = $lastopenState->status;
+                        $history->change_to = "Closed-Cancelled";
+                        $history->stage = "Cancelled";
+
+                        // 🔹 Previous & Current info
+                        $history->previous = $lastopenState->cancelled_by
+                            ? $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on
+                            : '';
+                        $history->current = $actionItem->cancelled_by . ' , ' . $actionItem->cancelled_on;
+                        $history->action_name = $lastopenState->cancelled_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
+
+
+
+
+                $childExtensions = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'CC')
+                    ->get();
+
+                if ($childExtensions->count() > 0) {
+                    foreach ($childExtensions as $ext) {
+                        $lastDocument = clone $ext; // store previous values
+
+                        // 🔹 Update each child extension
+                        $ext->status = "Closed Cancelled";
+                        $ext->stage = "0";
+                        $ext->reject_by = Auth::user()->name;
+                        $ext->reject_on = Carbon::now()->format('d-M-Y');
+                        $ext->reject_comment = $request->comment;
+                        $ext->save();
+
+                        // 🔹 Add Audit Trail
+                        $history = new ExtensionNewAuditTrail();
+                        $history->extension_id = $ext->id;
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->action = 'Cancel';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_from = $lastDocument->status;
+                        $history->change_to = "Closed - Cancelled";
+                        $history->stage = 'Closed - Cancelled';
+
+                        // Previous/Current data tracking
+                        $history->previous = $lastDocument->reject_by
+                            ? $lastDocument->reject_by . ' , ' . $lastDocument->reject_on
+                            : '';
+                        $history->current = $ext->reject_by . ' , ' . $ext->reject_on;
+                        $history->action_name = $lastDocument->reject_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
+
+
+                 
+                $childCapas = Capa::where('parent_id', $id)
+                    ->where('parent_type', 'CC')
+                    ->get();
+
+                if ($childCapas->count() > 0) {
+                    foreach ($childCapas as $capa) {
+                        $lastDocument = clone $capa; // save old state for history
+
+                        // 🔹 Update individual CAPA record
+                        $capa->stage = "0";
+                        $capa->status = "Closed-Cancelled";
+                        $capa->cancelled_by = Auth::user()->name;
+                        $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $capa->cancel_comment = $request->comment;
+                        $capa->save();
+
+                        // 🔹 Create Audit Trail entry
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $capa->id;
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->action = 'Cancel';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_from = $lastDocument->status;
+                        $history->change_to = "Closed-Cancelled";
+                        $history->stage = 'Cancelled';
+
+                        // Previous / Current audit info
+                        $history->previous = $lastDocument->cancelled_by
+                            ? $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on
+                            : '';
+                        $history->current = $capa->cancelled_by . ' , ' . $capa->cancelled_on;
+                        $history->action_name = $lastDocument->cancelled_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
+
+
+
+
+             $childroot = RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', 'CC')
+                ->get();
+
+            if ($childroot->count() > 0) {
+                foreach ($childroot as $root) {
+                    $lastopenState = clone $root; // save previous values before update
+
+                    // 🔹 Update fields
+                    $root->stage = "0";
+                    $root->status = "Closed-Cancelled";
+                    $root->cancelled_by = Auth::user()->name;
+                    $root->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $root->cancel_comment = $request->comment;
+                    $root->save();
+
+                    // 🔹 Create history record
+                    $history = new RootAuditTrial();
+                    $history->root_id = $id;
+                    $history->activity_type = 'Cancelled By,Cancelled On';
+                    // $history->previous = $lastDocument->cancelled_by;
+                    $history->previous = "";
+                    $history->current = $root->cancelled_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->action = "Cancel";
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Closed-Cancelled";
+                    $history->change_from = $lastDocument->status;
+
+                    $history->stage = 'Cancelled ';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $root->cancelled_by . ' , ' . $root->cancelled_on;
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+
+            }
+        }
+                
+
+            ////////////////////////
 
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
@@ -14402,6 +14508,193 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $changeControl->cancelled_by = Auth::user()->name;
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
             $changeControl->cancelled_comment = $request->comments;
+
+
+            //child cancel if parent cancel
+
+             $childActionItems = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'CC')
+                ->get();
+
+                if ($childActionItems->count() > 0) {
+                    foreach ($childActionItems as $actionItem) {
+                        $lastopenState = clone $actionItem; // save previous values before update
+
+                        // 🔹 Update fields
+                        $actionItem->stage = "0";
+                        $actionItem->status = "Closed-Cancelled";
+                        $actionItem->cancelled_by = Auth::user()->name;
+                        $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $actionItem->cancelled_comment =$request->comment;
+                        $actionItem->save();
+
+                        // 🔹 Create history record
+                        $history = new ActionItemHistory();
+                        $history->cc_id = $actionItem->id;
+                        $history->action = "Cancel";
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->change_from = $lastopenState->status;
+                        $history->change_to = "Closed-Cancelled";
+                        $history->stage = "Cancelled";
+
+                        // 🔹 Previous & Current info
+                        $history->previous = $lastopenState->cancelled_by
+                            ? $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on
+                            : '';
+                        $history->current = $actionItem->cancelled_by . ' , ' . $actionItem->cancelled_on;
+                        $history->action_name = $lastopenState->cancelled_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
+
+
+
+
+                $childExtensions = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'CC')
+                    ->get();
+
+                if ($childExtensions->count() > 0) {
+                    foreach ($childExtensions as $ext) {
+                        $lastDocument = clone $ext; // store previous values
+
+                        // 🔹 Update each child extension
+                        $ext->status = "Closed Cancelled";
+                        $ext->stage = "0";
+                        $ext->reject_by = Auth::user()->name;
+                        $ext->reject_on = Carbon::now()->format('d-M-Y');
+                        $ext->reject_comment = $request->comment;
+                        $ext->save();
+
+                        // 🔹 Add Audit Trail
+                        $history = new ExtensionNewAuditTrail();
+                        $history->extension_id = $ext->id;
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->action = 'Cancel';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_from = $lastDocument->status;
+                        $history->change_to = "Closed - Cancelled";
+                        $history->stage = 'Closed - Cancelled';
+
+                        // Previous/Current data tracking
+                        $history->previous = $lastDocument->reject_by
+                            ? $lastDocument->reject_by . ' , ' . $lastDocument->reject_on
+                            : '';
+                        $history->current = $ext->reject_by . ' , ' . $ext->reject_on;
+                        $history->action_name = $lastDocument->reject_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
+
+
+                 
+                $childCapas = Capa::where('parent_id', $id)
+                    ->where('parent_type', 'CC')
+                    ->get();
+
+                if ($childCapas->count() > 0) {
+                    foreach ($childCapas as $capa) {
+                        $lastDocument = clone $capa; // save old state for history
+
+                        // 🔹 Update individual CAPA record
+                        $capa->stage = "0";
+                        $capa->status = "Closed-Cancelled";
+                        $capa->cancelled_by = Auth::user()->name;
+                        $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $capa->cancel_comment = $request->comment;
+                        $capa->save();
+
+                        // 🔹 Create Audit Trail entry
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $capa->id;
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->action = 'Cancel';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_from = $lastDocument->status;
+                        $history->change_to = "Closed-Cancelled";
+                        $history->stage = 'Cancelled';
+
+                        // Previous / Current audit info
+                        $history->previous = $lastDocument->cancelled_by
+                            ? $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on
+                            : '';
+                        $history->current = $capa->cancelled_by . ' , ' . $capa->cancelled_on;
+                        $history->action_name = $lastDocument->cancelled_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
+
+
+
+
+             $childroot = RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', 'CC')
+                ->get();
+
+            if ($childroot->count() > 0) {
+                foreach ($childroot as $root) {
+                    $lastopenState = clone $root; // save previous values before update
+
+                    // 🔹 Update fields
+                    $root->stage = "0";
+                    $root->status = "Closed-Cancelled";
+                    $root->cancelled_by = Auth::user()->name;
+                    $root->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $root->cancel_comment = $request->comment;
+                    $root->save();
+
+                    // 🔹 Create history record
+                    $history = new RootAuditTrial();
+                    $history->root_id = $id;
+                    $history->activity_type = 'Cancelled By,Cancelled On';
+                    // $history->previous = $lastDocument->cancelled_by;
+                    $history->previous = "";
+                    $history->current = $root->cancelled_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->action = "Cancel";
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Closed-Cancelled";
+                    $history->change_from = $lastDocument->status;
+
+                    $history->stage = 'Cancelled ';
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->previous = "";
+                    } else {
+                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                    }
+                    $history->current = $root->cancelled_by . ' , ' . $root->cancelled_on;
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+
+            }
+        }
+                
+
+            ////////////////////////
+
             $changeControl->update();
 
             $history = new RcmDocHistory();
@@ -14430,6 +14723,24 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $history->change_from = $lastDocument->status;
             $history->stage = 'Plan Proposed';
             $history->save();
+
+
+
+             $list = Helpers::getQAUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            Mail::send(
+                                'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "CC", 'history' => "Cancel", 'process' => 'Change Control', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                                }
+                            );
+                        }
+                    
+            } 
 
             $history = new CCStageHistory();
             $history->type = "Change-Control";
