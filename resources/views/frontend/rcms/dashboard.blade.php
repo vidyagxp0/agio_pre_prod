@@ -827,6 +827,11 @@
                                                     @php
                                                         $findRecord = DB::table('internal_audits')->find($datas->parent_id);
                                                     @endphp
+                                                                                                        
+                                                    @elseif ($datas->parent_type == 'OOC')
+                                                    @php
+                                                        $findRecord = DB::table('out_of_calibrations')->find($datas->parent_id);
+                                                    @endphp
                                                     
                                                 @endif
 
