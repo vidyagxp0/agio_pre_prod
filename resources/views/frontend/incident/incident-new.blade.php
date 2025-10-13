@@ -711,7 +711,7 @@ dd($pre);
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         {{-- <input disabled type="text" name="record_number"> --}}
                                         <input disabled type="text" name="record" id="record"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/INC/{{ date('y') }}/{{ $data }}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/INC/{{ date('Y') }}/{{ $data }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -1104,7 +1104,7 @@ dd($pre);
                                 <div class="col-lg-6" id="nature_of_repeat_block" style="display: none">
 
                                     <div class="group-input" id="nature_of_repeat">
-                                        <label for="nature_of_repeat">Repeat Nature </label>
+                                        <label for="nature_of_repeat">Repeat Nature  <span class="text-danger">*</span> </label>
                                         <textarea name="nature_of_repeat" class="nature_of_repeat"></textarea>
                                     </div>
                                 </div>
@@ -1367,24 +1367,14 @@ dd($pre);
                                     <div class="group-input">
                                         <label for="audit type">Incident Related To </label>
                                         <select multiple name="audit_type[]" id="audit_type">
-                                            {{-- <option value="">Enter Your Selection Here</option> --}}
+                                           
                                             <option value="Equipment/Instrument/System">Equipment/Instrument/System </option>
                                             <option value="Material">Material</option>
                                             <option value="Process">Process</option>
-                                            <option value="Anyother(specify)">Any other (specify) </option>
-                                            {{-- <option value="Documentationerror">Documentation error </option>
-                                            <option value="STP/ADS_instruction">STP/ADS instruction </option>
-                                            <option value="Packaging&Labelling">Packaging & Labelling </option>
-                                            <option value="Laboratory_Instrument/System"> Laboratory Instrument /System
-                                            </option>
-                                            <option value="Facility">Facility</option>
-                                            <option value="Utility_System"> Utility System</option>
-                                            <option value="Computer_System"> Computer System</option> --}}
-                                            {{-- <option value="Document">Document</option> --}}
-                                            {{-- <option value="Data integrity">Data integrity</option>
-                                            <option value="SOP Instruction">SOP Instruction</option>
-                                            <option value="BMR/ECR Instruction">BMR/ECR Instruction</option>
-                                            <option value="Water System">Water System</option> --}}
+                                            <option value="Other">Other</option>
+                                           
+                                           
+                                          
 
                                         </select>
                                     </div>
@@ -1408,7 +1398,7 @@ dd($pre);
                                             <option value="SOP Instruction">SOP Instruction</option>
                                             <option value="BMR/ECR Instruction">BMR/ECR Instruction</option>
                                             <option value="Water System">Water System</option>
-                                            <option value="Anyother(specify)">Any other (specify) </option>
+                                            <option value="Other">Any other (specify) </option>
                                         </select>
                                     </div>
                                 </div> --}}
@@ -1434,8 +1424,8 @@ dd($pre);
 
 
                                         selectField.addEventListener('change', function() {
-                                            // var isRequired = this.value === 'Anyother(specify)';
-                                            var isRequired = this.value.includes('Anyother(specify)');
+                                            // var isRequired = this.value === 'Other';
+                                            var isRequired = this.value.includes('Other');
                                             console.log(this.value, isRequired, 'value');
 
                                             inputsToToggle.forEach(function(input) {
@@ -1500,13 +1490,10 @@ dd($pre);
                                 </div>
                                 <div class="group-input" id="facilityRow" style="display: none">
                                     <label for="audit-agenda-grid">
-                                        Facility/ Equipment/ Instrument/ System Details
+                                        Facility/ Equipment/ Instrument/ System Details<span
+                                                class="text-danger">*</span>
                                         <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
-                                        {{-- <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span> --}}
+                                        
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="onservation-field-table">
@@ -1572,7 +1559,7 @@ dd($pre);
                                 </script>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Document Details Required">Document Details Required?</label>
+                                        <label for="Document Details Required">Document Details Required? </label>
                                         <select name=" Document_Details_Required" id="Document_Details_Required">
                                             <option value="">--Select --</option>
                                             <option value="yes">Yes</option>
@@ -1583,14 +1570,10 @@ dd($pre);
                                 </div>
                                 <div class="group-input" id="documentsRow" style="display: none">
                                     <label for="audit-agenda-grid">
-                                        Document Details
+                                        Document Details <span
+                                                class="text-danger">*</span>
                                         <button type="button" name="audit-agenda-grid" id="ReferenceDocument">+</button>
-                                        {{--document-details-field-instruction-modal--}}
-                                        {{-- <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal1"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span> --}}
+                                        
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="ReferenceDocument_details"
@@ -1680,7 +1663,8 @@ dd($pre);
                                 <div class="col-lg-12">
                                     <div class="group-input" id="productRow" style="display: none">
                                         <label for="audit-agenda-grid">
-                                            Product / Material Details
+                                            Product / Material Details<span
+                                                class="text-danger">*</span>
                                                     {{--Batch--}}
                                             <button type="button" name="audit-agenda-grid"
                                                 id="Product_Details">+</button>
