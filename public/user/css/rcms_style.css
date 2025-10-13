@@ -372,8 +372,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
     background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
     border-radius: 50%;
     position: relative;
-    box-shadow: 0 0 30px 4px rgba(0, 0, 0, 0.5) inset,
-        0 5px 12px rgba(0, 0, 0, 0.15);
+    /* box-shadow: 0 0 30px 4px rgba(0, 0, 0, 0.5) inset,
+        0 5px 12px rgba(0, 0, 0, 0.15); */
     overflow: hidden;
 }
 
@@ -998,11 +998,13 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 
 #division-config-modal .content-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     padding: 20px;
     background: white;
     border: 1px solid #8080804a;
     box-shadow: 0 8px 24px #80808052;
+    border-radius: 20px;
+    
 }
 
 #division-config-modal .division-tabs {
@@ -1028,7 +1030,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 
 #division-config-modal .division-tabs {
     display: grid;
-    grid-template-columns: 1.5fr 2fr;
+    grid-template-columns: 2fr 2.5fr;
 }
 
 #division-config-modal .right-block .head,
@@ -1049,6 +1051,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 
 #division-config-modal .tab div {
     display: flex;
+    margin: 10px 0 10px;
     align-items: center;
     background-color: inherit;
     color: black;
@@ -1067,8 +1070,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 }
 
 #division-config-modal .tab div.active {
-    background-color: #37a51b;
-    color: white;
+    background-color: #243642;
+    color: white !important;
 }
 
 #division-config-modal .divisioncontent {
@@ -1103,7 +1106,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 }
 
 #division-config-modal .btn-container div {
-    background: #03a9f3;
+    background: #fde0bf;
     color: white;
     padding: 5px 15px;
     font-size: 0.9rem;

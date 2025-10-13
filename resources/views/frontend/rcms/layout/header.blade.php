@@ -378,7 +378,7 @@
 
                 <div class="modal-body">
                     <div class="logo">
-                        <img src="{{ asset('user/images/vidhyagxp.png') }}" alt="..." class="w-70 h-100">
+                        <img src="{{ asset('user/images/vidhyagxp.png') }}" alt="..." class="w-50 h-50">
                     </div>
                     <div class="bar">
                         <strong>Version : </strong> 10.0.0

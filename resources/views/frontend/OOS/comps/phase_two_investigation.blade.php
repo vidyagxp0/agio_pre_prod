@@ -93,7 +93,7 @@
            <div class="col-lg-12 new-time-data-field">
             <div class="group-input input-time ">
                 <label for="If Others">Checklist Outcome</label>
-                <textarea id="checklist_outcome_iia" name="checklist_outcome_iia" {{ $data->stage == 13 ? '' : 'readonly' }}>{{ $data->checklist_outcome_iia }}</textarea>
+                <textarea class="summernote" id="summernote-1" name="checklist_outcome_iia" {{ $data->stage == 13 ? '' : 'readonly' }}>{{ $data->checklist_outcome_iia }}</textarea>
             </div>
         </div>
             <div class="sub-head">

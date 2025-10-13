@@ -147,25 +147,25 @@
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Any Other Cause/Suspected Cause<span class="text-danger">*</span></label>
-                    <textarea id="Any_other_cause" name="Any_other_cause" {{ $data->stage == 5 ? "" : "readonly" }}>{{ $data->Any_other_cause }}</textarea>
+                    <textarea class="summernote" id="summernote-1" name="Any_other_cause" {{ $data->stage == 5 ? "" : "readonly" }}>{{ $data->Any_other_cause }}</textarea>
                 </div>
             </div>
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Any Other Batches Analyzed</label>
-                    <textarea id="Any_other_batches" name="Any_other_batches">{{ $data->Any_other_batches }}</textarea>
+                    <textarea class="summernote" id="summernote-1" name="Any_other_batches">{{ $data->Any_other_batches }}</textarea>
                 </div>
             </div>
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Details Of Trend</label>
-                    <textarea id="details_of_trend" name="details_of_trend">{{ $data->details_of_trend }}</textarea>
+                    <textarea class="summernote" id="summernote-1" name="details_of_trend">{{ $data->details_of_trend }}</textarea>
                 </div>
             </div>
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Assignable Cause And Rational For Assignable Cause <span class="text-danger">*</span></label>
-                    <textarea id="rational_for_assingnable" {{ $data->stage == 5 ? "" : "readonly" }} name="rational_for_assingnable">{{ $data->rational_for_assingnable }}</textarea>
+                    <textarea class="summernote" id="summernote-1" {{ $data->stage == 5 ? "" : "readonly" }} name="rational_for_assingnable">{{ $data->rational_for_assingnable }}</textarea>
                 </div>
             </div>
             {{-- <div class="col-md-12 mb-4">
@@ -519,7 +519,7 @@
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Impact Assessment <span class="text-danger">*</span></label>
-                    <textarea id="impact_assesment_pia"  name="impact_assesment_pia" {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->impact_assesment_pia }}</textarea>
+                    <textarea class="summernote" id="summernote-1"  name="impact_assesment_pia" {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->impact_assesment_pia }}</textarea>
                 </div>
             </div>
             <div class="col-lg-12">
