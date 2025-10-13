@@ -10,12 +10,124 @@
 </head>
 
 <style>
+    @page {
+        margin: 160px 35px 100px;
+    }
+
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
-        min-width: 100vw;
-        min-height: 100vh;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px;
+    }
+
+    header,
+    footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
+
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
+
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+
+    .content-area table {
+        border: none !important;
+    }
+
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+
+    .block {
+        margin-bottom: 25px;
+    }
+
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #4274da;
+        color: #4274da;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .table_bg { 
+        background-color: #4274da;
+        color: #111;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
+
+    th,
+    td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        white-space: normal !important;
+        word-wrap: break-word;
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .highlight {
+        background: #4274da;
+        color: white;
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .no-border th,
+    .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 {
+        width: 6%;
+    }
+
+    .w-6 {
+        width: 7%;
+    }
+
+    .w-8 {
+        width: 8%;
     }
 
     .w-10 {
@@ -50,102 +162,24 @@
         width: 80%;
     }
 
-    .w-90 {
-        width: 90%;
-    }
-
     .w-100 {
         width: 100%;
     }
 
-    .h-100 {
-        height: 100%;
-    }
-
-    table,
-    th,
-    td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        overflow: hidden;
-        vertical-align: middle;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-    }
-
-    header .head {
-        font-weight: bold;
+    .text-center {
         text-align: center;
-        font-size: 1.2rem;
     }
 
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
+    .border-table {
+        overflow-x: auto;
     }
 
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
-    }
-
-    footer {
-        position: fixed;
-        bottom: -40px;
-        left: 0;
-        width: 100%;
-    }
-
-    .inner-block {
-        padding: 10px;
-    }
-
-    .inner-block .head {
-        font-weight: bold;
-        font-size: 1.2rem;
-        margin-bottom: 5px;
-    }
-
-    .inner-block .division {
-        margin-bottom: 10px;
-    }
-
-    .first-table {
-        border-top: 1px solid black;
-        margin-bottom: 20px;
-    }
-
-    .first-table table td,
-    .first-table table th,
-    .first-table table {
-        border: 0;
-    }
-
-    .second-table td:nth-child(1)>div {
-        margin-bottom: 10px;
-    }
-
-    .second-table td:nth-child(1)>div:nth-last-child(1) {
-        margin-bottom: 0px;
-    }
-
-    .table_bg {
-        background: #4274da57;
+    table th,
+    table td {
+        word-wrap: break-word;
     }
 </style>
+
 
 <body>
 
@@ -153,7 +187,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Management Review Audit Trial Report
+                <h2> Management Review Audit Trial Report</h2> 
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -194,24 +228,19 @@
 
     <div class="inner-block">
 
-
-        <div class="second-table">
-            <table>
-                <thead>
-                    <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
-                    </tr>
-                </thead>
-                {{-- @foreach ($data as $datas)
-                    <tr>
-                        @php
-                            $previousItem = null;
-                        @endphp --}}
+  <div class="second-table">
+        <table class="allow-wb">
+            <thead style="max-width: 100px;">
+                <tr class="table_bg">
+                    <th class="w-2 highlight">S.No</th>
+                    <th class="w-15 highlight">Flow Changed From</th>
+                    <th class="w-15 highlight">Flow Changed To</th>
+                    <th class="w-30 highlight">Data Field</th>
+                    <th class="w-20 highlight">Action Type</th>
+                    <th class="w-20 highlight" style="word-break: break-all;">Performer</th>
+                </tr>
+            </thead>
+               
 
                 <tbody>
                     @foreach ($audit as $index => $dataDemo)
