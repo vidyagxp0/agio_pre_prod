@@ -944,11 +944,11 @@
                                 </tr>
 
                             </table>
-                        {{-- <div class="block-head">
+                        <div class="block-head">
                         More Info Required
-                        </div> --}}
+                        </div>
 
-                        {{-- <table>
+                        <table>
                                 <tr>
                                     <th class="w-20">More Info Required By</th>
                                     <td class="w-80">
@@ -978,7 +978,7 @@
                                     </td>
                                 </tr>
 
-                        </table> --}}
+                        </table>
                     <div class="block-head">
                         CAPA Plan Proposed
                     </div>

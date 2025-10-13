@@ -1043,6 +1043,8 @@
                         {{-- <div class="static">{{ $data->work_complition_comment }}</div> --}}
                     </div>
                 </div>
+
+            
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="HOD Review Complete by"><b> Complete By</b></label>
@@ -1064,6 +1066,9 @@
                         {{-- <div class="static">{{ $data->effectiveness_check_complete_comment }}</div> --}}
                     </div>
                 </div>
+
+                
+                
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="HOD Review Complete by"><b>HOD Review Complete By</b></label>
@@ -1085,6 +1090,8 @@
                         {{-- <div class="static">{{ $data->hod_review_complete_comment }}</div> --}}
                     </div>
                 </div>
+
+            
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Not Effective By"><b>Not Effective By</b></label>
@@ -1127,6 +1134,7 @@
                         {{-- <div class="static">{{ $data->effective_comment }}</div> --}}
                     </div>
                 </div>
+
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Not Effective Approval Complete By"><b>Not Effective Approval Complete By</b></label>
@@ -1172,7 +1180,6 @@
                         {{-- <div class="static">{{ $data->effective_approval_complete_comment }}</div> --}}
                     </div>
                 </div>
-
 
             </div>
 

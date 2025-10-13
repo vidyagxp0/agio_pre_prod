@@ -1143,7 +1143,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <option value="Failure Mode and Effect Analysis" {{ in_array('Failure Mode and Effect Analysis', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Failure Mode and Effect Analysis</option>
                                             <option value="Fishbone or Ishikawa Diagram" {{ in_array('Fishbone or Ishikawa Diagram', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Fishbone or Ishikawa Diagram</option>
                                             <option value="Is/Is Not Analysis" {{ in_array('Is/Is Not Analysis', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Is/Is Not Analysis</option>
-                                            <option value="Rootcauseothers" {{ in_array('Rootcauseothers', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Others</option>
+                                            {{-- <option value="Rootcauseothers" {{ in_array('Rootcauseothers', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Others</option> --}}
                                         </select>
 
                                         @error('root_cause_methodology')
@@ -1156,7 +1156,8 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endforeach
                                         @endif
                                     </div>
-                                </div><div class="col-12 mb-4" id="fmea-section" style="display:none;">
+                                </div>
+                                <div class="col-12 mb-4" id="fmea-section" style="display:none;">
                                     <div class="group-input">
                                         <label for="agenda">
                                             Failure Mode and Effect Analysis
@@ -2109,6 +2110,9 @@ dd($data->initiator_id , Auth::user()->id);
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                        <div class="col-12">
+                                            <div class="sub-head">Acknowledge</div>
+                                        </div>
                                 <div class="col-lg-4">
                                     <div class="group-input" style="margin-bottom: 1rem">
                                         <label for="acknowledge_by">Acknowledge By</label>
@@ -2142,7 +2146,35 @@ dd($data->initiator_id , Auth::user()->id);
                                         </div>
                                     </div>
                                 </div>
-                               
+                                 {{-- <div class="col-12">
+                                            <div class="sub-head">More Info Req</div>
+                                        </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_by">More Info Req.
+                                            By</label>
+                                        <div class="">@if ($data->More_Info_ack_by ){{ $data->More_Info_ack_by }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_on">More Info Req.
+                                            On</label>
+                                        <div class="">@if ($data->More_Info_ack_on ){{ $data->More_Info_ack_on }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_comment">Comments</label>
+                                        <div class="">@if ($data->More_Info_ack_comment ){{ $data->More_Info_ack_comment }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div> --}}
+                                        <div class="col-12">
+                                            <div class="sub-head">HOD Review</div>
+                                        </div>
                                 <div class="col-lg-4">
                                     <div class="group-input" style="margin-bottom: 1rem">
                                         <label for="HOD_Review_Complete_By">HOD Review Complete By</label>
@@ -2180,7 +2212,36 @@ dd($data->initiator_id , Auth::user()->id);
                                     </div>
                                 </div>
 
-                              
+                                {{-- <div class="col-12">
+                                            <div class="sub-head">More Info Req</div>
+                                        </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_by">More Info Req.
+                                            By</label>
+                                        <div class="">@if ($data->More_Info_hrc_by ){{ $data->More_Info_hrc_by }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_on">More Info Req.
+                                            On</label>
+                                        <div class="">@if ($data->More_Info_hrc_on ){{ $data->More_Info_hrc_on }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_comment">Comments</label>
+                                        <div class="">@if ($data->More_Info_hrc_comment ){{ $data->More_Info_hrc_comment }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div> --}}
+
+                                        <div class="col-12">
+                                            <div class="sub-head">QA/CQA Review</div>
+                                        </div>
                                 <div class="col-lg-4">
                                     <div class="group-input" style="margin-bottom: 1rem">
                                         <label for="QQQA_Review_Complete_By">QA/CQA Review Complete By</label>
@@ -2211,6 +2272,35 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endif</div>
                                     </div>
                                 </div>
+                                 {{-- <div class="col-12">
+                                            <div class="sub-head">More Info Req</div>
+                                        </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_by">More Info Req.
+                                            By</label>
+                                        <div class="">@if ($data->More_Info_qac_by ){{ $data->More_Info_qac_by }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_on">More Info Req.
+                                            On</label>
+                                        <div class="">@if ($data->More_Info_qac_on ){{ $data->More_Info_qac_on }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_comment">Comments</label>
+                                        <div class="">@if ($data->More_Info_qac_comment ){{ $data->More_Info_qac_comment }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div> --}}
+                                        <div class="col-12">
+                                            <div class="sub-head">Submited</div>
+                                        </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input" style="margin-bottom: 1rem">
@@ -2240,7 +2330,35 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endif</div>
                                     </div>
                                 </div>
-                                
+                                 {{-- <div class="col-12">
+                                            <div class="sub-head">More Info Req</div>
+                                        </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_by">More Info Req.
+                                            By</label>
+                                        <div class="">@if ($data->More_Info_sub_by ){{ $data->More_Info_sub_by }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_on">More Info Req.
+                                            On</label>
+                                        <div class="">@if ($data->More_Info_sub_on ){{ $data->More_Info_sub_on }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="More_Info_hfr_comment">Comments</label>
+                                        <div class="">@if ($data->More_Info_sub_comment ){{ $data->More_Info_sub_comment }}@else Not Applicable
+                                            @endif</div>
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                            <div class="sub-head">HOD Final Review</div>
+                                        </div>
                                 <div class="col-lg-4" style="margin-bottom: 1rem">
                                     <div class="group-input">
                                         <label for="HOD_Final_Review_Complete_By">HOD Final Review Complete By</label>
@@ -2268,26 +2386,35 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endif</div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-4">
+                                {{-- <div class="col-12">
+                                            <div class="sub-head">More Info Req</div>
+                                        </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hfr_by">More Info Req.
                                             By</label>
-                                        <div class="">{{ $data->More_Info_hfr_by }}</div>
+                                        <div class="">@if ($data->More_Info_hfr_by ){{ $data->More_Info_hfr_by }}@else Not Applicable
+                                            @endif</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hfr_on">More Info Req.
                                             On</label>
-                                        <div class="">{{ $data->More_Info_hfr_on }}</div>
+                                        <div class="">@if ($data->More_Info_hfr_on ){{ $data->More_Info_hfr_on }}@else Not Applicable
+                                            @endif</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="More_Info_hfr_comment">Comments</label>
-                                        <div class="">{{ $data->More_Info_hfr_comment }}</div>
+                                        <div class="">@if ($data->More_Info_hfr_comment ){{ $data->More_Info_hfr_comment }}@else Not Applicable
+                                            @endif</div>
                                     </div>
                                 </div> --}}
+                                        <div class="col-12">
+                                            <div class="sub-head">Final QA/CQA Review</div>
+                                        </div>
                                 <div class="col-lg-4" style="margin-bottom: 1rem">
                                     <div class="group-input">
                                         <label for="Final_QA_Review_Complete_By">Final QA/CQA Review Complete
@@ -2317,26 +2444,32 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endif</div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-4">
+                                 {{-- <div class="col-12">
+                                            <div class="sub-head">More Info Req. </div>
+                                        </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="qA_review_complete_by">More Info Req.
                                             By</label>
-                                        <div class="">{{ $data->qA_review_complete_by }}</div>
+                                        <div class="">@if ($data->qA_review_complete_by ){{ $data->qA_review_complete_by }}@else Not Applicable @endif</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="qA_review_complete_on">More Info Req.
                                             On</label>
-                                        <div class="">{{ $data->qA_review_complete_on }}</div>
+                                        <div class="">@if ($data->qA_review_complete_on ){{ $data->qA_review_complete_on }}@else Not Applicable @endif</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="qA_review_complete_comment">Comments</label>
-                                        <div class="">{{ $data->qA_review_complete_comment }}</div>
+                                        <div class="">@if ($data->qA_review_complete_comment ){{ $data->qA_review_complete_comment }}@else Not Applicable @endif</div>
                                     </div>
                                 </div> --}}
+                                 <div class="col-12">
+                                            <div class="sub-head">QAH/CQAH Closure. </div>
+                                        </div>
                                 <div class="col-lg-4" style="margin-bottom: 1rem">
                                     <div class="group-input">
                                         <label for="evaluation_complete_by">QAH/CQAH Closure By</label>
@@ -2365,6 +2498,10 @@ dd($data->initiator_id , Auth::user()->id);
                                             @endif</div>
                                     </div>
                                 </div>
+                                
+                                <div class="col-12">
+                                            <div class="sub-head">Cancel </div>
+                                        </div>
                                 <div class="col-lg-4" style="margin-bottom: 1rem">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancel By</label>
