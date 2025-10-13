@@ -7013,8 +7013,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             $hasPendingRCA = false;
                         foreach ($rcachilds as $ext) {
                                 $rcachildstatus = trim(strtolower($ext->status));
-                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== '	
-                                    closed-cancelled' ) {
+                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 
+                                    'closed-cancelled' ) {
                                     $hasPendingRCA = true;
                                     break;
                                 }
@@ -7219,7 +7219,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         $hasPending2 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'Closed - Done' && $extensionchildStatus !==  'Closed Cancelled') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending2 = true;
                                 break;
                             }
@@ -7251,7 +7251,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             $hasPendingRCA = false;
                         foreach ($rcachilds as $ext) {
                                 $rcachildstatus = trim(strtolower($ext->status));
-                                if ($rcachildstatus !== 'Closed - Done' && $rcachildstatus !==   'Closed-Cancelled' ) {
+                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==   'closed-cancelled' ) {
                                     $hasPendingRCA = true;
                                     break;
                                 }
@@ -7284,7 +7284,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
                                 $actionchildstatus = trim(strtolower($ext->status));
-                                if ($actionchildstatus !== 'Closed - Done' && $actionchildstatus !== 'Closed-Cancelled' ) {
+                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
                                     $hasPendingaction = true;
                                     break;
                                 }
@@ -7316,7 +7316,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         $hasPendingcapa = false;
                         foreach($capachilds as $ext) {
                                 $capachildstatus = trim(strtolower($ext->status));
-                                if ($capachildstatus !== 'Closed - Done' && $capachildstatus !== 'Closed - Cancelled') {
+                                if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
                                     $hasPendingcapa = true;
                                     break;
                                 }
@@ -7453,7 +7453,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'Closed - Done' && $extensionchildStatus !==  'Closed Cancelled') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -7586,7 +7586,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         $hasPending2 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'Closed - Done' && $extensionchildStatus !==  'Closed Cancelled') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending2 = true;
                                 break;
                             }
@@ -7618,8 +7618,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             $hasPendingRCA = false;
                         foreach ($rcachilds as $ext) {
                                 $rcachildstatus = trim(strtolower($ext->status));
-                                if ($rcachildstatus !== 'Closed - Done' && $rcachildstatus !== '	
-                                    Closed-Cancelled' ) {
+                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==
+                                    'closed-cancelled' ) {
                                     $hasPendingRCA = true;
                                     break;
                                 }
@@ -7652,7 +7652,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             $hasPendingaction = false;
                         foreach ($actionchilds as $ext) {
                                 $actionchildstatus = trim(strtolower($ext->status));
-                                if ($actionchildstatus !== 'Closed - Done' && $actionchildstatus !== 'Closed-Cancelled' ) {
+                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
                                     $hasPendingaction = true;
                                     break;
                                 }
@@ -7684,7 +7684,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         $hasPendingcapa = false;
                         foreach($capachilds as $ext) {
                                 $capachildstatus = trim(strtolower($ext->status));
-                                if ($capachildstatus !== 'Closed - Done' && $capachildstatus !== 'Closed - Cancelled') {
+                                if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
                                     $hasPendingcapa = true;
                                     break;
                                 }
@@ -7959,7 +7959,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'Closed - Done' && $extensionchildStatus !==  'Closed Cancelled') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -8109,7 +8109,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         $hasPending4 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'Closed - Done' && $extensionchildStatus !==  'Closed Cancelled') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending4 = true;
                                 break;
                             }
@@ -8351,7 +8351,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         $hasPending5 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'Closed - Done' && $extensionchildStatus !==  'Closed Cancelled') {
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !==  'closed cancelled') {
                                 $hasPending5 = true;
                                 break;
                             }
