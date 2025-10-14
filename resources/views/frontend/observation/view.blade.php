@@ -860,11 +860,11 @@
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td>
-                                                                        <textarea name="observation[{{ $loop->index }}][non_compliance]" rows="3" cols="40">{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}</textarea>
+                                                                        <textarea name="observation[{{ $loop->index }}][non_compliance]" rows="3" cols="40" required>{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}</textarea>
                                                                     </td>
 
                                                                     <td>
-                                                                     <select name="observation[{{ $loop->index }}][category]" >
+                                                                     <select name="observation[{{ $loop->index }}][category]" required >
                                                                       <option value="">Select Category</option>
                                                                       <option value="major" {{ isset($datas['category']) && $datas['category'] == 'major' ? 'selected' : '' }}>major</option>
                                                                      <option value="minor" {{ isset($datas['category']) && $datas['category'] == 'minor' ? 'selected' : '' }}>minor</option>
@@ -893,9 +893,9 @@
                                                                 html += '<tr>' +
                                                                     '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                                                                     '"></td>' +
-                                                                    '<td><textarea name="observation[' + serialNumber + '][non_compliance]" rows="3" cols="40"></textarea></td>'
+                                                                    '<td><textarea name="observation[' + serialNumber + '][non_compliance]" rows="3" cols="40" required></textarea></td>'
                                                                      +
-                                                                    '<td><select name="observation[' + serialNumber + '][category]">' +
+                                                                    '<td><select name="observation[' + serialNumber + '][category]" required>' +
                                                                         '<option value="">Select Category</option>' +
                                                                          '<option value="major">major</option>' +
                                                                          '<option value="minor">minor</option>' +
@@ -1484,7 +1484,7 @@
                                                     @endif
 
                                                 </label>
-                                                <textarea name="action_taken" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} class="summernote">{{ $data->action_taken }}</textarea>
+                                                <textarea name="action_taken" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} class="summernote" id="summernote">{{ $data->action_taken }}</textarea>
                                             </div>
                                         </div>
 
@@ -1499,7 +1499,7 @@
                                                     @endif
 
                                                 </label>
-                                                <textarea name="response_summary"  {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} class="summernote">{{ $data->response_summary }}</textarea>
+                                                <textarea name="response_summary" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} class="summernote" id="summernote">{{ $data->response_summary }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6 new-date-data-field">
@@ -1759,7 +1759,7 @@
                                                     <div class="static">{{ $data->qa_approval_without_capa_on }}</div>
                                                     @else
                                                         Not Applicable
-                                a                    @endif
+                                                    @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -2365,30 +2365,30 @@
       ]
   });
 
-  $('.summernote').summernote({
-    toolbar: [
-        ['style', ['style']],
-        ['font', ['bold', 'underline', 'clear', 'italic']],
-        ['color', ['color']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['table', ['table']],
-        ['insert', ['link', 'picture', 'video']],
-        ['view', ['fullscreen', 'codeview', 'help']]
-    ],
-        callbacks: {
-            onPaste: function (e) {
-                let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
+//   $('.summernote').summernote({
+//     toolbar: [
+//         ['style', ['style']],
+//         ['font', ['bold', 'underline', 'clear', 'italic']],
+//         ['color', ['color']],
+//         ['para', ['ul', 'ol', 'paragraph']],
+//         ['table', ['table']],
+//         ['insert', ['link', 'picture', 'video']],
+//         ['view', ['fullscreen', 'codeview', 'help']]
+//     ],
+    //     callbacks: {
+    //         onPaste: function (e) {
+    //             let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
 
-                bufferText = bufferText.replace(/<table/g, '<table border="1"');
+    //             bufferText = bufferText.replace(/<table/g, '<table border="1"');
 
-                setTimeout(function () {
-                    $('.summernote').summernote('pasteHTML', bufferText);
-                }, 10);
+    //             setTimeout(function () {
+    //                 $('.summernote').summernote('pasteHTML', bufferText);
+    //             }, 10);
                 
-                e.preventDefault();
-            }
-        }
-    });
+    //             e.preventDefault();
+    //         }
+    //     }
+    // });
      var stage = @json($data->stage); // PHP se JS me stage bhejna
 
     if (stage != 2) {
