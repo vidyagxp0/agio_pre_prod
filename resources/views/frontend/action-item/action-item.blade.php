@@ -145,7 +145,7 @@
                                         <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Parent Record Number</b></label>
                                         @if (!empty($record_number_full))
@@ -155,6 +155,20 @@
                                         <input readonly type="text" name="parent_record_number"
                                         value="">
                                         @endif
+                                    </div>
+                                </div> --}}
+    
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Parent Record Number</b></label>
+                                    @if (!empty($parent_record))
+                                        <input readonly type="text" name="parent_record_number"
+                                            value="{{ $parent_record }}">
+                                    @else
+                                        <input readonly type="text" name="parent_record_number" value="">
+                                    @endif
+
                                     </div>
                                 </div>
 
@@ -411,6 +425,33 @@
                                            <input type="text" name="related_records">
                                         </div>
                                 </div>
+                                 {{-- <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="related_records">
+                                           Action Item Related Records <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select multiple name="related_records[]" id="related_records" 
+                                            placeholder="Select Reference Records"
+                                            data-silent-initial-value-set="true"
+                                            required>
+                                            
+                                            @if (!empty($relatedRecords))
+                                                @foreach ($relatedRecords as $records)
+                                                    @php
+                                                        $recordValue = Helpers::getDivisionName(
+                                                            $records->division_id ?? $records->division ?? $records->division_code ?? $records->site_location_code
+                                                        ) . '/' . $records->process_name . '/' . date('Y') . '/' . Helpers::recordFormat($records->record);
+                                                    @endphp
+
+                                                    <option value="{{ $recordValue }}">
+                                                        {{ $recordValue }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div> --}}
 
                                 <div class="col-lg-6">
                                     <div class="group-input">

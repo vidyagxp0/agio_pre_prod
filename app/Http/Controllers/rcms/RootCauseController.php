@@ -5349,10 +5349,10 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
             $p_record = RootCauseAnalysis::find($id);
             $data = new \stdClass();   // Create an empty object
             $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
-            $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);    
-            $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
-            $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
-            return view('frontend.action-item.action-item', compact('record_number','parent_division_id','due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data_record', 'data'));
+            $parent_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);    
+            // $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+            // $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+            return view('frontend.action-item.action-item', compact('record_number','parent_division_id','due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data'));
         }
 
         if ($request->revision == "extension") {
