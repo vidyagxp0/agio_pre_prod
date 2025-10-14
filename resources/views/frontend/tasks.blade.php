@@ -193,135 +193,110 @@
                     </div> --}}
                 </div>
                 <div class="row">
-                    <div class="col-xl-12 col-lg-12">
-                        <div class="document-left-block">
-                            <div class="inner-block table-block">
-                                <div class="head" style="justify-content: flex-start">
-                                    QMS Task
-                                </div>
-                                <form class="mb-4 p-4 filter-form" method="GET" action="{{ url('mytaskdata') }}">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <label style="margin-bottom: 10px; font-size: 16px; font-weight: bold;">Process</label>
-                                            <select class="custom-select form-control" name="process" onchange="this.form.submit()">
-                                                <option value="">Select Process</option>
-                                                @foreach ($processes as $key => $process)
-                                                    <option value="{{ $key }}" {{ request('process') == $key ? 'selected' : '' }}>{{ $process['name'] }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-6" style="margin-top: 2.1rem !important;">
-                                            <a href="{{ url('mytaskdata') }}" class="btn btn-secondary custom-button">
-                                                <i class="fas fa-sync-alt"></i> Reset Filters
-                                            </a>
-                                            &nbsp;&nbsp;
-                                            <a href="{{ url('mytaskdata') }}" class="btn btn-secondary custom-button" id="refreshPage">
-                                                <i class="fas fa-sync-alt"></i> Refresh
-                                            </a>
-                                        </div>
-                                    </div>
-                                </form>
+        <div class="col-xl-12 col-lg-12">
+            <div class="document-left-block">
+                <div class="inner-block table-block">
+                    <div class="head" style="justify-content: flex-start">
+                        <i class="fas fa-tasks"></i> QMS Tasks - All Processes
+                    </div>
+                    
+                    <!-- Task Summary -->
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> 
+                        Showing all pending tasks across all QMS processes for your roles.
+                        @if(count($allTasks) > 0)
+                            Total Tasks: <strong>{{ count($allTasks) }}</strong>
+                        @endif
+                    </div>
 
-                                @if(request('process'))
-                                    <table class="table table-bordered">
-                                        <thead style="background-color: #5c98e7">
+                    <div class="record-list mt-4">
+                        <div class="inner-block">
+                            @if(count($allTasks) > 0)
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover custom-table">
+                                        <thead class="table-header" style="background-color: #5c98e7; color: white;">
                                             <tr>
-                                                <th>S. No.</th>
-                                                <th>Activity</th>
-                                                <th>Count</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($taskCounts as $status => $count)
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $status }}</td>
-                                                    <td>
-                                                        <a href="{{ url('mytaskdata') }}?process={{ request('process') }}&status={{ $status }}" style="color: #0039bd; border-bottom:1px solid #0039bd; font-weight: bold;">
-                                                            {{ $count }}
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                @else
-                                    <p>Please select a process to view pending activities.</p>
-                                @endif
-                            </div>
-                            <div class="record-list mt-4">
-                               <div class="inner-block">
-                                @if(request('status'))
-                                @if(count($records) > 0)
-                                    <table class="table table-bordered custom-table">
-                                        <thead class="table-header">
-                                            <tr>
+                                                <th style="width: 12%">Process</th>
                                                 <th style="width: 10%">Record ID</th>
                                                 <th style="width: 10%">Initiator</th>
-                                                <th style="width: 20%">Site/Division</th>
+                                                <th style="width: 15%">Site/Division</th>
                                                 <th style="width: 10%">Record No.</th>
                                                 <th style="width: 15%">Status</th>
-                                                <th>Short Description</th>
+                                                <th style="width: 28%">Short Description</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($records as $record)
-                                                <tr style="text-align: center; font-weight: bold;">
+                                            @foreach($allTasks as $task)
+                                                <tr style="text-align: center;">
                                                     <td>
-                                                        @php
-                                                            // Define route names for each process
-                                                            $routes = [
-                                                                'ActionItem' => 'actionItem.show',
-                                                                'AuditProgram' => 'ShowAuditProgram',
-                                                                'Capa' => 'capashow',
-                                                                'CC' => 'CC.show',
-                                                                'Deviation' => 'devshow',
-                                                                'EffectivenessCheck' => 'effectiveness.show',
-                                                                'Errata' => 'errata.show',
-                                                                'Extension' => 'extension_newshow',
-                                                                'ExternalAudit' => 'showExternalAudit',
-                                                                'Incident' => 'incident-show',
-                                                                'InternalAudit' => 'showInternalAudit',
-                                                                'LabIncident' => 'ShowLabIncident',
-                                                                'ManagementReview' => 'manageshow',
-                                                                'MarketComplaint' => 'marketcomplaint.marketcomplaint_view',
-                                                                'Observation' => 'showobservation',
-                                                                'OOC' => 'ShowOutofCalibration',
-                                                                'OOSOOT' => 'oos.oos_view',
-                                                                'Resampling' => 'resampling_view',
-                                                                'RiskAssessment' => 'showRiskManagement',
-                                                                'RootCauseAnalysis' => 'root_show',
-                                                            ];
-                                                            $routeName = $routes[request('process')] ?? '';
-                                                        @endphp
-
-                                                        @if($routeName)
-                                                            <a target="_blank" href="{{ route($routeName, $record->id) }}">
-                                                                {{ Helpers::recordFormat($record->record) }}
+                                                        <span class="badge badge-primary">{{ $task['process'] }}</span>
+                                                    </td>
+                                                    <td>
+                                                        @if($task['route_name'])
+                                                            <a target="_blank" href="{{ route($task['route_name'], $task['record_id']) }}" class="btn btn-link btn-sm" style="color: #0039bd; text-decoration: underline; font-weight: bold;">
+                                                                {{ Helpers::recordFormat($task['record_format']) }}
                                                             </a>
                                                         @else
-                                                            N/A
+                                                            <span class="text-muted">{{ Helpers::recordFormat($task['record_format']) }}</span>
                                                         @endif
                                                     </td>
-                                                    <td>{{ Helpers::getInitiatorName($record->initiator_id) }}</td>
-                                                    <td>{{ Helpers::getDivisionName($record->division_id) }}</td>
-                                                    <td>{{ $record->record_number }}</td>
-                                                    <td>{{ $record->status }}</td>
-                                                    <td>{{ $record->short_description }}</td>
+                                                    <td>{{ Helpers::getInitiatorName($task['initiator_id']) }}</td>
+                                                    <td>{{ Helpers::getDivisionName($task['division_id']) }}</td>
+                                                    <td>
+                                                        <span class="badge badge-secondary">{{ $task['record_number'] }}</span>
+                                                    </td>
+                                                    <td>
+                                                        @php
+                                                            $statusClass = 'badge-warning';
+                                                            if (strpos($task['status'], 'Approval') !== false) {
+                                                                $statusClass = 'badge-info';
+                                                            } elseif (strpos($task['status'], 'Review') !== false) {
+                                                                $statusClass = 'badge-primary';
+                                                            } elseif (strpos($task['status'], 'Complete') !== false || strpos($task['status'], 'Closed') !== false) {
+                                                                $statusClass = 'badge-success';
+                                                            } elseif (strpos($task['status'], 'Opened') !== false) {
+                                                                $statusClass = 'badge-secondary';
+                                                            }
+                                                        @endphp
+                                                        <span class="badge {{ $statusClass }}">{{ $task['status'] }}</span>
+                                                    </td>
+                                                    <td style="text-align: left;">
+                                                        {{ Str::limit($task['short_description'], 100) }}
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                @else
-                                    <p>No records found for this status.</p>
-                                @endif
-                            @endif
-                               </div>
-                            </div>
+                                </div>
 
+                                <!-- Refresh Button -->
+                                <div class="mt-3 text-center">
+                                    <a href="{{ url('mytaskdata') }}" class="btn btn-primary custom-button">
+                                        <i class="fas fa-sync-alt"></i> Refresh Tasks
+                                    </a>
+                                </div>
+                            @else
+                                <div class="alert alert-warning text-center">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <h4>No Pending Tasks Found</h4>
+                                    <p>You don't have any pending tasks across all QMS processes for your current roles.</p>
+                                </div>
+                                
+                                <!-- Refresh Button -->
+                                <div class="text-center mt-3">
+                                    <a href="{{ url('mytaskdata') }}" class="btn btn-primary custom-button">
+                                        <i class="fas fa-sync-alt"></i> Refresh Tasks
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     </div>
+
                 </div>
+            </div>
+        </div>
+    </div>
+              
 
             </div>
         </div>
