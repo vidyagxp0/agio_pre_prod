@@ -1703,46 +1703,44 @@
                                         </div>
                                     </div>
 
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            var selectField = document.getElementById('Facility_Equipment');
-                                            var inputsToToggle = [];
+                                  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var selectField = document.getElementById('Facility_Equipment');
+    var facilityRow = document.getElementById('facilityRow');
+    var asteriskIcon = document.getElementById('asteriskInvifaci');
 
-                                            // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('facility-name');
-                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                inputsToToggle.push(facilityNameInputs[i]);
-                                            }
+    // Collect inputs to toggle
+    function getInputsToToggle() {
+        var inputs = [];
+        document.querySelectorAll('.facility-name, .id-number, .remarks').forEach(function(el) {
+            inputs.push(el);
+        });
+        return inputs;
+    }
 
-                                            // Add elements with class 'id-number' to inputsToToggle
-                                            var idNumberInputs = document.getElementsByClassName('id-number');
-                                            for (var j = 0; j < idNumberInputs.length; j++) {
-                                                inputsToToggle.push(idNumberInputs[j]);
-                                            }
+    // Function to update visibility and required fields
+    function updateFacilitySection() {
+        var isRequired = selectField.value === 'yes';
+        var inputsToToggle = getInputsToToggle();
 
-                                            // Add elements with class 'remarks' to inputsToToggle
-                                            var remarksInputs = document.getElementsByClassName('remarks');
-                                            for (var k = 0; k < remarksInputs.length; k++) {
-                                                inputsToToggle.push(remarksInputs[k]);
-                                            }
+        // Set required attribute based on selection
+        inputsToToggle.forEach(function(input) {
+            input.required = isRequired;
+        });
 
+        // Show/hide facility row and asterisk
+        facilityRow.style.display = isRequired ? 'block' : 'none';
+        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+    }
 
-                                            selectField.addEventListener('change', function() {
-                                                var isRequired = this.value === 'yes';
-                                                console.log(this.value, isRequired, 'value');
+    // Trigger once on page load (for already selected value)
+    updateFacilitySection();
 
-                                                inputsToToggle.forEach(function(input) {
-                                                    input.required = isRequired;
-                                                    console.log(input.required, isRequired, 'input req');
-                                                });
+    // Trigger again when dropdown changes
+    selectField.addEventListener('change', updateFacilitySection);
+});
+</script>
 
-                                                // Show or hide the asterisk icon based on the selected value
-                                                var asteriskIcon = document.getElementById('asteriskInvifaci');
-                                                document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
-                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                            });
-                                        });
-                                    </script>
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -1830,50 +1828,43 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var selectField = document.getElementById('Document_Details_Required');
+                                    var documentsRow = document.getElementById('documentsRow');
+                                    var asteriskIcon = document.getElementById('asteriskInvidoc');
 
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            // note-codable
-
-                                            var selectField = document.getElementById('Document_Details_Required');
-                                            var inputsToToggle = [];
-
-                                            // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('numberDetail');
-                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                inputsToToggle.push(facilityNameInputs[i]);
-                                            }
-
-                                            // Add elements with class 'id-number' to inputsToToggle
-                                            var idNumberInputs = document.getElementsByClassName('Document_Remarks');
-                                            for (var j = 0; j < idNumberInputs.length; j++) {
-                                                inputsToToggle.push(idNumberInputs[j]);
-                                            }
-
-                                            // Add elements with class 'remarks' to inputsToToggle
-                                            var remarksInputs = document.getElementsByClassName('ReferenceDocumentName');
-                                            for (var k = 0; k < remarksInputs.length; k++) {
-                                                inputsToToggle.push(remarksInputs[k]);
-                                            }
-
-
-                                            selectField.addEventListener('change', function() {
-                                                var isRequired = this.value === 'yes';
-                                                console.log(this.value, isRequired, 'value');
-
-                                                inputsToToggle.forEach(function(input) {
-                                                    input.required = isRequired;
-                                                    console.log(input.required, isRequired, 'input req');
-                                                });
-
-                                                // Show or hide the asterisk icon based on the selected value
-                                                document.getElementById('documentsRow').style.display = isRequired ? 'block' : 'none';
-                                                var asteriskIcon = document.getElementById('asteriskInvidoc');
-                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                            });
+                                    // Collect inputs to toggle
+                                    function getInputsToToggle() {
+                                        var inputs = [];
+                                        document.querySelectorAll('.numberDetail, .Document_Remarks, .ReferenceDocumentName').forEach(function(el) {
+                                            inputs.push(el);
                                         });
-                                    </script>
+                                        return inputs;
+                                    }
 
+                                    // Function to update section visibility and required fields
+                                    function updateDocumentSection() {
+                                        var isRequired = selectField.value === 'yes';
+                                        var inputsToToggle = getInputsToToggle();
+
+                                        // Set required attribute based on selection
+                                        inputsToToggle.forEach(function(input) {
+                                            input.required = isRequired;
+                                        });
+
+                                        // Show or hide section and asterisk
+                                        documentsRow.style.display = isRequired ? 'block' : 'none';
+                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                    }
+
+                                    // 🔹 Run once on page load (for already selected value)
+                                    updateDocumentSection();
+
+                                    // 🔹 Run again whenever dropdown value changes
+                                    selectField.addEventListener('change', updateDocumentSection);
+                                });
+                                </script>
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Document Details Required">Product / Material Batch Details Required<span
@@ -1969,45 +1960,43 @@
                                         </div>
 
                                         <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                // note-codable
-                                                var selectField = document.getElementById('Product_Details_Required');
-                                                var inputsToToggle = [];
+document.addEventListener('DOMContentLoaded', function() {
+    var selectField = document.getElementById('Product_Details_Required');
+    var productRow = document.getElementById('productRow');
+    var asteriskIcon = document.getElementById('asteriskInvipro');
 
-                                                // Add elements with class 'productName' to inputsToToggle
-                                                var productNameInput = document.getElementsByClassName('productName');
-                                                for (var i = 0; i < productNameInput.length; i++) {
-                                                    inputsToToggle.push(productNameInput[i]);
-                                                }
+    // Function to collect all inputs related to the product section
+    function getInputsToToggle() {
+        var inputs = [];
+        document.querySelectorAll('.productName, .productStage, .productBatchNo').forEach(function(el) {
+            inputs.push(el);
+        });
+        return inputs;
+    }
 
-                                                // Add elements with class 'productStage' to inputsToToggle
-                                                var productStageInput = document.getElementsByClassName('productStage');
-                                                for (var j = 0; j < productStageInput.length; j++) {
-                                                    inputsToToggle.push(productStageInput[j]);
-                                                }
+    // Function to show/hide section and toggle required attributes
+    function updateProductSection() {
+        var isRequired = selectField.value === 'yes';
+        var inputsToToggle = getInputsToToggle();
 
-                                                // Add elements with class 'productBatchNo' to inputsToToggle
-                                                var batchNoInput = document.getElementsByClassName('productBatchNo');
-                                                for (var k = 0; k < batchNoInput.length; k++) {
-                                                    inputsToToggle.push(batchNoInput[k]);
-                                                }
+        // Set or remove required attribute
+        inputsToToggle.forEach(function(input) {
+            input.required = isRequired;
+        });
 
-                                                selectField.addEventListener('change', function() {
-                                                    var isRequired = this.value === 'yes';
-                                                    console.log(this.value, isRequired, 'value');
+        // Show or hide the section and asterisk
+        productRow.style.display = isRequired ? 'block' : 'none';
+        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+    }
 
-                                                    inputsToToggle.forEach(function(input) {
-                                                        input.required = isRequired;
-                                                        console.log(input.required, isRequired, 'input req');
-                                                    });
+    // 🔹 Run once on page load (important)
+    updateProductSection();
 
-                                                    // Show or hide the asterisk icon based on the selected value
-                                                    document.getElementById('productRow').style.display = isRequired ? 'block' : 'none';
-                                                    var asteriskIcon = document.getElementById('asteriskInvipro');
-                                                    asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                });
-                                            });
-                                        </script>
+    // 🔹 Run again when dropdown changes
+    selectField.addEventListener('change', updateProductSection);
+});
+</script>
+
                                         <div class="col-md-12">
                                             <div class="group-input">
                                                 <label for="Immediate Action">Description of Deviation <span class="text-danger">*</span></label>
