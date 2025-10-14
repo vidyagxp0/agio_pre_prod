@@ -352,7 +352,7 @@
                 <button class="cctablinks Chemical" onclick="openCity(event, 'CCForm24')">PHASE- I B INVESTIGATION Checklist (Chemical)</button>
                 <button class="cctablinks Chemical" onclick="openCity(event, 'CCForm25')">PHASE- II INVESTIGATION Checklist (Chemical)</button>
                 <button class="cctablinks Micro" onclick="openCity(event, 'CCForm18')">Checklist - Investigation of Bacterial Endotoxin Test</button>
-                <button class="cctablinks Micro" onclick="openCity(event, 'CCForm19')">Checklist - Investigation ofSterility</button>
+                <button class="cctablinks Micro" onclick="openCity(event, 'CCForm19')">Checklist - Investigation of Sterility</button>
                 <button class="cctablinks Micro" onclick="openCity(event, 'CCForm20')">Checklist - Investigation of Microbial limit test/Bioburden and Water Test </button>
                 <button class="cctablinks Micro" onclick="openCity(event, 'CCForm21')">Checklist - Investigation of Microbial assay</button>
                 <button class="cctablinks Micro" onclick="openCity(event, 'CCForm22')">Checklist - Investigation of Environmental Monitoring</button>

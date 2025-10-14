@@ -1809,7 +1809,7 @@
                     </div>
                 </div>
 
-                <div class="block">
+                {{-- <div class="block">
                     <div class="block-head">Checklist for Review of sample intactness before analysis ?</div>
                     <div class="border-table">
                         @php
@@ -1862,16 +1862,16 @@
                                     $main_question_index += 0.1;
                                 }
                             @endphp
-                                {{-- <tr>
+                                <tr>
                                     <td class="flex text-center">{{ $review_item['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : number_format($main_question_index, 1) }}</td>
                                     <td>{{$review_item['question']}}</td>
                                     <td>{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'response', true, $index) ?? '' }}</td>
                                     <td>{{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'remark', true, $index) ?? '' }}</td>
-                                </tr> --}}
-                                @endforeach
+                                </tr>
+                            @endforeach
                         </table>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="block">
                     <div class="block-head">Checklist for Review of test methods & Procedures</div>

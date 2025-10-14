@@ -1047,7 +1047,7 @@ dd($data->initiator_id , Auth::user()->id);
 
                                         <div class="group-input">
                                             <label for="objective" style="">Objective<span class="text-danger">*</span></label>
-                                            <textarea name="objective" class="summernote" {{$data->stage == 4 ? '' : 'readonly'}}>{{  strip_tags($data->objective) }}</textarea>
+                                            <textarea name="objective" id="summernote" class="summernote" {{$data->stage == 4 ? '' : 'readonly'}}>{{  strip_tags($data->objective) }}</textarea>
                                         </div>
 
                                         @error('objective')
@@ -1058,19 +1058,19 @@ dd($data->initiator_id , Auth::user()->id);
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="scope">Scope @if ($data->stage == 4)<span class="text-danger">*</span>@endif</label>
-                                        <textarea name="scope" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->scope) }}</textarea>
+                                        <textarea name="scope" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->scope) }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="problem_statement">Problem Statement @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
-                                        <textarea name="problem_statement_rca" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->problem_statement_rca) }}</textarea>
+                                        <textarea name="problem_statement_rca" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->problem_statement_rca) }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="requirement">Background @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="requirement" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->requirement) }}</textarea>
+                                        <textarea name="requirement" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->requirement) }}</textarea>
                                     </div>
                                     @error('requirement')
                                         <span>{{$message}} </span>
@@ -1079,7 +1079,7 @@ dd($data->initiator_id , Auth::user()->id);
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="immediate_action">Immediate Action @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="immediate_action" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->immediate_action) }}</textarea>
+                                        <textarea name="immediate_action" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->immediate_action) }}</textarea>
                                     </div>
                                 </div>
 
@@ -1807,13 +1807,13 @@ dd($data->initiator_id , Auth::user()->id);
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="root_cause">Root Cause @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
-                                        <textarea name="root_cause"  class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->root_cause) }}</textarea>
+                                        <textarea name="root_cause"  id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->root_cause) }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="impact_risk_assessment">Impact / Risk Assessment @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
-                                        <textarea name="impact_risk_assessment" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->impact_risk_assessment) }}</textarea>
+                                        <textarea name="impact_risk_assessment" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->impact_risk_assessment) }}</textarea>
                                     </div>
                                     @error('impact_risk_assessment')
                                         <p class="text-danger">{{$message}}</p>
@@ -1822,7 +1822,7 @@ dd($data->initiator_id , Auth::user()->id);
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="capa">CAPA @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="capa" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->capa) }}</textarea>
+                                        <textarea name="capa" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->capa) }}</textarea>
                                     </div>
                                     @error('capa')
                                     <p class="text-danger">{{$message}}</p>
@@ -1832,7 +1832,7 @@ dd($data->initiator_id , Auth::user()->id);
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="investigation_summary">Investigation Summary @if ($data->stage == 4 ? 'required' : '') <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="investigation_summary_rca" class="summernote" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->investigation_summary_rca) }}</textarea>
+                                        <textarea name="investigation_summary_rca" id="summernote" class="summernote" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->investigation_summary_rca) }}</textarea>
                                     </div>
                                 </div>
 
@@ -3362,30 +3362,30 @@ dd($data->initiator_id , Auth::user()->id);
       ]
   });
 
-  $('.summernote').summernote({
-    toolbar: [
-        ['style', ['style']],
-        ['font', ['bold', 'underline', 'clear', 'italic']],
-        ['color', ['color']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['table', ['table']],
-        ['insert', ['link', 'picture', 'video']],
-        ['view', ['fullscreen', 'codeview', 'help']]
-    ],
-        callbacks: {
-            onPaste: function (e) {
-                let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
+//   $('.summernote').summernote({
+//     toolbar: [
+//         ['style', ['style']],
+//         ['font', ['bold', 'underline', 'clear', 'italic']],
+//         ['color', ['color']],
+//         ['para', ['ul', 'ol', 'paragraph']],
+//         ['table', ['table']],
+//         ['insert', ['link', 'picture', 'video']],
+//         ['view', ['fullscreen', 'codeview', 'help']]
+//     ],
+//         callbacks: {
+//             onPaste: function (e) {
+//                 let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
 
-                bufferText = bufferText.replace(/<table/g, '<table border="1"');
+//                 bufferText = bufferText.replace(/<table/g, '<table border="1"');
 
-                setTimeout(function () {
-                    $('.summernote').summernote('pasteHTML', bufferText);
-                }, 10);
+//                 setTimeout(function () {
+//                     $('.summernote').summernote('pasteHTML', bufferText);
+//                 }, 10);
                 
-                e.preventDefault();
-            }
-        }
-    });
+//                 e.preventDefault();
+//             }
+//         }
+//     });
      var stage = @json($data->stage); // PHP se JS me stage bhejna
 
     if (stage != 4) {
