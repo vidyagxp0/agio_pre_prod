@@ -9588,15 +9588,16 @@ class RiskManagementController extends Controller
                     $cftUsers = DB::table('risk_managment_cfts')->where(['risk_id' => $id])->first();
                     // Define the column names
                    
-                    $columns = ['Production_Table_Person' , 'Production_Injection_Person' , 'ResearchDevelopment_person' ,'Human_Resource_person' ,'CorporateQualityAssurance_person', 'Store_person' , 'Quality_Control_Person' , 'QualityAssurance_person' ,'RegulatoryAffair_person' , 'Microbiology_person' , 'Engineering_person' , 'Environment_Health_Safety_person' , 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person' ];
+                    $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
-
+                    // $columns = ['Production_Table_Person' , 'Production_Injection_Person' , 'ResearchDevelopment_person' ,'Human_Resource_person' ,'CorporateQualityAssurance_person', 'Store_person' , 'Quality_Control_Person' , 'QualityAssurance_person' ,'RegulatoryAffair_person' , 'Microbiology_person' , 'Engineering_person' , 'Environment_Health_Safety_person' , 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person' ];
                     // Initialize an array to store the values
                     $valuesArray = [];
 
                     // Iterate over the columns and retrieve the values
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
+                       
                        if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
                             $updateCFT->Quality_Control_by = Auth::user()->name;
                             $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
@@ -9633,7 +9634,6 @@ class RiskManagementController extends Controller
 
                             $history->save();
                             }
-
                                             if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
                             $updateCFT->QualityAssurance_by = Auth::user()->name;
                             $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
