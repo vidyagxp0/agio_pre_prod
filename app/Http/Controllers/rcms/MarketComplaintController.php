@@ -8246,23 +8246,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
                         $history->save();
 
-                        // $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
-                        // foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //     $email = Helpers::getUserEmail($u->user_id);
-                        //     // dd($email);
-                        //     if ($email !== null) {
-                        //         Mail::send(
-                        //             'mail.view-mail',
-                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //             function ($message) use ($email, $marketstat) {
-                        //                 $message->to($email)
-                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
-                        //             }
-                        //         );
-                        //     }
-                        //     // }
-                        // }
+                        $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            // dd($email);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                                    }
+                                );
+                            }
+                            // }
+                        }
 
                         $marketstat->update();
                         toastr()->success('Document Set');
@@ -8331,22 +8331,22 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
                         $history->save();
 
-                        // $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
-                        // foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //     $email = Helpers::getUserEmail($u->user_id);
-                        //     if ($email !== null) {
-                        //         Mail::send(
-                        //             'mail.view-mail',
-                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //             function ($message) use ($email, $marketstat) {
-                        //                 $message->to($email)
-                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                        //             }
-                        //         );
-                        //     }
-                        //     // }
-                        // }
+                        $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                    }
+                                );
+                            }
+                            // }
+                        }
 
                         $marketstat->update();
                         toastr()->success('Document Sent');
@@ -8430,22 +8430,22 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
                         $history->save();
 
-                        // $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
-                        // foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //     $email = Helpers::getUserEmail($u->user_id);
-                        //     if ($email !== null) {
-                        //         Mail::send(
-                        //             'mail.view-mail',
-                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //             function ($message) use ($email, $marketstat) {
-                        //                 $message->to($email)
-                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                        //             }
-                        //         );
-                        //     }
-                        //     // }
-                        // }
+                        $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                    }
+                                );
+                            }
+                            // }
+                        }
 
                         $marketstat->update();
                         toastr()->success('Document Sent');
@@ -9120,43 +9120,77 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             }
                             $history->save();
 
-                        //     $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
-                        //     foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //     $email = Helpers::getUserEmail($u->user_id);
-                        //     if ($email !== null) {
-                        //         Mail::send(
-                        //             'mail.view-mail',
-                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //             function ($message) use ($email, $marketstat) {
-                        //                 $message->to($email)
-                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                        //             }
-                        //         );
-                        //     }
-                        //     // }
-                        // }
+                            $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
+                            foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                    }
+                                );
+                            }
+                            // }
+                        }
                             $marketstat->update();
                         }
                         toastr()->success('Document Sent');
                         return back();
                     }
 
-                    if ($marketstat->stage == 5) {
+                   if ($marketstat->stage == 5) {
 
-                        if (!$marketstat->qa_cqa_comments) {
-                            Session::flash('swal', [
-                                'title' => 'Mandatory Fields Required!',
-                                'message' => 'QA CQA Comments is yet to be filled!',
-                                'type' => 'warning',
-                            ]);
+                    // Check QA/CQA Comments
+                    if (!$marketstat->qa_cqa_comments) {
 
-                            return redirect()->back();
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Please fill QA/CQA Comments!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+
                         } else {
                             Session::flash('swal', [
                                 'type' => 'success',
                                 'title' => 'Success',
                                 'message' => 'QA/CQA Head Approval!'
+                            ]);
+                        }
+
+                        // Extension child validation
+                        $extensionchild = extension_new::where('parent_id', $marketstat->id)
+                            ->where('child_type', 'extension_new')
+                            ->get();
+
+                        $hasPending1 = false;
+                        foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                        if ($hasPending1) {
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed - Done.',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+
+                        } else {
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Sent for Next Stage',
+                                'type' => 'success',
                             ]);
                         }
 
@@ -9199,22 +9233,22 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         //}
                         $history->save();
 
-                        // $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
-                        // foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //     $email = Helpers::getUserEmail($u->user_id);
-                        //     if ($email !== null) {
-                        //         Mail::send(
-                        //             'mail.view-mail',
-                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //             function ($message) use ($email, $marketstat) {
-                        //                 $message->to($email)
-                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                        //             }
-                        //         );
-                        //     }
-                        //     // }
-                        // }
+                        $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                    }
+                                );
+                            }
+                            // }
+                        }
 
                         $marketstat->update();
                         toastr()->success('Document Sent');
@@ -9280,22 +9314,22 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         //}
                         $history->save();
 
-                        // $list = Helpers::getCftUserList($marketstat->division_id); // Notify CFT Person
-                        // foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //     $email = Helpers::getUserEmail($u->user_id);
-                        //     if ($email !== null) {
-                        //         Mail::send(
-                        //             'mail.view-mail',
-                        //             ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //             function ($message) use ($email, $marketstat) {
-                        //                 $message->to($email)
-                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                        //             }
-                        //         );
-                        //     }
-                        //     // }
-                        // }
+                        $list = Helpers::getCftUserList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Ext", 'history' => "Submit", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                    }
+                                );
+                            }
+                            // }
+                        }
 
                         $marketstat->update();
                         toastr()->success('Document Sent');
@@ -9430,23 +9464,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->stage = 'In QA Review';
                 $history->save();
 
-                // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
-                //         foreach ($list as $u) {
-                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //             // dd($email);
-                //             if ($email !== null) {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                //                     function ($message) use ($email, $marketstat) {
-                //                         $message->to($email)
-                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                     }
-                //                 );
-                //             }
-                //             // }
-                //         }
+                $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            // dd($email);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                    }
+                                );
+                            }
+                            // }
+                        }
                 $marketstat->update();
 
                 return back();
@@ -9474,23 +9508,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->stage = 'In QA Review';
                 $history->save();
 
-                // $list = Helpers::getCftUserList($marketstat->division_id); // Notify CFT Person
-                //         foreach ($list as $u) {
-                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //             // dd($email);
-                //             if ($email !== null) {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                //                     function ($message) use ($email, $marketstat) {
-                //                         $message->to($email)
-                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                     }
-                //                 );
-                //             }
-                //             // }
-                //         }
+                $list = Helpers::getCftUserList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            // dd($email);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                    }
+                                );
+                            }
+                            // }
+                        }
 
 
                 $marketstat->update();
@@ -9522,23 +9556,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $marketstat->update();
 
 
-                // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
-                //         foreach ($list as $u) {
-                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //             // dd($email);
-                //             if ($email !== null) {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                //                     function ($message) use ($email, $marketstat) {
-                //                         $message->to($email)
-                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                     }
-                //                 );
-                //             }
-                //             // }
-                //         }
+                $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            // dd($email);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                    }
+                                );
+                            }
+                            // }
+                        }
 
                         //$list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
                         //foreach ($list as $u) {
@@ -9654,23 +9688,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 //             // }
                 //         }
 
-                        // $list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
-                        // foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //     $email = Helpers::getUserEmail($u->user_id);
-                        //     // dd($email);
-                        //     if ($email !== null) {
-                        //         Mail::send(
-                        //             'mail.view-mail',
-                        //             ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //             function ($message) use ($email, $marketstat) {
-                        //                 $message->to($email)
-                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                        //             }
-                        //         );
-                        //     }
-                        //     // }
-                        // }
+                        $list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                            // dd($email);
+                            if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                                    function ($message) use ($email, $marketstat) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                    }
+                                );
+                            }
+                            // }
+                        }
 
                 $marketstat->update();
 
