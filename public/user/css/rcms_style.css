@@ -1679,7 +1679,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 /*! =================================================================================*/
 #rcms-desktop {
     background: #4274da;
-    min-height: calc(100vh - 70px);
+    /* min-height: calc(100vh - 70px); */
 }
 
 #rcms-desktop .process-groups {
