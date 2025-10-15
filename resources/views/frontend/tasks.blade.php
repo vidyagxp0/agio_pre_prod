@@ -216,11 +216,11 @@
                                     <table class="table table-bordered table-hover custom-table">
                                         <thead class="table-header" style="background-color: #5c98e7; color: white;">
                                             <tr>
-                                                <th style="width: 12%">Process</th>
                                                 <th style="width: 10%">Record ID</th>
+                                                <th style="width: 10%">Record No.</th>
+                                                <th style="width: 12%">Process</th>
                                                 <th style="width: 10%">Initiator</th>
                                                 <th style="width: 15%">Site/Division</th>
-                                                <th style="width: 10%">Record No.</th>
                                                 <th style="width: 15%">Status</th>
                                                 <th style="width: 28%">Short Description</th>
                                             </tr>
@@ -228,9 +228,6 @@
                                         <tbody>
                                             @foreach($allTasks as $task)
                                                 <tr style="text-align: center;">
-                                                    <td>
-                                                        <span class="badge badge-primary">{{ $task['process'] }}</span>
-                                                    </td>
                                                     <td>
                                                         @if($task['route_name'])
                                                             <a target="_blank" href="{{ route($task['route_name'], $task['record_id']) }}" class="btn btn-link btn-sm" style="color: #0039bd; text-decoration: underline; font-weight: bold;">
@@ -240,11 +237,15 @@
                                                             <span class="text-muted">{{ Helpers::recordFormat($task['record_format']) }}</span>
                                                         @endif
                                                     </td>
-                                                    <td>{{ Helpers::getInitiatorName($task['initiator_id']) }}</td>
-                                                    <td>{{ Helpers::getDivisionName($task['division_id']) }}</td>
-                                                    <td>
+                                                     <td>
                                                         <span class="badge badge-secondary">{{ $task['record_number'] }}</span>
                                                     </td>
+                                                    <td>
+                                                        <span>{{ $task['process'] }}</span>
+                                                    </td>
+                                                    <td>{{ Helpers::getInitiatorName($task['initiator_id']) }}</td>
+                                                    <td>{{ Helpers::getDivisionName($task['division_id']) }}</td>
+                                                   
                                                     <td>
                                                         @php
                                                             $statusClass = 'badge-warning';
@@ -258,7 +259,7 @@
                                                                 $statusClass = 'badge-secondary';
                                                             }
                                                         @endphp
-                                                        <span class="badge {{ $statusClass }}">{{ $task['status'] }}</span>
+                                                        <span >{{ $task['status'] }}</span>
                                                     </td>
                                                     <td style="text-align: left;">
                                                         {{ Str::limit($task['short_description'], 100) }}

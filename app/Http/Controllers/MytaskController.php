@@ -69,7 +69,7 @@ class MytaskController extends Controller
             'Observation' => ['model' => Observation::class, 'name' => 'Observation'],
             'OOC' => ['model' => OutOfCalibration::class, 'name' => 'OOC'],
             'OOSOOT' => ['model' => OOS::class, 'name' => 'OOS/OOT'],
-            'Resampling' => ['model' => Resampling::class, 'name' => 'Resampling'],
+            // 'Resampling' => ['model' => Resampling::class, 'name' => 'Resampling'],
             'RiskAssessment' => ['model' => RiskManagement::class, 'name' => 'Risk Assessment'],
             'RootCauseAnalysis' => ['model' => RootCauseAnalysis::class, 'name' => 'Root Cause Analysis'],
         ];
