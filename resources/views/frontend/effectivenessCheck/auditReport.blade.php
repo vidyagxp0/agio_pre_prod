@@ -255,7 +255,11 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">Effectiveness Check Audit Trail Report</td>
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
+                      Effectiveness Check Audit Trail Report
+                    </div>
+                </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
                         <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
@@ -275,7 +279,7 @@
 
     <div class="inner-block">
         <div class="second-table">
-        <table class="allow-wb" style="table-layout: fixed; width: 700px;">
+        <table class="allow-wb" >
                 <thead>
                     <tr class="table_bg">
                         <th class="w-5">S.No</th>

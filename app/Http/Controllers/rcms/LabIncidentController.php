@@ -8207,7 +8207,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                         }
                 }
 
-                 $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
+                $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {

@@ -259,7 +259,15 @@
                                                             ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                         @endphp
                                                             <a href="{{ route('CC.show', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             <a href="{{ url('rcms/qms-dashboard', $datas->id) }}/CC">
@@ -277,7 +285,15 @@
                                                             ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                         @endphp
                                                             <a href="{{ route('showInternalAudit', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -298,7 +314,15 @@
                                                             ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                         @endphp
                                                             <a href="{{ route('marketcomplaint.marketcomplaint_view', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -318,7 +342,15 @@
                                                             ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                         @endphp
                                                             <a href="{{ route('showRiskManagement', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -338,7 +370,15 @@
                                                                 ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                             @endphp
                                                             <a href="{{ route('ShowLabIncident', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -359,7 +399,15 @@
                                                                 @endphp
 
                                                             <a href="{{ route('incident-show', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -379,7 +427,15 @@
                                                                 ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('ShowOutofCalibration', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -399,7 +455,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('showExternalAudit', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -419,7 +483,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp 
                                                             <a href="{{ route('ShowAuditProgram', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -439,7 +511,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp 
                                                             <a href="{{ route('showobservation', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -459,7 +539,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('actionItem.show', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -479,7 +567,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ url('extension_newshow', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -497,7 +593,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('effectiveness.show', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -517,7 +621,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('capashow', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -537,7 +649,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('oos.oos_view', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -567,7 +687,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('errata.show', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -617,7 +745,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('manageshow', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -637,7 +773,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('devshow', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -657,7 +801,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('devshow', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -677,7 +829,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('failure-investigation-show', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -697,7 +857,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('non-conformance-show', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -717,7 +885,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ route('root_show', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -732,7 +908,15 @@
                                                             @endif
                                                         @elseif($datas->type == 'OOT')
                                                             <a href="{{ route('rcms/oot_view', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -752,7 +936,15 @@
                                                                     ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
                                                                 @endphp
                                                             <a href="{{ url('resampling_view', $datas->id) }}"
-                                                                style="color: blue">
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
                                                                 {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
                                                             </a>
                                                             @if (!empty($datas->parent_id))
@@ -826,6 +1018,11 @@
                                                     @elseif ($datas->parent_type == 'Internal-Audit')
                                                     @php
                                                         $findRecord = DB::table('internal_audits')->find($datas->parent_id);
+                                                    @endphp
+                                                                                                        
+                                                    @elseif ($datas->parent_type == 'OOC')
+                                                    @php
+                                                        $findRecord = DB::table('out_of_calibrations')->find($datas->parent_id);
                                                     @endphp
                                                     
                                                 @endif

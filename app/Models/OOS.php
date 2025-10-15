@@ -34,6 +34,7 @@ class OOS extends Model
           'file_attachment_IB_Inv',
           'reference_system_document_gi',
           'source_document_type_gi',
+          'sourceDocOtherGi',
           'oos_observed_on',
           'delay_justification',
           'oos_reported_date',

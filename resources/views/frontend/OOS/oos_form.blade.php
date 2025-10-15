@@ -829,7 +829,7 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Source Document Type</label>
-                                <select name="source_document_type_gi">
+                                <select name="source_document_type_gi" id="Change_Application">
                                     <option value="0">Enter Your Selection Here</option>
                                     <option value="OOT">OOT</option>
                                     <option value="Lab Incident">Lab Incident</option>
@@ -840,6 +840,39 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
+                  
+
+                        <div class="col-6 new-date-data-field" id="any-other-section" style="display: none;">
+                            <div class="group-input">
+                                <label for="Other Application"> Other Source Document Type</label>
+                                <input type="text" name="sourceDocOtherGi" id="other_application"
+                                    class="form-control" value="">
+                            </div>
+                        </div>
+
+
+                        <script>
+                            $(document).ready(function() {
+                                $('#Change_Application').on('change', function() {
+                                    var selectedValue = $(this).val(); // single select hai, array nahi
+
+                                    // Hide by default
+                                    $('#any-other-section').hide();
+                                    // $('#other_application').removeAttr('required');
+                                    $('#required-star').hide();
+
+                                    if (selectedValue === 'Others') {
+                                        $('#any-other-section').show();
+                                        // $('#other_application').attr('required', true);
+                                        $('#required-star').show();
+                                    }
+                                });
+
+                                // Trigger on page load for pre-filled data
+                                $('#Change_Application').trigger('change');
+                            });
+                        </script>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>

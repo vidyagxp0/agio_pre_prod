@@ -1387,7 +1387,7 @@
 
                     <table>
                     <tr>
-                        <th class="w-20">Compiled by</th>
+                        <th class="w-20"> Complied By</th>
                         <td class="w-80" colspan="3">
                             @if ($data->compiled_by)
                                 {{Helpers::getInitiatorName($data->compiled_by) }}
