@@ -350,11 +350,12 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
+                            
+                            
                         @elseif(
                             $data->stage == 4 && (Helpers::check_roles($data->division_id, 'Market Complaint', 5) ||
                                 in_array(Auth::user()->id, $valuesArray)))
-                            <!-- @if (!$cftCompleteUser)
-    -->
+       
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#rejection-modal">
                                     More Information Required
@@ -369,8 +370,7 @@
                             </button>
 
 
-                            <!--
-    @endif -->
+              
                         @elseif(
                             $data->stage == 5 &&
                                 (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
@@ -6942,15 +6942,15 @@
                                             <textarea class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 RegulatoryAffair">
+                                    {{-- <div class="col-md-12 mb-3 RegulatoryAffair">
                                         <div class="group-input">
-                                            <label for="Regulatory Affair feedback">Regulatory Affair Feedback</label>
+                                            <label for="Regulatory Affair feedback">Impact Assessment (By Regulatory Affair)</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
                                             <textarea class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 @else
                                     <div class="col-md-12 mb-3 RegulatoryAffair">
                                         <div class="group-input">
@@ -6962,7 +6962,7 @@
                                             <textarea disabled class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mb-3 RegulatoryAffair">
+                                    {{-- <div class="col-md-12 mb-3 RegulatoryAffair">
                                         <div class="group-input">
                                             <label for="Regulatory Affair feedback">Regulatory Affair Feedback</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
@@ -6970,9 +6970,9 @@
                                                     does not require completion</small></div>
                                             <textarea disabled class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 @endif
-                                <div class="col-12 RegulatoryAffair">
+                                {{-- <div class="col-12 RegulatoryAffair">
                                     <div class="group-input">
                                         <label for="Regulatory Affair attachment">Regulatory Affair
                                             Attachments</label>
@@ -7006,7 +7006,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6 mb-3 RegulatoryAffair">
                                     <div class="group-input">
                                         <label for="Regulatory Affair Completed By">Regulatory Affair Review  Completed

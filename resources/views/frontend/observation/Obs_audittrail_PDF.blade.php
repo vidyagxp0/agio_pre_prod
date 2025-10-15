@@ -279,7 +279,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Observation Audit Trail Report
+                    <strong>Observation Audit Trail Report</strong>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -322,7 +322,7 @@
 
 
         <div class="second-table">
-            <table class="allow-wb" style="table-layout: fixed; width: 700px;">
+            <table>
                 <thead>
                     <tr class="table_bg">
                         <th class="w-6">S.No</th>
