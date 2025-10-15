@@ -17,6 +17,11 @@ use App\Models\InternalAuditStageHistory;
 use App\Models\InternalAuditObservationGrid;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use App\Models\extension_new;
+use App\Models\Observation;
+use App\Models\ActionItem;
+use App\Models\RootCauseAnalysis;
+use App\Models\Capa;
 use App\Models\InternalAuditResponse;
 use App\Models\IA_checklist_compression;
 use PDF;
@@ -357,8 +362,8 @@ class InternalauditController extends Controller
         //}
 
 
-//------------------------------------response and remarks input---------------------------------
-//$internalaudit   = new table_cc_impactassement();
+                //------------------------------------response and remarks input---------------------------------
+                //$internalaudit   = new table_cc_impactassement();
 
             $internal_id = $internalAudit->id;
             $newDataGridInternalsave = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'observations'])->firstOrNew();
@@ -474,7 +479,7 @@ class InternalauditController extends Controller
             //}
 
 
-//$internalAudit->save();
+        //$internalAudit->save();
         $ia_id = $internalAudit->id;
         $auditAssessmentGrid = InternalAuditChecklistGrid::where(['ia_id' => $internalAudit->id, 'identifier' => 'auditAssessmentChecklist'])->firstOrNew();
         $auditAssessmentGrid->ia_id = $internalAudit->id;
@@ -823,7 +828,7 @@ class InternalauditController extends Controller
             $history = new InternalAuditTrial();
             $history->internalAudit_id = $internalAudit->id;
             $history->activity_type = 'Record Number';
-            $history->previous = "Not Applicable";
+            $history->previous = "Null";
             $history->current = Helpers::getDivisionName(session()->get('division')) . "/IA/" . Helpers::year($internalAudit->created_at) . "/" . str_pad($internalAudit->record, 4, '0', STR_PAD_LEFT);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -840,7 +845,7 @@ class InternalauditController extends Controller
             $history = new InternalAuditTrial();
             $history->internalAudit_id = $internalAudit->id;
             $history->activity_type = 'Site/Location Code';
-            $history->previous = "Not Applicable";
+            $history->previous = "Null";
             $history->current = $internalAudit->division_code;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -856,7 +861,7 @@ class InternalauditController extends Controller
             $history = new InternalAuditTrial();
             $history->internalAudit_id = $internalAudit->id;
             $history->activity_type = 'Initiator';
-            $history->previous = "Not Applicable";
+            $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($internalAudit->initiator_id);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -873,7 +878,7 @@ class InternalauditController extends Controller
             $history = new InternalAuditTrial();
             $history->internalAudit_id = $internalAudit->id;
             $history->activity_type = 'Date Of Initiation';
-            $history->previous = "Not Applicable";
+            $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($request->intiation_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -890,7 +895,7 @@ class InternalauditController extends Controller
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Auditee Department Head';
-            $history->previous = "Not Applicable";
+            $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($internalAudit->assign_to);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -907,7 +912,7 @@ class InternalauditController extends Controller
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Scheduled audit date';
-            $history->previous = "Not Applicable";
+            $history->previous = "Null";
             $history->current =  Helpers::getdateFormat($internalAudit->sch_audit_start_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -923,7 +928,7 @@ class InternalauditController extends Controller
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Auditee department Name';
-            $history->previous = "Not Applicable";
+            $history->previous = "Null";
             $history->current = Helpers::getFullDepartmentName($internalAudit->auditee_department);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
@@ -939,8 +944,8 @@ class InternalauditController extends Controller
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Initiator Department';
-            $history->previous = "Not Applicable";
-            $history->current = Helpers::getFullDepartmentName($internalAudit->Initiator_Group);
+            $history->previous = "Null";
+            $history->current = $internalAudit->Initiator_Group;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -4922,6 +4927,22 @@ if ($areIniAttachmentsSame2 != true) {
                 //             }
                 //      }
                 //   }
+
+                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getInitiatorEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changeControl) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
+
                 $changeControl->update();
                 $checkReviews = InternalAuditResponse::where('ia_id', $id)->get();
 
@@ -4988,6 +5009,22 @@ if ($areIniAttachmentsSame2 != true) {
                         $changeControl->acknowledge_commnet = $request->comment;
                     }
 
+
+                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getInitiatorEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changeControl) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
+
                     $changeControl->update();
 
                     // Save audit trail
@@ -5024,6 +5061,67 @@ if ($areIniAttachmentsSame2 != true) {
                         'message' => 'Sent for Response'
                     ]);
                 }
+
+                $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Internal Audit')
+                    ->get();
+                    // dd($extensionchild);
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    $observationchild = Observation::where('parent_id', $id)
+                    ->where('parent_type', 'Internal Audit')
+                    ->get();
+                    // dd($extensionchild);
+                        $hasPending2 = false;
+                        foreach ($observationchild as $ext) {
+                            $observationchildStatus = trim(strtolower($ext->status));
+                            if ($observationchildStatus !== 'closed - done') {
+                                $hasPending2 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending2) {
+                            Session::flash('swal', [
+                                'title' => 'Observations Child Pending!',
+                                'message' => 'You cannot proceed until Observations Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
 
                 $changeControl->stage = "4";
                 $changeControl->status = " Response";
@@ -5073,6 +5171,22 @@ if ($areIniAttachmentsSame2 != true) {
                         //      }
                         //   }
 
+                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getInitiatorEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changeControl) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
+
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5096,6 +5210,130 @@ if ($areIniAttachmentsSame2 != true) {
                 //         'message' => 'Sent for Closed -Done'
                 //     ]);
                 // }
+
+                $extensionchild = extension_new::where('parent_id', $id)
+                   ->where('parent_type', 'Internal Audit')
+                    ->get();
+                        $hasPending6 = false;
+                        foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending6 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending6) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'Internal Audit')
+                        ->get();
+                            $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    $capachilds = Capa::where('parent_id', $id)
+                        ->where('parent_type', 'Internal Audit')
+                        ->get();
+                            $hasPending = false;
+                            foreach ($capachilds as $ext) {
+                                $capachildstatus = trim(strtolower($ext->status));
+                                if ($capachildstatus !== 'closed - done') {
+                                    $hasPending = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPending) {
+                        // $capachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPending) {
+                            Session::flash('swal', [
+                                'title' => 'CAPA Child Pending!',
+                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                        ->where('parent_type', 'Internal Audit')
+                        ->get();
+                            $hasPendingRCA = false;
+                            foreach ($rcachilds as $ext) {
+                                $rcachildstatus = trim(strtolower($ext->status));
+                                if ($rcachildstatus !== 'closed - done') {
+                                    $hasPendingRCA = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changeControl->stage = "5";
                 $changeControl->status = "Response Verification";
                 $changeControl->audit_observation_submitted_by = Auth::user()->name;
@@ -5125,6 +5363,22 @@ if ($areIniAttachmentsSame2 != true) {
                                 $history->action_name = 'Update';
                             }
                             $history->save();
+
+                            $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                            foreach ($list as $u) {
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                    }
+                                );
+                            }
+                            }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5149,6 +5403,38 @@ if ($areIniAttachmentsSame2 != true) {
                         'message' => 'Sent for Closed -Done'
                     ]);
                 }
+
+                $extensionchild = extension_new::where('parent_id', $id)
+                   ->where('parent_type', 'Internal Audit')
+                    ->get();
+                        $hasPending6 = false;
+                        foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending6 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending6) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
                 $changeControl->stage = "6";
                 $changeControl->status = "Closed - Done";
                 $changeControl->audit_lead_more_info_reqd_by = Auth::user()->name;
@@ -5182,6 +5468,22 @@ if ($areIniAttachmentsSame2 != true) {
                                 $history->action_name = 'Update';
                             }
                             $history->save();
+
+                            $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                            foreach ($list as $u) {
+                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                    if ($email !== null) {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                        }
+                                    );
+                                }
+                            }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -5302,6 +5604,22 @@ if ($areIniAttachmentsSame2 != true) {
                                                 $history->action_name = 'Update';
                                             }
                                             $history->save();
+
+                                            $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                                            foreach ($list as $u) {
+                                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                                    if ($email !== null) {
+                                                    Mail::send(
+                                                        'mail.view-mail',
+                                                        ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                                        function ($message) use ($email, $changeControl) {
+                                                            $message->to($email)
+                                                            ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                                        }
+                                                    );
+                                                }
+                                            }
+
                                 $changeControl->update();
                         }
                         $stageCheck->save();
@@ -5338,6 +5656,22 @@ if ($areIniAttachmentsSame2 != true) {
                                         $history->action_name = 'Update';
                                     }
                                     $history->save();
+
+                                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                            if ($email !== null) {
+                                            Mail::send(
+                                                'mail.view-mail',
+                                                ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                                function ($message) use ($email, $changeControl) {
+                                                    $message->to($email)
+                                                    ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                                }
+                                            );
+                                        }
+                                    }
+
                         $changeControl->update();
 
                         toastr()->success('Document Sent');
@@ -5368,6 +5702,130 @@ if ($areIniAttachmentsSame2 != true) {
 
 
         if ($changeControl->stage == 4) {
+
+                    $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Internal Audit')
+                    ->get();
+                        $hasPending6 = false;
+                        foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done') {
+                                $hasPending6 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending6) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'Internal Audit')
+                        ->get();
+                            $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    $capachilds = Capa::where('parent_id', $id)
+                        ->where('parent_type', 'Internal Audit')
+                        ->get();
+                            $hasPending = false;
+                            foreach ($capachilds as $ext) {
+                                $capachildstatus = trim(strtolower($ext->status));
+                                if ($capachildstatus !== 'closed - done') {
+                                    $hasPending = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPending) {
+                        // $capachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPending) {
+                            Session::flash('swal', [
+                                'title' => 'CAPA Child Pending!',
+                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                        ->where('parent_type', 'Internal Audit')
+                        ->get();
+                            $hasPendingRCA = false;
+                            foreach ($rcachilds as $ext) {
+                                $rcachildstatus = trim(strtolower($ext->status));
+                                if ($rcachildstatus !== 'closed - done') {
+                                    $hasPendingRCA = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
             $changeControl->stage = "5";
             $changeControl->status = "Response Verification";
             $changeControl->no_capa_plan_by = Auth::user()->name;
@@ -5414,6 +5872,22 @@ if ($areIniAttachmentsSame2 != true) {
                     //             }
                     //      }
                     //   }
+
+                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getInitiatorEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changeControl) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
+
 
             $changeControl->update();
             $history = new InternalAuditStageHistory();
@@ -5468,7 +5942,7 @@ if ($areIniAttachmentsSame2 != true) {
                 $changeControl->more_info_2_comment = $request->comment;
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
-                            $history->activity_type = 'Not Applicable';
+                            $history->activity_type = 'More Info Required';
                             // if (is_null($lastDocument->more_info_2_by) || $lastDocument->more_info_2_by === '') {
                             //   $history->previous = "Not Applicable";
                             // } else {
@@ -5509,6 +5983,22 @@ if ($areIniAttachmentsSame2 != true) {
                         //             }
                         //      }
                         //   }
+
+                        $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                    }
+                                );
+                            }
+                        }
+
 
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
@@ -5589,6 +6079,22 @@ if ($areIniAttachmentsSame2 != true) {
                         //      }
                         //   }
 
+                        $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                                if ($email !== null) {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                    }
+                                );
+                            }
+                        }
+
+
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -5619,6 +6125,67 @@ if ($areIniAttachmentsSame2 != true) {
                 $changeControl->cancelled_1_by = Auth::user()->name;
                 $changeControl->cancelled_1_on = Carbon::now()->format('d-M-Y');
                 $changeControl->cancel_1_comment = $request->comment;
+
+                $Capachild = Capa::where('parent_id', $id)
+                    ->where('parent_type', 'Internal Audit')
+                    ->get();
+
+                foreach ($Capachild as $child) {
+                    $child->stage = "0";
+                    $child->status = "Closed - Cancelled";
+                    // $child->cancelled_by = Auth::user()->name;
+                    // $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $child->save();
+                }
+
+                $ExtensionChild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Internal Audit')
+                    ->get();
+
+                foreach ($ExtensionChild as $child) {
+                    $child->stage = "0";
+                    $child->status = "Closed - Cancelled";
+                    // $child->cancelled_by = Auth::user()->name;
+                    // $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $child->save();
+                }
+
+                $ActionChild = ActionItem::where('parent_id', $id)
+                    ->where('parent_type', 'Internal Audit')
+                    ->get();
+
+                foreach ($ActionChild as $child) {
+                    $child->stage = "0";
+                    $child->status = "Closed - Cancelled";
+                    // $child->cancelled_by = Auth::user()->name;
+                    // $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $child->save();
+                }
+
+                $RCAChild = RootCauseAnalysis::where('parent_id', $id)
+                    ->where('parent_type', 'Internal Audit')
+                    ->get();
+
+                foreach ($RCAChild as $child) {
+                    $child->stage = "0";
+                    $child->status = "Closed - Cancelled";
+                    // $child->cancelled_by = Auth::user()->name;
+                    // $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $child->save();
+                }
+
+                $ObservationChild = Observation::where('parent_id', $id)
+                    ->where('parent_type', 'Internal Audit')
+                    ->get();
+
+                foreach ($ObservationChild as $child) {
+                    $child->stage = "0";
+                    $child->status = "Closed - Cancelled";
+                    // $child->cancelled_by = Auth::user()->name;
+                    // $child->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $child->save();
+                }
+
                                 $history = new InternalAuditTrial();
                                 $history->InternalAudit_id = $id;
                                 $history->activity_type = 'Cancel By, Cancel On';
@@ -5812,9 +6379,9 @@ if ($areIniAttachmentsSame2 != true) {
                 $parent_due_date = InternalAudit::where('id', $id)->value('due_date');
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $data = InternalAudit::find($id);
-                $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'EA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                 $count = Helpers::getChildData($id, $parent_type);
-                $countData = $count + 1; 
+                $countData = $count + 1;    
                 return view('frontend.extension.extension_new', compact('parent_type','record','record_number','parent_id','parent_due_date','extension_record','parent_division_id', 'relatedRecords','countData',));
             }
 

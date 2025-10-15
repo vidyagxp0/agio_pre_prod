@@ -1015,7 +1015,7 @@
                                                         $findRecord = DB::table('incidents')->find($datas->parent_id);
                                                     @endphp
 
-                                                    @elseif ($datas->parent_type == 'Internal-Audit')
+                                                    @elseif ($datas->parent_type == 'Internal Audit')
                                                     @php
                                                         $findRecord = DB::table('internal_audits')->find($datas->parent_id);
                                                     @endphp

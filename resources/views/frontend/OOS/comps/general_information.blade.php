@@ -294,7 +294,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Source Document Type  <span class="text-danger">*</span></label>
-                    <select name="source_document_type_gi" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? 'required' : 'readonly' }}>
+                    <select name="source_document_type_gi" id="Change_Application" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? 'required' : 'readonly' }}>
                         <option value="0">Enter Your Selection Here</option>
                         <option value="OOT" @if ($data->source_document_type_gi == 'oot') selected @endif>OOT</option>
                         <option value="Lab Incident" @if ($data->source_document_type_gi == 'Lab Incident') selected @endif>Lab Incident</option>
@@ -305,6 +305,37 @@
                     </select>
                 </div>
             </div>
+
+            <div class="col-6 new-date-data-field" id="any-other-section" style="display: none;">
+                <div class="group-input">
+                    <label for="Other Application"> Other Source Document Type</label>
+                    <input type="text" name="sourceDocOtherGi" id="other_application"
+                        class="form-control" value="{{$data->sourceDocOtherGi}}">
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    $('#Change_Application').on('change', function() {
+                        var selectedValue = $(this).val(); // single select hai, array nahi
+
+                        // Hide by default
+                        $('#any-other-section').hide();
+                        // $('#other_application').removeAttr('required');
+                        $('#required-star').hide();
+
+                        if (selectedValue === 'Others') {
+                            $('#any-other-section').show();
+                            // $('#other_application').attr('required', true);
+                            $('#required-star').show();
+                        }
+                    });
+
+                    // Trigger on page load for pre-filled data
+                    $('#Change_Application').trigger('change');
+                });
+            </script>
+
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">Reference System Document <span class="text-danger">*</span></label>
@@ -449,7 +480,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Sample Type <span class="text-danger">*</span></label>
-                    <select name="sample_type_gi"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'readonly' }}>
+                    <select name="sample_type_gi" id="sample_other" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Materia' ?
                             'selected' : '' }}>Raw Material</option>
@@ -464,6 +495,36 @@
                     </select>
                 </div>
             </div>
+
+            <div class="col-6 new-date-data-field" id="any-other1-section" style="display: none;">
+                <div class="group-input">
+                    <label for="Other Application"> Other Sample Type</label>
+                    <input type="text" name="Others1" id="other1_application"
+                        class="form-control" value="{{$data->Others1}}">
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    $('#sample_other').on('change', function() {
+                        var selectedValue = $(this).val(); // single select hai, array nahi
+                        // Hide by default
+                        $('#any-other1-section').hide();
+                        // $('#other_application').removeAttr('required');
+                        $('#required-star').hide();
+
+                        if (selectedValue === 'Others') {
+                            $('#any-other1-section').show();
+                            // $('#other_application').attr('required', true);
+                            $('#required-star').show();
+                        }
+                    });
+
+                    // Trigger on page load for pre-filled data
+                    $('#sample_other').trigger('change');
+                });
+            </script>
+
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Short Description">Product / Material Name <span class="text-danger">*</span></label>

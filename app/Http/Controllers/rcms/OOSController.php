@@ -313,8 +313,8 @@ class OOSController extends Controller
                 }
 
                   // exetnsion child validation
-                      $extensionchild = extension_new::where('parent_id', $id)
-                   ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    $extensionchild = extension_new::where('parent_id', $id)
+                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
                     ->get();
                     // dd($extensionchild);
                         $hasPending1 = false;
@@ -2546,12 +2546,15 @@ class OOSController extends Controller
                 $changestage->more_info_requiered1_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered1_By) || $lastDocument->more_info_requiered1_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered1_By . ' , ' . $lastDocument->more_info_requiered1_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered1_By) || $lastDocument->more_info_requiered1_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered1_By . ' , ' . $lastDocument->more_info_requiered1_On;
+                    // }
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2560,12 +2563,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Opened";
-                    $history->current = $changestage->more_info_requiered1_By . ' , ' . $changestage->more_info_requiered1_On;
-                    if (is_null($lastDocument->more_info_requiered1_By) || $lastDocument->more_info_requiered1_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered1_By . ' , ' . $changestage->more_info_requiered1_On;
+                    // if (is_null($lastDocument->more_info_requiered1_By) || $lastDocument->more_info_requiered1_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getInitiatorUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -2573,7 +2577,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -2594,12 +2598,15 @@ class OOSController extends Controller
                 $changestage->more_info_requiered2_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered2_By) || $lastDocument->more_info_requiered2_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered2_By . ' , ' . $lastDocument->more_info_requiered2_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered2_By) || $lastDocument->more_info_requiered2_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered2_By . ' , ' . $lastDocument->more_info_requiered2_On;
+                    // }
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2608,12 +2615,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "HOD Primary Review";
-                    $history->current = $changestage->more_info_requiered2_By . ' , ' . $changestage->more_info_requiered2_On;
-                    if (is_null($lastDocument->more_info_requiered2_By) || $lastDocument->more_info_requiered2_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered2_By . ' , ' . $changestage->more_info_requiered2_On;
+                    // if (is_null($lastDocument->more_info_requiered2_By) || $lastDocument->more_info_requiered2_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getHodUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -2621,7 +2629,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -2642,12 +2650,16 @@ class OOSController extends Controller
                 $changestage->Request_More_Info3_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'Request More Info By    ,  Request More Info On';
-                    if (is_null($lastDocument->Request_More_Info3_By) || $lastDocument->Request_More_Info3_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->Request_More_Info3_By . ' , ' . $lastDocument->Request_More_Info3_On;
-                    }
+                    // $history->activity_type = 'Request More Info By    ,  Request More Info On';
+                    // if (is_null($lastDocument->Request_More_Info3_By) || $lastDocument->Request_More_Info3_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->Request_More_Info3_By . ' , ' . $lastDocument->Request_More_Info3_On;
+                    // }
+
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2656,12 +2668,13 @@ class OOSController extends Controller
                     $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "CQA/QA Head Primary Review";
-                    $history->current = $changestage->Request_More_Info3_By . ' , ' . $changestage->Request_More_Info3_On;
-                    if (is_null($lastDocument->Request_More_Info3_By) || $lastDocument->Request_More_Info3_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->Request_More_Info3_By . ' , ' . $changestage->Request_More_Info3_On;
+                    // if (is_null($lastDocument->Request_More_Info3_By) || $lastDocument->Request_More_Info3_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     // $list = Helpers::getCQAUsersList($changestage->division_id);
                     // foreach ($list as $u) {
@@ -2683,7 +2696,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -2703,12 +2716,15 @@ class OOSController extends Controller
                 $changestage->more_info_requiered4_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered4_By) || $lastDocument->more_info_requiered4_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered4_By . ' , ' . $lastDocument->more_info_requiered4_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered4_By) || $lastDocument->more_info_requiered4_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered4_By . ' , ' . $lastDocument->more_info_requiered4_On;
+                    // }
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2717,12 +2733,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under Phase-IA Investigation";
-                    $history->current = $changestage->more_info_requiered4_By . ' , ' . $changestage->more_info_requiered4_On;
-                    if (is_null($lastDocument->more_info_requiered4_By) || $lastDocument->more_info_requiered4_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered4_By . ' , ' . $changestage->more_info_requiered4_On;
+                    // if (is_null($lastDocument->more_info_requiered4_By) || $lastDocument->more_info_requiered4_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getInitiatorUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -2730,7 +2747,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -2751,12 +2768,16 @@ class OOSController extends Controller
                 $changestage->more_info_requiered5_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered5_By) || $lastDocument->more_info_requiered5_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered5_By . ' , ' . $lastDocument->more_info_requiered5_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered5_By) || $lastDocument->more_info_requiered5_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered5_By . ' , ' . $lastDocument->more_info_requiered5_On;
+                    // }
+
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2765,12 +2786,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IA HOD Primary Review";
-                    $history->current = $changestage->more_info_requiered5_By . ' , ' . $changestage->more_info_requiered5_On;
-                    if (is_null($lastDocument->more_info_requiered5_By) || $lastDocument->more_info_requiered5_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered5_By . ' , ' . $changestage->more_info_requiered5_On;
+                    // if (is_null($lastDocument->more_info_requiered5_By) || $lastDocument->more_info_requiered5_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getHodUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -2778,7 +2800,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -2799,12 +2821,15 @@ class OOSController extends Controller
                 $changestage->Request_More_Info6_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'Request More Info By    ,  Request More Info On';
-                    if (is_null($lastDocument->Request_More_Info6_By) || $lastDocument->Request_More_Info6_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->Request_More_Info6_By . ' , ' . $lastDocument->Request_More_Info6_On;
-                    }
+                    // $history->activity_type = 'Request More Info By    ,  Request More Info On';
+                    // if (is_null($lastDocument->Request_More_Info6_By) || $lastDocument->Request_More_Info6_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->Request_More_Info6_By . ' , ' . $lastDocument->Request_More_Info6_On;
+                    // }
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2813,12 +2838,13 @@ class OOSController extends Controller
                     $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IA QA Review";
-                    $history->current = $changestage->Request_More_Info6_By . ' , ' . $changestage->Request_More_Info6_On;
-                    if (is_null($lastDocument->Request_More_Info6_By) || $lastDocument->Request_More_Info6_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->Request_More_Info6_By . ' , ' . $changestage->Request_More_Info6_On;
+                    // if (is_null($lastDocument->Request_More_Info6_By) || $lastDocument->Request_More_Info6_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     // $list = Helpers::getCQAUsersList($changestage->division_id);
                     // foreach ($list as $u) {
@@ -2841,7 +2867,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -2863,12 +2889,16 @@ class OOSController extends Controller
                 $changestage->more_info_requiered7_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered7_By) || $lastDocument->more_info_requiered7_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered7_By . ' , ' . $lastDocument->more_info_requiered7_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered7_By) || $lastDocument->more_info_requiered7_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered7_By . ' , ' . $lastDocument->more_info_requiered7_On;
+                    // }
+
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2877,12 +2907,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-IA CQAH/QAH Review";
-                    $history->current = $changestage->more_info_requiered7_By . ' , ' . $changestage->more_info_requiered7_On;
-                    if (is_null($lastDocument->more_info_requiered7_By) || $lastDocument->more_info_requiered7_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered7_By . ' , ' . $changestage->more_info_requiered7_On;
+                    // if (is_null($lastDocument->more_info_requiered7_By) || $lastDocument->more_info_requiered7_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     // $list = Helpers::getCQAUsersList($changestage->division_id);
                     // foreach ($list as $u) {
@@ -2904,7 +2935,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -2925,12 +2956,15 @@ class OOSController extends Controller
                 $changestage->more_info_requiered8_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered8_By) || $lastDocument->more_info_requiered8_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered8_By . ' , ' . $lastDocument->more_info_requiered8_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered8_By) || $lastDocument->more_info_requiered8_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered8_By . ' , ' . $lastDocument->more_info_requiered8_On;
+                    // }
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2939,12 +2973,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under Phase-IB Investigation";
-                    $history->current = $changestage->more_info_requiered8_By . ' , ' . $changestage->more_info_requiered8_On;
-                    if (is_null($lastDocument->more_info_requiered8_By) || $lastDocument->more_info_requiered8_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered8_By . ' , ' . $changestage->more_info_requiered8_On;
+                    // if (is_null($lastDocument->more_info_requiered8_By) || $lastDocument->more_info_requiered8_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getInitiatorUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -2952,7 +2987,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -2974,12 +3009,16 @@ class OOSController extends Controller
                 $changestage->more_info_requiered9_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered9_By) || $lastDocument->more_info_requiered9_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered9_By . ' , ' . $lastDocument->more_info_requiered9_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered9_By) || $lastDocument->more_info_requiered9_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered9_By . ' , ' . $lastDocument->more_info_requiered9_On;
+                    // }
+
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2989,11 +3028,12 @@ class OOSController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IB HOD Primary Review";
                     $history->current = $changestage->more_info_requiered9_By . ' , ' . $changestage->more_info_requiered9_On;
-                    if (is_null($lastDocument->more_info_requiered9_By) || $lastDocument->more_info_requiered9_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // if (is_null($lastDocument->more_info_requiered9_By) || $lastDocument->more_info_requiered9_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getInitiatorUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -3001,7 +3041,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -3022,12 +3062,15 @@ class OOSController extends Controller
                 $changestage->Request_More_Info10_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'Request More Info By    ,  Request More Info On';
-                    if (is_null($lastDocument->Request_More_Info10_By) || $lastDocument->Request_More_Info10_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->Request_More_Info10_By . ' , ' . $lastDocument->Request_More_Info10_On;
-                    }
+                    // $history->activity_type = 'Request More Info By    ,  Request More Info On';
+                    // if (is_null($lastDocument->Request_More_Info10_By) || $lastDocument->Request_More_Info10_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->Request_More_Info10_By . ' , ' . $lastDocument->Request_More_Info10_On;
+                    // }
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3036,12 +3079,13 @@ class OOSController extends Controller
                     $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase IB QA Review";
-                    $history->current = $changestage->Request_More_Info10_By . ' , ' . $changestage->Request_More_Info10_On;
-                    if (is_null($lastDocument->Request_More_Info10_By) || $lastDocument->Request_More_Info10_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->Request_More_Info10_By . ' , ' . $changestage->Request_More_Info10_On;
+                    // if (is_null($lastDocument->Request_More_Info10_By) || $lastDocument->Request_More_Info10_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getHodUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -3049,7 +3093,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -3070,12 +3114,15 @@ class OOSController extends Controller
                 $changestage->more_info_requiered11_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered11_By) || $lastDocument->more_info_requiered11_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered11_By . ' , ' . $lastDocument->more_info_requiered11_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered11_By) || $lastDocument->more_info_requiered11_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered11_By . ' , ' . $lastDocument->more_info_requiered11_On;
+                    // }
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3084,12 +3131,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-IB CQAH/QAH Review";
-                    $history->current = $changestage->more_info_requiered11_By . ' , ' . $changestage->more_info_requiered11_On;
-                    if (is_null($lastDocument->more_info_requiered11_By) || $lastDocument->more_info_requiered11_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered11_By . ' , ' . $changestage->more_info_requiered11_On;
+                    // if (is_null($lastDocument->more_info_requiered11_By) || $lastDocument->more_info_requiered11_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getQAUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -3097,7 +3145,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -3131,12 +3179,16 @@ class OOSController extends Controller
                 $changestage->more_info_requiered12_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered12_By) || $lastDocument->more_info_requiered12_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered12_By . ' , ' . $lastDocument->more_info_requiered12_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered12_By) || $lastDocument->more_info_requiered12_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered12_By . ' , ' . $lastDocument->more_info_requiered12_On;
+                    // }
+
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3145,12 +3197,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under Phase-II A Investigation";
-                    $history->current = $changestage->more_info_requiered12_By . ' , ' . $changestage->more_info_requiered12_On;
-                    if (is_null($lastDocument->more_info_requiered12_By) || $lastDocument->more_info_requiered12_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered12_By . ' , ' . $changestage->more_info_requiered12_On;
+                    // if (is_null($lastDocument->more_info_requiered12_By) || $lastDocument->more_info_requiered12_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
 
                     $list = Helpers::getQAUserList($changestage->division_id);
@@ -3159,7 +3212,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -3179,12 +3232,16 @@ class OOSController extends Controller
                 $changestage->more_info_requiered13_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered13_By) || $lastDocument->more_info_requiered13_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered13_By . ' , ' . $lastDocument->more_info_requiered13_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered13_By) || $lastDocument->more_info_requiered13_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered13_By . ' , ' . $lastDocument->more_info_requiered13_On;
+                    // }
+
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3193,12 +3250,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase II A HOD Primary Review";
-                    $history->current = $changestage->more_info_requiered13_By . ' , ' . $changestage->more_info_requiered13_On;
-                    if (is_null($lastDocument->more_info_requiered13_By) || $lastDocument->more_info_requiered13_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered13_By . ' , ' . $changestage->more_info_requiered13_On;
+                    // if (is_null($lastDocument->more_info_requiered13_By) || $lastDocument->more_info_requiered13_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getProductionUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -3206,7 +3264,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -3227,12 +3285,15 @@ class OOSController extends Controller
                 $changestage->more_info_requiered14_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'Request More Info By    ,  Request More Info On';
-                    if (is_null($lastDocument->more_info_requiered14_By) || $lastDocument->more_info_requiered14_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered14_By . ' , ' . $lastDocument->more_info_requiered14_On;
-                    }
+                    // $history->activity_type = 'Request More Info By    ,  Request More Info On';
+                    // if (is_null($lastDocument->more_info_requiered14_By) || $lastDocument->more_info_requiered14_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered14_By . ' , ' . $lastDocument->more_info_requiered14_On;
+                    // }
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3241,12 +3302,13 @@ class OOSController extends Controller
                     $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase II A QA Review";
-                    $history->current = $changestage->more_info_requiered14_By . ' , ' . $changestage->more_info_requiered14_On;
-                    if (is_null($lastDocument->more_info_requiered14_By) || $lastDocument->more_info_requiered14_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered14_By . ' , ' . $changestage->more_info_requiered14_On;
+                    // if (is_null($lastDocument->more_info_requiered14_By) || $lastDocument->more_info_requiered14_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     // $list = Helpers::getCQAUsersList($changestage->division_id);
                     // foreach ($list as $u) {
@@ -3268,7 +3330,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -3288,12 +3350,15 @@ class OOSController extends Controller
                 $changestage->Request_More_Info15_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->Request_More_Info15_By) || $lastDocument->Request_More_Info15_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->Request_More_Info15_By . ' , ' . $lastDocument->Request_More_Info15_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->Request_More_Info15_By) || $lastDocument->Request_More_Info15_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->Request_More_Info15_By . ' , ' . $lastDocument->Request_More_Info15_On;
+                    // }
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3302,12 +3367,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-II A QAH/CQAH Review";
-                    $history->current = $changestage->Request_More_Info15_By . ' , ' . $changestage->Request_More_Info15_On;
-                    if (is_null($lastDocument->Request_More_Info15_By) || $lastDocument->Request_More_Info15_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->Request_More_Info15_By . ' , ' . $changestage->Request_More_Info15_On;
+                    // if (is_null($lastDocument->Request_More_Info15_By) || $lastDocument->Request_More_Info15_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     // $list = Helpers::getCQAUsersList($changestage->division_id);
                     // foreach ($list as $u) {
@@ -3329,7 +3395,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -3350,12 +3416,16 @@ class OOSController extends Controller
                 $changestage->more_info_requiered16_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered16_By) || $lastDocument->more_info_requiered16_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered16_By . ' , ' . $lastDocument->more_info_requiered16_On;
-                    }
+                    // $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered16_By) || $lastDocument->more_info_requiered16_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered16_By . ' , ' . $lastDocument->more_info_requiered16_On;
+                    // }
+
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3364,12 +3434,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Under Phase-II B Investigation";
-                    $history->current = $changestage->more_info_requiered16_By . ' , ' . $changestage->more_info_requiered16_On;
-                    if (is_null($lastDocument->more_info_requiered16_By) || $lastDocument->more_info_requiered16_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered16_By . ' , ' . $changestage->more_info_requiered16_On;
+                    // if (is_null($lastDocument->more_info_requiered16_By) || $lastDocument->more_info_requiered16_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getInitiatorUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -3377,7 +3448,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -3398,12 +3469,15 @@ class OOSController extends Controller
                 $changestage->more_info_requiered17_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                     $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered17_By) || $lastDocument->more_info_requiered17_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered17_By . ' , ' . $lastDocument->more_info_requiered17_On;
-                    }
+                    //  $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered17_By) || $lastDocument->more_info_requiered17_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered17_By . ' , ' . $lastDocument->more_info_requiered17_On;
+                    // }
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3412,12 +3486,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase II B HOD Primary Review";
-                    $history->current = $changestage->more_info_requiered17_By . ' , ' . $changestage->more_info_requiered17_On;
-                    if (is_null($lastDocument->more_info_requiered17_By) || $lastDocument->more_info_requiered17_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered17_By . ' , ' . $changestage->more_info_requiered17_On;
+                    // if (is_null($lastDocument->more_info_requiered17_By) || $lastDocument->more_info_requiered17_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     $list = Helpers::getHodUserList($changestage->division_id);
                     foreach ($list as $u) {
@@ -3425,7 +3500,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -3446,12 +3521,16 @@ class OOSController extends Controller
                 $changestage->more_info_requiered18_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                     $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                    if (is_null($lastDocument->more_info_requiered18_By) || $lastDocument->more_info_requiered18_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->more_info_requiered18_By . ' , ' . $lastDocument->more_info_requiered18_On;
-                    }
+                    //  $history->activity_type = 'More Information Required By    ,  More Information Required On';
+                    // if (is_null($lastDocument->more_info_requiered18_By) || $lastDocument->more_info_requiered18_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->more_info_requiered18_By . ' , ' . $lastDocument->more_info_requiered18_On;
+                    // }
+
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3460,12 +3539,13 @@ class OOSController extends Controller
                     $history->action = 'More Information Required';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "Phase II B QA Review";
-                    $history->current = $changestage->more_info_requiered18_By . ' , ' . $changestage->more_info_requiered18_On;
-                    if (is_null($lastDocument->more_info_requiered18_By) || $lastDocument->more_info_requiered18_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->more_info_requiered18_By . ' , ' . $changestage->more_info_requiered18_On;
+                    // if (is_null($lastDocument->more_info_requiered18_By) || $lastDocument->more_info_requiered18_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
                     // $list = Helpers::getCQAUsersList($changestage->division_id);
                     // foreach ($list as $u) {
@@ -3487,7 +3567,7 @@ class OOSController extends Controller
                            if ($email !== null) {
                            Mail::send(
                                'mail.view-mail',
-                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                function ($message) use ($email, $changestage) {
                                    $message->to($email)
                                    ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
@@ -3508,12 +3588,16 @@ class OOSController extends Controller
                 $changestage->Request_More_Info19_Comment = $request->comment;
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                     $history->activity_type = 'Request More Info By    ,  Request More Info On';
-                    if (is_null($lastDocument->Request_More_Info19_By) || $lastDocument->Request_More_Info19_By === '') {
-                        $history->previous = "Null";
-                    } else {
-                        $history->previous = $lastDocument->Request_More_Info19_By . ' , ' . $lastDocument->Request_More_Info19_On;
-                    }
+                    //  $history->activity_type = 'Request More Info By    ,  Request More Info On';
+                    // if (is_null($lastDocument->Request_More_Info19_By) || $lastDocument->Request_More_Info19_By === '') {
+                    //     $history->previous = "Null";
+                    // } else {
+                    //     $history->previous = $lastDocument->Request_More_Info19_By . ' , ' . $lastDocument->Request_More_Info19_On;
+                    // }
+
+                    $history->activity_type = 'Not Applicable';
+                    $history->previous = "Not Applicable";
+                    $history->current = "Not Applicable";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -3522,13 +3606,29 @@ class OOSController extends Controller
                     $history->action = 'Request More Info';
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   "P-II B QAH/CQAH Review";
-                    $history->current = $changestage->Request_More_Info19_By . ' , ' . $changestage->Request_More_Info19_On;
-                    if (is_null($lastDocument->Request_More_Info19_By) || $lastDocument->Request_More_Info19_By === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
+                    // $history->current = $changestage->Request_More_Info19_By . ' , ' . $changestage->Request_More_Info19_On;
+                    // if (is_null($lastDocument->Request_More_Info19_By) || $lastDocument->Request_More_Info19_By === '') {
+                    //     $history->action_name = 'New';
+                    // } else {
+                    //     $history->action_name = 'Update';
+                    // }
+                    $history->action_name = 'Not Applicable';
                     $history->save();
+
+                    $list = Helpers::getQAUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
