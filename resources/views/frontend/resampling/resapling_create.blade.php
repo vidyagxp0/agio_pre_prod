@@ -298,7 +298,7 @@
                                                 <option value="EN" >Engineering</option>
                                                 <option value="HR" >Human Resource</option>
                                                 <option value="ST" >Store</option>
-                                                <option value="IT" >Electronic Data Processing</option>
+                                                <option value="IT" >Information Technology</option>
                                                 <option value="FD" >Formulation  Development</option>
                                                 <option value="AL" >Analytical research and Development Laboratory</option>
                                                 <option value="PD">Packaging Development</option>
@@ -306,6 +306,14 @@
                                                 <option value="DC">Document Cell</option>
                                                 <option value="RA">Regulatory Affairs</option>
                                                 <option value="PV">Pharmacovigilance</option>
+                                                 <option value="Safety" >Safety</option>
+                                                <option value="Accounts">Accounts</option>
+                                                <option value="Finance" >Finance</option>
+                                                <option value="Artwork" >Artwork</option>
+                                                <option value="Company secretary">Company secretary</option>
+                                                <option value="Exports">Exports</option>
+                                                <option value="Marketing">Marketing</option>
+
                                         </select>
                                     </div>
                                 </div>

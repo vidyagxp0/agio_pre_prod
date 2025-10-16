@@ -49,7 +49,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputName1">Department Name*</label>
-                    <select class="form-control" id="documentid" name="departmentid" required />
+                    <select class="form-control" id="documentid" name="departmentid" required >
                     <option class="selected disabled hidden;">Select Document Name</option>
                     @foreach ($department as $temp)
                         <option value="{{ $temp->id }}" @if ($data->departmentid == $temp->id) Selected @endif>
@@ -80,7 +80,8 @@
                         document.getElementById("selectedOptions").innerHTML = "Selected roles: <br>" + selectedOptions.join("<br>");
                     }
                 </script> --}}
-                <div class="form-group" id="roleGroup">
+                {{-- only ctr a se select but not remove  --}}
+                {{-- <div class="form-group" id="roleGroup">
                     <label for="exampleInputName1">
                         Roles (Click to select multiple options)<span style="color: red">*</span>
                     </label>
@@ -118,7 +119,69 @@
                     }
 
                     updateSelectedOptions();
+                </script> --}}
+                {{-- both select and ct +a and also unslected ctr+a  --}}
+                <div class="form-group" id="roleGroup">
+                    <label for="exampleInputName1">
+                        Roles (Click to select multiple options)<span style="color: red">*</span>
+                    </label>
+                    <select class="form-control2" id="roles" name="roles[]" multiple required style="height: 150px;">
+                        @foreach ($group as $role)
+                            <option value="{{ $role->id }}" {{ in_array($role->id, $userRoles) ? 'selected' : '' }}>
+                                {{ $role->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div id="selectedOptions"></div>
+
+                <script>
+                    const selectElement = document.getElementById("roles");
+
+                    // Prevent default click and make toggle on click
+                    for (let i = 0; i < selectElement.options.length; i++) {
+                        selectElement.options[i].addEventListener("mousedown", function (e) {
+                            e.preventDefault(); // stop normal behavior
+                            this.selected = !this.selected; // toggle select
+                            updateSelectedOptions();
+                        });
+                    }
+
+                    // ✅ Handle Ctrl + A to select/unselect all
+                    selectElement.addEventListener("keydown", function (e) {
+                        if (e.ctrlKey && e.key === "a") {
+                            e.preventDefault();
+
+                            // Check if all are already selected
+                            const allSelected = Array.from(selectElement.options).every(opt => opt.selected);
+
+                            // Toggle all
+                            for (let opt of selectElement.options) {
+                                opt.selected = !allSelected;
+                            }
+
+                            updateSelectedOptions();
+                        }
+                    });
+
+                    function updateSelectedOptions() {
+                        let selectedOptions = [];
+                        for (let i = 0; i < selectElement.options.length; i++) {
+                            if (selectElement.options[i].selected) {
+                                selectedOptions.push(selectElement.options[i].text);
+                            }
+                        }
+
+                        document.getElementById("selectedOptions").innerHTML =
+                            selectedOptions.length
+                                ? "Selected roles:<br>" + selectedOptions.join("<br>")
+                                : "No roles selected";
+                    }
+
+                    updateSelectedOptions();
                 </script>
+
 
             </div>
 

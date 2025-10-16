@@ -625,7 +625,7 @@
                                                 <option value="EN" {{ old('departments', $data->departments) == 'EN' ? 'selected' : '' }}>Engineering</option>
                                                 <option value="HR" {{ old('departments', $data->departments) == 'HR' ? 'selected' : '' }}>Human Resource</option>
                                                 <option value="ST" {{ old('departments', $data->departments) == 'ST' ? 'selected' : '' }}>Store</option>
-                                                <option value="IT" {{ old('departments', $data->departments) == 'IT' ? 'selected' : '' }}>Electronic Data Processing</option>
+                                                <option value="IT" {{ old('departments', $data->departments) == 'IT' ? 'selected' : '' }}>Information Technology</option>
                                                 <option value="FD" {{ old('departments', $data->departments) == 'FD' ? 'selected' : '' }}>Formulation Development</option>
                                                 <option value="AL" {{ old('departments', $data->departments) == 'AL' ? 'selected' : '' }}>Analytical Research and Development Laboratory</option>
                                                 <option value="PD" {{ old('departments', $data->departments) == 'PD' ? 'selected' : '' }}>Packaging Development</option>
@@ -633,6 +633,13 @@
                                                 <option value="DC" {{ old('departments', $data->departments) == 'DC' ? 'selected' : '' }}>Document Cell</option>
                                                 <option value="RA" {{ old('departments', $data->departments) == 'RA' ? 'selected' : '' }}>Regulatory Affairs</option>
                                                 <option value="PV" {{ old('departments', $data->departments) == 'PV' ? 'selected' : '' }}>Pharmacovigilance</option>
+                                                <option value="Safety" {{ old('departments', $data->departments) == 'Safety' ? 'selected' : '' }}>Safety</option>
+                                                <option value="Accounts" {{ old('departments', $data->departments) == 'Accounts' ? 'selected' : '' }}>Accounts</option>
+                                                <option value="Finance" {{ old('departments', $data->departments) == 'Finance' ? 'selected' : '' }}>Finance</option>
+                                                <option value="Artwork" {{ old('departments', $data->departments) == 'Artwork' ? 'selected' : '' }}>Artwork</option>
+                                                <option value="Company secretary" {{ old('departments', $data->departments) == 'Company secretary' ? 'selected' : '' }}>Company secretary</option>
+                                                <option value="Exports" {{ old('departments', $data->departments) == 'Exports' ? 'selected' : '' }}>Exports</option>
+                                                <option value="Marketing" {{ old('departments', $data->departments) == 'Marketing' ? 'selected' : '' }}>Marketing</option>
                                             </select>
 
                                             <!-- Hidden Input to Retain Value When Disabled -->
@@ -1721,7 +1728,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('send-resampling', $data->id) }}" method="POST">
+                <form action="{{ route('send-resampling', $data->id) }}" method="POST" class="signatureModalFormloder">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1746,7 +1753,13 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -1764,7 +1777,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('moreinfoState_resampling', $data->id) }}" method="POST">
+                <form action="{{ route('moreinfoState_resampling', $data->id) }}" method="POST" >
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -2047,5 +2060,21 @@
             $('#rchars').text(textlen);
         });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+                // var signatureForm = document.getElementById('signatureModalFormloder');
+              var signatureForm = document.querySelector('.signatureModalFormloder'); // <-- class use kiya
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+</script>
 
 @endsection

@@ -8373,8 +8373,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 'message' => 'CFT Reviews'
                             ]);
                         }
-                        if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->ContractGiver_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
-                            Session::flash('swal', [
+    //     
+
+                        if ( $Cft->Production_Table_Review !== 'yes' &&
+                            $Cft->Production_Injection_Review !== 'yes' &&
+                            $Cft->ProductionLiquid_Review !== 'yes' &&
+                            $Cft->Store_Review !== 'yes' &&
+                            $Cft->ResearchDevelopment_Review !== 'yes' &&
+                            $Cft->Microbiology_Review !== 'yes' &&
+                            $Cft->RegulatoryAffair_Review !== 'yes' &&
+                            $Cft->CorporateQualityAssurance_Review !== 'yes' &&
+                            $Cft->ContractGiver_Review !== 'yes' &&
+                            $Cft->Quality_review !== 'yes' &&
+                            $Cft->Quality_Assurance_Review !== 'yes' &&
+                            $Cft->Engineering_review !== 'yes' &&
+                            $Cft->Environment_Health_review !== 'yes' &&
+                            $Cft->Human_Resource_review !== 'yes') {
+                                                    Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
                                 'message' => 'CFT Tab is yet to be filled!',
                                 'type' => 'warning',
@@ -9499,8 +9514,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             }
 
             if ($marketstat->stage == 5) {
-                $marketstat->stage = "4";
-                $marketstat->status = "CFt Review";
+                $marketstat->stage = "3";
+                $marketstat->status = "Investigation, CAPA and Root Cause Analysis";
                 $marketstat->reject_by = 'Not Applicable';
                 $marketstat->reject_on = 'Not Applicable';
                 // $marketstat->reject_comment = $request->comment;
@@ -9515,9 +9530,9 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to = "CFT Review";
+                $history->change_to = "Investigation, CAPA and Root Cause Analysis";
                 $history->change_from = $lastDocument->status;
-                $history->stage = 'CFT Review';
+                $history->stage = 'Investigation, CAPA and Root Cause Analysis';
                 $history->save();
                 $marketstat->update();
 
