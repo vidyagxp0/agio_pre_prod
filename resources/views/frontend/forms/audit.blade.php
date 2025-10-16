@@ -792,7 +792,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Auditee department Name <span class="text-danger">*</span> </label>
+                                        <label for="Initiator Group">Auditee Department Name <span class="text-danger">*</span> </label>
                                         <select name="auditee_department" required >
                                             <option value="">Select Department</option>
                                             <option value="CQA">Corporate Quality Assurance</option>
@@ -809,7 +809,7 @@
                                             <option value="EN">Engineering</option>
                                             <option value="HR">Human Resource</option>
                                             <option value="ST">Store</option>
-                                            <option value="EP">Electronic Data Processing</option>
+                                            <option value="IT">Information Technology</option>
                                             <option value="FD">Formulation Development</option>
                                             <option value="AL">Analytical research and Development Laboratory</option>
                                             <option value="PD">Packaging Development</option>
@@ -817,6 +817,13 @@
                                             <option value="DC">Document Cell</option>
                                             <option value="RA">Regulatory Affairs</option>
                                             <option value="PV">Pharmacovigilance</option>
+                                            <option value="Safety">Safety</option>
+                                            <option value="Accounts">Accounts</option>
+                                            <option value="Finance">Finance</option>
+                                            <option value="Artwork">Artwork</option>
+                                            <option value="Company secretary">Company secretary</option>
+                                            <option value="Exports">Exports</option>
+                                            <option value="Marketing">Marketing</option>
                                         </select>
                                     </div>
                                 </div>
@@ -996,6 +1003,13 @@
                                                             <option value="Document Cell">Document Cell</option>
                                                             <option value="Regulatory Affairs">Regulatory Affairs</option>
                                                             <option value="Pharmacovigilance">Pharmacovigilance</option>
+                                                            <option value="Safety">Safety</option>
+                                                            <option value="Accounts">Accounts</option>
+                                                            <option value="Finance">Finance</option>
+                                                            <option value="Artwork">Artwork</option>
+                                                            <option value="Company secretary">Company secretary</option>
+                                                            <option value="Exports">Exports</option>
+                                                            <option value="Marketing">Marketing</option>
                                                         </select>
                                                     </td>
 

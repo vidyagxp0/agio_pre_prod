@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<style>
+{{-- <style>
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -231,172 +231,272 @@
     .full-width-table tbody tr:nth-child(even) {
         background-color: #f9f9f9;
     }
+</style> --}}
+
+<style>
+    @page {
+         margin: 160px 35px 100px;
+     }
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+         margin-bottom: -60px; 
+    }
+
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
+
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
+
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
+    }
+
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
+    }
+
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .full-width-table {
+        width: 100%;
+        table-layout: fixed; 
+        border-collapse: collapse;
+        border: 1px solid #ddd; 
+    }
+
+    .full-width-table th, 
+    .full-width-table td {
+        padding: 3px;
+        text-align: center;
+        font-size: 10px;
+        border: 1px solid #ddd;
+        word-wrap: break-word; 
+    }
+
+    .full-width-table thead {
+        background-color: #f4f4f4; 
+        font-weight: bold;
+    }
+
+    .full-width-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .table_bg {
+        background-color: #387478;
+        color: #111;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
+
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        white-space: normal !important;
+        word-wrap: break-word;
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .no-border th, .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-6 { width: 7%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-40 { width: 40%; }
+    .w-50 { width: 50%; }
+    .w-60 { width: 60%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+
+    table th, table td {
+        word-wrap: break-word;
+    }
 </style>
 
-<!-- <style>
-    .custom-procedure-block {
-        width: 100%;
-    }
-
-    .custom-container {
-        width: 100%;
-        display: inline-block;
-    }
-
-    .custom-table-wrapper {
-        margin-right: 40px;
-    }
-
-    .custom-procedure-content {
-        width: 100%;
-        overflow-x: auto;
-    }
-
-    .custom-content-wrapper {
-        height: auto;
-        overflow-x: auto;
-        width: 700px;
-        margin-left: 1rem;
-    }
-
-    .custom-table-wrapper table {
-        width: 100%; 
-        border-collapse: collapse;
-        overflow: auto;
-    }
-
-    .custom-table-wrapper table td, 
-    .custom-table-wrapper table th {
-        word-wrap: break-word;
-        text-align: center;
-        padding: 5px;
-    }
-
-    .custom-table-wrapper table img {
-        max-width: 100%;
-        height: auto;
-    }
-
-</style> -->
-
-    <style>
-        
-        #isPasted {
-            width: 690px !important;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-        #isPasted td:first-child,
-        #isPasted th:first-child {
-            white-space: nowrap; 
-            width: 1%;
-            vertical-align: top;
-        }
-
-        #isPasted td:last-child,
-        #isPasted th:last-child {
-            width: auto;
-            vertical-align: top;
-
-        }
-
-        #isPasted th,
-        #isPasted td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted td > p {
-            text-align: justify;
-            text-justify: inter-word;
-            margin: 0;
-            max-width: 700px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted img {
-            max-width: 500px !important;
-            height: 100%;
-            display: block;
-            margin: 5px auto;
-        }
-
-        #isPasted td img {
-            max-width: 400px !important;
-            height: 300px;
-            margin: 5px auto;
-        }
-
-        .table-containers {
-            width: 690px;
-            font-size: 14px;
-            overflow-x: fixed;
-        }
-
+<style>
     
-        #isPasted table {
-            width: 100% !important;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
+    #isPasted {
+        width: 690px !important;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    #isPasted td:first-child,
+    #isPasted th:first-child {
+        white-space: nowrap; 
+        width: 1%;
+        vertical-align: top;
+    }
+
+    #isPasted td:last-child,
+    #isPasted th:last-child {
+        width: auto;
+        vertical-align: top;
+
+    }
+
+    #isPasted th,
+    #isPasted td {
+        border: 1px solid #000 !important;
+        padding: 8px;
+        text-align: left;
+        max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #isPasted td > p {
+        text-align: justify;
+        text-justify: inter-word;
+        margin: 0;
+        max-width: 700px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #isPasted img {
+        max-width: 500px !important;
+        height: 100%;
+        display: block;
+        margin: 5px auto;
+    }
+
+    #isPasted td img {
+        max-width: 400px !important;
+        height: 300px;
+        margin: 5px auto;
+    }
+
+    .table-containers {
+        width: 690px;
+        font-size: 14px;
+        overflow-x: fixed;
+    }
 
 
-        #isPasted table th,
-        #isPasted table td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
+    #isPasted table {
+        width: 100% !important;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
 
-        #isPasted table img {
-            max-width: 100% !important;
-            height: auto;
-            display: block;
-            margin: 5px auto;
-        }
 
-        .problem-statement th {
-            background: #f4bb22;
-            width: 150px;
-        }
+    #isPasted table th,
+    #isPasted table td {
+        border: 1px solid #000 !important;
+        padding: 8px;
+        text-align: left;
+        max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
 
-        .why-label {
-            color: #393cd4;
-            width: 150px;
-        }
+    #isPasted table img {
+        max-width: 100% !important;
+        height: auto;
+        display: block;
+        margin: 5px auto;
+    }
 
-        .answer-label {
-            color: #393cd4;
-            width: 150px;
-        }
+    .problem-statement th {
+        background: #f4bb22;
+        width: 150px;
+    }
 
-        .root-cause th {
-            background: #0080006b;
-            width: 150px;
-        }
+    .why-label {
+        color: #393cd4;
+        width: 150px;
+    }
 
-        .text-muted {
-            color: gray;
-        }
-        
-    </style>
+    .answer-label {
+        color: #393cd4;
+        width: 150px;
+    }
+
+    .root-cause th {
+        background: #0080006b;
+        width: 150px;
+    }
+
+    .text-muted {
+        color: gray;
+    }
+    
+</style>
 
 <body>
 
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
-                    Root Cause Analysis Report
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
+                     Root Cause Analysis Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -442,7 +542,7 @@
                 <table>
                     <tr> {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Record Number</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             {{ Helpers::divisionNameForQMS($data->division_id) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                         </td>
 
@@ -461,7 +561,7 @@
                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
 
                         <th class="w-20">Date of Initiation</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
 
                     </tr>
 
@@ -486,6 +586,8 @@
                         </td>
 
                     </tr>
+                </table> 
+                <table>   
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80" colspan="3">
@@ -495,29 +597,10 @@
                                 Not Applicable
                             @endif
                         </td>
-
                     </tr>
-
-                    {{-- <tr><th class="w-20">Additional Investigators</th> <td class="w-30">@if ($data->investigators){{ $data->investigators }}@else Not Applicable @endif</td>
-                        <th class="w-20">Severity Level</th>
-                        <td class="w-30">
-                            @if ($data->severity_level)
-                                {{ $data->severity_level }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Initiated Through</th>
-                        <td class="w-80">
-                            @if ($data->initiated_through)
-                                {{ $data->initiated_through }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                    </tr> --}}
-                    <tr>{{-- <th class="w-20">Additional Investigators</th> <td class="w-30">@if ($data->investigators){{ $data->investigators }}@else Not Applicable @endif</td> --}}
+                </table>
+                <table>
+                    <tr>
                         <th class="w-20"> Name Of Responsible Department Head</th>
                         <td class="w-30">
                             @if ($data->assign_to)
@@ -527,14 +610,13 @@
                             @endif
                         </td>
                         <th class="w-20">QA Reviewer</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->qa_reviewer)
                                 {{ Helpers::getInitiatorName($data->qa_reviewer) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-
                     </tr>
 
 
@@ -549,34 +631,17 @@
                         </td>
 
                         <th class="w-20">Initiated Through</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->initiated_through)
                                 {{ $data->initiated_through }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-
-                       
-
-                       
-
-                        {{-- <div class="inner-block">
-                            <label
-                                class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-                                Others</label>
-                            <span style="font-size: 0.8rem; margin-left: 60px;">
-                                @if ($data->initiated_if_other)
-                                    {!! $data->initiated_if_other !!}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </span>
-                        </div> --}}
-
                     </tr>
+                    </table>
+                    <table>
                         <tr>
-                        
                             <th class="w-20">Others</th>
                             <td class="w-80">
                                 @if ($data->initiated_if_other)
@@ -594,10 +659,9 @@
                                     Not Applicable
                                 @endif
                             </td> --}}
-
-                           
-
                         </tr>
+                    </table>
+                    <table>    
 
                         <tr>
                             <th class="w-20">Responsible Department</th>
@@ -766,6 +830,48 @@
         </div>
 
 
+        <style>
+            .tableFMEA {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 7px;
+                table-layout: fixed; /* Ensures columns are evenly distributed */
+            }
+
+            .thFMEA,
+            .tdFMEA {
+                border: 1px solid black;
+                padding: 5px;
+                word-wrap: break-word;
+                text-align: center;
+                vertical-align: middle;
+                font-size: 6px; /* Apply the same font size for all cells */
+            }
+
+            /* Rotating specific headers */
+            .rotate {
+                transform: rotate(-90deg);
+                white-space: nowrap;
+                width: 10px;
+                height: 100px;
+            }
+
+            /* Ensure the "Traceability Document" column fits */
+            .tdFMEA:last-child,
+            .thFMEA:last-child {
+                width: 80px; /* Allocate more space for "Traceability Document" */
+            }
+
+            /* Adjust for smaller screens to fit */
+            @media (max-width: 1200px) {
+                .tdFMEA:last-child,
+                .thFMEA:last-child {
+                    font-size: 6px;
+                    width: 70px; /* Shrink width further for smaller screens */
+                }
+            }
+
+        </style>
 
 
         <div class="block">
@@ -884,34 +990,38 @@
                     <div class="block-head">
                         Failure Mode and Effect Analysis
                     </div>
-                    <table class="table full-width-table"  >
+                    <table class="tableFMEA">
                         <thead>
-                            <tr class="table_bg tr">
-                                <th class="th" style="font-size: 7px" rowspan="2">Sr.No.</th>
-                                <th class="th" style="font-size: 7px" colspan="2">Risk Identification</th>
-                                <th class="th" style="font-size: 7px" colspan="1">Risk Analysis</th>
-                                <th class="th" style="font-size: 7px" colspan="4">Risk Evaluation</th>
-                                <th class="th" style="font-size: 7px"colspan="1">Risk Control</th>
-                                <th class="th" style="font-size: 7px" colspan="6">Risk Evaluation</th>
-                                <th class="th" style="font-size: 7px"></th>
-                
+                            <tr class="table_bg" style="text-align: center; vertical-align: middle; padding: 20px;">
+                                <th class="thFMEA" rowspan="2">Sr.No</th>
+                                <th class="thFMEA" colspan="2">Risk Identification</th>
+                                <th class="thFMEA">Risk Analysis</th>
+                                <th class="thFMEA" colspan="4">Risk Evaluation</th>
+                                <th class="thFMEA">Risk Control</th>
+                                <th class="thFMEA" colspan="6">Risk Evaluation</th>
+
+                                <th class="thFMEA" rowspan="2">Traceability Document</th>
+                                
                             </tr>
-                            <tr class="table_bg tr">
-                                <th style="font-size: 7px" class="th">Activity</th>
-                                <th style="font-size: 7px" class="th">Possible Risk/Failure (Identified Risk)</th>
-                                <th style="font-size: 7px" class="th">Consequences of Risk/Potential Causes</th>
-                                <th style="font-size: 7px" class="rotate th">Severity (S)</th>
-                                <th style="font-size: 7px" class="rotate th">Probability (P)</th>
-                                <th style="font-size: 7px" class="rotate th">Detection (D)</th>
-                                <th style="font-size: 7px" class="rotate th">Risk Level (RPN)</th>
-                                <th style="font-size: 7px" class="th">Control Measures recommended/ Risk mitigation proposed</th>
-                                <th style="font-size: 7px" class="rotate th">Severity (S)</th>
-                                <th style="font-size: 7px" class="rotate th">Probability (P)</th>
-                                <th style="font-size: 7px" class="rotate th">Detection (D)</th>
-                                <th style="font-size: 7px" class="rotate th">Risk Level (RPN)</th>
-                                <th style="font-size: 7px">Category of Risk Level (Low, Medium and High)</th>
-                                <th style="font-size: 7px">Risk Acceptance (Y/N)</th>
-                                <th style="font-size: 7px">Traceability Document</th>
+                            <tr class="table_bg">
+                                <th class="thFMEA">Activity</th>
+                                <th class="thFMEA">Possible Risk/Failure (Identified Risk)</th>
+                                <th class="thFMEA">Consequences of Risk/Potential Causes</th>
+                                <th class="thFMEA">Severity (S)</th>
+                                <th class="thFMEA">Probability (P)</th>
+                                <th class="thFMEA">Detection (D)</th>
+                                <th class="thFMEA">Risk Level(RPN)</th>
+                                <th class="thFMEA">	Control Measures recommended/ Risk mitigation proposed</th>
+                                <th class="thFMEA">Severity (S)</th>
+                                <th class="thFMEA">Probability (P)</th>
+                                <th class="thFMEA">Detection (D)</th>
+                                <th class="thFMEA">Risk Level(RPN)</th>
+                                <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
+                                <th class="thFMEA">Risk Acceptance (Y/N)</th>
+                                <!-- <th class="thFMEA">Others</th>
+                                <th class="thFMEA">Attchment</th> -->
+                                
+                                {{-- <th></th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -919,22 +1029,22 @@
                             @if (!empty($data->risk_factor))
                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
                                 <tr class="tr">
-                                    <td style="font-size: 7px"  class="td">{{ $key + 1 }}</td>
-                                    <td style="font-size: 7px" class="td">{{ $riskFactor }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->risk_element)[$key] ?? null }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->problem_cause)[$key] ?? null }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->initial_severity)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->initial_detectability)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->initial_probability)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->initial_rpn)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->risk_control_measure)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->residual_severity)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->residual_probability)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->residual_detectability)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->residual_rpn)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->risk_acceptance)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->risk_acceptance2)[$key] }}</td>
-                                    <td style="font-size: 7px" class="td">{{ unserialize($data->mitigation_proposal)[$key] }}</td>
+                                    <td class="tdFMEA">{{ $key + 1 }}</td>
+                                    <td class="tdFMEA">{{ $riskFactor }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->risk_element)[$key] ?? null }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->problem_cause)[$key] ?? null }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->initial_severity)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->initial_detectability)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->initial_probability)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->initial_rpn)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->risk_control_measure)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->residual_severity)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->residual_probability)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->residual_detectability)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->residual_rpn)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->risk_acceptance)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->risk_acceptance2)[$key] }}</td>
+                                    <td class="tdFMEA">{{ unserialize($data->mitigation_proposal)[$key] }}</td>
                                     
                                 </tr>
                             @endforeach
@@ -1705,7 +1815,7 @@ Not Applicable
                                         </td>
                                 
                                         <th class="w-20"> Acknowledge Comment</th>
-                                        <td class="w-80">
+                                        <td class="w-30">
                                             @if ($data->acknowledge_comment)
                                                 {{ $data->acknowledge_comment }}
                                             @else
@@ -1745,7 +1855,7 @@ Not Applicable
                                         @endif
                                     </td>
                                     <th class="w-20">HOD Review Complete Comment</th>
-                                    <td class="w-80">
+                                    <td class="w-30">
                                         @if ($data->HOD_Review_Complete_Comment)
                                             {{ $data->HOD_Review_Complete_Comment }}
                                         @else
@@ -1785,7 +1895,7 @@ Not Applicable
                                             @endif
                                         </td>
                                         <th class="w-20">QA/CQA Review Complete Comment</th>
-                                        <td class="w-80">
+                                        <td class="w-30">
                                             @if ($data->QAQQ_Review_Complete_comment)
                                                 {{ $data->QAQQ_Review_Complete_comment }}
                                             @else
@@ -1901,7 +2011,7 @@ Not Applicable
                                             @endif
                                         </td>
                                         <th class="w-20"> FinalQA/CQA Review Completed Comment</th>
-                                        <td class="w-80">
+                                        <td class="w-30">
                                             @if ($data->evalution_Closure_comment)
                                                 {{ $data->Final_QA_Review_Complete_Comment }}
                                             @else
@@ -1937,7 +2047,7 @@ Not Applicable
                                         </td>
                                         <th class="w-20">
                                             QAH/CQAH Closure Comment</th>
-                                        <td class="w-80">
+                                        <td class="w-30">
                                             @if ($data->Final_QA_Review_Complete_Comment)
                                                 {{ $data->evalution_Closure_comment }}
                                             @else

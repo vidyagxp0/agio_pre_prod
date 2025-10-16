@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<style>
+{{-- <style>
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -162,47 +162,166 @@
     padding: 10px;
     background: #fff;
     border-radius: 5px;
-}
+    }
 
-.block-head {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
+    .block-head {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-.table th, .table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-}
+    .table th, .table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
 
-.problem-statement th {
-    background: #f4bb22;
-    width: 150px;
-}
+    .problem-statement th {
+        background: #f4bb22;
+        width: 150px;
+    }
 
-.why-label {
-    color: #393cd4;
-    width: 150px;
-}
+    .why-label {
+        color: #393cd4;
+        width: 150px;
+    }
 
-.answer-label {
-    color: #393cd4;
-    width: 150px;
-}
+    .answer-label {
+        color: #393cd4;
+        width: 150px;
+    }
 
-.root-cause th {
-    background: #0080006b;
-    width: 150px;
-}
+    .root-cause th {
+        background: #0080006b;
+        width: 150px;
+    }
 
-.text-muted {
-    color: gray;
-}
+    .text-muted {
+        color: gray;
+    }
+</style> --}}
+
+<style>
+    @page {
+         margin: 160px 35px 100px;
+     }
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+         margin-bottom: -60px; 
+    }
+
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
+
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
+
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
+    }
+
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
+    }
+
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .table_bg {
+        background-color: #387478;
+        color: #111;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
+
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        white-space: normal !important;
+        word-wrap: break-word;
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .no-border th, .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-6 { width: 7%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-40 { width: 40%; }
+    .w-50 { width: 50%; }
+    .w-60 { width: 60%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+
+    table th, table td {
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -210,8 +329,10 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     Deviation Report
+                   </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -304,9 +425,11 @@
                         </td>
 
                     </tr>
+                </table>
+                <table>
                     <tr>
-                    <th class="w-20">Initiator Department Code</th>
-                        <td class="w-30">
+                        <th class="w-20">Initiator Department Code</th>
+                        <td class="w-80">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}
                             @else
@@ -316,7 +439,7 @@
                     </tr>
 
                 </table>
-                <div class="inner-block">
+                {{-- <div class="inner-block">
                     <label class="Summer"
                         style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
                         Short Description </label>
@@ -327,10 +450,22 @@
                             Not Applicable
                         @endif
                     </span>
-                </div>
+                </div> --}}
+
                 <table>
+                    <tr>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80">
+                            @if ($data->short_description)
+                                {{ $data->short_description }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
 
-
+                <table>
                     <tr>
                         <th class="w-20"> Repeat Deviation?</th>
                         <td class="w-30">
@@ -435,8 +570,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        </tr>
-                        <tr>
+
                         <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
                         <td class="w-30">
                             @if ($data->Facility_Equipment)
@@ -447,11 +581,10 @@
                         </td>
 
                     </tr>
-
-                    </table>
+                </table>
 
                    
-                            <div class="block">
+                        <div class="block">
                             <div class="block-head">
                                 Facility/ Equipment/ Instrument/ System Details
                             </div>
@@ -848,7 +981,7 @@
                         HOD Review
                     </div>
 
-                    <div class="inner-block">
+                    {{-- <div class="inner-block">
                         <label class="Summer"
                             style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
                             HOD Review Comment </label>
@@ -859,7 +992,19 @@
                                 Not Applicable
                             @endif
                         </span>
-                    </div>
+                    </div> --}}
+                    <table>
+                        <tr>
+                            <th class="w-20">HOD Review Comment</th>
+                            <td class="w-80">
+                                @if ($data->HOD_Remarks)
+                                    {{ $data->HOD_Remarks }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
                     <div class="border-table">
                         <div class="block-head">
                             HOD Attachments
@@ -900,7 +1045,7 @@
                 <table>
 
                 <tr>
-                <th class="w-20">Initial Deviation category</th>
+                        <th class="w-20">Initial Deviation category</th>
                         <td class="w-30">
                             @if ($data->Deviation_category)
                                 {{ Ucfirst($data->Deviation_category) }}
@@ -908,9 +1053,6 @@
                                 Not Applicable
                             @endif
                         </td>
-                </tr>
-                    <tr>
-                        
                         <th class="w-20">CAPA Required</th>
                         <td class="w-30">
                             @if ($data->capa_required)
@@ -919,6 +1061,9 @@
                                 Not Applicable
                             @endif
                         </td>
+                </tr>
+                    <tr>
+                        
                         <th class="w-20">QRM Required?</th>
                         <td class="w-30">
                             @if ($data->qrm_required)
@@ -927,9 +1072,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
 
-                    <tr>
                         <th class="w-20">Investigation Required?</th>
                         <td class="w-30">
                             @if ($data->Investigation_required)
@@ -938,23 +1081,32 @@
                                 Not Applicable
                             @endif
                         </td>
-
-                        
-
                     </tr>
                 </table>
-                <div class="inner-block">
-                    <label class="Summer"
-                        style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
-                        Justification for categorization </label>
-                    <span style="font-size: 0.8rem; margin-left: 60px;">
-                        @if ($data->Justification_for_categorization)
-                            {{ $data->Justification_for_categorization }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </span>
-                </div>
+                        {{-- <div class="inner-block">
+                            <label class="Summer"
+                                style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
+                                Justification for categorization </label>
+                            <span style="font-size: 0.8rem; margin-left: 60px;">
+                                @if ($data->Justification_for_categorization)
+                                    {{ $data->Justification_for_categorization }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </span>
+                        </div> --}}
+                <table>
+                    <tr>
+                        <th class="w-20">Justification for categorization</th>
+                        <td class="w-80">
+                                @if ($data->Justification_for_categorization)
+                                    {{ $data->Justification_for_categorization }}
+                                @else
+                                    Not Applicable
+                                @endif
+                        </td>
+                    </tr>
+                </table>        
                 {{-- <div class="inner-block">
                     <label class="Summer"
                         style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">Investigation
@@ -967,7 +1119,7 @@
                         @endif
                     </span>
                 </div> --}}
-                <!-- <div class="inner-block">
+                {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline; width:5%">
                         Investigation Required? </label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
@@ -977,9 +1129,9 @@
                             Not Applicable
                         @endif
                     </span>
-                </div> -->
+                </div> --}}
 
-                <div class="inner-block">
+                {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA/CQA Initial Assessment Comment </label>
                     <span style="font-size: 0.8rem; margin-left: 60px;">
                         @if ($data->QAInitialRemark)
@@ -988,7 +1140,19 @@
                             Not Applicable
                         @endif
                     </span>
-                </div>
+                </div> --}}
+                <table>
+                    <tr>
+                        <th class="w-20">QA/CQA Initial Assessment Comment</th>
+                        <td class="w-80">
+                            @if ($data->QAInitialRemark)
+                                {{ $data->QAInitialRemark }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
 
 
             </div>
@@ -1056,11 +1220,12 @@
                                 </td>
                             </tr>
 
-
+                        </table>
+                        <table>
                             <tr>
 
                                 <th class="w-20">Impact Assessment (By Production Tablet/Capsule/Powder)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Production_Table_Assessment)
                                             {{ $data1->Production_Table_Assessment }}
@@ -1080,8 +1245,9 @@
                                     </div>
                                 </td> --}}
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Production Tablet/Capsule/Powder Impact Assessment Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -1103,7 +1269,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                         </table>
                     </div>
                     <div class="border-table">
@@ -1146,7 +1311,6 @@
                             <table>
 
                                 <tr>
-
                                     <th class="w-20">Production Injection Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -1169,11 +1333,11 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Production Injection)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Production_Injection_Assessment)
                                                 {{ $data1->Production_Injection_Assessment }}
@@ -1193,8 +1357,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Production Injection Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -1253,9 +1418,7 @@
                                 Research & Development
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Research & Development Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -1278,11 +1441,11 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>    
+                            <table>
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Research & Development)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->ResearchDevelopment_assessment)
                                                 {{ $data1->ResearchDevelopment_assessment }}
@@ -1302,8 +1465,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>  
+                            <table>  
                                 <tr>
-
                                     <th class="w-20">Research & Development Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -1361,9 +1525,7 @@
                                 Human Resource
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Human Resource Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -1387,10 +1549,11 @@
                                     </td>
                                 </tr>
 
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Human Resource)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Human_Resource_assessment)
                                                 {{ $data1->Human_Resource_assessment }}
@@ -1410,8 +1573,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table> 
+                            <table>   
                                 <tr>
-
                                     <th class="w-20">Human Resource Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -1470,9 +1634,7 @@
                                 Corporate Quality Assurance
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Corporate Quality Assurance Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -1496,10 +1658,11 @@
                                     </td>
                                 </tr>
 
+                            </table> 
+                            <table> 
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Corporate Quality Assurance)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->CorporateQualityAssurance_assessment)
                                                 {{ $data1->CorporateQualityAssurance_assessment }}
@@ -1519,8 +1682,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Corporate Quality Assurance Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -1568,7 +1732,6 @@
                                         <td class="w-20">Not Applicable</td>
                                     </tr>
                                 @endif
-
                             </table>
                         </div>
                     </div>
@@ -1579,9 +1742,7 @@
                                 Stores
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Store Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -1605,10 +1766,11 @@
                                     </td>
                                 </tr>
 
+                            </table>
+                            <table>
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Store)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Store_assessment)
                                                 {{ $data1->Store_assessment }}
@@ -1628,8 +1790,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Store Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -1688,9 +1851,7 @@
                                 Engineering
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Engineering Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -1714,10 +1875,11 @@
                                     </td>
                                 </tr>
 
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Engineering)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Engineering_assessment)
                                                 {{ $data1->Engineering_assessment }}
@@ -1737,8 +1899,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table> 
+                            <table>   
                                 <tr>
-
                                     <th class="w-20">Engineering Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -1767,7 +1930,6 @@
                                 Engineering Attachments
                             </div>
                             <table>
-
                                 <tr class="table_bg">
                                     <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
@@ -1796,9 +1958,7 @@
                                 Regulatory Affair
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Regulatory Affair Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -1822,10 +1982,11 @@
                                     </td>
                                 </tr>
 
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Regulatory Affair)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->RegulatoryAffair_assessment)
                                                 {{ $data1->RegulatoryAffair_assessment }}
@@ -1845,6 +2006,8 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>
+                            <table>    
                                 <tr>
 
                                     <th class="w-20">Regulatory Affair Impact Assessment Completed By</th>
@@ -1905,9 +2068,7 @@
                                 Quality Assurance
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Quality Assurance Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -1930,11 +2091,12 @@
                                         </div>
                                     </td>
                                 </tr>
+                            </table>    
 
+                            <table>
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Quality Assurance)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->QualityAssurance_assessment)
                                                 {{ $data1->QualityAssurance_assessment }}
@@ -1954,8 +2116,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Quality Assurance Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -2014,9 +2177,7 @@
                                 Production (Liquid/Ointment)
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Production (Liquid/Ointment) Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -2039,11 +2200,11 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Production (Liquid/Ointment))</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->ProductionLiquid_assessment)
                                                 {{ $data1->ProductionLiquid_assessment }}
@@ -2063,8 +2224,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>  
+                            <table>  
                                 <tr>
-
                                     <th class="w-20">Production (Liquid/Ointment) Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -2122,9 +2284,7 @@
                                 Quality Control
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Quality Control Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -2147,11 +2307,11 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Quality Control)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Quality_Control_assessment)
                                                 {{ $data1->Quality_Control_assessment }}
@@ -2171,8 +2331,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>  
+                            <table>  
                                 <tr>
-
                                     <th class="w-20">Quality Control Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -2201,7 +2362,6 @@
                                 Quality Control Attachments
                             </div>
                             <table>
-
                                 <tr class="table_bg">
                                     <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
@@ -2220,7 +2380,6 @@
                                         <td class="w-20">Not Applicable</td>
                                     </tr>
                                 @endif
-
                             </table>
                         </div>
                     </div>
@@ -2231,9 +2390,7 @@
                                 Microbiology
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Microbiology Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -2257,11 +2414,12 @@
                                     </td>
                                 </tr>
 
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Microbiology)
                                     </th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Microbiology_assessment)
                                                 {{ $data1->Microbiology_assessment }}
@@ -2281,8 +2439,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Microbiology Impact Assessment Completed By
                                     </th>
                                     <td class="w-30">
@@ -2313,7 +2472,6 @@
                                 Microbiology Attachment
                             </div>
                             <table>
-
                                 <tr class="table_bg">
                                     <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
@@ -2344,9 +2502,7 @@
                                 Safety
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Safety Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -2370,10 +2526,11 @@
                                     </td>
                                 </tr>
 
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Safety)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Health_Safety_assessment)
                                                 {{ $data1->Health_Safety_assessment }}
@@ -2393,8 +2550,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Safety Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -2451,12 +2609,9 @@
                         <div class="head">
                             <div class="block-head">
                                 Contract Giver
-
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Contract Giver Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -2480,10 +2635,11 @@
                                     </td>
                                 </tr>
 
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Impact Assessment (By Contract Giver)</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->ContractGiver_assessment)
                                                 {{ $data1->ContractGiver_assessment }}
@@ -2503,8 +2659,9 @@
                                         </div>
                                     </td> --}}
                                 </tr>
+                            </table>
+                            <table>    
                                 <tr>
-
                                     <th class="w-20">Contract Giver Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -2564,9 +2721,7 @@
                                 Other's 1 ( Additional Person Impact Assessment From Departments If Required)
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Other's 1 Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -2588,6 +2743,10 @@
                                             @endif
                                         </div>
                                     </td>
+                                    
+                                </tr>
+
+                                <tr>
                                     <th class="w-20">Other's 1 Department</th>
                                     <td class="w-30">
                                         <div>
@@ -2598,9 +2757,6 @@
                                             @endif
                                         </div>
                                     </td>
-                                </tr>
-
-                                <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 1)</th>
                                     <td class="w-30">
@@ -2624,7 +2780,6 @@
                                     </td> --}}
                                 </tr>
                                 <tr>
-
                                     <th class="w-20">Other's 1 Impact Assessment Completed By</th>
                                     <td class="w-30">
                                         <div>
@@ -2682,9 +2837,7 @@
                                 Other's 2 ( Additional Person Impact Assessment From Departments If Required)
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Other's 2 Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -2706,6 +2859,9 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+
+                                <tr>
                                     <th class="w-20">Other's 2 Department</th>
                                     <td class="w-30">
                                         <div>
@@ -2716,9 +2872,6 @@
                                             @endif
                                         </div>
                                     </td>
-                                </tr>
-
-                                <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 2)</th>
                                     <td class="w-30">
@@ -2800,9 +2953,7 @@
                                 Other's 3 ( Additional Person Impact Assessment From Departments If Required)
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Other's 3 Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -2824,6 +2975,11 @@
                                             @endif
                                         </div>
                                     </td>
+                                    
+                                </tr>
+
+                                <tr>
+
                                     <th class="w-20">Other's 3 Department</th>
                                     <td class="w-30">
                                         <div>
@@ -2834,9 +2990,6 @@
                                             @endif
                                         </div>
                                     </td>
-                                </tr>
-
-                                <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 3)</th>
                                     <td class="w-30">
@@ -2918,9 +3071,7 @@
                                 Other's 4 ( Additional Person Impact Assessment From Departments If Required)
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Other's 4 Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -2942,6 +3093,9 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+
+                                <tr>
                                     <th class="w-20">Other's 4 Department</th>
                                     <td class="w-30">
                                         <div>
@@ -2952,10 +3106,6 @@
                                             @endif
                                         </div>
                                     </td>
-                                </tr>
-
-                                <tr>
-
                                     <th class="w-20">Impact Assessment (By Other's 4)</th>
                                     <td class="w-30">
                                         <div>
@@ -3036,9 +3186,7 @@
                                 Other's 5 ( Additional Person Impact Assessment From Departments If Required)
                             </div>
                             <table>
-
                                 <tr>
-
                                     <th class="w-20">Other's 5 Impact Assessment Required ?
                                     </th>
                                     <td class="w-30">
@@ -3060,6 +3208,9 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+
+                                <tr>
                                     <th class="w-20">Other's 5 Department</th>
                                     <td class="w-30">
                                         <div>
@@ -3070,10 +3221,6 @@
                                             @endif
                                         </div>
                                     </td>
-                                </tr>
-
-                                <tr>
-
                                     <th class="w-20">Impact Assessment (By Other's 5)</th>
                                     <td class="w-30">
                                         <div>
@@ -3156,7 +3303,6 @@
                         QA/CQA Final Assessment
                         </div>
                         <table>
-
                             <tr>
                                 <th class="w-20">QA/CQA Final Assessment Comment </th>
                                 <td class="w-80">
@@ -3199,7 +3345,6 @@
                         </div>
 
 
-
                         <br>
 
                         <div class="block">
@@ -3207,7 +3352,6 @@
                         QA/CQA Head/Designee Approval
                         </div>
                         <table>
-
                             <tr>
                                 <th class="w-20">QA/CQA Head/Designee Approval comment </th>
                                 <td class="w-80">
@@ -3271,8 +3415,63 @@
                                         </div>
                                     </td>
                                 </tr> --}}
+                                <tr>
+                                    <th class="w-20">Description of Event
+                                    </th>
+                                    <td class="w-80">
+                                        <div>
+                                        @if ($data->Discription_Event)
+                                            {{ $data->Discription_Event }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="w-20">Objective
+                                    </th>
+                                    <td class="w-80">
+                                        <div>
+                                        @if ($data->objective)
+                                            {{ $data->objective }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="w-20">Scope
+                                    </th>
+                                    <td class="w-80">
+                                        <div>
+                                            @if ($data->scope)
+                                                {{ $data->scope }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="w-20">Immediate Action
+                                    </th>
+                                    <td class="w-80">
+                                        <div>
+                                        @if ($data->imidiate_action)
+                                            {{ $data->imidiate_action }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
-                            <div class="inner-block">
+                            {{-- <div class="inner-block">
                                 <label class="Summer"
                                     style="font-weight: bold; font-size: 13px; display: inline; width:5%">
                                     Description of Event </label>
@@ -3307,7 +3506,7 @@
                                         Not Applicable
                                     @endif
                                 </span>
-                            </div>
+                            </div> 
                             <div class="inner-block">
                                 <label class="Summer"
                                     style="font-weight: bold; font-size: 13px; display: inline; width:5%">
@@ -3319,7 +3518,7 @@
                                         Not Applicable
                                     @endif
                                 </span>
-                            </div>
+                            </div> --}}
 
 
                             <div class="border-table" style="margin-bottom: 15px;">
@@ -4160,22 +4359,6 @@
                         </table> --}}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             <!-- <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head">
                                     Why Why Chart
@@ -4600,7 +4783,7 @@
                         <div class="block-head">
                         Root Cause
                             </div>
-                        <div class="inner-block">
+                            {{-- <div class="inner-block">
                                 <label class="Summer"
                                     style="font-weight: bold; font-size: 13px; display: inline; width:5%">
                                     Investigation Summary </label>
@@ -4611,7 +4794,22 @@
                                         Not Applicable
                                     @endif
                                 </span>
-                            </div>
+                            </div> --}}
+
+                            <table>
+                                <tr>
+                                    <th class="w-20">Investigation Summary</th>
+                                    <td class="w-80">
+                                        <div>
+                                            @if ($data->Detail_Of_Root_Cause)
+                                                {{ $data->Detail_Of_Root_Cause }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
 
                         <div class="border-table">
                             <div class="block-head">
@@ -4816,7 +5014,8 @@
                                         <th class="thFMEA" colspan="4">Risk Evaluation</th>
                                         <!-- <th class="thFMEA" rowspan="2">RPN</th> -->
                                         <th class="thFMEA" colspan="1">Risk Control</th>
-                                        <th class="thFMEA" colspan="7">Risk Evaluation</th>
+                                        <th class="thFMEA" colspan="6">Risk Evaluation</th>
+                                        <th class="thFMEA" rowspan="2">Traceability Document</th>
                                         
                                     </tr>
                                     <tr class="table_bg">
@@ -4835,7 +5034,6 @@
                                         <th class="thFMEA">Risk Level(RPN)</th>
                                         <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
                                         <th class="thFMEA">Risk Acceptance (Y/N)</th>
-                                        <th class="thFMEA">Traceability Document</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -5349,7 +5547,61 @@
                         Head QA/CQA / Designee Closure Approval
                         </div>
 
-                        <div class="inner-block">
+                        <table>
+                            <tr>
+                                <th class="w-20">Post Categorization Of Deviation</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->Post_Categorization)
+                                            {{ Ucfirst($data->Post_Categorization) }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Justification for Revised Category</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->Investigation_Of_Review)
+                                            {{ $data->Investigation_Of_Review }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Head QA/CQA / Designee Closure Approval Comments</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->Closure_Comments)
+                                            {{ $data->Closure_Comments }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Disposition Of Batch</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->Disposition_Batch)
+                                            {{ $data->Disposition_Batch }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        {{-- <div class="inner-block">
                             <label class="Summer"
                                 style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
 
@@ -5361,7 +5613,7 @@
                                     Not Applicable
                                 @endif
                             </span>
-                        </div>
+                        </div> 
 
                         <div class="inner-block">
                             <label class="Summer"
@@ -5399,7 +5651,7 @@
                                     Not Applicable
                                 @endif
                             </span>
-                        </div>
+                        </div> --}}
 
 
                     </div>
@@ -5445,131 +5697,179 @@
                         <th class="w-20">Submit On</th>
                         <td class="w-30">{{ $data->submit_on ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Submit Comment</th>
-                        <td class="w-30">{{ $data->submit_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->submit_comment ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>    
+                <table>
                     <tr>
                         <th class="w-20">HOD Review Complete By</th>
                         <td class="w-30">{{ $data->HOD_Review_Complete_By ?? 'Not Applicable' }}</td>
                         <th class="w-20">HOD Review Complete On</th>
                         <td class="w-30">{{ $data->HOD_Review_Complete_On ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">HOD Review Comment</th>
-                        <td class="w-30">{{ $data->HOD_Review_Comments ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->HOD_Review_Comments ?? 'Not Applicable' }}</td>
                     </tr>
+                </table> 
+                <table>   
                     <tr>
                         <th class="w-20">Request For Cancellation By</th>
                         <td class="w-30">{{ $data->pending_Cancel_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Request For Cancellation On</th>
                         <td class="w-30">{{ $data->pending_Cancel_on ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>  
+                <table>  
                     <tr>
                         <th class="w-20">Request For Cancellation Comment</th>
-                        <td class="w-30">{{ $data->pending_Cancel_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->pending_Cancel_comment ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">QA/CQA Initial Review Complete By</th>
                         <td class="w-30">{{ $data->QA_Initial_Review_Complete_By ?? 'Not Applicable' }}</td>
                         <th class="w-20">QA/CQA Initial Review Complete On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->QA_Initial_Review_Complete_On) ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">QA/CQA Initial Review Comment</th>
-                        <td class="w-30">{{ $data->QA_Initial_Review_Comments ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->QA_Initial_Review_Comments ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">CFT Review Complete By</th>
                         <td class="w-30">{{ $data->CFT_Review_Complete_By ?? 'Not Applicable' }}</td>
                         <th class="w-20">CFT Review Complete On</th>
                         <td class="w-30">{{ $data->CFT_Review_Complete_On ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">CFT Review Comment</th>
-                        <td class="w-30">{{ $data->CFT_Review_Comments ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->CFT_Review_Comments ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">CFT Review Not Required By</th>
                         <td class="w-30">{{ $data->cft_review_not_req_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">CFT Review Not Required On</th>
                         <td class="w-30">{{ $data->cft_review_not_req_on ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">CFT Review Not Required Comment</th>
-                        <td class="w-30">{{ $data->cft_review_not_req_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->cft_review_not_req_comment ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">QA/CQA Final Assessment Complete By</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Complete_By ?? 'Not Applicable' }}</td>
                         <th class="w-20">QA/CQA Final Assessment Complete On</th>
                         <td class="w-30">{{ $data->QA_Final_Review_Complete_On ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">QA/CQA Final Assessment Complete Comment</th>
-                        <td class="w-30">{{ $data->QA_Final_Review_Comments ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->QA_Final_Review_Comments ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Approved By</th>
                         <td class="w-30">{{ $data->QA_head_approved_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Approved On</th>
                         <td class="w-30">{{ $data->QA_head_approved_on ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Approved Comment</th>
-                        <td class="w-30">{{ $data->QA_head_approved_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->QA_head_approved_comment ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Initiator Update Completed By</th>
                         <td class="w-30">{{ $data->pending_initiator_approved_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Initiator Update Completed On</th>
                         <td class="w-30">{{ $data->pending_initiator_approved_on ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Initiator Update Completed Comment</th>
-                        <td class="w-30">{{ $data->pending_initiator_approved_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->pending_initiator_approved_comment ?? 'Not Applicable' }}</td>
                     </tr>
-
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">HOD Final Review Complete By</th>
                         <td class="w-30">{{ $data->Hod_final_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">HOD Final Review Complete On</th>
                         <td class="w-30">{{ $data->Hod_final_on ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">HOD Final Review Complete Comment</th>
-                        <td class="w-30">{{ $data->Hod_final_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->Hod_final_comment ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Implementation Verification Complete By</th>
                         <td class="w-30">{{ $data->QA_final_approved_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Implementation Verification Complete On</th>
                         <td class="w-30">{{ $data->QA_final_approved_on ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Implementation Verification Complete Comment</th>
-                        <td class="w-30">{{ $data->QA_final_approved_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->QA_final_approved_comment ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Closure Approved By</th>
                         <td class="w-30">{{ $data->Close_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Closure Approved On</th>
                         <td class="w-30">{{ $data->Close_on ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Closure Approved Comment</th>
-                        <td class="w-30">{{ $data->Close_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->Close_comment ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Cancel By</th>
                         <td class="w-30">{{ $data->cancelled_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Cancel On</th>
                         <td class="w-30">{{ $data->cancelled_on ?? 'Not Applicable' }}</td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Cancel Comment</th>
-                        <td class="w-30">{{ $data->cancelled_comment ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ $data->cancelled_comment ?? 'Not Applicable' }}</td>
                     </tr>
                 </table>
             </div>

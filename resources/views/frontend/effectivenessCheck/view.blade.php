@@ -1407,7 +1407,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ url('rcms/send-effectiveness', $data->id) }}" method="POST">
+                <form action="{{ url('rcms/send-effectiveness', $data->id) }}" method="POST" class="signatureModalForm">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1430,13 +1430,14 @@
                         </div>
                     </div>
 
-                    <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div> -->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -1452,7 +1453,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ url('rcms/send-not-effective', $data->id) }}" method="POST">
+                <form action="{{ url('rcms/send-not-effective', $data->id) }}" method="POST" class="signatureModalForm">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -1474,7 +1475,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -1492,7 +1499,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('rcms/effectiveness-reject', $data->id) }}" method="POST">
+                <form action="{{ url('rcms/effectiveness-reject', $data->id) }}" method="POST" class="signatureModalForm">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1521,7 +1528,13 @@
                                 <button>Close</button>
                             </div> -->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -1685,6 +1698,20 @@
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+        var signatureForms = document.querySelectorAll('.signatureModalForm');
+
+            signatureForms.forEach(function(form) {
+                form.addEventListener('submit', function(e) {
+                    var submitButton = form.querySelector('.signatureModalButton');
+                    var spinner = form.querySelector('.signatureModalSpinner');
+
+                    if (submitButton) submitButton.disabled = true;
+                    if (spinner) spinner.style.display = 'inline-block';
+                });
+            });
         });
     </script>
 
