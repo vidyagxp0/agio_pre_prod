@@ -279,7 +279,7 @@
             font-weight: normal !important;
         }
         
-    </style> --}}
+    </style> 
 
     <style>
     @page {
