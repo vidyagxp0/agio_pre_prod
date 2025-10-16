@@ -6,6 +6,8 @@ use App\Models\RecordNumber;
 use App\Models\RiskAuditTrail;
 use App\Models\RiskManagement;
 use App\Models\RiskAssesmentGrid;
+use App\Models\ActionItemHistory;
+use App\Models\CapaAuditTrial;
 use App\Models\RoleGroup;
 use App\Models\ActionItem;
 use App\Models\Capa;
@@ -11085,6 +11087,87 @@ class RiskManagementController extends Controller
                 $riskAssement->risk_analysis_completed_by = 'Not Applicable';
                 $riskAssement->risk_analysis_completed_on = 'Not Applicable';
                 // $riskAssement->more_actions_needed_1 = $request->comment;
+                 $childCapas = Capa::where('parent_id', $id)
+                ->where('parent_type', 'RCA')
+                ->get();
+
+            if ($childCapas->count() > 0) {
+
+                foreach ($childCapas as $capa) {
+                    $lastDocument = clone $capa; // save old state for history
+
+                    // 🔹 2. Update CAPA fields
+                    $capa->stage = "0";
+                    $capa->status = "Closed-Cancelled";
+                    $capa->cancelled_by = Auth::user()->name;
+                    $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $capa->cancel_comment = $request->comment;
+                    $capa->save();
+
+                    // 🔹 3. Create Audit Trail
+                    $history = new CapaAuditTrial();
+                    $history->capa_id = $capa->id;
+                    $history->activity_type = 'Cancel By, Cancel On';
+                    $history->action = 'Cancel';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_from = $lastDocument->status;
+                    $history->change_to = "Closed-Cancelled";
+                    $history->stage = 'Cancelled';
+
+                    // Previous / Current audit info
+                    $history->previous = $lastDocument->cancelled_by
+                        ? $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on
+                        : '';
+                    $history->current = $capa->cancelled_by . ' , ' . $capa->cancelled_on;
+                    $history->action_name = $lastDocument->cancelled_by ? 'Update' : 'New';
+
+                    $history->save();
+                }
+            }
+                $childActionItems = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'RCA')
+                ->get();
+
+            if ($childActionItems->count() > 0) {
+                foreach ($childActionItems as $actionItem) {
+                    $lastopenState = clone $actionItem; // save previous values before update
+
+                    // 🔹 Update fields
+                    $actionItem->stage = "0";
+                    $actionItem->status = "Closed-Cancelled";
+                    $actionItem->cancelled_by = Auth::user()->name;
+                    $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $actionItem->cancelled_comment = $request->comment;
+                    $actionItem->save();
+
+                    // 🔹 Create history record
+                    $history = new ActionItemHistory();
+                    $history->cc_id = $actionItem->id;
+                    $history->action = "Cancel";
+                    $history->activity_type = 'Cancel By, Cancel On';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastopenState->status;
+                    $history->change_from = $lastopenState->status;
+                    $history->change_to = "Closed-Cancelled";
+                    $history->stage = "Cancelled";
+
+                    // 🔹 Previous & Current info
+                    $history->previous = $lastopenState->cancelled_by
+                        ? $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on
+                        : '';
+                    $history->current = $actionItem->cancelled_by . ' , ' . $actionItem->cancelled_on;
+                    $history->action_name = $lastopenState->cancelled_by ? 'Update' : 'New';
+
+                    $history->save();
+                }
+            }
 
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;

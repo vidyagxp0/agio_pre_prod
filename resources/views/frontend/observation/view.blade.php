@@ -1934,7 +1934,7 @@
                             <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form action="{{ route('observation_change_stage', $data->id) }}" method="POST">
+                        <form action="{{ route('observation_change_stage', $data->id) }}" method="POST" class="signatureModalFormloder">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -1963,10 +1963,16 @@
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
                             </div> -->
-                            <div class="modal-footer">
-                                <button type="submit">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
+                           <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
                             </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
                         </form>
                     </div>
                 </div>
@@ -2429,6 +2435,22 @@
         }
 
     </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+                // var signatureForm = document.getElementById('signatureModalFormloder');
+              var signatureForm = document.querySelector('.signatureModalFormloder'); // <-- class use kiya
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+    </script>
 
 
         @endsection

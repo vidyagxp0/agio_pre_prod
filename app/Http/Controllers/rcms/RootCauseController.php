@@ -5362,7 +5362,9 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
             $extension_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1; 
-            return view('frontend.extension.extension_new', compact('parent_type', 'parent_id', 'record_number','extension_record','parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
+            $record = $record_number;
+
+            return view('frontend.extension.extension_new', compact('parent_type', 'parent_id', 'record_number','extension_record','parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date','record'));
         }
     }
 
