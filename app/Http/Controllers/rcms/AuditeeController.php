@@ -19,6 +19,10 @@ use App\Models\ExternalAuditCFTResponse;
 use Carbon\Carbon;
 use App\Models\User;
 use PDF;
+use App\Models\ActionItemHistory;
+use App\Models\ActionItem;
+use App\Models\Observation;
+use App\Models\AuditTrialObservation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
@@ -6776,7 +6780,73 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
 
             if ($changeControl->stage == 1) {
+                   //Action Item child validation
 
+                    //  $actionchilds = ActionItem::where('parent_id', $id)
+                    //             ->where('parent_type', 'External Audit')
+                    //             ->get();
+                    //                 $hasPendingaction = false;
+                    //             foreach ($actionchilds as $ext) {
+                    //                     $actionchildstatus = trim(strtolower($ext->status));
+                    //                    if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                    //                         $hasPendingaction = true;
+                    //                         break;
+                    //                     }
+                    //                 }
+                    //         if ($hasPendingaction) {
+                    //             // $actionchildstatus = trim(strtolower($extensionchild->status));
+                    //             if ($hasPendingaction) {
+                    //                 Session::flash('swal', [
+                    //                     'title' => 'Action Item Child Pending!',
+                    //                     'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                    //                     'type' => 'warning',
+                    //                 ]);
+
+                    //             return redirect()->back();
+                    //             }
+                    //         } else {
+                    //             // Flash message for success (when the form is filled correctly)
+                    //             Session::flash('swal', [
+                    //                 'title' => 'Success!',
+                    //                 'message' => 'Document Sent',
+                    //                 'type' => 'success',
+                    //             ]);
+                    //         }
+
+
+                    // //Observation child validation
+
+                    //  $observationchilds = Observation::where('parent_id', $id)
+                    //             ->where('parent_type', 'External Audit')
+                    //             ->get();
+                    //                 $hasPendingaction = false;
+                    //             foreach ($observationchilds as $ext) {
+                    //                     $observationchildstatus = trim(strtolower($ext->status));
+                    //                    if ($observationchildstatus !== 'closed - done'  && $observationchildstatus !== 'closed-cancelled') {
+                    //                         $hasPendingaction = true;
+                    //                         break;
+                    //                     }
+                    //                 }
+                    //         if ($hasPendingaction) {
+                    //             // $observationchildstatus = trim(strtolower($extensionchild->status));
+                    //             if ($hasPendingaction) {
+                    //                 Session::flash('swal', [
+                    //                     'title' => 'Observation Child Pending!',
+                    //                     'message' => 'You cannot proceed until Observation Child is Closed-Done.',
+                    //                     'type' => 'warning',
+                    //                 ]);
+
+                    //             return redirect()->back();
+                    //             }
+                    //         } else {
+                    //             // Flash message for success (when the form is filled correctly)
+                    //             Session::flash('swal', [
+                    //                 'title' => 'Success!',
+                    //                 'message' => 'Document Sent',
+                    //                 'type' => 'success',
+                    //             ]);
+                    //         }
+                   
                 if (empty($changeControl->due_date)|| empty($changeControl->audit_type)|| empty($changeControl->initial_comments)||empty($changeControl->external_agencies)||empty($changeControl->start_date_gi) ||empty($changeControl->end_date_gi))
                     {
                         Session::flash('swal', [
@@ -6913,6 +6983,29 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             //             'message' => 'Sent for CFT review state'
             //         ]);
             //     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
                          if (!$Cft->Production_Table_Review|| !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review  || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
@@ -6938,6 +7031,9 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                     $stage->external_audit_id = $id;
                     $stage->cft_user_id = Auth::user()->id;
                     $stage->status = "CFT Required";
+
+
+                    
                     // $stage->cft_stage = ;
                     $stage->comment = $request->comment;
                     $stage->is_required = 1;
@@ -7065,6 +7161,102 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                 //         'message' => 'Sent for QA/CQA Head Approval state'
                 //     ]);
                 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+ ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+                     $userId = Auth::user()->name;
+                    $userAssignments = DB::table('external_audit_c_f_t_s')->where(['external_audit_id' => $id])->first();
+                    $incompleteFields = [];
+
+                    if ($userAssignments->Production_Table_Person == $userId && empty($userAssignments->Production_Table_Assessment)) {
+                        $incompleteFields[] = 'Production Table Assessment';
+                    }
+                    
+                    if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
+                        $incompleteFields[] = 'Production Injection Assessment';
+                    }
+                    
+                    if ($userAssignments->ResearchDevelopment_person == $userId && empty($userAssignments->ResearchDevelopment_assessment)) {
+                        $incompleteFields[] = 'Research Development Assessment';
+                    }
+                    
+                    if ($userAssignments->Store_person == $userId && empty($userAssignments->Store_assessment)) {
+                        $incompleteFields[] = 'Store assessment';
+                    }
+                    
+                    if ($userAssignments->Quality_Control_Person == $userId && empty($userAssignments->Quality_Control_assessment)) {
+                        $incompleteFields[] = 'Quality Control assessment';
+                    }
+                    
+                    if ($userAssignments->QualityAssurance_person == $userId && empty($userAssignments->QualityAssurance_assessment)) {
+                        $incompleteFields[] = 'Quality Assurance assessment';
+                    }
+                    
+                    if ($userAssignments->CorporateQualityAssurance_person == $userId && empty($userAssignments->CorporateQualityAssurance_assessment)) {
+                        $incompleteFields[] = 'Corporate Quality Assurance Assessment';
+                    }
+
+                    if ($userAssignments->RegulatoryAffair_person == $userId && empty($userAssignments->RegulatoryAffair_assessment)) {
+                        $incompleteFields[] = 'RegulatoryAffair assessment';
+                    }
+                    
+                    if ($userAssignments->ProductionLiquid_person == $userId && empty($userAssignments->ProductionLiquid_assessment)) {
+                        $incompleteFields[] = 'ProductionLiquid assessment';
+                    }
+                    
+                    if ($userAssignments->Microbiology_person == $userId && empty($userAssignments->Microbiology_assessment)) {
+                        $incompleteFields[] = 'Microbiology assessment';
+                    }
+                    
+                    if ($userAssignments->Engineering_person == $userId && empty($userAssignments->Engineering_assessment)) {
+                        $incompleteFields[] ='Engineering assessment';
+                    }
+                    
+                    if ($userAssignments->Environment_Health_Safety_person == $userId && empty($userAssignments->Health_Safety_assessment)) {
+                        $incompleteFields[] = 'Health Safety assessment';
+                    }
+                    
+                    if ($userAssignments->Human_Resource_person == $userId && empty($userAssignments->Human_Resource_assessment)) {
+                        $incompleteFields[] = 'Human Resourcec Assessment';
+                    }
+                    
+                    if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {
+                        $incompleteFields[] = 'ContractGiver Assessment';
+                    }
+                    
+                    
+                    if (!empty($incompleteFields)) {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'You must fill your assigned fields for: ' . implode(', ', $incompleteFields) . '.'
+                        ]);
+                        return redirect()->back();
+                    } else {
+                        
+
+
+
+
+
+
+
 
 
                 $IsCFTRequired = ExternalAuditCFTResponse::where(['is_required' => 1, 'external_audit_id' => $id])->latest()->first();
@@ -7823,6 +8015,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
     
                     $changeControl->update();
                 }
+            }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -8768,7 +8961,8 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
             $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'EA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
-            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type', 'data_record','data','parent_division_id'));
+            $parent_record=$data_record;
+            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type', 'data_record','data','parent_division_id','parent_record'));
         }
 
         if ($request->child_type == "Observations")
@@ -8779,8 +8973,10 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
+            // dd($parent_type);
             return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
         }
+
 
         if ($request->child_type == "Extension")
         {

@@ -1019,6 +1019,11 @@
                                                     @php
                                                         $findRecord = DB::table('internal_audits')->find($datas->parent_id);
                                                     @endphp
+
+                                                     @elseif ($datas->parent_type == 'External Audit')
+                                                    @php
+                                                        $findRecord = DB::table('auditees')->find($datas->parent_id);
+                                                    @endphp
                                                                                                         
                                                     @elseif ($datas->parent_type == 'OOC')
                                                     @php
