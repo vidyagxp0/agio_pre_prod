@@ -625,7 +625,7 @@
                                                 <option value="EN" {{ old('departments', $data->departments) == 'EN' ? 'selected' : '' }}>Engineering</option>
                                                 <option value="HR" {{ old('departments', $data->departments) == 'HR' ? 'selected' : '' }}>Human Resource</option>
                                                 <option value="ST" {{ old('departments', $data->departments) == 'ST' ? 'selected' : '' }}>Store</option>
-                                                <option value="IT" {{ old('departments', $data->departments) == 'IT' ? 'selected' : '' }}>Electronic Data Processing</option>
+                                                <option value="IT" {{ old('departments', $data->departments) == 'IT' ? 'selected' : '' }}>Information Technology</option>
                                                 <option value="FD" {{ old('departments', $data->departments) == 'FD' ? 'selected' : '' }}>Formulation Development</option>
                                                 <option value="AL" {{ old('departments', $data->departments) == 'AL' ? 'selected' : '' }}>Analytical Research and Development Laboratory</option>
                                                 <option value="PD" {{ old('departments', $data->departments) == 'PD' ? 'selected' : '' }}>Packaging Development</option>
@@ -633,6 +633,13 @@
                                                 <option value="DC" {{ old('departments', $data->departments) == 'DC' ? 'selected' : '' }}>Document Cell</option>
                                                 <option value="RA" {{ old('departments', $data->departments) == 'RA' ? 'selected' : '' }}>Regulatory Affairs</option>
                                                 <option value="PV" {{ old('departments', $data->departments) == 'PV' ? 'selected' : '' }}>Pharmacovigilance</option>
+                                                <option value="Safety" {{ old('departments', $data->departments) == 'Safety' ? 'selected' : '' }}>Safety</option>
+                                                <option value="Accounts" {{ old('departments', $data->departments) == 'Accounts' ? 'selected' : '' }}>Accounts</option>
+                                                <option value="Finance" {{ old('departments', $data->departments) == 'Finance' ? 'selected' : '' }}>Finance</option>
+                                                <option value="Artwork" {{ old('departments', $data->departments) == 'Artwork' ? 'selected' : '' }}>Artwork</option>
+                                                <option value="Company secretary" {{ old('departments', $data->departments) == 'Company secretary' ? 'selected' : '' }}>Company secretary</option>
+                                                <option value="Exports" {{ old('departments', $data->departments) == 'Exports' ? 'selected' : '' }}>Exports</option>
+                                                <option value="Marketing" {{ old('departments', $data->departments) == 'Marketing' ? 'selected' : '' }}>Marketing</option>
                                             </select>
 
                                             <!-- Hidden Input to Retain Value When Disabled -->
