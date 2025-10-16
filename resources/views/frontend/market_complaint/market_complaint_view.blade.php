@@ -355,6 +355,8 @@
                         @elseif(
                             $data->stage == 4 && (Helpers::check_roles($data->division_id, 'Market Complaint', 5) ||
                                 in_array(Auth::user()->id, $valuesArray)))
+                                 {{-- @if (!$cftCompleteUser) --}}
+
        
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#rejection-modal">
@@ -368,6 +370,8 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                                 Child
                             </button>
+                            {{-- @endif  --}}
+
 
 
               
