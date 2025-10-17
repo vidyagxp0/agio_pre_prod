@@ -407,6 +407,69 @@
             </div>
         </div>
     </div>
+     <style>
+        .company-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #387478;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .company-name::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: #387478;
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        .modal-body .logo {
+            width: 200px;
+            aspect-ratio: 1/0.35;
+            margin: 0 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-body .logo img {
+            object-fit: contain;
+            object-position: center;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .modal-body .bar {
+            margin-bottom: 5px;
+        }
+
+        .modal-body .copyright-bar {
+            margin-top: 20px;
+            background: #5c98e7;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .modal-body {
+            /* display: flex; */
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .modal-body .bar strong {
+            font-weight: bold;
+            color: #5c98e7;
+        }
+
+        .modal-body .bar:nth-child(odd) {
+            background-color: #f0f0f0;
+        }
+    </style>
 
 @php
     $logs_list = [
@@ -428,23 +491,69 @@
 @endphp
 
     {{-- LOG LIST MODAL START --}}
-    <div class="modal fade" id="log-list-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Log Reports</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <!-- Modal -->
+<div class="modal fade" id="log-list-modal" tabindex="-1" aria-labelledby="logModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content rounded-4 shadow-sm">
+            <div class="modal-header bg-gradient-primary text-white rounded-top-4">
+                <h5 class="modal-title" id="logModalLabel"><i class="bi bi-journal-text me-2"></i> Log Reports</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-
-                @foreach ($logs_list as $log_list)
-                    <p> <a href="{{ route('rcms.logs.show', Str::slug($log_list)) }}" target="_blank">{{ $log_list }}</a> </p>
-                @endforeach
+            <div class="modal-body p-4">
+                <ul class="list-unstyled">
+                    @foreach ($logs_list as $log_list)
+                        <li class="mb-3">
+                            <div class="log-card p-3 rounded-3 shadow-sm hover-effect">
+                                <i class="bi bi-file-earmark-text-fill text-primary me-2"></i>
+                                <a href="{{ route('rcms.logs.show', Str::slug($log_list)) }}" target="_blank" class="text-dark fw-medium text-decoration-none">
+                                    {{ $log_list }}
+                                </a>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
+           
         </div>
     </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<style>
+/* Gradient header */
+.bg-gradient-primary {
+    background: linear-gradient(90deg, #5c98e7, #3b73c9);
+}
+
+/* Scrollable modal body */
+.modal-body {
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+/* Log card style */
+.log-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #f8f9fa;
+}
+
+.log-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Remove bullet style */
+.list-unstyled {
+    padding-left: 0;
+}
+
+/* Link hover */
+.log-card a:hover {
+    text-decoration: underline;
+    color: #1a4db3;
+}
+</style>
+
     {{-- LOG LIST MODAL END --}}

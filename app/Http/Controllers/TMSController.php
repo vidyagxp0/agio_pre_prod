@@ -36,11 +36,15 @@ class TMSController extends Controller
 {
     public function index(){
         
-        $inductionTraining = Induction_training::get();  
-        $jobTraining = JobDescription::get();      
-        $jobTrainings = JobTraining::get();
+        // $inductionTraining = Induction_training::get();  
+          $inductionTraining = Induction_training::paginate(10); 
+        $jobTraining = JobDescription::paginate(10);      
+        $jobTrainings = JobTraining::paginate(10);
         if(Helpers::checkRoles(6)){
-            $documents = DocumentTraining::where('trainer', Auth::user()->id)->with('root_document')->orderByDesc('id')->get();
+           $documents = DocumentTraining::where('trainer', Auth::user()->id)
+            ->with('root_document')
+            ->orderByDesc('id')
+            ->paginate(10);
            if($documents){
                foreach($documents as $temp){
 
@@ -143,10 +147,10 @@ class TMSController extends Controller
            }
             }
 
-            $employees = Employee::get();
+               $employees = Employee::orderByDesc('id')->paginate(10);
             // dd($employees);
 
-            $trainers = TrainerQualification::get();
+              $trainers = TrainerQualification::paginate(10);
             return view('frontend.TMS.dashboard', compact('useDocFromJobTraining', 'useDocFromInductionTraining', 'documents2','documents','due','pending','complete', 'employees', 'trainers', 'inductionTraining', 'jobTrainings'));
         }
         else{
