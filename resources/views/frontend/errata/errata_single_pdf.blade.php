@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<style>
+{{-- <style>
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -158,6 +158,119 @@
         font-weight: bold;
         font-size: 14px;
     }
+</style> --}}
+
+<style>
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
+    }
+
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
+
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
+
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
+    }
+
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
+    }
+
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .table_bg {
+        background-color: #387478;
+        color: #111;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
+
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .no-border th, .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+    table th, table td {
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -165,8 +278,10 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     ERRATA Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -217,7 +332,7 @@
 
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->id)
                                 {{ Helpers::divisionNameForQMS($data->division_id) }}/ERRATA/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                             @else
@@ -226,7 +341,7 @@
                         </td>
 
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if (Helpers::getDivisionName($data->division_id))
                                 {{ Helpers::getDivisionName($data->division_id) }}
                             @else
@@ -236,10 +351,10 @@
                     </tr>
                     <tr> {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
-                        <td class="w-80">{{ $data->originator }}</td>
+                        <td class="w-30">{{ $data->originator }}</td>
 
                         <th class="w-20">Date of Initiation</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
 
@@ -297,7 +412,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Document Type</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->document_type)
                                 {{ $data->document_type }}
                             @else
@@ -306,7 +421,7 @@
                         </td>
 
                         <th class="w-20">Others</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->document_type_others)
                                 {{ $data->document_type_others }}
                             @else
@@ -398,7 +513,8 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Brief Description of error</th>
                         <td class="w-80">
@@ -464,7 +580,7 @@
                    
                     <tr>
                         <th class="w-20">Type Of Error</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->type_of_error)
                                 {{ $data->type_of_error }}
                             @else
@@ -473,7 +589,7 @@
                         </td>
 
                         <th class="w-20">Other</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->otherFieldsUser)
                                 {{ $data->otherFieldsUser }}
                             @else
@@ -500,7 +616,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Department Head</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->department_head_to)
                                 {{ Helpers::getInitiatorName($data->department_head_to) }}
                             @else
@@ -509,7 +625,7 @@
                         </td>
 
                         <th class="w-20">QA reviewer</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->qa_reviewer)
                                 {{ Helpers::getInitiatorName($data->qa_reviewer) }}
                             @else
@@ -571,8 +687,8 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20">Sr. No.</th>
-                                <th class="w-20">List Of Impacting Document (If Any)</th>
+                                <th class="w-5">Sr. No.</th>
+                                <th class="w-80">List Of Impacting Document (If Any)</th>
                                 <!-- <th class="w-20">Prepared By</th>
                                 <th class="w-20">Checked By</th>
                                 <th class="w-20">Approved By</th> -->
@@ -580,9 +696,9 @@
                                 @if($grid_Data->ListOfImpactingDocument)
                                 @foreach (unserialize($grid_Data->ListOfImpactingDocument) as $key => $dataDemo)
                                 <tr>
-                                    <td class="w-15">{{ $dataDemo ? $key +1  : "Not Applicable" }}</td>
+                                    <td class="w-5">{{ $dataDemo ? $key +1  : "Not Applicable" }}</td>
 
-                                    <td class="w-15">{{ $dataDemo ? $dataDemo : "Not Applicable"}}</td>
+                                    <td class="w-80">{{ $dataDemo ? $dataDemo : "Not Applicable"}}</td>
                                 </tr>
                                 @endforeach
                                 @else
@@ -654,14 +770,14 @@
                             @foreach (json_decode($data->HOD_Attachments) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
+                                <td class="w-60">Not Applicable</td>
                             </tr>
                         @endif
 
@@ -725,14 +841,14 @@
                             @foreach (json_decode($data->QA_Attachments) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
+                                <td class="w-60">Not Applicable</td>
                             </tr>
                         @endif
 
@@ -771,14 +887,14 @@
                             @foreach (json_decode($data->Approval_Attachments) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
+                                <td class="w-60">Not Applicable</td>
                             </tr>
                         @endif
 
@@ -794,7 +910,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Date Of Correction of document</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->Date_and_time_of_correction)
                                 {{ $data->Date_and_time_of_correction }}
                             @else
@@ -802,7 +918,7 @@
                             @endif
                         </td>
                         <th class="w-20">All Impacting Documents Corrected</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->All_Impacting_Documents_Corrected)
                                 {{ $data->All_Impacting_Documents_Corrected }}
                             @else
@@ -842,14 +958,14 @@
                             @foreach (json_decode($data->Initiator_Attachments) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
+                                <td class="w-60">Not Applicable</td>
                             </tr>
                         @endif
 
@@ -937,7 +1053,7 @@
                             @foreach (json_decode($data->QA_Attachments1) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
@@ -983,14 +1099,14 @@
                             @foreach (json_decode($data->Closure_Attachments) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
+                                <td class="w-60">Not Applicable</td>
                             </tr>
                         @endif
 
@@ -1025,6 +1141,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Submit Comment</th>
                         <td class="w-80">
@@ -1035,8 +1153,8 @@
                             @endif
                         </td>
                     </tr>
-
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Cancel By</th>
                         <td class="w-30">
@@ -1056,6 +1174,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Cancel Comment</th>
                         <td class="w-80">
@@ -1066,8 +1186,8 @@
                             @endif
                         </td>
                     </tr>
-
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">HOD Initial Review Complete By</th>
                         <td class="w-30">
@@ -1087,6 +1207,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">HOD Initial Review Complete Comment</th>
                         <td class="w-80">
@@ -1097,6 +1219,8 @@
                             @endif
                         </td>
                     </tr>
+                </table> 
+                <table>   
                     <tr>
                         <th class="w-20">Review Complete By</th>
                         <td class="w-30">
@@ -1116,6 +1240,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Review Complete Comment</th>
                         <td class="w-80">
@@ -1126,6 +1252,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Approval Complete By</th>
                         <td class="w-30">
@@ -1145,6 +1273,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Approval Complete Comment</th>
                         <td class="w-80">
@@ -1155,8 +1285,8 @@
                             @endif
                         </td>
                     </tr>
-
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Correction Completed By</th>
                         <td class="w-30">
@@ -1176,6 +1306,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Correction Completed Comment</th>
                         <td class="w-80">
@@ -1186,8 +1318,8 @@
                             @endif
                         </td>
                     </tr>
-
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">HOD Review Completed By</th>
                         <td class="w-30">
@@ -1207,6 +1339,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">HOD Review Completed Comment</th>
                         <td class="w-80">
@@ -1217,6 +1351,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
 
                     <tr>
                         <th class="w-20">QA/CQA Head Approval Completed By</th>
@@ -1237,6 +1373,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">QA/CQA Head Approval Completed Comment</th>
                         <td class="w-80">
@@ -1247,7 +1385,8 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Sent To Opened State By</th>
                         <td class="w-30">
@@ -1267,6 +1406,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Sent To Opened State Comment</th>
                         <td class="w-80">
@@ -1277,10 +1418,6 @@
                             @endif
                         </td>
                     </tr>
-
-
-
-
                 </table>
             </div>
 
