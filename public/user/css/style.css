@@ -2665,6 +2665,7 @@ section#pdf-page .watermark {
     margin-bottom: 20px;
     /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
+    border-radius: 5px;
 }
 
 #tms-dashboard .main-block .top {

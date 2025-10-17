@@ -241,17 +241,7 @@
     <div id="rcms_login_block" style="background-image: url('{{ asset('user/images/main-bg.jg') }}')">
         <div class="login-form-block" style="background-image: url('{{ asset('user/images/rcms-login-bg2.p') }}')">
             <div style="display: flex" class="main-block ">
-                {{-- <div class="top-block"> --}}
-                    {{-- <div class="logo" style="display: flex">
-    <img src="{{ asset('user/images/agio-removebg-preview.png') }}" alt="..." style="filter: none; scale: 1; max-width: 100px; margin: auto; margin-bottom: 33px;">
-
-
-    <img  src="{{ asset('user/images/vidhyaGxp.png') }}" alt="..." style="filter: none; scale: 2; max-width: 100px; margin: auto">
-
-
-                    </div> --}}
-                    
-                {{-- </div> --}}
+            
                 <div style="padding: 24px; margin-top: 34px;" class="col-lg-6">
                      <div class="logo" style="display: flex display: flex;flex-direction: row; gap: 65px;">
                      <img src="{{ asset('user/images/agio-removebg-preview.png') }}" alt="..." style="filter: none; scale: 0.7; max-width: 100px; margin: auto; margin-bottom: 14px;">
@@ -261,22 +251,22 @@
 
 
                     </div> 
-                    <div class="head">
-                        Welcome To VidyaGxP
-                    </div>
+                      <div class="head animated-header">
+                        Welcome To <span style="color: #317bf2;">VidyaGxP</span>
+                   </div>
                     <form action="{{ url('rcms_check') }}" method="POST">
                         @csrf
                         <div class="group-input">
-                            <label for="username"><i class="fa-solid fa-envelope"></i></label>
+                            <label for="username"><i class="fa-solid fa-envelope"style="color: #317bf2;"></i></label>
                             <input type="text" name="emp_code" placeholder="Enter Your Employee Code" class="black-placeholder">
                         </div>
                        
                         <div class="group-input">
-                            <label for="password"><i class="fa-solid fa-lock"></i></label>
+                            <label for="password"><i class="fa-solid fa-lock" style="color: #317bf2;"></i></label>
                             <input type="password" name="password" placeholder="Enter Your Password" class="black-placeholder">
                         </div>
                         <div class="group-input">
-                            <label for="timezone"><i class="fa-solid fa-calendar-check"></i></label>
+                            <label for="timezone"><i class="fa-solid fa-calendar-check" style="color: #317bf2;"></i></label>
                             <select name="timezone">
                                 <!-- <option value="Pacific/Midway">
                                     (GMT-11:00) Midway Island
