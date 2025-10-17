@@ -11124,7 +11124,7 @@ document.getElementById('initiator_group').addEventListener('change', function()
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('marketcomplaint.mar_comp_stagechange', $data->id) }}" method="POST" class="signatureModalFormloder"> 
+                <form action="{{ route('marketcomplaint.mar_comp_stagechange', $data->id) }}" method="POST" id="signatureModalFormloder"> 
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -11143,7 +11143,7 @@ document.getElementById('initiator_group').addEventListener('change', function()
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="text" name="comment">
                         </div>
                     </div>
 
@@ -11533,7 +11533,22 @@ document.getElementById('initiator_group').addEventListener('change', function()
                 });
             });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('signatureModalFormloder');
+            //   var signatureForm = document.querySelector('.signatureModalFormloder'); // <-- class use kiya
 
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+</script>
 
 
 
