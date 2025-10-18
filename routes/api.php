@@ -82,3 +82,6 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
 
 //  Route::Post('/mcFilter/{id}',[CCController::class,'audit_filter'])->name('api.marketc.filter');
 
+Route::get('/Change-ControlLog', [LogFilterController::class, 'printPDFCC'])->name('printReportcc');
+Route::get('/print-report', [LogFilterController::class, 'printPDF'])->name('printReport');
+

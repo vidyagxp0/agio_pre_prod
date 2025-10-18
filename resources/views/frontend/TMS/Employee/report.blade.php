@@ -10,11 +10,118 @@
 </head>
 
 <style>
+    @page {
+        margin: 160px 35px 100px;
+        /* top header, side margin, bottom footer */
+    }
+
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
-        min-height: 100vh;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px;
+    }
+
+    header,
+    footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
+
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
+
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
+    }
+
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+
+    .block {
+        margin-bottom: 25px;
+    }
+
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .table_bg {
+        background-color: #387478;
+        color: #111;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
+
+    th,
+    td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        white-space: normal !important;
+        word-wrap: break-word;
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .no-border th,
+    .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 {
+        width: 6%;
+    }
+
+    .w-6 {
+        width: 7%;
+    }
+
+    .w-8 {
+        width: 8%;
     }
 
     .w-10 {
@@ -23,10 +130,6 @@
 
     .w-20 {
         width: 20%;
-    }
-
-    .w-25 {
-        width: 25%;
     }
 
     .w-30 {
@@ -53,120 +156,35 @@
         width: 80%;
     }
 
-    .w-90 {
-        width: 90%;
-    }
-
     .w-100 {
         width: 100%;
     }
 
-    .h-100 {
-        height: 100%;
-    }
-
-    header table,
-    header th,
-    header td,
-    footer table,
-    footer th,
-    footer td,
-    .border-table table,
-    .border-table th,
-    .border-table td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        vertical-align: middle;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-    }
-
-    footer .head,
-    header .head {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
-    }
-
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
-    }
-
-    footer {
-        width: 100%;
-        position: fixed;
-        display: block;
-        bottom: -40px;
-        left: 0;
-        font-size: 0.9rem;
-    }
-
-    footer td {
+    .text-center {
         text-align: center;
     }
 
-    .inner-block {
-        padding: 10px;
+    .border-table {
+        overflow-x: auto;
     }
 
-    .inner-block tr {
-        font-size: 0.8rem;
-    }
-
-    .inner-block .block {
-        margin-bottom: 30px;
-    }
-
-    .inner-block .block-head {
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #4274da;
-        margin-bottom: 10px;
-        color: #4274da;
-    }
-
-    .inner-block th,
-    .inner-block td {
-        vertical-align: baseline;
-    }
-
-    .table_bg {
-        background: #4274da57;
+    table th,
+    table td {
+        word-wrap: break-word;
     }
 </style>
-
 <body>
 
     <header>
         <table>
             <tr>
                 <td class="w-70 head">
-                    Employee Report
+                <h1>Employee Report </h1>
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
-                            class="w-100">
+                        <img src="http://agio_pre_prod.test/user/images/agio.jpg" alt=""
+                            class="w-30">
                     </div>
                 </td>
             </tr>
@@ -190,18 +208,23 @@
         </table>
     </header>
 
-    <footer>
+   <footer>
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                    <strong>Printed By:</strong> {{ Auth::user()->name }}
                 </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
+                <td class="w-30">
+                  <strong>Printed On:</strong> {{ now()->format('d-M-Y | h:i A') }}
 
+                </td>
             </tr>
+
         </table>
+        <table>
+
+        </table>
+
     </footer>
     <div class="inner-block">
         <div class="content-table">
@@ -628,19 +651,7 @@
     </div>
 
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
 
-            </tr>
-        </table>
-    </footer>
 
 </body>
 
