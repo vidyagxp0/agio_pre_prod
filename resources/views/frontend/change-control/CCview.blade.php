@@ -11063,9 +11063,14 @@
         }
 
         // Store user department data
+        //let userDepartments = {
+        //    @foreach ($users as $user)
+        //        "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+        //    @endforeach
+        //};
         let userDepartments = {
             @foreach ($users as $user)
-                "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+                "{{ $user->name }}": `{!! Helpers::getUsersDepartmentName($user->departmentid) !!}`,
             @endforeach
         };
 

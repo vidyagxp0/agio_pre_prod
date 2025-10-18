@@ -242,8 +242,8 @@
     }
 
     th {
-         white-space: normal !important;
-    word-wrap: break-word;
+        white-space: normal !important;
+        word-wrap: break-word;
         background-color: #f2f2f2;
         font-weight: 600;
     }
@@ -284,8 +284,10 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     Internal Audit Trail Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -327,10 +329,8 @@
     </footer>
 
     <div class="inner-block">
-
-
         <div class="second-table">
-            <table class="allow-wb" style="table-layout: fixed; width: 700px;">
+            <table class="allow-wb" style="table-layout:">
                 <thead>
                     <tr class="table_bg">
                         <th class="w-6">S.No</th>
@@ -441,9 +441,6 @@
         </div>
 
     </div>
-
-
-
 
 </body>
 
