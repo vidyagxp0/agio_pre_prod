@@ -904,6 +904,8 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">
                             Additional Testing Required</th>
@@ -928,9 +930,9 @@
                                 Not Applicable
                             @endif
                         </td>
-
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">
                             Any Similar Incident in Past</th>
@@ -1109,7 +1111,7 @@
                     <tr>
                         <th class="w-20">
                             Initiator Update Comments</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->QA_Feedbacks)
                                 {{ $data->QA_Feedbacks }}
                             @else
