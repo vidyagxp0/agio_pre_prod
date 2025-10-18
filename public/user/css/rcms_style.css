@@ -62,10 +62,10 @@ button:hover {
 /*! =================================================================================*/
 /*! HEADER */
 /*! =================================================================================*/
-header .header_rcms_top {
+/* header .header_rcms_top {
     background: #4274da;
     padding: 3px;
-}
+} */
 
 header .header_rcms_middle .middle-head {
     display: flex;
@@ -757,8 +757,10 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 /*! =================================================================================*/
 #rcms-dashboard {
     padding: 20px 0px;
-    background: #4274da;
+    background: #4274da8a;
     min-height: calc(100vh - 130px);
+    border-radius: 2px;
+
 }
 
 #rcms-dashboard .left-block {
@@ -854,7 +856,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 #rcms-dashboard .scope-table thead {
     background: #2f6fd5f2;
     font-size: 0.75rem;
-    /* color: #fff; */
+    color: #fff;
 }
 
 #rcms-dashboard .scope-table .child-row {
@@ -1679,7 +1681,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 /*! =================================================================================*/
 #rcms-desktop {
     background: #4274da;
-    min-height: calc(100vh - 70px);
+    /* min-height: calc(100vh - 70px); */
 }
 
 #rcms-desktop .process-groups {

@@ -4,20 +4,41 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Deviation;
 use App\Models\CC;
+use App\Models\Supplier;
+use App\Models\supplierAudit;
+use App\Models\ActionItem;
+use App\Models\GlobalChangeControl;
+use App\Models\PreventiveMaintenance;
+use App\Models\EquipmentLifecycleManagement;
+use App\Models\GlobalCapa;
+use App\Models\Sanction;
+use App\Models\Document;
+use App\Models\OOS;
+
+use App\Models\Incident;
+use App\Models\CallibrationDetails;
+use App\Models\EHSEvent;
+use App\Models\Ootc;
+use App\Models\Auditee;
+
+use App\Models\OOS_micro;
+use App\Models\NonConformance;
+use App\Models\RootCauseAnalysis;
+use App\Models\AuditProgram;
 use App\Models\errata;
 use App\Models\FailureInvestigation;
+use App\Models\EffectivenessCheck;
+use App\Models\extension_new;
 use App\Models\MarketComplaint;
 use App\Models\RiskManagement;
-use App\Models\NonConformance;
 use App\Models\OutOfCalibration;
 use App\Models\LabIncident;
-use App\Models\Incident;
 use App\Models\InternalAudit;
 use Illuminate\Http\Request;
-use App\Models\OOS_micro;
-use App\Models\Ootc;
 use Carbon\Carbon;
 use App\Models\Capa;
+use App\Models\CapaGrid;
+use PDF;
 use App\Http\Controllers\Controller;
 
 
@@ -1016,11 +1037,112 @@ public function IncidentFilter(Request $request)
 }
 
     
+public function printPDF(Request $request)
+{
+    $filters = $request->all(); 
+    
+    $department = $filterCC['department'] ?? null; 
+    $changerelateTo = $filterCC['changerelateTo'] ?? null; 
+    $classification = $filterCC['dateFrom'] ?? null; 
+    $Initiator = $filterCC['Initiator'] ?? null;
+    
+    $To = $filterCC['dateTo'] ?? null; 
+   
+    $query = Capa::query();
 
+    $query->when($department, function ($q) use ($department) {
+        return $q->where('initiator_Group', $department);
+    });
 
+  
+    $query->when($Initiator, function ($q) use ($Initiator) {
+        return $q->where('initiator_id', $Initiator);
+    });
+
+    $query->when($classification, function ($q) use ($classification) {
+        return $q->where('intiation_date', $classification);
+    });
+
+    $query->when($To, function ($q) use ($To) {
+        return $q->where('intiation_date', $To);
+    });
+
+   
+    $filteredDataCC = $query->get();
+
+    $rowsPerPage = 7;
+    $totalRows = $filteredDataCC->count();
+    $totalPages = ceil($totalRows / $rowsPerPage);
+    $paginatedData = $filteredDataCC->chunk($rowsPerPage);
 
     
 
+    $pdf = Pdf::loadView('frontend.forms.Logs.capapdf', compact('rowsPerPage','paginatedData','totalPages','filteredDataCC'))->setPaper('a4', 'landscape');
+
+    return $pdf->stream('report.pdf');
+}
+
+
     
+public function printPDFCC(Request $request)
+{
+    $filterCC = $request->all();
+
+    // dd($filterCC);
+    $department = $filterCC['department'] ?? null; 
+    $changerelateTo = $filterCC['changerelateTo'] ?? null; 
+    $classification = $filterCC['dateFrom'] ?? null; 
+    $Initiator = $filterCC['Initiator'] ?? null;
+    
+    $To = $filterCC['dateTo'] ?? null; 
+    $changeCategory = $filterCC['RadioActivtiyCCC'] ?? null;
+    $changeCategorytcc = $filterCC['RadioActivtiyTCC'] ?? null;
+
+    $query = CC::query();
+
+    $query->when($department, function ($q) use ($department) {
+        return $q->where('initiator_Group', $department);
+    });
+
+    $query->when($changerelateTo, function ($q) use ($changerelateTo) {
+        return $q->where('severity', $changerelateTo);
+    });
+
+    $query->when($Initiator, function ($q) use ($Initiator) {
+        return $q->where('initiator_id', $Initiator);
+    });
+
+    $query->when($classification, function ($q) use ($classification) {
+        return $q->where('intiation_date', $classification);
+    });
+
+    $query->when($To, function ($q) use ($To) {
+        return $q->where('intiation_date', $To);
+    });
+
+    if ($changeCategory) {
+        $categories = explode(',', $changeCategory); 
+        $query->whereIn('doc_change', $categories);
+    }
+
+    if ($changeCategorytcc) {
+        $categoriestcc = explode(',', $changeCategory); 
+        $query->whereIn('doc_change', $categoriestcc);
+    }
+
+    $filteredDataCC = $query->get();
+
+    $rowsPerPage = 5;
+    $totalRows = $filteredDataCC->count();
+    $totalPages = ceil($totalRows / $rowsPerPage);
+    $paginatedData = $filteredDataCC->chunk($rowsPerPage);
+
+    
+
+    $pdf = Pdf::loadView('frontend.forms.Logs.cclogpdf', compact('rowsPerPage','paginatedData','totalPages','filteredDataCC','changeCategory','changeCategorytcc'))->setPaper('a4', 'landscape');
+
+    return $pdf->stream('report.pdf');
+}
+
 }    
 
