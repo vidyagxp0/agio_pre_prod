@@ -8,160 +8,130 @@
     <title>Vidyagxp - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
-
 <style>
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
-        min-height: 100vh;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
     }
 
-    .w-10 {
-        width: 10%;
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
     }
 
-    .w-20 {
-        width: 20%;
+    header {
+        top: -140px;
+        border-bottom: none;
     }
 
-    .w-25 {
-        width: 25%;
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
     }
 
-    .w-30 {
-        width: 30%;
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
     }
 
-    .w-40 {
-        width: 40%;
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
     }
 
-    .w-50 {
-        width: 50%;
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
     }
 
-    .w-60 {
-        width: 60%;
-    }
-
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    header table,
-    header th,
-    header td,
-    footer table,
-    footer th,
-    footer td,
-    .border-table table,
-    .border-table th,
-    .border-table td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        vertical-align: middle;
+    .table_bg {
+        background-color: #387478;
+        color: #111;
     }
 
     table {
         width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
     }
 
-    th,
-    td {
-        padding: 10px;
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
         text-align: left;
+        vertical-align: top;
     }
 
-    footer .head,
-    header .head {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
     }
 
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
+    .section-gap {
+        margin-top: 20px;
     }
 
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
+    .no-border th, .no-border td {
+        border: none !important;
     }
 
-    footer {
-        width: 100%;
-        position: fixed;
-        display: block;
-        bottom: -40px;
-        left: 0;
-        font-size: 0.9rem;
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
     }
-
-    footer td {
-        text-align: center;
-    }
-
-    .inner-block {
-        padding: 10px;
-    }
-
-    .inner-block tr {
-        font-size: 0.8rem;
-    }
-
-    .inner-block .block {
-        margin-bottom: 30px;
-    }
-
-    .inner-block .block-head {
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #4274da;
-        margin-bottom: 10px;
-        color: #4274da;
-    }
-
-    .inner-block th,
-    .inner-block td {
-        vertical-align: baseline;
-    }
-
-    .table_bg {
-        background: #4274da57;
+    table th, table td {
+        word-wrap: break-word;
     }
 </style>
+
 
 <body>
 
     <header>
+       
         <table>
             <tr>
-                <td class="w-70 head">
-                   CAPA Report
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
+                       CAPA Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -307,7 +277,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">CAPA Team</th>
-                        <td class="w-30">@if($data->capa_team){{  $capa_teamNamesString }}@else Not Applicable @endif</td>
+                        <td class="w-80" colspan="5">@if($data->capa_team){{  $capa_teamNamesString }}@else Not Applicable @endif</td>
 
                     </tr>
                 </table>
@@ -316,14 +286,14 @@
                 <table>
                      <tr>
                             <th class="w-20">Reference Records</th>
-                            <td class="w-30">
+                            <td class="w-80" colspan="5">
                                 @if($data->parent_record_number_edit){{ $data->parent_record_number_edit}}@else Not Applicable @endif
                                 {{--@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif--}}
                             </td>
                         </tr>
                         <tr>
                             <th class="w-20"> Initial Observation</th>
-                            <td class="w-80" colspan="80">
+                            <td class="w-80" colspan="5">
                             @if($data->initial_observation){{ $data->initial_observation}}@else Not Applicable @endif </td>
                     </tr>
                 </table>
@@ -1001,112 +971,116 @@
                                 Activity Log
                             </div>
                             <table>
+                                {{-- Propose Plan --}}
                                 <tr>
-                                    <th class="w-30">Propose Plan By
-                                    </th>
-                                    <td class="w-30"> @if($data->plan_proposed_by){{ $data->plan_proposed_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        Propose Plan On</th>
-                                    <td class="w-30">  @if($data->plan_proposed_on){{ $data->plan_proposed_on }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        Propose Plan Comment</th>
-                                    <td class="w-30">  @if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
+                                    <th class="w-20">Propose Plan By</th>
+                                    <td class="w-30">@if($data->plan_proposed_by){{ $data->plan_proposed_by }}@else Not Applicable @endif</td>
+                                    <th class="w-20">Propose Plan On</th>
+                                    <td class="w-30">@if($data->plan_proposed_on){{ $data->plan_proposed_on }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
-                                    <th class="w-20">Cancel By
-                                    </th>
-                                    <td class="w-30">  @if($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        Cancel On</th>
-                                    <td class="w-30">  @if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        Cancel Comment</th>
-                                    <td class="w-30"> @if($data->cancelled_on_comment){{ $data->cancelled_on_comment }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">HOD Review Complete By
-                                    </th>
-                                    <td class="w-30">  @if($data->hod_review_completed_by){{ $data->hod_review_completed_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        HOD Review Complete On</th>
-                                    <td class="w-30">  @if($data->hod_review_completed_on){{ $data->hod_review_completed_on }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        HOD Review Complete Comment</th>
-                                    <td class="w-30"> @if($data->hod_comment){{ $data->hod_comment }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">QA/CQA Review Complete By
-                                    </th>
-                                    <td class="w-30">  @if($data->qa_review_completed_by){{ $data->qa_review_completed_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        QA/CQA Review Complete On</th>
-                                    <td class="w-30"> @if($data->qa_review_completed_on){{ $data->qa_review_completed_on }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        QA/CQA Review Complete Comment</th>
-                                    <td class="w-30"> @if($data->qa_comment){{ $data->qa_comment }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">Approved By</th>
-                                    <td class="w-30">  @if($data->approved_by){{ $data->approved_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">Approved On</th>
-                                    <td class="w-30">  @if($data->approved_on){{ $data->approved_on }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        Approved Comment</th>
-                                    <td class="w-30"> @if($data->approved_comment){{ $data->approved_comment }}@else Not Applicable @endif</td>
+                                    <th>Propose Plan Comment</th>
+                                    <td colspan="3">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
                                 </tr>
 
+                                {{-- Cancel --}}
                                 <tr>
-                                    <th class="w-20">Complete By
-                                    </th>
-                                    <td class="w-30"> @if($data->completed_by){{ $data->completed_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        Complete On</th>
-                                    <td class="w-30"> @if($data->completed_on){{ $data->completed_on }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        Complete Comment</th>
-                                    <td class="w-30"> @if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
-                                </tr>
-                                {{-- <tr>
-                                    <th class="w-20">QA More Info Required By
-                                    </th>
-                                    <td class="w-30">{{ $data->qa_more_info_required_by }}</td>
-                                    <th class="w-20">
-                                        QA More Info Required On</th>
-                                    <td class="w-30">{{ $data->qa_more_info_required_on }}</td>
-                                    <th class="w-20">
-                                        Comment</th>
-                                    <td class="w-30">{{ $data->qa_more_info_required_on_comment }}</td>
-                                </tr> --}}
-                                <tr>
-                                    <th class="w-20">HOD Final Review Complete By</th>
-                                    <td class="w-30">  @if($data->hod_final_review_completed_by){{ $data->hod_final_review_completed_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">HOD Final Review Completed On</th>
-                                    <td class="w-30"> @if($data->hod_final_review_completed_on){{ $data->hod_final_review_completed_on }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        HOD Final Review Complete Comment</th>
-                                    <td class="w-30">  @if($data->final_comment){{ $data->final_comment }}@else Not Applicable @endif</td>
+                                    <th>Cancel By</th>
+                                    <td>@if($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</td>
+                                    <th>Cancel On</th>
+                                    <td>@if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
-                                    <th class="w-20">QA/CQA Closure Review Complete By</th>
-                                    <td class="w-30">  @if($data->qa_closure_review_completed_by){{ $data->qa_closure_review_completed_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">QA/CQA Closure Review Complete On</th>
-                                    <td class="w-30">  @if($data->qa_closure_review_completed_on){{ $data->qa_closure_review_completed_on }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        QA/CQA Closure Review Complete Comment</th>
-                                    <td class="w-30">  @if($data->qa_closure_comment){{ $data->qa_closure_comment }}@else Not Applicable @endif</td>
-                                </tr>
-                                <tr>
-                                    <th class="w-20">QAH/CQA Head Approval Complete By</th>
-                                    <td class="w-30"> @if($data->qah_approval_completed_by){{ $data->qah_approval_completed_by }}@else Not Applicable @endif</td>
-                                    <th class="w-20">  QAH/CQA Head Approval Complete On</th>
-                                    <td class="w-30"> @if($data->qah_approval_completed_on){{ $data->qah_approval_completed_on }}@else Not Applicable @endif</td>
-                                    <th class="w-20">
-                                        QAH/CQA Head Approval Complete Comment</th>
-                                    <td class="w-30"> @if($data->qah_comment){{ $data->qah_comment }}@else Not Applicable @endif</td>
+                                    <th>Cancel Comment</th>
+                                    <td colspan="3">@if($data->cancelled_on_comment){{ $data->cancelled_on_comment }}@else Not Applicable @endif</td>
                                 </tr>
 
+                                {{-- HOD Review --}}
+                                <tr>
+                                    <th>HOD Review Complete By</th>
+                                    <td>@if($data->hod_review_completed_by){{ $data->hod_review_completed_by }}@else Not Applicable @endif</td>
+                                    <th>HOD Review Complete On</th>
+                                    <td>@if($data->hod_review_completed_on){{ $data->hod_review_completed_on }}@else Not Applicable @endif</td>
+                                </tr>
+                                <tr>
+                                    <th>HOD Review Comment</th>
+                                    <td colspan="3">@if($data->hod_comment){{ $data->hod_comment }}@else Not Applicable @endif</td>
+                                </tr>
+
+                                {{-- QA/CQA Review --}}
+                                <tr>
+                                    <th>QA/CQA Review Complete By</th>
+                                    <td>@if($data->qa_review_completed_by){{ $data->qa_review_completed_by }}@else Not Applicable @endif</td>
+                                    <th>QA/CQA Review Complete On</th>
+                                    <td>@if($data->qa_review_completed_on){{ $data->qa_review_completed_on }}@else Not Applicable @endif</td>
+                                </tr>
+                                <tr>
+                                    <th>QA/CQA Review Comment</th>
+                                    <td colspan="3">@if($data->qa_comment){{ $data->qa_comment }}@else Not Applicable @endif</td>
+                                </tr>
+
+                                {{-- Approved --}}
+                                <tr>
+                                    <th>Approved By</th>
+                                    <td>@if($data->approved_by){{ $data->approved_by }}@else Not Applicable @endif</td>
+                                    <th>Approved On</th>
+                                    <td>@if($data->approved_on){{ $data->approved_on }}@else Not Applicable @endif</td>
+                                </tr>
+                                <tr>
+                                    <th>Approved Comment</th>
+                                    <td colspan="3">@if($data->approved_comment){{ $data->approved_comment }}@else Not Applicable @endif</td>
+                                </tr>
+
+                                {{-- Completed --}}
+                                <tr>
+                                    <th>Completed By</th>
+                                    <td>@if($data->completed_by){{ $data->completed_by }}@else Not Applicable @endif</td>
+                                    <th>Completed On</th>
+                                    <td>@if($data->completed_on){{ $data->completed_on }}@else Not Applicable @endif</td>
+                                </tr>
+                                <tr>
+                                    <th>Complete Comment</th>
+                                    <td colspan="3">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
+                                </tr>
+
+                                {{-- HOD Final Review --}}
+                                <tr>
+                                    <th>HOD Final Review Complete By</th>
+                                    <td>@if($data->hod_final_review_completed_by){{ $data->hod_final_review_completed_by }}@else Not Applicable @endif</td>
+                                    <th>HOD Final Review Completed On</th>
+                                    <td>@if($data->hod_final_review_completed_on){{ $data->hod_final_review_completed_on }}@else Not Applicable @endif</td>
+                                </tr>
+                                <tr>
+                                    <th>HOD Final Review Comment</th>
+                                    <td colspan="3">@if($data->final_comment){{ $data->final_comment }}@else Not Applicable @endif</td>
+                                </tr>
+
+                                {{-- QA/CQA Closure Review --}}
+                                <tr>
+                                    <th>QA/CQA Closure Review Complete By</th>
+                                    <td>@if($data->qa_closure_review_completed_by){{ $data->qa_closure_review_completed_by }}@else Not Applicable @endif</td>
+                                    <th>QA/CQA Closure Review Complete On</th>
+                                    <td>@if($data->qa_closure_review_completed_on){{ $data->qa_closure_review_completed_on }}@else Not Applicable @endif</td>
+                                </tr>
+                                <tr>
+                                    <th>QA/CQA Closure Review Comment</th>
+                                    <td colspan="3">@if($data->qa_closure_comment){{ $data->qa_closure_comment }}@else Not Applicable @endif</td>
+                                </tr>
+
+                                {{-- QAH/CQA Head Approval --}}
+                                <tr>
+                                    <th>QAH/CQA Head Approval Complete By</th>
+                                    <td>@if($data->qah_approval_completed_by){{ $data->qah_approval_completed_by }}@else Not Applicable @endif</td>
+                                    <th>QAH/CQA Head Approval Complete On</th>
+                                    <td>@if($data->qah_approval_completed_on){{ $data->qah_approval_completed_on }}@else Not Applicable @endif</td>
+                                </tr>
+                                <tr>
+                                    <th>QAH/CQA Head Approval Comment</th>
+                                    <td colspan="3">@if($data->qah_comment){{ $data->qah_comment }}@else Not Applicable @endif</td>
+                                </tr>
                             </table>
                         </div>
+
                     </div>
                     </div>
 

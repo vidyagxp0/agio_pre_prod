@@ -9,182 +9,130 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
+
 <style>
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
-        min-height: 100vh;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
     }
 
-    .w-10 {
-        width: 10%;
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
     }
 
-    .w-20 {
-        width: 20%;
+    header {
+        top: -140px;
+        border-bottom: none;
     }
 
-    .w-25 {
-        width: 25%;
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
     }
 
-    .w-30 {
-        width: 30%;
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
     }
 
-    .w-40 {
-        width: 40%;
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
     }
 
-    .w-50 {
-        width: 50%;
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
     }
 
-    .w-60 {
-        width: 60%;
-    }
-
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    header table,
-    header th,
-    header td,
-    footer table,
-    footer th,
-    footer td,
-    .border-table table,
-    .border-table th,
-    .border-table td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        vertical-align: middle;
+    .table_bg {
+        background-color: #387478;
+        color: #111;
     }
 
     table {
         width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
     }
 
-    th,
-    td {
-        padding: 10px;
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
         text-align: left;
+        vertical-align: top;
     }
 
-    footer .head,
-    header .head {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
     }
 
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
+    .section-gap {
+        margin-top: 20px;
     }
 
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
+    .no-border th, .no-border td {
+        border: none !important;
     }
 
-    footer {
-        width: 100%;
-        position: fixed;
-        display: block;
-        bottom: -40px;
-        left: 0;
-        font-size: 0.9rem;
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
     }
-
-    footer td {
-        text-align: center;
+    table th, table td {
+        word-wrap: break-word;
     }
-
-    .inner-block {
-        padding: 10px;
-    }
-
-
-    .inner-block tr {
-        font-size: 0.8rem;
-    }
-
-    .inner-block .block {
-        margin-bottom: 30px;
-    }
-
-    .inner-block .block-head {
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #4274da;
-        margin-bottom: 10px;
-        color: #4274da;
-    }.inner-block .block-head {
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #4274da;
-        margin-bottom: 10px;
-        color: #4274da;
-    }
-
-    .inner-block th,
-    .inner-block td {
-        vertical-align: baseline;
-    }
-
-    .table_bg {
-        background: #4274da57;
-    }
-
-    .summernote-content table {
-        width: 100% !important;
-        border-collapse: collapse !important;
-    }
-    .summernote-content table td,
-    .summernote-content table th {
-        border: 1px solid #ddd !important;
-        padding: 8px !important;
-        vertical-align: top !important;
-        text-align: left !important;
-    }
-    .summernote-content table th {
-        background-color: #f2f2f2 !important;
-    }
-  </style>
-
+</style>
 <body>
 
     <header>
+
+          
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     Out Of Calibration Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -194,6 +142,8 @@
                 </td>
             </tr>
         </table>
+      
+        
         <table>
             <tr>
                 <td class="w-30">
@@ -1811,424 +1761,222 @@
             </div>
 
 
-            <div class="inner-block">
+        <div class="inner-block">
                 <div class="block-head">
                     Activity Log
                 </div>
+
+                <!-- Submit -->
                 <table>
                     <tr>
                         <th class="w-20">Submit By:</th>
-                        <td class="w-30">
-                            @if ($data->submitted_by)
-                                {!! $data->submitted_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->submitted_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Submit On:</th>
-                        <td class="w-30">
-                            @if ($data->submitted_on)
-                                {{ $data->submitted_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Submit Comment:</th>
-                        <td class="w-30">
-                            @if ($data->comment)
-                                {!! $data->comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->submitted_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>Submit Comment:</th>
+                        <td colspan="3">{!! $data->comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- HOD Primary Review -->
+                <table>
                     <tr>
                         <th class="w-20">HOD Primary Review Complete By:</th>
-                        <td class="w-30">
-                            @if ($data->initial_phase_i_investigation_completed_by)
-                                {!! $data->initial_phase_i_investigation_completed_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->initial_phase_i_investigation_completed_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">HOD Primary Review Complete On:</th>
-                        <td class="w-30">
-                            @if ($data->initial_phase_i_investigation_completed_on)
-                                {{ $data->initial_phase_i_investigation_completed_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">HOD Primary Review Complete Comment:</th>
-                        <td class="w-30">
-                            @if ($data->initial_phase_i_investigation_comment)
-                                {!! $data->initial_phase_i_investigation_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->initial_phase_i_investigation_completed_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>HOD Primary Review Complete Comment:</th>
+                        <td colspan="3">{!! $data->initial_phase_i_investigation_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- More Information Required -->
+                <table>
                     <tr>
                         <th class="w-20">More Information Required By:</th>
-                        <td class="w-30">
-                            @if ($data->initial_phase_i_investigation_completed_by)
-                                {!! $data->initial_phase_i_investigation_completed_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->initial_phase_i_investigation_completed_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">More Information Required On:</th>
-                        <td class="w-30">
-                            @if ($data->initial_phase_i_investigation_completed_on)
-                                {{ $data->initial_phase_i_investigation_completed_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">More Information Required Comment:</th>
-                        <td class="w-30">
-                            @if ($data->initial_phase_i_investigation_comment)
-                                {!! $data->initial_phase_i_investigation_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->initial_phase_i_investigation_completed_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>More Information Required Comment:</th>
+                        <td colspan="3">{!! $data->initial_phase_i_investigation_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- QA Head Primary Review -->
+                <table>
                     <tr>
                         <th class="w-20">QA Head Primary Review Complete By:</th>
-                        <td class="w-30">
-                            @if ($data->assignable_cause_f_completed_by)
-                                {!! $data->assignable_cause_f_completed_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->assignable_cause_f_completed_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">QA Head Primary Review Complete On:</th>
-                        <td class="w-30">
-                            @if ($data->assignable_cause_f_completed_on)
-                                {{ $data->assignable_cause_f_completed_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">QA Head Primary Review Complete Comment:</th>
-                        <td class="w-30">
-                            @if ($data->assignable_cause_f_completed_comment)
-                                {!! $data->assignable_cause_f_completed_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->assignable_cause_f_completed_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>QA Head Primary Review Complete Comment:</th>
+                        <td colspan="3">{!! $data->assignable_cause_f_completed_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- Phase IA Investigation -->
+                <table>
                     <tr>
                         <th class="w-20">Phase IA Investigation By:</th>
-                        <td class="w-30">
-                            @if ($data->cause_f_completed_by)
-                                {!! $data->cause_f_completed_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->cause_f_completed_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Phase IA Investigation On:</th>
-                        <td class="w-30">
-                            @if ($data->cause_f_completed_on)
-                                {{ $data->cause_f_completed_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Phase IA Investigation Comment:</th>
-                        <td class="w-30">
-                            @if ($data->cause_f_completed_comment)
-                                {!! $data->cause_f_completed_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->cause_f_completed_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>Phase IA Investigation Comment:</th>
+                        <td colspan="3">{!! $data->cause_f_completed_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- Phase IA HOD Review -->
+                <table>
                     <tr>
                         <th class="w-20">Phase IA HOD Review Complete By:</th>
-                        <td class="w-30">
-                            @if ($data->obvious_r_completed_by)
-                                {!! $data->obvious_r_completed_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->obvious_r_completed_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Phase IA HOD Review Complete On:</th>
-                        <td class="w-30">
-                            @if ($data->obvious_r_completed_on)
-                                {{ $data->obvious_r_completed_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Phase IA HOD Review Complete Comment:</th>
-                        <td class="w-30">
-                            @if ($data->cause_i_ncompleted_comment)
-                                {!! $data->cause_i_ncompleted_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->obvious_r_completed_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>Phase IA HOD Review Complete Comment:</th>
+                        <td colspan="3">{!! $data->cause_i_ncompleted_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- Phase IA QA Review -->
+                <table>
                     <tr>
                         <th class="w-20">Phase IA QA Review Complete By:</th>
-                        <td class="w-30">
-                            @if ($data->cause_i_completed_by)
-                                {!! $data->cause_i_completed_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->cause_i_completed_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Phase IA QA Review Complete On:</th>
-                        <td class="w-30">
-                            @if ($data->cause_i_completed_on)
-                                {{ $data->cause_i_completed_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Phase IA QA Review Complete Comment:</th>
-                        <td class="w-30">
-                            @if ($data->correction_ooc_comment)
-                                {!! $data->correction_ooc_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->cause_i_completed_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>Phase IA QA Review Complete Comment:</th>
+                        <td colspan="3">{!! $data->correction_ooc_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- Assignable Cause Found -->
+                <table>
                     <tr>
                         <th class="w-20">Assignable Cause Found By:</th>
-                        <td class="w-30">
-                            @if ($data->approved_ooc_completed_by)
-                                {!! $data->approved_ooc_completed_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->approved_ooc_completed_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Assignable Cause Found On:</th>
-                        <td class="w-30">
-                            @if ($data->approved_ooc_completed_on)
-                                {{ $data->approved_ooc_completed_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Assignable Cause Found Comment:</th>
-                        <td class="w-30">
-                            @if ($data->approved_ooc_comment)
-                                {!! $data->approved_ooc_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->approved_ooc_completed_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>Assignable Cause Found Comment:</th>
+                        <td colspan="3">{!! $data->approved_ooc_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- Assignable Cause Not Found -->
+                <table>
                     <tr>
                         <th class="w-20">Assignable Cause Not Found By:</th>
-                        <td class="w-30">
-                            @if ($data->correction_r_completed_by)
-                                {!! $data->correction_r_completed_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->correction_r_completed_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Assignable Cause Not Found On:</th>
-                        <td class="w-30">
-                            @if ($data->correction_r_completed_on)
-                                {{ $data->correction_r_completed_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Assignable Cause Not Found Comment:</th>
-                        <td class="w-30">
-                            @if ($data->correction_r_ncompleted_comment)
-                                {!! $data->correction_r_ncompleted_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->correction_r_completed_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>Assignable Cause Not Found Comment:</th>
+                        <td colspan="3">{!! $data->correction_r_ncompleted_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- Phase IB Investigation -->
+                <table>
                     <tr>
                         <th class="w-20">Phase IB Investigation By:</th>
-                        <td class="w-30">
-                            @if ($data->correction_ooc_completed_by)
-                                {!! $data->correction_ooc_completed_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->correction_ooc_completed_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Phase IB Investigation On:</th>
-                        <td class="w-30">
-                            @if ($data->correction_ooc_completed_on)
-                                {{ $data->correction_ooc_completed_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Phase IB Investigation Comment:</th>
-                        <td class="w-30">
-                            @if ($data->correction_ooc_comment)
-                                {!! $data->correction_ooc_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->correction_ooc_completed_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>Phase IB Investigation Comment:</th>
+                        <td colspan="3">{!! $data->correction_ooc_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- Phase IB HOD Review -->
+                <table>
                     <tr>
                         <th class="w-20">Phase IB HOD Review Complete By:</th>
-                        <td class="w-30">
-                            @if ($data->Phase_IB_HOD_Review_Completed_BY)
-                                {!! $data->Phase_IB_HOD_Review_Completed_BY !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->Phase_IB_HOD_Review_Completed_BY ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Phase IB HOD Review Complete On:</th>
-                        <td class="w-30">
-                            @if ($data->Phase_IB_HOD_Review_Completed_ON)
-                                {{ $data->Phase_IB_HOD_Review_Completed_ON }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Phase IB HOD Review Complete Comment:</th>
-                        <td class="w-30">
-                            @if ($data->Phase_IB_HOD_Review_Completed_Comment)
-                                {!! $data->Phase_IB_HOD_Review_Completed_Comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->Phase_IB_HOD_Review_Completed_ON ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>Phase IB HOD Review Complete Comment:</th>
+                        <td colspan="3">{!! $data->Phase_IB_HOD_Review_Completed_Comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- Phase IB QA Review -->
+                <table>
                     <tr>
                         <th class="w-20">Phase IB QA Review Complete By:</th>
-                        <td class="w-30">
-                            @if ($data->Phase_IB_QA_Review_Complete_12_by)
-                                {!! $data->Phase_IB_QA_Review_Complete_12_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->Phase_IB_QA_Review_Complete_12_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Phase IB QA Review Complete On:</th>
-                        <td class="w-30">
-                            @if ($data->Phase_IB_QA_Review_Complete_12_on)
-                                {{ $data->Phase_IB_QA_Review_Complete_12_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Phase IB QA Review Complete Comment:</th>
-                        <td class="w-30">
-                            @if ($data->Phase_IB_QA_Review_Complete_12_comment)
-                                {!! $data->Phase_IB_QA_Review_Complete_12_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->Phase_IB_QA_Review_Complete_12_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>Phase IB QA Review Complete Comment:</th>
+                        <td colspan="3">{!! $data->Phase_IB_QA_Review_Complete_12_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- Approved -->
+                <table>
                     <tr>
                         <th class="w-20">Approved By:</th>
-                        <td class="w-30">
-                            @if ($data->P_IB_Assignable_Cause_Found_by)
-                                {!! $data->P_IB_Assignable_Cause_Found_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->P_IB_Assignable_Cause_Found_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Approved On:</th>
-                        <td class="w-30">
-                            @if ($data->P_IB_Assignable_Cause_Found_on)
-                                {{ $data->P_IB_Assignable_Cause_Found_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Approved Comment:</th>
-                        <td class="w-30">
-                            @if ($data->P_IB_Assignable_Cause_Found_comment)
-                                {!! $data->P_IB_Assignable_Cause_Found_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->P_IB_Assignable_Cause_Found_on ?? 'Not Applicable' }}</td>
                     </tr>
+                    <tr>
+                        <th>Approved Comment:</th>
+                        <td colspan="3">{!! $data->P_IB_Assignable_Cause_Found_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
 
+                <!-- Cancel -->
+                <table>
                     <tr>
                         <th class="w-20">Cancel By:</th>
-                        <td class="w-30">
-                            @if ($data->cancelled_by)
-                                {!! $data->cancelled_by !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{!! $data->cancelled_by ?? 'Not Applicable' !!}</td>
 
                         <th class="w-20">Cancel On:</th>
-                        <td class="w-30">
-                            @if ($data->cancelled_on)
-                                {{ $data->cancelled_on }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Cancel Comment:</th>
-                        <td class="w-30">
-                            @if ($data->cancell_comment)
-                                {!! $data->cancell_comment !!}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        <td class="w-30">{{ $data->cancelled_on ?? 'Not Applicable' }}</td>
                     </tr>
-
-
-
-
-
-
+                    <tr>
+                        <th>Cancel Comment:</th>
+                        <td colspan="3">{!! $data->cancell_comment ?? 'Not Applicable' !!}</td>
+                    </tr>
                 </table>
             </div>
+
         </div>
     </div>
 
