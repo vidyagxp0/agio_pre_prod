@@ -7,162 +7,120 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vidyagxp - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    {{-- <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }  
+    <style>
+      
 
-        .w-10 {
-            width: 10%;
-        }
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
+    }
 
-        .w-20 {
-            width: 20%;
-        }
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
 
-        .w-25 {
-            width: 25%;
-        }
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
 
-        .w-30 {
-            width: 30%;
-        }
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
 
-        .w-40 {
-            width: 40%;
-        }
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
+    }
 
-        .w-50 {
-            width: 50%;
-        }
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
+    }
 
-        .w-60 {
-            width: 60%;
-        }
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
 
-        .w-70 {
-            width: 70%;
-        }
+    .table_bg {
+        background-color: #387478;
+        color: #111;
+    }
 
-        .w-80 {
-            width: 80%;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
 
-        .w-90 {
-            width: 90%;
-        }
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
 
-        .w-100 {
-            width: 100%;
-        }
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
 
-        .h-100 {
-            height: 100%;
-        }
+    .section-gap {
+        margin-top: 20px;
+    }
 
-        header table,
-        header th,
-        header td,
-        footer table,
-        footer th,
-        footer td,
-        .border-table table,
-        .border-table th,
-        .border-table td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            vertical-align: middle;
-        }
+    .no-border th, .no-border td {
+        border: none !important;
+    }
 
-        table {
-            width: 100%;
-        }
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+    table th, table td {
+        word-wrap: break-word;
+    }
 
-        th,
-        td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        footer .head,
-        header .head {
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        @page {
-            size: A4;
-            margin-top: 160px;
-            margin-bottom: 60px;
-        }
-
-        header {
-            position: fixed;
-            top: -140px;
-            left: 0;
-            width: 100%;
-            display: block;
-        }
-
-        footer {
-            width: 100%;
-            position: fixed;
-            bottom: -40px;
-            left: 0;
-            display: block;
-            font-size: 0.9rem;
-        }
-
-        footer td {
-            text-align: center;
-        }
-
-        .inner-block {
-            padding: 10px;
-        }
-
-        .inner-block tr {
-            font-size: 0.8rem;
-        }
-
-        .inner-block .block {
-            margin-bottom: 30px;
-        }
-
-        .inner-block .block-head {
-            font-weight: bold;
-            font-size: 1.1rem;
-            padding-bottom: 5px;
-            border-bottom: 2px solid #4274da;
-            margin-bottom: 10px;
-            color: #4274da;
-        }
-
-        .inner-block th,
-        .inner-block td {
-            vertical-align: baseline;
-        }
-
-        .table_bg {
-            background: #4274da57;
-        }
-
-        .table_bg th {
-            background: #4274da57;
-        }
-
-        .table_bg td {
-            background: none;
-        }
-
-        .page-break {
-            page-break-before: always;
-        }
 
         .head-number {
             font-weight: bold;
@@ -321,7 +279,7 @@
             font-weight: normal !important;
         }
         
-    </style> --}}
+    </style> 
 
     <style>
     @page {
@@ -448,10 +406,14 @@
 <body>
 
     <header>
+        
+
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     Risk Assessment Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -618,79 +580,49 @@
                         </td>
 
                     </tr>
-                </table>
 
-                <label class="head-number" for="Purpose">Purpose</label>
-                <div class="div-data">
-                    @if ($data->purpose)
-                        {{ $data->purpose }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
+                    <tr>
+                        <th class="w-20">Purpose</th>
+                        <td class="w-80">
+                            @if ($data->purpose)
+                                {{ $data->purpose }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
 
-                <label class="head-number" for="Scope">Scope</label>
-                <div class="div-data">
-                    @if ($data->scope)
-                        {{ $data->scope }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Scope</th>
+                        <td class="w-80">
+                            @if ($data->scope)
+                                {{ $data->scope }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
 
-                <label class="head-number" for="Reason for Revision">Reason for Revision</label>
-                <div class="div-data">
-                    @if ($data->reason_for_revision)
-                        {{ $data->reason_for_revision }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
+                    </tr>
 
-                <!-- <label class="head-number" for="Brief Description / Procedure">Brief Description / Procedure</label> -->
-                <!-- <div class="div-data">
-                    @if ($data->Brief_description)
-                        {{ strip_tags($data->Brief_description) }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div> -->
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Brief Description / Procedure</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block" style='padding: 10px;'>
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->Brief_description, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                     <tr>
+                        <th class="w-20">Reason for Revision</th>
+                        <td class="w-80">
+                            @if ($data->reason_for_revision)
+                                {{ $data->reason_for_revision }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
 
-                {{-- <label class="head-number" for="Brief Description / Procedure">Brief Description / Procedure</label>
-                <div class="div-data">
-                    @if ($data->Brief_description)
-                     {!! strip_tags($data->Brief_description, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                    @else
-                        Not Applicable
-                    @endif
-                </div> --}}
-                <label class="head-number" for="Brief Description / Procedure">Brief Description / Procedure</label>
-                <div class="div-data">
+                    </tr>
+
+
+                     <tr>
+                        <th class="w-20">Brief Description / Procedure</th>
+                        <td class="w-80">
+                            
+                    <div class="div-data">
                     @if ($data->Brief_description)
                         {!! $data->Brief_description !!}
                     @else
@@ -698,17 +630,25 @@
                     @endif
                 </div>
 
+                        </td>
 
-                <label class="head-number" for="Documents Used For Risk Management">Documents Used For Risk
-                    Management</label>
-                <div class="div-data">
-                    @if ($data->document_used_risk)
-                        {{ $data->document_used_risk }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
-            </div>
+                    </tr>
+
+                     <tr>
+                        <th class="w-20">Documents Used For Risk
+                    Management</th>
+                        <td class="w-80">
+                           @if ($data->document_used_risk)
+                                {{ $data->document_used_risk }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                    </tr>
+                </table>
+
+              
 
             <div class="border-table">
                 <div class="block-head">
@@ -916,7 +856,7 @@
                             </tr>
                         @endif
                     </table>
-                    </div> --}}
+                    </div> 
 
 
             <div class="block">
@@ -938,8 +878,36 @@
                     @else
                         Not Applicable
                     @endif
-                </div>
+                </div>--}}
 
+
+                 <table>
+                        
+
+                    <tr>
+                        <th class="w-20">Root Cause Methodology</th>
+                        <td class="w-30">
+                            @if ($data->root_cause_methodology)
+                                {{ str_replace(',', ', ', $data->root_cause_methodology) }}
+                            @else
+                                Not Applicable
+                            @endif
+
+                        </td>
+                    </tr>
+                       <tr>
+                        <th class="w-20">Other (Root Cause Methodology)</th>
+                        <td class="w-30">
+                            @if ($data->other_root_cause_methodology)
+                                {{ $data->other_root_cause_methodology }}
+                            @else
+                                Not Applicable
+                            @endif
+
+                        </td>
+                    </tr>
+
+            </table>
                 {{-- <table>
                     <tr>
                         <th class="w-20">Root Cause Methodology</th>
@@ -974,8 +942,9 @@
     $causes = unserialize($riskEffectAnalysis->problem_cause);
     $existingControls = unserialize($riskEffectAnalysis->existing_risk_control);
     $initialS = unserialize($riskEffectAnalysis->initial_severity);
+     $initialD = unserialize($riskEffectAnalysis->initial_detectability);
     $initialP = unserialize($riskEffectAnalysis->initial_probability);
-    $initialD = unserialize($riskEffectAnalysis->initial_detectability);
+   
     $initialRPN = unserialize($riskEffectAnalysis->initial_rpn);
     $recommendations = unserialize($riskEffectAnalysis->risk_control_measure);
     $residualS = unserialize($riskEffectAnalysis->residual_severity);
@@ -1031,8 +1000,9 @@
                 <tr>
                     <td class="tdFMEA">{{ $existingControls[$key] ?? null }}</td>
                     <td class="tdFMEA">{{ $initialS[$key] ?? null }}</td>
-                    <td class="tdFMEA">{{ $initialP[$key] ?? null }}</td>
+                  
                     <td class="tdFMEA">{{ $initialD[$key] ?? null }}</td>
+                      <td class="tdFMEA">{{ $initialP[$key] ?? null }}</td>
                     <td class="tdFMEA">{{ $initialRPN[$key] ?? null }}</td>
                     <td class="tdFMEA">{{ $recommendations[$key] ?? null }}</td>
                 </tr>
@@ -1129,8 +1099,8 @@
                         @php
                             // Unserialize data and ensure each is an array
                             $measurement_4 = is_array(unserialize($riskEffectAnalysis->initial_severity)) ? unserialize($riskEffectAnalysis->initial_severity) : [];
-                            $measurement_5 = is_array(unserialize($riskEffectAnalysis->initial_detectability)) ? unserialize($riskEffectAnalysis->initial_detectability) : [];
-                            $measurement_6 = is_array(unserialize($riskEffectAnalysis->initial_probability)) ? unserialize($riskEffectAnalysis->initial_probability) : [];
+                            $measurement_5 = is_array(unserialize($riskEffectAnalysis->initial_probability)) ? unserialize($riskEffectAnalysis->initial_probability) : [];
+                            $measurement_6 = is_array(unserialize($riskEffectAnalysis->initial_detectability)) ? unserialize($riskEffectAnalysis->initial_detectability) : [];
                             $measurement_7 = is_array(unserialize($riskEffectAnalysis->initial_rpn)) ? unserialize($riskEffectAnalysis->initial_rpn) : [];
                             $row_number = 1; // Reset row number
                         @endphp
@@ -1408,17 +1378,34 @@
     </div>
 </diV>
 
-                
+       
+
+                <!-- <table>
+                    <tr>
+                        <th class="w-20">Risk Assessment Summary</th>
+                        <td class="w-80">
+
+                          @if ($data->investigation_summary)
+                                {!! $data->investigation_summary !!}
+                            @else
+                                Not Applicable
+                            @endif
+
+                         </td>
+                        </tr>
+
+                </table> -->
+
 
                 <div class="border">
-                        <label class="head-number" for="Risk Assessment Summary">Risk Assessment Summary</label>
+                        <!-- <label class="head-number" for="Risk Assessment Summary">Risk Assessment Summary</label>
                         <div class="div-data">
                             @if ($data->investigation_summary)
                                 {!! $data->investigation_summary !!}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </div> -->
                         
                         <table>
                         <!-- <tr>
@@ -1431,6 +1418,20 @@
                                 @endif
                             </td>
                         </tr> -->
+
+                        <tr>
+                            <th class="w-20">Risk Assessment Summary</th>
+                            <td class="w-80">
+                                @if ($data->investigation_summary)
+                                    
+                                        {!! $data->investigation_summary !!}
+                                    
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+
 
                         <tr>
                             <th class="w-20">Risk Assessment Conclusion</th>
@@ -1611,6 +1612,9 @@
                     </div> --}}
 
 
+
+                   
+
             <div class="block">
                  <div class="block-head">HOD/Designee</div>
                {{-- <table>
@@ -1621,14 +1625,27 @@
 
                 </table> --}}
 
-                <label class="head-number" for="HOD/Designee Review Comment">HOD/Designee Review Comment</label>
+                <!-- <label class="head-number" for="HOD/Designee Review Comment">HOD/Designee Review Comment</label>
                 <div class="div-data">
                     @if ($data->hod_des_rev_comm)
                         {{ $data->hod_des_rev_comm }}
                     @else
                         Not Applicable
                     @endif
-                </div>
+                </div> -->
+                 <table>
+                    <tr>
+                        <th class="w-20">HOD/Designee Review Comment</th>
+                        <td class="w-80">
+                             @if ($data->hod_des_rev_comm)
+                                {{ $data->hod_des_rev_comm }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                </table> 
                 <div class="border-table">
                     <div class="block-head">
                         HOD/Designee  Attachments
@@ -1661,11 +1678,12 @@
                 <div class="block-head">
                     CFT Review
                 </div>
-                <div class="block-head">Production (Tablet/Capsule/Powder) </div>
+               <div class="block-head">Production (Tablet/Capsule/Powder)</div>
+
                 <table>
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Review Required?</th>
-                        <td class="w-80">
+                         <td class="w-80">
                             @if ($data1->Production_Table_Review)
                                 {{ $data1->Production_Table_Review }}
                             @else
@@ -1673,9 +1691,8 @@
                             @endif
                         </td>
 
-                        {{-- <td class="w-30"> <div> @if ($data1->Production_Review)  {{ $data1->Production_Review }} @else Not Applicable  @endif </div>  </td> --}}
                         <th class="w-20">Production Tablet/Capsule/Powder Person</th>
-                        <td class="w-80">
+                         <td class="w-80">
                             @if ($data1->Production_Table_Person)
                                 {{ $data1->Production_Table_Person }}
                             @else
@@ -1683,9 +1700,10 @@
                             @endif
                         </td>
                     </tr>
+
                     <tr>
-                        <th class="w-20">Impact Assesment(By Production Tablet/Capsule/Powder)</th>
-                        <td class="w-80">
+                        <th class="w-20">Impact Assessment (By Production Tablet/Capsule/Powder)</th>
+                        <td colspan="3">
                             @if ($data1->Production_Table_Assessment)
                                 {{ strip_tags($data1->Production_Table_Assessment) }}
                             @else
@@ -1694,16 +1712,19 @@
                         </td>
                     </tr>
 
-                    {{-- <tr>
+                    {{-- Uncomment this block if you want to include Feedback --}}
+                    {{-- 
+                    <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Feedback</th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->Production_Table_Feedback)
                                 {{ strip_tags($data1->Production_Table_Feedback) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                    </tr> --}}
+                    </tr>
+                    --}}
 
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
@@ -1725,6 +1746,7 @@
                         </td>
                     </tr>
                 </table>
+
                 <table>
                     <div class="border-table">
                         <div class="block-head">
@@ -1775,9 +1797,12 @@
                         </td>
                     </tr>
 
+                
+                   
+
                     <tr>
                         <th class="w-20">Impact Assesment(By Production Injection)</th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->Production_Injection_Assessment)
                                 {{ strip_tags($data1->Production_Injection_Assessment) }}
                             @else
@@ -1785,7 +1810,7 @@
                             @endif
                         </td>
                     </tr>
-
+               
                     {{--<tr>
                         <th class="w-20">Production Injection Feedback(By Production Injection) </th>
                         <td class="w-80">
@@ -1870,7 +1895,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Impact Assessment (By Research & Development)</th>
-                        <td class="w-30">
+                        <td colspan="3">
                             @if ($data1->ResearchDevelopment_assessment)
                                 {{ strip_tags($data1->ResearchDevelopment_assessment) }}
                             @else
@@ -1961,7 +1986,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Human Resource)</th>
-                        <td class="w-80">
+                         <td colspan="3">
                             @if ($data1->Human_Resource_assessment)
                                 {{ strip_tags($data1->Human_Resource_assessment) }}
                             @else
@@ -2051,7 +2076,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Corporate Quality Assurance)</th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->CorporateQualityAssurance_assessment)
                                 {{ strip_tags($data1->CorporateQualityAssurance_assessment) }}
                             @else
@@ -2141,7 +2166,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Store)</th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->Store_assessment)
                                 {{ strip_tags($data1->Store_assessment) }}
                             @else
@@ -2231,7 +2256,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Quality Control)</th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->Quality_Control_assessment)
                                 {{ strip_tags($data1->Quality_Control_assessment) }}
                             @else
@@ -2322,7 +2347,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Quality assurance)</th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->QualityAssurance_assessment)
                                 {{ strip_tags($data1->QualityAssurance_assessment) }}
                             @else
@@ -2415,7 +2440,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (Regulatory Affair)</th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->RegulatoryAffair_assessment)
                                 {{ strip_tags($data1->RegulatoryAffair_assessment) }}
                             @else
@@ -2507,7 +2532,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Production Liquid/External  Preparation)</th>
-                        <td class="w-80">
+                         <td colspan="3">
                             @if ($data1->ProductionLiquid_assessment)
                                 {{ strip_tags($data1->ProductionLiquid_assessment) }}
                             @else
@@ -2600,7 +2625,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Microbiology)</th>
-                        <td class="w-80">
+                         <td colspan="3">
                             @if ($data1->Microbiology_assessment)
                                 {{ strip_tags($data1->Microbiology_assessment) }}
                             @else
@@ -2696,7 +2721,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Engineering)</th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->Engineering_assessment)
                                 {{ strip_tags($data1->Engineering_assessment) }}
                             @else
@@ -2793,7 +2818,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment(By Safety)</th>
-                        <td class="w-80">
+                       <td colspan="3">
                             @if ($data1->Health_Safety_assessment)
                                 {{ strip_tags($data1->Health_Safety_assessment) }}
                             @else
@@ -2884,7 +2909,7 @@
 
                     <tr>
                         <th class="w-20">Other's 1 Department</th>
-                        <td class="w-80">
+                         <td colspan="3">
                             @if ($data1->Other1_Department_person)
                                 {{ strip_tags($data1->Other1_Department_person) }}
                             @else
@@ -2895,7 +2920,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 1) </th>
-                        <td class="w-80">
+                         <td colspan="3">
                             @if ($data1->Other1_assessment)
                                 {{ strip_tags($data1->Other1_assessment) }}
                             @else
@@ -2986,7 +3011,7 @@
 
                     <tr>
                         <th class="w-20">Other's 2 Department</th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->Other2_Department_person)
                                 {{ strip_tags($data1->Other2_Department_person) }}
                             @else
@@ -2997,7 +3022,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 2) </th>
-                        <td class="w-80">
+                        <td colspan="3">
                            @if ($data1->Other2_Assessment)
                                 {{ strip_tags($data1->Other2_Assessment) }}
                             @else
@@ -3088,7 +3113,7 @@
 
                     <tr>
                         <th class="w-20">Other's 3 Department</th>
-                        <td class="w-80">
+                       <td colspan="3">
                             @if ($data1->Other3_Department_person)
                                 {{ strip_tags($data1->Other3_Department_person) }}
                             @else
@@ -3099,7 +3124,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 3) </th>
-                        <td class="w-80">
+                        <td colspan="3">
                         @if ($data1->Other3_Assessment)
                                 {{ strip_tags($data1->Other3_Assessment) }}
                             @else
@@ -3190,7 +3215,7 @@
 
                     <tr>
                         <th class="w-20">Other's 4 Department</th>
-                        <td class="w-80">
+                         <td colspan="3">
                             @if ($data1->Other4_Department_person)
                                 {{ strip_tags($data1->Other4_Department_person) }}
                             @else
@@ -3201,7 +3226,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 4) </th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->Other4_Assessment)
                                 {{ strip_tags($data1->Other4_Assessment) }}
                             @else
@@ -3292,7 +3317,7 @@
 
                     <tr>
                         <th class="w-20">Other's 5 Department</th>
-                        <td class="w-80">
+                       <td colspan="3">
                             @if ($data1->Other5_Department_person)
                                 {{ strip_tags($data1->Other5_Department_person) }}
                             @else
@@ -3303,7 +3328,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 5) </th>
-                        <td class="w-80">
+                        <td colspan="3">
                             @if ($data1->Other5_Assessment)
                                 {{ strip_tags($data1->Other5_Assessment) }}
                             @else
@@ -3375,14 +3400,20 @@
             <div class="block">
                 <div class="block-head">QA/CQA Review</div>
 
-                <label class="head-number" for="QA/CQA Review Comment">QA/CQA Review Comment</label>
-                <div class="div-data">
-                    @if ($data->qa_cqa_comments)
-                        {{ $data->qa_cqa_comments }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
+                
+
+                    <table>
+                        <tr>
+                            <th class="w-20">QA/CQA Review Comment</th>
+                            <td class="w-80">@if ($data->qa_cqa_comments)
+                            {{ $data->qa_cqa_comments }}
+                        @else
+                            Not Applicable
+                        @endif</td>
+                        </tr>
+                        </table>
+
+
                 <br>
 
                 <div class="border-table">
@@ -3415,14 +3446,26 @@
             <div class="block">
                 <div class="block-head">QA/CQA Head Approval</div>
                 <label class="head-number" for="QA/CQA Head Approval Comment">QA/CQA Head Approval Comment</label>
-                <div class="div-data">
+                <!-- <div class="div-data">
                     @if ($data->qa_cqa_head_comm)
                         {{ $data->qa_cqa_head_comm }}
                     @else
                         Not Applicable
                     @endif
-                </div>
-                <br>
+                </div> -->
+
+                <table>
+                        <tr>
+                            <th class="w-20">QA/CQA Head Approval</th>
+                            <td class="w-80">@if ($data->qa_cqa_head_comm)
+                            {{ $data->qa_cqa_head_comm }}
+                            @else
+                                Not Applicable
+                            @endif
+                             </td>
+                        </tr>
+                 </table>
+              
 
                 <div class="border-table">
                     <div class="block-head">
@@ -3472,7 +3515,7 @@
                 <tr>
                     <th class="w-20">
                         Submit Comment</th>
-                    <td class="w-30">@if($data->submit_comment){{ $data->submit_comment }}@else Not Applicable @endif</td>
+                   <td colspan="3">@if($data->submit_comment){{ $data->submit_comment }}@else Not Applicable @endif</td>
                 </tr>
 
             </table>
@@ -3489,7 +3532,7 @@
                 <tr>
                     <th class="w-20">
                         HOD Review Complete Comment</th>
-                    <td class="w-30">@if($data->cft_comments){{ $data->cft_comments }}@else Not Applicable @endif</td>
+                  <td colspan="3">@if($data->cft_comments){{ $data->cft_comments }}@else Not Applicable @endif</td>
                 </tr>
             </table>
             <div class="block-head">
@@ -3502,12 +3545,12 @@
                     <td class="w-30">@if($data->CFT_Review_Complete_By){{ $data->CFT_Review_Complete_By }}@else Not Applicable @endif</td>
                     <th class="w-20">
                         CFT Review Complete On</th>
-                    <td class="w-30">@if($data->CFT_Review_Complete_On){{ Helpers::getdateFormat($data->CFT_Review_Complete_On) }}@else Not Applicable @endif</td>
+                   <td class="w-30">@if($data->CFT_Review_Complete_On){{ Helpers::getdateFormat($data->CFT_Review_Complete_On) }}@else Not Applicable @endif</td>
                 </tr>
                 <tr>
                     <th class="w-20">
                         CFT Review Complete Comment</th>
-                    <td class="w-30">@if($data->CFT_Review_Comments){{ $data->CFT_Review_Comments }}@else Not Applicable @endif</td>
+                    <td colspan="3">@if($data->CFT_Review_Comments){{ $data->CFT_Review_Comments }}@else Not Applicable @endif</td>
                 </tr>
             </table>
             <div class="block-head">
@@ -3523,9 +3566,10 @@
                 <tr>
                     <th class="w-20">
                         QA/CQA Review Complete Comment</th>
-                    <td class="w-30">@if($data->QA_Initial_Review_Comments){{ $data->QA_Initial_Review_Comments }}@else Not Applicable @endif</td>
+                    <td colspan="3">@if($data->QA_Initial_Review_Comments){{ $data->QA_Initial_Review_Comments }}@else Not Applicable @endif</td>
                 </tr>
             </table>
+            
             <div class="block-head">
                 Approved
             </div>
@@ -3539,7 +3583,7 @@
                 <tr>
                     <th class="w-20">
                         Approved Comment</th>
-                    <td class="w-30">@if($data->in_approve_Comments){{ $data->in_approve_Comments }}@else Not Applicable @endif</td>
+                    <td colspan="3">@if($data->in_approve_Comments){{ $data->in_approve_Comments }}@else Not Applicable @endif</td>
                 </tr>
             </table>
 
@@ -3556,7 +3600,7 @@
                 <tr>
                     <th class="w-20">
                         Cancel Comment</th>
-                    <td class="w-30">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
+                    <td colspan="3">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
                 </tr>
             </table>
         </div>

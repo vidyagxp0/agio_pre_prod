@@ -209,9 +209,9 @@
     </script>
 
     <style>
-        textarea.note-codable {
+        /* textarea.note-codable {
             display: none !important;
-        }
+        } */
 
        
 
@@ -555,7 +555,7 @@ dd($data->initiator_id , Auth::user()->id);
                     <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                 </div>
 
-                <form action="{{ route('root_update', $data->id) }}" method="post" enctype="multipart/form-data">
+                <form id="" action="{{ route('root_update', $data->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div id="step-form">
 
@@ -608,7 +608,7 @@ dd($data->initiator_id , Auth::user()->id);
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiation Group Code">Initiator department code</label>
+                                            <label for="Initiation Group Code">Initiator Department code</label>
                                             <input type="text" name="initiator_group_code"
                                                 value="{{ $data->initiator_group_code }}" id="initiator_group_code"
                                                 readonly>
@@ -634,7 +634,7 @@ dd($data->initiator_id , Auth::user()->id);
                                     </div>
                                    <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="select-state">Name of Responsible department Head <span
+                                            <label for="select-state">Name of Responsible Department Head <span
                                                     class="text-danger">*</span></label>
                                             <select id="select-state" placeholder="Select..." name="assign_to"
                                                 {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}
@@ -797,7 +797,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                 <option value="Engineering" {{old('department', $data->department) == 'Engineering' ? 'selected' : '' }}>Engineering</option>
                                                 <option value="Human Resource" {{old('department', $data->department) == 'Human Resource' ? 'selected' : '' }}>Human Resource</option>
                                                 <option value="Store" {{old('department', $data->department) == 'Store' ? 'selected' : '' }}>Store</option>
-                                                <option value="Electronic Data Processing" {{old('department', $data->department) == 'Electronic Data Processing' ? 'selected' : '' }}>Electronic Data Processing</option>
+                                                <option value="Information Technology" {{old('department', $data->department) == 'Information Technology' ? 'selected' : '' }}>Information Technology</option>
                                                 <option value="Formulation Development" {{old('department', $data->department) == 'Formulation Development' ? 'selected' : '' }}>Formulation Development</option>
                                                 <option value="Analytical Research and Development Laboratory" {{old('department', $data->department) == 'Analytical Research and Development Laboratory' ? 'selected' : '' }}>Analytical Research and Development Laboratory</option>
                                                 <option value="Packaging Development" {{old('department', $data->department) == 'Packaging Development' ? 'selected' : '' }}>Packaging Development</option>
@@ -805,6 +805,13 @@ dd($data->initiator_id , Auth::user()->id);
                                                 <option value="Document Cell" {{old('department', $data->department) == 'Document Cell' ? 'selected' : '' }}>Document Cell</option>
                                                 <option value="Regulatory Affairs" {{old('department', $data->department) == 'Regulatory Affairs' ? 'selected' : '' }}>Regulatory Affairs</option>
                                                 <option value="Pharmacovigilance" {{old('department', $data->department) == 'Pharmacovigilance' ? 'selected' : '' }}>Pharmacovigilance</option>
+                                                <option value="Safety" {{old('department', $data->department) == 'Safety' ? 'selected' : '' }}>Safety</option>
+                                                <option value="Accounts" {{old('department', $data->department) == 'Accounts' ? 'selected' : '' }}>Accounts</option>
+                                                <option value="Finance" {{old('department', $data->department) == 'Finance' ? 'selected' : '' }}>Finance</option>
+                                                <option value="Artwork" {{old('department', $data->department) == 'Artwork' ? 'selected' : '' }}>Artwork</option>
+                                                <option value="Company secretary" {{old('department', $data->department) == 'Company secretary' ? 'selected' : '' }}>Company secretary</option>
+                                                <option value="Exports" {{old('department', $data->department) == 'Exports' ? 'selected' : '' }}>Exports</option>
+                                                <option value="Marketing" {{old('department', $data->department) == 'Marketing' ? 'selected' : '' }}>Marketing</option>
 
                                             </select>
                                             @error('department')
@@ -1138,12 +1145,12 @@ dd($data->initiator_id , Auth::user()->id);
                                    
 
                                         <select name="root_cause_methodology[]" multiple id="root-cause-methodology"
-                                            {{ in_array($data->stage, [0,1,2,3,5,6,7,8]) ? "disabled" : "" }}>
+                                            {{ in_array($data->stage, [0,1,2,3,5,6,7,8]) ? "disabled" : "" }}  {{ $data->stage == 4 ? 'required' : '' }}>
                                             <option value="Why-Why Chart" {{ in_array('Why-Why Chart', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Why-Why Chart</option>
                                             <option value="Failure Mode and Effect Analysis" {{ in_array('Failure Mode and Effect Analysis', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Failure Mode and Effect Analysis</option>
                                             <option value="Fishbone or Ishikawa Diagram" {{ in_array('Fishbone or Ishikawa Diagram', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Fishbone or Ishikawa Diagram</option>
                                             <option value="Is/Is Not Analysis" {{ in_array('Is/Is Not Analysis', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Is/Is Not Analysis</option>
-                                            {{-- <option value="Rootcauseothers" {{ in_array('Rootcauseothers', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Others</option> --}}
+                                            <option value="Rootcauseothers" {{ in_array('Rootcauseothers', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Others</option>
                                         </select>
 
                                         @error('root_cause_methodology')
@@ -1753,11 +1760,12 @@ dd($data->initiator_id , Auth::user()->id);
                                     <div class="group-input">
                                         <label for="root_cause_Others">Others @if ($data->stage == 4)@endif</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea class="summernote" {{$data->stage == 4 ? 'required' : ''}} name="root_cause_Others" id="summernote" {{$data->stage == 4 ? 'required' : ''}}>{{ $data->root_cause_Others}} </textarea>
+                                        <textarea class="summernote"  name="root_cause_Others" id="summernote" {{$data->stage == 4 ? 'required' : ''}}>{{ $data->root_cause_Others}} </textarea>
                                     </div>
                                 </div>
 
-                                    <div class="col-12" id="otherAttachmentField" style="display: {{ $data->reason == 'Rootcauseothers' ? 'block' : 'none' }};">                                    <div class="group-input">
+                                    <div class="col-12" id="otherAttachmentField" style="display: {{ $data->reason == 'Rootcauseothers' ? 'block' : 'none' }};">                                   
+                                        <div class="group-input">
                                         <label for="Inv Attachments">Other Attachment</label>
                                         <div>
                                             <small class="text-primary">
@@ -1832,7 +1840,7 @@ dd($data->initiator_id , Auth::user()->id);
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="investigation_summary">Investigation Summary @if ($data->stage == 4 ? 'required' : '') <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="investigation_summary_rca" id="summernote" class="summernote" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->investigation_summary_rca) }}</textarea>
+                                        <textarea name="investigation_summary_rca" id="summernote" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ strip_tags($data->investigation_summary_rca) }}</textarea>
                                     </div>
                                 </div>
 
@@ -2718,7 +2726,7 @@ dd($data->initiator_id , Auth::user()->id);
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('root_send_stage', $data->id) }}" method="POST">
+                <form action="{{ route('root_send_stage', $data->id) }}" method="POST" id="signatureModalForm">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -2743,7 +2751,14 @@ dd($data->initiator_id , Auth::user()->id);
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <!-- <button type="submit" data-bs-dismiss="modal">Submit</button> -->
                         <button type="button" data-bs-dismiss="modal">Close</button>
                         {{-- <button>Close</button> --}}
                     </div>
@@ -2987,10 +3002,25 @@ dd($data->initiator_id , Auth::user()->id);
                 row.cells[0].innerHTML = i;
             }
         }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('signatureModalForm');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
     </script>
     <script>
         VirtualSelect.init({
-            ele: '#investigators, #root-cause-methodology,#investigation_team'
+            ele: '#investigators, #root-cause-methodology, #investigation_team'
         });
 
         function openCity(evt, cityName) {
@@ -3170,6 +3200,7 @@ dd($data->initiator_id , Auth::user()->id);
 
 <script>
     $(document).ready(function () {
+
         function toggleRequiredFields(value, show) {
             switch (value) {
                 case 'Failure Mode and Effect Analysis':
@@ -3200,35 +3231,18 @@ dd($data->initiator_id , Auth::user()->id);
                     }
                     break;
                 case 'Rootcauseothers':
-                    // if (show) {
-                    //     $('#root-cause-others').find('input, select, textarea').attr('required', true);
-                    //     $('#root-cause-others label:first').append('<span class="text-danger req-asterisk"> *</span>');
-
-                    //     // Show Other Attachment field
-                    //     $('#otherAttachmentField').show();
-                    //     $('#otherAttachmentField input[type="file"]').attr('required', true);
-                    //     $('#otherAttachmentField label:first').append('<span class="text-danger req-asterisk"> *</span>');
-                    // } else {
-                    //     $('#root-cause-others').find('input, select, textarea').removeAttr('required');
-                    //     $('#root-cause-others .req-asterisk').remove();
-
-                    //     // Hide Other Attachment field
-                    //     $('#otherAttachmentField').hide();
-                    //     $('#otherAttachmentField input[type="file"]').removeAttr('required');
-                    //     $('#otherAttachmentField .req-asterisk').remove();
-                    // }
-
+                    
                     const existingFiles = {!! json_encode(json_decode($data->investigation_attachment)) !!};
 
                     if (show) {
-                        $('#root-cause-others').find('input, select, textarea').attr('required', true);
+                        // $('#root-cause-others').find('input, select, textarea').attr('required', true);
                         $('#root-cause-others label:first').append('<span class="text-danger req-asterisk"> *</span>');
 
                         $('#otherAttachmentField').show();
 
                         // File required only if no file is already uploaded
                         if (!existingFiles || existingFiles.length === 0) {
-                            $('#otherAttachmentField input[type="file"]').attr('required', true);
+                            // $('#otherAttachmentField input[type="file"]').attr('required', true);
                             $('#otherAttachmentField label:first').append('<span class="text-danger req-asterisk"> *</span>');
                         }
                     } else {
@@ -3307,49 +3321,11 @@ dd($data->initiator_id , Auth::user()->id);
     });
 </script>
 
+<script>
+   
+</script>
 
-
-    {{-- <script>
-        $(document).ready(function() {
-            $('#root-cause-methodology').on('change', function() {
-                var selectedValues = $(this).val() || [];
-
-                // Hide all sections initially
-                $('#why-why-chart-section').hide();
-                $('#fmea-section').hide();
-                $('#fishbone-section').hide();
-                $('#HideInference').hide();
-                $('#is-is-not-section').hide();
-                $('#root-cause-others').hide();
-
-
-                // Show sections based on the selected values
-                selectedValues.forEach(function(value) {
-                    if (value === 'Why-Why Chart') {
-                        $('#why-why-chart-section').show();
-                    }
-                    if (value === 'Failure Mode and Effect Analysis') {
-                        $('#fmea-section').show();
-                    }
-                    if (value === 'Fishbone or Ishikawa Diagram') {
-                        $('#fishbone-section').show();
-                        $('#HideInference').show();
-                    }
-                    if (value === 'Is/Is Not Analysis') {
-                        $('#is-is-not-section').show();
-                    }
-                    if (selectedValues.includes('Rootcauseothers')) {
-                        $('#root-cause-others').show();
-                     }
-                });
-            });
-
-            // Trigger the change event on page load to show the correct sections based on initial values
-            $('#root-cause-methodology').trigger('change');
-        });
-    </script> --}}
-
-    <script>
+<script>
     $('#summernote').summernote({
       toolbar: [
           ['style', ['style']],

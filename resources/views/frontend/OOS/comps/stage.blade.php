@@ -142,7 +142,7 @@
             <h4 class="modal-title">E-Signature</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form id="sendstage" action="{{ route('oos.send_stage', $data->id) }}" method="POST">
+            <form id="sendstage" action="{{ route('oos.send_stage', $data->id) }}" method="POST" class="signatureModalForm">
             @csrf
             <!-- Modal body -->
             <div class="modal-body">
@@ -166,7 +166,14 @@
             </div>
             </div>
             <div class="modal-footer">
-            <button type="submit" class="on-submit-disable-button">Submit</button>
+            <button type="submit" class="signatureModalButton">
+                <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                    role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                Submit
+            </button>
+            <!-- <button type="submit" class="on-submit-disable-button">Submit</button> -->
             <button type="button" data-bs-dismiss="modal">Close</button>
             </div>
             </form>
@@ -240,7 +247,7 @@
             <h4 class="modal-title">E-Signature</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form id="assignable" action="{{ route('oos.assignable_send_stage', $data->id) }}" method="POST">
+            <form id="assignable" action="{{ route('oos.assignable_send_stage', $data->id) }}" method="POST" class="signatureModalForm">
             @csrf
             <!-- Modal body -->
             <div class="modal-body">
@@ -265,7 +272,14 @@
             </div>
 
             <div class="modal-footer">
-            <button type="submit" class="on-submit-disable-button">Submit</button>
+            <button type="submit" class="signatureModalButton">
+                <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                    role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                Submit
+            </button>
+            <!-- <button type="submit" class="on-submit-disable-button">Submit</button> -->
             <button type="button" data-bs-dismiss="modal">Close</button>
             </div>
             </form>
@@ -279,6 +293,21 @@
             $('.on-submit-disable-button').prop('disabled', true);
         });
     })
+
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var signatureForms = document.querySelectorAll('.signatureModalForm');
+
+        signatureForms.forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                var submitButton = form.querySelector('.signatureModalButton');
+                var spinner = form.querySelector('.signatureModalSpinner');
+
+                if (submitButton) submitButton.disabled = true;
+                if (spinner) spinner.style.display = 'inline-block';
+            });
+        });
+    });
 </script>   
 <div class="modal fade" id="cancel-modal">
     <div class="modal-dialog modal-dialog-centered">

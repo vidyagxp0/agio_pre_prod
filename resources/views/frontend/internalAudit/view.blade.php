@@ -1073,7 +1073,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group">Auditee department Name</label>
+                                                <label for="Initiator Group">Auditee Department Name</label>
                                                 <select name="auditee_department"
                                                 @if ($data->stage != 1) disabled @endif
                                                 >
@@ -1123,8 +1123,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     <option value="ST"
                                                         @if ($data->auditee_department == 'ST') selected @endif>Store</option>
                                                     <option value="ED"
-                                                        @if ($data->auditee_department == 'ED') selected @endif>Electronic Data
-                                                        Processing
+                                                        @if ($data->auditee_department == 'IT') selected @endif>Information Technology
                                                     </option>
                                                     <option value="FD"
                                                         @if ($data->auditee_department == 'FD') selected @endif>Formulation
@@ -1155,6 +1154,35 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         Pharmacovigilance
                                                     </option>
 
+                                                    <option value="Safety"
+                                                        @if ($data->auditee_department == 'Safety') selected @endif>
+                                                        Safety
+                                                    </option>
+                                                    <option value="Accounts"
+                                                        @if ($data->auditee_department == 'Accounts') selected @endif>
+                                                        Accounts
+                                                    </option>
+
+                                                    <option value="Finance"
+                                                        @if ($data->auditee_department == 'Finance') selected @endif>
+                                                        Finance
+                                                    </option>
+                                                    <option value="Artwork"
+                                                        @if ($data->auditee_department == 'Artwork') selected @endif>
+                                                        Artwork
+                                                    </option>
+                                                    <option value="Company secretary"
+                                                        @if ($data->auditee_department == 'Company secretary') selected @endif>
+                                                        Company secretary
+                                                    </option>
+                                                    <option value="Exports"
+                                                        @if ($data->auditee_department == 'Exports') selected @endif>
+                                                        Exports
+                                                    </option>
+                                                    <option value="Marketing"
+                                                        @if ($data->auditee_department == 'Marketing') selected @endif>
+                                                        Marketing
+                                                    </option>
                                                 </select>
                                                 @if ($data->stage != 1)
                                                 <!-- Hidden field to retain the value if select is disabled -->
@@ -1315,14 +1343,21 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                                     "Engineering",
                                                                                     "Human Resource",
                                                                                     "Store",
-                                                                                    "Electronic Data Processing",
+                                                                                    "Information Technology",
                                                                                     "Formulation Development",
                                                                                     "Analytical Research and Development Laboratory",
                                                                                     "Packaging Development",
                                                                                     "Purchase Department",
                                                                                     "Document Cell",
                                                                                     "Regulatory Affairs",
-                                                                                    "Pharmacovigilance"
+                                                                                    "Pharmacovigilance",
+                                                                                    "Safety",
+                                                                                    "Accounts",
+                                                                                    "Finance",
+                                                                                    "Artwork",
+                                                                                    "Company secretary",
+                                                                                    "Exports",
+                                                                                    "Marketing"
                                                                                 ];
                                                                             @endphp
                                                                             @foreach ($options as $option)
@@ -15201,7 +15236,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('AuditStateChange', $data->id) }}" method="POST">
+                <form action="{{ route('AuditStateChange', $data->id) }}" method="POST" class="signatureModalForm">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -15225,13 +15260,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
 
                     <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-
-                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                        <button>Close</button>
-                                    </div>-->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -15247,7 +15283,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('AuditStateChangeLeadAuditor', $data->id) }}" method="POST">
+                <form action="{{ route('AuditStateChangeLeadAuditor', $data->id) }}" method="POST" class="signatureModalForm">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -15271,13 +15307,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
 
                     <!-- Modal footer -->
-                    <!-- <div class="modal-footer">
-
-                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                        <button>Close</button>
-                                    </div>-->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -15296,7 +15333,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('internalauditreject', $data->id) }}" method="POST">
+                <form action="{{ url('internalauditreject', $data->id) }}" method="POST" class="signatureModalForm">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -15318,14 +15355,15 @@ document.addEventListener("DOMContentLoaded", function () {
                             <input type="comment" name="comment" required>
                         </div>
                     </div>
-                    {{--
-                                                         <div class="modal-footer">
 
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div>--> --}}
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -15617,6 +15655,20 @@ document.addEventListener("DOMContentLoaded", function () {
             input.addEventListener('input', function() {
                 // You may want to handle updates here if needed
                 updateOriginalValue(this);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+        var signatureForms = document.querySelectorAll('.signatureModalForm');
+
+            signatureForms.forEach(function(form) {
+                form.addEventListener('submit', function(e) {
+                    var submitButton = form.querySelector('.signatureModalButton');
+                    var spinner = form.querySelector('.signatureModalSpinner');
+
+                    if (submitButton) submitButton.disabled = true;
+                    if (spinner) spinner.style.display = 'inline-block';
+                });
             });
         });
     </script>

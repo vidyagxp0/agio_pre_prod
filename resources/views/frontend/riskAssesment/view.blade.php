@@ -9395,7 +9395,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    <form action="{{ route('riskassesmentCancel', $data->id) }}" method="POST">
+                    <form action="{{ route('riskassesmentCancel', $data->id) }}" method="POST"  id="signatureModalForm3">
                         @csrf
                         <!-- Modal body -->
                         <div class="modal-body">
@@ -9424,13 +9424,39 @@
                                                         <button>Close</button>
                                                     </div> -->
                         <div class="modal-footer">
-                            <button type="submit">Submit</button>
+                            <!-- <button type="submit">Submit</button> -->
+                             <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
+        <script>
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('signatureModalForm3');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+        </script>
+
 
         <div class="modal fade" id="signature-modal">
             <div class="modal-dialog modal-dialog-centered">
@@ -9441,7 +9467,7 @@
                         <h4 class="modal-title">E-Signature</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <form action="{{ route('riskAssesmentStateUpdate', $data->id) }}" method="POST">
+                    <form action="{{ route('riskAssesmentStateUpdate', $data->id) }}" method="POST"  id="signatureModalForm">
                         @csrf
                         <!-- Modal body -->
                         <div class="modal-body">
@@ -9470,13 +9496,38 @@
                                                             <button type="button" data-bs-dismiss="modal">Close</button>
                                                         </div> -->
                         <div class="modal-footer">
-                            <button type="submit">Submit</button>
+                            
+                            <!-- <button type="submit">Submit</button> -->
+                             <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+        <script>
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('signatureModalForm');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+        </script>
 
         <div class="modal fade" id="rejection-modal">
             <div class="modal-dialog modal-dialog-centered">
@@ -9488,7 +9539,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    <form action="{{ url('reject_Risk', $data->id) }}" method="POST">
+                    <form action="{{ url('reject_Risk', $data->id) }}" method="POST"  id="signatureModalForm2">
                         @csrf
                         <!-- Modal body -->
                         <div class="modal-body">
@@ -9516,14 +9567,41 @@
                                                             <button type="submit" data-bs-dismiss="modal">Submit</button>
                                                             <button>Close</button>
                                                         </div> -->
+
                         <div class="modal-footer">
-                            <button type="submit">Submit</button>
+                            <!-- <button type="submit">Submit</button> -->
+                             <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
+         <script>
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('signatureModalForm2');
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+
+        </script>
+
         {{-- <div class="modal fade" id="child-modal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

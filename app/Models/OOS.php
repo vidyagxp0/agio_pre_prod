@@ -35,6 +35,7 @@ class OOS extends Model
           'reference_system_document_gi',
           'source_document_type_gi',
           'sourceDocOtherGi',
+          'Others1',
           'oos_observed_on',
           'delay_justification',
           'oos_reported_date',

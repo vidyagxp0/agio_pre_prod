@@ -166,7 +166,7 @@
 
 <style>
     @page {
-         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+         margin: 160px 35px 100px;
      }
     body {
         font-family: 'Roboto', sans-serif;
@@ -175,15 +175,15 @@
         font-size: 11px;
         line-height: 1.4;
         color: #000;
-        margin-top: 20px;
-         margin-bottom: -40px; 
+        margin-top: 10px;
+         margin-bottom: -60px; 
     }
 
     header, footer {
         position: fixed;
         left: 0;
         right: 0;
-        padding: 20px 35px;
+        /* padding: 20px 35px; */
         font-size: 12px;
         box-sizing: border-box;
     }
@@ -195,7 +195,7 @@
 
     footer {
         bottom: 0;
-        bottom: -120px;
+        bottom: -100px;
         border-top: none;
     }
 
@@ -209,7 +209,7 @@
     }
 
     .inner-block {
-        padding: 20px 35px; /* Add margin from left/right and top/bottom */
+        /* padding: 20px 35px;  */
         box-sizing: border-box;
     }
     
@@ -246,6 +246,8 @@
     }
 
     th {
+        white-space: normal !important;
+        word-wrap: break-word;
         background-color: #f2f2f2;
         font-weight: 600;
     }
@@ -259,12 +261,15 @@
     }
 
     /* .w-5 { width: 5%; } */
-    .w-5 { width: 5%; }
+    .w-5 { width: 6%; }
+    .w-6 { width: 7%; }
     .w-8 { width: 8%; }
     .w-10 { width: 10%; }
     .w-20 { width: 20%; }
     .w-30 { width: 30%; }
+    .w-40 { width: 40%; }
     .w-50 { width: 50%; }
+    .w-60 { width: 60%; }
     .w-70 { width: 70%; }
     .w-80 { width: 80%; }
     .w-100 { width: 100%; }
@@ -283,8 +288,10 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
-                    Deviation Audit Trail Report
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
+                     Deviation Audit Trail Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -329,7 +336,7 @@
 
 
         <div class="second-table">
-            <table class="allow-wb" style="table-layout: fixed; width: 650px;">
+            <table class="allow-wb" style="table-layout: fixed;">
                 <thead>
                     <tr class="table_bg">
                         <th class="w-5">S.No</th>

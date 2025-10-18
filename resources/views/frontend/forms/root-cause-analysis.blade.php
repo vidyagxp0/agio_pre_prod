@@ -192,7 +192,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="assign_to"> Name of Responsible department Head</label>
+                                        <label for="assign_to"> Name of Responsible Department Head</label>
                                         <select id="assign_to" name="assign_to" class="form-control">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
@@ -343,7 +343,7 @@
                                             <option value="Engineering">Engineering</option>
                                             <option value="Human Resource">Human Resource</option>
                                             <option value="Store">Store</option>
-                                            <option value="Electronic Data Processing">Electronic Data Processing</option>
+                                            <option value="Information Technology">Information Technology</option>
                                             <option value="Formulation Development">Formulation Development</option>
                                             <option value="Analytical Research and Development Laboratory">Analytical
                                                 Research and Development Laboratory</option>
@@ -352,7 +352,13 @@
                                             <option value="Document Cell">Document Cell</option>
                                             <option value="Regulatory Affairs">Regulatory Affairs</option>
                                             <option value="Pharmacovigilance">Pharmacovigilance</option>
-
+                                            <option value="Safety">Safety</option>
+                                            <option value="Accounts">Accounts</option>
+                                            <option value="Finance">Finance</option>
+                                            <option value="Artwork">Artwork</option>
+                                            <option value="Company secretary">Company secretary</option>
+                                            <option value="Exports">Exports</option>
+                                            <option value="Marketing">Marketing</option>
                                         </select>
                                     </div>
                                 </div>

@@ -999,7 +999,7 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
-                                <select name="sample_type_gi">
+                                <select name="sample_type_gi" id="sample_other">
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Raw Material">Raw Material</option>
                                     <option value="Packing Material">Packing Material</option>
@@ -1009,6 +1009,37 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
+
+                        <div class="col-6 new-date-data-field" id="any-other1-section" style="display: none;">
+                            <div class="group-input">
+                                <label for="Other Application"> Other Sample Type</label>
+                                <input type="text" name="Others1" id="other1_application"
+                                    class="form-control" value="">
+                            </div>
+                        </div>
+
+                        <script>
+                            $(document).ready(function() {
+                                $('#sample_other').on('change', function() {
+                                    var selectedValue = $(this).val(); // single select hai, array nahi
+
+                                    // Hide by default
+                                    $('#any-other1-section').hide();
+                                    // $('#other_application').removeAttr('required');
+                                    $('#required-star').hide();
+
+                                    if (selectedValue === 'Others') {
+                                        $('#any-other1-section').show();
+                                        // $('#other_application').attr('required', true);
+                                        $('#required-star').show();
+                                    }
+                                });
+
+                                // Trigger on page load for pre-filled data
+                                $('#sample_other').trigger('change');
+                            });
+                        </script>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description ">Product / Material Name</label>
