@@ -8412,6 +8412,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $stage->mc_id = $id;
                         $stage->cft_user_id = Auth::user()->id;
                         $stage->status = "CFT Required";
+                        // $stage->status ="In-progress"
                         // $stage->cft_stage = ;
                         $stage->comment = $request->comment;
                         $stage->is_required = 1;
@@ -9513,18 +9514,108 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 return back();
             }
 
+            // if ($marketstat->stage == 5) {
+            //     $marketstat->stage = "3";
+            //     $marketstat->status = "Investigation, CAPA and Root Cause Analysis";
+            //     $marketstat->reject_by = 'Not Applicable';
+            //     $marketstat->reject_on = 'Not Applicable';
+            //     // $marketstat->reject_comment = $request->comment;
+            //     $history = new MarketComplaintAuditTrial();
+            //     $history->market_id = $id;
+            //     $history->activity_type = 'Not Applicable';
+            //     $history->action = 'More Information Required';
+            //     $history->previous = "Not Applicable";
+            //     $history->current = $marketstat->closed_done_by;
+            //     $history->comment = $request->comment;
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $lastDocument->status;
+            //     $history->change_to = "Investigation, CAPA and Root Cause Analysis";
+            //     $history->change_from = $lastDocument->status;
+            //     $history->stage = 'Investigation, CAPA and Root Cause Analysis';
+            //     $history->save();
+            //     $marketstat->update();
+            //      $Cft = MarketComplaintCft::where('mc_id', $marketstat->id)->first();
+            //         if ($Cft) {
+            //             $Cft->QualityAssurance_by = null;
+            //             $Cft->QualityAssurance_on = null;
+            //             $Cft->Quality_Control_by = null;
+            //             $Cft->Quality_Control_on = null;
+            //             $Cft->Warehouse_by = null;
+            //             $Cft->Warehouse_on = null;
+            //             $Cft->Production_Injection_By = null;
+            //             $Cft->Production_Injection_On = null;
+            //             $Cft->Production_Table_By = null;
+            //             $Cft->Production_Table_On = null;
+            //             $Cft->RA_by = null;
+            //             $Cft->RA_on = null;
+            //             $Cft->production_by = null;
+            //             $Cft->production_on = null;
+
+            //             $Cft->save();
+            //           }
+
+
+            //     // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
+            //     //         foreach ($list as $u) {
+            //     //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
+            //     //             $email = Helpers::getUserEmail($u->user_id);
+            //     //             // dd($email);
+            //     //             if ($email !== null) {
+            //     //                 Mail::send(
+            //     //                     'mail.view-mail',
+            //     //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+            //     //                     function ($message) use ($email, $marketstat) {
+            //     //                         $message->to($email)
+            //     //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+            //     //                     }
+            //     //                 );
+            //     //             }
+            //     //             // }
+            //     //         }
+
+            //             //$list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
+            //             //foreach ($list as $u) {
+            //             //    // if($u->q_m_s_divisions_id == $marketstat->division_id){
+            //             //    $email = Helpers::getUserEmail($u->user_id);
+            //             //    // dd($email);
+            //             //    if ($email !== null) {
+            //             //        Mail::send(
+            //             //            'mail.view-mail',
+            //             //            ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+            //             //            function ($message) use ($email, $marketstat) {
+            //             //                $message->to($email)
+            //             //                    ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+            //             //            }
+            //             //        );
+            //             //    }
+            //             //    // }
+            //             //}
+
+            //     return back();
+            // }
             if ($marketstat->stage == 5) {
                 $marketstat->stage = "3";
                 $marketstat->status = "Investigation, CAPA and Root Cause Analysis";
                 $marketstat->reject_by = 'Not Applicable';
                 $marketstat->reject_on = 'Not Applicable';
                 // $marketstat->reject_comment = $request->comment;
+
+                DB::table('market_complaintcft_responces')
+                    ->where('mc_id', $id)
+                    ->whereIn('status', ['In-progress', 'Completed'])
+                    ->update([
+                        'status' => 'Pending',
+                        'updated_at' => now(),
+                    ]);
+
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
-                $history->activity_type = 'Not Applicable';
+                $history->activity_type = 'CFT Review Reset';
                 $history->action = 'More Information Required';
-                $history->previous = "Not Applicable";
-                $history->current = $marketstat->closed_done_by;
+                $history->previous = $lastDocument->status ?? 'Not Applicable';
+                $history->current = 'Returned for Investigation (Stage 3)';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -9534,46 +9625,64 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Investigation, CAPA and Root Cause Analysis';
                 $history->save();
+
                 $marketstat->update();
+                $Cft = MarketComplaintCft::where('mc_id', $marketstat->id)->first();
+                                if ($Cft) {
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Warehouse_by = null;
+                                    $Cft->Warehouse_on = null;
+                                    $Cft->Production_Injection_By = null;
+                                    $Cft->Production_Injection_On = null;
+                                    $Cft->Production_Table_By = null;
+                                    $Cft->Production_Table_On = null;
+                                    $Cft->RA_by = null;
+                                    $Cft->RA_on = null;
+                                    $Cft->production_by = null;
+                                    $Cft->production_on = null;
+                                    $Cft->ResearchDevelopment_by = null;
+                                    $Cft->ResearchDevelopment_on = null;
+                                    $Cft->Human_Resource_by = null;
+                                    $Cft->Human_Resource_on = null;
+                                    $Cft->CorporateQualityAssurance_by = null;
+                                    $Cft->CorporateQualityAssurance_on = null;
+                                    $Cft->Store_by = null;
+                                    $Cft->Store_on = null;
+                                    $Cft->Engineering_by = null;
+                                    $Cft->Engineering_on = null;
+                                    $Cft->RegulatoryAffair_by = null;
+                                    $Cft->RegulatoryAffair_on = null;
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->ProductionLiquid_by = null;
+                                    $Cft->ProductionLiquid_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Microbiology_by = null;
+                                    $Cft->Microbiology_on = null;
+                                    $Cft->Environment_Health_Safety_by = null;
+                                    $Cft->Environment_Health_Safety_on = null;
+                                    $Cft->ContractGiver_by = null;
+                                    $Cft->ContractGiver_on = null;
+                                    $Cft->Other1_by = null;
+                                    $Cft->Other1_on = null;
+                                    $Cft->Other2_by = null;
+                                    $Cft->Other2_on = null;
+                                    $Cft->Other3_by = null;
+                                    $Cft->Other3_on = null;
+                                    $Cft->Other4_by = null;
+                                    $Cft->Other4_on = null;
+                                    $Cft->Other5_by = null;
+                                    $Cft->Other5_on = null;
 
+                                    $Cft->save();
 
-                // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
-                //         foreach ($list as $u) {
-                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //             // dd($email);
-                //             if ($email !== null) {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                //                     function ($message) use ($email, $marketstat) {
-                //                         $message->to($email)
-                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                     }
-                //                 );
-                //             }
-                //             // }
-                //         }
-
-                        //$list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
-                        //foreach ($list as $u) {
-                        //    // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //    $email = Helpers::getUserEmail($u->user_id);
-                        //    // dd($email);
-                        //    if ($email !== null) {
-                        //        Mail::send(
-                        //            'mail.view-mail',
-                        //            ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //            function ($message) use ($email, $marketstat) {
-                        //                $message->to($email)
-                        //                    ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                        //            }
-                        //        );
-                        //    }
-                        //    // }
-                        //}
-
+                toastr()->success('Returned to Investigation stage. CFT Review reopened.');
                 return back();
+                                }
             }
 
             if ($marketstat->stage == 4) {
@@ -9582,6 +9691,13 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $marketstat->reject_by = 'Not Applicable';
                 $marketstat->reject_on = 'Not Applicable';
                 // $marketstat->reject_comment = $request->comment;
+                DB::table('market_complaintcft_responces')
+                ->where('mc_id', $id)
+                ->whereIn('status', ['In-progress', 'Completed'])
+                ->update([
+                    'status' => 'Pending',
+                    'updated_at' => now(),
+                ]);
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $id;
                 $history->activity_type = 'Not Applicable';
@@ -9598,104 +9714,157 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->stage = 'CFT Review';
                 $history->save();
                 $marketstat->update();
+                $Cft = MarketComplaintCft::where('mc_id', $marketstat->id)->first();
+                    if ($Cft) {
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Warehouse_by = null;
+                        $Cft->Warehouse_on = null;
+                        $Cft->Production_Injection_By = null;
+                        $Cft->Production_Injection_On = null;
+                        $Cft->Production_Table_By = null;
+                        $Cft->Production_Table_On = null;
+                        $Cft->RA_by = null;
+                        $Cft->RA_on = null;
+                        $Cft->production_by = null;
+                        $Cft->production_on = null;
+                        $Cft->ResearchDevelopment_by = null;
+                        $Cft->ResearchDevelopment_on = null;
+                        $Cft->Human_Resource_by = null;
+                        $Cft->Human_Resource_on = null;
+                        $Cft->CorporateQualityAssurance_by = null;
+                        $Cft->CorporateQualityAssurance_on = null;
+                        $Cft->Store_by = null;
+                        $Cft->Store_on = null;
+                        $Cft->Engineering_by = null;
+                        $Cft->Engineering_on = null;
+                        $Cft->RegulatoryAffair_by = null;
+                        $Cft->RegulatoryAffair_on = null;
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->ProductionLiquid_by = null;
+                        $Cft->ProductionLiquid_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Microbiology_by = null;
+                        $Cft->Microbiology_on = null;
+                        $Cft->Environment_Health_Safety_by = null;
+                        $Cft->Environment_Health_Safety_on = null;
+                        $Cft->ContractGiver_by = null;
+                        $Cft->ContractGiver_on = null;
+                        $Cft->Other1_by = null;
+                        $Cft->Other1_on = null;
+                        $Cft->Other2_by = null;
+                        $Cft->Other2_on = null;
+                        $Cft->Other3_by = null;
+                        $Cft->Other3_on = null;
+                        $Cft->Other4_by = null;
+                        $Cft->Other4_on = null;
+                        $Cft->Other5_by = null;
+                        $Cft->Other5_on = null;
 
-                return back();
+                        $Cft->save();
+
+                        return back();
+                    }
+
+                if ($marketstat->stage == 3) {
+                    $marketstat->stage = "2";
+                    $marketstat->status = "QA/CQA Head Review";
+                    $marketstat->more_information_required_by = 'Null';
+                    $marketstat->more_information_required_on = 'Null';
+                    // $marketstat->more_information_required_comment = $request->comment;
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $id;
+                    $history->activity_type = 'Not Applicable';
+                    $history->action = 'More Information Required';
+                    $history->previous = "Not Applicable";
+                    $history->current = 'Not Applicable';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "QA/CQA Head Review";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Opened';
+                    $history->save();
+                    $marketstat->update();
+
+                    return back();
+                }
+
+
+                if ($marketstat->stage == 2) {
+                    $marketstat->stage = "1";
+                    $marketstat->status = "Opened";
+                    $marketstat->more_information_required_by = 'Not Applicable';
+                    $marketstat->more_information_required_on = 'Not Applicable';
+                    $marketstat->more_information_required_comment = $request->comment;
+                    $history = new MarketComplaintAuditTrial();
+                    $history->market_id = $id;
+                    $history->activity_type = 'Not Applicable';
+                    $history->action = 'More Information Required';
+                    $history->previous = "Not Applicable";
+                    $history->current = 'Not Applicable';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to = "Open";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Opened';
+                    $history->save();
+
+                    // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
+                    //         foreach ($list as $u) {
+                    //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                    //             $email = Helpers::getUserEmail($u->user_id);
+                    //             // dd($email);
+                    //             if ($email !== null) {
+                    //                 Mail::send(
+                    //                     'mail.view-mail',
+                    //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "Cancel", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                    //                     function ($message) use ($email, $marketstat) {
+                    //                         $message->to($email)
+                    //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                    //                     }
+                    //                 );
+                    //             }
+                    //             // }
+                    //         }
+
+                            // $list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
+                            // foreach ($list as $u) {
+                            //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
+                            //     $email = Helpers::getUserEmail($u->user_id);
+                            //     // dd($email);
+                            //     if ($email !== null) {
+                            //         Mail::send(
+                            //             'mail.view-mail',
+                            //             ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
+                            //             function ($message) use ($email, $marketstat) {
+                            //                 $message->to($email)
+                            //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                            //             }
+                            //         );
+                            //     }
+                            //     // }
+                            // }
+
+                    $marketstat->update();
+
+                    return back();
+                }
             }
-
-            if ($marketstat->stage == 3) {
-                $marketstat->stage = "2";
-                $marketstat->status = "QA/CQA Head Review";
-                $marketstat->more_information_required_by = 'Null';
-                $marketstat->more_information_required_on = 'Null';
-                // $marketstat->more_information_required_comment = $request->comment;
-                $history = new MarketComplaintAuditTrial();
-                $history->market_id = $id;
-                $history->activity_type = 'Not Applicable';
-                $history->action = 'More Information Required';
-                $history->previous = "Not Applicable";
-                $history->current = 'Not Applicable';
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to = "QA/CQA Head Review";
-                $history->change_from = $lastDocument->status;
-                $history->stage = 'Opened';
-                $history->save();
-                $marketstat->update();
-
-                return back();
-            }
-
-
-            if ($marketstat->stage == 2) {
-                $marketstat->stage = "1";
-                $marketstat->status = "Opened";
-                $marketstat->more_information_required_by = 'Not Applicable';
-                $marketstat->more_information_required_on = 'Not Applicable';
-                $marketstat->more_information_required_comment = $request->comment;
-                $history = new MarketComplaintAuditTrial();
-                $history->market_id = $id;
-                $history->activity_type = 'Not Applicable';
-                $history->action = 'More Information Required';
-                $history->previous = "Not Applicable";
-                $history->current = 'Not Applicable';
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to = "Open";
-                $history->change_from = $lastDocument->status;
-                $history->stage = 'Opened';
-                $history->save();
-
-                // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
-                //         foreach ($list as $u) {
-                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //             // dd($email);
-                //             if ($email !== null) {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "Cancel", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                //                     function ($message) use ($email, $marketstat) {
-                //                         $message->to($email)
-                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
-                //                     }
-                //                 );
-                //             }
-                //             // }
-                //         }
-
-                        // $list = Helpers::getCQAUsersList($marketstat->division_id); // Notify CFT Person
-                        // foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //     $email = Helpers::getUserEmail($u->user_id);
-                        //     // dd($email);
-                        //     if ($email !== null) {
-                        //         Mail::send(
-                        //             'mail.view-mail',
-                        //             ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //             function ($message) use ($email, $marketstat) {
-                        //                 $message->to($email)
-                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                        //             }
-                        //         );
-                        //     }
-                        //     // }
-                        // }
-
-                $marketstat->update();
-
-                return back();
-            }
-        }
 
         // Optionally, handle invalid credentials or other logic
         return back()->withErrors(['Invalid credentials or action not allowed.']);
     }
+}
 
 
     public function MarketComplaintCancel(Request $request, $id)
