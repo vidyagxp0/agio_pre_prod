@@ -11330,11 +11330,13 @@ document.getElementById('initiator_group').addEventListener('change', function()
             <div class="modal-body">
                 <form action="{{ route('marketcomplaint.marketCompalinExtensionChild', $data->id) }}" method="POST">
                     @csrf
-
+                    @if(Helpers::getChildData($data->id, 'RCA') < 3)
                     <div class="form-check mb-3">
                         <input class="" type="radio" name="revision" id="extension" value="extension" required>
                         <label class="form-check-label" for="extension">Extension</label>
                     </div>
+                    @endif
+
 
                     <!-- Modal Footer -->
                     <div class="modal-footer">
@@ -11529,9 +11531,14 @@ document.getElementById('initiator_group').addEventListener('change', function()
             }
 
             // Store user department data
+            // let userDepartments = {
+            //     @foreach ($users as $user)
+            //         "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+            //     @endforeach
+            // };
             let userDepartments = {
                 @foreach ($users as $user)
-                    "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+                    "{{ $user->name }}": `{!! Helpers::getUsersDepartmentName($user->departmentid) !!}`,
                 @endforeach
             };
 

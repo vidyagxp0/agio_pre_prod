@@ -9,6 +9,8 @@ use App\Models\MarketComplaintAuditTrial;
 use App\Models\MarketComplaintCft;
 use App\Models\MarketComplaintcftResponce;
 use App\Models\AuditReviewersDetails;
+use App\Models\extension_new;
+use App\Models\ActionItem;
 use App\Models\Capa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -8286,7 +8288,127 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 'message' => 'Investigation CAPA And Root Cause Analysis'
                             ]);
                         }
+                        // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Market Complaint')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
 
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed — Extension Child is still pending.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+                      $capachilds = Capa::where('parent_id', $id)
+                ->where('parent_type', 'Market Complaint')
+                ->get();
+                    $hasPending = false;
+                foreach ($capachilds as $ext) {
+                        $capachildstatus = trim(strtolower($ext->status));
+                        if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled') {
+                            $hasPending = true;
+                            break;
+                        }
+                    }
+               if ($hasPending) {
+                // $capachildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPending) {
+                       Session::flash('swal', [
+                           'title' => 'CAPA Child Pending!',
+                           'message' => 'You cannot proceed — some Capa Child is still pending.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
+                $actionchilds = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'Market Complaint')
+                ->get();
+                    $hasPendingaction = false;
+                foreach ($actionchilds as $ext) {
+                        $actionchildstatus = trim(strtolower($ext->status));
+                        if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled') {
+                            $hasPendingaction = true;
+                            break;
+                        }
+                    }
+               if ($hasPendingaction) {
+                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPendingaction) {
+                       Session::flash('swal', [
+                           'title' => 'Action Item Child Pending!',
+                           'message' => 'You cannot proceed — some Action Item Child is still pending.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
+                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', 'Market Complaint')
+                ->get();
+                    $hasPendingRCA = false;
+                foreach ($rcachilds as $ext) {
+                        $rcachildstatus = trim(strtolower($ext->status));
+                        if ($rcachildstatus !== 'closed - done'  && $capachildstatus !== 'closed-cancelled') {
+                            $hasPendingRCA = true;
+                            break;
+                        }
+                    }
+               if ($hasPendingRCA) {
+                // $rcachildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPendingRCA) {
+                       Session::flash('swal', [
+                           'title' => 'RCA Child Pending!',
+                           'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
 
                         $marketstat->stage = "3";
                         $marketstat->status = "Investigation CAPA And Root Cause Analysis";
@@ -8373,7 +8495,38 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 'message' => 'CFT Reviews'
                             ]);
                         }
-    //     
+                        
+                          // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Market Complaint')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed — Extension Child is still pending.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                         if ( $Cft->Production_Table_Review !== 'yes' &&
                             $Cft->Production_Injection_Review !== 'yes' &&
