@@ -417,7 +417,7 @@
                                             <div class="group-input">
                                                 <label for="date_opened">Date of Initiation<span
                                                         class="text-danger"></span></label>
-                                                <input disabled type="text" value="{{ date('d-M-Y') }}"
+                                                <input disabled type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}"
                                                     name="intiation_date">
                                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                             </div>
