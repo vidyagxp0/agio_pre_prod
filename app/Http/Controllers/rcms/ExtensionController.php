@@ -512,7 +512,22 @@ class ExtensionController extends Controller
                     //         );
                     //       }
                     //     } 
-                    // }
+                    // }        
+                     
+                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getInitiatorEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changeControl, 'site' => "Extension", 'history' => "submit", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changeControl) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: Extension, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: submit");
+                               }
+                           );
+                       }
+                    }
 
                     toastr()->success('Document Sent');
 
@@ -537,6 +552,29 @@ class ExtensionController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Ext Approved";
                         $history->save();
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"Extension", 'history' => "Approved", 'process' => 'changeControl', 'comment' => $changeControl->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Extension, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
+
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Extension";
@@ -562,6 +600,7 @@ class ExtensionController extends Controller
                 //       }
                 //     } 
                 // }
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -596,6 +635,27 @@ class ExtensionController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'Cancelled';
                             $history->save();
+
+                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site'=>"Extension", 'history' => "Cancelled", 'process' => 'changeControl', 'comment' => $changeControl->comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Extension, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Extension";
@@ -626,6 +686,28 @@ class ExtensionController extends Controller
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'More Info Required';
                                 $history->save();
+
+                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site'=>"Extension", 'history' => "More Info Required", 'process' => 'changeControl', 'comment' => $changeControl->comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Extension, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Extension";

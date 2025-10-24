@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<style>
+{{-- <style>
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -171,6 +171,118 @@
     .summernote-content table th {
         background-color: #f2f2f2 !important;
     }
+</style> --}}
+<style>
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
+    }
+
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
+
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
+
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
+    }
+
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
+    }
+
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .table_bg {
+        background-color: #387478;
+        color: #111;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
+
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .no-border th, .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+    table th, table td {
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -178,8 +290,10 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70 head" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     Market Complaint Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -191,13 +305,13 @@
         </table>
         <table>
             <tr>
-                <td class="w-80">
+                <td class="w-30">
                     <strong>Market Complaint No.</strong>
                 </td>
                 <td class="w-40">
                     {{ Helpers::divisionNameForQMS($data->division_id) }}/MC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
-                <td class="w-80">
+                <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
@@ -207,7 +321,7 @@
     <footer>
         <table>
             <tr>
-                <td class="w-80">
+                <td class="w-30">
                     <strong>Printed On :</strong> {{ date('d-M-Y') }}
                 </td>
                 <td class="w-40">
@@ -245,25 +359,24 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator</th>
-                        <td class="w-80">{{ $data->originator }}</td>
+                        <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date Of Initiation</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
-
-
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Short Description</th>
-                        <td class="w-80">{{ $data->description_gi ?? 'Not Applicable' }}</td>
+                        <td class="w-80" >{{ $data->description_gi ?? 'Not Applicable' }}</td>
                     </tr>
-
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
                         {{-- <th class="w-20">Repeat Nature</th>
                         <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td> --}}
-                    </tr>
-
-                    <tr>
+                    
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->initiator_group)
@@ -272,8 +385,12 @@
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                {{-- </table>
+                <table> --}}
+                    <tr>
                         <th class="w-20">Initiator Department Code</th>
-                        <td class="w-30">
+                        <td class="w-80" colspan="3">
                             @if ($data->initiator_group_code_gi)
                                 {{ $data->initiator_group_code_gi }}
                             @else
@@ -307,7 +424,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">Sr.No.</th>
-                                <th class="w-60">attachment</th>
+                                <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data->initial_attachment_gi)
                                 @foreach (json_decode($data->initial_attachment_gi) as $key => $file)
@@ -335,8 +452,12 @@
                     <tr>
 
                         <th class="w-20">Complainant</th>
-                        <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
-                       
+                        <td class="w-80" colspan="3">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
                         <th class="w-20">Complaint Reported On</th>
                         <td class="w-80">
                             {{ Helpers::getdateFormat($data->complaint_reported_on_gi) ?? 'Not Applicable' }}</td>
@@ -346,7 +467,9 @@
                         <th class="w-20">Details of Nature of Market Complaint</th>
                         <td class="w-80" colspan='5'>{!! $data->details_of_nature_market_complaint_gi ?? 'Not Applicable' !!}</td>
                     </tr> -->
+                </table>
 
+                <table>
 
                     <tr>
                         <th class="w-20 align-top">Details of Nature of Market Complaint</th>
@@ -363,7 +486,7 @@
                     </tr>
                    
 
-                    </table>
+                </table>
 
             <div class="border-table">
                 <div class="block-head">
@@ -498,27 +621,21 @@
             </div>
 
              <table>
-
-
-
-
                     <tr>
                     <th class="w-20">Categorization Of Complaint</th>
-                        <td class="w-80">{{ $data->categorization_of_complaint_gi ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->categorization_of_complaint_gi ?? 'Not Applicable' }}</td>
 
                     
                         
                     <th class="w-20">Is Repeat</th>
-                        <td class="w-80">{{ ucfirst($data->is_repeat_gi ?? 'Not Applicable') }}</td>
+                        <td class="w-30" >{{ ucfirst($data->is_repeat_gi ?? 'Not Applicable') }}</td>
 
                     </tr>
+                
                     <tr>
                         <th class="w-20">Repeat Nature</th>
-                        <td class="w-80" colspan="5">{{ $data->repeat_nature_gi ?? 'Not Applicable' }}</td>
+                        <td class="w-30" colspan="3">{{ $data->repeat_nature_gi ?? 'Not Applicable' }}</td>
                     </tr>
-                   
-
-
                 </table>
 
 
@@ -1793,7 +1910,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Impact Assessment(By Production (Tablet/Capsule/Powder))</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Production_Table_Assessment)
                                 {{ strip_tags($data1->Production_Table_Assessment) }}
                             @else
@@ -1882,7 +1999,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Production Injection)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Production_Injection_Assessment)
                                 {{ strip_tags($data1->Production_Injection_Assessment) }}
                             @else
@@ -1893,7 +2010,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Production Injection Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Production_Injection_Feedback)
                                 {{ strip_tags($data1->Production_Injection_Feedback) }}
                             @else
@@ -1976,7 +2093,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Research & Development)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->ResearchDevelopment_assessment)
                                 {{ strip_tags($data1->ResearchDevelopment_assessment) }}
                             @else
@@ -1987,7 +2104,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Reasearch & Development Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->ResearchDevelopment_feedback)
                                 {{ strip_tags($data1->ResearchDevelopment_feedback) }}
                             @else
@@ -2070,7 +2187,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Human Resource)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Human_Resource_assessment)
                                 {{ strip_tags($data1->Human_Resource_assessment) }}
                             @else
@@ -2081,7 +2198,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Humane Resource Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Human_Resource_feedback)
                                 {{ strip_tags($data1->Human_Resource_feedback) }}
                             @else
@@ -2164,7 +2281,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Corporate Quality Assurance)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->CorporateQualityAssurance_assessment)
                                 {{ strip_tags($data1->CorporateQualityAssurance_assessment) }}
                             @else
@@ -2175,7 +2292,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Corporate Quality Assurance Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->CorporateQualityAssurance_feedback)
                                 {{ strip_tags($data1->CorporateQualityAssurance_feedback) }}
                             @else
@@ -2257,7 +2374,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Store)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Store_assessment)
                                 {{ strip_tags($data1->Store_assessment) }}
                             @else
@@ -2268,7 +2385,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Store Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Store_feedback)
                                 {{ strip_tags($data1->Store_feedback) }}
                             @else
@@ -2350,7 +2467,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Engineering)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Engineering_assessment)
                                 {{ strip_tags($data1->Engineering_assessment) }}
                             @else
@@ -2361,7 +2478,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Engineering Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Engineering_feedback)
                                 {{ strip_tags($data1->Engineering_feedback) }}
                             @else
@@ -2443,7 +2560,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Regulatory Affair)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->RegulatoryAffair_assessment)
                                 {{ strip_tags($data1->RegulatoryAffair_assessment) }}
                             @else
@@ -2454,7 +2571,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Regulatory Affair Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->RegulatoryAffair_feedback)
                                 {{ strip_tags($data1->RegulatoryAffair_feedback) }}
                             @else
@@ -2536,7 +2653,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Quality Assurance)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->QualityAssurance_assessment)
                                 {{ strip_tags($data1->QualityAssurance_assessment) }}
                             @else
@@ -2547,7 +2664,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Quality Assurance Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->QualityAssurance_feedback)
                                 {{ strip_tags($data1->QualityAssurance_feedback) }}
                             @else
@@ -2629,7 +2746,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment(By Production Liquid/Ointment)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->ProductionLiquid_assessment)
                                 {{ strip_tags($data1->ProductionLiquid_assessment) }}
                             @else
@@ -2640,7 +2757,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Production Liquid Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->ProductionLiquid_feedback)
                                 {{ strip_tags($data1->ProductionLiquid_feedback) }}
                             @else
@@ -2722,7 +2839,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Quality Control)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Quality_Control_assessment)
                                 {{ strip_tags($data1->Quality_Control_assessment) }}
                             @else
@@ -2733,7 +2850,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Quality Control Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Quality_Control_feedback)
                                 {{ strip_tags($data1->Quality_Control_feedback) }}
                             @else
@@ -2815,7 +2932,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment(By Microbiology)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Microbiology_assessment)
                                 {{ strip_tags($data1->Microbiology_assessment) }}
                             @else
@@ -2826,7 +2943,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Microbiology Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Microbiology_feedback)
                                 {{ strip_tags($data1->Microbiology_feedback) }}
                             @else
@@ -2908,7 +3025,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Safety)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Health_Safety_assessment)
                                 {{ strip_tags($data1->Health_Safety_assessment) }}
                             @else
@@ -2919,7 +3036,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Envinronment Health Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Health_Safety_feedback)
                                 {{ strip_tags($data1->Health_Safety_feedback) }}
                             @else
@@ -3001,7 +3118,7 @@
 
                     <tr>
                         <th class="w-20">Impect Assessment (By Contract Giver)</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->ContractGiver_assessment)
                                 {{ strip_tags($data1->ContractGiver_assessment) }}
                             @else
@@ -3012,7 +3129,7 @@
 
                     <!-- <tr>
                         <th class="w-20">Contract Giver Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data1->ContractGiver_feedback)
                                 {{ strip_tags($data1->ContractGiver_feedback) }}
                             @else
@@ -3101,8 +3218,10 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Other's 1 Department</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($data1->Other1_Department_person)
                                                 {{Helpers::getInitiatorGroups ($data1->Other1_Department_person) }}
@@ -3112,11 +3231,13 @@
                                         </div>
                                     </td>
                                 </tr>
+                                 </table>
+                                <table>
 
                                 <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 1)</th>
-                                    <td class="w-80" colspan="5">
+                                    <td class="w-80"  colspan="7">
                                         <div>
                                             @if ($data1->Other1_assessment)
                                                 {{ $data1->Other1_assessment }}
@@ -3126,9 +3247,11 @@
                                         </div>
                                     </td>
                                 </tr>
+                                 </table>
+                                <table>
                                 <!-- <tr>
                                     <th class="w-20">Other's 1 Feedback</th>
-                                    <td class="w-80" colspan="5">
+                                    <td class="w-80" colspan="3" colspan="5">
                                         <div>
                                             @if ($data1->Other1_feedback)
                                                 {{ $data1->Other1_feedback }}
@@ -3151,7 +3274,7 @@
                                         </div>
                                     </td>
                                     <th class="w-20">Other's 1 Review Completed On</th>
-                                    <td class="w-30">
+                                    <td class="w-30" colspan="3">
                                         <div>
                                             @if ($data1->Other1_on)
                                                 {{ Helpers::getdateFormat($data1->Other1_on) }}
@@ -3225,8 +3348,12 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+                                 </table>
+                                <table>
+                                <tr>
                                     <th class="w-20">Other's 2 Department</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Other2_Department_person)
                                                 {{ $data1->Other2_Department_person }}
@@ -3236,11 +3363,12 @@
                                         </div>
                                     </td>
                                 </tr>
-
+ </table>
+                                <table>
                                 <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 2)</th>
-                                    <td class="w-80" colspan="5">
+                                    <td class="w-80"  colspan="3">
                                         <div>
                                             @if ($data1->Other2_Assessment)
                                                 {{ $data1->Other2_Assessment }}
@@ -3249,10 +3377,10 @@
                                             @endif
                                         </div>
                                     </td>
-                                    </tr>
+                                </tr>
                                     <!-- <tr>
                                     <th class="w-20">Other's 2 Feedback</th>
-                                    <td class="w-80" colspan="5">
+                                    <td class="w-80" colspan="3" colspan="5">
                                         <div>
                                             @if ($data1->Other2_feedback)
                                                 {{ $data1->Other2_feedback }}
@@ -3350,6 +3478,10 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+                                </table>
+                                <table>
+                                <tr>
                                     <th class="w-20">Other's 3 Department</th>
                                     <td class="w-30">
                                         <div>
@@ -3361,11 +3493,12 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                                </table>
+                                <table>
                                 <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 3)</th>
-                                    <td class="w-80" colspan="5">
+                                    <td class="w-80" colspan="3" colspan="5">
                                         <div>
                                             @if ($data1->Other3_Assessment)
                                                 {{ $data1->Other3_Assessment }}
@@ -3475,6 +3608,10 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+                                </table>
+                                <table>
+                                <tr>
                                     <th class="w-20">Other's 4 Department</th>
                                     <td class="w-30">
                                         <div>
@@ -3486,6 +3623,8 @@
                                         </div>
                                     </td>
                                 </tr>
+                                 </table>
+                            <table>
 
                                 <tr>
 
@@ -3525,7 +3664,7 @@
                                         </div>
                                     </td>
                                     <th class="w-20">Other's 4 Review Completed On</th>
-                                    <td class="w-30">
+                                    <td class="w-30" colspan="3">
                                         <div>
                                             @if ($data1->Other4_on)
                                                 {{ Helpers::getdateFormat($data1->Other4_on) }}
@@ -3598,6 +3737,10 @@
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
                                     <th class="w-20">Other's 5 Department</th>
                                     <td class="w-30">
                                         <div>
@@ -3609,7 +3752,8 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </table>
+                            <table>
                                 <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 5)</th>
@@ -3648,7 +3792,7 @@
                                         </div>
                                     </td>
                                     <th class="w-20"> Other's 5 Review Completed On</th>
-                                    <td class="w-30">
+                                    <td class="w-30" colspan="3">
                                         <div>
                                             @if ($data1->Other5_on)
                                                 {{ Helpers::getdateFormat($data1->Other5_on) }}
@@ -3900,7 +4044,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Submit By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             <div>
                                 @if ($data->submitted_by)
                                     {{ $data->submitted_by }}
@@ -3910,7 +4054,7 @@
                             </div>
                         </td>
                         <th class="w-20">Submit On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             <div>
                                 @if ($data->submitted_on)
                                     {{ $data->submitted_on }}
@@ -3920,7 +4064,7 @@
                             </div>
                         </td>
                         <th class="w-20">Submit Comment</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             <div>
                                 @if ($data->submitted_comment)
                                     {{ $data->submitted_comment }}
@@ -3933,136 +4077,136 @@
 
                     <tr>
                         <th class="w-20">Complete Review By</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->complete_review_by)
                                 {{ $data->complete_review_by }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                         </td>
                         <th class="w-20">Complete Review On</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->complete_review_on)
                                 {{ $data->complete_review_on }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">Complete Review Comment</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->complete_review_Comments)
                                 {{ $data->complete_review_Comments }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                     </tr>
 
                     <tr>
                         <th class="w-20">Cancel By</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->cancelled_by)
                                 {{ $data->cancelled_by }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">Cancel On</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->cancelled_on)
                                 {{ $data->cancelled_on }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">Cancel Comment</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->cancelled_comment)
                                 {{ $data->cancelled_comment }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                     </tr>
                     <tr>
                         <th class="w-20">Send To CFT Review By</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->cft_complate_by)
                                 {{ $data->cft_complate_by }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">Send To CFT Review On</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->cft_complate_on)
                                 {{ $data->cft_complate_on }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">Send To CFT Review Comment</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->send_cft_comment)
                                 {{ $data->send_cft_comment }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                     </tr>
 
                     <tr>
                         <th class="w-20">CFT Review Complete By</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->cft_complate_by)
                                 {{ $data->cft_complate_by }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">CFT Review Complete On</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->cft_complate_on)
                                 {{ $data->cft_complate_on }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">CFT Review Complete Comment</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->cft_complate_comm)
                                 {{ $data->cft_complate_comm }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                     </tr>
 
                     <tr>
                         <th class="w-20">QA/CQA Verification Complete By :</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->qa_cqa_verif_comp_by)
                                 {{ $data->qa_cqa_verif_comp_by }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">QA/CQA Verification Complete On :</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->qa_cqa_verif_comp_on)
                                 {{ $data->qa_cqa_verif_comp_on }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">QA/CQA Verification Complete Comment</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->QA_cqa_verif_Comments)
                                 {{ $data->QA_cqa_verif_Comments }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                     </tr>
 
                     {{-- <tr>
@@ -4073,57 +4217,57 @@
                     </tr> --}}
                     <tr>
                         <th class="w-20">Approval Complete By</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->approve_plan_by)
                                 {{ $data->approve_plan_by }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">Approval Complete On</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->approve_plan_on)
                                 {{ $data->approve_plan_on }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">Approval Complete Comment</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->approve_plan_comment)
                                 {{ $data->approve_plan_comment }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                     </tr>
 
 
                     <tr>
                         <th class="w-20">Send Letter By</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->send_letter_by)
                                 {{ $data->send_letter_by }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">Send Letter On</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->send_letter_on)
                                 {{ $data->send_letter_on }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                         <th class="w-20">Send Letter Comment</th>
-                        <div>
+                        <td class="w-30">
                             @if ($data->send_letter_comment)
                                 {{ $data->send_letter_comment }}
                             @else
                                 Not Applicable
                             @endif
-                        </div>
+                        </td>
                     </tr>
 
 

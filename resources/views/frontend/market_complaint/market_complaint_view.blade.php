@@ -355,7 +355,7 @@
                         @elseif(
                             $data->stage == 4 && (Helpers::check_roles($data->division_id, 'Market Complaint', 5) ||
                                 in_array(Auth::user()->id, $valuesArray)))
-                                 {{-- @if (!$cftCompleteUser) --}}
+                               @if (!$cftCompleteUser || $cftCompleteUser->status == 'Pending')
 
        
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
@@ -370,7 +370,7 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                                 Child
                             </button>
-                            {{-- @endif  --}}
+                            @endif 
 
 
 
@@ -382,7 +382,7 @@
                                     Helpers::check_roles($data->division_id, 'Market Complaint', 18)))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
-                                    QA Verification complete
+                                    QA/CQA Verification complete
                                 </button></a>
                             <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#rejection-modal">
@@ -2620,7 +2620,7 @@
                                 });
                             </script>
 
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Complaint Sample Required">Complaint Sample Required @if($data->stage ==1)
                                             <span class="text-danger">*</span>
@@ -2641,14 +2641,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Complaint Sample Status">Complaint Sample Status</label>
-                                    <input type="text" name="complaint_sample_status_ca" id="date_of_initiation"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                        value="{{ $data->complaint_sample_status_ca }}">
-                                </div>
-                            </div> --}}
+                            
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Analytical Data review observation">Complaint Sample Status @if($data->stage ==1)
@@ -2658,6 +2651,40 @@
                                             not require completion</small></div>
                                     <textarea class="summernote" name="complaint_sample_status_ca"  id="summernote-1"
                                     {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->complaint_sample_status_ca }}</textarea>
+                                </div>
+                            </div> --}}
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Complaint Sample Required">Complaint Sample Required 
+                                        @if($data->stage == 1)
+                                            <span class="text-danger">*</span>
+                                        @endif
+                                    </label>
+                                    <select name="complaint_sample_required_ca" id="complaint_sample_required_ca"
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required>
+                                        <option value="">-- select --</option>
+                                        <option value="yes" {{ isset($data) && $data->complaint_sample_required_ca == 'yes' ? 'selected' : '' }}>Yes</option>
+                                        <option value="no" {{ isset($data) && $data->complaint_sample_required_ca == 'no' ? 'selected' : '' }}>No</option>
+                                        <option value="na" {{ isset($data) && $data->complaint_sample_required_ca == 'na' ? 'selected' : '' }}>NA</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3" id="complaint_sample_status_div"
+                                style="display: {{ isset($data) && $data->complaint_sample_required_ca == 'yes' ? 'block' : 'none' }};">
+                                <div class="group-input">
+                                    <label for="Analytical Data review observation">Complaint Sample Status 
+                                        @if($data->stage == 1)
+                                            <span class="text-danger">*</span>
+                                        @endif
+                                    </label>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small>
+                                    </div>
+                                    <textarea class="summernote" name="complaint_sample_status_ca" id="summernote-1"
+                                        {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->complaint_sample_status_ca }}</textarea>
                                 </div>
                             </div>
 
@@ -11124,7 +11151,7 @@ document.getElementById('initiator_group').addEventListener('change', function()
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('marketcomplaint.mar_comp_stagechange', $data->id) }}" method="POST" class="signatureModalFormloder"> 
+                <form action="{{ route('marketcomplaint.mar_comp_stagechange', $data->id) }}" method="POST" id="signatureModalFormloder"> 
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -11143,7 +11170,7 @@ document.getElementById('initiator_group').addEventListener('change', function()
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="text" name="comment">
                         </div>
                     </div>
 
@@ -11303,11 +11330,13 @@ document.getElementById('initiator_group').addEventListener('change', function()
             <div class="modal-body">
                 <form action="{{ route('marketcomplaint.marketCompalinExtensionChild', $data->id) }}" method="POST">
                     @csrf
-
+                    @if(Helpers::getChildData($data->id, 'RCA') < 3)
                     <div class="form-check mb-3">
                         <input class="" type="radio" name="revision" id="extension" value="extension" required>
                         <label class="form-check-label" for="extension">Extension</label>
                     </div>
+                    @endif
+
 
                     <!-- Modal Footer -->
                     <div class="modal-footer">
@@ -11502,9 +11531,14 @@ document.getElementById('initiator_group').addEventListener('change', function()
             }
 
             // Store user department data
+            // let userDepartments = {
+            //     @foreach ($users as $user)
+            //         "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+            //     @endforeach
+            // };
             let userDepartments = {
                 @foreach ($users as $user)
-                    "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+                    "{{ $user->name }}": `{!! Helpers::getUsersDepartmentName($user->departmentid) !!}`,
                 @endforeach
             };
 
@@ -11533,9 +11567,43 @@ document.getElementById('initiator_group').addEventListener('change', function()
                 });
             });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+                var signatureForm = document.getElementById('signatureModalFormloder');
+            //   var signatureForm = document.querySelector('.signatureModalFormloder'); // <-- class use kiya
 
+                signatureForm.addEventListener('submit', function(e) {
 
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
 
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+</script>
+
+<script>
+$(document).ready(function() {
+
+    function toggleComplaintSampleStatus() {
+        var val = $('#complaint_sample_required_ca').val();
+        if (val === 'yes') {
+            $('#complaint_sample_status_div').show();
+        } else {
+            $('#complaint_sample_status_div').hide();
+            $('#summernote-1').val(''); // optionally clear value
+        }
+    }
+
+    // Run on change
+    $('#complaint_sample_required_ca').on('change', toggleComplaintSampleStatus);
+
+    // Run on page load (for edit mode)
+    toggleComplaintSampleStatus();
+});
+</script>
 
     <!-- SweetAlert2 CDN -->
     {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}

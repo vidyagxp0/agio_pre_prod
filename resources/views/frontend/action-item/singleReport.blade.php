@@ -252,15 +252,15 @@
         font-size: 11px;
         line-height: 1.4;
         color: #000;
-        margin-top: 20px;
-         margin-bottom: -40px; 
+        margin-top: 10px;
+        margin-bottom: -60px; 
     }
 
     header, footer {
         position: fixed;
         left: 0;
         right: 0;
-        padding: 20px 35px;
+        /* padding: 20px 35px; */
         font-size: 12px;
         box-sizing: border-box;
     }
@@ -272,7 +272,7 @@
 
     footer {
         bottom: 0;
-        bottom: -120px;
+        bottom: -100px;
         border-top: none;
     }
 
@@ -286,7 +286,7 @@
     }
 
     .inner-block {
-        padding: 20px 35px; /* Add margin from left/right and top/bottom */
+        /* padding: 20px 35px;  */
         box-sizing: border-box;
     }
     
@@ -304,7 +304,7 @@
     }
 
     .table_bg {
-        background-color: #4274da57;;
+        background-color: #387478;
         color: #111;
     }
 
@@ -349,7 +349,6 @@
     .border-table {
         overflow-x: auto;
     }
-
     table th, table td {
         word-wrap: break-word;
     }
@@ -360,8 +359,10 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     Action-Item Report
+                    </div>
                 </td>
                 <td class="w-30">
                 <div class="logo" style="text-align: center;">
@@ -437,7 +438,7 @@
 
                     <tr>
                         <th class="w-20">Parent Record Number</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->parent_record_number)
                                 {{ $data->parent_record_number }}
                             @elseif($data->parent_record_number_edit)
@@ -454,11 +455,9 @@
                                 Not Applicable
                             @endif
                         </td>
-
-
                     </tr>
-
-
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-80">
@@ -468,14 +467,11 @@
                                 Not Applicable
                             @endif
                         </td>
-
                     </tr>
-
                 </table>
 
                 <div class="block">
                     <table>
-
                         <tr>
                             <th class="w-20">Short Description</th>
                             <td class="w-80">
@@ -485,8 +481,6 @@
                                     Not Applicable
                                 @endif
                             </td>
-
-
                         </tr>
                     </table>
                 </div>
@@ -497,14 +491,13 @@
                     <table>
                         <tr>
                             <th class="w-20">Action Item Related Records</th>
-                            <td class="w-80">
+                            <td class="w-30">
                                 @if ($data->related_records)
                                     {{ str_replace(',', ', ', $data->related_records) }}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
-                        </tr>
 
                         {{-- <tr>
                             <th class="w-20">HOD Persons</th>
@@ -517,10 +510,8 @@
                             </td>
                         </tr> --}}
 
-
-                        <tr>
                             <th class="w-20">HOD Persons</th>
-                            <td class="w-80">
+                            <td class="w-30">
                                 @if ($data->hod_preson)
                                     {{ $data->hod_preson }}
                                 @else
@@ -530,7 +521,7 @@
                         </tr>
                     </table>
 
-                    <div class="other-container ">
+                    {{-- <div class="other-container ">
                         <table>
                             <thead>
                                 <tr>
@@ -553,10 +544,23 @@
                                 </div>
                             </div>
                         </div>
+                    </div> --}}
+
+                    <div class="other-container">
+                        <table style="width:100%; border-collapse: collapse;">
+                                <tr>
+                                    <th class="w-20">
+                                        <strong>Description</strong>
+                                    </th>
+                                    <td class="w-80">
+                                        {!! strip_tags($data->description, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     </div>
                     <table>
-
                         <tr>
                             <th class="w-20">Responsible Department</th>
                             <td class="w-80">
@@ -567,10 +571,7 @@
                                 @endif
                             </td>
                         </tr>
-
                     </table>
-
-
                 </div>
                 <div class="block-head">
                     File Attachment
@@ -605,8 +606,6 @@
                         @endif
                     </table>
                 </div>
-
-
             </div>
 
 
@@ -624,9 +623,7 @@
                             Not Applicable
                         @endif
                     </td>
-
                 </tr>
-
             </table>
 
 
@@ -678,14 +675,12 @@
                             Not Applicable
                         @endif
                     </td>
-
                 </tr>
-
             </table>
             <table>
                 <tr>
                     <th class="w-20">Actual Start Date</th>
-                    <td class="w-80">
+                    <td class="w-30">
                         @if ($data->start_date)
                             {{ Helpers::getdateFormat($data->start_date) }}
                         @else
@@ -693,7 +688,7 @@
                         @endif
                     </td>
                     <th class="w-20">Actual End Date</th>
-                    <td class="w-80">
+                    <td class="w-30">
                         @if ($data->end_date)
                             {{ Helpers::getdateFormat($data->end_date) }}
                         @else
@@ -702,11 +697,9 @@
                     </td>
                 </tr>
             </table>
+
             <div class="block">
-
-
                 <table>
-
                     <tr>
                         <th class="w-20">Comments</th>
                         <td class="w-80">
@@ -716,7 +709,6 @@
                                 Not Applicable
                             @endif
                         </td>
-
                     </tr>
                 </table>
             </div>
@@ -769,9 +761,7 @@
                             Not Applicable
                         @endif
                     </td>
-
                 </tr>
-
             </table>
 
 
@@ -809,18 +799,10 @@
                 </table>
             </div>
 
-
-
-
             <div class="block" style="margin-top: 15px;">
                 <div class="block-head">
                     Activity Log
                 </div>
-
-                    <!-- <div class="block-head">
-                        Submit
-                    </div> -->
-
                 <table>
                     <tr>
                         <th class="w-10">Submit By</th>

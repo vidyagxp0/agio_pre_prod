@@ -10,148 +10,126 @@
 </head>
 
 <style>
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
-        min-width: 100vw;
-        min-height: 100vh;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
     }
 
-    .w-10 {
-        width: 10%;
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
     }
 
-    .w-20 {
-        width: 20%;
+    header {
+        top: -140px;
+        border-bottom: none;
     }
 
-    .w-30 {
-        width: 30%;
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
     }
 
-    .w-40 {
-        width: 40%;
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
     }
 
-    .w-50 {
-        width: 50%;
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
     }
 
-    .w-60 {
-        width: 60%;
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
     }
 
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    table,
-    th,
-    td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
+    .table_bg {
+        background-color: #387478;
+        color: #111;
     }
 
     table {
         width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
     }
 
-    th,
-    td {
-        padding: 10px;
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
         text-align: left;
+        vertical-align: top;
     }
 
-    header .head {
-        font-weight: bold;
-        text-align: center;
-        font-size: 1.2rem;
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
     }
 
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
+    .section-gap {
+        margin-top: 20px;
     }
 
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
+    .no-border th, .no-border td {
+        border: none !important;
     }
 
-    footer {
-        position: fixed;
-        bottom: -40px;
-        left: 0;
-        width: 100%;
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
     }
-
-    .inner-block {
-        padding: 10px;
-    }
-
-    .inner-block .head {
-        font-weight: bold;
-        font-size: 1.2rem;
-        margin-bottom: 5px;
-    }
-
-    .inner-block .division {
-        margin-bottom: 10px;
-    }
-
-    .first-table {
-        border-top: 1px solid black;
-        margin-bottom: 20px;
-    }
-
-    .first-table table td,
-    .first-table table th,
-    .first-table table {
-        border: 0;
-    }
-
-    .second-table td:nth-child(1)>div {
-        margin-bottom: 10px;
-    }
-
-    .second-table td:nth-child(1)>div:nth-last-child(1) {
-        margin-bottom: 0px;
-    }
-
-    .table_bg {
-        background: #4274da57;
+    table th, table td {
+        word-wrap: break-word;
     }
 </style>
 
 <body>
-
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
-                Action Item Audit Trial Report
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
+                    Action Item Audit Trial Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -180,10 +158,9 @@
 
         <div class="head">Action Item Audit Trial Report</div>
 
-        <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
-        </div>
-
+            <div class="division">
+                {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+            </div>
         
         <div class="second-table">
             <table>
