@@ -9155,11 +9155,13 @@
         }
 
         // Store user department data
-        let userDepartments = {
+       
+          let userDepartments = {
             @foreach ($users as $user)
-                "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+                "{{ $user->name }}": `{!! Helpers::getUsersDepartmentName($user->departmentid) !!}`,
             @endforeach
         };
+
 
         // Apply function to "Other's 1 Person" and "Other's 1 Department"
         setupPersonToDepartmentMapping("Other1_person", "Other1_Department_person", userDepartments);
