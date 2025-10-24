@@ -7188,27 +7188,27 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                     $incompleteFields = [];
 
                     if ($userAssignments->Production_Table_Person == $userId && empty($userAssignments->Production_Table_Assessment)) {
-                        $incompleteFields[] = 'Production Table Assessment';
+                        $incompleteFields[] = 'Review comment (By Production Tablet/Capsule / Powder)';
                     }
                     
                     if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
-                        $incompleteFields[] = 'Production Injection Assessment';
+                        $incompleteFields[] = 'Review Comment (By Production Injection)';
                     }
                     
                     if ($userAssignments->ResearchDevelopment_person == $userId && empty($userAssignments->ResearchDevelopment_assessment)) {
-                        $incompleteFields[] = 'Research Development Assessment';
+                        $incompleteFields[] = 'Review Comment (By Research & Development)';
                     }
                     
                     if ($userAssignments->Store_person == $userId && empty($userAssignments->Store_assessment)) {
-                        $incompleteFields[] = 'Store assessment';
+                        $incompleteFields[] = 'Review Comment (By Store)';
                     }
                     
                     if ($userAssignments->Quality_Control_Person == $userId && empty($userAssignments->Quality_Control_assessment)) {
-                        $incompleteFields[] = 'Quality Control assessment';
+                        $incompleteFields[] = 'Review Comment (By Corporate Quality Assurance) ';
                     }
                     
                     if ($userAssignments->QualityAssurance_person == $userId && empty($userAssignments->QualityAssurance_assessment)) {
-                        $incompleteFields[] = 'Quality Assurance assessment';
+                        $incompleteFields[] = 'Review Comment (By Quality Assurance) ';
                     }
                     
                     if ($userAssignments->CorporateQualityAssurance_person == $userId && empty($userAssignments->CorporateQualityAssurance_assessment)) {
@@ -7216,32 +7216,32 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                     }
 
                     if ($userAssignments->RegulatoryAffair_person == $userId && empty($userAssignments->RegulatoryAffair_assessment)) {
-                        $incompleteFields[] = 'RegulatoryAffair assessment';
+                        $incompleteFields[] = 'Review Comment (By Regulatory Affair)';
                     }
                     
                     if ($userAssignments->ProductionLiquid_person == $userId && empty($userAssignments->ProductionLiquid_assessment)) {
-                        $incompleteFields[] = 'ProductionLiquid assessment';
+                        $incompleteFields[] = 'Review Comment (By Production Liquid/ointment)';
                     }
                     
                     if ($userAssignments->Microbiology_person == $userId && empty($userAssignments->Microbiology_assessment)) {
-                        $incompleteFields[] = 'Microbiology assessment';
+                        $incompleteFields[] = 'Review Comment (By Microbiology)';
                     }
                     
                     if ($userAssignments->Engineering_person == $userId && empty($userAssignments->Engineering_assessment)) {
-                        $incompleteFields[] ='Engineering assessment';
+                        $incompleteFields[] ='Review Comment (By Engineering) ';
                     }
                     
                     if ($userAssignments->Environment_Health_Safety_person == $userId && empty($userAssignments->Health_Safety_assessment)) {
-                        $incompleteFields[] = 'Health Safety assessment';
+                        $incompleteFields[] = 'Review Comment (By Safety) ';
                     }
                     
                     if ($userAssignments->Human_Resource_person == $userId && empty($userAssignments->Human_Resource_assessment)) {
-                        $incompleteFields[] = 'Human Resourcec Assessment';
+                        $incompleteFields[] = 'Review Comment (By Human Resource) ';
                     }
                     
-                    if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {
-                        $incompleteFields[] = 'ContractGiver Assessment';
-                    }
+                    // if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {
+                    //     $incompleteFields[] = 'ContractGiver Assessment';
+                    // }
                     
                     
                     if (!empty($incompleteFields)) {
@@ -8480,6 +8480,15 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                 $changeControl->send_to_opened_on = Carbon::now()->format('d-M-Y');
                 $changeControl->send_to_opened_comment = $request->comment;
 
+                // $marketstat->reject_comment = $request->comment;
+                DB::table('external_audit_c_f_t_responses')
+                ->where('external_audit_id', $id)
+                ->whereIn('status', ['In-progress', 'Completed'])
+                ->update([
+                    'status' => 'Pending',
+                    'updated_at' => now(),
+                ]);
+
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
                 $history->activity_type = 'Send to Opened By, Send to Opened On';
@@ -8563,6 +8572,62 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                 }
                 $history->save();
                 $changeControl->update();
+
+                $Cft = ExternalAuditCFT::where('external_audit_id', $changeControl->id)->first();
+                    if ($Cft) {
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Warehouse_by = null;
+                        $Cft->Warehouse_on = null;
+                        $Cft->Production_Injection_By = null;
+                        $Cft->Production_Injection_On = null;
+                        $Cft->Production_Table_By = null;
+                        $Cft->Production_Table_On = null;
+                        $Cft->RA_by = null;
+                        $Cft->RA_on = null;
+                        $Cft->production_by = null;
+                        $Cft->production_on = null;
+                        $Cft->ResearchDevelopment_by = null;
+                        $Cft->ResearchDevelopment_on = null;
+                        $Cft->Human_Resource_by = null;
+                        $Cft->Human_Resource_on = null;
+                        $Cft->CorporateQualityAssurance_by = null;
+                        $Cft->CorporateQualityAssurance_on = null;
+                        $Cft->Store_by = null;
+                        $Cft->Store_on = null;
+                        $Cft->Engineering_by = null;
+                        $Cft->Engineering_on = null;
+                        $Cft->RegulatoryAffair_by = null;
+                        $Cft->RegulatoryAffair_on = null;
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->ProductionLiquid_by = null;
+                        $Cft->ProductionLiquid_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Microbiology_by = null;
+                        $Cft->Microbiology_on = null;
+                        $Cft->Environment_Health_Safety_by = null;
+                        $Cft->Environment_Health_Safety_on = null;
+                        $Cft->ContractGiver_by = null;
+                        $Cft->ContractGiver_on = null;
+                        $Cft->Other1_by = null;
+                        $Cft->Other1_on = null;
+                        $Cft->Other2_by = null;
+                        $Cft->Other2_on = null;
+                        $Cft->Other3_by = null;
+                        $Cft->Other3_on = null;
+                        $Cft->Other4_by = null;
+                        $Cft->Other4_on = null;
+                        $Cft->Other5_by = null;
+                        $Cft->Other5_on = null;
+
+                        $Cft->save();
+
+                        return back();
+                    }
                 toastr()->success('Document Sent');
                 return back();
             }
