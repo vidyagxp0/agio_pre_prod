@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<style>
+<!-- <style>
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -153,7 +153,121 @@
     .table_bg {
         background: #4274da57;
     }
+</style> -->
+
+<style>
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
+    }
+
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
+
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
+
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
+    }
+
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
+    }
+
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .table_bg {
+        background-color: #387478;
+        color: #111;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
+
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .no-border th, .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+    table th, table td {
+        word-wrap: break-word;
+    }
 </style>
+
 @php
 $users = DB::table('users')->select('id', 'name')->get();
 
@@ -179,8 +293,10 @@ $users = DB::table('users')->select('id', 'name')->get();
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     Audit Program Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -279,7 +395,7 @@ $users = DB::table('users')->select('id', 'name')->get();
 
 
                 </table>
-                <div class="inner-block">
+                {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px;">Short Description
                     </label>
                     <div style="font-size: 0.8rem">
@@ -289,8 +405,20 @@ $users = DB::table('users')->select('id', 'name')->get();
                         Not Applicable
                         @endif
                     </div>
-                </div>
+                </div> --}}
                 <table>
+                    <tr>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80">
+                            @if ($data->short_description)
+                            {{ $data->short_description }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Type</th>
                         <td class="w-80">
@@ -300,6 +428,10 @@ $users = DB::table('users')->select('id', 'name')->get();
                             Not Applicable
                             @endif
                         </td>
+                    </tr>
+                </table>
+                <table>    
+                    <tr>    
                         @if ($data->type == 'Other')
                         <th class="w-20">Type(Others)</th>
                         <td class="w-80">
@@ -331,7 +463,10 @@ $users = DB::table('users')->select('id', 'name')->get();
                             Not Applicable
                             @endif
                         </td>
-
+                    </tr>
+                </table>
+                <table>    
+                    <tr>
                         @if ($data->year == 'Other')
                         <th class="w-20">Initiated through(Others)</th>
                         <td class="w-80">
@@ -495,15 +630,17 @@ $users = DB::table('users')->select('id', 'name')->get();
     <table>
         <tr>
             <th class="w-20">Related URl </th>
-            <td class="w-30">
+            <td class="w-80">
                 @if ($data->related_url)
                 {{ $data->related_url }}
                 @else
                 Not Applicable
                 @endif
             </td>
+        </tr>
+        <tr>    
             <th class="w-20">URl's description</th>
-            <td class="w-30">
+            <td class="w-80">
                 @if ($data->url_description)
                 {{ $data->url_description }}
                 @else
