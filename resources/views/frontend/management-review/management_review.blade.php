@@ -213,26 +213,25 @@
                         @elseif(
                             $data->stage == 4 && (Helpers::check_roles($data->division_id, 'Management Review', 5) ||
                                 in_array(Auth::user()->id, $valuesArray)))
-                            <!-- @if (!$cftCompleteUser)
-    -->
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                CFT Action Complete
-                            </button>
-                            <!--
-    @endif -->
+                            @if (!$cftCompleteUser || $cftCompleteUser->status == 'Pending')
+    
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    CFT Action Complete
+                                </button>
+                            @endif 
                         @elseif(
                             $data->stage == 5 && (Helpers::check_roles($data->division_id, 'Management Review', 5) || Helpers::check_roles($data->division_id, 'Management Review', 4) ||
                                 in_array(Auth::user()->id, $valuesArray)))
-                            <!-- @if (!$hodcftCompleteUser)
-    -->
+                             @if (!$hodcftCompleteUser)
+    
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT HOD Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
-                            <!--
-    @endif -->
+                        
+                            @endif 
                         @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Management Review', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Verification Complete
