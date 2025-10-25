@@ -8545,6 +8545,38 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //             // }
                 //         }
 
+                ///////////
+                $list = Helpers::getQAHeadUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "Submit", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->Submited_Comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
 
 
                 $changeControl->update();
@@ -8687,6 +8719,75 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //  }
 
 
+                /////////////////////////
+
+                $list = Helpers::getCftUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "QA Head Review Complete", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->qaHeadReviewComplete_Comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Review Complete Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
+
+                $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "QA Head Review Complete", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->qaHeadReviewComplete_Comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Review Complete Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
+
+
                 //toastr()->success('Document Sent');
                 return back();
             }
@@ -8723,8 +8824,43 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //             'message' => 'Sent for CFT review state'
                 //         ]);
                 //     }
-                  if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
-                            Session::flash('swal', [
+                //   if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
+                //             Session::flash('swal', [
+                //                 'title' => 'Mandatory Fields Required!',
+                //                 'message' => 'CFT Tab is yet to be filled!',
+                //                 'type' => 'warning',
+                //             ]);
+
+                //             return redirect()->back();
+                //         } else {
+                //             Session::flash('swal', [
+                //                 'type' => 'success',
+                //                 'title' => 'Success',
+                //                 'message' => 'CFT Action'
+                //             ]);
+                //         }
+               
+                 if ( $Cft->Production_Table_Review !== 'Yes' &&
+                            $Cft->Production_Injection_Review !== 'Yes' &&
+                            $Cft->ProductionLiquid_Review !== 'Yes' &&
+                            $Cft->Store_Review !== 'Yes' &&
+                            $Cft->ResearchDevelopment_Review !== 'Yes' &&
+                            $Cft->Microbiology_Review !== 'Yes' &&
+                            $Cft->RegulatoryAffair_Review !== 'Yes' &&
+                            $Cft->CorporateQualityAssurance_Review !== 'Yes' &&
+                            $Cft->ContractGiver_Review !== 'Yes' &&
+                            $Cft->Quality_review !== 'Yes' &&
+                            $Cft->Quality_Assurance_Review !== 'Yes' &&
+                            $Cft->Engineering_review !== 'Yes' &&
+                            $Cft->Environment_Health_review !== 'Yes' &&
+                            $Cft->Human_Resource_review !== 'Yes' &&
+                            $Cft->Other1_person !== 'Yes' &&
+                            $Cft->Other2_person !== 'Yes' &&
+                            $Cft->Other3_person !== 'Yes' &&
+                            $Cft->Other4_person !== 'Yes' &&
+                            $Cft->Other5_person !== 'Yes' 
+                            ) {
+                                                    Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
                                 'message' => 'CFT Tab is yet to be filled!',
                                 'type' => 'warning',
@@ -8735,7 +8871,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                             Session::flash('swal', [
                                 'type' => 'success',
                                 'title' => 'Success',
-                                'message' => 'CFT Action'
+                                'message' => 'CFT Reviews'
                             ]);
                         }
                 $changeControl->stage = "4";
@@ -8797,6 +8933,40 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //  }
 
 
+
+                $list = Helpers::getCftUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "Meeting and Summary Complete", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->meeting_summary_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Meeting and Summary Complete Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
+
                 //toastr()->success('Document Sent');
                 return back();
             }
@@ -8823,6 +8993,74 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                     //     ]);
                     // }
 
+                    // /////////////////////////////////////////////////////////////
+                      $userId = Auth::user()->name;
+                    $userAssignments = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
+                    $incompleteFields = [];
+
+                    if ($userAssignments->Production_Table_Person == $userId && empty($userAssignments->Production_Table_Assessment)) {
+                        $incompleteFields[] = 'Production Table Assessment';
+                    }
+                    
+                    if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
+                        $incompleteFields[] = 'Production Injection Assessment';
+                    }
+                    
+                    if ($userAssignments->ResearchDevelopment_person == $userId && empty($userAssignments->ResearchDevelopment_assessment)) {
+                        $incompleteFields[] = 'Research Development Assessment';
+                    }
+                    
+                    if ($userAssignments->Store_person == $userId && empty($userAssignments->Store_assessment)) {
+                        $incompleteFields[] = 'Store assessment';
+                    }
+                    
+                    if ($userAssignments->Quality_Control_Person == $userId && empty($userAssignments->Quality_Control_assessment)) {
+                        $incompleteFields[] = 'Quality Control assessment';
+                    }
+                    
+                    if ($userAssignments->QualityAssurance_person == $userId && empty($userAssignments->QualityAssurance_assessment)) {
+                        $incompleteFields[] = 'Quality Assurance assessment';
+                    }
+                    
+                    if ($userAssignments->CorporateQualityAssurance_person == $userId && empty($userAssignments->CorporateQualityAssurance_assessment)) {
+                        $incompleteFields[] = 'Corporate Quality Assurance Assessment';
+                    }
+
+                    if ($userAssignments->RegulatoryAffair_person == $userId && empty($userAssignments->RegulatoryAffair_assessment)) {
+                        $incompleteFields[] = 'RegulatoryAffair assessment';
+                    }
+                    
+                    if ($userAssignments->ProductionLiquid_person == $userId && empty($userAssignments->ProductionLiquid_assessment)) {
+                        $incompleteFields[] = 'ProductionLiquid assessment';
+                    }
+                    
+                    if ($userAssignments->Microbiology_person == $userId && empty($userAssignments->Microbiology_assessment)) {
+                        $incompleteFields[] = 'Microbiology assessment';
+                    }
+                    
+                    if ($userAssignments->Engineering_person == $userId && empty($userAssignments->Engineering_assessment)) {
+                        $incompleteFields[] ='Engineering assessment';
+                    }
+                    
+                    if ($userAssignments->Environment_Health_Safety_person == $userId && empty($userAssignments->Health_Safety_assessment)) {
+                        $incompleteFields[] = 'Health Safety assessment';
+                    }
+                    
+                    if ($userAssignments->Human_Resource_person == $userId && empty($userAssignments->Human_Resource_assessment)) {
+                        $incompleteFields[] = 'Human Resourcec Assessment';
+                    }
+                    
+                    if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {
+                        $incompleteFields[] = 'ContractGiver Assessment';
+                    }
+                     if (!empty($incompleteFields)) {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'You must fill your assigned fields for: ' . implode(', ', $incompleteFields) . '.'
+                        ]);
+                        return redirect()->back();
+                    } else {
 
                     $IsCFTRequired = managementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
                     $cftUsers = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
@@ -9558,10 +9796,77 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      // }
                 //  }
 
+                        $list = Helpers::getCftUserList($changeControl->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "MR", 
+                                            'history' => "CFT Action Complete", 
+                                            'process' => 'Managment Review', 
+                                            'comment' => $changeControl->ALLAICompleteby_comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Action Complete Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    // Log the error for debugging
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                    // Optionally handle the exception (e.g., notify the user or admin)
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+
+
+                        $list = Helpers::getHodUserList($changeControl->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "MR", 
+                                            'history' => "CFT Action Complete", 
+                                            'process' => 'Managment Review', 
+                                            'comment' => $changeControl->ALLAICompleteby_comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Action Complete Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    // Log the error for debugging
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                    // Optionally handle the exception (e.g., notify the user or admin)
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+
+
 
                         $changeControl->update();
                     }
-                    //toastr()->success('Document Sent');
+                  }    
+                    toastr()->success('Document Sent');
                     return back();
                 }
 
@@ -9639,6 +9944,75 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                         //         'message' => 'Sent for Investigation and CAPA review state'
                         //     ]);
                     // }
+
+                     // /////////////////////////////////////////////////////////////
+                      $userId = Auth::user()->name;
+                    $userAssignments = DB::table('hodmanagement_cfts')->where(['ManagementReview_id' => $id])->first();
+                    $incompleteFields = [];
+
+                    if ($userAssignments->hod_Production_Table_Person == $userId && empty($userAssignments->hod_Production_Table_Feedback)) {
+                        $incompleteFields[] = 'Production Table Assessment';
+                    }
+                    
+                    if ($userAssignments->hod_Production_Injection_Person == $userId && empty($userAssignments->hod_Production_Injection_Feedback)) {
+                        $incompleteFields[] = 'Production Injection Assessment';
+                    }
+                    
+                    if ($userAssignments->hod_ResearchDevelopment_person == $userId && empty($userAssignments->hod_ResearchDevelopment_feedback)) {
+                        $incompleteFields[] = 'Research Development Assessment';
+                    }
+                    
+                    if ($userAssignments->hod_Store_person == $userId && empty($userAssignments->hod_Store_feedback)) {
+                        $incompleteFields[] = 'Store assessment';
+                    }
+                    
+                    if ($userAssignments->hod_Quality_Control_Person == $userId && empty($userAssignments->hod_Quality_Control_feedback)) {
+                        $incompleteFields[] = 'Quality Control assessment';
+                    }
+                    
+                    if ($userAssignments->hod_QualityAssurance_person == $userId && empty($userAssignments->hod_QualityAssurance_feedback)) {
+                        $incompleteFields[] = 'Quality Assurance assessment';
+                    }
+                    
+                    if ($userAssignments->hod_CorporateQualityAssurance_person == $userId && empty($userAssignments->hod_CorporateQualityAssurance_feedback)) {
+                        $incompleteFields[] = 'Corporate Quality Assurance Assessment';
+                    }
+
+                    if ($userAssignments->hod_RegulatoryAffair_person == $userId && empty($userAssignments->hod_RegulatoryAffair_feedback)) {
+                        $incompleteFields[] = 'RegulatoryAffair assessment';
+                    }
+                    
+                    if ($userAssignments->hod_ProductionLiquid_person == $userId && empty($userAssignments->hod_ProductionLiquid_feedback)) {
+                        $incompleteFields[] = 'ProductionLiquid assessment';
+                    }
+                    
+                    if ($userAssignments->hod_Microbiology_person == $userId && empty($userAssignments->hod_Microbiology_feedback)) {
+                        $incompleteFields[] = 'Microbiology assessment';
+                    }
+                    
+                    if ($userAssignments->hod_Engineering_person == $userId && empty($userAssignments->hod_Engineering_feedback)) {
+                        $incompleteFields[] ='Engineering assessment';
+                    }
+                    
+                    if ($userAssignments->hod_Environment_Health_Safety_person == $userId && empty($userAssignments->hod_Health_Safety_feedback)) {
+                        $incompleteFields[] = 'Health Safety assessment';
+                    }
+                    
+                    if ($userAssignments->hod_Human_Resource_person == $userId && empty($userAssignments->hod_Human_Resource_feedback)) {
+                        $incompleteFields[] = 'Human Resourcec Assessment';
+                    }
+                    
+                    // if ($userAssignments->hod_ContractGiver_person == $userId && empty($userAssignments->hod_ContractGiver_feedback)) {
+                    //     $incompleteFields[] = 'ContractGiver Assessment';
+                    // }
+                     if (!empty($incompleteFields)) {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'You must fill your assigned fields for: ' . implode(', ', $incompleteFields) . '.'
+                        ]);
+                        return redirect()->back();
+                    } else {
 
 
                     $IsCFTRequired = hodmanagementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
@@ -10357,9 +10731,43 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      // }
                 //  }
 
+
+                        $list = Helpers::getQAUserList($changeControl->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "MR", 
+                                            'history' => "CFT HOD Review Complete", 
+                                            'process' => 'Managment Review', 
+                                            'comment' => $changeControl->hodFinaleReviewComplete_comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT HOD Review Complete Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    // Log the error for debugging
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                    // Optionally handle the exception (e.g., notify the user or admin)
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+
                         $changeControl->update();
-                    }
-                    //toastr()->success('Document Sent');
+                        }
+                    }    
+                    toastr()->success('Document Sent');
                     return back();
                 }
 
@@ -10484,6 +10892,39 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      // }
                 //  }
 
+
+                $list = Helpers::getQAHeadUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "QA Verification Complete", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->QAVerificationComplete_Comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Verification Complete Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
                 //toastr()->success('Document Sent');
                 return back();
             }
@@ -10592,6 +11033,104 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //  }
 
 
+
+                $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "Approved", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->Approved_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
+                 $list = Helpers::getHodUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "Approved", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->Approved_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
+
+                $list = Helpers::getQAHeadUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "Approved", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->Approved_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
                 //toastr()->success('Document Sent');
                 return back();
             }
@@ -10666,6 +11205,39 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+
+                 $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "More Information Required", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->ReturnActivityOpenedstage_Comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -10679,6 +11251,13 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 $changeControl->requireactivitydepartment_by = "Not Applicable";
                 $changeControl->requireactivitydepartment_on = "Not Applicable";
                 $changeControl->requireactivitydepartment_comment  = $request->comment;
+                 DB::table('management_cft__responses')
+                    ->where('ManagementReview_id', $id)
+                    ->whereIn('status', ['In-progress', 'Completed'])
+                    ->update([
+                        'status' => 'Pending',
+                        'updated_at' => now(),
+                    ]);
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Not Applicable';
@@ -10707,6 +11286,62 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 // }
                  $history->save();
                  $changeControl->update();
+                  $Cft = managementCft::where('ManagementReview_id', $changeControl->id)->first();
+                                if ($Cft) {
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Warehouse_by = null;
+                                    $Cft->Warehouse_on = null;
+                                    $Cft->Production_Injection_By = null;
+                                    $Cft->Production_Injection_On = null;
+                                    $Cft->Production_Table_By = null;
+                                    $Cft->Production_Table_On = null;
+                                    $Cft->RA_by = null;
+                                    $Cft->RA_on = null;
+                                    $Cft->production_by = null;
+                                    $Cft->production_on = null;
+                                    $Cft->ResearchDevelopment_by = null;
+                                    $Cft->ResearchDevelopment_on = null;
+                                    $Cft->Human_Resource_by = null;
+                                    $Cft->Human_Resource_on = null;
+                                    $Cft->CorporateQualityAssurance_by = null;
+                                    $Cft->CorporateQualityAssurance_on = null;
+                                    $Cft->Store_by = null;
+                                    $Cft->Store_on = null;
+                                    $Cft->Engineering_by = null;
+                                    $Cft->Engineering_on = null;
+                                    $Cft->RegulatoryAffair_by = null;
+                                    $Cft->RegulatoryAffair_on = null;
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->ProductionLiquid_by = null;
+                                    $Cft->ProductionLiquid_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Microbiology_by = null;
+                                    $Cft->Microbiology_on = null;
+                                    $Cft->Environment_Health_Safety_by = null;
+                                    $Cft->Environment_Health_Safety_on = null;
+                                    $Cft->ContractGiver_by = null;
+                                    $Cft->ContractGiver_on = null;
+                                    $Cft->Other1_by = null;
+                                    $Cft->Other1_on = null;
+                                    $Cft->Other2_by = null;
+                                    $Cft->Other2_on = null;
+                                    $Cft->Other3_by = null;
+                                    $Cft->Other3_on = null;
+                                    $Cft->Other4_by = null;
+                                    $Cft->Other4_on = null;
+                                    $Cft->Other5_by = null;
+                                    $Cft->Other5_on = null;
+
+                                    $Cft->save();
+
+                toastr()->success('Returned to Investigation stage. CFT Review reopened.');
+                return back();
+                                }
 
                  //  $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
                 //  foreach ($list as $u) {
@@ -10725,6 +11360,38 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+                 $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "More Information Required", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->requireactivitydepartment_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -10782,6 +11449,70 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+                 $list = Helpers::getHodUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "More Information Required", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->requireactivityHODdepartment_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
+                 $list = Helpers::getCftUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "More Information Required", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->requireactivityHODdepartment_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -10838,6 +11569,39 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+
+                $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "More Information Required", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->requireactivityQAdepartment_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -10967,19 +11731,25 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         $parent_type = "Management Review";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $parent_record = ManagementReview::where('id', $id)->value('record');
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        
         $parent_record = $record_number;
         $data1 = ManagementReview::find($id);
+        $parent_record = Helpers::getDivisionName($data1->division_id ) . '/' . 'MR' .'/' . date('Y') .'/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);    
+     
         $currentDate = Carbon::now();
         $parent_intiation_date = $currentDate;
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
         $record=$record_number;
+   
         $parentRecord = ManagementReview::where('id', $id)->value('record');
         $p_record = ManagementReview::find($id);
         $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MR' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
 
-        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'data1','parent_initiator_id','parent_record', 'record', 'due_date','parent_division_id', 'parent_id', 'parent_type','old_record', 'data_record'));
+        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parent_record','parentRecord', 'data1','parent_initiator_id','parent_record', 'record', 'due_date','parent_division_id', 'parent_id', 'parent_type','old_record', 'data_record'));
     }
 
     public static function managementReviewReport($id)

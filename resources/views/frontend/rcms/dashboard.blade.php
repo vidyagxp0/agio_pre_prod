@@ -1024,6 +1024,11 @@
                                                     @php
                                                         $findRecord = DB::table('auditees')->find($datas->parent_id);
                                                     @endphp
+
+                                                     @elseif ($datas->parent_type == 'Management Review')
+                                                    @php
+                                                        $findRecord = DB::table('management_reviews')->find($datas->parent_id);
+                                                    @endphp
                                                                                                         
                                                     @elseif ($datas->parent_type == 'OOC')
                                                     @php
