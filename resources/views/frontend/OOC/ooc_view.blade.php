@@ -328,7 +328,7 @@
                                     {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                     Child
                 </button> --}}
-                                @elseif($ooc->stage == 6 && (Helpers::check_roles($data->division_id, 'OOC', 3) || Helpers::check_roles($data->division_id, 'OOC', 18)  ))
+                                @elseif($ooc->stage == 6 && (Helpers::check_roles($ooc->division_id, 'OOC', 3) || Helpers::check_roles($data->division_id, 'OOC', 18)  ))
                                     {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                 Extended Inv. Complete
             </button>

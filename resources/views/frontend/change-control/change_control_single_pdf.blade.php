@@ -9,6 +9,182 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
+ <style>
+      
+
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
+    }
+
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
+
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
+
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
+    }
+
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
+    }
+
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .table_bg {
+        background-color: #387478;
+        color: #111;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
+
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .no-border th, .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+    table th, table td {
+        word-wrap: break-word;
+    }
+
+
+        .head-number {
+            font-weight: bold;
+            font-size: 13px;
+            padding-left: 10px;
+        }
+
+        .div-data {
+            font-size: 13px;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+
+
+
+                .why-why-chart-container {
+                width: 100%;
+                padding: 10px;
+                background: #fff;
+                border-radius: 5px;
+            }
+
+            .block-head {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .table th, .table td {
+                padding: 10px;
+                border: 1px solid #ddd;
+            }
+
+            .problem-statement th {
+                background: #f4bb22;
+                width: 150px;
+            }
+
+            .why-label {
+                color: #393cd4;
+                width: 150px;
+            }
+
+            .answer-label {
+                color: #393cd4;
+                width: 150px;
+            }
+
+            .root-cause th {
+                background: #0080006b;
+                width: 150px;
+            }
+
+            .text-muted {
+                color: gray;
+            }
+    </style>
 <style>
     body {
         font-family: 'Roboto', sans-serif;
@@ -231,7 +407,7 @@
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date of Initiation</th>
-                        <td class="w-30">{{ Helpers::getDateFormat($data->intiation_date) }}</td>
+                        <td class="w-30">{{ Helpers::getDateFormat($data->w) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
@@ -272,7 +448,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Justification</th>
-                        <td class="w-30">
+                       <td class="w-80" colspan="3">
                             @if ($data->risk_identification)
                                 {{ $data->risk_identification }}
                             @else
@@ -283,7 +459,7 @@
 
                     <tr>
                         <th class="w-20">HOD Person</th>
-                        <td class="w-30">
+                          <td class="w-80" colspan="3">
                             @if ($data->hod_person)
                                 {{ Helpers::getInitiatorName($data->hod_person) }}
                             @else
@@ -375,7 +551,7 @@
 
                     <tr>
                         <th class="w-20">Nature of Change</th>
-                        <td class="w-30">
+                          <td class="w-80" colspan="3">
                             @if ($data->doc_change)
                                 {{ $data->doc_change }}
                             @else
@@ -754,14 +930,27 @@ Not Applicable
                     }
                 </style>
 
-                <label class="head-number" for="Related Records">Related Records</label>
+                <!-- <label class="head-number" for="Related Records">Related Records</label>
                 <div class="div-data">
                     @if ($data->related_records)
                         {{ str_replace(',', ', ', $data->related_records) }}
                     @else
                         Not Applicable
                     @endif
-                </div>
+                </div> -->
+
+                <tr>
+                    <th class="w-20">Related Records</th>
+                        <td class="w-80" colspan="3">
+                            <div>
+                                 @if ($data->related_records)
+                                    {{ str_replace(',', ', ', $data->related_records) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </div>
+                        </td>
+                </tr>
 
 
                         
@@ -2534,8 +2723,10 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Other's 1 Department</th>
-                                    <td class="w-30">
+                                   <td class="w-80" colspan="3">
                                         <div>
                                             @if ($cftData->Other1_Department_person)
                                                 {{ ($cftData->Other1_Department_person) }}
@@ -2549,7 +2740,7 @@ Not Applicable
                                 <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 1)</th>
-                                    <td class="w-80" colspan="5">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($cftData->Other1_assessment)
                                                 {{ $cftData->Other1_assessment }}
@@ -2654,8 +2845,10 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
+                               </tr>
+                                <tr>    
                                     <th class="w-20">Other's 2 Department</th>
-                                    <td class="w-30">
+                                  <td class="w-80" colspan="3">
                                         <div>
                                             @if ($cftData->Other2_Department_person)
                                                 {{ ($cftData->Other2_Department_person) }}
@@ -2669,7 +2862,7 @@ Not Applicable
                                 <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 2)</th>
-                                    <td class="w-80" colspan="5">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($cftData->Other2_Assessment)
                                                 {{ $cftData->Other2_Assessment }}
@@ -2774,8 +2967,10 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
+                            </tr>
+                            <tr>
                                     <th class="w-20">Other's 3 Department</th>
-                                    <td class="w-30">
+                                   <td class="w-80" colspan="3">
                                         <div>
                                             @if ($cftData->Other3_Department_person)
                                                 {{ ($cftData->Other3_Department_person) }}
@@ -2789,7 +2984,7 @@ Not Applicable
                                 <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 3)</th>
-                                    <td class="w-80" colspan="5">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($cftData->Other3_Assessment)
                                                 {{ $cftData->Other3_Assessment }}
@@ -2896,8 +3091,10 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
+                              </tr>
+                                <tr>
                                     <th class="w-20">Other's 4 Department</th>
-                                    <td class="w-30">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($cftData->Other4_Department_person)
                                                 {{ ( $cftData->Other4_Department_person )}}
@@ -3016,8 +3213,10 @@ Not Applicable
                                             @endif
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
                                     <th class="w-20">Other's 5 Department</th>
-                                    <td class="w-30">
+                                   <td class="w-80" colspan="3">
                                         <div>
                                             @if ($cftData->Other5_Department_person)
                                                 {{ ( $cftData->Other5_Department_person) }}
@@ -3031,7 +3230,7 @@ Not Applicable
                                 <tr>
 
                                     <th class="w-20">Impact Assessment (By Other's 5)</th>
-                                    <td class="w-80" colspan="5">
+                                    <td class="w-80" colspan="3">
                                         <div>
                                             @if ($cftData->Other5_Assessment)
                                                 {{ $cftData->Other5_Assessment }}

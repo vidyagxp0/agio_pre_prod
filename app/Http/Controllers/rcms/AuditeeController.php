@@ -5986,8 +5986,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Other s 1 Department';
-            $history->previous = Helpers::getFullDepartmentName($lastCft->Other1_Department_person);
-            $history->current =Helpers::getFullDepartmentName( $request->Other1_Department_person);
+            $history->previous = $lastCft->Other1_Department_person;
+            $history->current = $request->Other1_Department_person;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6145,12 +6145,15 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             }
             $history->save();
         }
+       // dd($lastCft->Other2_Department_person,$request->Other2_Department_person);
         if ($lastCft->Other2_Department_person != $request->Other2_Department_person && $request->Other2_Department_person != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Other s 2 Department';
-            $history->previous = Helpers::getFullDepartmentName($lastCft->Other2_Department_person);
-            $history->current = Helpers::getFullDepartmentName($request->Other2_Department_person);
+            $history->previous =$lastCft->Other2_Department_person;
+          
+            $history->current = $request->Other2_Department_person;
+            // dd($history);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6311,8 +6314,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Other s 3 Department';
-            $history->previous = Helpers::getFullDepartmentName($lastCft->Other3_Department_person);
-            $history->current = Helpers::getFullDepartmentName($request->Other3_Department_person);
+            $history->previous = $lastCft->Other3_Department_person;
+            $history->current = $request->Other3_Department_person;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6473,8 +6476,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Other s 4 Department';
-            $history->previous = Helpers::getFullDepartmentName($lastCft->Other4_Department_person);
-            $history->current = Helpers::getFullDepartmentName($request->Other4_Department_person);
+            $history->previous = $lastCft->Other4_Department_person;
+            $history->current = $request->Other4_Department_person;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6636,8 +6639,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Other s 5 Department';
-            $history->previous = Helpers::getFullDepartmentName($lastCft->Other5_Department_person);
-            $history->current = Helpers::getFullDepartmentName($request->Other5_Department_person);
+            $history->previous = $lastCft->Other5_Department_person;
+            $history->current = $request->Other5_Department_person;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -6782,70 +6785,70 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             if ($changeControl->stage == 1) {
                    //Action Item child validation
 
-                    //  $actionchilds = ActionItem::where('parent_id', $id)
-                    //             ->where('parent_type', 'External Audit')
-                    //             ->get();
-                    //                 $hasPendingaction = false;
-                    //             foreach ($actionchilds as $ext) {
-                    //                     $actionchildstatus = trim(strtolower($ext->status));
-                    //                    if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                    //                         $hasPendingaction = true;
-                    //                         break;
-                    //                     }
-                    //                 }
-                    //         if ($hasPendingaction) {
-                    //             // $actionchildstatus = trim(strtolower($extensionchild->status));
-                    //             if ($hasPendingaction) {
-                    //                 Session::flash('swal', [
-                    //                     'title' => 'Action Item Child Pending!',
-                    //                     'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                    //                     'type' => 'warning',
-                    //                 ]);
+                     $actionchilds = ActionItem::where('parent_id', $id)
+                                ->where('parent_type', 'External Audit')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($actionchilds as $ext) {
+                                        $actionchildstatus = trim(strtolower($ext->status));
+                                       if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Action Item Child Pending!',
+                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
 
-                    //             return redirect()->back();
-                    //             }
-                    //         } else {
-                    //             // Flash message for success (when the form is filled correctly)
-                    //             Session::flash('swal', [
-                    //                 'title' => 'Success!',
-                    //                 'message' => 'Document Sent',
-                    //                 'type' => 'success',
-                    //             ]);
-                    //         }
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
 
 
-                    // //Observation child validation
+                    //Observation child validation
 
-                    //  $observationchilds = Observation::where('parent_id', $id)
-                    //             ->where('parent_type', 'External Audit')
-                    //             ->get();
-                    //                 $hasPendingaction = false;
-                    //             foreach ($observationchilds as $ext) {
-                    //                     $observationchildstatus = trim(strtolower($ext->status));
-                    //                    if ($observationchildstatus !== 'closed - done'  && $observationchildstatus !== 'closed-cancelled') {
-                    //                         $hasPendingaction = true;
-                    //                         break;
-                    //                     }
-                    //                 }
-                    //         if ($hasPendingaction) {
-                    //             // $observationchildstatus = trim(strtolower($extensionchild->status));
-                    //             if ($hasPendingaction) {
-                    //                 Session::flash('swal', [
-                    //                     'title' => 'Observation Child Pending!',
-                    //                     'message' => 'You cannot proceed until Observation Child is Closed-Done.',
-                    //                     'type' => 'warning',
-                    //                 ]);
+                     $observationchilds = Observation::where('parent_id', $id)
+                                ->where('parent_type', 'External Audit')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($observationchilds as $ext) {
+                                        $observationchildstatus = trim(strtolower($ext->status));
+                                       if ($observationchildstatus !== 'closed - done'  && $observationchildstatus !== 'closed-cancelled') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $observationchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Observation Child Pending!',
+                                        'message' => 'You cannot proceed until Observation Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
 
-                    //             return redirect()->back();
-                    //             }
-                    //         } else {
-                    //             // Flash message for success (when the form is filled correctly)
-                    //             Session::flash('swal', [
-                    //                 'title' => 'Success!',
-                    //                 'message' => 'Document Sent',
-                    //                 'type' => 'success',
-                    //             ]);
-                    //         }
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
                    
                 if (empty($changeControl->due_date)|| empty($changeControl->audit_type)|| empty($changeControl->initial_comments)||empty($changeControl->external_agencies)||empty($changeControl->start_date_gi) ||empty($changeControl->end_date_gi))
                     {
@@ -6898,69 +6901,69 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                         }
                         $history->save();
 
-                //         $list = Helpers::getQAUserList($changeControl->division_id);
+                        $list = Helpers::getQAUserList($changeControl->division_id);
 
-                //         foreach ($list as $u) {
-                //             $email = Helpers::getUserEmail($u->user_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
                         
-                //             if ($email !== null) {
-                //                 try {
-                //                     Mail::send(
-                //                         'mail.view-mail',
-                //                         [
-                //                             'data' => $changeControl, 
-                //                             'site' => "view", 
-                //                             'history' => "Audit Details Summary", 
-                //                             'process' => 'External Audit', 
-                //                             'comment' => $request->comment, 
-                //                             'user' => Auth::user()->name
-                //                         ],
-                //                         function ($message) use ($email, $changeControl) {
-                //                             $message->to($email)
-                //                                 ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Details Summary Performed");
-                //                         }
-                //                     );
-                //                 } catch (\Exception $e) {
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "view", 
+                                            'history' => "Audit Details Summary", 
+                                            'process' => 'External Audit', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Details Summary Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
                                  
-                //                     Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
                         
                                    
-                //                     session()->flash('error', 'Failed to send email to ' . $email);
-                //                 }
-                //             }
-                //         }
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
                         
-                //     $list = Helpers::getCQAUsersList($changeControl->division_id);
+                $list = Helpers::getCQAUsersList($changeControl->division_id);
 
-                // foreach ($list as $u) {
-                //     $email = Helpers::getUserEmail($u->user_id);
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
 
-                //     if ($email !== null) {
-                //         try {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 [
-                //                     'data' => $changeControl, 
-                //                     'site' => "view", 
-                //                     'history' => "Audit Details Summary", 
-                //                     'process' => 'External Audit', 
-                //                     'comment' => $request->comment, 
-                //                     'user' => Auth::user()->name
-                //                 ],
-                //                 function ($message) use ($email, $changeControl) {
-                //                     $message->to($email)
-                //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Details Summary Performed");
-                //                 }
-                //             );
-                //         } catch (\Exception $e) {
-                //             // Log the error for debugging
-                //             Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "view", 
+                                    'history' => "Audit Details Summary", 
+                                    'process' => 'External Audit', 
+                                    'comment' => $request->comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Details Summary Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
 
-                //             // Optionally handle the exception (e.g., notify the user or admin)
-                //             session()->flash('error', 'Failed to send email to ' . $email);
-                //         }
-                //     }
-                // }
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -7070,71 +7073,71 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                        // $list = Helpers::getCftUserList($changeControl->division_id);
+                        $list = Helpers::getCftUserList($changeControl->division_id);
 
-                        // foreach ($list as $u) {
-                        //     $email = Helpers::getUserEmail($u->user_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
                         
-                        //     if ($email !== null) {
-                        //         try {
-                        //             Mail::send(
-                        //                 'mail.view-mail',
-                        //                 [
-                        //                     'data' => $changeControl, 
-                        //                     'site' => "External Audit", 
-                        //                     'history' => "Summary and Response Complete", 
-                        //                     'process' => 'External Audit', 
-                        //                     'comment' => $request->comment, 
-                        //                     'user' => Auth::user()->name
-                        //                 ],
-                        //                 function ($message) use ($email, $changeControl) {
-                        //                     $message->to($email)
-                        //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Summary and Response Complete Performed");
-                        //                 }
-                        //             );
-                        //         } catch (\Exception $e) {
-                        //             // Log the error for debugging
-                        //             Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "External Audit", 
+                                            'history' => "Summary and Response Complete", 
+                                            'process' => 'External Audit', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Summary and Response Complete Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    // Log the error for debugging
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
                         
-                        //             // Optionally handle the exception (e.g., notify the user or admin)
-                        //             session()->flash('error', 'Failed to send email to ' . $email);
-                        //         }
-                        //     }
-                        // }
+                                    // Optionally handle the exception (e.g., notify the user or admin)
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
                         
 
 
-                        // $list = Helpers::getCQAUsersList($changeControl->division_id);
+                        $list = Helpers::getCQAUsersList($changeControl->division_id);
 
-                        // foreach ($list as $u) {
-                        //     $email = Helpers::getUserEmail($u->user_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
                         
-                        //     if ($email !== null) {
-                        //         try {
-                        //             Mail::send(
-                        //                 'mail.view-mail',
-                        //                 [
-                        //                     'data' => $changeControl, 
-                        //                     'site' => "view", 
-                        //                     'history' => "Summary and Response Complete", 
-                        //                     'process' => 'External Audit', 
-                        //                     'comment' => $request->comment, 
-                        //                     'user' => Auth::user()->name
-                        //                 ],
-                        //                 function ($message) use ($email, $changeControl) {
-                        //                     $message->to($email)
-                        //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Summary and Response Complete Performed");
-                        //                 }
-                        //             );
-                        //         } catch (\Exception $e) {
-                        //             // Log the error for debugging
-                        //             Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "view", 
+                                            'history' => "Summary and Response Complete", 
+                                            'process' => 'External Audit', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Summary and Response Complete Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    // Log the error for debugging
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
                         
-                        //             // Optionally handle the exception (e.g., notify the user or admin)
-                        //             session()->flash('error', 'Failed to send email to ' . $email);
-                        //         }
-                        //     }
-                        // }
+                                    // Optionally handle the exception (e.g., notify the user or admin)
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
                         
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -7185,27 +7188,27 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                     $incompleteFields = [];
 
                     if ($userAssignments->Production_Table_Person == $userId && empty($userAssignments->Production_Table_Assessment)) {
-                        $incompleteFields[] = 'Production Table Assessment';
+                        $incompleteFields[] = 'Review comment (By Production Tablet/Capsule / Powder)';
                     }
                     
                     if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
-                        $incompleteFields[] = 'Production Injection Assessment';
+                        $incompleteFields[] = 'Review Comment (By Production Injection)';
                     }
                     
                     if ($userAssignments->ResearchDevelopment_person == $userId && empty($userAssignments->ResearchDevelopment_assessment)) {
-                        $incompleteFields[] = 'Research Development Assessment';
+                        $incompleteFields[] = 'Review Comment (By Research & Development)';
                     }
                     
                     if ($userAssignments->Store_person == $userId && empty($userAssignments->Store_assessment)) {
-                        $incompleteFields[] = 'Store assessment';
+                        $incompleteFields[] = 'Review Comment (By Store)';
                     }
                     
                     if ($userAssignments->Quality_Control_Person == $userId && empty($userAssignments->Quality_Control_assessment)) {
-                        $incompleteFields[] = 'Quality Control assessment';
+                        $incompleteFields[] = 'Review Comment (By Corporate Quality Assurance) ';
                     }
                     
                     if ($userAssignments->QualityAssurance_person == $userId && empty($userAssignments->QualityAssurance_assessment)) {
-                        $incompleteFields[] = 'Quality Assurance assessment';
+                        $incompleteFields[] = 'Review Comment (By Quality Assurance) ';
                     }
                     
                     if ($userAssignments->CorporateQualityAssurance_person == $userId && empty($userAssignments->CorporateQualityAssurance_assessment)) {
@@ -7213,32 +7216,32 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                     }
 
                     if ($userAssignments->RegulatoryAffair_person == $userId && empty($userAssignments->RegulatoryAffair_assessment)) {
-                        $incompleteFields[] = 'RegulatoryAffair assessment';
+                        $incompleteFields[] = 'Review Comment (By Regulatory Affair)';
                     }
                     
                     if ($userAssignments->ProductionLiquid_person == $userId && empty($userAssignments->ProductionLiquid_assessment)) {
-                        $incompleteFields[] = 'ProductionLiquid assessment';
+                        $incompleteFields[] = 'Review Comment (By Production Liquid/ointment)';
                     }
                     
                     if ($userAssignments->Microbiology_person == $userId && empty($userAssignments->Microbiology_assessment)) {
-                        $incompleteFields[] = 'Microbiology assessment';
+                        $incompleteFields[] = 'Review Comment (By Microbiology)';
                     }
                     
                     if ($userAssignments->Engineering_person == $userId && empty($userAssignments->Engineering_assessment)) {
-                        $incompleteFields[] ='Engineering assessment';
+                        $incompleteFields[] ='Review Comment (By Engineering) ';
                     }
                     
                     if ($userAssignments->Environment_Health_Safety_person == $userId && empty($userAssignments->Health_Safety_assessment)) {
-                        $incompleteFields[] = 'Health Safety assessment';
+                        $incompleteFields[] = 'Review Comment (By Safety) ';
                     }
                     
                     if ($userAssignments->Human_Resource_person == $userId && empty($userAssignments->Human_Resource_assessment)) {
-                        $incompleteFields[] = 'Human Resourcec Assessment';
+                        $incompleteFields[] = 'Review Comment (By Human Resource) ';
                     }
                     
-                    if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {
-                        $incompleteFields[] = 'ContractGiver Assessment';
-                    }
+                    // if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {
+                    //     $incompleteFields[] = 'ContractGiver Assessment';
+                    // }
                     
                     
                     if (!empty($incompleteFields)) {
@@ -7971,47 +7974,47 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
 
 
 
-                    // $list = Helpers::getCQAUsersList($changeControl->division_id);
-                    // foreach ($list as $u) {
-                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //         $email = Helpers::getUserEmail($u->user_id);
-                    //             if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $changeControl, 'site'=>"External Audit", 'history' => "CFT Review Complete", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //                     function ($message) use ($email, $changeControl) {
-                    //                         $message->to($email)
-                    //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete Performed");
-                    //                     }
-                    //                 );
-                    //             } catch(\Exception $e) {
-                    //                 info('Error sending mail', [$e]);
-                    //             }
-                    //         }
-                    //     // }
-                    // }
+                    $list = Helpers::getCQAUsersList($changeControl->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site'=>"External Audit", 'history' => "CFT Review Complete", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
     
-                    // $list = Helpers::getQAHeadUserList($changeControl->division_id);
-                    // foreach ($list as $u) {
-                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //         $email = Helpers::getUserEmail($u->user_id);
-                    //             if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $changeControl, 'site'=>"External Audit", 'history' => "CFT Review Complete", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //                     function ($message) use ($email, $changeControl) {
-                    //                         $message->to($email)
-                    //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete Performed");
-                    //                     }
-                    //                 );
-                    //             } catch(\Exception $e) {
-                    //                 info('Error sending mail', [$e]);
-                    //             }
-                    //         }
-                    //     // }
-                    // }
+                    $list = Helpers::getQAHeadUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site'=>"External Audit", 'history' => "CFT Review Complete", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
     
                     $changeControl->update();
                 }
@@ -8168,68 +8171,68 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
 
                 
 
-                    // $list = Helpers::getCQAUsersList($changeControl->division_id);
-                    // foreach ($list as $u) {
-                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //         $email = Helpers::getUserEmail($u->user_id);
-                    //             if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $changeControl, 'site'=>"External Audit", 'history' => "Approval Complete", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //                     function ($message) use ($email, $changeControl) {
-                    //                         $message->to($email)
-                    //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
-                    //                     }
-                    //                 );
-                    //             } catch(\Exception $e) {
-                    //                 info('Error sending mail', [$e]);
-                    //             }
-                    //         }
-                    //     // }
-                    // }
+                    $list = Helpers::getCQAUsersList($changeControl->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site'=>"External Audit", 'history' => "Approval Complete", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
     
-                    // $list = Helpers::getQAUserList($changeControl->division_id);
-                    // foreach ($list as $u) {
-                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //         $email = Helpers::getUserEmail($u->user_id);
-                    //             if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $changeControl, 'site'=>"External Audit", 'history' => "Approval Complete", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //                     function ($message) use ($email, $changeControl) {
-                    //                         $message->to($email)
-                    //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
-                    //                     }
-                    //                 );
-                    //             } catch(\Exception $e) {
-                    //                 info('Error sending mail', [$e]);
-                    //             }
-                    //         }
-                    //     // }
-                    // }
+                    $list = Helpers::getQAUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site'=>"External Audit", 'history' => "Approval Complete", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
 
-                    // $list = Helpers::getCftUserList($changeControl->division_id);
-                    // foreach ($list as $u) {
-                    //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //         $email = Helpers::getUserEmail($u->user_id);
-                    //             if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $changeControl, 'site'=>"External Audit", 'history' => "Approval Complete", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //                     function ($message) use ($email, $changeControl) {
-                    //                         $message->to($email)
-                    //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
-                    //                     }
-                    //                 );
-                    //             } catch(\Exception $e) {
-                    //                 info('Error sending mail', [$e]);
-                    //             }
-                    //         }
-                    //     // }
-                    // }
+                    $list = Helpers::getCftUserList($changeControl->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl, 'site'=>"External Audit", 'history' => "Approval Complete", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -8315,23 +8318,48 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         //     $history->action_name = 'Update';
                         // }
                         $history->save();
-                    //     $list = Helpers::getAuditManagerUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
+                   
+                        $list = Helpers::getCQAUsersList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"External Audit", 'history' => "More Information Required", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
 
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Rejected ".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+                $list = Helpers::getQAUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"External Audit", 'history' => "More Information Required", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
 
                     // $history = new AuditeeHistory();
                     // $history->type = "External Audit";
@@ -8398,47 +8426,47 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                 $history->status = $changeControl->status;
                 $history->save();
 
-                // $list = Helpers::getCQAUsersList($changeControl->division_id);
-                // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             try {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $changeControl, 'site'=>"External Audit", 'history' => "More Information Required", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                     function ($message) use ($email, $changeControl) {
-                //                         $message->to($email)
-                //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                //                     }
-                //                 );
-                //             } catch(\Exception $e) {
-                //                 info('Error sending mail', [$e]);
-                //             }
-                //         }
-                //     // }
-                // }
+                $list = Helpers::getCQAUsersList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"External Audit", 'history' => "More Information Required", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
 
-                // $list = Helpers::getQAUserList($changeControl->division_id);
-                // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             try {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $changeControl, 'site'=>"External Audit", 'history' => "More Information Required", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                     function ($message) use ($email, $changeControl) {
-                //                         $message->to($email)
-                //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                //                     }
-                //                 );
-                //             } catch(\Exception $e) {
-                //                 info('Error sending mail', [$e]);
-                //             }
-                //         }
-                //     // }
-                // }
+                $list = Helpers::getQAUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"External Audit", 'history' => "More Information Required", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
 
 
                 $changeControl->update();
@@ -8451,6 +8479,15 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                 $changeControl->send_to_opened_by = Auth::user()->name;
                 $changeControl->send_to_opened_on = Carbon::now()->format('d-M-Y');
                 $changeControl->send_to_opened_comment = $request->comment;
+
+                // $marketstat->reject_comment = $request->comment;
+                DB::table('external_audit_c_f_t_responses')
+                ->where('external_audit_id', $id)
+                ->whereIn('status', ['In-progress', 'Completed'])
+                ->update([
+                    'status' => 'Pending',
+                    'updated_at' => now(),
+                ]);
 
                 $history = new AuditTrialExternal();
                 $history->ExternalAudit_id = $id;
@@ -8491,50 +8528,106 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
 
 
 
-                // $list = Helpers::getQAUserList($changeControl->division_id);
-                // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             try {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $changeControl, 'site'=>"External Audit", 'history' => "Send to Opened", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                     function ($message) use ($email, $changeControl) {
-                //                         $message->to($email)
-                //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to Opened Performed");
-                //                     }
-                //                 );
-                //             } catch(\Exception $e) {
-                //                 info('Error sending mail', [$e]);
-                //             }
-                //         }
-                //     // }
-                // }
+                $list = Helpers::getQAUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"External Audit", 'history' => "Send to Opened", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to Opened Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
 
 
-                // $list = Helpers::getCQAUsersList($changeControl->division_id);
-                // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             try {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $changeControl, 'site'=>"External Audit", 'history' => "Send to Opened", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                     function ($message) use ($email, $changeControl) {
-                //                         $message->to($email)
-                //                         ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to Opened Performed");
-                //                     }
-                //                 );
-                //             } catch(\Exception $e) {
-                //                 info('Error sending mail', [$e]);
-                //             }
-                //         }
-                //     // }
-                // }
+                $list = Helpers::getCQAUsersList($changeControl->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl, 'site'=>"External Audit", 'history' => "Send to Opened", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to Opened Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
                 $history->save();
                 $changeControl->update();
+
+                $Cft = ExternalAuditCFT::where('external_audit_id', $changeControl->id)->first();
+                    if ($Cft) {
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Warehouse_by = null;
+                        $Cft->Warehouse_on = null;
+                        $Cft->Production_Injection_By = null;
+                        $Cft->Production_Injection_On = null;
+                        $Cft->Production_Table_By = null;
+                        $Cft->Production_Table_On = null;
+                        $Cft->RA_by = null;
+                        $Cft->RA_on = null;
+                        $Cft->production_by = null;
+                        $Cft->production_on = null;
+                        $Cft->ResearchDevelopment_by = null;
+                        $Cft->ResearchDevelopment_on = null;
+                        $Cft->Human_Resource_by = null;
+                        $Cft->Human_Resource_on = null;
+                        $Cft->CorporateQualityAssurance_by = null;
+                        $Cft->CorporateQualityAssurance_on = null;
+                        $Cft->Store_by = null;
+                        $Cft->Store_on = null;
+                        $Cft->Engineering_by = null;
+                        $Cft->Engineering_on = null;
+                        $Cft->RegulatoryAffair_by = null;
+                        $Cft->RegulatoryAffair_on = null;
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->ProductionLiquid_by = null;
+                        $Cft->ProductionLiquid_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Microbiology_by = null;
+                        $Cft->Microbiology_on = null;
+                        $Cft->Environment_Health_Safety_by = null;
+                        $Cft->Environment_Health_Safety_on = null;
+                        $Cft->ContractGiver_by = null;
+                        $Cft->ContractGiver_on = null;
+                        $Cft->Other1_by = null;
+                        $Cft->Other1_on = null;
+                        $Cft->Other2_by = null;
+                        $Cft->Other2_on = null;
+                        $Cft->Other3_by = null;
+                        $Cft->Other3_on = null;
+                        $Cft->Other4_by = null;
+                        $Cft->Other4_on = null;
+                        $Cft->Other5_by = null;
+                        $Cft->Other5_on = null;
+
+                        $Cft->save();
+
+                        return back();
+                    }
                 toastr()->success('Document Sent');
                 return back();
             }

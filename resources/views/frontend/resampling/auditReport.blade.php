@@ -151,6 +151,7 @@
         word-wrap: break-word;
     }
 </style> --}}
+
 <style>
     @page {
          margin: 160px 35px 100px; /* top header, side margin, bottom footer */
@@ -162,15 +163,15 @@
         font-size: 11px;
         line-height: 1.4;
         color: #000;
-        margin-top: 20px;
-         margin-bottom: -40px; 
+        margin-top: 10px;
+        margin-bottom: -60px; 
     }
 
     header, footer {
         position: fixed;
         left: 0;
         right: 0;
-        padding: 20px 35px;
+        /* padding: 20px 35px; */
         font-size: 12px;
         box-sizing: border-box;
     }
@@ -182,7 +183,7 @@
 
     footer {
         bottom: 0;
-        bottom: -120px;
+        bottom: -100px;
         border-top: none;
     }
 
@@ -196,7 +197,7 @@
     }
 
     .inner-block {
-        padding: 20px 35px; /* Add margin from left/right and top/bottom */
+        /* padding: 20px 35px;  */
         box-sizing: border-box;
     }
     
@@ -214,7 +215,7 @@
     }
 
     .table_bg {
-        background-color: #4274da57;;
+        background-color: #387478;
         color: #111;
     }
 
@@ -259,7 +260,6 @@
     .border-table {
         overflow-x: auto;
     }
-
     table th, table td {
         word-wrap: break-word;
     }
@@ -270,8 +270,10 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
-                    <strong> Resampling Audit Trail Report</strong>
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
+                    Resampling Audit Trail Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">

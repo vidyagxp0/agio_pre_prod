@@ -8,164 +8,195 @@
     <title>Vidyagxp - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
+    <style>
+      
 
-<style>
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
-        min-height: 100vh;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
     }
 
-    .w-10 {
-        width: 10%;
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
     }
 
-    .w-15 {
-        width: 15%;
+    header {
+        top: -140px;
+        border-bottom: none;
     }
 
-    .w-20 {
-        width: 20%;
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
     }
 
-    .w-25 {
-        width: 25%;
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
     }
 
-    .w-30 {
-        width: 30%;
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
     }
 
-    .w-40 {
-        width: 40%;
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
     }
 
-    .w-50 {
-        width: 50%;
-    }
-
-    .w-60 {
-        width: 60%;
-    }
-
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    header table,
-    header th,
-    header td,
-    footer table,
-    footer th,
-    footer td,
-    .border-table table,
-    .border-table th,
-    .border-table td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        vertical-align: middle;
+    .table_bg {
+        background-color: #387478;
+        color: #111;
     }
 
     table {
         width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
     }
 
-    th,
-    td {
-        padding: 5px;
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
         text-align: left;
+        vertical-align: top;
     }
 
-    footer .head,
-    header .head {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
     }
 
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
+    .section-gap {
+        margin-top: 20px;
     }
 
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
+    .no-border th, .no-border td {
+        border: none !important;
     }
 
-    footer {
-        width: 100%;
-        position: fixed;
-        display: block;
-        bottom: -40px;
-        left: 0;
-        font-size: 0.9rem;
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+    table th, table td {
+        word-wrap: break-word;
     }
 
-    footer td {
-        text-align: center;
-    }
 
-    .inner-block {
-        padding: 10px;
-    }
+        .head-number {
+            font-weight: bold;
+            font-size: 13px;
+            padding-left: 10px;
+        }
 
-    .inner-block tr {
-        font-size: 0.8rem;
-    }
+        .div-data {
+            font-size: 13px;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
 
-    .inner-block .block {
-        margin-bottom: 30px;
-    }
 
-    .inner-block .block-head {
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #4274da;
-        margin-bottom: 10px;
-        color: #4274da;
-    }
 
-    .inner-block th,
-    .inner-block td {
-        vertical-align: baseline;
-    }
+                .why-why-chart-container {
+                width: 100%;
+                padding: 10px;
+                background: #fff;
+                border-radius: 5px;
+            }
 
-    .table_bg {
-        background: #4274da57;
-    }
-</style>
+            .block-head {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .table th, .table td {
+                padding: 10px;
+                border: 1px solid #ddd;
+            }
+
+            .problem-statement th {
+                background: #f4bb22;
+                width: 150px;
+            }
+
+            .why-label {
+                color: #393cd4;
+                width: 150px;
+            }
+
+            .answer-label {
+                color: #393cd4;
+                width: 150px;
+            }
+
+            .root-cause th {
+                background: #0080006b;
+                width: 150px;
+            }
+
+            .text-muted {
+                color: gray;
+            }
+    </style>
+
+
 
 <body>
 
     <header>
-        <table>
+
+    <table>
             <tr>
-                <td class="w-70 head">
-                    External Audit Report
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
+                     External Audit Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -175,6 +206,7 @@
                 </td>
             </tr>
         </table>
+       
         <table>
             <tr>
                 <td class="w-30">
@@ -214,11 +246,8 @@
                     General Information
                 </div>
 
-                <table>
-
+                <table style="width: 100%; border-collapse: collapse;" border="1">
                     <tr>
-
-
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             @if ($data->record)
@@ -238,18 +267,17 @@
                         </td>
                     </tr>
 
-
-
-
-                    <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }}
+                    <tr>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
+
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getDateFormat($data->intiation_date) }}</td>
                     </tr>
+
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->due_date)
                                 {{ Helpers::getdateFormat($data->due_date) }}
                             @else
@@ -277,12 +305,18 @@
                             @endif
                         </td>
 
+                        <th class="w-20">External Agencies</th>
+                        <td class="w-30">
+                            @if ($data->external_agencies)
+                                {{ $data->external_agencies }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
 
-
-
                     <tr>
-                        <th class="w-20"> Short Description </th>
+                        <th class="w-20">Short Description</th>
                         <td class="w-80" colspan="3">
                             @if ($data->short_description)
                                 {{ $data->short_description }}
@@ -316,7 +350,7 @@
 
                     <tr>
                         <th class="w-20">Type of Audit</th>
-                        <td class="w-30" >
+                        <td class="w-30">
                             @if ($data->audit_type)
                                 {{ $data->audit_type }}
                             @else
@@ -334,21 +368,9 @@
                         </td>
                     </tr>
 
-
-                   
-                    <tr>
-                        <th class="w-20">External Agencies</th>
-                        <td class="w-30">
-                            @if ($data->external_agencies)
-                                {{ $data->external_agencies }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
                     <tr>
                         <th class="w-20">Others</th>
-                        <td class="w-30" colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data->others)
                                 {{ $data->others }}
                             @else
@@ -356,9 +378,6 @@
                             @endif
                         </td>
                     </tr>
-
-                  
-
 
                     <tr>
                         <th class="w-20">Description</th>
@@ -370,9 +389,7 @@
                             @endif
                         </td>
                     </tr>
-
                 </table>
-
 
 
 
@@ -473,7 +490,7 @@
 
 
 
-             <br>
+            
 
             <div class="border-table">
                 <div class="block-head">
@@ -1993,81 +2010,82 @@ Not Applicable
                         <div class="block-head">
                             Other's 1 ( Additional Person Review From Departments If Required)
                         </div>
-                        <table>
+                      <table>
+                        <tr>
+                            <th class="w-20">Other's 1 Review Comment Required?</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data1->Other1_review)
+                                        {{ ucfirst($data1->Other1_review) }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </div>
+                            </td>
 
-                            <tr>
+                            <th class="w-20">Other's 1 Person</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data1->Other1_person)
+                                        {{ $data1->Other1_person }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
 
-                                <th class="w-20">Other's 1 Review Comment Required?
-                                </th>
-                                <td class="w-30">
-                                    <div>
-                                        @if ($data1->Other1_review)
-                                            {{ ucfirst($data1->Other1_review) }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </div>
-                                </td>
-                                <th class="w-20">Other's 1 Person</th>
-                                <td class="w-30">
-                                    <div>
-                                        @if ($data1->Other1_person)
-                                            {{ $data1->Other1_person }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </div>
-                                </td>
-                                <th class="w-20">Other's 1 Department</th>
-                                <td class="w-30">
-                                    <div>
-                                        @if ($data1->Other1_Department_person)
-                                            {{  $data1->Other1_Department_person ?? ''}}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr>
+                            <th class="w-20">Other's 1 Department</th>
+                            <td class="w-80" colspan="3">
+                                <div>
+                                    @if ($data1->Other1_Department_person)
+                                        {{ $data1->Other1_Department_person }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
 
-                            <tr>
+                        <tr>
+                            <th class="w-20">Review Comment (By Other's 1)</th>
+                            <td class="w-80" colspan="3">
+                                <div>
+                                    @if ($data1->Other1_assessment)
+                                        {{ $data1->Other1_assessment }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
 
-                                <th class="w-20">Review comment (By Other's 1)</th>
-                                <td class="w-80" colspan="5">
-                                    <div>
-                                        @if ($data1->Other1_assessment)
-                                            {{ $data1->Other1_assessment }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </div>
-                                </td>
+                        <tr>
+                            <th class="w-20">Other's 1 Review Completed By</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data1->Other1_by)
+                                        {{ $data1->Other1_by }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </div>
+                            </td>
 
-                            </tr>
-                            <tr>
+                            <th class="w-20">Other's 1 Review Completed On</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data1->Other1_on)
+                                        {{ \Carbon\Carbon::parse($data1->Other1_on)->format('d-M-Y') }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-                                <th class="w-20">Other's 1 Review Completed By</th>
-                                <td class="w-30">
-                                    <div>
-                                        @if ($data1->Other1_by)
-                                            {{ $data1->Other1_by }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </div>
-                                </td>
-                                <th class="w-20"> Other's 1 Review Completed On</th>
-                                <td class="w-30">
-                                    <div>
-                                        @if ($data1->Other1_on)
-                                            {{ \Carbon\Carbon::parse($data1->Other1_on)->format('d-M-Y') }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
                     </div>
                     <div class="border-table">
                         <div class="block-head">
@@ -2127,8 +2145,12 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Other's 2 Department</th>
-                                <td class="w-30">
+                                
+                            </tr>
+
+                            <tr>
+                             <th class="w-20">Other's 2 Department</th>
+                                <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->Other2_Department_person)
                                             {{ $data1->Other2_Department_person ?? '' }}
@@ -2141,8 +2163,8 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Review comment (By Other's 2)</th>
-                                <td class="w-80" colspan="5">
+                            <th class="w-20">Review comment (By Other's 2)</th>
+                               <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->Other2_Assessment)
                                             {{ $data1->Other2_Assessment }}
@@ -2236,8 +2258,12 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Other's 3 Department</th>
-                                <td class="w-30">
+                                
+                            </tr>
+
+                            <tr>
+                             <th class="w-20">Other's 3 Department</th>
+                                <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->Other3_Department_person)
                                             {{ $data1->Other3_Department_person ?? '' }}
@@ -2251,7 +2277,7 @@ Not Applicable
                             <tr>
 
                                 <th class="w-20">Review comment (By Other's 3)</th>
-                                <td class="w-80" colspan="5">
+                                 <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->Other3_Assessment)
                                             {{ $data1->Other3_Assessment }}
@@ -2345,8 +2371,12 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Other's 4 Department</th>
-                                <td class="w-30">
+                                
+                            </tr>
+
+                            <tr>
+                              <th class="w-20">Other's 4 Department</th>
+                                <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->Other4_Department_person)
                                             {{ $data1->Other4_Department_person ?? '' }}
@@ -2356,11 +2386,10 @@ Not Applicable
                                     </div>
                                 </td>
                             </tr>
-
                             <tr>
 
                                 <th class="w-20">Review comment (By Other's 4)</th>
-                                <td class="w-80" colspan="5">
+                                <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->Other4_Assessment)
                                             {{ $data1->Other4_Assessment }}
@@ -2454,8 +2483,12 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Other's 5 Department</th>
-                                <td class="w-30">
+                               
+                            </tr>
+
+                            <tr>
+                             <th class="w-20">Other's 5 Department</th>
+                                <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->Other5_Department_person)
                                             {{ $data1->Other5_Department_person ?? '' }}
@@ -2469,7 +2502,7 @@ Not Applicable
                             <tr>
 
                                 <th class="w-20">Review comment (By Other's 5)</th>
-                                <td class="w-80" colspan="5">
+                                <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->Other5_Assessment)
                                             {{ $data1->Other5_Assessment }}

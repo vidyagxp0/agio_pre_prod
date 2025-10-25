@@ -1158,7 +1158,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-10">Sr.No.</th>
+                            <th class="w-5">Sr.No.</th>
                             <th class="w-30">Type</th>
                             <th class="w-30">Remarks</th>
                         </tr>
