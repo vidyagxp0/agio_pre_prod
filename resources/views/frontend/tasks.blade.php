@@ -91,7 +91,7 @@
                                             @foreach($task as $temp)
                                             <tr>
                                                 <td class="pr-id" style="text-decoration:underline">
-                                                    <a href="#"  style="background-color: #0056b3; 
+                                                    <a href="{{ route('documents.edit', $temp->id) }}"  style="background-color: #0056b3; 
                                                                             color: #fff !important; 
                                                                             font-weight: 600; 
                                                                             border-radius: 10px; 
@@ -99,7 +99,7 @@
                                                                             text-decoration: none; 
                                                                             transition: all 0.2s ease-in-out; 
                                                                             display: inline-block;">
-                                                        000{{$temp->id}}
+                                                        {{Helpers::recordFormat($temp->id)}}
                                                     </a>
                                                 </td>
                                                 {{-- <td class="division">
