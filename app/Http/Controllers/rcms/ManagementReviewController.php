@@ -8545,6 +8545,38 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //             // }
                 //         }
 
+                ///////////
+                $list = Helpers::getQAHeadUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "Submit", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->Submited_Comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
 
 
                 $changeControl->update();
@@ -8685,6 +8717,75 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+
+                /////////////////////////
+
+                $list = Helpers::getCftUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "QA Head Review Complete", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->qaHeadReviewComplete_Comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Review Complete Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
+
+                $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "QA Head Review Complete", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->qaHeadReviewComplete_Comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Review Complete Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
 
 
                 //toastr()->success('Document Sent');
@@ -8830,6 +8931,40 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+
+
+                $list = Helpers::getCftUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "Meeting and Summary Complete", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->meeting_summary_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Meeting and Summary Complete Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
 
 
                 //toastr()->success('Document Sent');
@@ -9660,6 +9795,72 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+                        $list = Helpers::getCftUserList($changeControl->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "MR", 
+                                            'history' => "CFT Action Complete", 
+                                            'process' => 'Managment Review', 
+                                            'comment' => $changeControl->ALLAICompleteby_comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Action Complete Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    // Log the error for debugging
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                    // Optionally handle the exception (e.g., notify the user or admin)
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+
+
+                        $list = Helpers::getHodUserList($changeControl->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "MR", 
+                                            'history' => "CFT Action Complete", 
+                                            'process' => 'Managment Review', 
+                                            'comment' => $changeControl->ALLAICompleteby_comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Action Complete Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    // Log the error for debugging
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                    // Optionally handle the exception (e.g., notify the user or admin)
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+
 
 
                         $changeControl->update();
@@ -10530,6 +10731,39 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      // }
                 //  }
 
+
+                        $list = Helpers::getQAUserList($changeControl->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "MR", 
+                                            'history' => "CFT HOD Review Complete", 
+                                            'process' => 'Managment Review', 
+                                            'comment' => $changeControl->hodFinaleReviewComplete_comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT HOD Review Complete Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    // Log the error for debugging
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                    // Optionally handle the exception (e.g., notify the user or admin)
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+
                         $changeControl->update();
                         }
                     }    
@@ -10658,6 +10892,39 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      // }
                 //  }
 
+
+                $list = Helpers::getQAHeadUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "QA Verification Complete", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->QAVerificationComplete_Comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Verification Complete Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
                 //toastr()->success('Document Sent');
                 return back();
             }
@@ -10766,6 +11033,104 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //  }
 
 
+
+                $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "Approved", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->Approved_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
+                 $list = Helpers::getHodUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "Approved", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->Approved_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
+
+                $list = Helpers::getQAHeadUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "Approved", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->Approved_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
                 //toastr()->success('Document Sent');
                 return back();
             }
@@ -10840,6 +11205,39 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+
+                 $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "More Information Required", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->ReturnActivityOpenedstage_Comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -10962,6 +11360,38 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+                 $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "More Information Required", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->requireactivitydepartment_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -11161,6 +11591,70 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+                 $list = Helpers::getHodUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "More Information Required", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->requireactivityHODdepartment_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
+
+                 $list = Helpers::getCftUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "More Information Required", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->requireactivityHODdepartment_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -11217,6 +11711,39 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 //      }
                 //      // }
                 //  }
+
+
+                $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "MR", 
+                                    'history' => "More Information Required", 
+                                    'process' => 'Managment Review', 
+                                    'comment' => $changeControl->requireactivityQAdepartment_comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -11346,19 +11873,25 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         $parent_type = "Management Review";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $parent_record = ManagementReview::where('id', $id)->value('record');
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        
         $parent_record = $record_number;
         $data1 = ManagementReview::find($id);
+        $parent_record = Helpers::getDivisionName($data1->division_id ) . '/' . 'MR' .'/' . date('Y') .'/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);    
+     
         $currentDate = Carbon::now();
         $parent_intiation_date = $currentDate;
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
         $record=$record_number;
+   
         $parentRecord = ManagementReview::where('id', $id)->value('record');
         $p_record = ManagementReview::find($id);
         $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MR' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
 
-        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'data1','parent_initiator_id','parent_record', 'record', 'due_date','parent_division_id', 'parent_id', 'parent_type','old_record', 'data_record'));
+        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parent_record','parentRecord', 'data1','parent_initiator_id','parent_record', 'record', 'due_date','parent_division_id', 'parent_id', 'parent_type','old_record', 'data_record'));
     }
 
     public static function managementReviewReport($id)

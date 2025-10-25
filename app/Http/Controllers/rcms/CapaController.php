@@ -5872,6 +5872,7 @@ class CapaController extends Controller
             
             // $p_record = OutOfCalibration::find($id);
             $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'CAPA' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+             $parent_record = $data_record;
             $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" . $data1->record . "";
             return view('frontend.action-item.action-item', compact('expectedParenRecord', 'old_record', 'parentRecord', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data_record', 'data1'));
         }

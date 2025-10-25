@@ -41,7 +41,7 @@
             {{-- {{dd($doc);}} --}}
             <tr>
                 <td class="pr-id" style="text-decoration:underline"><a href="{{ route('documents.edit', $doc->id) }}">
-                        000{{ $doc->id }}
+                        {{ Helpers::recordFormat($doc->id)}}
                     </a>
                 </td>
                 <td class="division">
