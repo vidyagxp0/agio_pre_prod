@@ -10941,7 +10941,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
 
                                     $Cft->save();
 
-                toastr()->success('Returned to Investigation stage. CFT Review reopened.');
+                toastr()->success('Returned to Meeting And Summary stage. CFT Review reopened.');
                 return back();
                                 }
 
@@ -10967,11 +10967,28 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             }
 
             if ($changeControl->stage == 6) {
-                $changeControl->stage = "5";
-                $changeControl->status = 'HOD Final Review';
+                $changeControl->stage = "3";
+                $changeControl->status = 'Meeting And Summary';
                 $changeControl->requireactivityHODdepartment_by = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_on = "Not Applicable";
                 $changeControl->requireactivityHODdepartment_comment  = $request->comment;
+                // for cft 
+                 DB::table('management_cft__responses')
+                    ->where('ManagementReview_id', $id)
+                    ->whereIn('status', ['In-progress', 'Completed'])
+                    ->update([
+                        'status' => 'Pending',
+                        'updated_at' => now(),
+                    ]);
+
+                 // for hod cft 
+                      DB::table('hodmanagement_cft__responses')
+                    ->where('ManagementReview_id', $id)
+                    ->whereIn('status', ['In-progress', 'Completed'])
+                    ->update([
+                        'status' => 'Pending',
+                        'updated_at' => now(),
+                    ]);
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = "Not Applicable";
@@ -11001,8 +11018,133 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 // }
                  $history->save();
                  $changeControl->update();
+                  $Cft = managementCft::where('ManagementReview_id', $changeControl->id)->first();
+                                // if ($Cft) 
+                                // {
+                                   
 
-                 //  $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                                //     toastr()->success('Returned to Meeting And Summary stage. CFT Review reopened.');
+                                //     // return back();
+                                // }
+
+                    $hodCft = hodmanagementCft::where('ManagementReview_id', $changeControl->id)->first();
+                    // dd( $hodCft);
+                                if ($hodCft) {
+                                    $hodCft->hod_QualityAssurance_by = null;
+                                    $hodCft->hod_QualityAssurance_on = null;
+                                    $hodCft->hod_Quality_Control_by = null;
+                                    $hodCft->hod_Quality_Control_on = null;
+                                    // $hodCft->hod_Warehouse_by = null;
+                                    // $hodCft->hod_Warehouse_on = null;
+                                    $hodCft->hod_Production_Injection_By = null;
+                                    $hodCft->hod_Production_Injection_On = null;
+                                    $hodCft->hod_Production_Table_By = null;
+                                    $hodCft->hod_Production_Table_On = null;
+                                    // $hodCft->hod_RA_by = null;
+                                    // $hodCft->hod_RA_on = null;
+                                    // $hodCft->hod_production_by = null;
+                                    // $hodCft->hod_production_on = null;
+                                    $hodCft->hod_ResearchDevelopment_by = null;
+                                    $hodCft->hod_ResearchDevelopment_on = null;
+                                    $hodCft->hod_Human_Resource_by = null;
+                                    $hodCft->hod_Human_Resource_on = null;
+                                    $hodCft->hod_CorporateQualityAssurance_by = null;
+                                    $hodCft->hod_CorporateQualityAssurance_on = null;
+                                    $hodCft->hod_Store_by = null;
+                                    $hodCft->hod_Store_on = null;
+                                    $hodCft->hod_Engineering_by = null;
+                                    $hodCft->hod_Engineering_on = null;
+                                    $hodCft->hod_RegulatoryAffair_by = null;
+                                    $hodCft->hod_RegulatoryAffair_on = null;
+                                    $hodCft->hod_QualityAssurance_by = null;
+                                    $hodCft->hod_QualityAssurance_on = null;
+                                    $hodCft->hod_ProductionLiquid_by = null;
+                                    $hodCft->hod_ProductionLiquid_on = null;
+                                    $hodCft->hod_Quality_Control_by = null;
+                                    $hodCft->hod_Quality_Control_on = null;
+                                    $hodCft->hod_Microbiology_by = null;
+                                    $hodCft->hod_Microbiology_on = null;
+                                    $hodCft->hod_Environment_Health_Safety_by = null;
+                                    $hodCft->hod_Environment_Health_Safety_on = null;
+                                    // $hodCft->hod_ContractGiver_by = null;
+                                    // $hodCft->hod_ContractGiver_on = null;
+                                    $hodCft->hod_Other1_by = null;
+                                    $hodCft->hod_Other1_on = null;
+                                    $hodCft->hod_Other2_by = null;
+                                    $hodCft->hod_Other2_on = null;
+                                    $hodCft->hod_Other3_by = null;
+                                    $hodCft->hod_Other3_on = null;
+                                    $hodCft->hod_Other4_by = null;
+                                    $hodCft->hod_Other4_on = null;
+                                    $hodCft->hod_Other5_by = null;
+                                    $hodCft->hod_Other5_on = null;
+                                    $hodCft->save();
+
+                                     $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Warehouse_by = null;
+                                    $Cft->Warehouse_on = null;
+                                    $Cft->Production_Injection_By = null;
+                                    $Cft->Production_Injection_On = null;
+                                    $Cft->Production_Table_By = null;
+                                    $Cft->Production_Table_On = null;
+                                    $Cft->RA_by = null;
+                                    $Cft->RA_on = null;
+                                    $Cft->production_by = null;
+                                    $Cft->production_on = null;
+                                    $Cft->ResearchDevelopment_by = null;
+                                    $Cft->ResearchDevelopment_on = null;
+                                    $Cft->Human_Resource_by = null;
+                                    $Cft->Human_Resource_on = null;
+                                    $Cft->CorporateQualityAssurance_by = null;
+                                    $Cft->CorporateQualityAssurance_on = null;
+                                    $Cft->Store_by = null;
+                                    $Cft->Store_on = null;
+                                    $Cft->Engineering_by = null;
+                                    $Cft->Engineering_on = null;
+                                    $Cft->RegulatoryAffair_by = null;
+                                    $Cft->RegulatoryAffair_on = null;
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->ProductionLiquid_by = null;
+                                    $Cft->ProductionLiquid_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Microbiology_by = null;
+                                    $Cft->Microbiology_on = null;
+                                    $Cft->Environment_Health_Safety_by = null;
+                                    $Cft->Environment_Health_Safety_on = null;
+                                    $Cft->ContractGiver_by = null;
+                                    $Cft->ContractGiver_on = null;
+                                    $Cft->Other1_by = null;
+                                    $Cft->Other1_on = null;
+                                    $Cft->Other2_by = null;
+                                    $Cft->Other2_on = null;
+                                    $Cft->Other3_by = null;
+                                    $Cft->Other3_on = null;
+                                    $Cft->Other4_by = null;
+                                    $Cft->Other4_on = null;
+                                    $Cft->Other5_by = null;
+                                    $Cft->Other5_on = null;
+
+                                    $Cft->save();
+
+                // toastr()->success('Returned to Meeting And Summary stage. CFT Review reopened.');
+                return back();
+                                }
+//                $hodCft = hodmanagementCft::where('ManagementReview_id', $changeControl->id)->first();
+
+// $hodCft->hod_Production_Table_By = 'temp';
+// $hodCft->hod_Production_Table_On = now();
+// $hodCft->save();
+
+// $hodCft->hod_Production_Table_By = null;
+// $hodCft->hod_Production_Table_On = null;
+// $hodCft->save();
+
+// dd($hodCft->fresh());             //  $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
                 //  foreach ($list as $u) {
                 //      // if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //      $email = Helpers::getUserEmail($u->user_id);

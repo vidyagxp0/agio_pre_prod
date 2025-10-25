@@ -10992,8 +10992,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
-        $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
-        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        // $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+        // $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
 
 
@@ -11005,6 +11005,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         if ($request->revision == "Action-Item") {
             // return "test";
             $data = MarketComplaint::find($id);
+            $parent_record = Helpers::getDivisionName($data->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);  
+             
 
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data'));
@@ -11060,11 +11062,13 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             // return "test";
             $p_record = MarketComplaint::find($id);
             $data_record = Helpers::getDivisionName($p_record->division_id) . '/' . 'MC' . '/' . date('Y') . '/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
-            $parentRecord = MarketComplaint::where('id', $id)->value('record');
+            // $parentRecord = MarketComplaint::where('id', $id)->value('record');
+            $parent_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);  
+
             $data = MarketComplaint::find($id);
             $parent_division_id  = MarketComplaint::where('id', $id)->value('division_id');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('parent_division_id','record', 'data', 'parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
+            return view('frontend.action-item.action-item', compact('parent_division_id','record', 'data', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
         } elseif ($request->revision == "rca") {
             //  return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
