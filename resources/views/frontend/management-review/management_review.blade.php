@@ -222,7 +222,7 @@
                         @elseif(
                             $data->stage == 5 && (Helpers::check_roles($data->division_id, 'Management Review', 5) || Helpers::check_roles($data->division_id, 'Management Review', 4) ||
                                 in_array(Auth::user()->id, $valuesArray)))
-                             @if (!$hodcftCompleteUser)
+                             @if (!$hodcftCompleteUser || $hodcftCompleteUser->status == 'Pending')
     
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT HOD Review Complete

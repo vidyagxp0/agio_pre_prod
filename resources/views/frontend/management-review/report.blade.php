@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<style>
+<!-- <style>
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -153,7 +153,152 @@
     .table_bg {
         background: #4274da57;
     }
+</style> -->
+
+<style>
+    @page {
+         margin: 160px 35px 100px;
+     }
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+         margin-bottom: -60px; 
+    }
+
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
+
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
+
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
+    }
+
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
+    }
+
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .full-width-table {
+        width: 100%;
+        table-layout: fixed; 
+        border-collapse: collapse;
+        border: 1px solid #ddd; 
+    }
+
+    .full-width-table th, 
+    .full-width-table td {
+        padding: 3px;
+        text-align: center;
+        font-size: 10px;
+        border: 1px solid #ddd;
+        word-wrap: break-word; 
+    }
+
+    .full-width-table thead {
+        background-color: #f4f4f4; 
+        font-weight: bold;
+    }
+
+    .full-width-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .table_bg {
+        background-color: #387478;
+        color: #111;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
+
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        white-space: normal !important;
+        word-wrap: break-word;
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .no-border th, .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-6 { width: 7%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-40 { width: 40%; }
+    .w-50 { width: 50%; }
+    .w-60 { width: 60%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+
+    table th, table td {
+        word-wrap: break-word;
+    }
 </style>
+
 @php
 use Carbon\Carbon;
 @endphp
@@ -164,8 +309,10 @@ use Carbon\Carbon;
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     Management Review Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -273,7 +420,6 @@ use Carbon\Carbon;
                         @endif
                         </td> --}}
 
-
                         <td class="w-30">
                             @if ($managementReview->initiator_Group )
                                 {{ $managementReview->initiator_Group }}
@@ -282,13 +428,6 @@ use Carbon\Carbon;
                             @endif
                         </td>
 
-                        {{-- @if ($managementReview->initiator_Group)
-                                        {{ $managementReview->initiator_Group }}
-                        @else
-                        Not Applicable
-                        @endif --}}
-                        {{-- </td>  --}}
-                        {{-- <td class="w-30">{{ Helpers::getInitiatorName($managementReview->initiator_Group) }}</td> --}}
                         <th class="w-20">Initiator department Code</th>
                         <td class="w-30">
                             @if ($managementReview->initiator_group_code)
@@ -298,22 +437,9 @@ use Carbon\Carbon;
                             @endif
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <th class="w-20">Assigned To</th>
-                        <td class="w-30">
-                            @if ($managementReview->assign_to)
-                                {{ Helpers::getInitiatorName($managementReview->assign_to) }}
-                    @else
-                    Not Applicable
-                    @endif
-                    </td>
-
-
-                    </tr> --}}
                 </table>
-                <div class="inner-block">
-                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Short
-                        Description </label>
+                {{-- <div class="inner-block">
+                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Short Description </label>
                     <span style="font-size: 0.8rem; margin-left: 25px;">
                         @if ($managementReview->short_description)
                         {{ $managementReview->short_description }}
@@ -321,13 +447,22 @@ use Carbon\Carbon;
                         Not Applicable
                         @endif
                     </span>
-                </div>
-
-
-                <br>
+                </div> --}}
 
                 <table>
+                    <tr>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80">                        
+                            @if ($managementReview->short_description)
+                            {{ $managementReview->short_description }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
 
+                <table>
                     <tr>
                         <th class="w-20">Type</th>
                         <td class="w-30">
@@ -337,26 +472,6 @@ use Carbon\Carbon;
                             Not Applicable
                             @endif
                         </td>
-                    </tr>
-
-                    <tr>
-                        {{-- <th class="w-20">Due Date</th>
-                        <td class="w-30">
-                            @if ($managementReview->due_date)
-                                {{ $managementReview->due_date }}
-                        @else
-                        Not Applicable
-                        @endif
-                        {{ Helpers::getdateFormat($managementReview->due_date) ?? 'Not Applicable' }}
-                        </td> --}}
-                        {{-- <th class="w-20">Priority Level</th>
-                        <td class="w-30">
-                            @if ($managementReview->priority_level)
-                                {{ $managementReview->priority_level }}
-                        @else
-                        Not Applicable
-                        @endif
-                        </td> --}}
 
                         <th class="w-20">Review Period</th>
                         <td class="w-30">
@@ -368,8 +483,12 @@ use Carbon\Carbon;
                             Not Applicable
                             @endif
                         </td>
+                    </tr>
+                </table>
+                <table>    
+                    <tr>
                         <th class="w-20">Proposed Schedule Start Date</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             {{-- @if ($managementReview->start_date)
                                 {{ $managementReview->start_date }}
                             @else
@@ -381,42 +500,9 @@ use Carbon\Carbon;
                     </tr>
 
 
-                    <tr>
-
-                        {{-- <th class="w-30"> Schedule End Date</th> --}}
-                        {{-- <td class="w-20">
-                            {{-- @if ($managementReview->end_date)
-                                {{ $managementReview->end_date }}
-                        @else
-                        Not Applicable
-                        @endif
-                        {{ Helpers::getdateFormat($managementReview->end_date) ?? 'Not Applicable' }}
-
-                        </td> --}}
-
-                        {{-- <th class="w-20">Invite Person Notify</th>
-                        <td class="w-30">
-                            @if ($managementReview->assign_to)
-                                {{ $managementReview->assign_to }}
-                        @else
-                        Not Applicable
-                        @endif
-                        </td> --}}
-                    </tr>
-
                 </table>
-                {{-- <div class="inner-block">
-                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Attendess</label>
-                    <span style="font-size: 0.8rem; margin-left: 70px;">
 
-                        @if ($managementReview->attendees)
-                            {{ $managementReview->attendees }}
-                @else
-                Not Applicable
-                @endif
-
-            </div> --}}
-            <div class="inner-block">
+            {{-- <div class="inner-block">
                 <label class="Summer"
                     style="font-weight: bold; font-size: 13px; display: inline;">Description</label>
                 <span style="font-size: 0.8rem; margin-left: 70px;">
@@ -426,8 +512,20 @@ use Carbon\Carbon;
                     @else
                     Not Applicable
                     @endif
+            </div> --}}
 
-            </div>
+            <table>
+                <tr>
+                    <th class="w-20">Description</th>
+                    <td class="w-80">
+                        @if ($managementReview->description)
+                        {{ $managementReview->description }}
+                        @else
+                        Not Applicable
+                        @endif
+                    </td>
+                </tr>
+            </table>
 
             <div class="border-table">
                 <div class="block-head">
@@ -443,14 +541,14 @@ use Carbon\Carbon;
                     @foreach (json_decode($managementReview->inv_attachment) as $key => $file)
                     <tr>
                         <td class="w-20">{{ $key + 1 }}</td>
-                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                 target="_blank"><b>{{ $file }}</b></a> </td>
                     </tr>
                     @endforeach
                     @else
                     <tr>
                         <td class="w-20">1</td>
-                        <td class="w-20">Not Applicable</td>
+                        <td class="w-60">Not Applicable</td>
                     </tr>
                     @endif
 
@@ -459,45 +557,6 @@ use Carbon\Carbon;
         </div>
 
 
-        {{-- <div class="block">
-                {{-- <div class="head">
-                    <div class="block-head">
-
-                    </div>
-                    <table>
-
-                        <tr>
-                            <th class="w-20">Operations </th>
-                            <td class="w-80"> @if ($managementReview->Operations){{ $managementReview->Operations }}@else Not Applicable @endif</td>
-        </tr>
-        <tr>
-            <th class="w-20">Comments(If Any)</th>
-            <td class="w-30">
-                @if ($managementReview->if_comments)
-                @foreach (explode(',', $managementReview->if_comments) as $Key => $value)
-
-                <li>{{ $value }}</li>
-                @endforeach
-                @else
-                Not Applicable
-                @endif
-            </td>
-            <th class="w-20">Product/Material Name</th>
-            <td class="w-80">
-                @if ($managementReview->material_name)
-                @foreach (explode(',', $managementReview->material_name) as $Key => $value)
-                <li>{{ $value }}</li>
-                @endforeach
-                @else
-                Not Applicable
-                @endif
-            </td>
-
-        </tr>
-
-        </table>
-    </div> --}}
-    {{-- </div>  --}}
     <div class="block">
         <div class="block-head">
             QA Head Review
@@ -517,7 +576,7 @@ use Carbon\Carbon;
                 <table>
                     <tr>
                         <th class="w-20">QA Head Review Comment</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($managementReview->Operations)
                             {{ $managementReview->Operations }}
                             @else
@@ -525,8 +584,8 @@ use Carbon\Carbon;
                             @endif
                         </td>
                     </tr>
-
-
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Invite Person Notify</th>
                         <td class="w-30">
@@ -537,11 +596,7 @@ use Carbon\Carbon;
                             @endif
                         </td>
                     </tr>
-
                 </table>
-
-
-
         </div>
 
         {{-- <div class="inner-block">
@@ -616,74 +671,6 @@ use Carbon\Carbon;
             @endif
 
     </div> --}}
-    {{-- <div class="inner-block">
-                    <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">Audit
-                        team</label>
-                    <span style="font-size: 0.8rem; margin-left: 70px;">
-
-                        @if ($managementReview->Audit_team)
-                            @foreach (explode(',', $managementReview->Audit_team) as $Key => $value)
-                                <li>{{ Helpers::getInitiatorName($value) }}</li>
-    @endforeach
-    @else
-    Not Applicable
-    @endif
-
-    </div> --}}
-
-
-    {{-- <div class="border-table">
-                    <div class="block-head">
-                        QA Head review Attachment
-                    </div>
-                    <table>
-
-                        <tr class="table_bg">
-                            <th class="w-20">Sr.No.</th>
-                            <th class="w-60">Batch No</th>
-                        </tr>
-                        @if ($managementReview->file_attachment)
-                            @foreach (json_decode($managementReview->file_attachment) as $key => $file)
-                                <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-            target="_blank"><b>{{ $file }}</b></a> </td>
-    </tr>
-    @endforeach
-    @else
-    <tr>
-        <td class="w-20">1</td>
-        <td class="w-20">Not Applicable</td>
-    </tr>
-    @endif
-
-    </table>
-    </div>
-    </div>
-    <div class="border-table">
-        <div class="block-head">
-            File Attachment
-        </div>
-        <table>
-
-            <tr class="table_bg">
-                <th class="w-20">Sr.No.</th>
-                <th class="w-60">Batch No</th>
-            </tr>
-            @if ($managementReview->file_attachment)
-            @foreach (json_decode($managementReview->file_attachment) as $key => $file)
-            <tr>
-                <td class="w-20">{{ $key + 1 }}</td>
-                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                        target="_blank"><b>{{ $file }}</b></a> </td>
-            </tr>
-            @endforeach
-            @else
-            <tr>
-                <td class="w-20">1</td>
-                <td class="w-20">Not Applicable</td>
-            </tr>
-            @endif --}}
 
             <div class="border-table">
                 <div class="block-head">
@@ -699,14 +686,14 @@ use Carbon\Carbon;
                     @foreach (json_decode($managementReview->file_attchment_if_any) as $key => $file)
                     <tr>
                         <td class="w-20">{{ $key + 1 }}</td>
-                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                 target="_blank"><b>{{ $file }}</b></a> </td>
                     </tr>
                     @endforeach
                     @else
                     <tr>
                         <td class="w-20">1</td>
-                        <td class="w-20">Not Applicable</td>
+                        <td class="w-60">Not Applicable</td>
                     </tr>
                     @endif
 
@@ -723,24 +710,13 @@ use Carbon\Carbon;
             </div>
             <table>
                 <tr>
-                    <th class="w-30">Meeting Start Date</th>
-                    <td class="w-20">
-                        {{-- @if ($managementReview->start_date)
-                                {{ $managementReview->start_date }}
-                            @else
-                            Not Applicable
-                        @endif --}}
+                    <th class="w-20">Meeting Start Date</th>
+                    <td class="w-30">
                         {{ Helpers::getdateFormat($managementReview->external_supplier_performance) ?? 'Not Applicable' }}
                     </td>
-                    <th class="w-30"> Meeting End Date</th>
-                    <td class="w-20">
-                        {{-- @if ($managementReview->end_date)
-                                    {{ $managementReview->end_date }}
-                            @else
-                            Not Applicable
-                        @endif --}}
+                    <th class="w-20"> Meeting End Date</th>
+                    <td class="w-30">
                         {{ Helpers::getdateFormat($managementReview->customer_satisfaction_level) ?? 'Not Applicable' }}
-
                     </td>
                 </tr>
                 <tr>
@@ -810,78 +786,6 @@ use Carbon\Carbon;
             </table>
         </div>
     </div>
-    {{-- <div class="block">
-        <div class="block-head">
-            Management Review Participants Part-2
-        </div>
-        <div class="border-table">
-            <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                <thead>
-                    <tr class="table_bg">
-                        <th style="width: 8%">Sr.No.</th>
-
-                        <th>Designee Name</th>
-                        <th>Designee Department/Designation</th>
-                        <th>Remarks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-
-                        <td>{{ unserialize($management_review_participants->designee_Name)[$key] ?? 'N/A' }}
-                        </td>
-                        <td>{{ unserialize($management_review_participants->designee_Department)[$key] ?? 'N/A' }}
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div> --}}
-    {{-- <div class="block">
-            <div class="block-head">
-                Performance Evaluation
-
-            </div>
-            <div class="border-table">
-                <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                    <thead>
-                        <tr class="table_bg">
-                            <th style="width: 6%">Sr.No.</th>
-                            <th>Monitoring</th>
-                            <th>Measurement</th>
-                            <th>Analysis</th>
-                            <th>Evalutaion</th>
-
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach (unserialize($performance_evaluation->monitoring) as $key => $temps)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-    <td>{{ unserialize($performance_evaluation->monitoring)[$key] ? unserialize($performance_evaluation->monitoring)[$key] : 'N/A' }}
-    </td>
-    <td>{{ unserialize($performance_evaluation->measurement)[$key] ? unserialize($performance_evaluation->measurement)[$key] : 'N/A' }}
-    </td>
-    <td>{{ unserialize($performance_evaluation->analysis)[$key] ? unserialize($performance_evaluation->analysis)[$key] : 'N/A' }}
-    </td>
-    <td>{{ unserialize($performance_evaluation->evaluation)[$key] ? unserialize($performance_evaluation->evaluation)[$key] : 'N/A' }}
-    </td>
-
-    </tr>
-    @endforeach
-    </tbody>
-    </table>
-    </div>
-    </div>--}}
-
-
-
 
 
     <div class="border-table">
@@ -898,14 +802,14 @@ use Carbon\Carbon;
             @foreach (json_decode($managementReview->meeting_and_summary_attachment) as $key => $file)
             <tr>
                 <td class="w-20">{{ $key + 1 }}</td>
-                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                         target="_blank"><b>{{ $file }}</b></a> </td>
             </tr>
             @endforeach
             @else
             <tr>
                 <td class="w-20">1</td>
-                <td class="w-20">Not Applicable</td>
+                <td class="w-60">Not Applicable</td>
             </tr>
             @endif
 
@@ -922,9 +826,7 @@ use Carbon\Carbon;
                     Production (Tablet/Capsule/Powder)
                 </div>
                 <table>
-
                     <tr>
-
                         <th class="w-20">Production Tablet/Capsule/Powder Action Required ?
                         </th>
                         <td class="w-30">
@@ -947,10 +849,11 @@ use Carbon\Carbon;
                             </div>
                         </td>
                     </tr>
-
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder HOD Person</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             <div>
                                 @if ($data5->hod_Production_Table_Person)
                                 {{ $data5->hod_Production_Table_Person }}
@@ -959,13 +862,10 @@ use Carbon\Carbon;
                                 @endif
                             </div>
                         </td>
-
-
                     </tr>
                     <tr>
-
                         <th class="w-20">Description of Action Item (By Production Tablet/Capsule/Powder)</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             <div>
                                 @if ($data1->Production_Table_Assessment)
                                 {{ $data1->Production_Table_Assessment }}
@@ -974,8 +874,10 @@ use Carbon\Carbon;
                                 @endif
                             </div>
                         </td>
+                    </tr>
+                    <tr>    
                         <th class="w-20">Production Tablet/Capsule/Powder Status of Action Item</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             <div>
                                 @if ($data1->Production_Table_Feedback)
                                 {{$data1->Production_Table_Feedback }}
@@ -985,8 +887,9 @@ use Carbon\Carbon;
                             </div>
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
-
                         <th class="w-20">Production Tablet/Capsule/Powder Action Completed By</th>
                         <td class="w-30">
                             <div>
@@ -1017,7 +920,6 @@ use Carbon\Carbon;
                         Production Tablet/Capsule/Powder Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -1026,17 +928,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->Production_Table_Attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -1047,11 +948,8 @@ use Carbon\Carbon;
                     <div class="block-head">
                         Production Injection
                     </div>
-
                     <table>
-
                         <tr>
-
                             <th class="w-20">Production Injection Action Required ?
                             </th>
                             <td class="w-30">
@@ -1074,10 +972,11 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-
+                    </table>
+                    <table>
                         <tr>
                             <th class="w-20">Production Injection HOD Person </th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Production_Injection_Person)
                                     {{ $data5->hod_Production_Injection_Person }}
@@ -1088,9 +987,8 @@ use Carbon\Carbon;
                             </td>
                         </tr>
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Production Injection)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Production_Injection_Assessment)
                                     {{ $data1->Production_Injection_Assessment }}
@@ -1099,8 +997,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Production Injection Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Production_Injection_Feedback)
                                     {{ $data1->Production_Injection_Feedback }}
@@ -1110,8 +1010,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Production Injection Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -1130,7 +1031,6 @@ use Carbon\Carbon;
                                     @else
                                     Not Applicable
                                     @endif
-
                                 </div>
                             </td>
                         </tr>
@@ -1142,7 +1042,6 @@ use Carbon\Carbon;
                         Production Injection Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -1151,14 +1050,14 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->Production_Injection_Attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
 
@@ -1171,9 +1070,7 @@ use Carbon\Carbon;
                         Research & Development
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Research & Development Action Required ?
                             </th>
                             <td class="w-30">
@@ -1196,11 +1093,11 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>  
+                    <table>  
                         <tr>
-
-
                             <th class="w-20">Research & Development HOD Person</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_ResearchDevelopment_person)
                                     {{ $data5->hod_ResearchDevelopment_person }}
@@ -1212,9 +1109,8 @@ use Carbon\Carbon;
                         </tr>
 
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Research & Development)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->ResearchDevelopment_assessment)
                                     {{ $data1->ResearchDevelopment_assessment }}
@@ -1223,8 +1119,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Research & Development Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->ResearchDevelopment_feedback)
                                     {{ $data1->ResearchDevelopment_feedback }}
@@ -1234,8 +1132,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Research & Development Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -1273,14 +1172,14 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->ResearchDevelopment_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
 
@@ -1293,9 +1192,7 @@ use Carbon\Carbon;
                         Human Resource
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Human Resource Action Required ?
                             </th>
                             <td class="w-30">
@@ -1319,10 +1216,11 @@ use Carbon\Carbon;
                             </td>
                         </tr>
 
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Human Resourse HOD Person</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Human_Resource_person)
                                     {{ $data5->hod_Human_Resource_person }}
@@ -1334,9 +1232,8 @@ use Carbon\Carbon;
                         </tr>
 
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Human Resource)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Human_Resource_assessment)
                                     {{ $data1->Human_Resource_assessment }}
@@ -1345,8 +1242,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Human Resource Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Human_Resource_feedback)
                                     {{ $data1->Human_Resource_feedback }}
@@ -1356,8 +1255,10 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-                        <tr>
 
+                    </table>
+                    <table>
+                        <tr>
                             <th class="w-20">Human Resource Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -1386,7 +1287,6 @@ use Carbon\Carbon;
                         Human Resource Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -1395,14 +1295,14 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->Human_Resource_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
 
@@ -1441,9 +1341,11 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>   
+                    <table> 
                         <tr>
                             <th class="w-20">Corporate Quality Assurance HOD Person</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_CorporateQualityAssurance_person)
                                     {{ $data5->hod_CorporateQualityAssurance_person }}
@@ -1455,9 +1357,8 @@ use Carbon\Carbon;
                         </tr>
 
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Corporate Quality Assurance)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->CorporateQualityAssurance_assessment)
                                     {{ $data1->CorporateQualityAssurance_assessment }}
@@ -1466,8 +1367,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Corporate Quality Assurance Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->CorporateQualityAssurance_feedback)
                                     {{ $data1->CorporateQualityAssurance_feedback }}
@@ -1477,8 +1380,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Corporate Quality Assurance Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -1516,17 +1420,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->CorporateQualityAssurance_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -1537,9 +1440,7 @@ use Carbon\Carbon;
                         Stores
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Stores Action Required ?
                             </th>
                             <td class="w-30">
@@ -1562,11 +1463,11 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Store HOD Person </th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Store_person)
                                     {{ $data5->hod_Store_person }}
@@ -1576,11 +1477,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Stores)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Store_assessment)
                                     {{ $data1->Store_assessment }}
@@ -1589,8 +1488,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Stores Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Store_feedback)
                                     {{ $data1->Store_feedback }}
@@ -1600,8 +1501,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Stores Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -1630,7 +1532,6 @@ use Carbon\Carbon;
                         Stores Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -1639,17 +1540,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->Store_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -1660,9 +1560,7 @@ use Carbon\Carbon;
                         Engineering
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Engineering Action Required ?
                             </th>
                             <td class="w-30">
@@ -1685,10 +1583,11 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Engineering HOD Person</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Engineering_person)
                                     {{ $data5->hod_Engineering_person }}
@@ -1698,11 +1597,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Engineering)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Engineering_assessment)
                                     {{ $data1->Engineering_assessment }}
@@ -1711,8 +1608,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Engineering Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Engineering_feedback)
                                     {{ $data1->Engineering_feedback }}
@@ -1722,8 +1621,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Engineering Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -1761,14 +1661,14 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->Engineering_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
 
@@ -1781,9 +1681,7 @@ use Carbon\Carbon;
                         Regulatory Affair
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Regulatory Affair Action Required ?
                             </th>
                             <td class="w-30">
@@ -1806,11 +1704,11 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Regulatory Affair HOD Person</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_RegulatoryAffair_person)
                                     {{ $data5->hod_RegulatoryAffair_person }}
@@ -1822,9 +1720,8 @@ use Carbon\Carbon;
                         </tr>
 
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Regulatory Affair)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->RegulatoryAffair_assessment)
                                     {{ $data1->RegulatoryAffair_assessment }}
@@ -1833,8 +1730,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Regulatory Affair Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->RegulatoryAffair_feedback)
                                     {{ $data1->RegulatoryAffair_feedback }}
@@ -1844,8 +1743,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Regulatory Affair Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -1869,12 +1769,12 @@ use Carbon\Carbon;
                         </tr>
                     </table>
                 </div>
+
                 <div class="border-table">
                     <div class="block-head">
                         Regulatory Affair Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -1883,17 +1783,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->RegulatoryAffair_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -1904,9 +1803,7 @@ use Carbon\Carbon;
                         Quality Assurance
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Quality Assurance Action Required ?
                             </th>
                             <td class="w-30">
@@ -1929,10 +1826,12 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                    </table>
 
+                    <table>    
+                        <tr>
                             <th class="w-20"> Quality Assurance HOD Person</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_QualityAssurance_person)
                                     {{ $data5->hod_QualityAssurance_person }}
@@ -1944,9 +1843,8 @@ use Carbon\Carbon;
                         </tr>
 
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Quality Assurance)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->QualityAssurance_assessment)
                                     {{ $data1->QualityAssurance_assessment }}
@@ -1955,8 +1853,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Quality Assurance Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Quality_Assurance_feedback)
                                     {{ $data1->Quality_Assurance_feedback }}
@@ -1966,8 +1866,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Quality Assurance Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -1996,7 +1897,6 @@ use Carbon\Carbon;
                         Quality Assurance Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -2015,7 +1915,6 @@ use Carbon\Carbon;
                             <td class="w-20">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -2026,9 +1925,7 @@ use Carbon\Carbon;
                         Production (Liquid/Ointment)
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Production Liquid/Ointment Action Required ?
                             </th>
                             <td class="w-30">
@@ -2051,12 +1948,12 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
 
+                    <table>    
                         <tr>
-
-
                             <th class="w-20">Production Liquid/Ointment HOD Person</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_ProductionLiquid_person)
                                     {{ $data5->hod_ProductionLiquid_person }}
@@ -2068,9 +1965,8 @@ use Carbon\Carbon;
                         </tr>
 
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Production Liquid/Ointment)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->ProductionLiquid_assessment)
                                     {{ $data1->ProductionLiquid_assessment }}
@@ -2079,8 +1975,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Production Liquid/Ointment Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->ProductionLiquid_feedback)
                                     {{ $data1->ProductionLiquid_feedback }}
@@ -2090,8 +1988,10 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                    </table>
 
+                    <table>    
+                        <tr>
                             <th class="w-20">Production Liquid/Ointment Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -2120,7 +2020,6 @@ use Carbon\Carbon;
                         Production Liquid/Ointment Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -2129,17 +2028,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->ProductionLiquid_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -2149,9 +2047,7 @@ use Carbon\Carbon;
                         Quality Control
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Quality Control Action Required ?
                             </th>
                             <td class="w-30">
@@ -2174,10 +2070,11 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Quality Control HOD Person</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Quality_Control_Person)
                                     {{ $data5->hod_Quality_Control_Person }}
@@ -2189,9 +2086,8 @@ use Carbon\Carbon;
                         </tr>
 
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Quality Control)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Quality_Control_assessment)
                                     {{ $data1->Quality_Control_assessment }}
@@ -2200,8 +2096,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Quality Control Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Quality_Control_feedback)
                                     {{ $data1->Quality_Control_feedback }}
@@ -2211,8 +2109,10 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                    </table>
 
+                    <table>
+                        <tr>
                             <th class="w-20">Quality Control Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -2241,7 +2141,6 @@ use Carbon\Carbon;
                         Quality Control Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -2260,7 +2159,6 @@ use Carbon\Carbon;
                             <td class="w-20">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -2271,9 +2169,7 @@ use Carbon\Carbon;
                         Microbiology
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Microbiology Action Required ?
                             </th>
                             <td class="w-30">
@@ -2296,10 +2192,11 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20"> Microbiology HOD Person</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Microbiology_person)
                                     {{ $data5->hod_Microbiology_person }}
@@ -2309,12 +2206,11 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-
+                   
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Microbiology)
                             </th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Microbiology_assessment)
                                     {{ $data1->Microbiology_assessment }}
@@ -2323,8 +2219,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Microbiology Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Microbiology_feedback)
                                     {{ $data1->Microbiology_feedback }}
@@ -2334,8 +2232,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Microbiology Action Completed By
                             </th>
                             <td class="w-30">
@@ -2366,7 +2265,6 @@ use Carbon\Carbon;
                         Microbiology Attachment
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -2375,17 +2273,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->Microbiology_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -2397,9 +2294,7 @@ use Carbon\Carbon;
                         Safety
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Safety Action Required ?
                             </th>
                             <td class="w-30">
@@ -2422,10 +2317,11 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20"> Safety HOD Person</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Environment_Health_Safety_person)
                                     {{ $data5->hod_Environment_Health_Safety_person }}
@@ -2437,9 +2333,8 @@ use Carbon\Carbon;
                         </tr>
 
                         <tr>
-
                             <th class="w-20">Description of Action Item (By Safety)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Health_Safety_assessment)
                                     {{ $data1->Health_Safety_assessment }}
@@ -2448,8 +2343,10 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Safety Status of Action Item</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Health_Safety_feedback)
                                     {{ $data1->Health_Safety_feedback }}
@@ -2459,8 +2356,10 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                    </table>
 
+                    <table>    
+                        <tr>
                             <th class="w-20">Safety Action Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -2489,7 +2388,6 @@ use Carbon\Carbon;
                         Safety Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -2498,154 +2396,27 @@ use Carbon\Carbon;
                         @foreach (json_decode($data1->Environment_Health_Safety_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
-            {{--
-                <div class="block">
-                    <div class="head">
-                        <div class="block-head">
-                            Contract Giver
-
-                        </div>
-                        <table>
-
-                            <tr>
-
-                                <th class="w-20">Contract Giver Action Required ?
-                                </th>
-                                <td class="w-30">
-                                    <div>
-                                        @if ($data1->ContractGiver_Review)
-                                            {{ $data1->ContractGiver_Review }}
-            @else
-            Not Applicable
-            @endif
-        </div>
-        </td>
-        <th class="w-20">Contract Giver Person</th>
-        <td class="w-30">
-            <div>
-                @if ($data1->ContractGiver_person)
-                {{ $data1->ContractGiver_person }}
-                @else
-                Not Applicable
-                @endif
-            </div>
-        </td>
-        </tr>
-        <tr>
-
-            <th class="w-20">HOD Contract Giver Person</th>
-            <td class="w-30">
-                <div>
-                    @if ($data5->hod_ContractGiver_person)
-                    {{ $data5->hod_ContractGiver_person }}
-                    @else
-                    Not Applicable
-                    @endif
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-
-            <th class="w-20">Description of Action Item (By Contract Giver)</th>
-            <td class="w-30">
-                <div>
-                    @if ($data1->ContractGiver_assessment)
-                    {{ $data1->ContractGiver_assessment }}
-                    @else
-                    Not Applicable
-                    @endif
-                </div>
-            </td>
-            <th class="w-20">Contract Giver Status of Action Item</th>
-            <td class="w-30">
-                <div>
-                    @if ($data1->ContractGiver_feedback)
-                    {{ $data1->ContractGiver_feedback }}
-                    @else
-                    Not Applicable
-                    @endif
-                </div>
-            </td>
-        </tr>
-        <tr>
-
-            <th class="w-20">Contract Giver Action Completed By</th>
-            <td class="w-30">
-                <div>
-                    @if ($data1->ContractGiver_by)
-                    {{ $data1->ContractGiver_by }}
-                    @else
-                    Not Applicable
-                    @endif
-                </div>
-            </td>
-            <th class="w-20"> Contract Giver Action Completed On</th>
-            <td class="w-30">
-                <div>
-                    @if ($data1->ContractGiver_on)
-                    {{ \Carbon\Carbon::parse($data1->ContractGiver_on)->format('d-M-Y') }}
-                    @else
-                    Not Applicable
-                    @endif
-                </div>
-            </td>
-        </tr>
-        </table>
-    </div>
-    <div class="border-table">
-        <div class="block-head">
-            Contract Giver Attachments
-        </div>
-        <table>
-
-            <tr class="table_bg">
-                <th class="w-20">Sr.No.</th>
-                <th class="w-60">Attachment</th>
-            </tr>
-            @if ($data1->ContractGiver_attachment)
-            @foreach (json_decode($data1->ContractGiver_attachment) as $key => $file)
-            <tr>
-                <td class="w-20">{{ $key + 1 }}</td>
-                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                        target="_blank"><b>{{ $file }}</b></a> </td>
-            </tr>
-            @endforeach
-            @else
-            <tr>
-                <td class="w-20">1</td>
-                <td class="w-20">Not Applicable</td>
-            </tr>
-            @endif
-
-        </table>
-    </div>
-    </div> --}}
-
-
+            
     <div class="block">
         <div class="head">
             <div class="block-head">
                 Other's 1 ( Additional Person Action From Departments If Required)
             </div>
             <table>
-
                 <tr>
-
                     <th class="w-20">Other's 1 Action Required ?
                     </th>
                     <td class="w-30">
@@ -2692,12 +2463,11 @@ use Carbon\Carbon;
                         </div>
                     </td>
                 </tr>
-
-
+            </table>
+            <table>
                 <tr>
-
                     <th class="w-20">Description of Action Item (By Other's 1)</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div>
                             @if ($data1->Other1_assessment)
                             {{ $data1->Other1_assessment }}
@@ -2706,8 +2476,10 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
+                </tr>
+                <tr>    
                     <th class="w-20">Other's 1 Status of Action Item</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div>
                             @if ($data1->Other1_feedback)
                             {{ $data1->Other1_feedback }}
@@ -2717,8 +2489,9 @@ use Carbon\Carbon;
                         </div>
                     </td>
                 </tr>
+            </table>
+            <table>    
                 <tr>
-
                     <th class="w-20">Other's 1 Action Completed By</th>
                     <td class="w-30">
                         <div>
@@ -2756,14 +2529,14 @@ use Carbon\Carbon;
                 @foreach (json_decode($data1->Other1_attachment) as $key => $file)
                 <tr>
                     <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                             target="_blank"><b>{{ $file }}</b></a> </td>
                 </tr>
                 @endforeach
                 @else
                 <tr>
                     <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
+                    <td class="w-60">Not Applicable</td>
                 </tr>
                 @endif
 
@@ -2776,9 +2549,7 @@ use Carbon\Carbon;
                 Other's 2 ( Additional Person Action From Departments If Required)
             </div>
             <table>
-
                 <tr>
-
                     <th class="w-20">Other's 2 Action Required ?
                     </th>
                     <td class="w-30">
@@ -2800,10 +2571,8 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
-
                 </tr>
                 <tr>
-
                     <th class="w-20">Other's 2 HOD Person</th>
                     <td class="w-30">
                         <div>
@@ -2825,11 +2594,11 @@ use Carbon\Carbon;
                         </div>
                     </td>
                 </tr>
-
+            </table>
+            <table>    
                 <tr>
-
                     <th class="w-20">Description of Action Item (By Other's 2)</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div>
                             @if ($data1->Other2_assessment)
                             {{ $data1->Other2_assessment }}
@@ -2838,8 +2607,10 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
+                </tr>
+                <tr>    
                     <th class="w-20">Other's 2 Status of Action Item</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div>
                             @if ($data1->Other2_feedback)
                             {{ $data1->Other2_feedback }}
@@ -2849,8 +2620,9 @@ use Carbon\Carbon;
                         </div>
                     </td>
                 </tr>
+            </table>
+            <table>    
                 <tr>
-
                     <th class="w-20">Other's 2 Action Completed By</th>
                     <td class="w-30">
                         <div>
@@ -2879,7 +2651,6 @@ use Carbon\Carbon;
                 Other's 2 Attachments
             </div>
             <table>
-
                 <tr class="table_bg">
                     <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
@@ -2888,17 +2659,16 @@ use Carbon\Carbon;
                 @foreach (json_decode($data1->Other2_attachment) as $key => $file)
                 <tr>
                     <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                             target="_blank"><b>{{ $file }}</b></a> </td>
                 </tr>
                 @endforeach
                 @else
                 <tr>
                     <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
+                    <td class="w-60">Not Applicable</td>
                 </tr>
                 @endif
-
             </table>
         </div>
     </div>
@@ -2908,9 +2678,7 @@ use Carbon\Carbon;
                 Other's 3 ( Additional Person Action From Departments If Required)
             </div>
             <table>
-
                 <tr>
-
                     <th class="w-20">Other's 3 Action Required ?
                     </th>
                     <td class="w-30">
@@ -2932,10 +2700,10 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
-
                 </tr>
 
-                <tr>  <th class="w-20">Other's 3 HOD Person</th>
+                <tr>  
+                    <th class="w-20">Other's 3 HOD Person</th>
                     <td class="w-30">
                         <div>
                             @if ($data5->hod_Other3_person)
@@ -2956,10 +2724,12 @@ use Carbon\Carbon;
                         </div>
                     </td>
                 </tr>
+            </table>
 
+            <table>    
                 <tr>
                     <th class="w-20">Description of Action Item (By Other's 3)</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div>
                             @if ($data1->Other3_Assessment)
                             {{ $data1->Other3_Assessment }}
@@ -2968,9 +2738,10 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
-
+                </tr>
+                <tr>
                     <th class="w-20">Other's 3 Status of Action Item</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div>
                             @if ($data1->Other3_feedback)
                             {{ $data1->Other3_feedback }}
@@ -2980,8 +2751,9 @@ use Carbon\Carbon;
                         </div>
                     </td>
                 </tr>
+            </table>
+            <table>    
                 <tr>
-
                     <th class="w-20">Other's 3 Action Completed By</th>
                     <td class="w-30">
                         <div>
@@ -3019,17 +2791,16 @@ use Carbon\Carbon;
                 @foreach (json_decode($data1->Other3_attachment) as $key => $file)
                 <tr>
                     <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                             target="_blank"><b>{{ $file }}</b></a> </td>
                 </tr>
                 @endforeach
                 @else
                 <tr>
                     <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
+                    <td class="w-60">Not Applicable</td>
                 </tr>
                 @endif
-
             </table>
         </div>
     </div>
@@ -3039,9 +2810,7 @@ use Carbon\Carbon;
                 Other's 4 ( Additional Person Action From Departments If Required)
             </div>
             <table>
-
                 <tr>
-
                     <th class="w-20">Other's 4 Action Required ?
                     </th>
                     <td class="w-30">
@@ -3063,11 +2832,9 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
-
                 </tr>
+                
                 <tr>
-
-
                     <th class="w-20"> Other's 4 HOD Person</th>
                     <td class="w-30">
                         <div>
@@ -3089,11 +2856,11 @@ use Carbon\Carbon;
                         </div>
                     </td>
                 </tr>
-
+            </table>
+            <table>    
                 <tr>
-
                     <th class="w-20">Description of Action Item (By Other's 4)</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div>
                             @if ($data1->Other4_Assessment)
                             {{ $data1->Other4_Assessment }}
@@ -3102,8 +2869,10 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
+                </tr>
+                <tr>    
                     <th class="w-20">Other's 4 Status of Action Item</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div>
                             @if ($data1->Other4_feedback)
                             {{ $data1->Other4_feedback }}
@@ -3113,8 +2882,9 @@ use Carbon\Carbon;
                         </div>
                     </td>
                 </tr>
+            </table>
+            <table>    
                 <tr>
-
                     <th class="w-20">Other's 4 Action Completed By</th>
                     <td class="w-30">
                         <div>
@@ -3143,7 +2913,6 @@ use Carbon\Carbon;
                 Other's 4 Attachments
             </div>
             <table>
-
                 <tr class="table_bg">
                     <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
@@ -3152,14 +2921,14 @@ use Carbon\Carbon;
                 @foreach (json_decode($data1->Other4_attachment) as $key => $file)
                 <tr>
                     <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                             target="_blank"><b>{{ $file }}</b></a> </td>
                 </tr>
                 @endforeach
                 @else
                 <tr>
                     <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
+                    <td class="w-60">Not Applicable</td>
                 </tr>
                 @endif
 
@@ -3172,9 +2941,7 @@ use Carbon\Carbon;
                 Other's 5 ( Additional Person Action From Departments If Required)
             </div>
             <table>
-
                 <tr>
-
                     <th class="w-20">Other's 5 Action Required ?
                     </th>
                     <td class="w-30">
@@ -3196,11 +2963,9 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
-
                 </tr>
 
                 <tr>
-
                     <th class="w-20">Other's 5 HOD Person</th>
                     <td class="w-30">
                         <div>
@@ -3222,10 +2987,11 @@ use Carbon\Carbon;
                         </div>
                     </td>
                 </tr>
+            </table>
+            <table>    
                 <tr>
-
                     <th class="w-20">Description of Action Item (By Other's 5)</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div>
                             @if ($data1->Other5_Assessment)
                             {{ $data1->Other5_Assessment }}
@@ -3234,8 +3000,10 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
+                </tr>
+                <tr>    
                     <th class="w-20">Other's 5 Status of Action Item</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         <div>
                             @if ($data1->Other5_feedback)
                             {{ $data1->Other5_feedback }}
@@ -3245,8 +3013,9 @@ use Carbon\Carbon;
                         </div>
                     </td>
                 </tr>
+            </table>
+            <table>    
                 <tr>
-
                     <th class="w-20">Other's 5 Action Completed By</th>
                     <td class="w-30">
                         <div>
@@ -3275,7 +3044,6 @@ use Carbon\Carbon;
                 Other's 5 Attachments
             </div>
             <table>
-
                 <tr class="table_bg">
                     <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
@@ -3284,17 +3052,16 @@ use Carbon\Carbon;
                 @foreach (json_decode($data1->Other5_attachment) as $key => $file)
                 <tr>
                     <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                             target="_blank"><b>{{ $file }}</b></a> </td>
                 </tr>
                 @endforeach
                 @else
                 <tr>
                     <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
+                    <td class="w-60">Not Applicable</td>
                 </tr>
                 @endif
-
             </table>
         </div>
     </div>
@@ -3309,11 +3076,9 @@ use Carbon\Carbon;
                     Production (Tablet/Capsule/Powder)
                 </div>
                 <table>
-
                     <tr>
-
                         <th class="w-20">HOD Production Tablet/Capsule/Powder Review Comments</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             <div>
                                 @if ($data5->hod_Production_Table_Feedback)
                                 {{ $data5->hod_Production_Table_Feedback }}
@@ -3323,8 +3088,9 @@ use Carbon\Carbon;
                             </div>
                         </td>
                     </tr>
+                </table>
+                <table>    
                     <tr>
-
                         <th class="w-20">HOD Production Tablet/Capsule/Powder Review Completed By</th>
                         <td class="w-30">
                             <div>
@@ -3346,7 +3112,6 @@ use Carbon\Carbon;
                             </div>
                         </td>
                     </tr>
-
                 </table>
             </div>
             <div class="border-table">
@@ -3355,7 +3120,6 @@ use Carbon\Carbon;
                         HOD Production Tablet/Capsule/Powder Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -3364,17 +3128,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_Production_Table_Attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -3384,15 +3147,11 @@ use Carbon\Carbon;
                     <div class="block-head">
                         Production Injection
                     </div>
-
                     <table>
-
-
                         <tr>
-
                             <th class="w-20">HOD Production Injection Review Comments
                             </th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Production_Injection_Feedback)
                                     {{ $data5->hod_Production_Injection_Feedback }}
@@ -3402,8 +3161,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">HOD Production Injection Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -3434,7 +3194,6 @@ use Carbon\Carbon;
                         HOD Production Injection Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -3443,17 +3202,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_Production_Injection_Attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -3465,7 +3223,7 @@ use Carbon\Carbon;
                     <table>
                         <tr>
                             <th class="w-20">HOD Research & Development Review Comments ?</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_ResearchDevelopment_feedback)
                                     {{ $data5->hod_ResearchDevelopment_feedback }}
@@ -3475,8 +3233,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">HOD Research & Development Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -3505,7 +3264,6 @@ use Carbon\Carbon;
                         HOD Research & Development Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -3514,14 +3272,14 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_ResearchDevelopment_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
 
@@ -3534,12 +3292,9 @@ use Carbon\Carbon;
                         Human Resource
                     </div>
                     <table>
-
-
                         <tr>
-
                             <th class="w-20">HOD Human Resource Review Comment</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Human_Resource_feedback)
                                     {{ $data5->hod_Human_Resource_feedback }}
@@ -3549,8 +3304,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">HOD Human Resource Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -3579,7 +3335,6 @@ use Carbon\Carbon;
                         HOD Human Resource Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -3588,17 +3343,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_Human_Resource_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -3609,14 +3363,9 @@ use Carbon\Carbon;
                         Corporate Quality Assurance
                     </div>
                     <table>
-
-
-
                         <tr>
-
-
                             <th class="w-20">HOD Corporate Quality Assurance Review Comments</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_CorporateQualityAssurance_feedback)
                                     {{ $data5->hod_CorporateQualityAssurance_feedback }}
@@ -3626,8 +3375,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">HOD Corporate Quality Assurance Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -3656,7 +3406,6 @@ use Carbon\Carbon;
                         HOD Corporate Quality Assurance Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -3665,17 +3414,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_CorporateQualityAssurance_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -3686,13 +3434,9 @@ use Carbon\Carbon;
                         Stores
                     </div>
                     <table>
-
-
                         <tr>
-
-
                             <th class="w-20">HOD Stores Review Comments</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Store_feedback)
                                     {{ $data5->hod_Store_feedback }}
@@ -3702,8 +3446,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">HOD Stores Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -3727,6 +3472,7 @@ use Carbon\Carbon;
                         </tr>
                     </table>
                 </div>
+
                 <div class="border-table">
                     <div class="block-head">
                         HOD Stores Attachments
@@ -3741,17 +3487,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_Store_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -3762,13 +3507,9 @@ use Carbon\Carbon;
                         Engineering
                     </div>
                     <table>
-
-
-
                         <tr>
-
                             <th class="w-20">HOD Engineering Review Comments</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Engineering_feedback)
                                     {{ $data5->hod_Engineering_feedback }}
@@ -3778,8 +3519,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">HOD Engineering Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -3803,15 +3545,12 @@ use Carbon\Carbon;
                         </tr>
                     </table>
                 </div>
-                <br>
-                <br>
-                <br>
+
                 <div class="border-table">
                     <div class="block-head">
                         HOD Engineering Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -3830,7 +3569,6 @@ use Carbon\Carbon;
                             <td class="w-20">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -3842,7 +3580,7 @@ use Carbon\Carbon;
                     <table>
                         <tr>
                             <th class="w-20">HOD Regulatory Affair Review Comments</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_RegulatoryAffair_feedback)
                                     {{ $data5->hod_RegulatoryAffair_feedback }}
@@ -3852,8 +3590,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">HOD Regulatory Affair Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -3900,7 +3639,6 @@ use Carbon\Carbon;
                             <td class="w-20">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -3913,7 +3651,7 @@ use Carbon\Carbon;
                     <table>
                         <tr>
                             <th class="w-20">HOD Quality Assurance Review Comments</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Quality_Assurance_feedback)
                                     {{ $data5->hod_Quality_Assurance_feedback }}
@@ -3923,6 +3661,8 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
                             <th class="w-20">HOD Quality Assurance Review Completed By</th>
                             <td class="w-30">
@@ -3960,17 +3700,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_Quality_Assurance_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -3981,17 +3720,20 @@ use Carbon\Carbon;
                         Production (Liquid/Ointment)
                     </div>
                     <table>
-                        <th class="w-20">HOD Production (Liquid/Ointment) Review Comments</th>
-                        <td class="w-30">
-                            <div>
-                                @if ($data5->hod_ProductionLiquid_feedback)
-                                {{ $data5->hod_ProductionLiquid_feedback }}
-                                @else
-                                Not Applicable
-                                @endif
-                            </div>
-                        </td>
+                        <tr>
+                            <th class="w-20">HOD Production (Liquid/Ointment) Review Comments</th>
+                            <td class="w-80">
+                                <div>
+                                    @if ($data5->hod_ProductionLiquid_feedback)
+                                    {{ $data5->hod_ProductionLiquid_feedback }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
                             <th class="w-20">HOD Production (Liquid/Ointment) Review Completed By</th>
                             <td class="w-30">
@@ -4021,7 +3763,6 @@ use Carbon\Carbon;
                         HOD Production (Liquid/Ointment) Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -4030,17 +3771,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_ProductionLiquid_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -4050,11 +3790,9 @@ use Carbon\Carbon;
                         Quality Control
                     </div>
                     <table>
-
-
                         <tr>
                           <th class="w-20">HOD Quality Control Review Comments</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Quality_Control_feedback)
                                     {{ $data5->hod_Quality_Control_feedback }}
@@ -4064,8 +3802,10 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                    </table>
 
+                    <table>    
+                        <tr>
                             <th class="w-20">HOD Quality Control Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -4094,7 +3834,6 @@ use Carbon\Carbon;
                         HOD Quality Control Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -4103,17 +3842,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_Quality_Control_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -4124,13 +3862,9 @@ use Carbon\Carbon;
                         Microbiology
                     </div>
                     <table>
-
-
                         <tr>
-
-
                             <th class="w-20">HOD Microbiology Review Comments</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Microbiology_feedback)
                                     {{ $data5->hod_Microbiology_feedback }}
@@ -4140,8 +3874,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">HOD Microbiology Review Completed By
                             </th>
                             <td class="w-30">
@@ -4172,7 +3907,6 @@ use Carbon\Carbon;
                         HOD Microbiology Attachment
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -4181,17 +3915,16 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_Microbiology_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -4203,13 +3936,9 @@ use Carbon\Carbon;
                         Safety
                     </div>
                     <table>
-
-
-
                         <tr>
-
                             <th class="w-20">HOD Safety Review Comments</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data5->hod_Health_Safety_feedback)
                                     {{ $data5->hod_Health_Safety_feedback }}
@@ -4219,8 +3948,9 @@ use Carbon\Carbon;
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">HOD Safety Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -4249,7 +3979,6 @@ use Carbon\Carbon;
                         HOD Safety Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -4258,479 +3987,374 @@ use Carbon\Carbon;
                         @foreach (json_decode($data5->hod_Environment_Health_Safety_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
+                        </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="block">
+                <div class="head">
+                    <div class="block-head">
+                        Other's 1 ( Additional Person Review From Departments If Required)
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">HOD Other's 1 Review Comments</th>
+                            <td class="w-80">
+                                <div>
+                                    @if ($data5->hod_Other1_feedback)
+                                    {{ $data5->hod_Other1_feedback }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>    
+                        <tr>
+                            <th class="w-20">HOD Other's 1 Review Completed By</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data5->hod_Other1_by)
+                                    {{ $data5->hod_Other1_by }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                            <th class="w-20"> HOD Other's 1 Review Completed On</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data5->hod_Other1_on)
+                                    {{ \Carbon\Carbon::parse($data5->hod_Other1_on)->format('d-M-Y') }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="border-table">
+                    <div class="block-head">
+                        HOD Other's 1 Attachments
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if ($data5->hod_Other1_attachment)
+                        @foreach (json_decode($data5->hod_Other1_attachment) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-60">Not Applicable</td>
+                        </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+            <div class="block">
+                <div class="head">
+                    <div class="block-head">
+                        Other's 2 ( Additional Person Review From Departments If Required)
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">HOD Other's 2 Review Comments</th>
+                            <td class="w-80">
+                                <div>
+                                    @if ($data5->hod_Other2_feedback)
+                                    {{ $data5->hod_Other2_feedback }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>    
+                        <tr>
+                            <th class="w-20">HOD Other's 2 Review Completed By</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data5->hod_Other2_by)
+                                    {{ $data5->hod_Other2_by }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                            <th class="w-20">HOD Other's 2 Review Completed On</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data5->hod_Other2_on)
+                                    {{ \Carbon\Carbon::parse($data5->hod_Other2_on)->format('d-M-Y') }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="border-table">
+                    <div class="block-head">
+                        HOD Other's 2 Attachments
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if ($data5->hod_Other2_attachment)
+                        @foreach (json_decode($data5->hod_Other2_attachment) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-60">Not Applicable</td>
+                        </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+            <div class="block">
+                <div class="head">
+                    <div class="block-head">
+                        Other's 3 ( Additional Person Review From Departments If Required)
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">HOD Other's 3 Review Comments</th>
+                            <td class="w-80">
+                                <div>
+                                    @if ($data5->hod_Other3_feedback)
+                                    {{ $data5->hod_Other3_feedback }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>    
+                        <tr>
+                            <th class="w-20">HOD Other's 3 Review Completed By</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data5->hod_Other3_by)
+                                    {{ $data5->hod_Other3_by }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                            <th class="w-20"> HOD Other's 3 Review Completed On</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data5->hod_Other3_on)
+                                    {{ \Carbon\Carbon::parse($data5->hod_Other3_on)->format('d-M-Y') }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="border-table">
+                    <div class="block-head">
+                        HOD Other's 3 Attachments
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if ($data5->hod_Other3_attachment)
+                        @foreach (json_decode($data5->hod_Other3_attachment) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
 
                     </table>
                 </div>
             </div>
-
-            {{-- <div class="block">
-                            <div class="head">
-                                <div class="block-head">
-                                    Contract Giver
-
-                                </div> --}}
-            {{-- <table>
-
-                                    <tr>
-
-
-                                        <th class="w-20">HOD Contract Giver Status of action item</th>
-                                        <td class="w-30">
-                                            <div>
-                                                @if ($data5->hod_ContractGiver_feedback)
-                                                    {{ $data5->hod_ContractGiver_feedback }}
-            @else
-            Not Applicable
-            @endif
-        </div>
-        </td>
-        </tr>
-        <tr>
-
-            <th class="w-20">HOD Contract Giver Review Completed By</th>
-            <td class="w-30">
-                <div>
-                    @if ($data5->hod_ContractGiver_by)
-                    {{ $data5->hod_ContractGiver_by }}
-                    @else
-                    Not Applicable
-                    @endif
+            <div class="block">
+                <div class="head">
+                    <div class="block-head">
+                        Other's 4 ( Additional Person Review From Departments If Required)
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">HOD Other's 4 Review Comments</th>
+                            <td class="w-80">
+                                <div>
+                                    @if ($data5->Other4_feedback)
+                                    {{ $data5->Other4_feedback }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>    
+                        <tr>
+                            <th class="w-20">HOD Other's 4 Review Completed By</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data5->hod_Other4_by)
+                                    {{ $data5->hod_Other4_by }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                            <th class="w-20"> HOD Other's 4 Review Completed On</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data5->hod_Other4_on)
+                                    {{ \Carbon\Carbon::parse($data5->hod_Other4_on)->format('d-M-Y') }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-            </td>
-            <th class="w-20">HOD Contract Giver Review Completed On</th>
-            <td class="w-30">
-                <div>
-                    @if ($data5->hod_ContractGiver_on)
-                    {{ \Carbon\Carbon::parse($data5->hod_ContractGiver_on)->format('d-M-Y') }}
-                    @else
-                    Not Applicable
-                    @endif
+                <div class="border-table">
+                    <div class="block-head">
+                        HOD Other's 4 Attachments
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if ($data5->hod_Other4_attachment)
+                        @foreach (json_decode($data5->hod_Other4_attachment) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-60">Not Applicable</td>
+                        </tr>
+                        @endif
+                    </table>
                 </div>
-            </td>
-        </tr>
-        </table>
-    </div>
-    <div class="border-table">
-        <div class="block-head">
-            HOD Contract Giver Attachments
-        </div>
-        <table>
-
-            <tr class="table_bg">
-                <th class="w-20">Sr.No.</th>
-                <th class="w-60">Attachment</th>
-            </tr>
-            @if ($data5->hod_ContractGiver_attachment)
-            @foreach (json_decode($data5->hod_ContractGiver_attachment) as $key => $file)
-            <tr>
-                <td class="w-20">{{ $key + 1 }}</td>
-                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                        target="_blank"><b>{{ $file }}</b></a> </td>
-            </tr>
-            @endforeach
-            @else
-            <tr>
-                <td class="w-20">1</td>
-                <td class="w-20">Not Applicable</td>
-            </tr>
-            @endif
-
-        </table>
-    </div>
-    </div> --}}
-
-
-    <div class="block">
-        <div class="head">
-            <div class="block-head">
-                Other's 1 ( Additional Person Review From Departments If Required)
             </div>
-            <table>
-
-
-
-
-
-                <tr>
-
-
-                    <th class="w-20">HOD Other's 1 Review Comments</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other1_feedback)
-                            {{ $data5->hod_Other1_feedback }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-
-                    <th class="w-20">HOD Other's 1 Review Completed By</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other1_by)
-                            {{ $data5->hod_Other1_by }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                    <th class="w-20"> HOD Other's 1 Review Completed On</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other1_on)
-                            {{ \Carbon\Carbon::parse($data5->hod_Other1_on)->format('d-M-Y') }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="border-table">
-            <div class="block-head">
-                HOD Other's 1 Attachments
+            <div class="block">
+                <div class="head">
+                    <div class="block-head">
+                        Other's 5 ( Additional Person Review From Departments If Required)
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">HOD Other's 5 Review Comments</th>
+                            <td class="w-80">
+                                <div>
+                                    @if ($data5->hod_Other5_feedback)
+                                    {{ $data5->hod_Other5_feedback }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>    
+                        <tr>
+                            <th class="w-20">HOD Other's 5 Review Completed By</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data5->hod_Other5_by)
+                                    {{ $data5->hod_Other5_by }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                            <th class="w-20">HOD Other's 5 Review Completed On</th>
+                            <td class="w-30">
+                                <div>
+                                    @if ($data5->hod_Other5_on)
+                                    {{ \Carbon\Carbon::parse($data5->hod_Other5_on)->format('d-M-Y') }}
+                                    @else
+                                    Not Applicable
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="border-table">
+                    <div class="block-head">
+                        HOD Other's 5 Attachments
+                    </div>
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if ($data5->hod_Other5_attachment)
+                        @foreach (json_decode($data5->hod_Other5_attachment) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-60">Not Applicable</td>
+                        </tr>
+                        @endif
+                    </table>
+                </div>
             </div>
-            <table>
-
-                <tr class="table_bg">
-                    <th class="w-20">Sr.No.</th>
-                    <th class="w-60">Attachment</th>
-                </tr>
-                @if ($data5->hod_Other1_attachment)
-                @foreach (json_decode($data5->hod_Other1_attachment) as $key => $file)
-                <tr>
-                    <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                            target="_blank"><b>{{ $file }}</b></a> </td>
-                </tr>
-                @endforeach
-                @else
-                <tr>
-                    <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
-                </tr>
-                @endif
-
-            </table>
-        </div>
-    </div>
-    <div class="block">
-        <div class="head">
-            <div class="block-head">
-                Other's 2 ( Additional Person Review From Departments If Required)
-            </div>
-            <table>
-
-
-
-
-                <tr>
-
-
-                    <th class="w-20">HOD Other's 2 Review Comments</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other2_feedback)
-                            {{ $data5->hod_Other2_feedback }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-
-                    <th class="w-20">HOD Other's 2 Review Completed By</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other2_by)
-                            {{ $data5->hod_Other2_by }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                    <th class="w-20">HOD Other's 2 Review Completed On</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other2_on)
-                            {{ \Carbon\Carbon::parse($data5->hod_Other2_on)->format('d-M-Y') }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="border-table">
-            <div class="block-head">
-                HOD Other's 2 Attachments
-            </div>
-            <table>
-
-                <tr class="table_bg">
-                    <th class="w-20">Sr.No.</th>
-                    <th class="w-60">Attachment</th>
-                </tr>
-                @if ($data5->hod_Other2_attachment)
-                @foreach (json_decode($data5->hod_Other2_attachment) as $key => $file)
-                <tr>
-                    <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                            target="_blank"><b>{{ $file }}</b></a> </td>
-                </tr>
-                @endforeach
-                @else
-                <tr>
-                    <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
-                </tr>
-                @endif
-
-            </table>
-        </div>
-    </div>
-    <div class="block">
-        <div class="head">
-            <div class="block-head">
-                Other's 3 ( Additional Person Review From Departments If Required)
-            </div>
-            <table>
-
-
-                <tr>
-
-                    <th class="w-20">HOD Other's 3 Review Comments</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other3_feedback)
-                            {{ $data5->hod_Other3_feedback }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-
-                    <th class="w-20">HOD Other's 3 Review Completed By</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other3_by)
-                            {{ $data5->hod_Other3_by }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                    <th class="w-20"> HOD Other's 3 Review Completed On</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other3_on)
-                            {{ \Carbon\Carbon::parse($data5->hod_Other3_on)->format('d-M-Y') }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="border-table">
-            <div class="block-head">
-                HOD Other's 3 Attachments
-            </div>
-            <table>
-
-                <tr class="table_bg">
-                    <th class="w-20">Sr.No.</th>
-                    <th class="w-60">Attachment</th>
-                </tr>
-                @if ($data5->hod_Other3_attachment)
-                @foreach (json_decode($data5->hod_Other3_attachment) as $key => $file)
-                <tr>
-                    <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                            target="_blank"><b>{{ $file }}</b></a> </td>
-                </tr>
-                @endforeach
-                @else
-                <tr>
-                    <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
-                </tr>
-                @endif
-
-            </table>
-        </div>
-    </div>
-    <div class="block">
-        <div class="head">
-            <div class="block-head">
-                Other's 4 ( Additional Person Review From Departments If Required)
-            </div>
-            <table>
-
-
-
-
-                <tr>
-                    <th class="w-20">HOD Other's 4 Review Comments</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->Other4_feedback)
-                            {{ $data5->Other4_feedback }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-
-                    <th class="w-20">HOD Other's 4 Review Completed By</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other4_by)
-                            {{ $data5->hod_Other4_by }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                    <th class="w-20"> HOD Other's 4 Review Completed On</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other4_on)
-                            {{ \Carbon\Carbon::parse($data5->hod_Other4_on)->format('d-M-Y') }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="border-table">
-            <div class="block-head">
-                HOD Other's 4 Attachments
-            </div>
-            <table>
-
-                <tr class="table_bg">
-                    <th class="w-20">Sr.No.</th>
-                    <th class="w-60">Attachment</th>
-                </tr>
-                @if ($data5->hod_Other4_attachment)
-                @foreach (json_decode($data5->hod_Other4_attachment) as $key => $file)
-                <tr>
-                    <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                            target="_blank"><b>{{ $file }}</b></a> </td>
-                </tr>
-                @endforeach
-                @else
-                <tr>
-                    <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
-                </tr>
-                @endif
-
-            </table>
-        </div>
-    </div>
-    <div class="block">
-        <div class="head">
-            <div class="block-head">
-                Other's 5 ( Additional Person Review From Departments If Required)
-            </div>
-            <table>
-
-
-
-                <tr>
-
-
-                    <th class="w-20">HOD Other's 5 Review Comments</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other5_feedback)
-                            {{ $data5->hod_Other5_feedback }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-
-                    <th class="w-20">HOD Other's 5 Review Completed By</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other5_by)
-                            {{ $data5->hod_Other5_by }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                    <th class="w-20">HOD Other's 5 Review Completed On</th>
-                    <td class="w-30">
-                        <div>
-                            @if ($data5->hod_Other5_on)
-                            {{ \Carbon\Carbon::parse($data5->hod_Other5_on)->format('d-M-Y') }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="border-table">
-            <div class="block-head">
-                HOD Other's 5 Attachments
-            </div>
-            <table>
-
-                <tr class="table_bg">
-                    <th class="w-20">Sr.No.</th>
-                    <th class="w-60">Attachment</th>
-                </tr>
-                @if ($data5->hod_Other5_attachment)
-                @foreach (json_decode($data5->hod_Other5_attachment) as $key => $file)
-                <tr>
-                    <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                            target="_blank"><b>{{ $file }}</b></a> </td>
-                </tr>
-                @endforeach
-                @else
-                <tr>
-                    <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
-                </tr>
-                @endif
-
-            </table>
-        </div>
-    </div>
-
     </div>
 
 
@@ -4739,13 +4363,7 @@ use Carbon\Carbon;
             <div class="block-head">
                 QA verification
             </div>
-
-
-
-
-
-
-            <div class="inner-block">
+            {{-- <div class="inner-block">
                 <label class="Summer"
                     style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
                     QA verification Comment </label>
@@ -4756,9 +4374,23 @@ use Carbon\Carbon;
                     Not Applicable
                     @endif
                 </span>
-            </div>
+            </div> --}}
+
+            <table>
+                <tr>
+                    <th class="w-20">QA verification Comment</th>
+                    <td class="w-80">                    
+                        @if ($managementReview->additional_suport_required)
+                        {{ $managementReview->additional_suport_required }}
+                        @else
+                        Not Applicable
+                        @endif
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
+
     <div class="border-table">
         <div class="block-head">
             QA Verification Attachments
@@ -4773,17 +4405,16 @@ use Carbon\Carbon;
             @foreach (json_decode($managementReview->qa_verification_file) as $key => $file)
             <tr>
                 <td class="w-20">{{ $key + 1 }}</td>
-                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                         target="_blank"><b>{{ $file }}</b></a> </td>
             </tr>
             @endforeach
             @else
             <tr>
                 <td class="w-20">1</td>
-                <td class="w-20">Not Applicable</td>
+                <td class="w-60">Not Applicable</td>
             </tr>
             @endif
-
         </table>
     </div>
     <br>
@@ -4793,22 +4424,7 @@ use Carbon\Carbon;
                 Closure
             </div>
 
-            {{-- <table>
-                                <tr>
-
-                                    <th class="w-30">Next Management Review Date</th>
-                                    <td class="w-20">
-
-                                        {{ Helpers::getdateFormat($managementReview->next_managment_review_date) ?? 'Not Applicable' }}
-            </td>
-
-
-            </tr>
-
-
-
-            </table> --}}
-            <div class="inner-block">
+            {{-- <div class="inner-block">
                 <label class="Summer"
                     style="font-weight: bold; font-size: 13px; display: inline-block; width: 75px;">
                     QA Head Comment </label>
@@ -4819,14 +4435,20 @@ use Carbon\Carbon;
                     Not Applicable
                     @endif
                 </span>
-            </div>
+            </div> --}}
 
-
-
-
-
-
-
+            <table>
+                <tr>
+                    <th class="w-20">QA Head Comment</th>
+                    <td class="w-80">                    
+                        @if ($managementReview->conclusion_new)
+                        {{ $managementReview->conclusion_new }}
+                        @else
+                        Not Applicable
+                        @endif
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="border-table">
@@ -4834,7 +4456,6 @@ use Carbon\Carbon;
             Closure Attachments
         </div>
         <table>
-
             <tr class="table_bg">
                 <th class="w-20">Sr.No.</th>
                 <th class="w-60">Attachment</th>
@@ -4843,25 +4464,18 @@ use Carbon\Carbon;
             @foreach (json_decode($managementReview->closure_attachments) as $key => $file)
             <tr>
                 <td class="w-20">{{ $key + 1 }}</td>
-                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                         target="_blank"><b>{{ $file }}</b></a> </td>
             </tr>
             @endforeach
             @else
             <tr>
                 <td class="w-20">1</td>
-                <td class="w-20">Not Applicable</td>
+                <td class="w-60">Not Applicable</td>
             </tr>
             @endif
-
         </table>
     </div>
-
-
-
-
-
-    <br>
 
     <div class="block">
         <div class="head">
@@ -4874,278 +4488,107 @@ use Carbon\Carbon;
                     <td class="w-30">{{ $managementReview->Submited_by ?? 'Not Applicable' }}</td>
                     <th class="w-20">Submit On</th>
                     <td class="w-30">{{ $managementReview->Submited_on ? Helpers::getdateFormat($managementReview->Submited_on) : 'Not Applicable' }}</td>
-                    <th class="w-20">Submit Comment</th>
-                    <td class="w-30">{{ $managementReview->Submited_Comment ?? 'Not Applicable' }}</td>
                 </tr>
-
+            </table>
+            <table>    
+                <tr>    
+                    <th class="w-20">Submit Comment</th>
+                    <td class="w-80">{{ $managementReview->Submited_Comment ?? 'Not Applicable' }}</td>
+                </tr>
+            </table>    
+            
+            <table>
                 <tr>
                     <th class="w-20">QA Head Review Complete By</th>
                     <td class="w-30">{{ $managementReview->qaHeadReviewComplete_By ?? 'Not Applicable' }}</td>
                     <th class="w-20">QA Head Review Complete On</th>
                     <td class="w-30">{{ $managementReview->qaHeadReviewComplete_On ? Helpers::getdateFormat($managementReview->qaHeadReviewComplete_On) : 'Not Applicable' }}</td>
-                    <th class="w-20">QA Head Review Complete Comment</th>
-                    <td class="w-30">{{ $managementReview->qaHeadReviewComplete_Comment ?? 'Not Applicable' }}</td>
                 </tr>
+            </table>
+            <table>    
+                <tr>    
+                    <th class="w-20">QA Head Review Complete Comment</th>
+                    <td class="w-80">{{ $managementReview->qaHeadReviewComplete_Comment ?? 'Not Applicable' }}</td>
+                </tr>
+            </table>
 
+            <table>
                 <tr>
                     <th class="w-20">Meeting and Summary Complete By</th>
                     <td class="w-30">{{ $managementReview->meeting_summary_by ?? 'Not Applicable' }}</td>
                     <th class="w-20">Meeting and Summary Complete On</th>
                     <td class="w-30">{{ $managementReview->meeting_summary_on ? Helpers::getdateFormat($managementReview->meeting_summary_on) : 'Not Applicable' }}</td>
-                    <th class="w-20">Meeting and Summary Complete Comment</th>
-                    <td class="w-30">{{ $managementReview->meeting_summary_comment ?? 'Not Applicable' }}</td>
                 </tr>
+            </table>
 
+            <table>    
+                <tr>    
+                    <th class="w-20">Meeting and Summary Complete Comment</th>
+                    <td class="w-80">{{ $managementReview->meeting_summary_comment ?? 'Not Applicable' }}</td>
+                </tr>
+            </table>
+            
+            <table>
                 <tr>
                     <th class="w-20">CFT Action Complete By</th>
                     <td class="w-30">{{ $managementReview->ALLAICompleteby_by ?? 'Not Applicable' }}</td>
                     <th class="w-20">CFT Action Complete On</th>
                     <td class="w-30">{{ $managementReview->ALLAICompleteby_on ? Helpers::getdateFormat($managementReview->ALLAICompleteby_on) : 'Not Applicable' }}</td>
-                    <th class="w-20">CFT Action Complete Comment</th>
-                    <td class="w-30">{{ $managementReview->ALLAICompleteby_comment ?? 'Not Applicable' }}</td>
                 </tr>
-
+            </table>
+            <table>    
+                <tr>    
+                    <th class="w-20">CFT Action Complete Comment</th>
+                    <td class="w-80">{{ $managementReview->ALLAICompleteby_comment ?? 'Not Applicable' }}</td>
+                </tr>
+            </table>
+            <table>    
                 <tr>
                     <th class="w-20">CFT HOD Review Complete By</th>
                     <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_by ?? 'Not Applicable' }}</td>
                     <th class="w-20">CFT HOD Review Complete On</th>
                     <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_on ? Helpers::getdateFormat($managementReview->hodFinaleReviewComplete_on) : 'Not Applicable' }}</td>
-                    <th class="w-20">CFT HOD Review Complete Comment</th>
-                    <td class="w-30">{{ $managementReview->hodFinaleReviewComplete_comment ?? 'Not Applicable' }}</td>
                 </tr>
-
+            </table>
+            <table>    
+                <tr>    
+                    <th class="w-20">CFT HOD Review Complete Comment</th>
+                    <td class="w-80">{{ $managementReview->hodFinaleReviewComplete_comment ?? 'Not Applicable' }}</td>
+                </tr>
+            </table>
+            
+            <table>
                 <tr>
                     <th class="w-20">QA Verification Complete By</th>
                     <td class="w-30">{{ $managementReview->QAVerificationComplete_by ?? 'Not Applicable' }}</td>
                     <th class="w-20">QA Verification Complete On</th>
                     <td class="w-30">{{ $managementReview->QAVerificationComplete_On ? Helpers::getdateFormat($managementReview->QAVerificationComplete_On) : 'Not Applicable' }}</td>
-                    <th class="w-20">QA Verification Complete Comment</th>
-                    <td class="w-30">{{ $managementReview->QAVerificationComplete_Comment ?? 'Not Applicable' }}</td>
                 </tr>
-
+            </table>
+            <table>    
+                <tr>    
+                    <th class="w-20">QA Verification Complete Comment</th>
+                    <td class="w-80">{{ $managementReview->QAVerificationComplete_Comment ?? 'Not Applicable' }}</td>
+                </tr>
+            </table>
+            <table>    
                 <tr>
                     <th class="w-20">Approved By</th>
                     <td class="w-30">{{ $managementReview->Approved_by ?? 'Not Applicable' }}</td>
                     <th class="w-20">Approved On</th>
                     <td class="w-30">{{ $managementReview->Approved_on ? Helpers::getdateFormat($managementReview->Approved_on) : 'Not Applicable' }}</td>
+                </tr>
+            </table>
+            <table>    
+                <tr>    
                     <th class="w-20">Approved Comment</th>
-                    <td class="w-30">{{ $managementReview->Approved_comment ?? 'Not Applicable' }}</td>
+                    <td class="w-80">{{ $managementReview->Approved_comment ?? 'Not Applicable' }}</td>
                 </tr>
             </table>
         </div>
     </div>
-
-    {{--
-        <div class="block">
-            <div class="block-head">
-
-                Agenda
-            </div>
-            <div class="border-table">
-                <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                    <thead>
-                        <tr class="table_bg">
-                            <th>Sr.No.</th>
-                            <th>Date</th>
-                            <th>Topic</th>
-                            <th>Responsible</th>
-                            <th>Time Start</th>
-                            <th>Time End</th>
-                            <th>Comment</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (unserialize($agenda->topic) as $key => $temps)
-                            <tr>
-                                <td>
-                                    {{ $key + 1 }}</td>
-
-
-    <td>
-        @php
-        $date = unserialize($agenda->date)[$key] ?? null;
-        @endphp
-        {{ $date ? Carbon::parse($date)->format('d-M-Y') : 'N/A' }}
-    </td>
-    <td>
-        {{ unserialize($agenda->topic)[$key] ?? 'N/A' }}
-    </td>
-    <td>
-
-        {{ unserialize($agenda->responsible)[$key] ? unserialize($agenda->responsible)[$key] : 'N/A' }}
-    </td>
-    <td>
-
-        {{ unserialize($agenda->start_time)[$key] ? unserialize($agenda->start_time)[$key] : 'N/A' }}
-    </td>
-    <td>
-        {{ unserialize($agenda->end_time)[$key] ? unserialize($agenda->end_time)[$key] : 'N/A' }}
-    </td>
-    <td>
-
-        {{ unserialize($agenda->comment)[$key] ? unserialize($agenda->comment)[$key] : 'N/A' }}
-    </td>
-
-    </tr>
-    @endforeach
-    </tbody>
-    </table>
     </div>
     </div>
-    --}}
-
-    {{-- <div class="block">
-            <div class="block-head">
-                Performance Evaluation
-
-            </div>
-            <div class="border-table">
-                <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                    <thead>
-                        <tr class="table_bg">
-                            <th style="width: 6%">Row #</th>
-                            <th>Monitoring</th>
-                            <th>Measurement</th>
-                            <th>Analysis</th>
-                            <th>Evalutaion</th>
-
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach (unserialize($performance_evaluation->monitoring) as $key => $temps)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-    <td>{{ unserialize($performance_evaluation->monitoring)[$key] ? unserialize($performance_evaluation->monitoring)[$key] : 'N/A' }}
-    </td>
-    <td>{{ unserialize($performance_evaluation->measurement)[$key] ? unserialize($performance_evaluation->measurement)[$key] : 'N/A' }}
-    </td>
-    <td>{{ unserialize($performance_evaluation->analysis)[$key] ? unserialize($performance_evaluation->analysis)[$key] : 'N/A' }}
-    </td>
-    <td>{{ unserialize($performance_evaluation->evaluation)[$key] ? unserialize($performance_evaluation->evaluation)[$key] : 'N/A' }}
-    </td>
-
-    </tr>
-    @endforeach
-    </tbody>
-    </table>
-    </div>
-    </div>
-
-
-    <div class="block">
-        <div class="block-head">
-            Action Item Details - Part 1
-        </div>
-        <div class="border-table">
-            <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                <thead>
-                    <tr class="table_bg">
-                        <th style="width: 6%">Sr.No.</th>
-                        <th>Short Description</th>
-                        <th>Due Date</th>
-                        <th style="width: 10%">Site / Division</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (unserialize($action_item_details->date_due) as $key => $due_date)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        <td>{{ unserialize($action_item_details->short_desc)[$key] ?? '' }}</td>
-                        <td>{{ Helpers::getdateFormat($due_date) }}</td>
-                        <td>{{ unserialize($action_item_details->site)[$key] ?? '' }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div> --}}
-    {{-- <div class="block">
-            <div class="block-head">
-                Action Item Details - Part 2
-            </div>
-            <div class="border-table">
-                <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                    <thead>
-                        <tr class="table_bg">
-                            <th style="width: 6%">Sr.No.</th>
-                            <th>Person Responsible</th>
-                            <th>Current Status</th>
-                            <th>Date Closed</th>
-                            <th>Remarks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (unserialize($action_item_details->date_due) as $key => $due_date)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-    <td>
-        @php
-        $responsiblePersonId =
-        unserialize($action_item_details->responsible_person)[$key] ?? null;
-        $responsiblePerson = $users->firstWhere('id', $responsiblePersonId);
-        @endphp
-        {{ $responsiblePerson->name ?? '' }}
-    </td>
-    <td>{{ unserialize($action_item_details->current_status)[$key] ?? '' }}</td>
-    <td>{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key] ?? null) }}
-    </td>
-    <td>{{ unserialize($action_item_details->remark)[$key] ?? '' }}</td>
-    </tr>
-    @endforeach
-    </tbody>
-
-    </table>
-    </div>
-    </div> --}}
-
-
-    {{-- <div class="block">
-            <div class="block-head">
-                CAPA Details - Part 2
-            </div>
-            <div class="border-table">
-                <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                    <thead>
-                        <tr class="table_bg">
-                            <th style="width: 6%">Sr.No.</th>
-
-                            <th>Current Status</th>
-                            <th>Date Closed</th>
-                            <th>Remark</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!empty($capa_detail_details->date_closed2))
-                            @foreach (unserialize($capa_detail_details->date_closed2) as $key => $temps)
-                                <tr>
-                                    <td>
-                                        {{ $key + 1 }}</td>
-
-    <td>{{ unserialize($capa_detail_details->current_status2)[$key] ?? '' }}</td>
-    <td>
-        @php
-        $date = unserialize($capa_detail_details->date_closed2)[$key] ?? null;
-        @endphp
-        {{ $date ? Carbon::parse($date)->format('d-M-Y') : 'N/A' }}
-    </td>
-    <td>{{ unserialize($capa_detail_details->remark2)[$key] ?? '' }}</td>
-    </tr>
-    @endforeach
-    @endif
-    </tbody>
-    </table>
-    </div>
-    </div> --}}
-
-    </div>
-    </div>
-
-
-
-
-
 
 </body>
 
