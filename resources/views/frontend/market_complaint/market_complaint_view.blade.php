@@ -1277,18 +1277,16 @@
 
 
 
-                            <div class="col-md-12 mb-3">
+                           
+                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Details Of Nature Market Complaint">Details of Nature of Market Complaint 
-                                     @if($data->stage ==1)
+                                    <label for="Review of Control Sample">Details of Nature of Market Complaint  @if($data->stage ==1)
                                             <span class="text-danger">*</span>
-                                         @endif
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote"
-                                        name="details_of_nature_market_complaint_gi" id="summernote-1" required>{{ $data->details_of_nature_market_complaint_gi }}
-                                    </textarea>
+                                         @endif</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea class="summernote" name="details_of_nature_market_complaint_gi"  id="summernote-1" 
+                                    {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->details_of_nature_market_complaint_gi }} </textarea>
                                 </div>
                             </div>
 
