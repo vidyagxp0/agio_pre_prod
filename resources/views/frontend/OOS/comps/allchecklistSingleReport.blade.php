@@ -3837,6 +3837,7 @@
                             "Were instrument properly connected at the time of analysis?",
                             "Was temperature of the instrument as per STP?",
                             "Was temperature acquired during analysis?",
+                            "Was analyst verified the oil is filled up to the level before start of analysis?",
                         );
                         @endphp
                         <div class="block">
