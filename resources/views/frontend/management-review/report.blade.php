@@ -325,13 +325,13 @@ use Carbon\Carbon;
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Management Review No.</strong>
+                    <strong>Record No.</strong> {{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-40">
                     {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Page No.</strong>
                 </td>
             </tr>
         </table>

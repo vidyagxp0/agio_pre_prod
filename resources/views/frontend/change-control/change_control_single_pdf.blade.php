@@ -185,7 +185,7 @@
                 color: gray;
             }
     </style>
-<style>
+<!-- <style>
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -342,15 +342,17 @@
         word-break: break-all;
         word-wrap: break-word;
     }
-</style>
+</style> -->
 
 <body>
 
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     Change Control Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -363,13 +365,13 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Change Control No.</strong>
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-40">
                     {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Page No.</strong>
                 </td>
             </tr>
         </table>

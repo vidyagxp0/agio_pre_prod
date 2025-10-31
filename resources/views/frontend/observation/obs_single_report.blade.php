@@ -400,13 +400,13 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Observation No.</strong>
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-40">
                     {{ Helpers::getDivisionName($data->division_code) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Page No.</strong>
                 </td>
             </tr>
         </table>
@@ -1173,6 +1173,21 @@
 
  </div>
 </div>
+
+    <script type="text/php">
+        if ( isset($pdf) ) {
+            $pdf->page_script('
+                if ($PAGE_COUNT > 1) {
+                    $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+                    $size = 9;
+                    $pageText =  $PAGE_NUM . " of " . $PAGE_COUNT;
+                    $y = 110;
+                    $x = 763;
+                    $pdf->text($x, $y, $pageText, $font, $size);
+                }
+            ');
+        }
+    </script>
 </body>
 
 </html>

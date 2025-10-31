@@ -1049,7 +1049,7 @@
                      </div>
                  </div>
 
-                 @php
+                @php
                      $Melting_Point_questions = array(
                              "Was instrument calibrated before start of analysis?",
                              "Was sampled prepared as per STP?",
@@ -1057,7 +1057,7 @@
                              "Were instrument properly connected at the time of analysis?",
                              "Was temperature of the instrument as per STP?",
                              "Was temperature acquired during analysis?",
-                             // "Was analyst verified the oil is filled up to the level before start of analysis?",
+                             "Was analyst verified the oil is filled up to the level before start of analysis?",
                          );
                  @endphp
                  <div class="col-12">
@@ -1084,15 +1084,20 @@
                                                      <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                          <select name="Melting_Point[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
                                                              <option value="">Select an Option</option>
-                                                             <option value="Yes" {{ Helpers::getArrayKey($Melting_Points->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                             <option value="No" {{ Helpers::getArrayKey($Melting_Points->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                             <option value="N/A" {{ Helpers::getArrayKey($Melting_Points->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            @php
+                                                                $meltingData = isset($Melting_Points->data[$loop->index]) ? $Melting_Points->data[$loop->index] : [];
+                                                            @endphp
+
+                                                            <option value="Yes" {{ Helpers::getArrayKey($meltingData, 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getArrayKey($meltingData, 'response') == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ Helpers::getArrayKey($meltingData, 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                          </select>
                                                      </div>
                                                  </td>
                                                  <td style="vertical-align: middle;">
                                                      <div style="margin: auto; display: flex; justify-content: center;">
-                                                         <textarea name="Melting_Point[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($Melting_Points->data[$loop->index], 'remark') }}</textarea>
+                                                         {{-- <textarea name="Melting_Point[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($Melting_Points->data[$loop->index], 'remark') }}</textarea> --}}
+                                                         <textarea name="Melting_Point[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getArrayKey($meltingData, 'remark') }}</textarea>
                                                      </div>
                                                  </td>
                                              </tr>
