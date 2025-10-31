@@ -509,13 +509,12 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Root Cause Analysis No.</strong>
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-40">
                     {{ Helpers::divisionNameForQMS($data->division_id) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
-                <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                <td class="w-30"><strong>Page No.</strong>
                 </td>
             </tr>
         </table>
@@ -1816,8 +1815,8 @@ Not Applicable
                                 
                                         <th class="w-20"> Acknowledge Comment</th>
                                         <td class="w-30">
-                                            @if ($data->acknowledge_comment)
-                                                {{ $data->acknowledge_comment }}
+                                            @if ($data->ack_comments)
+                                                {{ $data->ack_comments }}
                                             @else
                                                 Not Applicable
                                             @endif
