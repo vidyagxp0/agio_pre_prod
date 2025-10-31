@@ -2424,6 +2424,11 @@ class MarketComplaintController extends Controller
         $lastCft = MarketComplaintCft::where('mc_id', $lastmarketComplaint->id)->first();
 
         $marketComplaint = MarketComplaint::find($id);
+        $marketComplaintdata = MarketComplaint::find($id);
+
+         $marketComplaintdata->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi ?? $marketComplaintdata->details_of_nature_market_complaint_gi;
+
+          $marketComplaintdata->save();
 
         if (!$marketComplaint) {
             return redirect()->back()->with('error', 'Market Complaint not found.');
@@ -2443,6 +2448,8 @@ class MarketComplaintController extends Controller
         $marketComplaint->assign_to = $request->assign_to;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
+      
+        // dd($marketComplaint->details_of_nature_of_market);
         $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
 
         // if ($request->filled('complaint_reported_on_gi')) {
@@ -2450,7 +2457,8 @@ class MarketComplaintController extends Controller
         //     $marketComplaint->complaint_reported_on_gi = $complaintDate;
         // }
 
-        $marketComplaint->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi;
+        // $marketComplaint->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi;
+        //   $marketComplaint->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi;
         $marketComplaint->categorization_of_complaint_gi = $request->categorization_of_complaint_gi;
         $marketComplaint->review_of_complaint_sample_gi = $request->review_of_complaint_sample_gi;
         $marketComplaint->review_of_control_sample_gi = $request->review_of_control_sample_gi;
@@ -8201,8 +8209,10 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                     if ($marketstat->stage == 1) {
 
-
-                        if (empty($marketstat->complainant_gi) || empty($marketstat->complaint_reported_on_gi) || empty($marketstat->details_of_nature_market_complaint_gi) || empty($marketstat->categorization_of_complaint_gi) || empty($marketstat->is_repeat_gi)|| empty($marketstat->review_of_complaint_sample_gi)|| empty($marketstat->review_of_control_sample_gi) || empty($marketstat->review_of_stability_study_gi) || empty($marketstat->review_of_product_manu_gi) || empty($marketstat->additional_inform)|| empty($marketstat->probable_root_causes_complaint_hodsr)|| empty($marketstat->in_case_Invalide_com)|| empty($marketstat->manufacturer_name_address_ca)|| empty($marketstat->complaint_sample_required_ca)|| empty($marketstat->complaint_sample_status_ca)|| empty($marketstat->brief_description_of_complaint_ca) || empty($marketstat->batch_record_review_observation_ca)|| empty($marketstat->analytical_data_review_observation_ca)|| empty($marketstat->retention_sample_review_observation_ca)|| empty($marketstat->qms_events_ifany_review_observation_ca)|| empty($marketstat->repeated_complaints_queries_for_product_ca)|| empty($marketstat->interpretation_on_complaint_sample_ifrecieved_ca)|| empty($marketstat->comments_ifany_ca)) {
+                      
+                         
+                        if (empty($marketstat->complainant_gi) || empty($marketstat->complaint_reported_on_gi) || empty($marketstat->details_of_nature_market_complaint_gi) || empty($marketstat->categorization_of_complaint_gi) || empty($marketstat->is_repeat_gi)|| empty($marketstat->review_of_complaint_sample_gi)|| empty($marketstat->review_of_control_sample_gi) || empty($marketstat->review_of_stability_study_gi) || empty($marketstat->review_of_product_manu_gi) || empty($marketstat->additional_inform)|| empty($marketstat->probable_root_causes_complaint_hodsr)|| empty($marketstat->in_case_Invalide_com)|| empty($marketstat->manufacturer_name_address_ca)|| empty($marketstat->complaint_sample_required_ca)|| empty($marketstat->brief_description_of_complaint_ca) || empty($marketstat->batch_record_review_observation_ca)|| empty($marketstat->analytical_data_review_observation_ca)|| empty($marketstat->retention_sample_review_observation_ca)|| empty($marketstat->qms_events_ifany_review_observation_ca)|| empty($marketstat->repeated_complaints_queries_for_product_ca)|| empty($marketstat->interpretation_on_complaint_sample_ifrecieved_ca)|| empty($marketstat->comments_ifany_ca)) {
+                          
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
                                 'message' => 'Pls fill Both  General Information Tab And Complaint Acknowledgement  Tab is yet to be filled!',
