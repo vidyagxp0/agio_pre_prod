@@ -56,25 +56,25 @@ class FailureInvestigationController extends Controller
         // dd($request->all());
         $form_progress = null;
 
-        if ($request->form_name == 'general')
-        {
-            $validator = Validator::make($request->all(), [
-                'Initiator_Group' => 'required',
-                'short_description' => 'required'
+        // if ($request->form_name == 'general')
+        // {
+        //     $validator = Validator::make($request->all(), [
+        //         'Initiator_Group' => 'required',
+        //         'short_description' => 'required'
 
-            ], [
-                'Initiator_Group.required' => 'Department field required!',
-                'short_description_required.required' => 'Nature of repeat field required!'
-            ]);
+        //     ], [
+        //         'Initiator_Group.required' => 'Department field required!',
+        //         'short_description_required.required' => 'Nature of repeat field required!'
+        //     ]);
 
-            if ($validator->fails()) {
-                return back()
-                    ->withErrors($validator)
-                    ->withInput();
-            } else {
-                $form_progress = '  ';
-            }
-        }
+        //     if ($validator->fails()) {
+        //         return back()
+        //             ->withErrors($validator)
+        //             ->withInput();
+        //     } else {
+        //         $form_progress = '  ';
+        //     }
+        // }
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
@@ -103,6 +103,7 @@ class FailureInvestigationController extends Controller
         $failureInvestigation->failure_investigation_date = $request->failure_investigation_date;
         $failureInvestigation->failure_investigation_time = $request->failure_investigation_time;
         $failureInvestigation->failure_investigation_reported_date = $request->failure_investigation_reported_date;
+        $failureInvestigation->process = $request->process;
         if (is_array($request->audit_type)) {
             $failureInvestigation->audit_type = implode(',', $request->audit_type);
         }
@@ -1200,110 +1201,110 @@ class FailureInvestigationController extends Controller
         {
 
             // dd($request->Delay_Justification);
-            $validator = Validator::make($request->all(), [
-                'Initiator_Group' => 'required',
-                'short_description' => 'required',
-                'short_description_required' => 'required|in:Recurring,Non_Recurring',
-                'nature_of_repeat' => 'required_if:short_description_required,Recurring',
-                'failure_investigation_date' => 'required',
-                'failure_investigation_time' => 'required',
-                'failure_investigation_reported_date' => 'required',
-                'Delay_Justification' => [
-                    function ($attribute, $value, $fail) use ($request) {
-                        $failureInvestigation_date = Carbon::parse($request->failure_investigation_date);
-                        $reported_date = Carbon::parse($request->failure_investigation_reported_date);
-                        $diff_in_days = $reported_date->diffInDays($failureInvestigation_date);
-                        if ($diff_in_days !== 0) {
-                            if(!$request->Delay_Justification){
-                                $fail('The Delay Justification is required!');
-                            }
-                        }
-                    },
-                ],
-                'audit_type' => [
-                    'required',
-                    'array',
-                    function($attribute, $value, $fail) {
-                        if (count($value) === 1 && reset($value) === null) {
-                            return $fail($attribute.' must not contain only null values.');
-                        }
-                    },
-                ],
-                'Facility_Equipment' => 'required|in:yes,no',
-                'facility_name' => [
-                    function ($attribute, $value, $fail) use ($request) {
-                        if ($request->input('Facility_Equipment') === 'yes' && (count($value) === 1 && reset($value) === null)) {
-                            $fail('The Facility name is required when Facility Equipment is yes.');
-                        }
-                    },
-                ],
-                'IDnumber' => [
-                    function ($attribute, $value, $fail) use ($request) {
-                        if ($request->input('Facility_Equipment') === 'yes' && (count($value) === 1 && reset($value) === null)) {
-                            $fail('The ID Number field is required when Facility Equipment is yes.');
-                        }
-                    },
-                ],
-                'Document_Details_Required' => 'required|in:yes,no',
-                'Product_Details_Required' => 'required|in:yes,no',
-                'Number' => [
-                    function ($attribute, $value, $fail) use ($request) {
-                        if ($request->input('Document_Details_Required') === 'yes' && (count($value) === 1 && reset($value) === null)) {
-                            $fail('The Document Number field is required when Document Details Required is yes.');
-                        }
-                    },
-                ],
-                'ReferenceDocumentName' => [
-                    function ($attribute, $value, $fail) use ($request) {
-                        if ($request->input('Document_Details_Required') === 'yes' && (count($value) === 1 && reset($value) === null)) {
-                            $fail('The Referrence Document Number field is required when Document Details Required is yes.');
-                        }
-                    },
-                ],
-                // 'Description_failure_investigation' => [
-                //     'required',
-                //     'array',
-                //     function($attribute, $value, $fail) {
-                //         if (count($value) === 1 && reset($value) === null) {
-                //             return $fail('Description of Failure Investigation must not be empty!.');
-                //         }
-                //     },
-                // ],
-                'Immediate_Action' => [
-                    'required',
-                    'array',
-                    function($attribute, $value, $fail) {
-                        if (count($value) === 1 && reset($value) === null) {
-                            return $fail('Immediate Action field must not be empty!.');
-                        }
-                    },
-                ],
-                'Preliminary_Impact' => [
-                    'required',
-                    'array',
-                    function($attribute, $value, $fail) {
-                        if (count($value) === 1 && reset($value) === null) {
-                            return $fail('Preliminary Impact field must not be empty!.');
-                        }
-                    },
-                ],
-            ], [
-                'short_description_required.required' => 'Nature of Repeat required!',
-                'nature_of_repeat.required' =>  'The nature of repeat field is required when nature of repeat is Recurring.',
-                'audit_type' => 'Failure Investigation related to field required!'
-            ]);
+            // $validator = Validator::make($request->all(), [
+            //     'Initiator_Group' => 'required',
+            //     'short_description' => 'required',
+            //     'short_description_required' => 'required|in:Recurring,Non_Recurring',
+            //     'nature_of_repeat' => 'required_if:short_description_required,Recurring',
+            //     'failure_investigation_date' => 'required',
+            //     'failure_investigation_time' => 'required',
+            //     'failure_investigation_reported_date' => 'required',
+            //     'Delay_Justification' => [
+            //         function ($attribute, $value, $fail) use ($request) {
+            //             $failureInvestigation_date = Carbon::parse($request->failure_investigation_date);
+            //             $reported_date = Carbon::parse($request->failure_investigation_reported_date);
+            //             $diff_in_days = $reported_date->diffInDays($failureInvestigation_date);
+            //             if ($diff_in_days !== 0) {
+            //                 if(!$request->Delay_Justification){
+            //                     $fail('The Delay Justification is required!');
+            //                 }
+            //             }
+            //         },
+            //     ],
+            //     'audit_type' => [
+            //         'required',
+            //         'array',
+            //         function($attribute, $value, $fail) {
+            //             if (count($value) === 1 && reset($value) === null) {
+            //                 return $fail($attribute.' must not contain only null values.');
+            //             }
+            //         },
+            //     ],
+            //     'Facility_Equipment' => 'required|in:yes,no',
+            //     'facility_name' => [
+            //         function ($attribute, $value, $fail) use ($request) {
+            //             if ($request->input('Facility_Equipment') === 'yes' && (count($value) === 1 && reset($value) === null)) {
+            //                 $fail('The Facility name is required when Facility Equipment is yes.');
+            //             }
+            //         },
+            //     ],
+            //     'IDnumber' => [
+            //         function ($attribute, $value, $fail) use ($request) {
+            //             if ($request->input('Facility_Equipment') === 'yes' && (count($value) === 1 && reset($value) === null)) {
+            //                 $fail('The ID Number field is required when Facility Equipment is yes.');
+            //             }
+            //         },
+            //     ],
+            //     'Document_Details_Required' => 'required|in:yes,no',
+            //     'Product_Details_Required' => 'required|in:yes,no',
+            //     'Number' => [
+            //         function ($attribute, $value, $fail) use ($request) {
+            //             if ($request->input('Document_Details_Required') === 'yes' && (count($value) === 1 && reset($value) === null)) {
+            //                 $fail('The Document Number field is required when Document Details Required is yes.');
+            //             }
+            //         },
+            //     ],
+            //     'ReferenceDocumentName' => [
+            //         function ($attribute, $value, $fail) use ($request) {
+            //             if ($request->input('Document_Details_Required') === 'yes' && (count($value) === 1 && reset($value) === null)) {
+            //                 $fail('The Referrence Document Number field is required when Document Details Required is yes.');
+            //             }
+            //         },
+            //     ],
+            //     // 'Description_failure_investigation' => [
+            //     //     'required',
+            //     //     'array',
+            //     //     function($attribute, $value, $fail) {
+            //     //         if (count($value) === 1 && reset($value) === null) {
+            //     //             return $fail('Description of Failure Investigation must not be empty!.');
+            //     //         }
+            //     //     },
+            //     // ],
+            //     'Immediate_Action' => [
+            //         'required',
+            //         'array',
+            //         function($attribute, $value, $fail) {
+            //             if (count($value) === 1 && reset($value) === null) {
+            //                 return $fail('Immediate Action field must not be empty!.');
+            //             }
+            //         },
+            //     ],
+            //     'Preliminary_Impact' => [
+            //         'required',
+            //         'array',
+            //         function($attribute, $value, $fail) {
+            //             if (count($value) === 1 && reset($value) === null) {
+            //                 return $fail('Preliminary Impact field must not be empty!.');
+            //             }
+            //         },
+            //     ],
+            // ], [
+            //     'short_description_required.required' => 'Nature of Repeat required!',
+            //     'nature_of_repeat.required' =>  'The nature of repeat field is required when nature of repeat is Recurring.',
+            //     'audit_type' => 'Failure Investigation related to field required!'
+            // ]);
 
-            $validator->sometimes('others', 'required|string|min:1', function ($input) {
-                return in_array('Anyother(specify)', explode(',', $input->audit_type[0]));
-            });
+            // $validator->sometimes('others', 'required|string|min:1', function ($input) {
+            //     return in_array('Anyother(specify)', explode(',', $input->audit_type[0]));
+            // });
 
-            if ($validator->fails()) {
-                return back()
-                    ->withErrors($validator)
-                    ->withInput();
-            } else {
-                $form_progress = 'general-open';
-            }
+            // if ($validator->fails()) {
+            //     return back()
+            //         ->withErrors($validator)
+            //         ->withInput();
+            // } else {
+            //     $form_progress = 'general-open';
+            // }
         }
         if ($request->form_name == 'qa')
         {
@@ -1433,7 +1434,12 @@ class FailureInvestigationController extends Controller
         $failureInvestigation->failure_investigation_reported_date = $request->failure_investigation_reported_date;
         $failureInvestigation->failure_investigation_date = $request->failure_investigation_date;
         $failureInvestigation->failure_investigation_time = $request->failure_investigation_time;
+        $failureInvestigation->non_conformances_date = $request->non_conformances_date;
         $failureInvestigation->Delay_Justification = $request->Delay_Justification;
+        $failureInvestigation->Facility = $request->Facility;
+        $failureInvestigation->non_conformances_reported_date = $request->non_conformances_reported_date;
+        $failureInvestigation->non_conformances_time = $request->non_conformances_time;
+        $failureInvestigation->process = $request->process;
         // $failureInvestigation->audit_type = implode(',', $request->audit_type);
         if (is_array($request->audit_type)) {
             $failureInvestigation->audit_type = implode(',', $request->audit_type);
@@ -6833,7 +6839,35 @@ class FailureInvestigationController extends Controller
                 $cftDetails = FailureInvestigationCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'failure_investigation_id' => $id])->distinct('cft_user_id')->count();
     
                 if ($failureInvestigation->stage == 1) {
-                    if ($failureInvestigation->form_progress !== 'general-open')
+                    // if ($failureInvestigation->form_progress !== 'general-open')
+                    // {
+                    //     //dd('emnter');
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'General Information Tab is yet to be filled'
+                    //     ]);
+    
+                    //     return redirect()->back();
+                    // } else {
+                        
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for HOD review state'
+                    //     ]);
+                    // }
+                     if ( empty($failureInvestigation->short_description) ||
+                        empty($failureInvestigation->short_description_required) ||
+                        empty($failureInvestigation->nature_of_repeat) ||
+                        empty($failureInvestigation->failure_investigation_date) ||
+                        empty($failureInvestigation->failure_investigation_time) ||
+                        empty($failureInvestigation->Facility) ||
+                        empty($failureInvestigation->audit_type) ||
+                        empty($failureInvestigation->process) ||
+                        empty($failureInvestigation->Facility_Equipment)
+                    
+                        )
                     {
                         //dd('emnter');
                         Session::flash('swal', [

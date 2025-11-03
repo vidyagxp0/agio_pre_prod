@@ -959,15 +959,14 @@
                                             <div class="calenderauditee">
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    name="due_date" />
+                                                        name="due_date" />
                                                 <input type="date" name="due_date"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-inputnewfail"
                                                     oninput="handleDateInput(this, 'due_date')" />
                                             </div>
                                         </div>
                                     </div>
 
-                                    
                                     <script>
                                         // Format the due date to DD-MM-YYYY
                                         var dueDateFormatted = new Date("{{ $dueDate }}").toLocaleDateString('en-GB', {
@@ -979,8 +978,13 @@
                                         // Set the formatted due date value to the input field
                                         document.getElementById('due_date').value = dueDateFormatted;
                                     </script>
+                                    <style>
+                                        .hide-inputnewfail{
+                                            display: none!important;
+                                        }
+                                    </style>
 
-                                  <div class="col-lg-12">
+                                  {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Department</b><span class="text-danger">*</span></label>
                                         <select name="Initiator_Group" 
@@ -995,7 +999,39 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator"><b>Initiator Department</b></label>
+                                                <input readonly type="text" name="Initiator_Group" id="Initiator_Group" 
+                                                    value="{{ $data->initiator_Group }}">
+                                            </div>
                                 </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiation Group Code">Initiator Department Code</label>
+                                                <input type="text" name="initiator_group_code"
+                                                    value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                    readonly>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator"><b>Initiator Department</b></label>
+                                                <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                                    value="{{ $data->Initiator_Group }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiation Group Code">Initiator Department Code</label>
+                                                <input type="text" name="initiator_group_code"
+                                                    value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                    readonly>
+                                            </div>
+                                        </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
@@ -1086,30 +1122,42 @@
                                         }
                                     </script>
 
-                                    <div class="col-6 new-date-data-field">
+                                    {{-- <div class="col-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="severity-level">Failure Investigation Observed On <span
                                                     class="text-danger">*</span></label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="failure_investigation_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->failure_investigation_date) }}" />
                                                 <input type="date" name="failure_investigation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->failure_investigation_date }}"
-                                                class="hide-input"
+                                                class="hide-inputfail2"
                                                 oninput="handleDateInput(this, 'failure_investigation_date')" />
                                             </div>
                                             @error('failure_investigation_date')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                    </div> --}}
+                                   
+                                    <div class="col-6">
+                                        <div class="group-input">
+                                            <label for="severity-level">Failure Investigation Observed On <span
+                                                    class="text-danger">*</span></label>
+                                            <!-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span> -->
+                                            <input type="date" id="non_conformances_date"  max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                name="failure_investigation_date"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ old('failure_investigation_date') ? old('failure_investigation_date') : $data->failure_investigation_date }}">
+                                            @error('failure_investigation_date')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
-
-
                                     <div class="col-lg-6 new-time-data-field">
                                         <div class="group-input input-time">
-                                            <label for="failure_investigation_time">Failure Investigation Observed On (Time) <span
+                                            <label for="non_conformances_time">Failure Investigation Observed On (Time) <span
                                                     class="text-danger">*</span></label>
                                             <input type="text"
                                                 name="failure_investigation_time"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                id="failure_investigation_time"
+                                                id="non_conformances_time"
                                                 value="{{ old('failure_investigation_time') ? old('failure_investigation_time') : $data->failure_investigation_time }}">
                                             @error('failure_investigation_time')
                                                 <div class="text-danger">{{ $message }}</div>
@@ -1117,10 +1165,11 @@
                                         </div>
                                     </div>
 
+
                                     <div class="col-lg-6 new-time-data-field">
                                         <div
-                                            class="group-input input-time @if ($data->Delay_Justification) style="display: block !important" @endif @error('Delay_Justification') @else delayJustificationBlock @enderror">
-                                            <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
+                                            class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
+                                            <label for="non_conformances_time">Delay Justification <span class="text-danger">*</span></label>
                                             <textarea id="Delay_Justification" name="Delay_Justification">{{ $data->Delay_Justification }}</textarea>
                                         </div>
                                         @error('Delay_Justification')
@@ -1128,18 +1177,17 @@
                                         @enderror
                                     </div>
 
-                                     <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    flatpickr("#failure_investigation_time", {
-                                        enableTime: true,
-                                        noCalendar: true,
-                                        dateFormat: "H:i", // 24-hour format without AM/PM
-                                        time_24hr: true, // Ensure 24-hour time format
-                                        minuteIncrement: 1 // Set minute increment to 1
-                                    });
-                                });
-                            </script>
 
+
+                                    <script>
+                                        flatpickr("#non_conformances_time", {
+                                            enableTime: true,
+                                            noCalendar: true,
+                                            dateFormat: "H:i", // 24-hour format without AM/PM
+                                            minuteIncrement: 1 // Set minute increment to 1
+
+                                        });
+                                    </script>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             @php
@@ -1155,14 +1203,49 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-6 new-date-data-field">
+                                     <script>
+                                        $(document).ready(function() {
+                                            // Hide the delayJustificationBlock initially
+                                            $('.delayJustificationBlock').hide();
+
+                                            // Check the condition on page load
+                                            checkDateDifference();
+                                        });
+
+                                        function checkDateDifference() {
+                                            let failureInvestigationDate = $('input[name=non_conformances_date]').val();
+                                            let reportedDate = $('input[name=non_conformances_reported_date]').val();
+
+                                            if (!failureInvestigationDate || !reportedDate) {
+                                                console.error('Non Conformance date or reported date is missing.');
+                                                return;
+                                            }
+
+                                            let failureInvestigationDateMoment = moment(failureInvestigationDate);
+                                            let reportedDateMoment = moment(reportedDate);
+
+                                            let diffInDays = reportedDateMoment.diff(failureInvestigationDateMoment, 'days');
+
+                                            if (diffInDays > 0) {
+                                                $('.delayJustificationBlock').show();
+                                            } else {
+                                                $('.delayJustificationBlock').hide();
+                                            }
+                                        }
+
+                                        // Call checkDateDifference whenever the values are changed
+                                        $('input[name=non_conformances_date], input[name=non_conformances_reported_date]').on('change', function() {
+                                            checkDateDifference();
+                                        });
+                                        </script>
+                                    {{-- <div class="col-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Initiator Group">Failure Investigation Reported On <span
                                                     class="text-danger">*</span></label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="failure_investigation_reported_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->failure_investigation_reported_date) }}" />
                                                 <input type="date" name="failure_investigation_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->failure_investigation_reported_date }}"
-                                                class="hide-input"
+                                                class="hide-input3"
                                                 oninput="handleDateInput(this, 'failure_investigation_reported_date')" />
                                             </div>
                                             @error('failure_investigation_reported_date')
@@ -1170,6 +1253,11 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <style>
+                                        .hide-input3{
+                                            display: none !important;
+                                        }
+                                    </style>
 
                                     <script>
                                         $(document).ready(function() {
@@ -1205,9 +1293,59 @@
                                         $('input[name=failure_investigation_date], input[name=failure_investigation_reported_date]').on('change', function() {
                                             checkDateDifference();
                                         });
+                                        </script> --}}
+                                        <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group">Failure Investigation Reported on <span
+                                                    class="text-danger">*</span></label>
+                                            <!-- <div><small class="text-primary">Please select related information</small></div> -->
+                                            <input type="date" id="non_conformances_reported_date"
+                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                name="failure_investigation_reported_date"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ $data->failure_investigation_reported_date }}">
+                                        </div>
+                                        @error('failure_investigation_reported_date')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            // Hide the delayJustificationBlock initially
+                                            $('.delayJustificationBlock').hide();
+
+                                            // Check the condition on page load
+                                            checkDateDifference();
+                                        });
+
+                                        function checkDateDifference() {
+                                            let failureInvestigationDate = $('input[name=non_conformances_date]').val();
+                                            let reportedDate = $('input[name=non_conformances_reported_date]').val();
+
+                                            if (!failureInvestigationDate || !reportedDate) {
+                                                console.error('Non Conformance date or reported date is missing.');
+                                                return;
+                                            }
+
+                                            let failureInvestigationDateMoment = moment(failureInvestigationDate);
+                                            let reportedDateMoment = moment(reportedDate);
+
+                                            let diffInDays = reportedDateMoment.diff(failureInvestigationDateMoment, 'days');
+
+                                            if (diffInDays > 0) {
+                                                $('.delayJustificationBlock').show();
+                                            } else {
+                                                $('.delayJustificationBlock').hide();
+                                            }
+                                        }
+
+                                        // Call checkDateDifference whenever the values are changed
+                                        $('input[name=non_conformances_date], input[name=non_conformances_reported_date]').on('change', function() {
+                                            checkDateDifference();
+                                        });
                                         </script>
 
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="audit type">Failure Investigation Related To <span
                                                     class="text-danger">*</span></label>
@@ -1281,7 +1419,117 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                    </div> --}}
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="audit type">Failure Investigation Related To <span
+                                                    class="text-danger">*</span></label>
+                                            <select multiple
+                                                name="audit_type[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="audit_type">
+                                                <option
+                                                    value="Facility"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    {{ strpos($data->audit_type, 'Facility') !== false ? 'selected' : '' }}>
+                                                    Facility</option>
+                                                <option value="Equipment/Instrument"
+                                                    {{ strpos($data->audit_type, 'Equipment/Instrument') !== false ? 'selected' : '' }}>
+                                                    Equipment/Instrument</option>
+                                                <option value="Documentationerror"
+                                                    {{ strpos($data->audit_type, 'Documentationerror') !== false ? 'selected' : '' }}>
+                                                    Documentation error</option>
+                                                <option value="STP/ADS_instruction"
+                                                    {{ strpos($data->audit_type, 'STP/ADS_instruction') !== false ? 'selected' : '' }}>
+                                                    STP/ADS instruction</option>
+                                                <option value="Packaging&Labelling"
+                                                    {{ strpos($data->audit_type, 'Packaging&Labelling') !== false ? 'selected' : '' }}>
+                                                    Packaging & Labelling</option>
+                                                <option value="Material_System"
+                                                    {{ strpos($data->audit_type, 'Material_System') !== false ? 'selected' : '' }}>
+                                                    Material System</option>
+                                                <option value="Laboratory_Instrument/System"
+                                                    {{ strpos($data->audit_type, 'Laboratory_Instrument/System') !== false ? 'selected' : '' }}>
+                                                    Laboratory Instrument/System</option>
+                                                <option value="Utility_System"
+                                                    {{ strpos($data->audit_type, 'Utility_System') !== false ? 'selected' : '' }}>
+                                                    Utility System</option>
+                                                <option value="Computer_System"
+                                                    {{ strpos($data->audit_type, 'Computer_System') !== false ? 'selected' : '' }}>
+                                                    Computer System</option>
+                                                <option value="Document"
+                                                    {{ strpos($data->audit_type, 'Document') !== false ? 'selected' : '' }}>
+                                                    Document</option>
+                                                <option value="Data integrity"
+                                                    {{ strpos($data->audit_type, 'Data integrity') !== false ? 'selected' : '' }}>
+                                                    Data integrity</option>
+                                                <option value="SOP Instruction"
+                                                    {{ strpos($data->audit_type, 'SOP Instruction') !== false ? 'selected' : '' }}>
+                                                    SOP Instruction</option>
+                                                <option value="BMR/ECR Instruction"
+                                                    {{ strpos($data->audit_type, 'BMR/ECR Instruction') !== false ? 'selected' : '' }}>
+                                                    BMR/ECR Instruction</option>
+                                                <option value="Water System"
+                                                    {{ strpos($data->audit_type, 'Water System') !== false ? 'selected' : '' }}>
+                                                    Water System</option>
+                                                <option value="Anyother(specify)"
+                                                    {{ strpos($data->audit_type, 'Anyother(specify)') !== false ? 'selected' : '' }}>
+                                                    Anyother(specify)</option>
+                                            </select>
+                                        </div>
+                                        @error('audit_type')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
+
+
+                                    <div class="col-lg-6" id="others_block"
+                                        @if (strpos($data->audit_type, 'Anyother(specify)') === false) style="display: none" @endif>
+
+                                        <div class="group-input">
+                                            <label for="others">Others <span id="asteriskInOther"
+                                                    style="display: {{ $data->audit_type == 'Anyother(specify)' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="otherrr" name="others"
+                                                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="others" value="{{ $data->others }}">
+                                            @error('others')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                   <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        var selectField = document.getElementById('audit_type');
+                                        var othersBlock = document.getElementById('others_block');
+                                        var asteriskIcon = document.getElementById('asteriskInOther');
+                                        var otherInputs = document.querySelectorAll('.otherrr');
+
+                                        function toggleOthersField() {
+                                            // Get all selected values as array
+                                            var selectedValues = Array.from(selectField.selectedOptions).map(opt => opt.value);
+
+                                            // Check if "Anyother(specify)" is selected
+                                            var isOtherSelected = selectedValues.includes('Anyother(specify)');
+
+                                            // Show or hide "Others" block
+                                            othersBlock.style.display = isOtherSelected ? 'block' : 'none';
+                                            asteriskIcon.style.display = isOtherSelected ? 'inline' : 'none';
+
+                                            // Toggle "required" attribute
+                                            otherInputs.forEach(input => {
+                                                input.required = isOtherSelected;
+                                            });
+                                        }
+
+                                        // Run on page load
+                                        toggleOthersField();
+
+                                        // Run whenever selection changes
+                                        selectField.addEventListener('change', toggleOthersField);
+                                    });
+                                    </script>
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Process"><b>Process</b><span class="text-danger">*</span></label>

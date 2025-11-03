@@ -700,7 +700,7 @@
                                     document.getElementById('due_date').value = dueDateFormatted;
                                 </script>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Department</b><span
                                                 class="text-danger">*</span></label>
@@ -750,14 +750,70 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Department Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="" readonly>
                                     </div>
-                                </div> --}}
+                                </div> --}}.
+                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input readonly type="text" name="Initiator_Group" id="initiator_group"
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
+                                </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Corporate Quality Assurance": "CQA",
+                                                "Quality Control (Microbiology department)": "QM",
+                                                "Engineering": "EN",
+                                                "Store": "ST",
+                                                "Production Injectable": "PI",
+                                                "Production External": "PE",
+                                                "Production Tablet,Powder and Capsule": "PT",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Regulatory Affairs": "RA",
+                                                "Packaging Development /Artwork": "PD",
+                                                "Artwork": "AW",
+                                                "Research & Development": "R&D",
+                                                "Human Resource": "HR",
+                                                "Marketing": "MK",
+                                                "Analytical research and Development Laboratory": "AL",
+                                                "Information Technology": "IT",
+                                                "Safety": "SA",
+                                                "Purchase Department": "PU",
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiator Department Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
+                                            value="" readonly>
+                                    </div>
+                                </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1017,6 +1073,15 @@
                                         });
                                     });
                                 </script>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Process"><b>Process</b><span class="text-danger">*</span></label>
+                                        <input type="text" name="process" id="process"  {{ $data->stage == 1 ? '' : 'disabled' }}>
+                                        @error('process')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System Details
