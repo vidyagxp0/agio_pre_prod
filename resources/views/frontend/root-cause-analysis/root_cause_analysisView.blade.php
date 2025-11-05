@@ -1150,7 +1150,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <option value="Failure Mode and Effect Analysis" {{ in_array('Failure Mode and Effect Analysis', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Failure Mode and Effect Analysis</option>
                                             <option value="Fishbone or Ishikawa Diagram" {{ in_array('Fishbone or Ishikawa Diagram', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Fishbone or Ishikawa Diagram</option>
                                             <option value="Is/Is Not Analysis" {{ in_array('Is/Is Not Analysis', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Is/Is Not Analysis</option>
-                                            <option value="Rootcauseothers" {{ in_array('Rootcauseothers', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Others</option>
+                                            <option value="others" {{ in_array('others', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Others</option>
                                         </select>
 
                                         @error('root_cause_methodology')
@@ -1764,7 +1764,7 @@ dd($data->initiator_id , Auth::user()->id);
                                     </div>
                                 </div>
 
-                                    <div class="col-12" id="otherAttachmentField" style="display: {{ $data->reason == 'Rootcauseothers' ? 'block' : 'none' }};">                                   
+                                    <div class="col-12" id="otherAttachmentField" style="display: {{ $data->reason == 'others' ? 'block' : 'none' }};">                                   
                                         <div class="group-input">
                                         <label for="Inv Attachments">Other Attachment</label>
                                         <div>
@@ -1796,7 +1796,7 @@ dd($data->initiator_id , Auth::user()->id);
 
                                                 @php
                                                     $isReadonly = in_array($data->stage, [0,1,2,3,5,6,7,8]);
-                                                    $isRequired = ($data->reason == 'Rootcauseothers' && empty($data->investigation_attachment) && $data->stage == 4);
+                                                    $isRequired = ($data->reason == 'others' && empty($data->investigation_attachment) && $data->stage == 4);
                                                 @endphp
 
                                                 <input type="file" id="myfile"
@@ -3020,7 +3020,12 @@ dd($data->initiator_id , Auth::user()->id);
     </script>
     <script>
         VirtualSelect.init({
-            ele: '#investigators, #root-cause-methodology, #investigation_team'
+            ele: '#investigators, #root-cause-methodology, #investigation_team',
+            multiple: true,
+            search: true,
+            showValueAsTags: true,         
+            optionsSelectedText: '',       
+            showSelectedOptionsFirst: true 
         });
 
         function openCity(evt, cityName) {
@@ -3230,7 +3235,7 @@ dd($data->initiator_id , Auth::user()->id);
                         $('#is-is-not-section .req-asterisk').remove();
                     }
                     break;
-                case 'Rootcauseothers':
+                case 'others':
                     
                     const existingFiles = {!! json_encode(json_decode($data->investigation_attachment)) !!};
 
@@ -3271,7 +3276,7 @@ dd($data->initiator_id , Auth::user()->id);
             var selectedValues = $(this).val() || [];
 
             // Hide all and reset requirements
-            ['Why-Why Chart', 'Failure Mode and Effect Analysis', 'Fishbone or Ishikawa Diagram', 'Is/Is Not Analysis', 'Rootcauseothers'].forEach(function (value) {
+            ['Why-Why Chart', 'Failure Mode and Effect Analysis', 'Fishbone or Ishikawa Diagram', 'Is/Is Not Analysis', 'others'].forEach(function (value) {
                 toggleRequiredFields(value, false);
                 switch (value) {
                     case 'Why-Why Chart':
@@ -3287,7 +3292,7 @@ dd($data->initiator_id , Auth::user()->id);
                     case 'Is/Is Not Analysis':
                         $('#is-is-not-section').hide();
                         break;
-                    case 'Rootcauseothers':
+                    case 'others':
                         $('#root-cause-others').hide();
                         $('#otherAttachmentField').hide();
                         break;
@@ -3310,7 +3315,7 @@ dd($data->initiator_id , Auth::user()->id);
                 if (value === 'Is/Is Not Analysis') {
                     $('#is-is-not-section').show();
                 }
-                if (value === 'Rootcauseothers') {
+                if (value === 'others') {
                     $('#root-cause-others').show();
                 }
             });

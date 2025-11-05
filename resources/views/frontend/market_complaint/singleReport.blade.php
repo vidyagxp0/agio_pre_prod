@@ -306,13 +306,13 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Market Complaint No.</strong>
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-40">
                     {{ Helpers::divisionNameForQMS($data->division_id) }}/MC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Page No.</strong>
                 </td>
             </tr>
         </table>
@@ -3301,14 +3301,14 @@
                                     @foreach (json_decode($data1->Other1_attachment) as $key => $file)
                                         <tr>
                                             <td class="w-20">{{ $key + 1 }}</td>
-                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                     target="_blank"><b>{{ $file }}</b></a> </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
                                         <td class="w-20">1</td>
-                                        <td class="w-20">Not Applicable</td>
+                                        <td class="w-60">Not Applicable</td>
                                     </tr>
                                 @endif
 
@@ -3430,14 +3430,14 @@
                                     @foreach (json_decode($data1->Other2_attachment) as $key => $file)
                                         <tr>
                                             <td class="w-20">{{ $key + 1 }}</td>
-                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                     target="_blank"><b>{{ $file }}</b></a> </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
                                         <td class="w-20">1</td>
-                                        <td class="w-20">Not Applicable</td>
+                                        <td class="w-60">Not Applicable</td>
                                     </tr>
                                 @endif
 
@@ -3483,7 +3483,7 @@
                                 <table>
                                 <tr>
                                     <th class="w-20">Other's 3 Department</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Other3_Department_person)
                                                 {{ $data1->Other3_Department_person }}
@@ -3561,14 +3561,14 @@
                                     @foreach (json_decode($data1->Other3_attachment) as $key => $file)
                                         <tr>
                                             <td class="w-20">{{ $key + 1 }}</td>
-                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                     target="_blank"><b>{{ $file }}</b></a> </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
                                         <td class="w-20">1</td>
-                                        <td class="w-20">Not Applicable</td>
+                                        <td class="w-60">Not Applicable</td>
                                     </tr>
                                 @endif
 
@@ -3613,7 +3613,7 @@
                                 <table>
                                 <tr>
                                     <th class="w-20">Other's 4 Department</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Other4_Department_person)
                                                 {{ $data1->Other4_Department_person }}
@@ -3690,14 +3690,14 @@
                                     @foreach (json_decode($data1->Other4_attachment) as $key => $file)
                                         <tr>
                                             <td class="w-20">{{ $key + 1 }}</td>
-                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                     target="_blank"><b>{{ $file }}</b></a> </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
                                         <td class="w-20">1</td>
-                                        <td class="w-20">Not Applicable</td>
+                                        <td class="w-60">Not Applicable</td>
                                     </tr>
                                 @endif
 
@@ -3742,7 +3742,7 @@
                             <table>
                                 <tr>
                                     <th class="w-20">Other's 5 Department</th>
-                                    <td class="w-30">
+                                    <td class="w-80">
                                         <div>
                                             @if ($data1->Other5_Department_person)
                                                 {{ $data1->Other5_Department_person }}
@@ -3818,14 +3818,14 @@
                                     @foreach (json_decode($data1->Other5_attachment) as $key => $file)
                                         <tr>
                                             <td class="w-20">{{ $key + 1 }}</td>
-                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                     target="_blank"><b>{{ $file }}</b></a> </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
                                         <td class="w-20">1</td>
-                                        <td class="w-20">Not Applicable</td>
+                                        <td class="w-60">Not Applicable</td>
                                     </tr>
                                 @endif
 

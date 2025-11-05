@@ -149,7 +149,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> OOS/OOT No.</strong>
+                    <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-40">
                 {{ Helpers::getDivisionName($data->division_id) }}/{{ $data->Form_type }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}
@@ -157,7 +157,7 @@
                   {{--{{ Helpers::getDivisionName(session()->get('division')) }}/OOS/OOT/{{ date('Y') }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}--}}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Page No.</strong>
                 </td>
             </tr>
         </table>

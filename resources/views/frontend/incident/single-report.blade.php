@@ -291,14 +291,13 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Incident No.</strong>
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-40">
                     {{ Helpers::divisionNameForQMS($data->division_id) }}/INC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
-                <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                </td>
+                <td class="w-30"><strong>Page No.</strong>
+                    </td>
             </tr>
         </table>
     </header>

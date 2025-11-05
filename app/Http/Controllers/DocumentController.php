@@ -6548,8 +6548,8 @@ class DocumentController extends Controller
                 ? json_decode($RevisionpamsData->data, true) :(is_array($RevisionpamsData->data) ? $RevisionpamsData->data:[]);
         
         $RevisionpiasData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pias_data")->first();
-        $RevisionGridpiasData = isset($RevisionpiasData->data) && is_string($RevisionpiasData->data)
-                ? json_decode($RevisionpiasData->data, true) :(is_array($RevisionpiasData->data) ? $RevisionpiasData->data:[]);
+        $RevisionGridpiasData = isset($RevisionpiasData?->data) && is_string($RevisionpiasData?->data)
+                ? json_decode($RevisionpiasData?->data, true) :(is_array($RevisionpiasData?->data) ? $RevisionpiasData?->data:[]);
 
         $RevisionmfpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfps_data")->first();
         $RevisionGridmfpsData = isset($RevisionmfpsData->data) && is_string($RevisionmfpsData->data)

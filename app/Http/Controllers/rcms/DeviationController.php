@@ -12935,8 +12935,14 @@ public function audit_trail_filter(Request $request, $id)
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 10, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+             $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
             return $pdf->stream('Deviation' . $id . '.pdf');
         }
     }

@@ -147,13 +147,13 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Out Of Calibration No.</strong>
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-40">
                     {{ Helpers::getDivisionName($ooc->division_id) }}/OOC/{{ Helpers::year($ooc->created_at) }}/{{ $ooc->record }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Page No.</strong>
                 </td>
             </tr>
         </table>
