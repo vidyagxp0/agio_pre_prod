@@ -255,6 +255,7 @@
 
     /* .w-5 { width: 5%; } */
     .w-5 { width: 6%; }
+    .w-7 { width: 7%; }
     .w-8 { width: 8%; }
     .w-10 { width: 10%; }
     .w-20 { width: 20%; }
@@ -314,6 +315,9 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
+                <td class="w-30">
+                    <strong>Page No.</strong>
+                </td>
             </tr>
         </table>
     </footer>
@@ -323,7 +327,7 @@
             <table>
                 <thead>
                     <tr class="table_bg">
-                        <th class="w-5">S.No</th>
+                        <th class="w-7">S.No</th>
                         <th class="w-15">Flow Changed From</th>
                         <th class="w-15">Flow Changed To</th>
                         <th class="w-30">Data Field</th>

@@ -128,9 +128,7 @@
                             }
 </style>
 <body>
-
     <header>
-        
         <table>
             <tr>
                 <td class="w-70" style="text-align: center; vertical-align: middle;">
@@ -156,12 +154,22 @@
         </table>
     </header>
 
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30"><strong>Printed On :</strong> {{ date('d-M-Y') }}</td>
+                <td class="w-40"><strong>Printed By :</strong> {{ Auth::user()->name }}</td>
+                <td class="w-30"><strong>Page No.</strong></td>
+            </tr>
+        </table>
+    </footer>
+
     <div class="inner-block">
         <div class="second-table">
         <table class="allow-wb" style="table-layout: fixed;">
                 <thead>
                     <tr class="table_bg">
-                        <th class="w-5">S.No</th>
+                        <th class="w-6">S.No</th>
                         <th class="w-15">Flow Changed From</th>
                         <th class="w-15">Flow Changed To</th>
                         <th class="w-30">Data Field</th>
@@ -218,15 +226,6 @@
             </table>
         </div>
     </div>
-
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30"><strong>Printed On :</strong> {{ date('d-M-Y') }}</td>
-                <td class="w-40"><strong>Printed By :</strong> {{ Auth::user()->name }}</td>
-            </tr>
-        </table>
-    </footer>
 
 </body>
 

@@ -9107,19 +9107,14 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $height = $canvas->get_height();
         $width = $canvas->get_width();
 
-        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $text = " $pageNumber of $pageCount";
+            $font = $fontMetrics->getFont('sans-serif', 'normal');
+            $size = 9;
+            $width = $fontMetrics->getTextWidth($text, $font, $size);
 
-        $canvas->page_text(
-            $width / 3,
-            $height / 2,
-            $doc->status,
-            null,
-            60,
-            [0, 0, 0],
-            2,
-            6,
-            -20
-        );
+            $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 26), $text, $font, $size);
+        });
         return $pdf->stream('SOP' . $id . '.pdf');
     }
 
