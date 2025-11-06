@@ -267,10 +267,11 @@
                 </table>
                 <table>
                     <tr>
-                        <th class="20">Short Description</th>
-                        <td class="80">@if($data->description_gi ){{ $data->description_gi  }} @else Not Applicable @endif</td>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80" colspan="3">@if($data->description_gi ){{ $data->description_gi  }} @else Not Applicable @endif</td>
                     </tr>
                 </table>
+            </div>    
                 <div class="block">
                 <table>
                     <tr>
@@ -342,7 +343,7 @@
                     <table>
                         <tr>
                             <th class="w-20">Delay Justification</th>
-                            <td class="w-30">@if($data->delay_justification ){{ $data->delay_justification }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->delay_justification ){{ $data->delay_justification }} @else Not Applicable @endif</td>
                         </tr>
                     </table>
                     <div class="block">
@@ -360,8 +361,8 @@
                 </div> --}}
                 <table>
                     <tr>
-                        <th>Immediate Action</th>
-                        <td>@if($data->immediate_action ){{ $data->immediate_action  }} @else Not Applicable @endif</td>
+                        <th class="w-20">Immediate Action</th>
+                        <td class="w-60">@if($data->immediate_action ){{ $data->immediate_action  }} @else Not Applicable @endif</td>
                     </tr>
                 </table>
 
@@ -703,8 +704,8 @@
             </div> -->
             <table>
                 <tr>
-                    <th>HOD Remarks</th>
-                    <td>@if($data->hod_remark1 ){{ $data->hod_remark1 }} @else Not Applicable @endif</td>
+                    <th class="w-20">HOD Remarks</th>
+                    <td class="w-80">@if($data->hod_remark1 ){{ $data->hod_remark1 }} @else Not Applicable @endif</td>
                 </tr>
             </table>
            </div>
@@ -726,7 +727,7 @@
                     @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                     @endif
                 </table>
@@ -750,7 +751,7 @@
               <table>
                   <tr class="table_bg">
                       <th class="w-20">Sr.No.</th>
-                      <th class="w-80"> Attachment </th>
+                      <th class="w-60"> Attachment </th>
                   </tr>
                   @if ($data->QA_Head_attachment1)
                   @foreach ($data->QA_Head_attachment1 as $key => $file)
@@ -762,7 +763,7 @@
                   @else
                       <tr>
                           <td class="w-20">1</td>
-                          <td class="w-20">Not Applicable</td>
+                          <td class="w-60">Not Applicable</td>
                       </tr>
                   @endif
               </table>
@@ -779,8 +780,8 @@
                 </div> -->
                 <table>
                     <tr>
-                        <th>CQA/QA Head Remark</th>
-                        <td>@if($data->QA_Head_primary_remark1 ){{ $data->QA_Head_primary_remark1 }} @else Not Applicable @endif</td>
+                        <th class="w-20">CQA/QA Head Remark</th>
+                        <td class="w-80">@if($data->QA_Head_primary_remark1 ){{ $data->QA_Head_primary_remark1 }} @else Not Applicable @endif</td>
                     </tr>
                 </table>
             </div>
@@ -1165,14 +1166,14 @@
                             @if ($data->file_attachments_pli)
                             @foreach ($data->file_attachments_pli as $key => $file)
                                  <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
                         </table>
@@ -1195,7 +1196,7 @@
                       @else
                           <tr>
                               <td class="w-20">1</td>
-                              <td class="w-20">Not Applicable</td>
+                              <td class="w-80">Not Applicable</td>
                           </tr>
                       @endif
                   </table>
@@ -1707,14 +1708,14 @@
                             @if ($data->file_attachment_IB_Inv)
                                 @foreach ($data->file_attachment_IB_Inv as $key => $file)
                                     <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-80">Not Applicable</td>
                                 </tr>
                             @endif
                         </table>
@@ -1747,14 +1748,14 @@
                             @if ($data->hod_attachment3)
                             @foreach ($data->hod_attachment3 as $key => $file)
                                  <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-80">Not Applicable</td>
                                 </tr>
                             @endif
                         </table>
@@ -2000,7 +2001,7 @@
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-80">Not Applicable</td>
                                 </tr>
                             @endif
                         </table>
@@ -2055,7 +2056,7 @@
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-80">Not Applicable</td>
                                 </tr>
                             @endif
                         </table>
@@ -2089,14 +2090,14 @@
                       @if ($data->hod_attachment4)
                       @foreach ($data->hod_attachment4 as $key => $file)
                            <tr>
-                              <td>{{ $key + 1 }}</td>
-                              <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                              <td class="w-20">{{ $key + 1 }}</td>
+                              <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                           </tr>
                       @endforeach
                       @else
                           <tr>
                               <td class="w-20">1</td>
-                              <td class="w-20">Not Applicable</td>
+                              <td class="w-80">Not Applicable</td>
                           </tr>
                       @endif
                   </table>
@@ -2130,14 +2131,14 @@
                             @if ($data->QA_Head_attachment4)
                             @foreach ($data->QA_Head_attachment4 as $key => $file)
                                  <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-80">Not Applicable</td>
                                 </tr>
                             @endif
                         </table>
@@ -2181,14 +2182,14 @@
                             @if ($data->QA_Head_primary_attachment4)
                             @foreach ($data->QA_Head_primary_attachment4 as $key => $file)
                                  <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-80">Not Applicable</td>
                                 </tr>
                             @endif
                         </table>
@@ -2325,14 +2326,14 @@
                                 @if ($data->hod_attachment5)
                                 @foreach ($data->hod_attachment5 as $key => $file)
                                     <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                                 @else
                                     <tr>
                                         <td class="w-20">1</td>
-                                        <td class="w-20">Not Applicable</td>
+                                        <td class="w-80">Not Applicable</td>
                                     </tr>
                                 @endif
                             </table>
@@ -2372,7 +2373,7 @@
                                     @else
                                         <tr>
                                             <td class="w-20">1</td>
-                                            <td class="w-20">Not Applicable</td>
+                                            <td class="w-80">Not Applicable</td>
                                         </tr>
                                     @endif
                                 </table>
@@ -2406,14 +2407,14 @@
                                         @if ($data->QA_Head_primary_attachment4)
                                         @foreach ($data->QA_Head_primary_attachment4 as $key => $file)
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                                <td class="w-20">{{ $key + 1 }}</td>
+                                                <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                                             </tr>
                                         @endforeach
                                         @else
                                             <tr>
                                                 <td class="w-20">1</td>
-                                                <td class="w-20">Not Applicable</td>
+                                                <td class="w-80">Not Applicable</td>
                                             </tr>
                                         @endif
                                     </table>
@@ -2522,7 +2523,7 @@
                                         @else
                                             <tr>
                                                 <td class="w-20">1</td>
-                                                <td class="w-20">Not Applicable</td>
+                                                <td class="w-80">Not Applicable</td>
                                             </tr>
                                         @endif
                                     </table>
@@ -2693,7 +2694,7 @@
                                                     @else
                                                         <tr>
                                                             <td class="w-20">1</td>
-                                                            <td class="w-20">Not Applicable</td>
+                                                            <td class="w-80">Not Applicable</td>
                                                         </tr>
                                                     @endif
                                                 </table>
@@ -2730,7 +2731,7 @@
                                                     @else
                                                         <tr>
                                                             <td class="w-20">1</td>
-                                                            <td class="w-20">Not Applicable</td>
+                                                            <td class="w-80">Not Applicable</td>
                                                         </tr>
                                                     @endif
                                                 </table>

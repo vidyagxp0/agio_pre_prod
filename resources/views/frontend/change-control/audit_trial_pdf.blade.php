@@ -130,8 +130,6 @@
 <body>
 
     <header>
-       
-               
         <table>
             <tr>
                 <td class="w-70" style="text-align: center; vertical-align: middle;">
@@ -174,7 +172,9 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-
+                <td class="w-30">
+                    <strong>Page No.</strong>
+                </td>
             </tr>
         </table>
     </footer>

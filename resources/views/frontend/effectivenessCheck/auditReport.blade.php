@@ -9,128 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-{{-- <style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        padding: 0;
-        min-width: 100vw;
-        min-height: 100vh;
-    }
-
-    .w-5 {
-        width: 5%;
-    }
-
-    .w-10 {
-        width: 10%;
-    }
-
-    .w-15 {
-        width: 15%;
-    }
-
-    .w-10 {
-        width: 10%;
-    }
-
-    .w-20 {
-        width: 20%;
-    }
-
-    .w-30 {
-        width: 30%;
-    }
-
-    .w-40 {
-        width: 40%;
-    }
-
-    .w-50 {
-        width: 50%;
-    }
-
-    .w-60 {
-        width: 60%;
-    }
-
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        vertical-align: top;
-        word-wrap: break-word; /* Ensure text breaks and wraps inside the cell */
-    }
-
-    table {
-        width: 100%;
-    }
-
-    th, td {
-        padding: 8px;
-        text-align: left;
-    }
-
-    header .head {
-        font-weight: bold;
-        text-align: center;
-        font-size: 1.2rem;
-    }
-
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
-    }
-
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
-    }
-
-    footer {
-        position: fixed;
-        bottom: -40px;
-        left: 0;
-        width: 100%;
-    }
-
-    .inner-block {
-        padding: 10px;
-    }
-
-    .table_bg {
-        background-color: #4274da57;
-    }
-    .allow-wb {
-        word-break: break-all;
-        word-wrap: break-word;
-    }
-</style> --}}
-
 <style>
     @page {
          margin: 160px 35px 100px; /* top header, side margin, bottom footer */
@@ -277,12 +155,22 @@
         </table>
     </header>
 
+        <footer>
+        <table>
+            <tr>
+                <td class="w-30"><strong>Printed On :</strong> {{ date('d-M-Y') }}</td>
+                <td class="w-40"><strong>Printed By :</strong> {{ Auth::user()->name }}</td>
+                <td class="w-30"><strong>Page No.</strong></td>
+            </tr>
+        </table>
+    </footer>
+
     <div class="inner-block">
         <div class="second-table">
         <table class="allow-wb" >
                 <thead>
                     <tr class="table_bg">
-                        <th class="w-5">S.No</th>
+                        <th class="w-6">S.No</th>
                         <th class="w-15">Flow Changed From</th>
                         <th class="w-15">Flow Changed To</th>
                         <th class="w-30">Data Field</th>
@@ -339,15 +227,6 @@
             </table>
         </div>
     </div>
-
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30"><strong>Printed On :</strong> {{ date('d-M-Y') }}</td>
-                <td class="w-40"><strong>Printed By :</strong> {{ Auth::user()->name }}</td>
-            </tr>
-        </table>
-    </footer>
 
 </body>
 
