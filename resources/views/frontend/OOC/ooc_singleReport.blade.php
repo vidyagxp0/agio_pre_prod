@@ -393,14 +393,14 @@
                                 @foreach (json_decode($data->initial_attachment_ooc) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -412,7 +412,7 @@
 
                     <tr>
                         <th class="w-20">HOD Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->assign_to)
                                 {{ Helpers::getInitiatorName($data->assign_to) }}
                             @else
@@ -421,7 +421,7 @@
                         </td>
 
                         <th class="w-20">QA Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->qa_assign_person)
                                 {{ Helpers::getInitiatorName($data->qa_assign_person) }}
                             @else
@@ -432,7 +432,7 @@
 
                     <tr>
                         <th class="w-20">OOC Logged by</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->ooc_logged_by)
                                 {{ Helpers::getInitiatorName($data->ooc_logged_by) }}
                             @else
@@ -441,7 +441,7 @@
                         </td>
 
                         <th class="w-20">OOC Logged On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->ooc_due_date)
                                 {{ Carbon::parse($data->ooc_due_date)->format('d-M-Y') }}
                             @else

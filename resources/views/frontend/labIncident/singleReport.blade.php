@@ -1064,11 +1064,11 @@
                 </div>
                     <table>
                         <tr>
-                            <th>Closure of Incident</th>
+                            <th class="w-20">Closure of Incident</th>
                             <td class="w-80" colspan='3'>@if($labtab->closure_incident_c){{ $labtab->closure_incident_c }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>    
-                            <th>QA Head Comment</th>
+                            <th class="w-20">QA Head Comment</th>
                             <td class="w-80" colspan='3'>@if($labtab->qa_hear_remark_c){{ $labtab->qa_hear_remark_c }}@else Not Applicable @endif</td>
                         </tr>
                     </table>
