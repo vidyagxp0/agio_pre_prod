@@ -120,19 +120,16 @@
     .w-100 { width: 100%; }
     .text-center { text-align: center; }
     .border-table {
-                                overflow-x: auto;
-                            }
+        overflow-x: auto;
+    }
 
-                            table th, table td {
-                                word-wrap: break-word;
-                            }
+    table th, table td {
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
-
     <header>
-       
-
          <table>
             <tr>
                 <td class="w-70" style="text-align: center; vertical-align: middle;">
@@ -176,24 +173,24 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-
+                <td class="w-30">
+                    <strong>Page No.</strong>
+                </td>
             </tr>
         </table>
     </footer>
 
     <div class="inner-block">
-
-
         <div class="second-table">
-                 <table class="allow-wb" style="table-layout: fixed;">
+            <table class="" style="table-layout: fixed;">
                 <thead>
                     <tr class="table_bg">
-                        <th>S.No</th>
-                        <th>Flow Changed From</th>
-                        <th>Flow Changed To</th>
-                        <th>Data Field</th>
-                        <th>Action Type</th>
-                        <th>Performer</th>
+                        <th class="w-6">S.No</th>
+                        <th class="w-15">Flow Changed From</th>
+                        <th class="w-15">Flow Changed To</th>
+                        <th class="w-30">Data Field</th>
+                        <th class="w-15" style="word-break: break-all;">Action Type</th>
+                        <th class="w-15" style="word-break: break-all;">Performer</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -4476,7 +4476,6 @@ class NonConformaceController extends Controller
     }
 
 
-
     public function NonConformaceAuditTrail($id)
     {
         $audit = NonConformanceAuditTrails::where('non_conformances_id', $id)->orderByDesc('id')->paginate(5);
@@ -4487,7 +4486,7 @@ class NonConformaceController extends Controller
         return view('frontend.non-conformance.audit-trail', compact('audit', 'document', 'today'));
     }
 
-    public function NonConformanceAuditTrailPdf($id)
+    public function NonConformaceAuditTrailPdf($id)
     {
         $doc = NonConformance::find($id);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
@@ -4507,19 +4506,14 @@ class NonConformaceController extends Controller
         $height = $canvas->get_height();
         $width = $canvas->get_width();
 
-        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $text = " $pageNumber of $pageCount";
+            $font = $fontMetrics->getFont('sans-serif', 'normal');
+            $size = 9;
+            $width = $fontMetrics->getTextWidth($text, $font, $size);
 
-        $canvas->page_text(
-            $width / 3,
-            $height / 2,
-            $doc->status,
-            null,
-            60,
-            [0, 0, 0],
-            2,
-            6,
-            -20
-        );
+            $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 26), $text, $font, $size);
+            });
         return $pdf->stream('SOP' . $id . '.pdf');
     }
 
@@ -4563,8 +4557,15 @@ class NonConformaceController extends Controller
             $canvas = $pdf->getDomPDF()->getCanvas();
             $height = $canvas->get_height();
             $width = $canvas->get_width();
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
             return $pdf->stream('Failure Investigation' . $id . '.pdf');
         }
     }

@@ -426,14 +426,14 @@
                         }
                     </style>
 
-                    <label class="head-number" for="Related Records">Related Records</label>
+                    {{-- <label class="head-number" for="Related Records">Related Records</label>
                     <div class="div-data">
                         @if ($data->related_records)
                             {{ str_replace(',', ', ', $data->related_records) }}
                         @else
                             Not Applicable
                         @endif
-                    </div>
+                    </div> --}}
 
                     <table>
                         <tr>
@@ -472,16 +472,17 @@
                     <table>    
                         <tr>
                             <th class="w-20">Responsible Department</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 @if ($data->departments)
                                     {{ Helpers::getFullDepartmentName($data->departments) }}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
-
+                    </table>
+                    <table>
                             <th class="w-20">If Others</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 @if ($data->if_others)
                                     {{ $data->if_others }}
                                 @else
@@ -533,7 +534,7 @@
                     <table>
                         <tr>
                             <th class="w-20">CAPA Related Records</th>
-                            {{-- <td class="w-80">@if ($data->capa_related_record){{ $data->capa_related_record }}@else Not Applicable @endif</td> --}}
+                            <td class="w-80">@if ($data->capa_related_record){{ $data->capa_related_record }}@else Not Applicable @endif</td>
                         </tr>
                         </table>
                       </div>
@@ -784,7 +785,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Submitted Comment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->acknowledgement_comment )
                             {{ $data->acknowledgement_comment }}
                             @else
@@ -813,7 +814,7 @@
                     </tr>
                     <tr>
                         <th class="w-20"> Approved Comment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->work_completion_comment)
                             {{ $data->work_completion_comment }}
                             @else
@@ -840,7 +841,7 @@
                     </tr>
                     <tr>
                         <th class="w-20"> Acknowledge Complete Comment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ( $data->qa_varification_comment)
                             {{ $data->qa_varification_comment }}
                             @else
@@ -869,7 +870,7 @@
                     </tr>
                     <tr>
                         <th class="w-20"> Verification Completed Comment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ( $data->completed_comment)
                             {{ $data->completed_comment }}
                             @else
@@ -898,7 +899,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Cancelled Comment</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ( $data->cancelled_on)
                             {{ $data->cancelled_on }}
                             @else

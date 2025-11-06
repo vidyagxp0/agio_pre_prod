@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<style>
+{{-- <style>
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -153,6 +153,119 @@
     .table_bg {
         background: #4274da57;
     }
+</style> --}}
+
+<style>
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
+    }
+
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    header {
+        top: -140px;
+        border-bottom: none;
+    }
+
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
+    }
+
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
+    }
+
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
+    }
+
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    .table_bg {
+        background-color: #387478;
+        color: #111;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
+    }
+
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .section-gap {
+        margin-top: 20px;
+    }
+
+    .no-border th, .no-border td {
+        border: none !important;
+    }
+
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+    table th, table td {
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -160,8 +273,10 @@
     <header>
         <table>
             <tr>
-                <td class="w-70 head">
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
                     Non Conformance Report
+                    </div>
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -174,7 +289,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Non Conformance No.</strong>
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-40">
                     {{-- {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} --}}
@@ -182,11 +297,24 @@
 
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Page No.</strong>
                 </td>
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -208,7 +336,7 @@
 
                     <tr>
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                        <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}</td>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
                         </td>
@@ -356,17 +484,17 @@
                 </table>
                 <table>
                     <tr>
-                        <th class="w-60">Facility/ Equipment/ Instrument/ System Details Required?</th>
-                        <td class="w-80">
+                        <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
+                        <td class="w-30">
                             @if ($data->Facility_Equipment)
                                 {{ $data->Facility_Equipment }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-
-                        <th class="w-40">Document Details Required?</th>
-                        <td class="w-80">
+                    
+                        <th class="w-20">Document Details Required?</th>
+                        <td class="w-30">
                             @if ($data->Document_Details_Required)
                                 {{ $data->Document_Details_Required }}
                             @else
@@ -417,7 +545,7 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-10">Sr. No.</th>
+                                <th class="w-5">Sr. No.</th>
                                 <th class="w-25">Name</th>
                                 <th class="w-25">ID Number</th>
                                 <th class="w-25">Remarks</th>
@@ -426,17 +554,16 @@
                             @if (!empty($grid_data->IDnumber))
                                 @foreach (unserialize($grid_data->IDnumber) as $key => $dataDemo)
                                     <tr>
-                                        <td class="w-15">{{ $loop->index + 1 }}</td>
-                                        <td class="w-15">
+                                        <td class="w-5">{{ $loop->index + 1 }}</td>
+                                        <td class="w-25">
                                             {{ unserialize($grid_data->facility_name)[$key] ? unserialize($grid_data->facility_name)[$key] : 'Not Applicable' }}
                                         </td>
-                                        <td class="w-15">
+                                        <td class="w-25">
                                             {{ unserialize($grid_data->IDnumber)[$key] ? unserialize($grid_data->IDnumber)[$key] : 'Not Applicable' }}
                                         </td>
-                                        <td class="w-15">
+                                        <td class="w-25">
                                             {{ unserialize($grid_data->Remarks)[$key] ? unserialize($grid_data->Remarks)[$key] : 'Not Applicable' }}
                                         </td>
-
                                     </tr>
                                 @endforeach
                             @else
@@ -459,7 +586,7 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-10">Sr. No.</th>
+                                <th class="w-5">Sr. No.</th>
                                 <th class="w-25">Number</th>
                                 <th class="w-25">Reference Document Name</th>
                                 <th class="w-25">Remarks</th>
@@ -468,14 +595,14 @@
                             @if (!empty($grid_data1->Number))
                                 @foreach (unserialize($grid_data1->Number) as $key => $dataDemo)
                                     <tr>
-                                        <td class="w-15">{{ $loop->index + 1 }}</td>
-                                        <td class="w-15">
+                                        <td class="w-5">{{ $loop->index + 1 }}</td>
+                                        <td class="w-25">
                                             {{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : 'Not Applicable' }}
                                         </td>
-                                        <td class="w-15">
+                                        <td class="w-25">
                                             {{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : 'Not Applicable' }}
                                         </td>
-                                        <td class="w-15">
+                                        <td class="w-25">
                                             {{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : 'Not Applicable' }}
                                         </td>
 
@@ -501,7 +628,7 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-10">Sr. No.</th>
+                                <th class="w-5">Sr. No.</th>
                                 <th class="w-25">Product</th>
                                 <th class="w-25">Stage</th>
                                 <th class="w-25">Batch No.</th>
@@ -510,14 +637,14 @@
                             @if (!empty($grid_data1->Number))
                                 @foreach (unserialize($grid_data1->Number) as $key => $dataDemo)
                                     <tr>
-                                        <td class="w-15">{{ $loop->index + 1 }}</td>
-                                        <td class="w-15">
+                                        <td class="w-5">{{ $loop->index + 1 }}</td>
+                                        <td class="w-25">
                                             {{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : 'Not Applicable' }}
                                         </td>
-                                        <td class="w-15">
+                                        <td class="w-25">
                                             {{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : 'Not Applicable' }}
                                         </td>
-                                        <td class="w-15">
+                                        <td class="w-25">
                                             {{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : 'Not Applicable' }}
                                         </td>
 
@@ -550,14 +677,14 @@
                             @foreach (json_decode($data->Audit_file) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
+                                <td class="w-60">Not Applicable</td>
                             </tr>
                         @endif
 
@@ -594,21 +721,19 @@
                                 @foreach (json_decode($data->Audit_file) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
                         </table>
                     </div>
-
-
 
                 </div>
             </div>
@@ -620,7 +745,7 @@
             </div>
             <table>
                 <tr>
-                    <th class="w-40">Initial Non Conformance category</th>
+                    <th class="w-20">Initial Non Conformance category</th>
                     <td class="w-80">
                         @if ($data->non_conformances_category)
                             {{ $data->non_conformances_category }}
@@ -630,7 +755,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="w-40">Justification for categorization</th>
+                    <th class="w-20">Justification for categorization</th>
                     <td class="w-80">
                         @if ($data->Justification_for_categorization)
                             {{ strip_tags($data->Justification_for_categorization) }}
@@ -681,7 +806,6 @@
                 QA Initial Attachments
             </div>
             <table>
-
                 <tr class="table_bg">
                     <th class="w-20">S.N.</th>
                     <th class="w-60">Attachment</th>
@@ -690,14 +814,14 @@
                     @foreach (json_decode($data->Initial_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                     target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                     @endforeach
                 @else
                     <tr>
                         <td class="w-20">1</td>
-                        <td class="w-20">Not Applicable</td>
+                        <td class="w-60">Not Applicable</td>
                     </tr>
                 @endif
 
@@ -714,9 +838,7 @@
                         Production
                     </div>
                     <table>
-
                         <tr>
-
                             <th class="w-20">Production Review Required ?
                             </th>
                             <td class="w-30">
@@ -732,19 +854,19 @@
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_person)
-                                        {{ $data1->Production_person }}
+                                        {{ Helpers::getInitiatorName($data1->Production_person) }}
                                     @else
                                         Not Applicable
                                     @endif
                                 </div>
                             </td>
                         </tr>
+                    </table>
 
-
+                    <table>
                         <tr>
-
                             <th class="w-20">Impact Assessment (By Production)</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Production_assessment)
                                         {{ $data1->Production_assessment }}
@@ -753,8 +875,10 @@
                                     @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>    
                             <th class="w-20">Production Feedback</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if ($data1->Production_feedback)
                                         {{ $data1->Production_feedback }}
@@ -764,8 +888,9 @@
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                    <table>    
                         <tr>
-
                             <th class="w-20">Production Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -787,11 +912,10 @@
                                 </div>
                             </td>
                         </tr>
-
                     </table>
                 </div>
                 <div class="border-table">
-                    <div class="block-">
+                        <div class="block-head">
                         Production Attachments
                     </div>
                     <table>
@@ -804,14 +928,14 @@
                             @foreach (json_decode($data1->production_attachment) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
+                                <td class="w-60">Not Applicable</td>
                             </tr>
                         @endif
 
@@ -840,18 +964,18 @@
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Warehouse_notification)
-                                            {{ $data1->Warehouse_notification }}
+                                            {{ Helpers::getInitiatorName($data1->Warehouse_notification) }}
                                         @else
                                             Not Applicable
                                         @endif
                                     </div>
                                 </td>
                             </tr>
-
+                        </table>
+                        <table>
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Warehouse)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Warehouse_assessment)
                                             {{ $data1->Warehouse_assessment }}
@@ -860,8 +984,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Warehouse Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Warehouse_feedback)
                                             {{ $data1->Warehouse_feedback }}
@@ -871,8 +997,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Warehouse Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -897,7 +1024,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Production Attachments 2
                         </div>
                         <table>
@@ -910,14 +1037,14 @@
                                 @foreach (json_decode($data1->Warehouse_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -930,9 +1057,7 @@
                             Quality Control
                         </div>
                         <table>
-
                             <tr>
-
                                 <th class="w-20">Quality Control Review Required ?
                                 </th>
                                 <td class="w-30">
@@ -948,18 +1073,18 @@
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Quality_Control_Person)
-                                            {{ $data1->Quality_Control_Person }}
+                                            {{ Helpers::getInitiatorName($data1->Quality_Control_Person) }}
                                         @else
                                             Not Applicable
                                         @endif
                                     </div>
                                 </td>
                             </tr>
-
+                        </table>
+                        <table>
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Quality Control)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Quality_Control_assessment)
                                             {{ $data1->Quality_Control_assessment }}
@@ -968,8 +1093,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Quality Control Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Quality_Control_feedback)
                                             {{ $data1->Quality_Control_feedback }}
@@ -979,8 +1106,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Quality Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -1005,11 +1133,10 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Quality Control Attachments
                         </div>
                         <table>
-
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Attachment</th>
@@ -1018,17 +1145,16 @@
                                 @foreach (json_decode($data1->Quality_Control_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
-
                         </table>
                     </div>
                 </div>
@@ -1040,9 +1166,7 @@
                             Quality Assurance
                         </div>
                         <table>
-
                             <tr>
-
                                 <th class="w-20">Quality Assurance Review Required ?
                                 </th>
                                 <td class="w-30">
@@ -1058,7 +1182,7 @@
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->QualityAssurance_person)
-                                            {{ $data1->QualityAssurance_person }}
+                                            {{ Helpers::getInitiatorName($data1->QualityAssurance_person) }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -1066,10 +1190,12 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        
+                        <table>
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Quality Assurance)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->QualityAssurance_assessment)
                                             {{ $data1->QualityAssurance_assessment }}
@@ -1078,8 +1204,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Quality Assurance feedback Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Quality_Assurance_feedback)
                                             {{ $data1->Quality_Assurance_feedback }}
@@ -1089,8 +1217,10 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                        </table>
 
+                        <table>    
+                            <tr>
                                 <th class="w-20">Quality Assurance Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -1115,11 +1245,10 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Quality Assurance Attachments
                         </div>
                         <table>
-
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Attachment</th>
@@ -1128,14 +1257,14 @@
                                 @foreach (json_decode($data1->Quality_Assurance_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -1148,9 +1277,7 @@
                             Engineering
                         </div>
                         <table>
-
                             <tr>
-
                                 <th class="w-20">Engineering Review Required ?
                                 </th>
                                 <td class="w-30">
@@ -1166,18 +1293,19 @@
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Engineering_person)
-                                            {{ $data1->Engineering_person }}
+                                            {{ Helpers::getInitiatorName($data1->Engineering_person) }}
                                         @else
                                             Not Applicable
                                         @endif
                                     </div>
                                 </td>
                             </tr>
-
+                        </table>
+                        
+                        <table>
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Engineering)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Engineering_assessment)
                                             {{ $data1->Engineering_assessment }}
@@ -1186,8 +1314,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Engineering Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Engineering_feedback)
                                             {{ $data1->Engineering_feedback }}
@@ -1197,8 +1327,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Engineering Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -1223,7 +1354,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Engineering Attachments
                         </div>
                         <table>
@@ -1236,14 +1367,14 @@
                                 @foreach (json_decode($data1->Engineering_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -1285,7 +1416,7 @@
                             <tr>
 
                                 <th class="w-20">Impact Assessment (By Analytical Development Laboratory)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Analytical_Development_assessment)
                                             {{ $data1->Analytical_Development_assessment }}
@@ -1294,8 +1425,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Analytical Development Laboratory Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Analytical_Development_feedback)
                                             {{ $data1->Analytical_Development_feedback }}
@@ -1331,7 +1464,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Analytical Development Laboratory Attachments
                         </div>
                         <table>
@@ -1344,14 +1477,14 @@
                                 @foreach (json_decode($data1->Analytical_Development_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -1389,12 +1522,12 @@
                                     </div>
                                 </td>
                             </tr>
-
+                        </table>
+                        <table>
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Process Development Laboratory / Kilo Lab)
                                 </th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Kilo_Lab_assessment)
                                             {{ $data1->Kilo_Lab_assessment }}
@@ -1403,8 +1536,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Process Development Laboratory / Kilo Lab Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Kilo_Lab_feedback)
                                             {{ $data1->Kilo_Lab_feedback }}
@@ -1414,6 +1549,8 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
 
                                 <th class="w-20">Process Development Laboratory / Kilo Lab Review Completed By
@@ -1442,7 +1579,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Process Development
                         </div>
                         <table>
@@ -1455,14 +1592,14 @@
                                 @foreach (json_decode($data1->Kilo_Lab_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -1502,10 +1639,11 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Technology Transfer / Design)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Technology_transfer_assessment)
                                             {{ $data1->Technology_transfer_assessment }}
@@ -1514,8 +1652,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Technology Transfer / Design Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Technology_transfer_feedback)
                                             {{ $data1->Technology_transfer_feedback }}
@@ -1525,8 +1665,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Technology Transfer / Design Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -1551,7 +1692,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Technology Transfer / Design Attachments
                         </div>
                         <table>
@@ -1564,14 +1705,14 @@
                                 @foreach (json_decode($data1->Technology_transfer_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -1611,10 +1752,11 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Environment, Health & Safety)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Health_Safety_assessment)
                                             {{ $data1->Health_Safety_assessment }}
@@ -1623,8 +1765,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Environment, Health & Safety Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Health_Safety_feedback)
                                             {{ $data1->Health_Safety_feedback }}
@@ -1634,8 +1778,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Environment, Health & Safety Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -1660,7 +1805,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Environment, Health & Safety Attachments
                         </div>
                         <table>
@@ -1673,14 +1818,14 @@
                                 @foreach (json_decode($data1->Human_Resource_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -1719,10 +1864,11 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Human Resource & Administration)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Human_Resource_assessment)
                                             {{ $data1->Human_Resource_assessment }}
@@ -1732,7 +1878,7 @@
                                     </div>
                                 </td>
                                 <th class="w-20">Human Resource & Administration Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Human_Resource_feedback)
                                             {{ $data1->Human_Resource_feedback }}
@@ -1742,8 +1888,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Human Resource & Administration Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -1768,11 +1915,10 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Human Resource & Administration Attachments
                         </div>
                         <table>
-
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Attachment</th>
@@ -1781,14 +1927,14 @@
                                 @foreach (json_decode($data1->Initial_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -1800,12 +1946,9 @@
                     <div class="head">
                         <div class="block-head">
                             Information Technology
-
                         </div>
                         <table>
-
                             <tr>
-
                                 <th class="w-20">Information Technology Review Required ?
                                 </th>
                                 <td class="w-30">
@@ -1829,10 +1972,11 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Information Technology)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Information_Technology_assessment)
                                             {{ $data1->Information_Technology_assessment }}
@@ -1842,7 +1986,7 @@
                                     </div>
                                 </td>
                                 <th class="w-20">Information Technology Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Information_Technology_feedback)
                                             {{ $data1->Information_Technology_feedback }}
@@ -1852,8 +1996,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Information Technology Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -1878,7 +2023,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Information Technology Attachments
                         </div>
                         <table>
@@ -1891,14 +2036,14 @@
                                 @foreach (json_decode($data1->Information_Technology_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -1910,12 +2055,9 @@
                     <div class="head">
                         <div class="block-head">
                             Project Management
-
                         </div>
                         <table>
-
                             <tr>
-
                                 <th class="w-20">Project Management Review Required ?
                                 </th>
                                 <td class="w-30">
@@ -1939,10 +2081,11 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Project Management)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Project_management_assessment)
                                             {{ $data1->Project_management_assessment }}
@@ -1952,7 +2095,7 @@
                                     </div>
                                 </td>
                                 <th class="w-20">Project Management Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Project_management_feedback)
                                             {{ $data1->Project_management_feedback }}
@@ -1962,8 +2105,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Project Management Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -1988,7 +2132,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Project Management Attachments
                         </div>
                         <table>
@@ -2001,14 +2145,14 @@
                                 @foreach (json_decode($data1->Project_management_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -2021,9 +2165,7 @@
                             Other's 1 ( Additional Person Review From Departments If Required)
                         </div>
                         <table>
-
                             <tr>
-
                                 <th class="w-20">Other's 1 Review Required ?
                                 </th>
                                 <td class="w-30">
@@ -2045,6 +2187,8 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Other's 1 Department</th>
                                 <td class="w-30">
                                     <div>
@@ -2057,10 +2201,11 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        <table>
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Other's 1)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Other1_assessment)
                                             {{ $data1->Other1_assessment }}
@@ -2069,8 +2214,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Other's 1 Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Other1_feedback)
                                             {{ $data1->Other1_feedback }}
@@ -2080,8 +2227,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Other's 1 Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -2106,7 +2254,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Other's 1 Attachments
                         </div>
                         <table>
@@ -2119,14 +2267,14 @@
                                 @foreach (json_decode($data1->Other1_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -2139,9 +2287,7 @@
                             Other's 2 ( Additional Person Review From Departments If Required)
                         </div>
                         <table>
-
                             <tr>
-
                                 <th class="w-20">Other's 2 Review Required ?
                                 </th>
                                 <td class="w-30">
@@ -2163,6 +2309,8 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Other's 2 Department</th>
                                 <td class="w-30">
                                     <div>
@@ -2175,10 +2323,11 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Other's 2)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Other2_assessment)
                                             {{ $data1->Other2_assessment }}
@@ -2188,7 +2337,7 @@
                                     </div>
                                 </td>
                                 <th class="w-20">Other's 2 Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Other2_feedback)
                                             {{ $data1->Other2_feedback }}
@@ -2198,8 +2347,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Other's 2 Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -2224,7 +2374,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Other's 2 Attachments
                         </div>
                         <table>
@@ -2237,14 +2387,14 @@
                                 @foreach (json_decode($data1->Other2_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -2257,9 +2407,7 @@
                             Other's 3 ( Additional Person Review From Departments If Required)
                         </div>
                         <table>
-
                             <tr>
-
                                 <th class="w-20">Other's 3 Review Required ?
                                 </th>
                                 <td class="w-30">
@@ -2281,6 +2429,8 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Other's 3 Department</th>
                                 <td class="w-30">
                                     <div>
@@ -2293,10 +2443,11 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Other's 3)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Other3_assessment)
                                             {{ $data1->Other3_assessment }}
@@ -2305,8 +2456,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Other's 3 Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Other3_feedback)
                                             {{ $data1->Other3_feedback }}
@@ -2316,8 +2469,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Other's 3 Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -2342,7 +2496,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Other's 3 Attachments
                         </div>
                         <table>
@@ -2355,14 +2509,14 @@
                                 @foreach (json_decode($data1->Other3_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">4</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -2399,6 +2553,8 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Other's 4 Department</th>
                                 <td class="w-30">
                                     <div>
@@ -2411,10 +2567,11 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Other's 4)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Other4_assessment)
                                             {{ $data1->Other4_assessment }}
@@ -2423,8 +2580,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Other's 4 Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Other4_feedback)
                                             {{ $data1->Other4_feedback }}
@@ -2434,8 +2593,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Other's 4 Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -2460,7 +2620,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Other's 4 Attachments
                         </div>
                         <table>
@@ -2473,14 +2633,14 @@
                                 @foreach (json_decode($data1->Other4_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -2493,9 +2653,7 @@
                             Other's 5 ( Additional Person Review From Departments If Required)
                         </div>
                         <table>
-
                             <tr>
-
                                 <th class="w-20">Other's 5 Review Required ?
                                 </th>
                                 <td class="w-30">
@@ -2517,6 +2675,8 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Other's 5 Department</th>
                                 <td class="w-30">
                                     <div>
@@ -2529,10 +2689,11 @@
                                 </td>
                             </tr>
 
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Impact Assessment (By Other's 5)</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Other5_assessment)
                                             {{ $data1->Other5_assessment }}
@@ -2541,8 +2702,10 @@
                                         @endif
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>    
                                 <th class="w-20">Other's 5 Feedback</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data1->Other5_feedback)
                                             {{ $data1->Other5_feedback }}
@@ -2552,8 +2715,9 @@
                                     </div>
                                 </td>
                             </tr>
+                        </table>
+                        <table>    
                             <tr>
-
                                 <th class="w-20">Other's 5 Review Completed By</th>
                                 <td class="w-30">
                                     <div>
@@ -2578,7 +2742,7 @@
                         </table>
                     </div>
                     <div class="border-table">
-                        <div class="block-">
+                        <div class="block-head">
                             Other's 5 Attachments
                         </div>
                         <table>
@@ -2591,14 +2755,14 @@
                                 @foreach (json_decode($data1->Other5_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -2695,7 +2859,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="w-60">Post Categorization Of Non Conformance</th>
+                                <th class="w-20">Post Categorization Of Non Conformance</th>
                                 <td class="w-80">
                                     <div>
                                         @if ($data->Post_Categorization)
@@ -2709,7 +2873,7 @@
                         </table>
                         <table>
                             <tr>
-                                <th class="w-60"> Justification For Revised category
+                                <th class="w-20"> Justification For Revised category
                                 </th>
                                 <td class="w-80">
                                     <div>
@@ -2744,10 +2908,10 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
-                                    <th class="w-60">Investigation Team</th>
-                                    <th class="w-60">Responsibility</th>
-                                    <th class="w-60">Remarks</th>
+                                    <th class="w-5">S.N.</th>
+                                    <th class="w-25">Investigation Team</th>
+                                    <th class="w-25">Responsibility</th>
+                                    <th class="w-25">Remarks</th>
                                 </tr>
                                 <tbody>
                                     @if ($investigation_data && is_array($investigation_data))
@@ -2757,22 +2921,22 @@
                                         @endphp
                                         @foreach ($investigation_data as $investigation_item)
                                             <tr>
-                                                <td class="w-80">{{ $serialNumber++ }}</td>
+                                                <td class="w-5">{{ $serialNumber++ }}</td>
                                                 @foreach ($users as $user)
                                                 <option value="{{ $user->id }}"
                                                     {{ $investigation_item['teamMember'] == $user->id ? 'selected' : '' }}>
                                                     {{ $user->name }}</option>
                                             @endforeach
-                                                <td class="w-80">{{ $investigation_item['responsibility'] }}</td>
-                                                <td class="w-80">{{ $investigation_item['remarks'] }}</td>
+                                                <td class="w-25">{{ $investigation_item['responsibility'] }}</td>
+                                                <td class="w-25">{{ $investigation_item['remarks'] }}</td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td class="w-20">1</td>
-                                            <td class="w-20">Not Applicable</td>
-                                            <td class="w-20">Not Applicable</td>
-                                            <td class="w-20">Not Applicable</td>
+                                            <td class="w-5">1</td>
+                                            <td class="w-25">Not Applicable</td>
+                                            <td class="w-25">Not Applicable</td>
+                                            <td class="w-25">Not Applicable</td>
                                         </tr>
                                     @endif
                                 </tbody>
@@ -2785,12 +2949,12 @@
                             </div>
                             <table>
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
-                                    <th class="w-60">Root Cause Category</th>
-                                    <th class="w-60">Root Cause Sub-Category</th>
-                                    <th class="w-60">Others</th>
-                                    <th class="w-60">Probability</th>
-                                    <th class="w-60">Remark</th>
+                                    <th class="w-5">S.N.</th>
+                                    <th class="w-20">Root Cause Category</th>
+                                    <th class="w-20">Root Cause Sub-Category</th>
+                                    <th class="w-20">Others</th>
+                                    <th class="w-20">Probability</th>
+                                    <th class="w-20">Remark</th>
                                 </tr>
 
                                 <tbody>
@@ -2800,9 +2964,9 @@
                                         @endphp
                                         @foreach ($root_cause_data as $rootCause_data)
                                         <tr>
-                                            <td class="w-20">{{ $serialNumber++ }}</td>
+                                            <td class="w-5">{{ $serialNumber++ }}</td>
                                             <td class="w-20">{{ $rootCause_data['rootCauseCategory'] }}</td>
-                                            <td class="w-20">{{ $rootCause_data['rooCauseSubCategory'] }}</td>
+                                            <td class="w-20">{{ $rootCause_data['rootCauseSubCategory'] }}</td>
                                             <td class="w-20">{{ $rootCause_data['ifOthers'] }}</td>
                                             <td class="w-20">{{ $rootCause_data['probability'] }}</td>
                                             <td class="w-20">{{ $rootCause_data['remarks'] }}</td>
@@ -2810,7 +2974,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td class="w-20">1</td>
+                                            <td class="w-5">1</td>
                                             <td class="w-20">Not Applicable</td>
                                             <td class="w-20">Not Applicable</td>
                                             <td class="w-20">Not Applicable</td>
@@ -2904,13 +3068,13 @@
                                         @foreach ($why_data->data['why_2'] as $whyData)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
-                                                <td class="w-20">{{ $whyData }}</td>
+                                                <td class="w-60">{{ $whyData }}</td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
                                             <td class="w-20">1</td>
-                                            <td class="w-20">Not Applicable</td>
+                                            <td class="w-60">Not Applicable</td>
                                         </tr>
                                     @endif
                                 </tbody>
@@ -2934,13 +3098,13 @@
                                         @foreach ($why_data->data['why_3'] as $whyData)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
-                                                <td class="w-20">{{ $whyData }}</td>
+                                                <td class="w-60">{{ $whyData }}</td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
                                             <td class="w-20">1</td>
-                                            <td class="w-20">Not Applicable</td>
+                                            <td class="w-60">Not Applicable</td>
                                         </tr>
                                     @endif
                                 </tbody>
@@ -2964,13 +3128,13 @@
                                         @foreach ($why_data->data['why_4'] as $whyData)
                                             <tr>
                                                 <td class="w-20">{{ $serialNumber++ }}</td>
-                                                <td class="w-20">{{ $whyData }}</td>
+                                                <td class="w-60">{{ $whyData }}</td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
                                             <td class="w-20">1</td>
-                                            <td class="w-20">Not Applicable</td>
+                                            <td class="w-60">Not Applicable</td>
                                         </tr>
                                     @endif
                                 </tbody>
@@ -2993,14 +3157,14 @@
                                         @endphp
                                         @foreach ($why_data->data['why_5'] as $whyData)
                                             <tr>
-                                                <td class="w-20">{{ $serialNumber++ }}</td>
-                                                <td class="w-20">{{ $whyData }}</td>
+                                                <td class="w-60">{{ $serialNumber++ }}</td>
+                                                <td class="w-60">{{ $whyData }}</td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td class="w-20">1</td>
-                                            <td class="w-20">Not Applicable</td>
+                                            <td class="w-60">1</td>
+                                            <td class="w-60">Not Applicable</td>
                                         </tr>
                                     @endif
                                 </tbody>
@@ -3014,11 +3178,11 @@
                             </div>
                             <table>
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
-                                    <th class="w-60">Gap Category</th>
-                                    <th class="w-60">Issues</th>
-                                    <th class="w-60">Actions</th>
-                                    <th class="w-60">Remark</th>
+                                    <th class="w-5">S.N.</th>
+                                    <th class="w-20">Gap Category</th>
+                                    <th class="w-20">Issues</th>
+                                    <th class="w-20">Actions</th>
+                                    <th class="w-20">Remark</th>
                                 </tr>
 
                                 <tbody>
@@ -3071,10 +3235,10 @@
                             </div>
                             <table>
                                 <tr class="table_bg">
-                                    <th class="w-20">&nbsp;</th>
-                                    <th class="w-60">Will Be</th>
-                                    <th class="w-60">Will Not Be</th>
-                                    <th class="w-60">Rationale</th>
+                                    <th class="w-5">&nbsp;</th>
+                                    <th class="w-20">Will Be</th>
+                                    <th class="w-20">Will Not Be</th>
+                                    <th class="w-20">Rationale</th>
                                 </tr>
 
                                 <tbody>
@@ -3130,14 +3294,14 @@
                                 @foreach (json_decode($data->Investigation_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -3157,14 +3321,14 @@
                                 @foreach (json_decode($data->Capa_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -3203,14 +3367,14 @@
                                 @foreach (json_decode($data->QA_attachments) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -3231,8 +3395,8 @@
                         </div>
                         <table>
                             <tr>
-                                <th class="w-40">Proposed Due Date </th>
-                                <td class="w-80">
+                                <th class="w-20">Proposed Due Date </th>
+                                <td class="w-30">
                                     <div>
                                         @if ($qrmExtension && $qrmExtension->qrm_proposed_due_date)
                                             {{ Helpers::getdateFormat($qrmExtension->qrm_proposed_due_date) }}
@@ -3244,7 +3408,7 @@
                             </tr>
                             <tr>
                                 <th class="w-20">Conclusion</th>
-                                <td class="w-80">
+                                <td class="w-30">
                                     <div>
                                         @if ($data->Conclusion)
                                             {{ strip_tags($data->Conclusion) }}
@@ -3294,7 +3458,7 @@
                                     </div>
                                 </td>
                                 <th class="w-20">Detection</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data->detection)
                                             {{ $data->detection }}
@@ -3326,7 +3490,7 @@
                             </div>
                             <table>
                                 <tr class="table_bg">
-                                    <th>Row #</th>
+                                    <th>Sr No.</th>
                                     <th>Risk Factor</th>
                                     <th>Risk element </th>
                                     <th>Probable cause of risk element</th>
@@ -3365,7 +3529,7 @@
 
                             <table style="margin-top:10px;">
                                 <tr class="table_bg">
-                                    <th>Row #</th>
+                                    <th>Sr No.</th>
                                     <th>Initial Probability- H(3)/M(2)/L(1)</th>
                                     <th>Initial Detectability- H(1)/M(2)/L(3)</th>
                                     <th>Initial RPN</th>
@@ -3389,7 +3553,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td class="w-20">1</td>
+                                            <td class="w-5">1</td>
                                             <td class="w-20">Not Applicable</td>
                                             <td class="w-20">Not Applicable</td>
                                             <td class="w-20">Not Applicable</td>
@@ -3401,7 +3565,7 @@
 
                             <table style="margin-top:10px;">
                                 <tr class="table_bg">
-                                    <th>Row #</th>
+                                    <th>Sr No.</th>
                                     <th>Residual Severity- H(3)/M(2)/L(1)</th>
                                     <th>Residual Probability- H(3)/M(2)/L(1)</th>
                                     <th>Residual Detectability- H(1)/M(2)/L(3)</th>
@@ -3428,7 +3592,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td class="w-20">1</td>
+                                            <td class="w-5">1</td>
                                             <td class="w-20">Not Applicable</td>
                                             <td class="w-20">Not Applicable</td>
                                             <td class="w-20">Not Applicable</td>
@@ -3449,12 +3613,12 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
-                                    <th class="w-60">Risk Assessment</th>
-                                    <th class="w-60">Review Schedule</th>
-                                    <th class="w-60">Actual Reviewed On</th>
-                                    <th class="w-60">Recorded By Sign and Date</th>
-                                    <th class="w-60">Remark</th>
+                                    <th class="w-5">S.N.</th>
+                                    <th class="w-20">Risk Assessment</th>
+                                    <th class="w-20">Review Schedule</th>
+                                    <th class="w-20">Actual Reviewed On</th>
+                                    <th class="w-20">Recorded By Sign and Date</th>
+                                    <th class="w-20">Remark</th>
                                 </tr>
                                 <tbody>
                                     @if ($grid_data_matrix_qrms && is_array($grid_data_matrix_qrms->data))
@@ -3463,17 +3627,17 @@
                                         @endphp
                                         @foreach ($grid_data_matrix_qrms->data as $matrix_grid_data)
                                             <tr>
-                                                <td>{{ $serialNumber }}</td>
-                                                <td>{{ $matrix_grid_data['risk_Assesment'] }}</td>
-                                                <td>{{ $matrix_grid_data['review_schedule'] }}</td>
-                                                <td>{{ $matrix_grid_data['actual_reviewed'] }}</td>
-                                                <td>{{ $matrix_grid_data['recorded_by'] }}</td>
-                                                <td>{{ $matrix_grid_data['remark'] }}</td>
+                                                <td class="w-5">{{ $serialNumber }}</td>
+                                                <td class="w-20">{{ $matrix_grid_data['risk_Assesment'] }}</td>
+                                                <td class="w-20">{{ $matrix_grid_data['review_schedule'] }}</td>
+                                                <td class="w-20">{{ $matrix_grid_data['actual_reviewed'] }}</td>
+                                                <td class="w-20">{{ $matrix_grid_data['recorded_by'] }}</td>
+                                                <td class="w-20">{{ $matrix_grid_data['remark'] }}</td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td class="w-20">1</td>
+                                            <td class="w-5">1</td>
                                             <td class="w-20">Not Applicable</td>
                                             <td class="w-20">Not Applicable</td>
                                             <td class="w-20">Not Applicable</td>
@@ -3539,7 +3703,7 @@
                             </tr>
                             <tr>
                                 <th class="w-20">Description of Discrepancy</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($data->Description_of_Discrepancy)
                                             {{ strip_tags($data->Description_of_Discrepancy) }}
@@ -3553,7 +3717,7 @@
                         <table>
                             <tr>
                                 <th class="w-20">Root Cause</th>
-                                <td class="w-80">
+                                <td class="w-30">
                                     <div>
                                         @if ($data->capa_root_cause)
                                             {{ strip_tags($data->capa_root_cause) }}
@@ -3616,7 +3780,6 @@
                                 </td>
                             </tr>
                             <tr>
-
                                 <th class="w-20">Interim Control</th>
                                 <td class="w-80">
                                     <div>
@@ -3668,7 +3831,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                         </table>
                         <div class="border-table">
                             <div class="block-">
@@ -3684,14 +3846,14 @@
                                     @foreach (json_decode($data->CAPA_Closure_attachment) as $key => $file)
                                         <tr>
                                             <td class="w-20">{{ $key + 1 }}</td>
-                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                     target="_blank"><b>{{ $file }}</b></a> </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
                                         <td class="w-20">1</td>
-                                        <td class="w-20">Not Applicable</td>
+                                        <td class="w-60">Not Applicable</td>
                                     </tr>
                                 @endif
 
@@ -3750,7 +3912,7 @@
                             </tr>
                             <tr>
                                 <th class="w-20">Root cause</th>
-                                <td class="w-80">
+                                <td class="w-30">
                                     <div>
                                         @if ($data->Root_cause)
                                             {{ $data->Root_cause }}
@@ -3825,14 +3987,14 @@
                                 @foreach (json_decode($data->Investigation_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -3852,14 +4014,14 @@
                                 @foreach (json_decode($data->Capa_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -3895,14 +4057,14 @@
                                 @foreach (json_decode($data->QA_attachments) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
@@ -3948,14 +4110,14 @@
                             @foreach (json_decode($data->closure_attachment) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a> </td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
+                                <td class="w-60">Not Applicable</td>
                             </tr>
                         @endif
                     </table>
@@ -3963,19 +4125,6 @@
             </div>
         </div>
     </div>
-
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-            </tr>
-        </table>
-    </footer>
 
 </body>
 

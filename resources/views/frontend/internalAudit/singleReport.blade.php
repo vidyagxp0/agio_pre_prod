@@ -9,165 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-{{-- <style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-    }
-
-    .w-5 {
-        width: 5%;
-    }
-
-    .w-10 {
-        width: 10%;
-    }
-
-    .w-15 {
-        width: 15%;
-    }
-
-    .w-20 {
-        width: 20%;
-    }
-
-    .w-25 {
-        width: 25%;
-    }
-
-    .w-30 {
-        width: 30%;
-    }
-
-    .w-40 {
-        width: 40%;
-    }
-
-    .w-50 {
-        width: 50%;
-    }
-
-    .w-60 {
-        width: 60%;
-    }
-
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    header table,
-    header th,
-    header td,
-    footer table,
-    footer th,
-    footer td,
-    .border-table table,
-    .border-table th,
-    .border-table td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        vertical-align: middle;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-    }
-
-    footer .head,
-    header .head {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
-    }
-
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
-    }
-
-    footer {
-        width: 100%;
-        position: fixed;
-        display: block;
-        bottom: -40px;
-        left: 0;
-        font-size: 0.9rem;
-    }
-
-    footer td {
-        text-align: center;
-    }
-
-    .inner-block {
-        padding: 10px;
-    }
-
-    .inner-block tr {
-        font-size: 0.8rem;
-    }
-
-    .inner-block .block {
-        margin-bottom: 30px;
-    }
-
-    .inner-block .block-head {
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #4274da;
-        margin-bottom: 10px;
-        color: #4274da;
-    }
-
-    .inner-block th,
-    .inner-block td {
-        vertical-align: baseline;
-    }
-
-    .table_bg {
-        background: #4274da57;
-    }
-
-    .allow-wb {
-        word-break: break-all;
-        word-wrap: break-word;
-    }
-</style> --}}
-
 <style>
     @page {
          margin: 160px 35px 100px;
@@ -288,7 +129,6 @@
 </style>
 
 <body>
-
     <header>
         <table>
             <tr>
@@ -333,7 +173,7 @@
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                     </tr>
-                    <tr> {{ $data->created_at }} added by {{ $data->originator }}
+                    <tr>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date of Initiation</th>
@@ -354,30 +194,18 @@
                                Not Applicable
                             @endif
                         </td>
-                        {{-- <td class="w-30">
-                            @if ( Helpers::getUsersDepartmentName(Auth::user()->departmentid))
-                            {{  Helpers::getUsersDepartmentName(Auth::user()->departmentid)}}
-                        @else
-                            Not Applicable
-                        @endif
-                        </td> --}}
+
                         <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
     
                 </table>
                 <table>
-
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">
                             @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                         </td>
-                        {{-- <th class="w-20">Severity Level </th>
-                        <td class="w-30">
-                            @if($data->severity_level_form){{ $data->severity_level_form }}@else Not Applicable @endif
-                        </td> --}}
-
                     </tr>
                 </table>    
                 <table>
@@ -386,8 +214,6 @@
                         <td class="w-30">@if($data->auditee_department){{ Helpers::getFullDepartmentName($data->auditee_department) }}@else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
-
-
                     </tr>
                     <tr>
                         <th class="w-20">Others</th>
@@ -419,27 +245,9 @@
                 <table>
                     <tr>
                         <th class="w-20">Scheduled audit date</th>
-                        <td class="w-30"> @if($data->sch_audit_start_date){{Helpers::getdateFormat ($data->sch_audit_start_date) }} @else Not Applicable @endif</td>
-
-                        {{-- <th class="w-20">If Other</th>
-                           <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>
-                        --}}
+                        <td class="w-80"> @if($data->sch_audit_start_date){{Helpers::getdateFormat ($data->sch_audit_start_date) }} @else Not Applicable @endif</td>
                     </tr>
-                    {{-- <tr>
-                        <th class="w-20">External Agencies</th>
-                        <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }}@else Not Applicable @endif</td>
-                    <th class="w-20">Others</th>
-                    <td class="w-30">@if($data->Others){{ $data->Others }}@else Not Applicable @endif</td>
-
-
-                    </tr> --}}
-
                 </table>
-
-
-
-
-
 
                 <div class="block">
                     <div class="block-head">
@@ -450,11 +258,11 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="table_bg">
-                                    <th>Sr.No.</th>
-                                    <th>Auditor Name</th>
-                                    <th>Department</th>
-                                    <th>Designation</th>
-                                    <th>Remarks</th>
+                                    <th class="w-5">Sr.No.</th>
+                                    <th class="w-20">Auditor Name</th>
+                                    <th class="w-20">Department</th>
+                                    <th class="w-20">Designation</th>
+                                    <th class="w-20">Remarks</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -465,13 +273,13 @@
                                 @if (!empty($auditorview->data) && is_iterable($auditorview->data))
                                 @foreach ($auditorview->data as $audditor)
                                 <tr>
-                                    <td>{{ $serialNumber++ }}</td>
-                                    <td>
+                                    <td class="w-5">{{ $serialNumber++ }}</td>
+                                    <td class="w-20">
                                         {{ Helpers::getInitiatorName($audditor['auditornew']) ?? 'Not Available' }}
                                     </td>
-                                    <td>{{ $audditor['regulatoryagency'] ?? 'Not Available' }}</td>
-                                    <td>{{ $audditor['designation'] ?? 'Not Available' }}</td>
-                                    <td>{{ $audditor['remarks'] ?? 'Not Available' }}</td>
+                                    <td class="w-20">{{ $audditor['regulatoryagency'] ?? 'Not Available' }}</td>
+                                    <td class="w-20">{{ $audditor['designation'] ?? 'Not Available' }}</td>
+                                    <td class="w-20">{{ $audditor['remarks'] ?? 'Not Available' }}</td>
                                 </tr>
                                 @endforeach
                                 @else
@@ -483,10 +291,6 @@
                         </table>
                     </div>
                 </div>
-
-
-
-
 
                 <div class="border-table">
                     <div class="block-head">
@@ -502,16 +306,15 @@
                         @foreach(json_decode($data->inv_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
             </div>
@@ -545,13 +348,13 @@
                         @foreach(json_decode($data->file_attachment) as $key => $file)
                         <tr>
                             <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                            <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                         </tr>
                         @endforeach
                         @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                         @endif
 
@@ -571,38 +374,37 @@
                         <tr>
                             <th class="w-30">Audit Schedule Start Date</th>
                             <td class="w-20">@if($data->audit_schedule_start_date){{ $data->audit_schedule_start_date }}@else Not Applicable @endif</td>
-        <th class="w-30">Audit Schedule End Date</th>
-        <td class="w-20">@if($data->audit_schedule_end_date){{ $data->audit_schedule_end_date }}@else Not Applicable @endif</td>
-        </tr>
-        <tr>
-            <th class="w-20">Comments(If Any)</th>
-            <td class="w-30">
-                @if($data->if_comments)
-                @foreach (explode(',', $data->if_comments) as $Key => $value)
+                            <th class="w-30">Audit Schedule End Date</th>
+                            <td class="w-20">@if($data->audit_schedule_end_date){{ $data->audit_schedule_end_date }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Comments(If Any)</th>
+                            <td class="w-30">
+                                @if($data->if_comments)
+                                @foreach (explode(',', $data->if_comments) as $Key => $value)
 
-                <li>{{ $value }}</li>
-                @endforeach
-                @else
-                Not Applicable
-                @endif
-            </td>
-            <th class="w-20">Product/Material Name</th>
-            <td class="w-80">
-                @if($data->material_name)
-                @foreach (explode(',', $data->material_name) as $Key => $value)
-                <li>{{ $value }}</li>
-                @endforeach
-                @else
-                Not Applicable
-                @endif
-            </td>
+                                <li>{{ $value }}</li>
+                                @endforeach
+                                @else
+                                Not Applicable
+                                @endif
+                            </td>
+                            <th class="w-20">Product/Material Name</th>
+                            <td class="w-80">
+                                @if($data->material_name)
+                                @foreach (explode(',', $data->material_name) as $Key => $value)
+                                <li>{{ $value }}</li>
+                                @endforeach
+                                @else
+                                Not Applicable
+                                @endif
+                            </td>
 
+                        </tr>
 
-        </tr>
-
-        </table>
-    </div>
-    </div> --}}
+                    </table>
+                </div>
+        </div> --}}
     {{-- <div class="block">
                 <div class="block-head">
                     Audit Preparation
@@ -611,54 +413,54 @@
                     <tr>
                         <th class="w-20">Lead Auditor</th>
                         <td class="w-30">@if($data->lead_auditor){{ Helpers::getInitiatorName($data->lead_auditor) }}@else Not Applicable @endif</td>
-    <th class="w-20">External Auditor Details</th>
-    <td class="w-30">@if($data->Auditor_Details){{ $data->Auditor_Details }}@else Not Applicable @endif</td>
-    </tr>
-    <tr>
-        <th class="w-20">External Auditing Agencys</th>
-        <td class="w-30">@if($data->External_Auditing_Agency){{ $data->External_Auditing_Agency }}@else Not Applicable @endif</td>
-        <th class="w-20">Relevant Guidelines /Industry Standards</th>
-        <td class="w-30">@if($data->Relevant_Guideline){{ $data->Relevant_Guideline }}@else Not Applicable @endif</td>
-    </tr>
-    <tr>
-        <th class="w-20">QA Comments</th>
-        <td class="w-30">@if($data->QA_Comments){{ $data->QA_Comments }}@else Not Applicable @endif</td>
-    </tr>
+                        <th class="w-20">External Auditor Details</th>
+                        <td class="w-30">@if($data->Auditor_Details){{ $data->Auditor_Details }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">External Auditing Agencys</th>
+                        <td class="w-30">@if($data->External_Auditing_Agency){{ $data->External_Auditing_Agency }}@else Not Applicable @endif</td>
+                        <th class="w-20">Relevant Guidelines /Industry Standards</th>
+                        <td class="w-30">@if($data->Relevant_Guideline){{ $data->Relevant_Guideline }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA Comments</th>
+                        <td class="w-30">@if($data->QA_Comments){{ $data->QA_Comments }}@else Not Applicable @endif</td>
+                    </tr>
 
-    <tr>
-        <th class="w-20">Audit team</th>
-        <td class="w-30">
-            @if($data->Audit_team)
-            @foreach (explode(',', $data->Audit_team) as $Key => $value)
-            <li>{{ Helpers::getInitiatorName($value) }}</li>
-            @endforeach
-            @else Not Applicable
-            @endif
-        </td>
-        <th class="w-20">Auditee</th>
-        <td class="w-30">
-            @if($data->Auditee)
-            @foreach (explode(',', $data->Auditee) as $Key => $value)
-            <li>{{ Helpers::getInitiatorName($value) }}</li>
-            @endforeach
-            @else Not Applicable
-            @endif
-        </td>
+                    <tr>
+                        <th class="w-20">Audit team</th>
+                        <td class="w-30">
+                            @if($data->Audit_team)
+                            @foreach (explode(',', $data->Audit_team) as $Key => $value)
+                            <li>{{ Helpers::getInitiatorName($value) }}</li>
+                            @endforeach
+                            @else Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Auditee</th>
+                        <td class="w-30">
+                            @if($data->Auditee)
+                            @foreach (explode(',', $data->Auditee) as $Key => $value)
+                            <li>{{ Helpers::getInitiatorName($value) }}</li>
+                            @endforeach
+                            @else Not Applicable
+                            @endif
+                        </td>
 
-    </tr>
-    <tr>
-        <th class="w-20">Comments</th>
-        <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
-        <th class="w-20">Audit Category</th>
-        <td class="w-30">@if($data->Audit_Category){{ Helpers::getInitiatorName( $data->Audit_Category)}}@else Not Applicable @endif</td>
-    </tr>
-    <tr>
-        <th class="w-20">Supplier/Vendor/Manufacturer Site</th>
-        <td class="w-30">@if($data->Supplier_Site){{ $data->Supplier_Site }}@else Not Applicable @endif</td>
-        <th class="w-20">Supplier/Vendor/Manufacturer Details</th>
-        <td class="w-30">@if($data->Supplier_Details){{ $data->Supplier_Details}}@else Not Applicable @endif</td>
-    </tr>
-    </table>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Comments</th>
+                        <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
+                        <th class="w-20">Audit Category</th>
+                        <td class="w-30">@if($data->Audit_Category){{ Helpers::getInitiatorName( $data->Audit_Category)}}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Supplier/Vendor/Manufacturer Site</th>
+                        <td class="w-30">@if($data->Supplier_Site){{ $data->Supplier_Site }}@else Not Applicable @endif</td>
+                        <th class="w-20">Supplier/Vendor/Manufacturer Details</th>
+                        <td class="w-30">@if($data->Supplier_Details){{ $data->Supplier_Details}}@else Not Applicable @endif</td>
+                    </tr>
+                </table>
     </div> --}}
 
 
@@ -669,8 +471,8 @@
             <table>
 
                 <tr>
-                    <th class="w-18">Audit Start Date</th>
-                    <td class="w-20">
+                    <th class="w-20">Audit Start Date</th>
+                    <td class="w-30">
                         <div>
                             @if($data->audit_start_date){{ Helpers::getdateFormat($data->audit_start_date) }}@else Not Applicable @endif
                         </div>
@@ -770,23 +572,11 @@
                 </tr> -->
                 <tr>
                     <th class="w-20">Comments</th>
-                    <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
+                    <td class="w-80">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
                 </tr>
             </table>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-            <br>
-            <br>
 
             <div class="border-table">
                 <div class="block-head">
@@ -801,95 +591,95 @@
                     @foreach(json_decode($data->file_attachment_guideline) as $key => $file)
                     <tr>
                         <td class="w-20">{{ $key + 1 }}</td>
-                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                     </tr>
                     @endforeach
                     @else
                     <tr>
                         <td class="w-20">1</td>
-                        <td class="w-20">Not Applicable</td>
+                        <td class="w-60">Not Applicable</td>
                     </tr>
                     @endif
                 </table>
             </div>
 
 
-<!-- checklkist data -->
+    <!-- checklkist data -->
 
 
 
-@php
-    $questions_packing = [
-    "Is access to the facility restricted?",
-    "Is the dispensing area cleaned as per SOP?",
-    "Check the status label of area and equipment.",
-    "Are all raw materials carry proper label?",
-    "Standard operating procedure for dispensing of raw material is displayed?",
-    "All the person involve in dispensing having proper gowning?",
-    "Where you keep the materials after dispensing?",
-    "Is there any log book for keeping the record of dispensing?",
-    "Have you any standard practice to cross check the approved status of raw materials before dispensing?",
-    "Are all balances calibrated which are to be use for dispensing?",
-    "Is the pressure differential of RLAF is within acceptance limit? What is the limit? _______",
-    "Is the pressure differential of the area is within acceptance limit? Check the pressure differential__________",
-    "Is there any record for room temperature & relative humidity? Check the temperature _____°C & RH _____%"
-    ];
+    @php
+        $questions_packing = [
+        "Is access to the facility restricted?",
+        "Is the dispensing area cleaned as per SOP?",
+        "Check the status label of area and equipment.",
+        "Are all raw materials carry proper label?",
+        "Standard operating procedure for dispensing of raw material is displayed?",
+        "All the person involve in dispensing having proper gowning?",
+        "Where you keep the materials after dispensing?",
+        "Is there any log book for keeping the record of dispensing?",
+        "Have you any standard practice to cross check the approved status of raw materials before dispensing?",
+        "Are all balances calibrated which are to be use for dispensing?",
+        "Is the pressure differential of RLAF is within acceptance limit? What is the limit? _______",
+        "Is the pressure differential of the area is within acceptance limit? Check the pressure differential__________",
+        "Is there any record for room temperature & relative humidity? Check the temperature _____°C & RH _____%"
+        ];
 
-    $questions_documentation = [
-    "Is status labels displayed on all equipments?",
-    "Equipment cleanliness, check few equipments.",
-    "Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?",
-    "Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?",
-    "Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?",
-    "Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?",
-    "Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance",
-    "Are there written instructions describing how to use in-process data to control the process?",
-    "Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book",
-    "Is equipment inspected immediately prior to use?",
-    "Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?",
-    "Has a written schedule been established and is it followed for cleaning of equipment?",
-    "Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?",
-    "Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments.",
-    "Is equipment cleaned promptly after use?",
-    "Is there proper storage of cleaned equipment so as to prevent contamination?",
-    "Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?",
-    "Is sewage, trash and other reuse disposed off in a safe and sanitary manner ( and with sufficient frequency)",
-    "Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.",
-    "Are all weighing and measuring performed by one qualified person and checked by a second person Check the weighing balance record.",
-    "Are the sieves & screen kept in proper place with proper label?",
-    "Is the pressure differential of every particular area are within limit?",
-    "All the person working in granulation area having proper gowning?",
-    "Is Inventory record of sieve, screen, rubber sleeve, FBD bag, etc. maintained?",
-    "Check the FBD bags for three products, and their utilization records.",
-    "Have you any SOP regarding Hold time of material during staging?",
-    "Is there a written procedure specifying the frequency of inspection and replacement for air filters?",
-    "Are written operating procedures available for each equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.",
-    "Does each equipment have written instructions for maintenance that includes a schedule for maintenance?",
-    "Does the process control address all issues to ensure identity, strength, quality and purity of product?",
-    "Check the calibration labels for instrument calibration status.",
-    "Temperature & RH record log book is available for each staging area.",
-    "Check for area activity record.",
-    "Check for equipment usage record.",
-    "Check for general equipment details and accessory details.",
-    "Check for man & material movement in the area.",
-    "Air handling system qualification , cleaning details and PAO test reports.",
-    "Check for purified water hose pipe status and water hold up.",
-    "Check for the status labeling in the area and material randomly.",
-    "Check the in-process equipments cleaning status & records.",
-    "Are any unplanned process changes (process excursions) documented in the batch record?",
-    "If the product is blended, are there blending parameters and/or homogeneity specifications?",
-    "Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?",
-    "Is there is an preventive maintenance program for all equipment and status of it."
-    ];
+        $questions_documentation = [
+        "Is status labels displayed on all equipments?",
+        "Equipment cleanliness, check few equipments.",
+        "Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?",
+        "Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? For active ingredients, have these procedures been validated?",
+        "Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?",
+        "Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?",
+        "Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance",
+        "Are there written instructions describing how to use in-process data to control the process?",
+        "Are all piece of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book",
+        "Is equipment inspected immediately prior to use?",
+        "Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?",
+        "Has a written schedule been established and is it followed for cleaning of equipment?",
+        "Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?",
+        "Is clean equipment clearly identified as “cleaned” with a cleaning date shown on the equipment tag? Check for few equipments.",
+        "Is equipment cleaned promptly after use?",
+        "Is there proper storage of cleaned equipment so as to prevent contamination?",
+        "Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?",
+        "Is sewage, trash and other reuse disposed off in a safe and sanitary manner ( and with sufficient frequency)",
+        "Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.",
+        "Are all weighing and measuring performed by one qualified person and checked by a second person Check the weighing balance record.",
+        "Are the sieves & screen kept in proper place with proper label?",
+        "Is the pressure differential of every particular area are within limit?",
+        "All the person working in granulation area having proper gowning?",
+        "Is Inventory record of sieve, screen, rubber sleeve, FBD bag, etc. maintained?",
+        "Check the FBD bags for three products, and their utilization records.",
+        "Have you any SOP regarding Hold time of material during staging?",
+        "Is there a written procedure specifying the frequency of inspection and replacement for air filters?",
+        "Are written operating procedures available for each equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.",
+        "Does each equipment have written instructions for maintenance that includes a schedule for maintenance?",
+        "Does the process control address all issues to ensure identity, strength, quality and purity of product?",
+        "Check the calibration labels for instrument calibration status.",
+        "Temperature & RH record log book is available for each staging area.",
+        "Check for area activity record.",
+        "Check for equipment usage record.",
+        "Check for general equipment details and accessory details.",
+        "Check for man & material movement in the area.",
+        "Air handling system qualification , cleaning details and PAO test reports.",
+        "Check for purified water hose pipe status and water hold up.",
+        "Check for the status labeling in the area and material randomly.",
+        "Check the in-process equipments cleaning status & records.",
+        "Are any unplanned process changes (process excursions) documented in the batch record?",
+        "If the product is blended, are there blending parameters and/or homogeneity specifications?",
+        "Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?",
+        "Is there is an preventive maintenance program for all equipment and status of it."
+        ];
 
-    $questions_documentation_table = [
-    "Do records have doer & checker signatures? Check the timings, date and yield etc. in the batch manufacturing record.",
-    "Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.",
-    "Is the batch record is on line up to the current stage of a process?",
-    "In process carried out as per the written instruction describe in batch record?",
-    "Is there any area cleaning record available?",
-    "Current version of SOP’s is available in respective areas?",
-    ];
+        $questions_documentation_table = [
+        "Do records have doer & checker signatures? Check the timings, date and yield etc. in the batch manufacturing record.",
+        "Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.",
+        "Is the batch record is on line up to the current stage of a process?",
+        "In process carried out as per the written instruction describe in batch record?",
+        "Is there any area cleaning record available?",
+        "Current version of SOP’s is available in respective areas?",
+        ];
     @endphp
 
 
@@ -3722,7 +3512,7 @@
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">Sr.No.</th>
+                        <th class="w-6">Sr.No.</th>
                         <th>Observations/Discrepancy</th>
                         <th>Category</th>
                         <th>Remarks</th>
@@ -3752,11 +3542,6 @@
             </div>
         </div>
 
-
-
-
-
-
         <div class="block">
             <div class="block-head">
                 Audit Response
@@ -3764,7 +3549,7 @@
             <table>
                 <tr>
                     <th class="w-20">Reference Record</th>
-                    <td class="w-30">
+                    <td class="w-80">
                         @if ($data->refrence_record)
                             @php
                                 $records = explode(',', $data->refrence_record);

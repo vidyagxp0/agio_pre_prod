@@ -347,15 +347,6 @@
                     </tr>
                 </table>
 
-
-                {{-- <label class="Summer" for="Short Description">Short Description</label>
-                <div class="div-data">
-                    @if ($data->short_description)
-                        {{ $data->short_description }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div> --}}
                 <table>
                     <tr>
                         <th class="w-20">Short Description</th>
@@ -369,7 +360,6 @@
                     </tr>
                 </table>
                 <table>
-
                     <tr>
                         <th class="w-20">Extension Number</th>
                         <td class="w-30">
@@ -379,8 +369,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
+                    
                         <th class="w-20">HOD Review</th>
                         <td class="w-30">
                             @if ($data->reviewers)
@@ -391,15 +380,6 @@
                         </td>
                     </tr>
                 </table>
-
-                {{-- <label class="Summer" for="Parent Record Number">Parent Records Number</label>
-                <div class="div-data">
-                    @if ($data->related_records)
-                        {{ str_replace(',', ', ', $data->related_records) }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div> --}}
 
                 <table>
                     <tr>
@@ -463,23 +443,7 @@
                         </td>
                     </tr>
                 </table>
-                {{-- <label class="Summer" for="Description">Description</label>
-                <div class="div-data">
-                    @if ($data->description)
-                        {{ $data->description }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
 
-                <label class="Summer" for="Justification / Reason">Justification / Reason</label>
-                <div class="div-data">
-                    @if ($data->justification_reason)
-                        {{ $data->justification_reason }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div> --}}
             </div>
             <div class="block">
                 <div class="block-head">Attachment Extension</div>
@@ -521,15 +485,6 @@
                         </td>
                     </tr>
                 </table>
-
-                {{-- <label class="Summer" for="HOD Remarks">HOD Remarks</label>
-                <div class="div-data">
-                    @if ($data->reviewer_remarks)
-                        {{ $data->reviewer_remarks }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div> --}}
 
             </div>
             <div class="block">
@@ -574,15 +529,6 @@
                     </tr>
                 </table>
 
-                {{-- <label class="Summer" for="QA/CQA Approval Comments">QA/CQA Approval Comments</label>
-                <div class="div-data">
-                    @if ($data->approver_remarks)
-                        {{ $data->approver_remarks }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div> --}}
-
             </div>
             <div class="block">
                 <div class="block-head">QA/CQA Approval Attachments</div>
@@ -626,17 +572,7 @@
                             @endif
                         </td>
                     </tr>
-                </table>
-                
-                    {{-- <label class="Summer" for="QA/CQA Approval Comments">CQA Approval Comments</label>
-                    <div class="div-data">
-                        @if (!empty($data->QAapprover_remarks))
-                            {{ $data->QAapprover_remarks }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </div> --}}
-                
+                </table>                
 
             </div>
             <div class="block">

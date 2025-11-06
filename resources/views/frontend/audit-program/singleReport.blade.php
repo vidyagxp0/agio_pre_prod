@@ -9,152 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<!-- <style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-    }
-
-    .w-10 {
-        width: 10%;
-    }
-
-    .w-20 {
-        width: 20%;
-    }
-
-    .w-25 {
-        width: 25%;
-    }
-
-    .w-30 {
-        width: 30%;
-    }
-
-    .w-40 {
-        width: 40%;
-    }
-
-    .w-50 {
-        width: 50%;
-    }
-
-    .w-60 {
-        width: 60%;
-    }
-
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    header table,
-    header th,
-    header td,
-    footer table,
-    footer th,
-    footer td,
-    .border-table table,
-    .border-table th,
-    .border-table td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        vertical-align: middle;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-    }
-
-    footer .head,
-    header .head {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
-    }
-
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
-    }
-
-    footer {
-        width: 100%;
-        position: fixed;
-        display: block;
-        bottom: -40px;
-        left: 0;
-        font-size: 0.9rem;
-    }
-
-    footer td {
-        text-align: center;
-    }
-
-    .inner-block {
-        padding: 10px;
-    }
-
-    .inner-block tr {
-        font-size: 0.8rem;
-    }
-
-    .inner-block .block {
-        margin-bottom: 30px;
-    }
-
-    .inner-block .block-head {
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #4274da;
-        margin-bottom: 10px;
-        color: #4274da;
-    }
-
-    .inner-block th,
-    .inner-block td {
-        vertical-align: baseline;
-    }
-
-    .table_bg {
-        background: #4274da57;
-    }
-</style> -->
-
 <style>
     @page {
          margin: 160px 35px 100px; /* top header, side margin, bottom footer */
@@ -395,17 +249,6 @@ $users = DB::table('users')->select('id', 'name')->get();
 
 
                 </table>
-                {{-- <div class="inner-block">
-                    <label class="Summer" style="font-weight: bold; font-size: 13px;">Short Description
-                    </label>
-                    <div style="font-size: 0.8rem">
-                        @if ($data->short_description)
-                        {{ $data->short_description }}
-                        @else
-                        Not Applicable
-                        @endif
-                    </div>
-                </div> --}}
                 <table>
                     <tr>
                         <th class="w-20">Short Description</th>
@@ -499,7 +342,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20" style="width: 25px;">Sr.No.</th>
+                                <th class="w-5" style="width: 25px;">Sr.No.</th>
                                 <th class="w-20">Auditees</th>
                                 <th class="w-20">Date Start</th>
                                 <th class="w-20">Date End</th>
@@ -510,7 +353,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                             @if ($grid_Data3 && is_array($grid_Data3->data))
                             @foreach ($grid_Data3->data as $grid_Data)
                             <tr>
-                                <td class="w-20">{{ $loop->index + 1 }}</td>
+                                <td class="w-5">{{ $loop->index + 1 }}</td>
                                 <td class="w-20">
                                     {{ isset($grid_Data['Auditees']) ? $grid_Data['Auditees'] : 'Not Applicable' }}
                                 </td>
@@ -548,123 +391,65 @@ $users = DB::table('users')->select('id', 'name')->get();
                     </tr>
                 </table>
 
-        {{-- <div class="block">
+                <div class="border-table">
                     <div class="block-head">
-                        Self Inspection Planner
+                        Attached Files
                     </div>
-                    <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20" style="width: 25px;">Row#</th>
-                                <th class="w-20">Department</th>
-                                <th class="w-20">Months</th>
-                                <th class="w-20">Remarks</th>
+                    <table>
 
-                            </tr>
-                            @if ($grid_Data4 && is_array($grid_Data4->data))
-                                    @foreach ($grid_Data4->data as $grid_Data)
-                                <tr>
-                                    <td class="w-20">{{ $loop->index + 1 }}</td>
-                <td class="w-20">
-                    {{ isset($grid_Data['department']) ? $grid_Data['department'] : 'Not Applicable' }}
-                </td>
-                <td>
-                    {{ isset($grid_Data['Months']) ? $grid_Data['Months'] : 'Not Applicable' }}
-                </td>
-                <td>
-                    {{ isset($grid_Data['Remarked']) ? $grid_Data['Remarked'] : 'Not Applicable' }}
-                </td>
-                </tr>
-                @endforeach
-                @endif
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if ($data->attachments)
+                        @foreach (json_decode($data->attachments) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                        @endif
+                    </table>
+
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Related URl </th>
+                        <td class="w-80">
+                            @if ($data->related_url)
+                            {{ $data->related_url }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>    
+                        <th class="w-20">URl's description</th>
+                        <td class="w-80">
+                            @if ($data->url_description)
+                            {{ $data->url_description }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </td>
+                    </tr>
                 </table>
+                </div>
+
             </div>
-        </div> --}}
-
-
-
-
-
-
-
-
-        {{-- <div class="inner-block">
-                    <label class="Summer" style="font-weight: bold; font-size: 13px;">Comments
-                    </label>
-                    <div style="font-size: 0.8rem">
-                        @if ($data->comments)
-                            {{ $data->comments }}
-            @else
-            Not Applicable
-            @endif
-         </div>
-        </div> --}}
-
-    <div class="border-table">
-        <div class="block-head">
-            Attached Files
         </div>
-        <table>
-
-            <tr class="table_bg">
-                <th class="w-20">Sr.No.</th>
-                <th class="w-60">Attachment</th>
-            </tr>
-            @if ($data->attachments)
-            @foreach (json_decode($data->attachments) as $key => $file)
-            <tr>
-                <td class="w-20">{{ $key + 1 }}</td>
-                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                        target="_blank"><b>{{ $file }}</b></a> </td>
-            </tr>
-            @endforeach
-            @else
-            <tr>
-                <td class="w-20">1</td>
-                <td class="w-20">Not Applicable</td>
-            </tr>
-            @endif
-        </table>
-
-    </div>
-    <table>
-        <tr>
-            <th class="w-20">Related URl </th>
-            <td class="w-80">
-                @if ($data->related_url)
-                {{ $data->related_url }}
-                @else
-                Not Applicable
-                @endif
-            </td>
-        </tr>
-        <tr>    
-            <th class="w-20">URl's description</th>
-            <td class="w-80">
-                @if ($data->url_description)
-                {{ $data->url_description }}
-                @else
-                Not Applicable
-                @endif
-            </td>
-        </tr>
-    </table>
-    </div>
-
-
-    </div>
-    </div>
     </div>
     {{-- </div> --}}
 
 
     <div class="inner-block">
         <div class="content-table">
-            {{--<div class="block">
-                <div class="block-head">
-                        Self Inspection Circular
-                </div>--}}
-
 
             <div class="block">
                 <div class="block-head">
@@ -673,7 +458,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20" style="width: 25px;">Sr.No.</th>
+                            <th class="w-5" style="width: 25px;">Sr.No.</th>
                             <th class="w-20">Department</th>
                             <th class="w-20">Audit Date</th>
                             <th class="w-20">Name of Auditors</th>
@@ -683,7 +468,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                         @if ($grid_Data2 && is_array($grid_Data2->data))
                         @foreach ($grid_Data2->data as $grid_Data)
                         <tr>
-                            <td class="w-20">{{ $loop->index + 1 }}</td>
+                            <td class="w-5">{{ $loop->index + 1 }}</td>
                             <td class="w-20">
                                 {{ isset($grid_Data['departments']) ? $grid_Data['departments'] : 'Not Applicable' }}
                             </td>
@@ -703,16 +488,6 @@ $users = DB::table('users')->select('id', 'name')->get();
                                 @endphp
                                 {{ !empty($auditors) ? implode(', ', $auditors) : 'Not Applicable' }}
                             </td>
-
-                            {{-- <td>
-                                    @if(isset($grid_Data['Auditor']) && is_array($grid_Data['Auditor']))
-                                        {{ \App\Models\User::whereIn('id', $grid_Data['Auditor'])->pluck('name')->implode(',') }}
-                            @elseif(isset($grid_Data['Auditor']))
-                            {{ \App\Models\User::find($grid_Data['Auditor'])->name ?? 'Not Applicable' }}
-                            @else
-                            Not Applicable
-                            @endif
-                            </td> --}}
                         </tr>
                         @endforeach
                         @endif
@@ -721,13 +496,9 @@ $users = DB::table('users')->select('id', 'name')->get();
             </div>
 
             <table>
-                {{-- <tr>
-                                <th>Comments</th>
-                                <td>@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
-                </tr> --}}
 
                 <th class="w-20">Comments</th>
-                <td class="w-30">
+                <td class="w-80">
                     @if ($data->comment)
                     {{ $data->comment }}
                     @else
@@ -750,14 +521,14 @@ $users = DB::table('users')->select('id', 'name')->get();
                     @foreach (json_decode($data->Attached_File) as $key => $file)
                     <tr>
                         <td class="w-20">{{ $key + 1 }}</td>
-                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                 target="_blank"><b>{{ $file }}</b></a> </td>
                     </tr>
                     @endforeach
                     @else
                     <tr>
                         <td class="w-20">1</td>
-                        <td class="w-20">Not Applicable</td>
+                        <td class="w-60">Not Applicable</td>
                     </tr>
                     @endif
 
@@ -765,150 +536,98 @@ $users = DB::table('users')->select('id', 'name')->get();
 
             </div>
         </div>
-        {{--
-            <div class="block">
+
+        <div class="block">
+            <div class="block-head" style="">CQA/QA Approval</div>
+            <table>
+                <tr>
+                    <th class="w-20">CQA/QA Approval Comments</th>
+                    <td class="w-80">
+                        @if ($data->cqa_qa_comment)
+                        {{ $data->cqa_qa_comment }}
+                        @else
+                        Not Applicable
+                        @endif
+                    </td>
+                </tr>
+            </table>
+
+            <div class="border-table">
                 <div class="block-head">
-                    HOD/Designee Review
-                        </div>
-                        <table>
-                            <tr>
-                                <th>HOD/Designee Review Comments</th>
-                                <td>@if($data->hod_comment){{ $data->hod_comment }}@else Not Applicable @endif</td>
-        </tr>
-        </table>
-    </div>
+                    CQA/QA Attached Files
+                </div>
+                <table>
 
-    <div class="border-table">
-        <div class="block-head">
-            HOD/Designee Review Attached Files
-        </div>
-        <table>
-
-            <tr class="table_bg">
-                <th class="w-20">Sr.No.</th>
-                <th class="w-60">Attachment</th>
-            </tr>
-            @if ($data->hod_attached_File)
-            @foreach (json_decode($data->hod_attached_File) as $key => $file)
-            <tr>
-                <td class="w-20">{{ $key + 1 }}</td>
-                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                        target="_blank"><b>{{ $file }}</b></a> </td>
-            </tr>
-            @endforeach
-            @else
-            <tr>
-                <td class="w-20">1</td>
-                <td class="w-20">Not Applicable</td>
-            </tr>
-            @endif
-
-        </table>
-
-    </div> --}}
-
-
-    <div class="block">
-        <div class="block-head" style="">CQA/QA Approval</div>
-        <table>
-            <tr>
-                <th class="w-20">CQA/QA Approval Comments</th>
-                <td class="w-30">
-                    @if ($data->cqa_qa_comment)
-                    {{ $data->cqa_qa_comment }}
+                    <tr class="table_bg">
+                        <th class="w-20">Sr.No.</th>
+                        <th class="w-60">Attachment</th>
+                    </tr>
+                    @if ($data->cqa_qa_Attached_File)
+                    @foreach (json_decode($data->cqa_qa_Attached_File) as $key => $file)
+                    <tr>
+                        <td class="w-20">{{ $key + 1 }}</td>
+                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                target="_blank"><b>{{ $file }}</b></a> </td>
+                    </tr>
+                    @endforeach
                     @else
-                    Not Applicable
+                    <tr>
+                        <td class="w-20">1</td>
+                        <td class="w-60">Not Applicable</td>
+                    </tr>
                     @endif
-                </td>
-            </tr>
-        </table>
 
-        <div class="border-table">
-            <div class="block-head">
-                CQA/QA Attached Files
+                </table>
+
             </div>
+        </div>
+
+        <div class="block">
+            <div class="block-head" style="">CQA/QA Review</div>
             <table>
-
-                <tr class="table_bg">
-                    <th class="w-20">Sr.No.</th>
-                    <th class="w-60">Attachment</th>
-                </tr>
-                @if ($data->cqa_qa_Attached_File)
-                @foreach (json_decode($data->cqa_qa_Attached_File) as $key => $file)
                 <tr>
-                    <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                            target="_blank"><b>{{ $file }}</b></a> </td>
+                    <th class="w-20">CQA/QA Review Comments</th>
+                    <td class="w-80">
+                        @if ($data->cqa_qa_review_comment)
+                        {{ $data->cqa_qa_review_comment }}
+                        @else
+                        Not Applicable
+                        @endif
+                    </td>
                 </tr>
-                @endforeach
-                @else
-                <tr>
-                    <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
-                </tr>
-                @endif
-
             </table>
 
-        </div>
-    </div>
+            <div class="border-table">
+                <div class="block-head">
+                    CQA/QA Review Attachment
+                </div>
+                <table>
 
-    <div class="block">
-        <div class="block-head" style="">CQA/QA Review</div>
-        <table>
-            <tr>
-                <th class="w-20">CQA/QA Review Comments</th>
-                <td class="w-30">
-                    @if ($data->cqa_qa_review_comment)
-                    {{ $data->cqa_qa_review_comment }}
+                    <tr class="table_bg">
+                        <th class="w-20">Sr.No.</th>
+                        <th class="w-60">Attachment</th>
+                    </tr>
+                    @if ($data->cqa_qa_review_Attached_File)
+                    @foreach (json_decode($data->cqa_qa_review_Attached_File) as $key => $file)
+                    <tr>
+                        <td class="w-20">{{ $key + 1 }}</td>
+                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                target="_blank"><b>{{ $file }}</b></a> </td>
+                    </tr>
+                    @endforeach
                     @else
-                    Not Applicable
+                    <tr>
+                        <td class="w-20">1</td>
+                        <td class="w-60">Not Applicable</td>
+                    </tr>
                     @endif
-                </td>
-            </tr>
-        </table>
 
-        <div class="border-table">
-            <div class="block-head">
-                CQA/QA Review Attachment
+                </table>
+
             </div>
-            <table>
-
-                <tr class="table_bg">
-                    <th class="w-20">Sr.No.</th>
-                    <th class="w-60">Attachment</th>
-                </tr>
-                @if ($data->cqa_qa_review_Attached_File)
-                @foreach (json_decode($data->cqa_qa_review_Attached_File) as $key => $file)
-                <tr>
-                    <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                            target="_blank"><b>{{ $file }}</b></a> </td>
-                </tr>
-                @endforeach
-                @else
-                <tr>
-                    <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
-                </tr>
-                @endif
-
-            </table>
-
         </div>
-    </div>
 
     </div>
-
-
-
-
-
-
-
-
-
-
 
     <div class="inner-block">
         <div class="content-table">
@@ -1002,22 +721,6 @@ $users = DB::table('users')->select('id', 'name')->get();
 
         </div>
     </div>
-    <!--  ------------------------------- audit program grid--------------------------------------- -->
-    <!-- <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td>
-            </tr>
-        </table>
-    </footer> -->
 </body>
 
 </html>

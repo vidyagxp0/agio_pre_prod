@@ -130,22 +130,22 @@
     <body>
 
         <header>
-                  
-        <table>
-            <tr>
-                <td class="w-70" style="text-align: center; vertical-align: middle;">
-                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
-                   Incident Audit Trail Report
-                    </div>
-                </td>
-                <td class="w-30">
-                    <div class="logo" style="text-align: center;">
-                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
-                        style="max-height: 55px; max-width: 40px;">
-                    </div>
-                </td>
-            </tr>
-        </table>
+                    
+            <table>
+                <tr>
+                    <td class="w-70" style="text-align: center; vertical-align: middle;">
+                        <div style="font-size: 18px; font-weight: 800; display: inline-block;">
+                         Incident Audit Trail Report
+                        </div>
+                    </td>
+                    <td class="w-30">
+                        <div class="logo" style="text-align: center;">
+                            <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                            style="max-height: 55px; max-width: 40px;">
+                        </div>
+                    </td>
+                </tr>
+            </table>
 
             <table>
                 <tr>
@@ -171,18 +171,12 @@
                     <td class="w-40">
                         <strong>Printed By :</strong> {{ Auth::user()->name }}
                     </td>
-
+                    <td class="w-30">
+                        <strong>Page No.</strong>
+                    </td>
                 </tr>
             </table>
         </footer>
-
-        {{--<table class="allow-wb" style="table-layout: fixed; width: 700px;" >
-            <tr class="table_bg">
-                <th class='w-30' style="word-break: break-all;">Field History</th>
-                <th class='w-10'>Date Performed</th>
-                <th class='w-10'>Person Responsible</th>
-                <th class='w-10'>Change Type</th>--}}
-
 
         <div class="inner-block">
 
@@ -190,7 +184,7 @@
                  <table class="allow-wb" style="table-layout: fixed;">
                     <thead>
                         <tr class="table_bg">
-                            <th class='w-8'>S.No</th>
+                            <th class='w-6'>S.No</th>
                             <th class='w-15'>Flow Changed From</th>
                             <th class='w-15'>Flow Changed To</th>
                             <th class='w-30' style="word-break: break-all;">Data Field</th>
@@ -198,12 +192,6 @@
                             <th class='w-15'>Performer</th>
                         </tr>
                     </thead>
-
-                    {{-- @foreach ($data as $datas)
-                        <tr>
-                            @php
-                                $previousItem = null;
-                            @endphp --}}
 
                     <tbody>
                         @foreach ($audit as $index => $dataDemo)
