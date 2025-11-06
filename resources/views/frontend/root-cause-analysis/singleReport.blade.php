@@ -664,7 +664,7 @@
 
                         <tr>
                             <th class="w-20">Responsible Department</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 @if ($data->department)
                                     {{ $data->department }}
                                 @else

@@ -588,7 +588,7 @@ use Carbon\Carbon;
                 <table>
                     <tr>
                         <th class="w-20">Invite Person Notify</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($managementReview->assign_to)
                             {{ $managementReview->assign_to }}
                             @else
