@@ -7,136 +7,133 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vidyagxp - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <style>
-      
+    <!-- <style>
+        
+        @page {
+            margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 11px;
+            line-height: 1.4;
+            color: #000;
+            margin-top: 10px;
+            margin-bottom: -60px; 
+        }
 
-    @page {
-         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
-     }
-    body {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        padding: 0;
-        font-size: 11px;
-        line-height: 1.4;
-        color: #000;
-        margin-top: 10px;
-        margin-bottom: -60px; 
-    }
+        header, footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            /* padding: 20px 35px; */
+            font-size: 12px;
+            box-sizing: border-box;
+        }
 
-    header, footer {
-        position: fixed;
-        left: 0;
-        right: 0;
-        /* padding: 20px 35px; */
-        font-size: 12px;
-        box-sizing: border-box;
-    }
+        header {
+            top: -140px;
+            border-bottom: none;
+        }
 
-    header {
-        top: -140px;
-        border-bottom: none;
-    }
+        footer {
+            bottom: 0;
+            bottom: -100px;
+            border-top: none;
+        }
 
-    footer {
-        bottom: 0;
-        bottom: -100px;
-        border-top: none;
-    }
+        .logo img {
+            display: block;
+            margin-left: auto;
+        }
+        /* To remove borders from content part only */
+        .content-area table {
+            border: none !important;
+        }
 
-    .logo img {
-        display: block;
-        margin-left: auto;
-    }
-    /* To remove borders from content part only */
-    .content-area table {
-        border: none !important;
-    }
+        .inner-block {
+            /* padding: 20px 35px;  */
+            box-sizing: border-box;
+        }
+        
+        .block {
+            margin-bottom: 25px;
+        }
 
-    .inner-block {
-        /* padding: 20px 35px;  */
-        box-sizing: border-box;
-    }
-    
-    .block {
-        margin-bottom: 25px;
-    }
-
-    .block-head {
-        font-size: 13px;
-        font-weight: bold;
-        border-bottom: 2px solid #387478;
-        color: #387478;
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-    }
-
-    .table_bg {
-        background-color: #387478;
-        color: #111;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 12px;
-    }
-
-    th, td {
-        padding: 6px 10px;
-        font-size: 10.5px;
-        border: 1px solid #ccc;
-        text-align: left;
-        vertical-align: top;
-    }
-
-    th {
-        background-color: #f2f2f2;
-        font-weight: 600;
-    }
-
-    .section-gap {
-        margin-top: 20px;
-    }
-
-    .no-border th, .no-border td {
-        border: none !important;
-    }
-
-    /* .w-5 { width: 5%; } */
-    .w-5 { width: 6%; }
-    .w-8 { width: 8%; }
-    .w-10 { width: 10%; }
-    .w-20 { width: 20%; }
-    .w-30 { width: 30%; }
-    .w-50 { width: 50%; }
-    .w-70 { width: 70%; }
-    .w-80 { width: 80%; }
-    .w-100 { width: 100%; }
-    .text-center { text-align: center; }
-    .border-table {
-        overflow-x: auto;
-    }
-    table th, table td {
-        word-wrap: break-word;
-    }
-
-
-        .head-number {
+        .block-head {
+            font-size: 13px;
             font-weight: bold;
-            font-size: 13px;
-            padding-left: 10px;
-        }
-
-        .div-data {
-            font-size: 13px;
-            padding-left: 10px;
+            border-bottom: 2px solid #387478;
+            color: #387478;
             margin-bottom: 10px;
+            padding-bottom: 5px;
+        }
+
+        .table_bg {
+            background-color: #387478;
+            color: #111;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse
+            margin-bottom: 12px;
+        }
+
+        th, td {
+            padding: 6px 10px;
+            font-size: 10.5px;
+            border: 1px solid #ccc;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+
+        .section-gap {
+            margin-top: 20px;
+        }
+
+        .no-border th, .no-border td {
+            border: none !important;
+        }
+
+        /* .w-5 { width: 5%; } */
+        .w-5 { width: 6%; }
+        .w-8 { width: 8%; }
+        .w-10 { width: 10%; }
+        .w-20 { width: 20%; }
+        .w-30 { width: 30%; }
+        .w-50 { width: 50%; }
+        .w-70 { width: 70%; }
+        .w-80 { width: 80%; }
+        .w-100 { width: 100%; }
+        .text-center { text-align: center; }
+        .border-table {
+            overflow-x: auto;
+        }
+        table th, table td {
+            word-wrap: break-word;
         }
 
 
+            .head-number {
+                font-weight: bold;
+                font-size: 13px;
+                padding-left: 10px;
+            }
 
-                .why-why-chart-container {
+            .div-data {
+                font-size: 13px;
+                padding-left: 10px;
+                margin-bottom: 10px;
+            }
+
+            .why-why-chart-container {
                 width: 100%;
                 padding: 10px;
                 background: #fff;
@@ -182,7 +179,7 @@
             .text-muted {
                 color: gray;
             }
-    </style>
+    </style> -->
 
     <style>
         
@@ -283,8 +280,8 @@
 
     <style>
     @page {
-         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
-     }
+            margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+        }
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
@@ -293,7 +290,7 @@
         line-height: 1.4;
         color: #000;
         margin-top: 10px;
-         margin-bottom: -60px; 
+            margin-bottom: -60px; 
     }
 
     header, footer {
@@ -329,7 +326,7 @@
         /* padding: 20px 35px;  */
         box-sizing: border-box;
     }
-    
+
     .block {
         margin-bottom: 25px;
     }
@@ -363,7 +360,7 @@
     }
 
     th {
-         white-space: normal !important;
+            white-space: normal !important;
     word-wrap: break-word;
         background-color: #f2f2f2;
         font-weight: 600;
@@ -398,7 +395,7 @@
     table th, table td {
         word-wrap: break-word;
     }
-</style>
+    </style>
 
     
 </head>
@@ -514,7 +511,7 @@
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">
-                            @if ($data->short_description)
+                        @if ($data->short_description)
                             {{ $data->short_description }}
                         @else
                             Not Applicable
@@ -657,236 +654,30 @@
                 <table>
                     <tr class="table_bg">
                         <th class="w-20">Sr.No.</th>
-                        <th class="w-60">Attachment</th>
+                        <th class="w-80">Attachment</th>
                     </tr>
                     @if ($data->risk_attachment)
                         @foreach (json_decode($data->risk_attachment) as $key => $file)
                             <tr>
                                 <td class="w-20">{{ $key + 1 }}</td>
-                                <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                <td class="w-80"><a href="{{ asset('upload/' . $file) }}"
                                         target="_blank"><b>{{ $file }}</b></a></td>
                             </tr>
                         @endforeach
                     @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-60">Not Applicable</td>
+                            <td class="w-80">Not Applicable</td>
                         </tr>
                     @endif
                 </table>
             </div>
-
-
-
-
-
-            {{-- <div class="block">
-                <div class="block-head">
-                    Risk/Opportunity details
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Department(s)</th>
-                        <td class="w-80">@if ($data->departments2){{ ($data->departments2) }}@else Not Applicable @endif</td>
-                        <th class="w-20">Source of Risk</th>
-                        <td class="w-80">@if ($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Site Name</th>
-                        <td class="w-30">{{ $data->site_name ?? 'Not Applicable' }}</td>
-
-                        <th class="w-20">Building</th>
-                        <td class="w-30">{{ $data->building ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Floor</th>
-                        <td class="w-30">{{ $data->floor ?? 'Not Applicable' }}</td>
-
-                        <th class="w-20">Duration</th>
-                        <td class="w-30">{{ $data->duration ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Hazard</th>
-                        <td class="w-30">{{ $data->hazard ?? 'Not Applicable' }}</td>
-
-                        <th class="w-20">Room</th>
-                        <td class="w-30">{{ $data->room ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Regulatory Climate</th>
-                        <td class="w-30">{{ $data->regulatory_climate ?? 'Not Applicable' }}</td>
-
-                        <th class="w-20">Number of Employees</th>
-                        <td class="w-30">{{ $data->Number_of_employees ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Room</th>
-                        <td class="w-30">{{ $data->room2 ?? 'Not Applicable' }}</td>
-
-                        <th class="w-20">Risk Management Strategy</th>
-                        <td class="w-30">{{ $data->risk_management_strategy ?? 'Not Applicable' }}</td>
-                    </tr>
-
-                </table>
-            </div> --}}
-
-
-            {{-- <div class="block">
-            <div class="block-head">
-                Work Group Assignment
-            </div>
-            <table>
-                <tr>
-                    <th class="w-20">Scheduled Start Date</th>
-                    <td class="w-30">@if ($data->schedule_start_date1){{ $data->schedule_start_date1 }}@else Not Applicable @endif</td>
-                    <th class="w-20">Scheduled End Date</th>
-                    <td class="w-30">@if ($data->schedule_end_date1){{ $data->schedule_end_date1 }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
-                    <th class="w-50">Estimated Man-Hours</th>
-                    <td class="w-50">@if ($data->estimated_man_hours){{ $data->estimated_man_hours }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Estimated Cost</th>
-                    <td class="w-30">@if ($data->estimated_cost){{ $data->estimated_cost }}@else Not Applicable @endif</td>
-                    <th class="w-20">Currency</th>
-                    <td class="w-30">@if ($data->currency){{ $data->currency }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Justification/Rationale</th>
-                    <td class="w-80">@if ($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
-
-                </tr>
-            </table>
-        </div> --}}
-
-
-
-
-            {{--  <div class="block">
-        <div class="block-head">
-                Action Plan
-            </div>
-            <table>
-                <tr>
-                    <th class="w-20">Scheduled Start Date</th>
-                    <td class="w-30">@if ($data->schedule_start_date1){{ $data->schedule_start_date1 }}@else Not Applicable @endif</td>
-                    <th class="w-20">Scheduled End Date</th>
-                    <td class="w-30">@if ($data->schedule_end_date1){{ $data->schedule_end_date1 }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
-                    <th class="w-50">Estimated Man-Hours</th>
-                    <td class="w-50">@if ($data->estimated_man_hours){{ $data->estimated_man_hours }}@else Not Applicable @endif</td>
-                </tr>
-                <tr>
-                    <th class="w-20">Estimated Cost</th>
-                    <td class="w-30">@if ($data->estimated_cost){{ $data->estimated_cost }}@else Not Applicable @endif</td>
-                    <th class="w-20">Currency</th>
-                    <td class="w-30">@if ($data->currency){{ $data->currency }}@else Not Applicable @endif</td>
-                </tr>
-
-            </table>
-        </div>  --}}
-
-
-
-            <div class="border-table">
-                {{-- <div class="block-head">
-                    Action Plan
-                </div> --}}
-                {{-- <table>
-                            <thead>
-                                <tr class="table_bg">
-                                    <th class="w-20">Row #</th>
-                                    <th class="w-20">Action</th>
-                                    <th class="w-20">Responsible</th>
-                                    <th class="w-20">Deadline</th>
-                                    <th class="w-20">Item Static</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $measurement_1 = unserialize($action_plan->action);
-                                    $measurement_2 = unserialize($action_plan->responsible);
-                                    $measurement_3 = unserialize($action_plan->deadline);
-                                    $measurement_4 = unserialize($action_plan->item_static);
-                                    $row_number = 1;
-
-                                    // Create a map of user IDs to user names for quick lookup
-                                    $userMap = $users->pluck('name', 'id')->toArray();
-                                @endphp
-
-                                @for ($i = 0; $i < count($measurement_1); $i++)
-                                    <tr>
-                                        <td class="w-10">{{ $row_number++ }}</td>
-                                        <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
-                                        <td class="w-20">
-                                            {{ $userMap[$measurement_2[$i]] ?? 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
-                                        <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
-                                    </tr>
-                                @endfor
-                            </tbody>
-                        </table> --}}
-            </div>
-
-
-
-            {{-- <div class="border-table">
-                    <div class="block-head">
-                        Work Group Attachmentss
-                    </div>
-                    <table>
-                        <tr class="table_bg">
-                            <th class="w-20">Sr.No.</th>
-                            <th class="w-60">File No</th>
-                        </tr>
-                        @if ($data->reference)
-                            @foreach (json_decode($data->reference) as $key => $file)
-                                <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a></td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td class="w-20">1</td>
-                                <td class="w-60">Not Applicable</td>
-                            </tr>
-                        @endif
-                    </table>
-                    </div> 
-
-
-            <div class="block">
-                <div class="block-head">Risk Assessment</div>
-
-                <label class="head-number" for="Root Cause Methodology">Root Cause Methodology</label>
-                <div class="div-data">
-                    @if ($data->root_cause_methodology)
-                        {{ str_replace(',', ', ', $data->root_cause_methodology) }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
-
-                <label class="head-number" for="Other (Root Cause Methodology)">Other (Root Cause Methodology)</label>
-                <div class="div-data">
-                    @if ($data->other_root_cause_methodology)
-                        {{ $data->other_root_cause_methodology }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>--}}
 
 
                  <table>
-                        
-
                     <tr>
                         <th class="w-20">Root Cause Methodology</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->root_cause_methodology)
                                 {{ str_replace(',', ', ', $data->root_cause_methodology) }}
                             @else
@@ -895,9 +686,9 @@
 
                         </td>
                     </tr>
-                       <tr>
+                    <tr>
                         <th class="w-20">Other (Root Cause Methodology)</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->other_root_cause_methodology)
                                 {{ $data->other_root_cause_methodology }}
                             @else
@@ -906,496 +697,176 @@
 
                         </td>
                     </tr>
-
-            </table>
-                {{-- <table>
-                    <tr>
-                        <th class="w-20">Root Cause Methodology</th>
-                        <td class="w-30">
-                            @if ($data->root_cause_methodology)
-                                {{ $data->root_cause_methodology }}
-                            @else
-                                Not Applicable
-                            @endif
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Other (Root Cause Methodology)</th>
-                        <td class="w-30">
-                            @if ($data->other_root_cause_methodology)
-                                {{ $data->other_root_cause_methodology }}
-                            @else
-                                Not Applicable
-                            @endif
-
-                        </td>
-                    </tr>
-                </table> --}}
-
-                {{-- <div class="block-head"> Failure Mode And Effect Analysis </div> --}}
+                </table>
 
                 <div class="block-head">Failure Mode and Effect Analysis</div>
 
-@php
-    $riskFactors = !empty($riskEffectAnalysis->risk_factor) ? unserialize($riskEffectAnalysis->risk_factor) : [];
-    $causes = unserialize($riskEffectAnalysis->problem_cause);
-    $existingControls = unserialize($riskEffectAnalysis->existing_risk_control);
-    $initialS = unserialize($riskEffectAnalysis->initial_severity);
-     $initialD = unserialize($riskEffectAnalysis->initial_detectability);
-    $initialP = unserialize($riskEffectAnalysis->initial_probability);
-   
-    $initialRPN = unserialize($riskEffectAnalysis->initial_rpn);
-    $recommendations = unserialize($riskEffectAnalysis->risk_control_measure);
-    $residualS = unserialize($riskEffectAnalysis->residual_severity);
-    $residualP = unserialize($riskEffectAnalysis->residual_probability);
-    $residualD = unserialize($riskEffectAnalysis->residual_detectability);
-    $residualRPN = unserialize($riskEffectAnalysis->residual_rpn);
-    $category = unserialize($riskEffectAnalysis->risk_acceptance);
-    $accepted = unserialize($riskEffectAnalysis->risk_acceptance2);
-    $traceability = unserialize($riskEffectAnalysis->mitigation_proposal);
-@endphp
+            @php
+                $riskFactors = !empty($riskEffectAnalysis->risk_factor) ? unserialize($riskEffectAnalysis->risk_factor) : [];
+                $causes = unserialize($riskEffectAnalysis->problem_cause);
+                $existingControls = unserialize($riskEffectAnalysis->existing_risk_control);
+                $initialS = unserialize($riskEffectAnalysis->initial_severity);
+                $initialD = unserialize($riskEffectAnalysis->initial_detectability);
+                $initialP = unserialize($riskEffectAnalysis->initial_probability);
+            
+                $initialRPN = unserialize($riskEffectAnalysis->initial_rpn);
+                $recommendations = unserialize($riskEffectAnalysis->risk_control_measure);
+                $residualS = unserialize($riskEffectAnalysis->residual_severity);
+                $residualP = unserialize($riskEffectAnalysis->residual_probability);
+                $residualD = unserialize($riskEffectAnalysis->residual_detectability);
+                $residualRPN = unserialize($riskEffectAnalysis->residual_rpn);
+                $category = unserialize($riskEffectAnalysis->risk_acceptance);
+                $accepted = unserialize($riskEffectAnalysis->risk_acceptance2);
+                $traceability = unserialize($riskEffectAnalysis->mitigation_proposal);
+            @endphp
 
-@if (count($riskFactors))
+            @if (count($riskFactors))
 
-{{-- ===================== Part 1: Risk Identification ===================== --}}
-<div class="table-responsive">
-    
-    <table class="tableFMEA">
-        <thead>
-            <tr class="table_bg">
-                <th class="thFMEA">Sr.No</th>
-                <th class="thFMEA">Activity</th>
-                <th class="thFMEA">Possible Risk/Failure (Identified Risk)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($riskFactors as $key => $riskFactor)
-                <tr>
-                    <td class="tdFMEA">{{ $key + 1 }}</td>
-                    <td class="tdFMEA">{{ $riskFactor }}</td>
-                    <td class="tdFMEA">{{ $causes[$key] ?? null }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+            {{-- ===================== Part 1: Risk Identification ===================== --}}
+            <div class="table-responsive">
+                
+                <table class="tableFMEA">
+                    <thead>
+                        <tr class="table_bg">
+                            <th class="thFMEA">Sr.No</th>
+                            <th class="thFMEA">Activity</th>
+                            <th class="thFMEA">Possible Risk/Failure (Identified Risk)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($riskFactors as $key => $riskFactor)
+                            <tr>
+                                <td class="tdFMEA">{{ $key + 1 }}</td>
+                                <td class="tdFMEA">{{ $riskFactor }}</td>
+                                <td class="tdFMEA">{{ $causes[$key] ?? null }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
-{{-- ===================== Part 2: Risk Analysis and Initial Evaluation ===================== --}}
-<div class="table-responsive">
-    
-    <table class="tableFMEA">
-        <thead>
-            <tr class="table_bg">
-                <th class="thFMEA">Consequences of Risk/Potential Causes</th>
-                <th class="thFMEA">Severity (S)</th>
-                <th class="thFMEA">Probability (P)</th>
-                <th class="thFMEA">Detection (D)</th>
-                <th class="thFMEA">Risk Level (RPN)</th>
-                <th class="thFMEA">Control Measures recommended</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($riskFactors as $key => $riskFactor)
-                <tr>
-                    <td class="tdFMEA">{{ $existingControls[$key] ?? null }}</td>
-                    <td class="tdFMEA">{{ $initialS[$key] ?? null }}</td>
-                  
-                    <td class="tdFMEA">{{ $initialD[$key] ?? null }}</td>
-                      <td class="tdFMEA">{{ $initialP[$key] ?? null }}</td>
-                    <td class="tdFMEA">{{ $initialRPN[$key] ?? null }}</td>
-                    <td class="tdFMEA">{{ $recommendations[$key] ?? null }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+            {{-- ===================== Part 2: Risk Analysis and Initial Evaluation ===================== --}}
+            <div class="table-responsive">
+                
+                <table class="tableFMEA">
+                    <thead>
+                        <tr class="table_bg">
+                            <th class="thFMEA">Consequences of Risk/Potential Causes</th>
+                            <th class="thFMEA">Severity (S)</th>
+                            <th class="thFMEA">Probability (P)</th>
+                            <th class="thFMEA">Detection (D)</th>
+                            <th class="thFMEA">Risk Level (RPN)</th>
+                            <th class="thFMEA">Control Measures recommended</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($riskFactors as $key => $riskFactor)
+                            <tr>
+                                <td class="tdFMEA">{{ $existingControls[$key] ?? null }}</td>
+                                <td class="tdFMEA">{{ $initialS[$key] ?? null }}</td>
+                            
+                                <td class="tdFMEA">{{ $initialD[$key] ?? null }}</td>
+                                <td class="tdFMEA">{{ $initialP[$key] ?? null }}</td>
+                                <td class="tdFMEA">{{ $initialRPN[$key] ?? null }}</td>
+                                <td class="tdFMEA">{{ $recommendations[$key] ?? null }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
-{{-- ===================== Part 3: Post-Control Evaluation ===================== --}}
-<div class="table-responsive">
-    
-    <table class="tableFMEA">
-        <thead>
-            <tr class="table_bg">
-                <th class="thFMEA">Severity (S)</th>
-                <th class="thFMEA">Probability (P)</th>
-                <th class="thFMEA">Detection (D)</th>
-                <th class="thFMEA">Risk Level (RPN)</th>
-                <th class="thFMEA">Category of Risk Level</th>
-                <th class="thFMEA">Risk Acceptance (Y/N)</th>
-                <th class="thFMEA">Traceability Document</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($riskFactors as $key => $riskFactor)
-                <tr>
-                    <td class="tdFMEA">{{ $residualS[$key] ?? null }}</td>
-                    <td class="tdFMEA">{{ $residualP[$key] ?? null }}</td>
-                    <td class="tdFMEA">{{ $residualD[$key] ?? null }}</td>
-                    <td class="tdFMEA">{{ $residualRPN[$key] ?? null }}</td>
-                    <td class="tdFMEA">{{ $category[$key] ?? null }}</td>
-                    <td class="tdFMEA">{{ $accepted[$key] ?? null }}</td>
-                    <td class="tdFMEA">{{ $traceability[$key] ?? null }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+            {{-- ===================== Part 3: Post-Control Evaluation ===================== --}}
+            <div class="table-responsive">
+                
+                <table class="tableFMEA">
+                    <thead>
+                        <tr class="table_bg">
+                            <th class="thFMEA">Severity (S)</th>
+                            <th class="thFMEA">Probability (P)</th>
+                            <th class="thFMEA">Detection (D)</th>
+                            <th class="thFMEA">Risk Level (RPN)</th>
+                            <th class="thFMEA">Category of Risk Level</th>
+                            <th class="thFMEA">Risk Acceptance (Y/N)</th>
+                            <th class="thFMEA">Traceability Document</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($riskFactors as $key => $riskFactor)
+                            <tr>
+                                <td class="tdFMEA">{{ $residualS[$key] ?? null }}</td>
+                                <td class="tdFMEA">{{ $residualP[$key] ?? null }}</td>
+                                <td class="tdFMEA">{{ $residualD[$key] ?? null }}</td>
+                                <td class="tdFMEA">{{ $residualRPN[$key] ?? null }}</td>
+                                <td class="tdFMEA">{{ $category[$key] ?? null }}</td>
+                                <td class="tdFMEA">{{ $accepted[$key] ?? null }}</td>
+                                <td class="tdFMEA">{{ $traceability[$key] ?? null }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
-@else
-    <p>No data available.</p>
-@endif
+            @else
+                <p>No data available.</p>
+            @endif
 
                 <!-------------------- new data -->
 
-
-               {{-- <div class="border-table">
-                 <table>
-
-
-                    <thead>
-                        <tr class="table_bg">
-                            <th class="w-20">Row #</th>
-                            <th class="w-20">Activity</th>
-                            <th class="w-20">Possible Risk/Failure (Identified Risk)</th>
-                            <th class="w-20">Consequences of Risk/Potential Causes</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            // Unserialize data and ensure it's an array
-                            $measurement_1 = is_array(unserialize($riskEffectAnalysis->risk_factor)) ? unserialize($riskEffectAnalysis->risk_factor) : [];
-                            $measurement_2 = is_array(unserialize($riskEffectAnalysis->problem_cause)) ? unserialize($riskEffectAnalysis->problem_cause) : [];
-                            $measurement_3 = is_array(unserialize($riskEffectAnalysis->existing_risk_control)) ? unserialize($riskEffectAnalysis->existing_risk_control) : [];
-                            $row_number = 1;
-                        @endphp
-
-                        <tbody>
-                            @for ($i = 0; $i < count($measurement_1); $i++)
-                                <tr>
-                                    <td class="w-10">{{ $row_number++ }}</td>
-                                    <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
-                                    <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
-                                    <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
-                                </tr>
-                            @endfor
-                        </tbody>
-                    </tbody>
-                </table>
-               </div>
-
-                <table>
-                    <thead>
-                        <tr class="table_bg">
-                            <th class="w-10">Row #</th>
-                            <th class="w-20">Initial Severity (S)</th>
-                            <th class="w-20">Initial Probability (P)</th>
-                            <th class="w-20">Initial Detectability (D)</th>
-                            <th class="w-20">RPN</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            // Unserialize data and ensure each is an array
-                            $measurement_4 = is_array(unserialize($riskEffectAnalysis->initial_severity)) ? unserialize($riskEffectAnalysis->initial_severity) : [];
-                            $measurement_5 = is_array(unserialize($riskEffectAnalysis->initial_probability)) ? unserialize($riskEffectAnalysis->initial_probability) : [];
-                            $measurement_6 = is_array(unserialize($riskEffectAnalysis->initial_detectability)) ? unserialize($riskEffectAnalysis->initial_detectability) : [];
-                            $measurement_7 = is_array(unserialize($riskEffectAnalysis->initial_rpn)) ? unserialize($riskEffectAnalysis->initial_rpn) : [];
-                            $row_number = 1; // Reset row number
-                        @endphp
-
-                        @for ($i = 0; $i < count($measurement_4); $i++)
-                            <tr>
-                                <td class="w-10">{{ $row_number++ }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_5[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
-                            </tr>
-                        @endfor
-                    </tbody>
-
-                </table>
-
-                <table>
-                    <thead>
-                        <tr class="table_bg">
-                            <th class="w-10">Row #</th>
-                            <th class="w-20">Control Measures recommended/ Risk mitigation proposed</th>
-                            <th class="w-20">Residual Severity (S)</th>
-                            <th class="w-20">Residual Probability (P)</th>
-                            <th class="w-20">Residual Detectability (D)</th>
-                            <th class="w-20">Risk Level (RPN)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $measurement_8 = unserialize($riskEffectAnalysis->risk_control_measure);
-                            $measurement_9 = unserialize($riskEffectAnalysis->residual_severity);
-                            $measurement_10 = unserialize($riskEffectAnalysis->residual_probability);
-                            $measurement_11 = unserialize($riskEffectAnalysis->residual_detectability);
-                            $measurement_12 = unserialize($riskEffectAnalysis->residual_rpn);
-                            $row_number = 1; // Reset row number
-                        @endphp
-
-                        @if (is_array($measurement_8))
-                            @for ($i = 0; $i < count($measurement_8); $i++)
-                                <tr>
-                                    <td class="w-10">{{ $row_number++ }}</td>
-                                    <td class="w-20">{{ htmlspecialchars($measurement_8[$i] ?? 'Not Applicable') }}
-                                    </td>
-                                    <td class="w-20">{{ htmlspecialchars($measurement_9[$i] ?? 'Not Applicable') }}
-                                    </td>
-                                    <td class="w-20">{{ htmlspecialchars($measurement_10[$i] ?? 'Not Applicable') }}
-                                    </td>
-                                    <td class="w-20">{{ htmlspecialchars($measurement_11[$i] ?? 'Not Applicable') }}
-                                    </td>
-                                    <td class="w-20">{{ htmlspecialchars($measurement_12[$i] ?? 'Not Applicable') }}
-                                    </td>
-                                </tr>
-                            @endfor
-                        @else
-                            <tr>
-                                <td colspan="6">No measurements available</td>
-                            </tr>
-                        @endif
-
-                    </tbody>
-                </table>
-
-                <table>
-                    <thead>
-                        <tr class="table_bg">
-                            <th class="w-10">Row #</th>
-                            <th class="w-20">Category of Risk Level (Low, Medium, and High)</th>
-                            <th class="w-20">Risk Acceptance (Y/N)</th>
-                            <th class="w-20">Traceability document</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @php
-                            // Unserialize data and ensure each variable is an array
-                            $measurement_13 = is_array(unserialize($riskEffectAnalysis->risk_acceptance)) ? unserialize($riskEffectAnalysis->risk_acceptance) : [];
-                            $measurement_14 = is_array(unserialize($riskEffectAnalysis->risk_acceptance2)) ? unserialize($riskEffectAnalysis->risk_acceptance2) : [];
-                            $measurement_15 = is_array(unserialize($riskEffectAnalysis->mitigation_proposal)) ? unserialize($riskEffectAnalysis->mitigation_proposal) : [];
-
-                            // Calculate the maximum count of all arrays
-                            $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
-
-                            // Reset row number
-                            $row_number = 1;
-                        @endphp
-
-                        @for ($i = 0; $i < $max_count; $i++)
-                            <tr>
-                                <td class="w-10">{{ $row_number++ }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_13[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_14[$i] ?? 'Not Applicable') }}</td>
-                                <td class="w-20">{{ htmlspecialchars($measurement_15[$i] ?? 'Not Applicable') }}</td>
-                            </tr>
-                        @endfor
-                    </tbody>
-
-                </table> --}}
-
-
-
-                {{-- <div class="block-head">
-                    Fishbone or Ishikawa Diagram
+               
+            <div class="why-why-chart-container">
+                <div class="block-head">
+                    <strong>Why-Why Chart</strong>
                 </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Measurement</th>
-                        <td class="w-80">
-                            @php
-                            $measurement = unserialize($riskgrdfishbone->measurement);
-                            @endphp
 
-                            @if (is_array($measurement))
-                            @foreach ($measurement as $value)
-                            {{ htmlspecialchars($value) }}
-                            @endforeach
-                            @elseif(is_string($measurement))
-                            {{ htmlspecialchars($measurement) }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Materials</th>
-                        <td class="w-80">
-                            @php
-                            $materials = unserialize($riskgrdfishbone->materials);
-                            @endphp
-
-                            @if (is_array($materials))
-                            @foreach ($materials as $value)
-                            {{ htmlspecialchars($value) }}
-                            @endforeach
-                            @elseif(is_string($materials))
-                            {{ htmlspecialchars($materials) }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">Methods</th>
-                        <td class="w-80">
-                            @php
-                            $methods = unserialize($riskgrdfishbone->methods);
-                            @endphp
-
-                            @if (is_array($methods))
-                            @foreach ($methods as $value)
-                            {{ htmlspecialchars($value) }}
-                            @endforeach
-                            @elseif(is_string($methods))
-                            {{ htmlspecialchars($methods) }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Environment</th>
-                        <td class="w-80">
-                            @php
-                            $environment = unserialize($riskgrdfishbone->environment);
-                            @endphp
-
-                            @if (is_array($environment))
-                            @foreach ($environment as $value)
-                            {{ htmlspecialchars($value) }}
-                            @endforeach
-                            @elseif(is_string($environment))
-                            {{ htmlspecialchars($environment) }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Manpower</th>
-                        <td class="w-80">
-                            @php
-                            $manpower = unserialize($riskgrdfishbone->manpower);
-                            @endphp
-
-                            @if (is_array($manpower))
-                            @foreach ($manpower as $value)
-                            {{ htmlspecialchars($value) }}
-                            @endforeach
-                            @elseif(is_string($manpower))
-                            {{ htmlspecialchars($manpower) }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Machine</th>
-                        <td class="w-80">
-                            @php
-                            $machine = unserialize($riskgrdfishbone->machine);
-                            @endphp
-
-                            @if (is_array($machine))
-                            @foreach ($machine as $value)
-                            {{ htmlspecialchars($value) }}
-                            @endforeach
-                            @elseif(is_string($machine))
-                            {{ htmlspecialchars($machine) }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Problem Statement1</th>
-                        <td class="w-80">
-                            @if ($riskgrdfishbone->problem_statement)
-
-                            {{ $riskgrdfishbone->problem_statement }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
-
-                    </tr>
-                </table> --}}
-
-                <div class="why-why-chart-container">
-    <div class="block-head">
-        <strong>Why-Why Chart</strong>
-    </div>
-
-    <table class="table table-bordered">
-        <tbody>
-            <tr class="problem-statement">
-                <th>Problem Statement :</th>
-                <td>
-                    {{ $riskgrdwhy_chart->why_problem_statement ?? 'Not Applicable' }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div>
-        @php
-            $why_data = !empty($riskgrdwhy_chart->why_data) ? unserialize($riskgrdwhy_chart->why_data) : [];
-        @endphp
-
-        @if (is_array($why_data) && count($why_data) > 0)
-            @foreach ($why_data as $index => $why)
                 <table class="table table-bordered">
                     <tbody>
-                        <tr>
-                            <th class="why-label">Why {{ $index + 1 }}</th>
-                            <td>{{ $why['question'] ?? 'Not Applicable' }}</td>
-                        </tr>
-                        <tr>
-                            <th class="answer-label">Answer {{ $index + 1 }}</th>
-                            <td>{{ $why['answer'] ?? 'Not Applicable' }}</td>
+                        <tr class="problem-statement">
+                            <th class="w-20">Problem Statement :</th>
+                            <td class="w-80">
+                                {{ $riskgrdwhy_chart->why_problem_statement ?? 'Not Applicable' }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-            @endforeach
-        @else
-            <p class="text-muted">No Why-Why Data Available</p>
-        @endif
-    </div>
 
-    <div id="root-cause-container">
-        <table class="table table-bordered">
-            <tbody>
-                <tr class="root-cause">
-                    <th>Root Cause :</th>
-                    <td>
-                        {{ $riskgrdwhy_chart->why_root_cause ?? 'Not Applicable' }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</diV>
+                <div>
+                    @php
+                        $why_data = !empty($riskgrdwhy_chart->why_data) ? unserialize($riskgrdwhy_chart->why_data) : [];
+                    @endphp
 
-       
+                    @if (is_array($why_data) && count($why_data) > 0)
+                        @foreach ($why_data as $index => $why)
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th class="why-label">Why {{ $index + 1 }}</th>
+                                        <td>{{ $why['question'] ?? 'Not Applicable' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="answer-label">Answer {{ $index + 1 }}</th>
+                                        <td>{{ $why['answer'] ?? 'Not Applicable' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        @endforeach
+                    @else
+                        <p class="text-muted">No Why-Why Data Available</p>
+                    @endif
+                </div>
 
-                <!-- <table>
-                    <tr>
-                        <th class="w-20">Risk Assessment Summary</th>
-                        <td class="w-80">
-
-                          @if ($data->investigation_summary)
-                                {!! $data->investigation_summary !!}
-                            @else
-                                Not Applicable
-                            @endif
-
-                         </td>
-                        </tr>
-
-                </table> -->
-
+                <div id="root-cause-container">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr class="root-cause">
+                                <th class="w-20">Root Cause :</th>
+                                <td class="w-80">
+                                    {{ $riskgrdwhy_chart->why_root_cause ?? 'Not Applicable' }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </diV>
 
                 <div class="border">
                         <!-- <label class="head-number" for="Risk Assessment Summary">Risk Assessment Summary</label>
@@ -1454,185 +925,31 @@
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
-                            <th class="w-60">Attachment</th>
+                            <th class="w-80">Attachment</th>
                         </tr>
                         @if ($data->risk_ana_attach)
                             @foreach (json_decode($data->risk_ana_attach) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a></td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td class="w-20">1</td>
-                                <td class="w-60">Not Applicable</td>
+                                <td class="w-80">Not Applicable</td>
                             </tr>
                         @endif
                     </table>
                 </div>
 
             </div>
-
-
-            {{-- <div class="block">
-                <div class="block-head">
-                    Risk Analysis
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Severity Rate</th>
-                        <td class="w-80">
-                            <div>
-                                @if ($data->severity_rate)
-                                    @switch($data->severity_rate)
-                                        @case(1)
-                                            1-Insignificant
-                                        @break
-
-                                        @case(2)
-                                            2-Minor
-                                        @break
-
-                                        @case(3)
-                                            3-Major
-                                        @break
-
-                                        @case(4)
-                                            4-Critical
-                                        @break
-
-                                        @case(5)
-                                            5-Catastrophic
-                                        @break
-
-                                        @default
-                                            Not Applicable
-                                    @endswitch
-                                @else
-                                    Not Applicable
-                                @endif
-                            </div>
-                        </td>
-
-                        <th class="w-20">Occurrence</th>
-                        <td class="w-80">
-                            <div>
-                                @if ($data->occurrence)
-                                    @switch($data->occurrence)
-                                        @case(1)
-                                            1-Very rare
-                                        @break
-
-                                        @case(2)
-                                            2-Unlikely
-                                        @break
-
-                                        @case(3)
-                                            3-Possibly
-                                        @break
-
-                                        @case(4)
-                                            4-Likely
-                                        @break
-
-                                        @case(5)
-                                            5-Almost certain (every time)
-                                        @break
-
-                                        @default
-                                            Not Applicable
-                                    @endswitch
-                                @else
-                                    Not Applicable
-                                @endif
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">Detection</th>
-                        <td class="w-80">
-                            <div>
-                                @if ($data->detection)
-                                    @switch($data->detection)
-                                        @case(5)
-                                            5-Not detectable
-                                        @break
-
-                                        @case(4)
-                                            4-Unlikely to detect
-                                        @break
-
-                                        @case(3)
-                                            3-Possible to detect
-                                        @break
-
-                                        @case(2)
-                                            2-Likely to detect
-                                        @break
-
-                                        @case(1)
-                                            1-Always detected
-                                        @break
-
-                                        @default
-                                            Not Applicable
-                                    @endswitch
-                                @else
-                                    Not Applicable
-                                @endif
-                            </div>
-                        </td>
-                        <th class="w-20">RPN</th>
-                        <td class="w-80">
-                            <div>
-                                @if ($data->rpn)
-                                    {{ $data->rpn }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </div>
-                        </td>
-                    </tr>
-
-                </table>
-            </div> --}}
-
-            {{-- <div class="border">
-                        <table>
-                        <tr>
-                            <th class="w-20">Comments</th>
-                            <td class="w-80">@if ($data->comments2){{ $data->comments2 }}@else Not Applicable @endif</td>
-                        </tr>
-                        </table>
-                    </div> --}}
-
-
-
                    
 
             <div class="block">
                  <div class="block-head">HOD/Designee</div>
-               {{-- <table>
-                    <tr>
-                        <th class="w-20">CFT Reviewer Selection</th>
-                        <td class="w-80">{!! Helpers::getInitiatorName($data->reviewer_person_value) ?? 'Not Applicable' !!}</td>
-                    </tr>
-
-                </table> --}}
-
-                <!-- <label class="head-number" for="HOD/Designee Review Comment">HOD/Designee Review Comment</label>
-                <div class="div-data">
-                    @if ($data->hod_des_rev_comm)
-                        {{ $data->hod_des_rev_comm }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div> -->
+            
                  <table>
                     <tr>
                         <th class="w-20">HOD/Designee Review Comment</th>
@@ -1653,20 +970,20 @@
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">Sr. No.</th>
-                            <th class="w-60">Attachment</th>
+                            <th class="w-80">Attachment</th>
                         </tr>
                         @if ($data->hod_design_attach)
                             @foreach (json_decode($data->hod_design_attach) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                    <td class="w-80"><a href="{{ asset('upload/' . $file) }}"
                                             target="_blank"><b>{{ $file }}</b></a></td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td class="w-20">1</td>
-                                <td class="w-60">Not Applicable</td>
+                                <td class="w-80">Not Applicable</td>
                             </tr>
                         @endif
                     </table>
@@ -1683,7 +1000,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Review Required?</th>
-                         <td class="w-80">
+                         <td class="w-30">
                             @if ($data1->Production_Table_Review)
                                 {{ $data1->Production_Table_Review }}
                             @else
@@ -1692,7 +1009,7 @@
                         </td>
 
                         <th class="w-20">Production Tablet/Capsule/Powder Person</th>
-                         <td class="w-80">
+                         <td class="w-30">
                             @if ($data1->Production_Table_Person)
                                 {{ $data1->Production_Table_Person }}
                             @else
@@ -1700,10 +1017,12 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+                <table>    
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Production Tablet/Capsule/Powder)</th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Production_Table_Assessment)
                                 {{ strip_tags($data1->Production_Table_Assessment) }}
                             @else
@@ -1712,23 +1031,11 @@
                         </td>
                     </tr>
 
-                    {{-- Uncomment this block if you want to include Feedback --}}
-                    {{-- 
-                    <tr>
-                        <th class="w-20">Production Tablet/Capsule/Powder Feedback</th>
-                        <td colspan="3">
-                            @if ($data1->Production_Table_Feedback)
-                                {{ strip_tags($data1->Production_Table_Feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    --}}
-
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Production_Table_By)
                                 {{ $data1->Production_Table_By }}
                             @else
@@ -1737,7 +1044,7 @@
                         </td>
 
                         <th class="w-20">Production Tablet/Capsule/Powder Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Production_Table_On)
                                 {{ Helpers::getdateFormat($data1->Production_Table_On) }}
                             @else
@@ -1779,16 +1086,15 @@
                 <table>
                     <tr>
                         <th class="w-20">Production Injection Review Required </th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Production_Injection_Review)
                                 {{ $data1->Production_Injection_Review }}
                             @else
                                 Not Applicable  
                             @endif
                         </td>
-                        {{-- <td class="w-30"> <div> @if ($data1->Production_Review)  {{ $data1->Production_Review }} @else Not Applicable  @endif </div>  </td> --}}
                         <th class="w-20">Production Injection Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Production_Injection_Person)
                                 {{ $data1->Production_Injection_Person }}
                             @else
@@ -1797,12 +1103,11 @@
                         </td>
                     </tr>
 
-                
-                   
-
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Impact Assesment(By Production Injection)</th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Production_Injection_Assessment)
                                 {{ strip_tags($data1->Production_Injection_Assessment) }}
                             @else
@@ -1810,22 +1115,12 @@
                             @endif
                         </td>
                     </tr>
-               
-                    {{--<tr>
-                        <th class="w-20">Production Injection Feedback(By Production Injection) </th>
-                        <td class="w-80">
-                            @if ($data1->Production_Injection_Feedback)
-                                {{ strip_tags($data1->Production_Injection_Feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
 
-                    </tr>--}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Production Injection Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Production_Injection_By)
                                 {{ $data1->Production_Injection_By }}
                             @else
@@ -1833,7 +1128,7 @@
                             @endif
                         </td>
                         <th class="w-20">Production Injection Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ( $data1->Production_Injection_On)
                                 {{ Helpers::getdateFormat($data1->Production_Injection_On) }}
                             @else
@@ -1895,7 +1190,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Impact Assessment (By Research & Development)</th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->ResearchDevelopment_assessment)
                                 {{ strip_tags($data1->ResearchDevelopment_assessment) }}
                             @else
@@ -1905,16 +1200,6 @@
                     </tr>
                 </table>    
 
-                    {{-- <tr>
-                        <th class="w-20">Reasearch & Development Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->ResearchDevelopment_feedback)
-                                {{ strip_tags($data1->ResearchDevelopment_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
                 <table>
                     <tr>
                         <th class="w-20">Research & Development Review Completed By</th>
@@ -1967,7 +1252,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Human Resource Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Human_Resource_review)
                                 {{ $data1->Human_Resource_review }}
                             @else
@@ -1975,7 +1260,7 @@
                             @endif
                         </td>
                         <th class="w-20">Human Resource Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Human_Resource_person)
                                 {{ $data1->Production_Injection_Person }}
                             @else
@@ -1984,9 +1269,11 @@
                         </td>
                     </tr>
 
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Impact Assessment (By Human Resource)</th>
-                         <td colspan="3">
+                         <td class="w-80" colspan="3">
                             @if ($data1->Human_Resource_assessment)
                                 {{ strip_tags($data1->Human_Resource_assessment) }}
                             @else
@@ -1995,20 +1282,11 @@
                         </td>
                     </tr>
 
-                    {{-- <tr>
-                        <th class="w-20">Human Resource Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Human_Resource_feedback)
-                                {{ strip_tags($data1->Human_Resource_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Human Resource Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Human_Resource_by)
                                 {{ $data1->Human_Resource_by }}
                             @else
@@ -2016,7 +1294,7 @@
                             @endif
                         </td>
                         <th class="w-20">Human Resource Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Human_Resource_on)
                                 {{ Helpers::getdateFormat($data1->Human_Resource_on) }}
                             @else
@@ -2057,7 +1335,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Corporate Quality Assurance Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->CorporateQualityAssurance_Review)
                                 {{ $data1->CorporateQualityAssurance_Review }}
                             @else
@@ -2065,7 +1343,7 @@
                             @endif
                         </td>
                         <th class="w-20">Corporate Quality Assurance Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->CorporateQualityAssurance_person)
                                 {{ $data1->CorporateQualityAssurance_person }}
                             @else
@@ -2074,9 +1352,11 @@
                         </td>
                     </tr>
 
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Impact Assessment (By Corporate Quality Assurance)</th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->CorporateQualityAssurance_assessment)
                                 {{ strip_tags($data1->CorporateQualityAssurance_assessment) }}
                             @else
@@ -2084,21 +1364,12 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Corporate Quality Assurance Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->CorporateQualityAssurance_feedback)
-                                {{ strip_tags($data1->CorporateQualityAssurance_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
+                </table>
+                <table>    
 
                     <tr>
                         <th class="w-20">Corporate Quality Assurance Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->CorporateQualityAssurance_by)
                                 {{ $data1->CorporateQualityAssurance_by }}
                             @else
@@ -2106,7 +1377,7 @@
                             @endif
                         </td>
                         <th class="w-20">Corporate Quality Assurance Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->CorporateQualityAssurance_on)
                                 {{ Helpers::getdateFormat($data1->CorporateQualityAssurance_on) }}
                             @else
@@ -2147,7 +1418,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Store Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Store_Review)
                                 {{ $data1->Store_Review }}
                             @else
@@ -2155,7 +1426,7 @@
                             @endif
                         </td>
                         <th class="w-20">Store Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Store_person)
                                 {{ $data1->Store_person }}
                             @else
@@ -2163,10 +1434,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Impact Assessment (By Store)</th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Store_assessment)
                                 {{ strip_tags($data1->Store_assessment) }}
                             @else
@@ -2174,21 +1446,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Store Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Store_feedback)
-                                {{ strip_tags($data1->Store_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Store Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Store_by)
                                 {{ $data1->Store_by }}
                             @else
@@ -2196,7 +1458,7 @@
                             @endif
                         </td>
                         <th class="w-20">Store Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Store_on)
                                 {{ Helpers::getdateFormat($data1->Store_on) }}
                             @else
@@ -2237,7 +1499,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Quality Control Review Required ?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Quality_review)
                                 {{ $data1->Quality_review }}
                             @else
@@ -2245,7 +1507,7 @@
                             @endif
                         </td>
                         <th class="w-20">Quality Control Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Quality_Control_Person)
                                 {{ $data1->Quality_Control_Person }}
                             @else
@@ -2253,10 +1515,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Impact Assessment (By Quality Control)</th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Quality_Control_assessment)
                                 {{ strip_tags($data1->Quality_Control_assessment) }}
                             @else
@@ -2264,21 +1527,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Quality Control Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Quality_Control_feedback)
-                                {{ strip_tags($data1->Quality_Control_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Quality Control Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Quality_Control_by)
                                 {{ $data1->Quality_Control_by }}
                             @else
@@ -2286,7 +1539,7 @@
                             @endif
                         </td>
                         <th class="w-20">Quality Control Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Quality_Control_on)
                                 {{ Helpers::getdateFormat($data1->Quality_Control_on) }}
                             @else
@@ -2328,7 +1581,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Quality Assurance Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Quality_Assurance_Review)
                                 {{ $data1->Quality_Assurance_Review }}
                             @else
@@ -2336,7 +1589,7 @@
                             @endif
                         </td>
                         <th class="w-20">Quality Assurance Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->QualityAssurance_person)
                                 {{ $data1->QualityAssurance_person }}
                             @else
@@ -2344,10 +1597,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Impact Assessment (By Quality assurance)</th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->QualityAssurance_assessment)
                                 {{ strip_tags($data1->QualityAssurance_assessment) }}
                             @else
@@ -2355,21 +1609,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Quality Assurance Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->QualityAssurance_feedback)
-                                {{ strip_tags($data1->QualityAssurance_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Quality Assurance Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->QualityAssurance_by)
                                 {{ $data1->QualityAssurance_by }}
                             @else
@@ -2377,7 +1621,7 @@
                             @endif
                         </td>
                         <th class="w-20">Quality Assurance Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->QualityAssurance_on)
                                 {{ Helpers::getdateFormat($data1->QualityAssurance_on) }}
                             @else
@@ -2414,14 +1658,11 @@
                     </div>
                 </table>
 
-
-
-
                 <div class="block-head">Regulatory Affair</div>
                 <table>
                     <tr>
                         <th class="w-20">Regulatory Affair Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->RegulatoryAffair_Review)
                                 {{ $data1->RegulatoryAffair_Review }}
                             @else
@@ -2429,7 +1670,7 @@
                             @endif
                         </td>
                         <th class="w-20">Regularory Affair Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->RegulatoryAffair_person)
                                 {{ $data1->RegulatoryAffair_person }}
                             @else
@@ -2437,10 +1678,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Impact Assessment (Regulatory Affair)</th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->RegulatoryAffair_assessment)
                                 {{ strip_tags($data1->RegulatoryAffair_assessment) }}
                             @else
@@ -2448,21 +1690,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Regulatory Affair Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->RegulatoryAffair_feedback)
-                                {{ strip_tags($data1->RegulatoryAffair_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Regulatory Affair Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->RegulatoryAffair_by)
                                 {{ $data1->RegulatoryAffair_by }}
                             @else
@@ -2470,7 +1702,7 @@
                             @endif
                         </td>
                         <th class="w-20">Regulatory Affair Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->RegulatoryAffair_on)
                                 {{ Helpers::getdateFormat($data1->RegulatoryAffair_on) }}
                             @else
@@ -2513,7 +1745,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Production Liquid/External preparation Review Required ?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->ProductionLiquid_Review)
                                 {{ $data1->ProductionLiquid_Review }}
                             @else
@@ -2521,7 +1753,7 @@
                             @endif
                         </td>
                         <th class="w-20">Production Liquid/External preparation Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->ProductionLiquid_person)
                                 {{ $data1->ProductionLiquid_person }}
                             @else
@@ -2529,10 +1761,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Impact Assessment (By Production Liquid/External  Preparation)</th>
-                         <td colspan="3">
+                         <td class="w-80" colspan="3">
                             @if ($data1->ProductionLiquid_assessment)
                                 {{ strip_tags($data1->ProductionLiquid_assessment) }}
                             @else
@@ -2540,22 +1773,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Production Liquid/External Preparation Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->ProductionLiquid_feedback)
-                                {{ strip_tags($data1->ProductionLiquid_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Production Liquid/External preparation Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->ProductionLiquid_by)
                                 {{ $data1->ProductionLiquid_by }}
                             @else
@@ -2563,7 +1785,7 @@
                             @endif
                         </td>
                         <th class="w-20">Production Liquid/External preparation Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->ProductionLiquid_on)
                                 {{ Helpers::getdateFormat($data1->ProductionLiquid_on) }}
                             @else
@@ -2606,7 +1828,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Microbiology Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Microbiology_Review)
                                 {{ $data1->Microbiology_Review }}
                             @else
@@ -2614,7 +1836,7 @@
                             @endif
                         </td>
                         <th class="w-20">Microbiology Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Microbiology_person)
                                 {{ $data1->Microbiology_person }}
                             @else
@@ -2622,10 +1844,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Impact Assessment (By Microbiology)</th>
-                         <td colspan="3">
+                         <td class="w-80" colspan="3">
                             @if ($data1->Microbiology_assessment)
                                 {{ strip_tags($data1->Microbiology_assessment) }}
                             @else
@@ -2633,21 +1856,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Microbiology Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Microbiology_feedback)
-                                {{ strip_tags($data1->Microbiology_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Microbiology Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Microbiology_by)
                                 {{ $data1->Microbiology_by }}
                             @else
@@ -2655,7 +1868,7 @@
                             @endif
                         </td>
                         <th class="w-20">Microbiology Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Microbiology_on)
                                 {{ Helpers::getdateFormat($data1->Microbiology_on) }}
                             @else
@@ -2692,17 +1905,11 @@
                     </div>
                 </table>
 
-
-
-
-
-
-
                 <div class="block-head">Engineering</div>
                 <table>
                     <tr>
                         <th class="w-20">Engineering Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Engineering_review)
                                 {{ $data1->Engineering_review }}
                             @else
@@ -2710,7 +1917,7 @@
                             @endif
                         </td>
                         <th class="w-20">Engineering Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Engineering_person)
                                 {{ $data1->Engineering_person }}
                             @else
@@ -2718,10 +1925,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Impact Assessment (By Engineering)</th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Engineering_assessment)
                                 {{ strip_tags($data1->Engineering_assessment) }}
                             @else
@@ -2729,21 +1937,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Engineering Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Engineering_feedback)
-                                {{ strip_tags($data1->Engineering_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Engineering Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Engineering_by)
                                 {{ $data1->Engineering_by }}
                             @else
@@ -2751,7 +1949,7 @@
                             @endif
                         </td>
                         <th class="w-20">Engineering Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Store_on)
                                 {{ Helpers::getdateFormat($data1->Store_on) }}
                             @else
@@ -2788,18 +1986,11 @@
                     </div>
                 </table>
 
-               
-
-
-                
-             
-
-
                 <div class="block-head">Safety</div>
                 <table>
                     <tr>
                         <th class="w-20">Safety Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Environment_Health_review)
                                 {{ $data1->Environment_Health_review }}
                             @else
@@ -2807,7 +1998,7 @@
                             @endif
                         </td>
                         <th class="w-20">Sefety Person</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Environment_Health_Safety_person)
                                 {{ $data1->Environment_Health_Safety_person }}
                             @else
@@ -2815,10 +2006,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Impact Assessment(By Safety)</th>
-                       <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Health_Safety_assessment)
                                 {{ strip_tags($data1->Health_Safety_assessment) }}
                             @else
@@ -2826,21 +2018,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Saftey Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Health_Safety_feedback)
-                                {{ strip_tags($data1->Health_Safety_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Safety Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Environment_Health_Safety_by)
                                 {{ $data1->Environment_Health_Safety_by }}
                             @else
@@ -2848,7 +2030,7 @@
                             @endif
                         </td>
                         <th class="w-20">Safety Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Environment_Health_Safety_on)
                                 {{ helpers::getdateFormat($data1->Environment_Health_Safety_on) }}
                             @else
@@ -2890,7 +2072,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Other's 1 Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other1_review)
                                 {{ $data1->Other1_review }}
                             @else
@@ -2898,7 +2080,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 1 Person </th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other1_person)
                                 {{ $data1->Other1_person }}
                             @else
@@ -2906,10 +2088,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Other's 1 Department</th>
-                         <td colspan="3">
+                         <td class="w-80" colspan="3">
                             @if ($data1->Other1_Department_person)
                                 {{ strip_tags($data1->Other1_Department_person) }}
                             @else
@@ -2920,7 +2103,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 1) </th>
-                         <td colspan="3">
+                         <td class="w-80" colspan="3">
                             @if ($data1->Other1_assessment)
                                 {{ strip_tags($data1->Other1_assessment) }}
                             @else
@@ -2928,21 +2111,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Other's 1 Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Other1_feedback)
-                                {{ strip_tags($data1->Other1_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Other's 1 Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other1_by)
                                 {{ $data1->Other1_by }}
                             @else
@@ -2950,7 +2123,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 1 Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other1_on)
                                 {{ Helpers::getdateFormat($data1->Other1_on) }}
                             @else
@@ -2992,7 +2165,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Other's 2 Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other2_review)
                                 {{ $data1->Other2_review }}
                             @else
@@ -3000,7 +2173,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 2 Person </th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other2_person)
                                 {{ $data1->Other2_person }}
                             @else
@@ -3008,10 +2181,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Other's 2 Department</th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Other2_Department_person)
                                 {{ strip_tags($data1->Other2_Department_person) }}
                             @else
@@ -3022,7 +2196,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 2) </th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                            @if ($data1->Other2_Assessment)
                                 {{ strip_tags($data1->Other2_Assessment) }}
                             @else
@@ -3030,21 +2204,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Other's 2 Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Other2_feedback)
-                                {{ strip_tags($data1->Other2_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Other's 2 Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other2_by)
                                 {{ $data1->Other2_by }}
                             @else
@@ -3052,7 +2216,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 2 Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other2_on)
                                 {{ Helpers::getdateFormat($data1->Other2_on) }}
                             @else
@@ -3089,12 +2253,11 @@
                     </div>
                 </table>
 
-
                 <div class="block-head">Other's 3 ( Additional Person Review From Departments If Required)</div>
                 <table>
                     <tr>
                         <th class="w-20">Other's 3 Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other3_review)
                                 {{ $data1->Other3_review }}
                             @else
@@ -3102,7 +2265,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 3 Person </th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other3_person)
                                 {{ $data1->Other3_person }}
                             @else
@@ -3110,10 +2273,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Other's 3 Department</th>
-                       <td colspan="3">
+                       <td class="w-80" colspan="3">
                             @if ($data1->Other3_Department_person)
                                 {{ strip_tags($data1->Other3_Department_person) }}
                             @else
@@ -3124,7 +2288,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 3) </th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                         @if ($data1->Other3_Assessment)
                                 {{ strip_tags($data1->Other3_Assessment) }}
                             @else
@@ -3132,21 +2296,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Other's 3 Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Other3_feedback)
-                                {{ strip_tags($data1->Other3_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Other's 3 Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other3_by)
                                 {{ $data1->Other3_by }}
                             @else
@@ -3154,7 +2308,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 3 Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other3_on)
                                 {{ Helpers::getdateFormat($data1->Other3_on) }}
                             @else
@@ -3196,7 +2350,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Other's 4 Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other4_review)
                                 {{ $data1->Other4_review }}
                             @else
@@ -3204,7 +2358,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 4 Person </th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other4_person)
                                 {{ $data1->Other4_person }}
                             @else
@@ -3212,10 +2366,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Other's 4 Department</th>
-                         <td colspan="3">
+                         <td class="w-80" colspan="3">
                             @if ($data1->Other4_Department_person)
                                 {{ strip_tags($data1->Other4_Department_person) }}
                             @else
@@ -3226,7 +2381,7 @@
 
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 4) </th>
-                        <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Other4_Assessment)
                                 {{ strip_tags($data1->Other4_Assessment) }}
                             @else
@@ -3234,21 +2389,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Other's 4 Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Other4_feedback)
-                                {{ strip_tags($data1->Other4_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Other's 4 Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other4_by)
                                 {{ $data1->Other4_by }}
                             @else
@@ -3256,7 +2401,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 4 Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other4_on)
                                 {{ $data1->Other4_on }}
                             @else
@@ -3298,7 +2443,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Other's 5 Review Required?</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other5_review)
                                 {{ $data1->Other5_review }}
                             @else
@@ -3306,7 +2451,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 5 Person </th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other5_person)
                                 {{ $data1->Other5_person }}
                             @else
@@ -3314,10 +2459,11 @@
                             @endif
                         </td>
                     </tr>
-
+                </table>
+                <table>    
                     <tr>
                         <th class="w-20">Other's 5 Department</th>
-                       <td colspan="3">
+                        <td class="w-80" colspan="3">
                             @if ($data1->Other5_Department_person)
                                 {{ strip_tags($data1->Other5_Department_person) }}
                             @else
@@ -3336,21 +2482,11 @@
                             @endif
                         </td>
                     </tr>
-
-                    {{-- <tr>
-                        <th class="w-20">Other's 5 Feedback</th>
-                        <td class="w-80">
-                            @if ($data1->Other5_feedback)
-                                {{ strip_tags($data1->Other5_feedback) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-
+                </table> 
+                <table>   
                     <tr>
                         <th class="w-20">Other's 5 Review Completed By</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other5_by)
                                 {{ $data1->Other5_by }}
                             @else
@@ -3358,7 +2494,7 @@
                             @endif
                         </td>
                         <th class="w-20">Other's 5 Review Completed On</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data1->Other5_on)
                                 {{ Helpers::getdateFormat($data1->Other5_on) }}
                             @else
@@ -3399,22 +2535,16 @@
 
             <div class="block">
                 <div class="block-head">QA/CQA Review</div>
-
-                
-
                     <table>
                         <tr>
                             <th class="w-20">QA/CQA Review Comment</th>
                             <td class="w-80">@if ($data->qa_cqa_comments)
                             {{ $data->qa_cqa_comments }}
-                        @else
-                            Not Applicable
-                        @endif</td>
+                            @else
+                                Not Applicable
+                            @endif</td>
                         </tr>
-                        </table>
-
-
-                <br>
+                    </table>
 
                 <div class="border-table">
                     <div class="block-head">
@@ -3446,24 +2576,16 @@
             <div class="block">
                 <div class="block-head">QA/CQA Head Approval</div>
                 <label class="head-number" for="QA/CQA Head Approval Comment">QA/CQA Head Approval Comment</label>
-                <!-- <div class="div-data">
-                    @if ($data->qa_cqa_head_comm)
-                        {{ $data->qa_cqa_head_comm }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div> -->
-
                 <table>
-                        <tr>
-                            <th class="w-20">QA/CQA Head Approval</th>
-                            <td class="w-80">@if ($data->qa_cqa_head_comm)
-                            {{ $data->qa_cqa_head_comm }}
-                            @else
-                                Not Applicable
-                            @endif
-                             </td>
-                        </tr>
+                    <tr>
+                        <th class="w-20">QA/CQA Head Approval</th>
+                        <td class="w-80">@if ($data->qa_cqa_head_comm)
+                        {{ $data->qa_cqa_head_comm }}
+                        @else
+                            Not Applicable
+                        @endif
+                        </td>
+                    </tr>
                  </table>
               
 
