@@ -3585,16 +3585,16 @@
 
                         <tbody>
                             @if($grid_Data5 && is_array($grid_Data5->data))
-                            @foreach($grid_Data5->data as $index => $item)
-                            <tr>
-                                <td>{{$index+1}}</td>
-                                <td>{{$item['observation'] ?? 'Not Applicable'}}</td>
-                                <td>{{$item['impact_assesment'] ?? 'Not Applicable'}}</td>
-                                <td>{{$item['responsiblity'] ?? 'Not Applicable'}}</td>
-                                <td>{{ isset($item['closure_date']) ? Helpers::getdateformat($item['closure_date']) : 'Not Applicable' }}</td>
-                                <td>{{ isset($item['Actual_date']) ? Helpers::getdateformat($item['Actual_date']) : 'Not Applicable' }}</td>
-                            </tr>
-                            @endforeach
+                                @foreach($grid_Data5->data as $index => $item)
+                                <tr>
+                                    <td>{{$index+1}}</td>
+                                    <td>{{$item['observation'] ?? 'Not Applicable'}}</td>
+                                    <td>{{$item['impact_assesment'] ?? 'Not Applicable'}}</td>
+                                    <td>{{$item['responsiblity'] ?? 'Not Applicable'}}</td>
+                                    <td>{{ isset($item['closure_date']) ? Helpers::getdateformat($item['closure_date']) : 'Not Applicable' }}</td>
+                                    <td>{{ isset($item['Actual_date']) ? Helpers::getdateformat($item['Actual_date']) : 'Not Applicable' }}</td>
+                                </tr>
+                                @endforeach
                             @else
 
                             <tr>
