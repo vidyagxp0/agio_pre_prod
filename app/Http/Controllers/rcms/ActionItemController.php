@@ -51,49 +51,49 @@ class ActionItemController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
-//         $pre = [
-//     'DEV' => \App\Models\Deviation::class,
-//    'AP' => \App\Models\AuditProgram::class,
-//    'AI' => \App\Models\ActionItem::class,
-//    'Exte' => \App\Models\extension_new::class,
-//    'Resam' => \App\Models\Resampling::class,
-//    'Obse' => \App\Models\Observation::class,
-//    'RCA' => \App\Models\RootCauseAnalysis::class,
-//    'RA' => \App\Models\RiskAssessment::class,
-//    'MR' => \App\Models\ManagementReview::class,
-//    'EA' => \App\Models\Auditee::class,
-//    'IA' => \App\Models\InternalAudit::class,
-//    'CAPA' => \App\Models\Capa::class,
-//    'CC' => \App\Models\CC::class,
-//    'ND' => \App\Models\Document::class,
-//    'Lab' => \App\Models\LabIncident::class,
-//    'EC' => \App\Models\EffectivenessCheck::class,
-//    'OOSChe' => \App\Models\OOS::class,
-//    'OOT' => \App\Models\OOT::class,
-//    'OOC' => \App\Models\OutOfCalibration::class,
-//    'MC' => \App\Models\MarketComplaint::class,
-//    'NC' => \App\Models\NonConformance::class,
-//    'Incident' => \App\Models\Incident::class,
-//    'FI' => \App\Models\FailureInvestigation::class,
-//    'ERRATA' => \App\Models\errata::class,
-//    'OOSMicr' => \App\Models\OOS_micro::class,
-//    // Add other models as necessary...
-// ];
+        $pre = [
+    'DEV' => \App\Models\Deviation::class,
+   'AP' => \App\Models\AuditProgram::class,
+   'AI' => \App\Models\ActionItem::class,
+   'Exte' => \App\Models\extension_new::class,
+   'Resam' => \App\Models\Resampling::class,
+   'Obse' => \App\Models\Observation::class,
+   'RCA' => \App\Models\RootCauseAnalysis::class,
+   'RA' => \App\Models\RiskAssessment::class,
+   'MR' => \App\Models\ManagementReview::class,
+   'EA' => \App\Models\Auditee::class,
+   'IA' => \App\Models\InternalAudit::class,
+   'CAPA' => \App\Models\Capa::class,
+   'CC' => \App\Models\CC::class,
+   'ND' => \App\Models\Document::class,
+   'Lab' => \App\Models\LabIncident::class,
+   'EC' => \App\Models\EffectivenessCheck::class,
+   'OOSChe' => \App\Models\OOS::class,
+   'OOT' => \App\Models\OOT::class,
+   'OOC' => \App\Models\OutOfCalibration::class,
+   'MC' => \App\Models\MarketComplaint::class,
+   'NC' => \App\Models\NonConformance::class,
+   'Incident' => \App\Models\Incident::class,
+   'FI' => \App\Models\FailureInvestigation::class,
+   'ERRATA' => \App\Models\errata::class,
+   'OOSMicr' => \App\Models\OOS_micro::class,
+   // Add other models as necessary...
+];
 
-// // Create an empty collection to store the related records
-// $relatedRecords = collect();
+// Create an empty collection to store the related records
+$relatedRecords = collect();
 
-// // Loop through each model and get the records, adding the process name to each record
-// foreach ($pre as $processName => $modelClass) {
-//    $records = $modelClass::all()->map(function ($record) use ($processName) {
-//        $record->process_name = $processName; // Attach the process name to each record
-//        return $record;
-//    });
+// Loop through each model and get the records, adding the process name to each record
+foreach ($pre as $processName => $modelClass) {
+   $records = $modelClass::all()->map(function ($record) use ($processName) {
+       $record->process_name = $processName; // Attach the process name to each record
+       return $record;
+   });
 
-//    // Merge the records into the collection
-//    $relatedRecords = $relatedRecords->merge($records);
-// }
-        return view('frontend.action-item.action-item', compact('due_date', 'record','old_record','record_number'));
+   // Merge the records into the collection
+   $relatedRecords = $relatedRecords->merge($records);
+}
+        return view('frontend.action-item.action-item', compact('due_date', 'record','old_record','record_number','relatedRecords'));
     }
     public function index()
     {
@@ -732,49 +732,49 @@ class ActionItemController extends Controller
         // $checkeffec = CheckEffecVerifi::where('cc_id', $id)->first();
         // $comments = RefInfoComments::where('cc_id', $id)->first();
         // return $taskdetails;
-//         $pre = [
-//     'DEV' => \App\Models\Deviation::class,
-//    'AP' => \App\Models\AuditProgram::class,
-//    'AI' => \App\Models\ActionItem::class,
-//    'Exte' => \App\Models\extension_new::class,
-//    'Resam' => \App\Models\Resampling::class,
-//    'Obse' => \App\Models\Observation::class,
-//    'RCA' => \App\Models\RootCauseAnalysis::class,
-//    'RA' => \App\Models\RiskAssessment::class,
-//    'MR' => \App\Models\ManagementReview::class,
-//    'EA' => \App\Models\Auditee::class,
-//    'IA' => \App\Models\InternalAudit::class,
-//    'CAPA' => \App\Models\Capa::class,
-//    'CC' => \App\Models\CC::class,
-//    'ND' => \App\Models\Document::class,
-//    'Lab' => \App\Models\LabIncident::class,
-//    'EC' => \App\Models\EffectivenessCheck::class,
-//    'OOSChe' => \App\Models\OOS::class,
-//    'OOT' => \App\Models\OOT::class,
-//    'OOC' => \App\Models\OutOfCalibration::class,
-//    'MC' => \App\Models\MarketComplaint::class,
-//    'NC' => \App\Models\NonConformance::class,
-//    'Incident' => \App\Models\Incident::class,
-//    'FI' => \App\Models\FailureInvestigation::class,
-//    'ERRATA' => \App\Models\errata::class,
-//    'OOSMicr' => \App\Models\OOS_micro::class,
-//    // Add other models as necessary...
-// ];
+        $pre = [
+    'DEV' => \App\Models\Deviation::class,
+   'AP' => \App\Models\AuditProgram::class,
+   'AI' => \App\Models\ActionItem::class,
+   'Exte' => \App\Models\extension_new::class,
+   'Resam' => \App\Models\Resampling::class,
+   'Obse' => \App\Models\Observation::class,
+   'RCA' => \App\Models\RootCauseAnalysis::class,
+   'RA' => \App\Models\RiskAssessment::class,
+   'MR' => \App\Models\ManagementReview::class,
+   'EA' => \App\Models\Auditee::class,
+   'IA' => \App\Models\InternalAudit::class,
+   'CAPA' => \App\Models\Capa::class,
+   'CC' => \App\Models\CC::class,
+   'ND' => \App\Models\Document::class,
+   'Lab' => \App\Models\LabIncident::class,
+   'EC' => \App\Models\EffectivenessCheck::class,
+   'OOSChe' => \App\Models\OOS::class,
+   'OOT' => \App\Models\OOT::class,
+   'OOC' => \App\Models\OutOfCalibration::class,
+   'MC' => \App\Models\MarketComplaint::class,
+   'NC' => \App\Models\NonConformance::class,
+   'Incident' => \App\Models\Incident::class,
+   'FI' => \App\Models\FailureInvestigation::class,
+   'ERRATA' => \App\Models\errata::class,
+   'OOSMicr' => \App\Models\OOS_micro::class,
+   // Add other models as necessary...
+];
 
-// // Create an empty collection to store the related records
-// $relatedRecords = collect();
+// Create an empty collection to store the related records
+$relatedRecords = collect();
 
-// // Loop through each model and get the records, adding the process name to each record
-// foreach ($pre as $processName => $modelClass) {
-//    $records = $modelClass::all()->map(function ($record) use ($processName) {
-//        $record->process_name = $processName; // Attach the process name to each record
-//        return $record;
-//    });
+// Loop through each model and get the records, adding the process name to each record
+foreach ($pre as $processName => $modelClass) {
+   $records = $modelClass::all()->map(function ($record) use ($processName) {
+       $record->process_name = $processName; // Attach the process name to each record
+       return $record;
+   });
 
-//    // Merge the records into the collection
-//    $relatedRecords = $relatedRecords->merge($records);
-// }
-        return view('frontend.action-item.atView', compact('data', 'cc','old_record', 'due_date_data'));
+   // Merge the records into the collection
+   $relatedRecords = $relatedRecords->merge($records);
+}
+        return view('frontend.action-item.atView', compact('data', 'cc','old_record', 'due_date_data','relatedRecords'));
     }
 
     public function edit($id)
@@ -790,10 +790,12 @@ class ActionItemController extends Controller
         }
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
-        $openState->related_records = $request->related_records;
-        //  if (is_array($request->related_records)) {
-        //     $openState->related_records = implode(',', $request->related_records);
-        // }
+        // $openState->related_records = $request->related_records;
+         if (is_array($request->related_records)) {
+            $openState->related_records = implode(',', $request->related_records);
+        }else {
+            $openState->related_records = $request->related_records;
+        }
         // $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->description = $request->description;
         $openState->title = $request->title;

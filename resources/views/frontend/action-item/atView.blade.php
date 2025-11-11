@@ -504,7 +504,7 @@
 
                                 </div> -->
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="HOD Persons">Action Item Related Records <span class="text-danger">*</span></label>
                                            <input type="text" name="related_records"  value="{{ $data->related_records }}" required>
@@ -512,8 +512,8 @@
                                     @error('hod_preson')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
-                                {{-- <div class="col-6">
+                                </div> --}}
+                                <div class="col-6">
                                         <div class="group-input">
                                             <label for="related_records">
                                                 Action Item Related Records <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
@@ -549,7 +549,7 @@
                                                 @endforeach
                                             @endif
                                         </div>
-                                    </div> --}}
+                                    </div>
 
                                 <div class="col-lg-6">
                                         <div class="group-input">
