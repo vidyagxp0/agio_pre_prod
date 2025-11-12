@@ -966,7 +966,7 @@
                                                     @php
                                                         $findRecord = DB::table('c_c_s')->find($datas->parent_id);
                                                     @endphp
-                                                 @elseif ($datas->parent_type == 'CC')
+                                                @elseif ($datas->parent_type == 'CC')
                                                     @php
                                                         $findRecord = DB::table('c_c_s')->find($datas->parent_id);
                                                     @endphp    
@@ -1073,7 +1073,9 @@
                                                         {{ $datas->short_description }}
                                                     </td>
                                                     @php
-                                                        $date = new \DateTime($datas->date_open);
+                                                        // $date = new \DateTime($datas->date_open);
+                                                        $date = new \DateTime($datas->date_open, new \DateTimeZone('UTC'));
+                                                        $date->setTimezone(new \DateTimeZone('Asia/Kolkata'));
                                                         $formattedDate = $date->format('d-M-Y H:i:s');
                                                     @endphp
 

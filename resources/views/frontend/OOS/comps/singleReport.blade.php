@@ -362,7 +362,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Immediate Action</th>
-                        <td class="w-60">@if($data->immediate_action ){{ $data->immediate_action  }} @else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->immediate_action ){{ $data->immediate_action  }} @else Not Applicable @endif</td>
                     </tr>
                 </table>
 
@@ -371,7 +371,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">Sr.No.</th>
-                                <th class="w-60"> Attachement </th>
+                                <th class="w-80"> Attachement </th>
                             </tr>
                             @if ($data->initial_attachment_gi)
                             @foreach ($data->initial_attachment_gi as $key => $file)
@@ -394,18 +394,24 @@
                     <tr>
                         <th class="w-20">Sample Type</th>
                         <td class="w-80">@if($data->sample_type_gi){{ Helpers::recordFormat($data->sample_type_gi) }}@else Not Applicable @endif</td>
+                    </tr> 
+                    <tr>   
                         <th class="w-20">Product / Material Name</th>
                         <td class="w-80">@if($data->product_material_name_gi){{ Helpers::recordFormat($data->product_material_name_gi) }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Market</th>
                         <td class="w-80">@if($data->market_gi){{ $data->market_gi }}@else Not Applicable @endif</td>
+                    </tr> 
+                    <tr>  
                         <th class="w-20">Customer</th>
                         <td class="w-80">@if($data->customer_gi){{ $data->customer_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Specification Details</th>
                         <td class="w-80">@if($data->specification_details){{ Helpers::recordFormat($data->specification_details) }}@else Not Applicable @endif</td>
+                    </tr> 
+                    <tr>      
                         <th class="w-20">STP Details</th>
                         <td class="w-80">@if($data->STP_details){{ Helpers::recordFormat($data->STP_details) }}@else Not Applicable @endif</td>
                     </tr>

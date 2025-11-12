@@ -79,7 +79,7 @@
 
              @elseif($data->stage == 24 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
 
-             @elseif($data->stage == 13 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 22) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
+             @elseif($data->stage == 13 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 3) || Helpers::check_roles($data->division_id, 'OOS/OOT', 22) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause"> Phase II A Investigation </button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>

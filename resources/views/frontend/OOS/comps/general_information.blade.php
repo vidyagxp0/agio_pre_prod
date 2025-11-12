@@ -887,14 +887,20 @@
                                                 <div class="col-lg-6 new-date-data-field">
                                                     <div class="group-input input-date">
                                                         <div class="calenderauditee">
+                                                            @php
+                                                                $today = \Carbon\Carbon::now()->format('Y-m-d');
+                                                                $oldDate = $instrument_detail['calibratedduedate_on'] ?? '';
+                                                            @endphp
                                                             <input type="text" id="calibratedduedate_on_{{ $loop->index }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat($instrument_detail['calibratedduedate_on'] ?? '') }}"
                                                              readonly placeholder="DD-MM-YYYY" {{Helpers::isOOSChemical($data->stage)}} />
-                                                            <input type="date" name="instrument_detail[{{ $loop->index }}][calibratedduedate_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ $instrument_detail['calibratedduedate_on'] ?? '' }}"  class="hide-input"
-                                                            oninput="handleDateInput(this, 'calibratedduedate_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} >
+                                                            {{-- <input type="date" name="instrument_detail[{{ $loop->index }}][calibratedduedate_on]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ $instrument_detail['calibratedduedate_on'] ?? '' }}"  class="hide-input"
+                                                            oninput="handleDateInput(this, 'calibratedduedate_on_{{ $loop->index }}')"   {{Helpers::isOOSChemical($data->stage)}} > --}}
+
+                                                            <input type="date" name="instrument_detail[{{ $loop->index }}][calibratedduedate_on]" value="{{ $oldDate }}" class="hide-input" oninput="handleDateInput(this, 'calibratedduedate_on_{{ $loop->index }}')" @if(empty($oldDate)) min="{{ $today }}" @endif>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                </td>
+                                            </td>
                                         <td><button type="text" class="removeRowBtn">Remove</button></td>
                                     </tr>
                                 @endforeach

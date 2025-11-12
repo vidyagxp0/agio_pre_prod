@@ -365,7 +365,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Initiation Department Code</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}
                             @else
@@ -767,14 +767,14 @@
                         @foreach (json_decode($data->Audit_file) as $key => $file)
                             <tr>
                                 <td class="w-20">{{ $key + 1 }}</td>
-                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                         target="_blank"><b>{{ $file }}</b></a> </td>
                             </tr>
                         @endforeach
                     @else
                         <tr>
                             <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
+                            <td class="w-60">Not Applicable</td>
                         </tr>
                     @endif
 
@@ -920,7 +920,7 @@
                 <table>    
                     <tr>    
                         <th class="w-20">
-                            If Yes, Then Mention
+                            If Yes, Then Mention  
                         </th>
                         <td class="w-80">
                             @if ($data->any_similar_incident_in_past)
@@ -1096,7 +1096,7 @@
                     <tr>
                         <th class="w-20">
                             Affected documents closed</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if ($data->affected_documents)
                                 {{ Ucfirst($data->affected_documents) }}
                             @else
