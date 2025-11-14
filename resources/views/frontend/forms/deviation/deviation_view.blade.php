@@ -1559,7 +1559,7 @@
             <div id="others_block" class="col-md-6 group-input" style="display: none;">
                 <label for="others">Others <span id="asteriskInOther" style="display: none;" class="text-danger">*</span></label>
                 <textarea class="tiny" name="others" id="others_field"
-                    {{ $data->stage == 1 ? '' : 'disabled' }}>{{ $data->others }}</textarea>
+                    {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->others }}</textarea>
             </div>
 
             <!-- jQuery Library -->

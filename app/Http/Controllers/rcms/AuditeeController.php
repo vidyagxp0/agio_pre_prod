@@ -9,6 +9,7 @@ use Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\RecordNumber;
+use Illuminate\Support\Facades\Log; 
 use App\Models\SummaryGrid;
 use App\Models\RoleGroup;
 use App\Models\ChildRecord;
