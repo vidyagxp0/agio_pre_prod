@@ -439,7 +439,7 @@
                             @if ($data->stage >= 5)
                                 <div class="active">QA/CQA Final Review</div>
                             @else
-                                <div class="">QA/CQA Final Review</div>-
+                                <div class="">QA/CQA Final Review</div>
                             @endif
                             @if (($data->stage > 6 || $data->status == 'Pending RA Approval') )
     <div id="pending-ra-stage" class="active">Pending RA Approval</div>

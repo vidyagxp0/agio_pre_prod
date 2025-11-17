@@ -766,7 +766,7 @@
 
 
             <div class="block-head">
-            QA/CQA Verification Attachment
+                    QA/CQA Verification Attachment
             </div>
             <div class="border-table">
                 <table>
@@ -812,6 +812,9 @@
                         <th class="w-10">Submit Comment</th>
                         <td class="w-30">@if($data->submitted_comment){{ $data->submitted_comment }}@else Not Applicable @endif</td>
                     </tr>
+
+
+                    
 
                     <!-- </table>
                     <div class="block-head">
