@@ -405,11 +405,12 @@
 
 
 
-                    <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }}
+                    {{-- <tr> On {{ Helpers::getDateFormat($data->created_at) }} added by {{ $data->originator }} --}}
+                    <tr>
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date of Initiation</th>
-                        <td class="w-30">{{ Helpers::getDateFormat($data->w) }}</td>
+                        <td class="w-30">{{ Helpers::getDateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
