@@ -446,7 +446,7 @@ class TMSController extends Controller
     // }
     public function trainingStatus(Request $request,$id){
 
-        if(Auth::user()->email == $request->email && Hash::check($request->password,Auth::user()->password)){
+        if(Auth::user()->emp_code == $request->email && Hash::check($request->password,Auth::user()->password)){
             $document = DocumentTraining::where('document_id',$id)->first();
             $document->train = Training::find($document->training_plan);
             $trainingStatus = new TrainingStatus();
