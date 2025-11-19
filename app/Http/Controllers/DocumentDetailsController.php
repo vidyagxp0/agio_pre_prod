@@ -54,7 +54,7 @@ class DocumentDetailsController extends Controller
 
   function sendforstagechanage(Request $request)
   {
-    if ($request->username == Auth::user()->email) {
+    if ($request->username == Auth::user()->emp_code) {
       if (Hash::check($request->password, Auth::user()->password)) {
         $document = Document::withTrashed()->find($request->document_id);
         $originator = User::find($document->originator_id);

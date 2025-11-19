@@ -6552,52 +6552,52 @@ class DocumentController extends Controller
                 ? json_decode($RevisionpiasData?->data, true) :(is_array($RevisionpiasData?->data) ? $RevisionpiasData?->data:[]);
 
         $RevisionmfpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfps_data")->first();
-        $RevisionGridmfpsData = isset($RevisionmfpsData->data) && is_string($RevisionmfpsData->data)
-                ? json_decode($RevisionmfpsData->data, true) :(is_array($RevisionmfpsData->data) ? $RevisionmfpsData->data:[]);
+        $RevisionGridmfpsData = isset($RevisionmfpsData?->data) && is_string($RevisionmfpsData?->data)
+                ? json_decode($RevisionmfpsData?->data, true) :(is_array($RevisionmfpsData?->data) ? $RevisionmfpsData?->data:[]);
 
         $RevisionmfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfpstp_data")->first();
-        $RevisionGridmfpstpData = isset($RevisionmfpstpData->data) && is_string($RevisionmfpstpData->data)
-                ? json_decode($RevisionmfpstpData->data, true) :(is_array($RevisionmfpstpData->data) ? $RevisionmfpstpData->data:[]);
+        $RevisionGridmfpstpData = isset($RevisionmfpstpData?->data) && is_string($RevisionmfpstpData?->data)
+                ? json_decode($RevisionmfpstpData?->data, true) :(is_array($RevisionmfpstpData?->data) ? $RevisionmfpstpData?->data:[]);
 
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
-        $SummaryDataGrid = isset($summaryResult->data) && is_string($summaryResult->data)
-            ? json_decode($summaryResult->data, true) :(is_array($summaryResult->data) ? $summaryResult->data:[]);
+        $SummaryDataGrid = isset($summaryResult?->data) && is_string($summaryResult?->data)
+            ? json_decode($summaryResult?->data, true) :(is_array($summaryResult?->data) ? $summaryResult?->data:[]);
 
         $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "sampleReconcilation")->first();
-        $sampleReconcilationDataGrid = isset($sampleReconcilation->data) && is_string($sampleReconcilation->data)
-            ? json_decode($sampleReconcilation->data, true) :(is_array($sampleReconcilation->data) ? $sampleReconcilation->data:[]);
+        $sampleReconcilationDataGrid = isset($sampleReconcilation?->data) && is_string($sampleReconcilation?->data)
+            ? json_decode($sampleReconcilation?->data, true) :(is_array($sampleReconcilation?->data) ? $sampleReconcilation?->data:[]);
 
 
 
         $specificationsGridData = specifications::where('specification_id', $id)->where('identifier', "specifications_testing")->first();
-        $SpecificationDataGrid = $specificationsGridData && isset($specificationsGridData->data) && is_string($specificationsGridData->data)
+        $SpecificationDataGrid = $specificationsGridData && isset($specificationsGridData?->data) && is_string($specificationsGridData?->data)
             ? json_decode($specificationsGridData->data, true)
-            : ($specificationsGridData && is_array($specificationsGridData->data) ? $specificationsGridData->data : []);
+            : ($specificationsGridData && is_array($specificationsGridData?->data) ? $specificationsGridData?->data : []);
 
         $specifications = specifications::where('specification_id', $id)->where('identifier', "specifications")->first();
-        $SpecificationGrid = $specifications && isset($specifications->data) && is_string($specifications->data)
-            ? json_decode($specifications->data, true)
-            : ($specifications && is_array($specifications->data) ? $specifications->data : []);
+        $SpecificationGrid = $specifications && isset($specifications?->data) && is_string($specifications?->data)
+            ? json_decode($specifications?->data, true)
+            : ($specifications && is_array($specifications?->data) ? $specifications?->data : []);
 
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
-        $ProductSpecificationData = $ProductSpecification && isset($ProductSpecification->data) && is_string($ProductSpecification->data)
-            ? json_decode($ProductSpecification->data, true)
-            : ($ProductSpecification && is_array($ProductSpecification->data) ? $ProductSpecification->data : []);
+        $ProductSpecificationData = $ProductSpecification && isset($ProductSpecification?->data) && is_string($ProductSpecification?->data)
+            ? json_decode($ProductSpecification?->data, true)
+            : ($ProductSpecification && is_array($ProductSpecification?->data) ? $ProductSpecification?->data : []);
     
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
-        $MaterialSpecificationData = $MaterialSpecification && isset($MaterialSpecification->data) && is_string($MaterialSpecification->data)
-            ? json_decode($MaterialSpecification->data, true)
-            : ($MaterialSpecification && is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
+        $MaterialSpecificationData = $MaterialSpecification && isset($MaterialSpecification?->data) && is_string($MaterialSpecification?->data)
+            ? json_decode($MaterialSpecification?->data, true)
+            : ($MaterialSpecification && is_array($MaterialSpecification?->data) ? $MaterialSpecification?->data : []);
     
         $Finished_product_specification = DocumentGrid::where('document_type_id', $id)->where('identifier', "Finished_product_specification")->first();
-        $finishedProductSpecificationData = $Finished_product_specification && isset($Finished_product_specification->data) && is_string($Finished_product_specification->data)
+        $finishedProductSpecificationData = $Finished_product_specification && isset($Finished_product_specification?->data) && is_string($Finished_product_specification?->data)
             ? json_decode($Finished_product_specification->data, true)
-            : ($Finished_product_specification && is_array($Finished_product_specification->data) ? $Finished_product_specification->data : []);
+            : ($Finished_product_specification && is_array($Finished_product_specification?->data) ? $Finished_product_specification?->data : []);
 
         $Revision_product_specification = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_data")->first();
-        $RevisionProductSpecificationData = $Revision_product_specification && isset($Revision_product_specification->data) && is_string($Revision_product_specification->data)
-            ? json_decode($Revision_product_specification->data, true)
-            : ($Revision_product_specification && is_array($Revision_product_specification->data) ? $Revision_product_specification->data : []);
+        $RevisionProductSpecificationData = $Revision_product_specification && isset($Revision_product_specification?->data) && is_string($Revision_product_specification?->data)
+            ? json_decode($Revision_product_specification?->data, true)
+            : ($Revision_product_specification && is_array($Revision_product_specification?->data) ? $Revision_product_specification?->data : []);
 
         $documentContent = DocumentContent::where('document_id', $id)->first();
 
