@@ -2226,79 +2226,11 @@
                                     @endforeach
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="launch-cbt">Launch CBT</label>
-                                    <select name="cbt">
-                                        <option value="" selected>Enter your Selection</option>
-                                        <option value="1`">Lorem, ipsum.</option>
-                                        <option value="1`">Lorem, ipsum.</option>
-                                        <option value="1`">Lorem, ipsum.</option>
-                                        <option value="1`">Lorem, ipsum.</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="training-type">Type</label>
-                                    <select name="training-type">
-                                        <option value="" selected>Enter your Selection</option>
-                                        <option value="1`">Lorem, ipsum.</option>
-                                        <option value="1`">Lorem, ipsum.</option>
-                                        <option value="1`">Lorem, ipsum.</option>
-                                        <option value="1`">Lorem, ipsum.</option>
-                                    </select>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="test">
-                                        Test(0)<button type="button" name="test"
-                                            onclick="addTrainRow('test')" {{Helpers::isRevised($document->stage)}}>+</button>
-                            </label>
-                            <table class="table-bordered table" id="test">
-                                <thead>
-                                    <tr>
-                                        <th class="row-num">Row No.</th>
-                                        <th class="question">Question</th>
-                                        <th class="answer">Answer</th>
-                                        <th class="result">Result</th>
-                                        <th class="comment">Comment</th>
-                                        <th class="comment">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="group-input">
-                            <label for="test">
-                                Survey(0)<button type="button" name="reporting1" onclick="addTrainRow('survey')" {{Helpers::isRevised($document->stage)}}>+</button>
-                            </label>
-                            <table class="table-bordered table" id="survey">
-                                <thead>
-                                    <tr>
-                                        <th class="row-num">Row No.</th>
-                                        <th class="question">Subject</th>
-                                        <th class="answer">Topic</th>
-                                        <th class="result">Rating</th>
-                                        <th class="comment">Comment</th>
-                                        <th class="comment">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div> --}}
+                            
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="comments">Comments</label>
-                                    <textarea name="comments" {{ Helpers::isRevised($document->stage) }}>{{ $document->comments }}</textarea>
+                                    <textarea name="comments" {{ Helpers::isRevised($document->stage) }}>{{ $trainingDoc?->comments }}</textarea>
 
                                 </div>
                             </div>
