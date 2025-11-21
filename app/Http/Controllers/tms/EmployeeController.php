@@ -105,7 +105,7 @@ class EmployeeController extends Controller
         $employee->email = $request->email;
         // $employee->employee_id = $newEmployeeId;
         $employee->password = bcrypt($randomPassword);
-        $employee->email_password = $encryptedPassword;
+        // $employee->email_password = $encryptedPassword;
         // $employee->password = $randomPassword;
 
     
