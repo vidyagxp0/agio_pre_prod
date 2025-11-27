@@ -785,7 +785,7 @@
                     <div class="input-fields">
                         <div class="row">
 
-                            @if($document->document_type_id == 'SOP')
+                            {{-- @if($document->document_type_id == 'SOP')
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-num">Document Number</label>
@@ -835,6 +835,60 @@
                                             @endif">
                                     </div>
                                 </div>
+                            @endif --}}
+
+                            @if($document->document_type_id == 'SOP')
+
+                                @php
+                                    // Revision number
+                                    $revisionNumber = $document->revised === 'Yes'
+                                        ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT)
+                                        : '00';
+
+                                    // Main ID formatting
+                                    $formattedId = str_pad($currentId, 3, '0', STR_PAD_LEFT);
+
+                                    // SOP Type check
+                                    if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
+                                        $finalDocNumber = "{$document->department_id}/{$document->sop_type_short}/{$formattedId}-{$revisionNumber}";
+                                    } else {
+                                        $finalDocNumber = "{$document->sop_type_short}/{$document->department_id}/{$formattedId}-{$revisionNumber}";
+                                    }
+                                @endphp
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-num">Document Number</label>
+                                        <input type="text" id="doc-num" name="document_number" class="default-name" readonly
+                                            value="{{ $finalDocNumber }}">
+                                    </div>
+                                </div>
+
+                            @else
+
+                                @php
+                                    // Same logic for NON-SOP also
+                                    $revisionNumber = $document->revised === 'Yes'
+                                        ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT)
+                                        : '00';
+
+                                    $formattedId = str_pad($currentId, 3, '0', STR_PAD_LEFT);
+
+                                    if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
+                                        $finalDocNumber = "{$document->department_id}/{$document->sop_type_short}/{$formattedId}-{$revisionNumber}";
+                                    } else {
+                                        $finalDocNumber = "{$document->sop_type_short}/{$document->department_id}/{$formattedId}-{$revisionNumber}";
+                                    }
+                                @endphp
+
+                                <div class="col-md-6" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="doc-num">Document Number</label>
+                                        <input type="text" id="doc-num" name="document_number" class="default-name" readonly
+                                            value="{{ $finalDocNumber }}">
+                                    </div>
+                                </div>
+
                             @endif
 
                             @if($document->document_type_id == 'SOP') 

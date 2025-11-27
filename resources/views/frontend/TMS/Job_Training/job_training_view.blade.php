@@ -411,7 +411,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="trainer-name">Trainer name</label>
+                                        <label for="trainer-name">Trainer Name</label>
                                         <select name="trainer_name" id="hod">
                                             <option value="">-- Select Trainer --</option>
                                             @foreach ($users as $user)

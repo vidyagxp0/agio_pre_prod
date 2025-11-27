@@ -42,8 +42,9 @@ class JobTrainingController extends Controller
         $jobTraining = JobTraining::all();
         $employees = Employee::all();
         $trainers = User::get();
+        $mainvalue = Employee::first();
 
-        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','delegate','employees','trainers'));
+        return view('frontend.TMS.Job_Training.job_training', compact('jobTraining','data','hods','delegate','employees','trainers','mainvalue'));
     }
 
 

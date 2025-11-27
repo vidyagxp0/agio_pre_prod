@@ -162,8 +162,8 @@
             </td>
             <td class="w-30">
                 <div class="logo">
-                    <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
-                        class="w-100">
+                    <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png" alt=""
+                        style="max-height: 55px; max-width: 40px;">
                 </div>
             </td>
         </tr>
@@ -182,11 +182,6 @@
             <td class="w-30">
                 {{ $data->name }}
             </td>
-
-        </tr>
-    </table>
-    <table>
-        <tr>
 
         </tr>
     </table>
@@ -333,7 +328,6 @@
                         @endif
                     </td>
                 </tr>
-                </tr>
             </table>
             <div class="block-heads">
 
@@ -368,43 +362,31 @@
                                     <td>
                                         @if ($data->subject_1)
                                             {{ $data->subject_1 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->type_of_training_1)
                                             {{ $data->type_of_training_1 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->reference_document_no_1)
                                             {{ $data->reference_document_no_1 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->trainer_1)
                                             {{ $data->trainer_1 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->startdate_1)
                                             {{ $data->startdate_1 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->enddate_1)
                                             {{ $data->enddate_1 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                 </tr>
@@ -415,43 +397,31 @@
                                     <td>
                                         @if ($data->subject_2)
                                             {{ $data->subject_2 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->type_of_training_2)
                                             {{ $data->type_of_training_2 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->reference_document_no_2)
                                             {{ $data->reference_document_no_2 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->trainer_2)
                                             {{ $data->trainer_2 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->startdate_2)
                                             {{ $data->startdate_2 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->enddate_2)
                                             {{ $data->enddate_2 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                 </tr>
@@ -462,43 +432,31 @@
                                     <td>
                                         @if ($data->subject_3)
                                             {{ $data->subject_3 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->type_of_training_3)
                                             {{ $data->type_of_training_3 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->reference_document_no_3)
                                             {{ $data->reference_document_no_3 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->trainer_3)
                                             {{ $data->trainer_3 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->startdate_3)
                                             {{ $data->startdate_3 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->enddate_3)
                                             {{ $data->enddate_3 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                 </tr>
@@ -509,44 +467,32 @@
                                     <td>
                                         @if ($data->subject_4)
                                             {{ $data->subject_4 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->type_of_training_4)
                                             {{ $data->type_of_training_4 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->reference_document_no_4)
                                             {{ $data->reference_document_no_4 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
 
                                         @if ($data->trainer_4)
                                             {{ $data->trainer_4 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->startdate_4)
                                             {{ $data->startdate_4 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->enddate_4)
                                             {{ $data->enddate_4 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                 </tr>
@@ -557,44 +503,32 @@
                                     <td>
                                         @if ($data->subject_5)
                                             {{ $data->subject_5 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->type_of_training_5)
                                             {{ $data->type_of_training_5 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->reference_document_no_5)
                                             {{ $data->reference_document_no_5 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
 
                                         @if ($data->trainer_5)
                                             {{ $data->trainer_5 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->startdate_5)
                                             {{ $data->startdate_5 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                     <td>
                                         @if ($data->enddate_5)
                                             {{ $data->enddate_5 }}
-                                        @else
-                                            Not Applicable
                                         @endif
                                     </td>
                                 </tr>

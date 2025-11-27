@@ -165,8 +165,8 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
-                            class="w-100">
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png" alt=""
+                            style="max-height: 55px; max-width: 40px;">
                     </div>
                 </td>
             </tr>
@@ -374,7 +374,7 @@
                                 <th class="w-20">Remarks</th>
                             </tr>
                             @if ($employee_grid_data && is_array($employee_grid_data->data))
-                                    @foreach ($employee_grid_data->data as $grid_Data)
+                                @foreach ($employee_grid_data->data as $grid_Data)
                                 <tr>
                                     <td class="w-20">{{ $loop->index + 1 }}</td>
                                     <td class="w-20">
@@ -384,7 +384,7 @@
                                         {{ isset($grid_Data['remarks']) ? $grid_Data['remarks'] : '' }} 
                                     </td>
                                 </tr>
-                            @endforeach
+                                @endforeach
                             @endif
                         </table>
                     </div>

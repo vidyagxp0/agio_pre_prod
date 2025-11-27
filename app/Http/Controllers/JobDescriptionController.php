@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\RecordNumber;
 use App\Models\JobDescription;
 use Illuminate\Support\Facades\Auth;
 use App\Models\JobDescriptionGrid;
@@ -26,20 +27,19 @@ class JobDescriptionController extends Controller
     public function index()
     {
         $data = Document::all();
-        // $hods = DB::table('user_roles')
-        //     ->join('users', 'user_roles.user_id', '=', 'users.id')
-        //     ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
-        //     ->where('user_roles.q_m_s_processes_id', $process->id)
-        //     ->where('user_roles.q_m_s_roles_id', 4)
-        //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name')
-        //     ->get();
+        
         $hods = User::get();
         $delegate = User::get();
 
         $jobTraining = JobDescription::all();
         $employees = Employee::all();
+        $mainvalue = Employee::first();
 
-        return view('frontend.TMS.Job_description.job_description', compact('jobTraining','data','hods','delegate','employees'));
+        $departmentCode = $mainvalue->department ?? ' ';
+        $serialNumber = str_pad((RecordNumber::first()->value('counter') + 1), 3, '0', STR_PAD_LEFT);
+        $revisionNumber = '00';
+        $jobDescriptionNumber = "JD/{$departmentCode}/{$serialNumber}/{$revisionNumber}";
+        return view('frontend.TMS.Job_description.job_description', compact('jobTraining','data','hods','delegate','employees','mainvalue','jobDescriptionNumber'));
     }
 
     public function getEmployeeData($id)
