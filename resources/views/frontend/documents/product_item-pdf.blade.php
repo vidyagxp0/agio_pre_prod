@@ -406,9 +406,8 @@
     
     </header>
 
-
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-        <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
             <tbody>
                 <tr style="border-bottom: 1px solid #ddd;">
                     @php

@@ -466,7 +466,7 @@
 
 
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-            <table class="border; padding: 5px;" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
                 <thead>
                     <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
                         <th style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px; font-weight: bold;"></th>

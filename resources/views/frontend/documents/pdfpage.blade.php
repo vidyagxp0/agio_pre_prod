@@ -471,7 +471,137 @@
         }
         
     </style>
+    {{-- <style>
+        @page {
+                margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+            }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 11px;
+            line-height: 1.4;
+            color: #000;
+            /* margin-top: 10px;
+            margin-bottom: -60px;  */
+            margin-top: 180px;
+            margin-bottom: 160px;
+        }
 
+        header, footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            /* padding: 20px 35px; */
+            font-size: 12px;
+            box-sizing: border-box;
+        }
+
+        header {
+            top: -140px;
+            border-bottom: none;
+
+            /* position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; */
+        }
+
+        footer {
+            bottom: 0;
+            bottom: -100px;
+            border-top: none;
+        }
+
+        .logo img {
+            display: block;
+            margin-left: auto;
+        }
+        /* To remove borders from content part only */
+        .content-area table {
+            border: none !important;
+        }
+
+        .inner-block {
+            /* padding: 20px 35px;  */
+            box-sizing: border-box;
+        }
+
+        .block {
+            margin-bottom: 25px;
+        }
+
+        .block-head {
+            font-size: 13px;
+            font-weight: bold;
+            border-bottom: 2px solid #387478;
+            color: #387478;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+        }
+
+        .table_bg {
+            background-color: #387478;
+            color: #111;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+        }
+
+        th, td {
+            padding: 6px 10px;
+            font-size: 10.5px;
+            border: 1px solid #ccc;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            white-space: normal !important;
+            word-wrap: break-word;
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+
+        .section-gap {
+            margin-top: 20px;
+        }
+
+        .no-border th, .no-border td {
+            border: none !important;
+        }
+
+        /* .w-5 { width: 5%; } */
+        .w-5 { width: 6%; }
+        .w-6 { width: 7%; }
+        .w-8 { width: 8%; }
+        .w-10 { width: 10%; }
+        .w-20 { width: 20%; }
+        .w-30 { width: 30%; }
+        .w-40 { width: 40%; }
+        .w-50 { width: 50%; }
+        .w-60 { width: 60%; }
+        .w-70 { width: 70%; }
+        .w-80 { width: 80%; }
+        .w-100 { width: 100%; }
+        .text-center { text-align: center; }
+        .border-table {
+            overflow-x: auto;
+        }
+
+        table th, table td {
+            word-wrap: break-word;
+        }
+
+        .investigation-summary * {
+            font-size: 10.5px !important;
+        }
+
+    </style> --}}
 
     <style>
         
@@ -598,7 +728,7 @@
             </tbody>
         </table>
 
-        <table class="border border-top-none" border="1"
+        <table class="border border-top-none"
             style="border-collapse: collapse; width: 100%; text-align: left;">
             <tbody>
                 <tr>
@@ -712,7 +842,7 @@
     </header>
     
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-        <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
                 <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
                     <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;"></th>
