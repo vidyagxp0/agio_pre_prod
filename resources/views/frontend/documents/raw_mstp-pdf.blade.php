@@ -253,106 +253,6 @@
         }
     </style>
 
-    {{-- <style>
-        
-        /*Main Table Styling */
-        #isPasted {
-            width: 690px !important;
-        border-collapse: collapse;
-        table-layout: fixed;
-        }
-
-        /* First column adjusts to its content */
-        #isPasted td:first-child,
-        #isPasted th:first-child {
-            white-space: nowrap; 
-            width: 1%;
-            vertical-align: top;
-        }
-
-        /* Second column takes remaining space */
-        #isPasted td:last-child,
-        #isPasted th:last-child {
-            width: auto;
-            vertical-align: top;
-
-        }
-
-        /* Common Table Cell Styling */
-        #isPasted th,
-        #isPasted td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        /* Paragraph Styling Inside Table Cells */
-        #isPasted td > p {
-            text-align: justify;
-            text-justify: inter-word;
-            margin: 0;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted td > p span {
-            display: inline-block;
-            width: 617px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        #isPasted img {
-            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-            height: 100%; /* Maintain image aspect ratio */
-            display: block; /* Remove extra space below the image */
-            margin: 5px auto; /* Add spacing and center align */
-        }
-
-        /* If you want larger images */
-        #isPasted td img {
-            max-width: 400px !important; /* Adjust this to your preferred maximum width */
-            height: 300px;
-            margin: 5px auto;
-        }
-
-        .table-containers {
-            width: 650px;
-            overflow-x: fixed; /* Enable horsizontal scrolling */
-        }
-
-    
-        #isPasted table {
-            width: 100% !important;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-
-        #isPasted table th,
-        #isPasted table td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-
-        #isPasted table img {
-            max-width: 100% !important;
-            height: auto;
-            display: block;
-            margin: 5px auto;
-        }
-        
-    </style> --}}
-
     <style>
         /* Main Table Styling */
         #isPasted {
@@ -564,7 +464,7 @@
 
 
         <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-            <table class="border; padding: 5px;" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
                 <thead>
                     <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
                         <th style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px; font-weight: bold;"></th>

@@ -646,41 +646,9 @@
             </tbody>
         </table>
     </header>
-
-
-    {{-- <footer class="footer">
-        <table class="border p-10">
-            <tbody>
-                <tr>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                </tr>
-                <tr>
-                    <td class=" w-50">
-                        @php
-                            $temp = DB::table('document_types')
-                                ->where('name', $data->document_type_name)
-                                ->value('typecode');
-                        @endphp
-                        @if ($data->revised === 'Yes')
-                            {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}
-                            {{ Helpers::getDivisionName($data->division_id) }}
-                        /@if ($data->document_type_name){{ $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}} 
-                        @else
-                            {{ $data->sop_type_short }}/{{ $data->department_id }}/000{{ $data->id }}/R{{ $data->major }}
-                        @endif
-
-                    <td class="w-50">Printed On: {{ \Carbon\Carbon::parse($time)->format('d-M-Y h:i A') }}</td>
-                    <td class="text-right w-20"></td> 
-                </tr>
-            </tbody>
-        </table>
-    </footer> --}}
     
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-        <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+        <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
                 <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
                     <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;"></th>
@@ -757,8 +725,6 @@
             </tbody>
         </table>
     </footer>
-    
-    
 
     <div>
         <section class="main-section" id="pdf-page">
