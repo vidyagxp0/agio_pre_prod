@@ -6,9 +6,9 @@
         <div class="row">
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Conclusion Comments</label>
+                    <label for="Description Deviation">Conclusion Comments s @if($data->stage == 20) <span class="text-danger">*</span>@endif</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
+                    <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1"  >
                         {{ $data->conclusion_comments_oosc ?? '' }}
                         </textarea>
                 </div>
@@ -60,14 +60,15 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments">Specification Limit </label>
-                    <input type="text" value="{{$data->specification_limit_oosc}}" name="specification_limit_oosc"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
+                    <input type="text" value="{{$data->specification_limit_oosc}}" name="specification_limit_oosc" {{   $data->stage == 21 ? 'disabled' : '' }}>
+                                                                            
                 </div>
             </div>
 
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">Results to be Reported</label>
-                    <select name="results_to_be_reported_oosc" {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
+                    <select name="results_to_be_reported_oosc" {{  $data->stage == 21 ? 'disabled' : '' }}>
                        <option value="">Enter Your Selection Here</option>
                         <option value="Initial" {{ $data->results_to_be_reported_oosc == 'Initial' ? 'selected' : ''
                             }}>Initial</option>
@@ -81,15 +82,15 @@
                 <div class="group-input">
                     <label for="Reference Recores">Final Reportable Results</label>
                     <input type="text" name="final_reportable_results_oosc"
-                        value="{{ $data->final_reportable_results_oosc ?? '' }}"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
+                        value="{{ $data->final_reportable_results_oosc ?? '' }}"  {{  $data->stage == 21 ? 'disabled' : '' }}>
                 </div>
             </div>
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Justifi. for Averaging Results</label>
+                    <label for="Description Deviation">Justifi. for Averaging Results s @if($data->stage == 20) <span class="text-danger">*</span>@endif</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
+                    <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1"  {{ $data->stage == 21 ? 'disabled' : ''  }}>
                                 {{ $data->justifi_for_averaging_results_oosc ?? '' }}
                             </textarea>
                 </div>
@@ -98,7 +99,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">OOS/OOT Stands </label>
-                    <select name="oos_stands_oosc"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
+                    <select name="oos_stands_oosc"  {{  $data->stage == 21 ? 'disabled' : ''}}>
                        <option value="">Enter Your Selection Here</option>
                         <option value="Valid" {{ $data->oos_stands_oosc == 'Valid' ? 'selected' : '' }}>Valid
                         </option>
@@ -111,7 +112,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">CAPA Req.</label>
-                    <select name="capa_req_oosc"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
+                    <select name="capa_req_oosc"  {{  $data->stage == 21 ? 'disabled' : '' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->capa_req_oosc == 'Yes' ? 'selected' : '' }}>Yes</option>
                         <option value="No" {{ $data->capa_req_oosc == 'No' ? 'selected' : '' }}>No</option>
@@ -122,8 +123,8 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">CAPA Ref No.</label>
-                    <select multiple id="reference_record" name="capa_ref_no_oosc[]"
-                         {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}
+                    <select multiple id="reference_record" name="capa_ref_no_oosc[]" {{  $data->stage == 21 ? 'disabled' : '' }}
+                        
 
                         placeholder="Select Reference Records">
                         
@@ -159,7 +160,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if CAPA not required</label>
-                    <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
+                    <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1"  {{ $data->stage == 21 ? 'disabled' : ''  }}>
                                 {{ $data->justify_if_capa_not_required_oosc ?? '' }}
                             </textarea>
                 </div>
@@ -350,7 +351,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Action On affected batches</label>
-                    <textarea class="summernote" name="action_on_affected_batch" id="summernote-1" {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
+                    <textarea class="summernote" name="action_on_affected_batch" id="summernote-1" {{ $data->stage == 21 ? 'disabled' : ''  }}>
                             {{ $data->action_on_affected_batch ? $data->action_on_affected_batch : '' }}
                         </textarea>
                 </div>
@@ -402,7 +403,7 @@
                     <label for="Description Deviation">CQ Review comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="cq_review_comments_ocqr" id="summernote-1">
-                                {{ $data->cq_review_comments_ocqr ?? '' }}
+                                {{ $data->cq_review_comments_ocqr ?? '' }} 
                         </textarea>
                 </div>
             </div>

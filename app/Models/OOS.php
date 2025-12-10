@@ -290,6 +290,7 @@ class OOS extends Model
       ];
 
     protected $casts = [
+      'capa_ref_no_oosc'=>'array',
       'proposal_for_hypothesis_IB' => 'array',
       'recommended_actions_reference_plic' => 'array',
       'reference_document' => 'array',
