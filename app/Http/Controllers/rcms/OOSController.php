@@ -274,45 +274,20 @@ class OOSController extends Controller
                                 $history->save();
 
 
-                               
-                                
                                 $list = Helpers::getHodUserList($changestage->division_id);
-
-foreach ($list as $u) {
-
-    try {
-
-        $email = Helpers::getUserEmail($u->user_id);
-
-        if ($email !== null) {
-
-            Mail::send(
-                'mail.view-mail',
-                [
-                    'data'    => $changestage,
-                    'site'    => "OOS/OOT",
-                    'history' => "Review",
-                    'process' => 'OOS/OOT',
-                    'comment' => $request->comments,
-                    'user'    => Auth::user()->name
-                ],
-                function ($message) use ($email, $changestage) {
-                    $message->to($email)
-                        ->subject(
-                            "Agio Notification: OOS/OOT, Record #" .
-                            str_pad($changestage->record, 4, '0', STR_PAD_LEFT) .
-                            " - Activity: Review"
-                        );
-                }
-            );
-        }
-
-    } catch (\Exception $e) {
-        // Agar email fail ho jaye to yahan handle karein
-        \Log::error("Mail sending failed for user {$u->user_id}: " . $e->getMessage());
-    }
-}
-
+                                foreach ($list as $u) {
+                                   $email = Helpers::getUserEmail($u->user_id);
+                                       if ($email !== null) {
+                                       Mail::send(
+                                           'mail.view-mail',
+                                           ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           function ($message) use ($email, $changestage) {
+                                               $message->to($email)
+                                               ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                           }
+                                       );
+                                   }
+                                }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -397,46 +372,20 @@ foreach ($list as $u) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                           
-                    
-                    $list = Helpers::getQAUserList($changestage->division_id);
-
-foreach ($list as $u) {
-
-    try {
-
-        $email = Helpers::getUserEmail($u->user_id);
-
-        if ($email !== null) {
-
-            Mail::send(
-                'mail.view-mail',
-                [
-                    'data'    => $changestage,
-                    'site'    => "OOS/OOT",
-                    'history' => "Review",
-                    'process' => 'OOS/OOT',
-                    'comment' => $request->comments,
-                    'user'    => Auth::user()->name
-                ],
-                function ($message) use ($email, $changestage) {
-                    $message->to($email)
-                        ->subject(
-                            "Agio Notification: OOS/OOT, Record #" .
-                            str_pad($changestage->record, 4, '0', STR_PAD_LEFT) .
-                            " - Activity: Review"
-                        );
-                }
-            );
-        }
-
-    } catch (\Exception $e) {
-        // Error ko log karein
-        \Log::error("Mail sending failed for QA user {$u->user_id}: " . $e->getMessage());
-    }
-
-}
-
+                            $list = Helpers::getQAUserList($changestage->division_id);
+                                foreach ($list as $u) {
+                                   $email = Helpers::getUserEmail($u->user_id);
+                                       if ($email !== null) {
+                                       Mail::send(
+                                           'mail.view-mail',
+                                           ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           function ($message) use ($email, $changestage) {
+                                               $message->to($email)
+                                               ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                           }
+                                       );
+                                   }
+                                }
 
                                 // $list = Helpers::getCQAUsersList($changestage->division_id);
                                 // foreach ($list as $u) {
@@ -593,23 +542,20 @@ foreach ($list as $u) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-
-
-                    
+                    $list = Helpers::getQAUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                     // $list = Helpers::getCQAUsersList($changestage->division_id);
                     // foreach ($list as $u) {
                     //    $email = Helpers::getUserEmail($u->user_id);
@@ -752,20 +698,20 @@ foreach ($list as $u) {
                 //            );
                 //        }
                 //     }
-                    // $list = Helpers::getQAHeadUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAHeadUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -977,20 +923,20 @@ foreach ($list as $u) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getCQAUsersList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1119,20 +1065,20 @@ foreach ($list as $u) {
                     //        );
                     //    }
                     // }
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1261,20 +1207,20 @@ foreach ($list as $u) {
                     //        );
                     //    }
                     // }
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getCQAUsersList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1416,20 +1362,20 @@ foreach ($list as $u) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getProductionUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getProductionUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -1559,20 +1505,20 @@ foreach ($list as $u) {
                     //        );
                     //    }
                     // }
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1687,20 +1633,20 @@ foreach ($list as $u) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getCQAUsersList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                     // $list = Helpers::getQAHeadUserList($changestage->division_id);
                     // foreach ($list as $u) {
                     //    $email = Helpers::getUserEmail($u->user_id);
@@ -1829,20 +1775,20 @@ foreach ($list as $u) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getInitiatorUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2042,20 +1988,20 @@ foreach ($list as $u) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getHodUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getHodUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -2172,20 +2118,20 @@ foreach ($list as $u) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                     // $list = Helpers::getCQAUsersList($changestage->division_id);
                     // foreach ($list as $u) {
                     //    $email = Helpers::getUserEmail($u->user_id);
@@ -2329,20 +2275,20 @@ foreach ($list as $u) {
                     //        );
                     //    }
                     // }
-                    // $list = Helpers::getQAHeadUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAHeadUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -2350,7 +2296,7 @@ foreach ($list as $u) {
             }
 
             if ($changestage->stage == 20) {
-                if (!$changestage->reopen_approval_comments_uaa) {
+               if (!$changestage->reopen_approval_comments_uaa) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
@@ -2378,7 +2324,6 @@ foreach ($list as $u) {
                         'type' => 'success',
                     ]);
                 }
-
                 $extensionchild = extension_new::where('parent_id', $id)
                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
                     ->get();
@@ -2442,7 +2387,7 @@ foreach ($list as $u) {
                     }
 
 
-               
+
                 $changestage->stage = "21";
                 $changestage->status = "Closed - Done";
                 $changestage->P_II_B_Assignable_Cause_Not_Found_By= Auth::user()->name;
@@ -4004,24 +3949,20 @@ foreach ($list as $u) {
                             }
                             $history->save();
                             
-                            // $list = Helpers::getQAUserList($changestage->division_id);
-                            // foreach ($list as $u) {
-                            //    $email = Helpers::getUserEmail($u->user_id);
-                            //        if ($email !== null) {
-                            //        Mail::send(
-                            //            'mail.view-mail',
-                            //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                            //            function ($message) use ($email, $changestage) {
-                            //                $message->to($email)
-                            //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                            //            }
-                            //        );
-                            //    }
-                            // }
-
-
-
-                            ///////////////////////////////////////
+                            $list = Helpers::getQAUserList($changestage->division_id);
+                            foreach ($list as $u) {
+                               $email = Helpers::getUserEmail($u->user_id);
+                                   if ($email !== null) {
+                                   Mail::send(
+                                       'mail.view-mail',
+                                       ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                       function ($message) use ($email, $changestage) {
+                                           $message->to($email)
+                                           ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                       }
+                                   );
+                               }
+                            }
                             // $list = Helpers::getCQAUsersList($changestage->division_id);
                             // foreach ($list as $u) {
                             //    $email = Helpers::getUserEmail($u->user_id);
@@ -4245,20 +4186,20 @@ foreach ($list as $u) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getInitiatorUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -4376,20 +4317,20 @@ foreach ($list as $u) {
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getInitiatorUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -4593,20 +4534,20 @@ foreach ($list as $u) {
                     }
                     $history->save();
 
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    $list = Helpers::getQAUserList($changestage->division_id);
+                    foreach ($list as $u) {
+                       $email = Helpers::getUserEmail($u->user_id);
+                           if ($email !== null) {
+                           Mail::send(
+                               'mail.view-mail',
+                               ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                               function ($message) use ($email, $changestage) {
+                                   $message->to($email)
+                                   ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                               }
+                           );
+                       }
+                    }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
