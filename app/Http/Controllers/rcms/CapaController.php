@@ -131,8 +131,8 @@ class CapaController extends Controller
         $capa = new Capa();
         $capa->form_type = "CAPA";
         //$capa->record = ((RecordNumber::first()->value('counter')) + 1);
-        $capa->record = $request->record_number;
-        
+        $capa->record = $record_number;
+        // dd($capa);
         $capa->initiator_id = Auth::user()->id;
         $capa->division_id = $request->division_id;
         $capa->parent_id = $request->parent_id;

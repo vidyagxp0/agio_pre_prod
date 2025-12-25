@@ -59,6 +59,10 @@ class MarketComplaintController extends Controller
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
         }
+         $lastCapa = MarketComplaint::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $marketComplaint = new MarketComplaint();
 
 

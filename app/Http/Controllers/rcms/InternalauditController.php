@@ -39,7 +39,9 @@ class InternalauditController extends Controller
     public function internal_audit()
     {
         $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+    //    $record_number = ((RecordNumber::first()->value('counter')) + 1);
+         $lasteffectivness = InternalAudit::orderBy('record', 'desc')->first();
+        $record_number = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;  
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -52,12 +54,19 @@ class InternalauditController extends Controller
     public function create(request $request)
     {
         // return "breaking";
+
+        $lastCapa = InternalAudit::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
        $internalAudit = new InternalAudit();
         $internalAudit->form_type = "Internal-audit";
-        $internalAudit->record = ((RecordNumber::first()->value('counter')) + 1);
-        $internalAudit->record_number = $request->record_number;
+        $internalAudit->record = $record_number;
+       $internalAudit->record_number = $record_number;
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->division_id = $request->division_id;
+        // dd($internalAudit);
         $internalAudit->external_agencies = $request->external_agencies;
        // $internalAudit->severity_level = $request->severity_level_select;
         $internalAudit->severity_level_form = $request->severity_level_form;

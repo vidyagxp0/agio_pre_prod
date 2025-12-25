@@ -33,8 +33,12 @@ class RootCauseController extends Controller
 {
     public function rootcause()
     {
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+         $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
+       
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
@@ -49,9 +53,16 @@ class RootCauseController extends Controller
             toastr()->error("Short description is required");
             return redirect()->back();
         }
+
+         $lastRCA = RootCauseAnalysis::orderBy('record', 'desc')->first();
+        $record_number = $lastRCA ? $lastRCA->record + 1 : 1;
+
         $root = new RootCauseAnalysis();
         $root->form_type = "Root-cause-analysis";
         $root->parent_id = $request->parent_id;
+        $root->record= $record_number;
+
+        
         $root->parent_type = $request->parent_type;
         $root->originator_id = $request->originator_id;
         $root->date_opened = $request->date_opened;
@@ -192,7 +203,7 @@ class RootCauseController extends Controller
         }
 
 
-        $root->record = ((RecordNumber::first()->value('counter')) + 1);
+        // $root->record = ((RecordNumber::first()->value('counter')) + 1);
         $root->initiator_id = Auth::user()->id;
         $root->division_code = $request->division_code;
         $root->intiation_date = $request->intiation_date;
