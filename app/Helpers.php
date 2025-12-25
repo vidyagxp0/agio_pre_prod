@@ -623,6 +623,14 @@ class Helpers
             return DB::table('user_roles')->where(['q_m_s_roles_id' => '7', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
         }
     }
+  public static function getQAApproverUserList($division = null){
+        if (!$division) {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '67'])->select(['user_id', DB::raw('MAX(q_m_s_divisions_id) as q_m_s_divisions_id')])->groupBy('user_id')->get();
+        } else {
+            return DB::table('user_roles')->where(['q_m_s_roles_id' => '67', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
+        }
+    }
+    
 
     /************ Updated User List Data End ***********/
 
