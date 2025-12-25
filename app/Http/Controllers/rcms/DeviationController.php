@@ -41,8 +41,13 @@ use Illuminate\Support\Facades\Validator;
 class DeviationController extends Controller
 {
     public function deviation(Request $request){
+        // $old_record = Deviation::select('id', 'division_id', 'record')->get();
+        // $record_number = (RecordNumber::first()->value('counter')) + 1;
+
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
-        $record_number = (RecordNumber::first()->value('counter')) + 1;
+        $lastAi = Deviation::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+       
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -95,17 +100,21 @@ class DeviationController extends Controller
                     break;
             }
 
+         $lastDeviation = Deviation::orderBy('record', 'desc')->first();
+        $record_number = $lastDeviation ? $lastDeviation->record + 1 : 1;
 
+       
         $deviation = new Deviation();
         $deviation->form_type = "Deviation";
 
-        $deviation->record = ((RecordNumber::first()->value('counter')) + 1);
-        $deviation->initiator_id = Auth::user()->id;
+       // $deviation->record = ((RecordNumber::first()->value('counter')) + 1);
+          $deviation->record = $request->record; 
+       $deviation->initiator_id = Auth::user()->id;
 
         $deviation->form_progress = isset($form_progress) ? $form_progress : null;
 
         # -------------new-----------
-        //  $deviation->record_number = $request->record_number;
+        $deviation->record_number = $request->record_number;
         $deviation->division_id = $request->division_id;
         $deviation->assign_to = $request->assign_to;
         $deviation->Facility = $request->Facility;

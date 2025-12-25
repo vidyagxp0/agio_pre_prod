@@ -68,11 +68,16 @@
                                           <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName($parent_division_id) }}/EC/{{ date('Y') }}/{{ $record_number }}"> 
                                         @else
-                                            <input type="hidden" name="record_number"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/EC/{{ date('Y') }}/{{ $record_number }}">
+                                         <input type="hidden" name="record" id="record" value="">
+                                           
+                                         <input type="hidden" name="record_number"
+                                                value="">
                                             <input disabled type="text"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/EC/{{ date('Y') }}/{{ $record_number }}">
-                                        @endif
+                                                value="">
+                                      
+                                               
+                                       
+                                         @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

@@ -39,7 +39,10 @@ class CapaController extends Controller
         $cft = [];
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         // Record number ko pad karke 4 digits ka bana rahe hain
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+         $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $lastAi = Capa::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
         // Division ke hisaab se latest record check kar rahe hain
@@ -118,9 +121,18 @@ class CapaController extends Controller
             toastr()->error("Short description is required");
             return redirect()->back();
         }
+
+        $lastCapa = Capa::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+        
         $capa = new Capa();
         $capa->form_type = "CAPA";
-        $capa->record = ((RecordNumber::first()->value('counter')) + 1);
+        //$capa->record = ((RecordNumber::first()->value('counter')) + 1);
+        $capa->record = $request->record_number;
+        
         $capa->initiator_id = Auth::user()->id;
         $capa->division_id = $request->division_id;
         $capa->parent_id = $request->parent_id;
@@ -130,6 +142,7 @@ class CapaController extends Controller
         $capa->general_initiator_group = $request->initiator_group;
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
+        // dd($capa);
         $capa->due_date = $request->due_date;
         $capa->assign_to = $request->assign_to;
         $capa->capa_team =  implode(',', $request->capa_team);

@@ -27,8 +27,11 @@ class AuditProgramController extends Controller
 
     public function auditprogram()
     {
-        $old_record = AuditProgram::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $old_record = AuditProgram::select('id', 'division_id', 'record')->get();
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+         $old_record = AuditProgram::select('id', 'division_id', 'record')->get();
+        $lastAi = AuditProgram::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -56,7 +59,8 @@ class AuditProgramController extends Controller
         // }
         $data = new AuditProgram();
         // $data->form_type = "audit-program";
-        $data->record = ((RecordNumber::first()->value('counter')) + 1);
+     //   $data->record = ((RecordNumber::first()->value('counter')) + 1);
+       $data->record = $request->record;
         $data->record_number = $request->record_number;
         $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
@@ -65,6 +69,7 @@ class AuditProgramController extends Controller
         $data->parent_type = $request->parent_type;
         $data->intiation_date = $request->intiation_date;
         $data->short_description = $request->short_description;
+        //  dd($data);
 
         $data->initiated_through = $request->initiated_through;
         $data->initiated_through_req = $request->initiated_through_req;

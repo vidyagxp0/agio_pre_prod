@@ -90,8 +90,12 @@ class CCController extends Controller
     {
 
         $riskData = RiskLevelKeywords::all();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+       // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $old_record = CC::select('id', 'division_id', 'record')->get();
+        $lastAi = CC::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // dd($record_number);
         $preRiskAssessment = RiskManagement::all();
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
@@ -129,11 +133,12 @@ class CCController extends Controller
         $openState->form_type = "CC";
         $openState->division_id = $request->division_id;
         $openState->initiator_id = Auth::user()->id;
-        $openState->record = DB::table('record_numbers')->value('counter') + 1;
-
+       // $openState->record = DB::table('record_numbers')->value('counter') + 1;
+        $openState->record = $request->record;
+      
         $openState->due_days = $request->due_days;
         $openState->severity_level1 = $request->severity_level1;
-
+        // dd($openState);
         $openState->parent_id = $request->parent_id;
         $openState->due_date = $request->due_date;
         $openState->parent_type = $request->parent_type;
