@@ -28,7 +28,11 @@ class ErrataController extends Controller
     {
         $old_record = errata::select('id', 'division_id', 'record')->get();
         // $showdata = errata::find($id);
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        //$record_number = ((RecordNumber::first()->value('counter')) + 1);
+         $old_record = errata::select('id', 'division_id', 'record')->get();
+        $lastAi = errata::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+       
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
         $pre = [
@@ -85,12 +89,14 @@ class ErrataController extends Controller
     {
 
         $data = new errata();
-        $data->record = ((RecordNumber::first()->value('counter')) + 1);
+       // $data->record = ((RecordNumber::first()->value('counter')) + 1);
+        $data->record = $request->record;
         $data->division_id = $request->division_id;
         $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
         $data->initiated_by = $request->initiated_by;
         // new added lines
+
         $data->department_head_to = $request->department_head_to;
         $data->document_title = $request->document_title;
         $data->qa_reviewer = $request->qa_reviewer;

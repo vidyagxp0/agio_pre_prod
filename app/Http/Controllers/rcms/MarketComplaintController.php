@@ -35,8 +35,13 @@ class MarketComplaintController extends Controller
 {
     public function index()
     {
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+        // $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $old_record = MarketComplaint::select('id', 'division_id', 'record')->get();
+        $lastAi = MarketComplaint::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // dd($record);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
@@ -54,6 +59,10 @@ class MarketComplaintController extends Controller
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
         }
+         $lastCapa = MarketComplaint::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $marketComplaint = new MarketComplaint();
 
 
@@ -67,7 +76,9 @@ class MarketComplaintController extends Controller
         $marketComplaint->intiation_date = $request->intiation_date;
         $marketComplaint->due_date_gi = $request->due_date_gi;
         $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
-        $marketComplaint->record = ((RecordNumber::first()->value('counter')) + 1);
+        $marketComplaint->record = $request->record;
+        // dd($marketComplaint);
+        // $marketComplaint->record = ((RecordNumber::first()->value('counter')) + 1);
         $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
         $marketComplaint->if_other_gi = $request->if_other_gi;
         $marketComplaint->is_repeat_gi = $request->is_repeat_gi;

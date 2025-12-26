@@ -212,13 +212,16 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-
+                               
                                         @if (!empty($parent_division_id))
+                                      
                                         <input disabled type="text" name="record"
                                             value="{{ Helpers::getDivisionName($parent_division_id) }}/MC/{{ date('Y') }}/{{ $record_number }}">                                        
                                         @else  
-                                        <input disabled type="text" name="record" id="record"
-                                            value="{{ $getDiv }}/MC/{{ date('Y') }}/{{ str_pad($record, 4, '0', STR_PAD_LEFT) }}">
+                                              <input type="hidden" name="record" id="record" value="{{ $record }}">
+                                              <input disabled type="text" name="record_number" id="record" placeholder="Record Number">
+                                        {{--<input disabled type="text" name="record" id="record"
+                                            value="{{ $getDiv }}/MC/{{ date('Y') }}/{{ str_pad($record, 4, '0', STR_PAD_LEFT) }}">--}}
                                         @endif
                                     </div>
                                 </div>

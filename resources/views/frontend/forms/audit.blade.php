@@ -495,11 +495,14 @@
                                             <input disabled type="text"
                                                 value="{{ Helpers::getDivisionName($parent_division_id) }}/IA/{{ date('Y') }}/{{ $record_number }}">
                                         @else
-                                            <input disabled type="hidden" name="record_number"
+                                           {{-- <input disabled type="hidden" name="record_number"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}/IA/{{ date('Y') }}/{{ $record_number }}">
                                             <input disabled type="text"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/IA/{{ date('Y') }}/{{ $record_number }}">
-                                        @endif
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/IA/{{ date('Y') }}/{{ $record_number }}">--}}
+                                        <input  type="hidden" name="record_number" id="record" >
+                                     <input disabled type="text" name="record_number"
+                                            placeholder = "Record Number">
+                                                @endif
                                         </div>
                                 </div>
                                 <div class="col-lg-6">

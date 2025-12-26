@@ -43,10 +43,16 @@ class ActionItemController extends Controller
 
     public function showAction()
     {
+
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = $record;
-        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $lastAi = ActionItem::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        
+        // $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = $record;
+        // $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
@@ -123,9 +129,11 @@ foreach ($pre as $processName => $modelClass) {
         $openState = new ActionItem();
         $openState->cc_id = $request->ccId;
         $openState->initiator_id = Auth::user()->id;
-        $openState->record = DB::table('record_numbers')->value('counter') + 1;
+          $openState->record = $request->record;
+        //$openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->parent_id = $request->parent_id;
         $openState->division_code = $request->division_code;
+         dd($openState);
         $openState->parent_record_number = $request->parent_record_number;
         $openState->parent_record_number_edit = $request->parent_record_number_edit;
         $openState->parent_type = $request->parent_type;

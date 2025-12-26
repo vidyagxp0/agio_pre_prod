@@ -36,7 +36,10 @@ class AuditeeController extends Controller
     public function external_audit()
     {
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+      //  $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $old_record = Auditee::select('id', 'division_id', 'record')->get();
+        $lastAi = Auditee::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -57,10 +60,16 @@ class AuditeeController extends Controller
             toastr()->error("Short description is required");
             return redirect()->back()->withInput();
         }
+         $lastCapa = Auditee::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+        
 
         $internalAudit = new Auditee();
         $internalAudit->form_type = "External-audit";
-        $internalAudit->record = ((RecordNumber::first()->value('counter')) + 1);
+        $internalAudit->record = $record_number;
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->division_id = $request->division_id;
         //$internalAudit->parent_id = $request->parent_id;

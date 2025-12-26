@@ -34,7 +34,10 @@ class ObservationController extends Controller
 
     public function observation()
     {
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $old_record = Observation::select('id', 'division_code', 'record')->get();
+        $lastAi = Observation::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -51,10 +54,15 @@ class ObservationController extends Controller
             toastr()->error("Short description is required");
             //return redirect()->back();
         }
+         $lastCapa = Observation::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
         $data = new Observation();
         // dd($data);
-
-        $data->record = ((RecordNumber::first()->value('counter')) + 1);
+        $data->record = $record_number;
+        // $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->parent_id = $request->parent_id;
         $data->parent_type = $request->parent_type;

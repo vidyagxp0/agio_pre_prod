@@ -31,8 +31,13 @@ class OOCController extends Controller
 {
     public function index()
     {
-        $record_number = RecordNumber::first();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = RecordNumber::first();
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+        $old_record = OutOfCalibration::select('id', 'division_id', 'record')->get();
+        $lastAi = OutOfCalibration::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -49,8 +54,10 @@ class OOCController extends Controller
         }
         $data = new OutOfCalibration();
         $data->form_type = 'Out Of Calibration';
-        $data->record = ((RecordNumber::first()->value('counter')) + 1);
-        $data->initiator_id = Auth::user()->id;
+      //  $data->record = ((RecordNumber::first()->value('counter')) + 1);
+      $data->record = $request->record;
+          
+      $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
         $data->description_ooc = $request->description_ooc;
         $data->assign_to = $request->assign_to;

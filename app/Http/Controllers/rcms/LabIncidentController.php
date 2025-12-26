@@ -45,7 +45,8 @@ class LabIncidentController extends Controller
 
     public function labincident()
     {
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+       $lasteffectivness = LabIncident::orderBy('record', 'desc')->first();
+        $record_number = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;  
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -89,10 +90,16 @@ class LabIncidentController extends Controller
         //     'BA' => 'Business Administration',
         // ];
 
+        $lastCapa = LabIncident::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
         $data = new LabIncident();
         $data->Form_Type = "lab-incident";
-        $data->record = ((RecordNumber::first()->value('counter')) + 1);
-        $data->record_number = $request->record_number;
+        $data->record = $record_number;
+        $data->record_number = $record_number;
+        // dd($data);
         $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
         $data->short_desc = $request->short_desc;

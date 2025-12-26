@@ -47,7 +47,12 @@ class IncidentController extends Controller
 
         $old_record = Incident::select('id', 'division_id', 'record')->get();
         $currentDate = Carbon::now();
-        $data = ((RecordNumber::first()->value('counter')) + 1);
+        //$data = ((RecordNumber::first()->value('counter')) + 1);
+
+        $old_record = Incident::select('id', 'division_id', 'record')->get();
+        $lastAi = Incident::orderBy('record', 'desc')->first();
+        $data = $lastAi ? $lastAi->record + 1 : 1;
+      
         $data = str_pad($data, 4, '0', STR_PAD_LEFT);
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -88,10 +93,16 @@ class IncidentController extends Controller
             return response()->redirect()->back()->withInput();
         }
 
+         $lastCapa = Incident::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+
         $incident = new Incident();
         $incident->form_type = "Incident";
 
-        $incident->record = ((RecordNumber::first()->value('counter')) + 1);
+        $incident->record = $record_number;
         $incident->initiator_id = Auth::user()->id;
 
         $incident->form_progress = isset($form_progress) ? $form_progress : null;

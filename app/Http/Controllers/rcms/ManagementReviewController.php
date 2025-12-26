@@ -42,7 +42,9 @@ class ManagementReviewController extends Controller
     public function meeting()
     {
        // $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+       // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $lasteffectivness = ManagementReview::orderBy('record', 'desc')->first();
+        $record_number = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;  
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -62,10 +64,12 @@ class ManagementReviewController extends Controller
             toastr()->error("Short description is required");
             return redirect()->back();
         }
-        //  if (!$request->initiator_Group) {
-        //     toastr()->error("Initiator Department is required");
-        //     return redirect()->back();
-        // }
+       
+
+         $lastCapa = ManagementReview::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $management = new ManagementReview();
         //$management->record_number = ($request->record_number);
         // $management->assign_to = 1;//$request->assign_to;
@@ -101,7 +105,7 @@ class ManagementReviewController extends Controller
       // $management = new ManagementReview();
         $management->form_type = "Management Review";
         $management->division_id = $request->division_id;
-        $management->record = ((RecordNumber::first()->value('counter')) + 1);
+        $management->record = $record_number;
         $management->initiator_id = Auth::user()->id;
         $management->form_progress = isset($form_progress) ? $form_progress : null;
         $management->intiation_date = $request->intiation_date;

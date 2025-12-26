@@ -40,7 +40,9 @@ class RiskManagementController extends Controller
     public function risk()
     {
         $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+       // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $lastAi = RiskManagement::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -62,13 +64,18 @@ class RiskManagementController extends Controller
             return redirect()->back()->withInput();
         }
         // return $request;
+
+        $lastCapa = RiskManagement::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $data = new RiskManagement();
         $data->form_type = "risk-assesment";
         $data->division_id = $request->division_id;
         $data->division_code = $request->division_code;
         $data->form_progress = isset($form_progress) ? $form_progress : null;
         //$data->record_number = $request->record_number;
-        $data->record = ((RecordNumber::first()->value('counter')) + 1);
+        $data->record = $record_number;
         $data->initiator_id = Auth::user()->id;
         $data->short_description = $request->short_description;
         $data->intiation_date = $request->intiation_date;

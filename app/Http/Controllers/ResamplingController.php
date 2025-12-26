@@ -33,7 +33,10 @@ class ResamplingController extends Controller
     public function showAction()
     {
         $old_record = Resampling::select('id', 'division_id', 'record')->get();
-        $record = ((RecordNumber::first()->value('counter')) + 1);
+        $lastAi = Resampling::orderBy('record', 'desc')->first();
+        $record = $lastAi ? $lastAi->record + 1 : 1;
+       
+       // $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
 
@@ -111,10 +114,16 @@ foreach ($pre as $processName => $modelClass) {
             toastr()->error("Short description is required");
             return redirect()->back();
         }
+
+          $lastCapa = Resampling::orderBy('record', 'desc')->first();
+
+        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
         $openState = new Resampling();
         $openState->resampling_id = $request->ccId;
         $openState->initiator_id = Auth::user()->id;
-        $openState->record = DB::table('record_numbers')->value('counter') + 1;
+        $openState->record = $record_number;
         $openState->parent_id = $request->parent_id;
         $openState->division_code = $request->division_code;
         $openState->parent_type = $request->parent_type;
