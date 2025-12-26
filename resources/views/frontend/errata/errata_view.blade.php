@@ -131,7 +131,7 @@
                                 (Helpers::check_roles($showdata->division_id, 'ERRATA', 4) ||
                                     Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-modal">
-                                Reject
+                                More info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-modal">
                                 HOD Initial Review Complete
@@ -145,7 +145,7 @@
                                     Helpers::check_roles($showdata->division_id, 'ERRATA', 66) ||
                                     Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                                Reject
+                                More info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review Complete
@@ -163,7 +163,7 @@
                                     Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#more-inform-required-modal">
-                                Reject
+                                More info Required
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
