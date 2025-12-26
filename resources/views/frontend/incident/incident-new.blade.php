@@ -709,10 +709,10 @@ dd($pre);
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        {{-- <input disabled type="text" name="record_number"> --}}
+                                        {{-- <input disabled type="text" name="record_number"> 
                                         <input disabled type="text" name="record" id="record"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/INC/{{ date('Y') }}/{{ $data }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/INC/{{ date('Y') }}/{{ $data }}">--}}
+                                        <input disabled type="text" name="record"  placeholder="Record Number">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

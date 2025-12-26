@@ -62,8 +62,11 @@
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName($parent_division_id) }}/Resampling/{{ date('Y') }}/{{ $record_number }}">
                                         @else
-                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/Resampling/{{ date('Y') }}/{{ $record}}">
+                                           <input type="hidden" name="record" id="record" value="{{ $record }}">
+                                           <input disabled type="text" name="record_number" id="record" placeholder="Record Number">
+                                     
+                                         {{-- <input disabled type="text" name="record_number"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/Resampling/{{ date('Y') }}/{{ $record}}"> --}}
                                         @endif
                                     </div>
                                 </div>

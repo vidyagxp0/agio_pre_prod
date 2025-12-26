@@ -78,10 +78,13 @@
                                             <input type="hidden" name="record_number" id="record_number"
                                                 value="{{ Helpers::getDivisionName($parent_division_id)}}/OBS/{{ date('Y') }}/{{ $record_number }}">
                                         @else
-                                            <input disabled type="text"
+                                           <input type="hidden" name="record" id="record" value="{{ $record_number }}">
+                                           <input disabled type="text" name="record_number" id="record" placeholder="Record Number">
+                                     
+                                            {{-- <input disabled type="text"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
                                                 <input type="hidden" name="record_number" id="record_number"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}"> --}}
                                         @endif
 
                                     </div>

@@ -30,7 +30,10 @@ class EffectivenessCheckController extends Controller
 
     public function effectiveness_check()
     {
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        //$record_number = ((RecordNumber::first()->value('counter')) + 1);
+         $old_record = EffectivenessCheck::select('id', 'division_id', 'record')->get();
+        $lastAi = EffectivenessCheck::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -65,7 +68,8 @@ class EffectivenessCheckController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-
+        $lasteffectivness = EffectivenessCheck::orderBy('record', 'desc')->first();
+        $record_number = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;
         $openState = new EffectivenessCheck();
         // $openState->form_type = "effectiveness-check";
         $openState->is_parent = "No";
@@ -77,7 +81,9 @@ class EffectivenessCheckController extends Controller
         $openState->parent_record = $request->parent_record;
         $openState->parent_type = $request->parent_type;
         $openState->parent_id = $request->parent_id;
-        $openState->record = DB::table('record_numbers')->value('counter') + 1;
+        $openState->record = $record_number;
+          dd($openState);
+     //   $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->originator = CC::where('id', $request->cc_id)->value('initiator_id');
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
