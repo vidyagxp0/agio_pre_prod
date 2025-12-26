@@ -1490,7 +1490,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Send For Submit", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Send For Submit", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send For Submit Performed");

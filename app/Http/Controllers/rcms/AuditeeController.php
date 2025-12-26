@@ -6974,6 +6974,37 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                         }
                     }
                 }
+                 $list = Helpers::getQAUserList($changeControl->division_id);
+
+                foreach ($list as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data' => $changeControl, 
+                                    'site' => "view", 
+                                    'history' => "Audit Details Summary", 
+                                    'process' => 'External Audit', 
+                                    'comment' => $request->comment, 
+                                    'user' => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                        ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Audit Details Summary Performed");
+                                }
+                            );
+                        } catch (\Exception $e) {
+                            // Log the error for debugging
+                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                            // Optionally handle the exception (e.g., notify the user or admin)
+                            session()->flash('error', 'Failed to send email to ' . $email);
+                        }
+                    }
+                }
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -8330,25 +8361,25 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         $history->save();
                    
                         $list = Helpers::getCQAUsersList($changeControl->division_id);
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl, 'site'=>"External Audit", 'history' => "More Information Required", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                                $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                    try {
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl, 'site'=>"External Audit", 'history' => "More Information Required", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                            }
+                                        );
+                                    } catch(\Exception $e) {
+                                        info('Error sending mail', [$e]);
                                     }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
+                                }
+                            // }
                         }
-                    // }
-                }
 
                 $list = Helpers::getQAUserList($changeControl->division_id);
                 foreach ($list as $u) {
@@ -8367,7 +8398,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                             } catch(\Exception $e) {
                                 info('Error sending mail', [$e]);
                             }
-                        }
+                        } are bolna ki 1 sal 10 month ho chuke or agr vo ye puche ki incremnet kab hua tha last time to bona incree abhi nhi hua tha kuch 3 4 month stiped pr the uske bad basic salry ki bat hyi thi 
                     // }
                 }
 
