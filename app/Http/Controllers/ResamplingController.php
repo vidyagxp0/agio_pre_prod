@@ -9,6 +9,7 @@ use App\Models\CC;
 use App\Models\RoleGroup;
 use App\Models\ResamplingAudittrail;
 use App\Models\CCStageHistory;
+use Illuminate\Support\Facades\Log; 
 use App\Models\RecordNumber;
 use App\Models\CheckEffecVerifi;
 use App\Models\RefInfoComments;
@@ -1710,13 +1711,13 @@ foreach ($pre as $processName => $modelClass) {
                                             'data' => $changeControl, 
                                             'site' => "RP", 
                                             'history' => "Submit", 
-                                            'process' => 'External Audit', 
+                                            'process' => 'Resampling', 
                                             'comment' => $request->comment, 
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
                                             $message->to($email)
-                                                ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                                ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
                                         }
                                     );
                                 } catch (\Exception $e) {
