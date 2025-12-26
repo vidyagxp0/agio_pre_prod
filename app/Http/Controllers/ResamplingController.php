@@ -1696,6 +1696,69 @@ foreach ($pre as $processName => $modelClass) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
+
+                        $list = Helpers::getQAUserList($changeControl->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "RP", 
+                                            'history' => "Submit", 
+                                            'process' => 'External Audit', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+                         $list = Helpers::getCQAHeadUsersList($changeControl->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "RP", 
+                                            'history' => "Submit", 
+                                            'process' => 'Resampling', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
                 $changeControl->update();
                 // $history = new CCStageHistory();
                 $history = new ResamplingAudittrail;
@@ -1728,54 +1791,9 @@ foreach ($pre as $processName => $modelClass) {
             //   }
 
 
-            $list = Helpers::getAssignToUserList($lastopenState->division_id);
 
-            $userIds = collect($list)->pluck('user_id')->toArray();
-            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-            $userId = $users->pluck('id')->implode(',');
-            if(!empty($users)){
-                try {
-                    $history = new ResamplingAudittrail();
-                    $history->resampling_id = $id;
-                    $history->activity_type = "Not Applicable";
-                    $history->previous = "Not Applicable";
-                    $history->current = "Not Applicable";
-                    $history->action = 'Notification';
-                    $history->comment = "";
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable";
-                    $history->change_to = "Not Applicable";
-                    $history->change_from = "Opened ";
-                    $history->stage = "";
-                    $history->action_name = "";
-                    $history->mailUserId = $userId;
-                    $history->role_name = "QA/CQA Head";
-                    $history->save();
-                } catch (\Throwable $e) {
-                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                }
-            }
-            foreach ($list as $u) {
-                // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    $email = Helpers::getUserEmail($u->user_id);
-                        if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $lastopenState, 'site'=>"RESMPLING", 'history' => "Approved", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $lastopenState) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approvel Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
-                        }
-                    }
-                // }
-            }
+            
+            
                 toastr()->success('Document Sent');
 
                 return back();
@@ -1850,34 +1868,6 @@ foreach ($pre as $processName => $modelClass) {
 
 
             $list = Helpers::getAssignToUserList($lastopenState->division_id);
-
-            $userIds = collect($list)->pluck('user_id')->toArray();
-            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-            $userId = $users->pluck('id')->implode(',');
-            if(!empty($users)){
-                try {
-                    $history = new ResamplingAudittrail();
-                    $history->resampling_id = $id;
-                    $history->activity_type = "Not Applicable";
-                    $history->previous = "Not Applicable";
-                    $history->current = "Not Applicable";
-                    $history->action = 'Notification';
-                    $history->comment = "";
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable";
-                    $history->change_to = "Not Applicable";
-                    $history->change_from = "Head QA/CQA Approval ";
-                    $history->stage = "";
-                    $history->action_name = "";
-                    $history->mailUserId = $userId;
-                    $history->role_name = "QA/CQA Head";
-                    $history->save();
-                } catch (\Throwable $e) {
-                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                }
-            }
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     $email = Helpers::getUserEmail($u->user_id);
@@ -1970,33 +1960,7 @@ foreach ($pre as $processName => $modelClass) {
 
 
             $list = Helpers::getQAUserList($lastopenState->division_id);
-            $userIds = collect($list)->pluck('user_id')->toArray();
-            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-            $userId = $users->pluck('id')->implode(',');
-            if(!empty($users)){
-                try {
-                    $history = new ResamplingAudittrail();
-                    $history->resampling_id = $id;
-                    $history->activity_type = "Not Applicable";
-                    $history->previous = "Not Applicable";
-                    $history->current = "Not Applicable";
-                    $history->action = 'Notification';
-                    $history->comment = "";
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable";
-                    $history->change_to = "Not Applicable";
-                    $history->change_from = "Acknowledge";
-                    $history->stage = "";
-                    $history->action_name = "";
-                    $history->mailUserId = $userId;
-                    $history->role_name = "Assigned To";
-                    $history->save();
-                } catch (\Throwable $e) {
-                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                }
-            }
+           
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     $email = Helpers::getUserEmail($u->user_id);
@@ -2110,165 +2074,8 @@ foreach ($pre as $processName => $modelClass) {
 
 
 
-            // $list = Helpers::getQAUserList($lastopenState->division_id);
-
-
-            // $userIds = collect($list)->pluck('user_id')->toArray();
-            // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-            // $userId = $users->pluck('id')->implode(',');
-            // if(!empty($users)){
-            //     try {
-            //         $history = new ResamplingAudittrail();
-            //         $history->resampling_id = $id;
-            //         $history->activity_type = "Not Applicable";
-            //         $history->previous = "Not Applicable";
-            //         $history->current = "Not Applicable";
-            //         $history->action = 'Notification';
-            //         $history->comment = "";
-            //         $history->user_id = Auth::user()->id;
-            //         $history->user_name = Auth::user()->name;
-            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //         $history->origin_state = "Not Applicable";
-            //         $history->change_to = "Not Applicable";
-            //         $history->change_from = "QA/CQA Verification";
-            //         $history->stage = "";
-            //         $history->action_name = "";
-            //         $history->mailUserId = $userId;
-            //         $history->role_name = "QA/CQA";
-            //         $history->save();
-            //     } catch (\Throwable $e) {
-            //         \Log::error('Mail failed to send: ' . $e->getMessage());
-            //     }
-            // }
-            // foreach ($list as $u) {
-            //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //         $email = Helpers::getUserEmail($u->user_id);
-            //             if ($email !== null) {
-            //             try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                     ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-            //                     function ($message) use ($email, $lastopenState) {
-            //                         $message->to($email)
-            //                         ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
-            //                     }
-            //                 );
-            //             } catch(\Exception $e) {
-            //                 info('Error sending mail', [$e]);
-            //             }
-            //         }
-            //     // }
-            // }
-            // $list = Helpers::getCQAHeadUsersList($lastopenState->division_id);
-            // foreach ($list as $u) {
-            //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //         $email = Helpers::getUserEmail($u->user_id);
-            //             if ($email !== null) {
-            //             try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                     ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-            //                     function ($message) use ($email, $lastopenState) {
-            //                         $message->to($email)
-            //                         ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
-            //                     }
-            //                 );
-            //             } catch(\Exception $e) {
-            //                 info('Error sending mail', [$e]);
-            //             }
-            //         }
-            //     // }
-            // }
-
-
-            // $list = Helpers::getAssignToUserList($lastopenState->division_id);
-            // foreach ($list as $u) {
-            //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //         $email = Helpers::getUserEmail($u->user_id);
-            //             if ($email !== null) {
-            //             try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                     ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-            //                     function ($message) use ($email, $lastopenState) {
-            //                         $message->to($email)
-            //                         ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
-            //                     }
-            //                 );
-            //             } catch(\Exception $e) {
-            //                 info('Error sending mail', [$e]);
-            //             }
-            //         }
-            //     // }
-            // }
-            // $list = Helpers::getInitiatorUserList($lastopenState->division_id);
-            // foreach ($list as $u) {
-            //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //         $email = Helpers::getUserEmail($u->user_id);
-            //             if ($email !== null) {
-            //             try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                     ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-            //                     function ($message) use ($email, $lastopenState) {
-            //                         $message->to($email)
-            //                         ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
-            //                     }
-            //                 );
-            //             } catch(\Exception $e) {
-            //                 info('Error sending mail', [$e]);
-            //             }
-            //         }
-            //     // }
-            // }
-            // $list = Helpers::getHodDesigneeUserList($lastopenState->division_id);
-            // foreach ($list as $u) {
-            //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //         $email = Helpers::getUserEmail($u->user_id);
-            //             if ($email !== null) {
-            //             try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                     ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-            //                     function ($message) use ($email, $lastopenState) {
-            //                         $message->to($email)
-            //                         ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
-            //                     }
-            //                 );
-            //             } catch(\Exception $e) {
-            //                 info('Error sending mail', [$e]);
-            //             }
-            //         }
-            //     // }
-            // }
             $list = Helpers::getQAUserList($lastopenState->division_id);
-            $userIds = collect($list)->pluck('user_id')->toArray();
-            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-            $userId = $users->pluck('id')->implode(',');
-            if(!empty($users)){
-                try {
-                    $history = new ResamplingAudittrail();
-                    $history->resampling_id = $id;
-                    $history->activity_type = "Not Applicable";
-                    $history->previous = "Not Applicable";
-                    $history->current = "Not Applicable";
-                    $history->action = 'Notification';
-                    $history->comment = "";
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable";
-                    $history->change_to = "Not Applicable";
-                    $history->change_from = "Acknowledge";
-                    $history->stage = "";
-                    $history->action_name = "";
-                    $history->mailUserId = $userId;
-                    $history->role_name = "Assigned To";
-                    $history->save();
-                } catch (\Throwable $e) {
-                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                }
-            }
+           
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     $email = Helpers::getUserEmail($u->user_id);
@@ -2276,10 +2083,10 @@ foreach ($pre as $processName => $modelClass) {
                         try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Acknowledge Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $lastopenState) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Complete Performed");
+                                    ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
                                 }
                             );
                         } catch(\Exception $e) {
@@ -2288,6 +2095,89 @@ foreach ($pre as $processName => $modelClass) {
                     }
                 // }
             }
+            $list = Helpers::getCQAHeadUsersList($lastopenState->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    $email = Helpers::getUserEmail($u->user_id);
+                        if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $lastopenState) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
+                                }
+                            );
+                        } catch(\Exception $e) {
+                            info('Error sending mail', [$e]);
+                        }
+                    }
+                // }
+            }
+
+
+            $list = Helpers::getAssignToUserList($lastopenState->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    $email = Helpers::getUserEmail($u->user_id);
+                        if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $lastopenState) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
+                                }
+                            );
+                        } catch(\Exception $e) {
+                            info('Error sending mail', [$e]);
+                        }
+                    }
+                // }
+            }
+            $list = Helpers::getInitiatorUserList($lastopenState->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    $email = Helpers::getUserEmail($u->user_id);
+                        if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $lastopenState) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
+                                }
+                            );
+                        } catch(\Exception $e) {
+                            info('Error sending mail', [$e]);
+                        }
+                    }
+                // }
+            }
+            $list = Helpers::getHodDesigneeUserList($lastopenState->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    $email = Helpers::getUserEmail($u->user_id);
+                        if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $lastopenState) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
+                                }
+                            );
+                        } catch(\Exception $e) {
+                            info('Error sending mail', [$e]);
+                        }
+                    }
+                // }
+            }
+           
               
             $list = Helpers::getCQAUsersList($lastopenState->division_id);
             foreach ($list as $u) {
@@ -2375,6 +2265,26 @@ public function resamplingStageCancel(Request $request, $id)
             $history->change_from = $lastopenState->status;
             $history->stage = "Cancelled";
             $history->save();
+             $list = Helpers::getQAUserList($lastopenState->division_id);
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    $email = Helpers::getUserEmail($u->user_id);
+                        if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "Cancel", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $lastopenState) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                                }
+                            );
+                        } catch(\Exception $e) {
+                            info('Error sending mail', [$e]);
+                        }
+                    }
+                // }
+            }
             $changeControl->update();
             // $history = new CCStageHistory();
             // $history->type = "Action Item";
@@ -2405,57 +2315,7 @@ public function resamplingStageCancel(Request $request, $id)
 
                 
 
-                  $list = Helpers::getHodUserList($lastopenState->division_id);
-
-
-                  $userIds = collect($list)->pluck('user_id')->toArray();
-                  $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                  $userId = $users->pluck('id')->implode(',');
-                  if(!empty($users)){
-                      try {
-                          $history = new ResamplingAudittrail();
-                          $history->resampling_id = $id;
-                          $history->activity_type = "Not Applicable";
-                          $history->previous = "Not Applicable";
-                          $history->current = "Not Applicable";
-                          $history->action = 'Notification';
-                          $history->comment = "";
-                          $history->user_id = Auth::user()->id;
-                          $history->user_name = Auth::user()->name;
-                          $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                          $history->origin_state = "Not Applicable";
-                          $history->change_to = "Not Applicable";
-                          $history->change_from = "Opened";
-                          $history->stage = "";
-                          $history->action_name = "";
-                          $history->mailUserId = $userId;
-                          $history->role_name = "Initiator";
-                          $history->save();
-                      } catch (\Throwable $e) {
-                          \Log::error('Mail failed to send: ' . $e->getMessage());
-                      }
-                  }
-
-
-                  foreach ($list as $u) {
-                      // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                          $email = Helpers::getUserEmail($u->user_id);
-                              if ($email !== null) {
-                              try {
-                                  Mail::send(
-                                      'mail.view-mail',
-                                      ['data' => $lastopenState, 'site'=>"CC", 'history' => "Cancelled", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                      function ($message) use ($email, $lastopenState) {
-                                          $message->to($email)
-                                          ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
-                                      }
-                                  );
-                              } catch(\Exception $e) {
-                                  info('Error sending mail', [$e]);
-                              }
-                          }
-                      // }
-                  }
+                  
 
             toastr()->success('Document Sent');
             return redirect('resampling_view/'.$id);
@@ -2524,37 +2384,6 @@ public function resamplingmoreinfo(Request $request, $id)
             // $history->change_from = $lastopenState->status;
             $history->save();
             $list = Helpers::getInitiatorUserList($lastopenState->division_id);
-            $userIds = collect($list)->pluck('user_id')->toArray();
-            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-            $userId = $users->pluck('id')->implode(',');
-            if(!empty($users)){
-                try {
-                    $history = new ResamplingAudittrail();
-                    $history->resampling_id = $id;
-                    $history->activity_type = "Not Applicable";
-                    $history->previous = "Not Applicable";
-                    $history->current = "Not Applicable";
-                    $history->action = 'Notification';
-                    $history->comment = "";
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable";
-                    $history->change_to = "Not Applicable";
-                    $history->change_from = "Head QA/CQA Approval ";
-                    $history->stage = "";
-                    $history->action_name = "";
-                    $history->mailUserId = $userId;
-                    $history->role_name = "QA/CQA Head";
-            $changeControl->status = "Opened";
-            $changeControl->update();
-
-                    $history->save();
-                } catch (\Throwable $e) {
-                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                }
-            }
-
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     $email = Helpers::getUserEmail($u->user_id);
@@ -2642,33 +2471,6 @@ public function resamplingmoreinfo(Request $request, $id)
             // $history->save();
 
             $list = Helpers::getQAUserList($lastopenState->division_id);
-            $userIds = collect($list)->pluck('user_id')->toArray();
-            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-            $userId = $users->pluck('id')->implode(',');
-            if(!empty($users)){
-                try {
-                    $history = new ResamplingAudittrail();
-                    $history->resampling_id = $id;
-                    $history->activity_type = "Not Applicable";
-                    $history->previous = "Not Applicable";
-                    $history->current = "Not Applicable";
-                    $history->action = 'Notification';
-                    $history->comment = "";
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable";
-                    $history->change_to = "Not Applicable";
-                    $history->change_from = "Acknowledge";
-                    $history->stage = "";
-                    $history->action_name = "";
-                    $history->mailUserId = $userId;
-                    $history->role_name = "QA/CQA Head";
-                    $history->save();
-                } catch (\Throwable $e) {
-                    \Log::error('Mail failed to send: ' . $e->getMessage());
-                }
-            }
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     $email = Helpers::getUserEmail($u->user_id);
@@ -2688,9 +2490,7 @@ public function resamplingmoreinfo(Request $request, $id)
                     }
                 // }
             }
-            $list = Helpers::getCQAHeadUsersList($lastopenState->division_id);
-
-            
+            $list = Helpers::getCQAHeadUsersList($lastopenState->division_id);      
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     $email = Helpers::getUserEmail($u->user_id);
@@ -2761,53 +2561,27 @@ public function resamplingmoreinfo(Request $request, $id)
                 $history->action_name = "Not Applicable";
                 $history->stage = 'Acknowledge';
             $history->save();
-            // $list = Helpers::getAssignToUserList($lastopenState->division_id);
-            // $userIds = collect($list)->pluck('user_id')->toArray();
-            // $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-            // $userId = $users->pluck('id')->implode(',');
-            // if(!empty($users)){
-            //     try {
-            //         $history = new ResamplingAudittrail();
-            //         $history->resampling_id = $id;
-            //         $history->activity_type = "Not Applicable";
-            //         $history->previous = "Not Applicable";
-            //         $history->current = "Not Applicable";
-            //         $history->action = 'Notification';
-            //         $history->comment = "";
-            //         $history->user_id = Auth::user()->id;
-            //         $history->user_name = Auth::user()->name;
-            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //         $history->origin_state = "Not Applicable";
-            //         $history->change_to = "Not Applicable";
-            //         $history->change_from = "QA/CQA Verification";
-            //         $history->stage = "";
-            //         $history->action_name = "";
-            //         $history->mailUserId = $userId;
-            //         $history->role_name = "QA/CQA";
-            //         $history->save();
-            //     } catch (\Throwable $e) {
-            //         \Log::error('Mail failed to send: ' . $e->getMessage());
-            //     }
-            // }
-            // foreach ($list as $u) {
-            //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //         $email = Helpers::getUserEmail($u->user_id);
-            //             if ($email !== null) {
-            //             try {
-            //                 Mail::send(
-            //                     'mail.view-mail',
-            //                     ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "More Information Required", 'process' => 'Resampling', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-            //                     function ($message) use ($email, $lastopenState) {
-            //                         $message->to($email)
-            //                         ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-            //                     }
-            //                 );
-            //             } catch(\Exception $e) {
-            //                 info('Error sending mail', [$e]);
-            //             }
-            //         }
-            //     // }
-            // }
+            $list = Helpers::getAssignToUserList($lastopenState->division_id);
+           
+            foreach ($list as $u) {
+                // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                    $email = Helpers::getUserEmail($u->user_id);
+                        if ($email !== null) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $lastopenState, 'site'=>"Resampling", 'history' => "More Information Required", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                function ($message) use ($email, $lastopenState) {
+                                    $message->to($email)
+                                    ->subject("Agio Notification: resampling, Record #" . str_pad($lastopenState->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                }
+                            );
+                        } catch(\Exception $e) {
+                            info('Error sending mail', [$e]);
+                        }
+                    }
+                // }
+            }
        
             toastr()->success('Document Sent');
             return redirect('resampling_view/'.$id);
