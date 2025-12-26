@@ -630,6 +630,7 @@ class Helpers
             return DB::table('user_roles')->where(['q_m_s_roles_id' => '67', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
         }
     }
+   
     
 
     /************ Updated User List Data End ***********/
