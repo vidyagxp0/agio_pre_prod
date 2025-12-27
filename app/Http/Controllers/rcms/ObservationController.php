@@ -2238,50 +2238,35 @@ if (is_array($request->action) && !empty($request->action)) {
                 }
 
                 $list = Helpers::getLeadAuditeeUsersList($changestage->division_code); // Notify CFT Person
-
-                    $userIds = collect($list)->pluck('user_id')->toArray();
-                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    $userId = $users->pluck('id')->implode(',');
-                    if(!empty($users)){
-                        try {
-                            $history = new AuditTrialObservation();
-                            $history->Observation_id = $id;
-                            $history->activity_type = "Not Applicable";
-                            $history->previous = "Not Applicable";
-                            $history->current = "Not Applicable";
-                            $history->action = 'Notification';
-                            $history->comment = "";
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = "Not Applicable";
-                            $history->change_to = "Not Applicable";
-                            $history->change_from = "Opened";
-                            $history->stage = "";
-                            $history->action_name = "";
-                            $history->mailUserId = $userId;
-                            $history->role_name = "Initiator";
-                            $history->save();
-                        } catch (\Throwable $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
-                        }
-                    }
-
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changestage->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changestage, 'site' => "Observation", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changestage) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changestage, 
+                                            'site' => "OV", 
+                                            'history' => "Submit", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changestage) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
                                 }
-                            );
+                            }
                         }
-                    // }
-                }
 
                 $history->save();
 
@@ -2446,51 +2431,38 @@ if (is_array($request->action) && !empty($request->action)) {
                     }
                     $history->save();
 
-                $list = Helpers::getQAUserList($changestage->division_code); // Notify CFT Person
+                  
+                $list = Helpers::getQAUserList($changestage->division_id);
 
-                    $userIds = collect($list)->pluck('user_id')->toArray();
-                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    $userId = $users->pluck('id')->implode(',');
-                    if(!empty($users)){
-                        try {
-                            $history = new AuditTrialObservation();
-                            $history->Observation_id = $id;
-                            $history->activity_type = "Not Applicable";
-                            $history->previous = "Not Applicable";
-                            $history->current = "Not Applicable";
-                            $history->action = 'Notification';
-                            $history->comment = "";
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = "Not Applicable";
-                            $history->change_to = "Not Applicable";
-                            $history->change_from = "Pending Response";
-                            $history->stage = "";
-                            $history->action_name = "";
-                            $history->mailUserId = $userId;
-                            $history->role_name = "Initiator";
-                            $history->save();
-                        } catch (\Throwable $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
-                        }
-                    }
-
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changestage->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changestage, 'site' => "Observation", 'history' => "CAPA Plan Proposed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changestage) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: CAPA Plan Proposed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changestage, 
+                                            'site' => "RP", 
+                                            'history' => "CAPA Plan Proposed", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changestage) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: CAPA Plan Proposed Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
                                 }
-                            );
+                            }
                         }
-                    // }
-                }
 
                     $changestage->update();
                     toastr()->success('Document Sent');
@@ -2652,51 +2624,127 @@ if (is_array($request->action) && !empty($request->action)) {
                         $history->action_name = 'Update';
                     }
 
-                    $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
-
-                    $userIds = collect($list)->pluck('user_id')->toArray();
-                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    $userId = $users->pluck('id')->implode(',');
-                    if(!empty($users)){
-                        try {
-                            $history = new AuditTrialObservation();
-                            $history->Observation_id = $id;
-                            $history->activity_type = "Not Applicable";
-                            $history->previous = "Not Applicable";
-                            $history->current = "Not Applicable";
-                            $history->action = 'Notification';
-                            $history->comment = "";
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = "Not Applicable";
-                            $history->change_to = "Not Applicable";
-                            $history->change_from = "Pending Response";
-                            $history->stage = "";
-                            $history->action_name = "";
-                            $history->mailUserId = $userId;
-                            $history->role_name = "Initiator";
-                            $history->save();
-                        } catch (\Throwable $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
-                        }
-                    }
-
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changestage->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+                    $list = Helpers::getAuditManagerUsersList($changestage->division_code);                                 
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changestage, 'site' => "Observation", 'history' => "No CAPAs Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changestage) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changestage, 
+                                            'site' => "Observation", 
+                                            'history' => "No CAPAs Required", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changestage) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
                                 }
-                            );
+                            }
                         }
-                    // }
-                }
+                         $list = Helpers::getQAUserList($changestage->division_code);                                 
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changestage, 
+                                            'site' => "Observation", 
+                                            'history' => "No CAPAs Required", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changestage) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+                         $list = Helpers::getCQAUsersList($changestage->division_code);                                 
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changestage, 
+                                            'site' => "Observation", 
+                                            'history' => "No CAPAs Required", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changestage) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+
+                         $list = Helpers::getLeadAuditeeUsersList($changestage->division_code);                                 
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changestage, 
+                                            'site' => "Observation", 
+                                            'history' => "No CAPAs Required", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changestage) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
 
                 $history->save();
                     $changestage->update();
@@ -2759,97 +2807,67 @@ if (is_array($request->action) && !empty($request->action)) {
                 }
 
                 $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
-
-                    $userIds = collect($list)->pluck('user_id')->toArray();
-                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    $userId = $users->pluck('id')->implode(',');
-                    if(!empty($users)){
-                        try {
-                            $history = new AuditTrialObservation();
-                            $history->Observation_id = $id;
-                            $history->activity_type = "Not Applicable";
-                            $history->previous = "Not Applicable";
-                            $history->current = "Not Applicable";
-                            $history->action = 'Notification';
-                            $history->comment = "";
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = "Not Applicable";
-                            $history->change_to = "Not Applicable";
-                            $history->change_from = "Response Verification";
-                            $history->stage = "";
-                            $history->action_name = "";
-                            $history->mailUserId = $userId;
-                            $history->role_name = "Initiator";
-                            $history->save();
-                        } catch (\Throwable $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
-                        }
-                    }
-
                      foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changestage->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changestage, 'site' => "Observation", 'history' => "Response Reviewed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changestage) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changestage, 
+                                            'site' => "Observation", 
+                                            'history' => "Response Reviewed", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changestage) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
                                 }
-                            );
+                            }
                         }
-                    // }
-                }
 
 
                 $list = Helpers::getQAUserList($changestage->division_code); // Notify CFT Person
-
-                    $userIds = collect($list)->pluck('user_id')->toArray();
-                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    $userId = $users->pluck('id')->implode(',');
-                    if(!empty($users)){
-                        try {
-                            $history = new AuditTrialObservation();
-                            $history->Observation_id = $id;
-                            $history->activity_type = "Not Applicable";
-                            $history->previous = "Not Applicable";
-                            $history->current = "Not Applicable";
-                            $history->action = 'Notification';
-                            $history->comment = "";
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = "Not Applicable";
-                            $history->change_to = "Not Applicable";
-                            $history->change_from = "Response Verification";
-                            $history->stage = "";
-                            $history->action_name = "";
-                            $history->mailUserId = $userId;
-                            $history->role_name = "Initiator";
-                            $history->save();
-                        } catch (\Throwable $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
-                        }
-                    }
-
                      foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changestage->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changestage, 'site' => "Observation", 'history' => "Response Reviewed", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changestage) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changestage, 
+                                            'site' => "Observation", 
+                                            'history' => "Response Reviewed", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changestage) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
                                 }
-                            );
+                            }
                         }
-                    // }
-                }
 
                 $history->save();
                 $changestage->update();
@@ -3008,143 +3026,135 @@ if ($childCapas->count() > 0) {
 
                 $list = Helpers::getLeadAuditeeUsersList($changeControl->division_code); // Notify CFT Person
 
-                    $userIds = collect($list)->pluck('user_id')->toArray();
-                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    $userId = $users->pluck('id')->implode(',');
-                    if(!empty($users)){
-                        try {
-                            $history = new AuditTrialObservation();
-                            $history->Observation_id = $id;
-                            $history->activity_type = "Not Applicable";
-                            $history->previous = "Not Applicable";
-                            $history->current = "Not Applicable";
-                            $history->action = 'Notification';
-                            $history->comment = "";
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = "Not Applicable";
-                            $history->change_to = "Not Applicable";
-                            $history->change_from = "Opened";
-                            $history->stage = "";
-                            $history->action_name = "";
-                            $history->mailUserId = $userId;
-                            $history->role_name = "Initiator";
-                            $history->save();
-                        } catch (\Throwable $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
-                        }
-                    }
-
                      foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "Observation", 'history' => "Cancel", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "Observation", 
+                                            'history' => "Response Reviewed", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
                                 }
-                            );
+                            }
                         }
-                    // }
-                }
+
 
 
                 $list = Helpers::getQAUserList($changeControl->division_code); // Notify CFT Person
 
-                    $userIds = collect($list)->pluck('user_id')->toArray();
-                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    $userId = $users->pluck('id')->implode(',');
-                    if(!empty($users)){
-                        try {
-                            $history = new AuditTrialObservation();
-                            $history->Observation_id = $id;
-                            $history->activity_type = "Not Applicable";
-                            $history->previous = "Not Applicable";
-                            $history->current = "Not Applicable";
-                            $history->action = 'Notification';
-                            $history->comment = "";
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = "Not Applicable";
-                            $history->change_to = "Not Applicable";
-                            $history->change_from = "Opened";
-                            $history->stage = "";
-                            $history->action_name = "";
-                            $history->mailUserId = $userId;
-                            $history->role_name = "Initiator";
-                            $history->save();
-                        } catch (\Throwable $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
-                        }
-                    }
-
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+                    foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "Observation", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "Observation", 
+                                            'history' => "Closed-Cancelled", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closed-Cancelled Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
                                 }
-                            );
+                            }
                         }
-                    // }
-                }
+
+                    
 
 
                 $list = Helpers::getCQAUsersList($changeControl->division_code); // Notify CFT Person
 
-                $userIds = collect($list)->pluck('user_id')->toArray();
-                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                $userId = $users->pluck('id')->implode(',');
-                if(!empty($users)){
-                    try {
-                        $history = new AuditTrialObservation();
-                        $history->Observation_id = $id;
-                        $history->activity_type = "Not Applicable";
-                        $history->previous = "Not Applicable";
-                        $history->current = "Not Applicable";
-                        $history->action = 'Notification';
-                        $history->comment = "";
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = "Not Applicable";
-                        $history->change_to = "Not Applicable";
-                        $history->change_from = "Opened";
-                        $history->stage = "";
-                        $history->action_name = "";
-                        $history->mailUserId = $userId;
-                        $history->role_name = "Initiator";
-                        $history->save();
-                    } catch (\Throwable $e) {
-                        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    }
-                }
-
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+               foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "Observation", 'history' => "Report Issued", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "Observation", 
+                                            'history' => "Closed-Cancelled", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closed-Cancelled Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
                                 }
-                            );
-                        }
-                    // }
-                }
+                            }
+                        } 
+                         $list = Helpers::getLeadAuditeeUsersList($changeControl->division_code); // Notify CFT Person
+
+                          foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "Observation", 
+                                            'history' => "Closed-Cancelled", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closed-Cancelled Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        } 
             }
 
                 $changeControl->update();
@@ -3188,51 +3198,66 @@ if ($childCapas->count() > 0) {
                 $history->stage = '';
                 $history->save();
 
-                $list = Helpers::getLeadAuditorUsersList($changeControl->division_code); // Notify CFT Person
-
-                    $userIds = collect($list)->pluck('user_id')->toArray();
-                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                    $userId = $users->pluck('id')->implode(',');
-                    if(!empty($users)){
-                        try {
-                            $history = new AuditTrialObservation();
-                            $history->Observation_id = $id;
-                            $history->activity_type = "Not Applicable";
-                            $history->previous = "Not Applicable";
-                            $history->current = "Not Applicable";
-                            $history->action = 'Notification';
-                            $history->comment = "";
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = "Not Applicable";
-                            $history->change_to = "Not Applicable";
-                            $history->change_from = "Pending Response";
-                            $history->stage = "";
-                            $history->action_name = "";
-                            $history->mailUserId = $userId;
-                            $history->role_name = "Initiator";
-                            $history->save();
-                        } catch (\Throwable $e) {
-                            \Log::error('Mail failed to send: ' . $e->getMessage());
-                        }
-                    }
-
-                     foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+                    $list = Helpers::getQAUserList($changeControl->division_code); // Notify CFT Person
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "Observation", 'history' => "More Info Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required");
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "OV", 
+                                            'history' => "More Info Required", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
                                 }
-                            );
-                        }
-                    // }
-                }
+                            }
+                        }         
+                         $list = Helpers::getCQAUsersList($changeControl->division_code); // Notify CFT Person
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "OV", 
+                                            'history' => "Submit", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }                    
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -3247,25 +3272,68 @@ if ($childCapas->count() > 0) {
                 $changeControl->reject_capa_plan_on = Carbon::now()->format('d-M-Y');
                 $changeControl->reject_capa_plan_comment = $request->comment;
 
-
-                $changeControl->update();
-                $list = Helpers::getLeadAuditeeUserList();
-                foreach ($list as $u) {
-                    if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                         if ($email !== null) {
-
-                          Mail::send(
-                              'mail.view-mail',
-                               ['data' => $changeControl],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document sent ".Auth::user()->name);
+                    $list = Helpers::getCQAHeadUsersList($changeControl->division_code); // Notify CFT Person
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "OV", 
+                                            'history' => "More Info Required", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
                             }
-                          );
+                        }   
+                    $list = Helpers::getQAHeadUserList($changeControl->division_code); // Notify CFT Person
+                    foreach ($list as $u) {
+                        $email = Helpers::getUserEmail($u->user_id);
+                    
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $changeControl, 
+                                        'site' => "OV", 
+                                        'history' => "More Info Required", 
+                                        'process' => 'Observation', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                    
+                                
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
-                 }
-              }
+                    }         
+                $changeControl->update();
+      
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -3318,57 +3386,97 @@ if ($childCapas->count() > 0) {
                 }
 
                 $list = Helpers::getAuditManagerUsersList($changeControl->division_code); // Notify CFT Person
-                foreach ($list as $u) {
-               // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                   $email = Helpers::getUserEmail($u->user_id);
-                       if ($email !== null) {
-                       Mail::send(
-                           'mail.view-mail',
-                           ['data' => $changeControl, 'site' => "Observation", 'history' => " No CAPAs Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                           function ($message) use ($email, $changeControl) {
-                               $message->to($email)
-                               ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity:  No CAPAs Required");
-                           }
-                       );
-                   }
-               // }
-                }
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "OV", 
+                                            'history' => "No CAPAs Required", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        } 
 
 
-           $list = Helpers::getQAUserList($changeControl->division_code); // Notify CFT Person
-                foreach ($list as $u) {
-               // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                   $email = Helpers::getUserEmail($u->user_id);
-                       if ($email !== null) {
-                       Mail::send(
-                           'mail.view-mail',
-                           ['data' => $changeControl, 'site' => "Observation", 'history' => " No CAPAs Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                           function ($message) use ($email, $changeControl) {
-                               $message->to($email)
-                               ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity:  No CAPAs Required");
-                           }
-                       );
-                   }
-               // }
-            }
-
-
-           $list = Helpers::getCQAUsersList($changeControl->division_code); // Notify CFT Person
-                foreach ($list as $u) {
-               // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                   $email = Helpers::getUserEmail($u->user_id);
-                       if ($email !== null) {
-                       Mail::send(
-                           'mail.view-mail',
-                           ['data' => $changeControl, 'site' => "Observation", 'history' => " No CAPAs Required", 'process' => 'Observation', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                           function ($message) use ($email, $changeControl) {
-                               $message->to($email)
-                               ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity:  No CAPAs Required");
-                           }
-                       );
-                   }
-               // }
-           }
+                $list = Helpers::getQAUserList($changeControl->division_code); // Notify CFT Person
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl, 
+                                            'site' => "OV", 
+                                            'history' => "No CAPAs Required", 
+                                            'process' => 'Observation', 
+                                            'comment' => $request->comment, 
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                 
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        
+                                   
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }   
+                    $list = Helpers::getCQAUsersList($changeControl->division_code); // Notify CFT Person
+                    foreach ($list as $u) {
+                        $email = Helpers::getUserEmail($u->user_id);
+                    
+                        if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $changeControl, 
+                                        'site' => "OV", 
+                                        'history' => "No CAPAs Required", 
+                                        'process' => 'Observation', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: No CAPAs Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                    
+                                
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
+                        }
+                    }      
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
