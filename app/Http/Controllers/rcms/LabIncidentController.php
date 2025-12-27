@@ -6392,67 +6392,114 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
             $history->save();
 
-            $list = Helpers::getQAUserList($labstate->division_id); // Notify CFT Person
-            foreach ($list as $u) {
+            // $list = Helpers::getQAUserList($labstate->division_id); // Notify CFT Person
+            // foreach ($list as $u) {
+            //         $email = Helpers::getUserEmail($u->user_id);
+            //             if ($email !== null) {
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $labstate) {
+            //                     $message->to($email)
+            //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+            //                 }
+            //             );
+            //         }
+            // }
+
+            //   $list = Helpers::getQAHeadUserList($labstate->division_id); // Notify CFT Person
+            // foreach ($list as $u) {
+            //         $email = Helpers::getUserEmail($u->user_id);
+            //             if ($email !== null) {
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $labstate) {
+            //                     $message->to($email)
+            //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+            //                 }
+            //             );
+            //         }
+            // }
+
+
+
+            // $list = Helpers::getInitiatorUserList($labstate->division_id); // Notify CFT Person
+            // foreach ($list as $u) {
+            //         $email = Helpers::getUserEmail($u->user_id);
+            //             if ($email !== null) {
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $labstate) {
+            //                     $message->to($email)
+            //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+            //                 }
+            //             );
+            //         }
+            // }
+
+            // $list = Helpers::getHodUserList($labstate->division_id); // Notify CFT Person
+            // foreach ($list as $u) {
+            //         $email = Helpers::getUserEmail($u->user_id);
+            //             if ($email !== null) {
+            //             Mail::send(
+            //                 'mail.view-mail',
+            //                 ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+            //                 function ($message) use ($email, $labstate) {
+            //                     $message->to($email)
+            //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
+            //                 }
+            //             );
+            //         }
+            // }
+
+            // Get all required users
+                $qaList        = Helpers::getQAUserList($labstate->division_id);
+                $qaHeadList    = Helpers::getQAHeadUserList($labstate->division_id);
+                $initiatorList = Helpers::getInitiatorUserList($labstate->division_id);
+                $initiatorHod = Helpers::getHodUserList($labstate->division_id);
+                // Merge & remove duplicate users
+                $users = collect($qaList)
+                            ->merge($qaHeadList)
+                            ->merge($initiatorList)
+                            ->merge($initiatorHod)
+                            ->unique('user_id')
+                            ->values();
+
+                // Send mail in single loop
+                foreach ($users as $u) {
+
                     $email = Helpers::getUserEmail($u->user_id);
-                        if ($email !== null) {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                            function ($message) use ($email, $labstate) {
-                                $message->to($email)
-                                ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-                            }
-                        );
+
+                    if (!empty($email)) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data'    => $labstate,
+                                    'site'    => "LI",
+                                    'history' => "Approved",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comments,
+                                    'user'    => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $labstate) {
+                                    $message->to($email)
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($labstate->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: Approved"
+                                            );
+                                }
+                            );
+                        } catch (\Throwable $e) {
+                            // Log error but do NOT stop execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                        }
                     }
-            }
+                }
 
-              $list = Helpers::getQAHeadUserList($labstate->division_id); // Notify CFT Person
-            foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
-                        if ($email !== null) {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                            function ($message) use ($email, $labstate) {
-                                $message->to($email)
-                                ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-                            }
-                        );
-                    }
-            }
-
-
-
-            $list = Helpers::getInitiatorUserList($labstate->division_id); // Notify CFT Person
-            foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
-                        if ($email !== null) {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                            function ($message) use ($email, $labstate) {
-                                $message->to($email)
-                                ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-                            }
-                        );
-                    }
-            }
-
-            $list = Helpers::getHodUserList($labstate->division_id); // Notify CFT Person
-            foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
-                        if ($email !== null) {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                            function ($message) use ($email, $labstate) {
-                                $message->to($email)
-                                ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-                            }
-                        );
-                    }
-            }
 
             $labstate->update();
 
@@ -6532,21 +6579,66 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 }
                 $history->save();
 
-                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
+                // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Submit", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+              // Get HOD & QC Head users
+                    $hodList    = Helpers::getHodUserList($changeControl->division_id);
+                    $qcHeadList = Helpers::QCHead($changeControl->division_id);
+
+                    // Merge & remove duplicate users
+                    $users = collect($hodList)
+                                ->merge($qcHeadList)
+                                ->unique('user_id')
+                                ->values();
+
+                    // Send mail in single loop
+                    foreach ($users as $u) {
+
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "Submit", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
-                                }
-                            );
+
+                        if (!empty($email)) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data'    => $changeControl,
+                                        'site'    => "LI",
+                                        'history' => "Submit",
+                                        'process' => 'Lab Incident',
+                                        'comment' => $request->comment,
+                                        'user'    => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                                ->subject(
+                                                    "Agio Notification: Lab Incident, Record #"
+                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                    . " - Activity: Submit"
+                                                );
+                                    }
+                                );
+                            } catch (\Throwable $e) {
+                                // Log error but do not stop execution
+                                \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            }
                         }
-                    // }
-                }
+                    }
+
+
 
 
                 $changeControl->update();
@@ -6635,36 +6727,77 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 }
 
                 $history->save();
-                $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
+                // $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QC Head/HOD Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QC Head/HOD Initial Review Complete");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+
+                // $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QC Head/HOD Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QC Head/HOD Initial Review Complete");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+                 $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+
                 foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "QC Head/HOD Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                [
+                                    'data'    => $changeControl,
+                                    'site'    => "LI",
+                                    'history' => "QA Head/HOD Initial Review Complete",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QC Head/HOD Initial Review Complete");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: QA Head/HOD Initial Review Complete"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do not break execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
-                    // }
+                    }
                 }
-                $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "QC Head/HOD Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QC Head/HOD Initial Review Complete");
-                                }
-                            );
-                        }
-                    // }
-                }
+
+
+
 
                 $changeControl->update();
                 //toastr()->success('Document Sent');
@@ -6755,21 +6888,56 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 }
 
                 $history->save();
-                $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                // $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Initial Review Complete");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+                 $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+
                 foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "QA Initial Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                [
+                                    'data'    => $changeControl,
+                                    'site'    => "LI",
+                                    'history' => "QA Initial Review Complete",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Initial Review Complete");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: QA Initial Review Complete"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do not break execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
-                    // }
+                    }
                 }
+
 
                 $changeControl->update();
                 //toastr()->success('Document Sent');
@@ -7006,21 +7174,67 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                     $history->save();
 
-                    $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
-                    foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                                if ($email !== null) {
+                    // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                    // foreach ($list as $u) {
+                    //         $email = Helpers::getUserEmail($u->user_id);
+                    //             if ($email !== null) {
+                    //             Mail::send(
+                    //                 'mail.view-mail',
+                    //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Pending Initiator Update Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //                 function ($message) use ($email, $changeControl) {
+                    //                     $message->to($email)
+                    //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Pending Initiator Update Complete");
+                    //                 }
+                    //             );
+                    //         }
+                    //     // }
+                    // }
+
+                    // Get HOD & QC Head users
+                    $hodList    = Helpers::getHodUserList($changeControl->division_id);
+                    $qcHeadList = Helpers::QCHead($changeControl->division_id);
+
+                    // Merge & remove duplicate users
+                    $users = collect($hodList)
+                                ->merge($qcHeadList)
+                                ->unique('user_id')
+                                ->values();
+
+                    // Send mail in single loop
+                    foreach ($users as $u) {
+
+                        $email = Helpers::getUserEmail($u->user_id);
+
+                        if (!empty($email)) {
+                            try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "LI", 'history' => "Pending Initiator Update Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    [
+                                        'data'    => $changeControl,
+                                        'site'    => "LI",
+                                        'history' => "Pending Initiator Update Complete",
+                                        'process' => 'Lab Incident',
+                                        'comment' => $request->comment,
+                                        'user'    => Auth::user()->name
+                                    ],
                                     function ($message) use ($email, $changeControl) {
                                         $message->to($email)
-                                        ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Pending Initiator Update Complete");
+                                                ->subject(
+                                                    "Agio Notification: Lab Incident, Record #"
+                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                    . " - Activity: Pending Initiator Update Complete"
+                                                );
                                     }
                                 );
+                            } catch (\Throwable $e) {
+                                // Log error but do not stop execution
+                                \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                             }
-                        // }
+                        }
                     }
+
+
+
 
                     $changeControl->update();
                     //toastr()->success('Document Sent');
@@ -7081,38 +7295,73 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     }
 
                 $history->save();
-                $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "Qc Head/HOD Secondary Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Qc Head/HOD Secondary Review Complete");
-                                }
-                            );
-                        }
-                    // }
-                }
+                // $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Qc Head/HOD Secondary Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Qc Head/HOD Secondary Review Complete");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
 
 
-                 $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
+                //  $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Qc Head/HOD Secondary Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Qc Head/HOD Secondary Review Complete");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+                 $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+
                 foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "Qc Head/HOD Secondary Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                [
+                                    'data'    => $changeControl,
+                                    'site'    => "LI",
+                                    'history' => "Submit",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Qc Head/HOD Secondary Review Complete");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: Submit"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do not break execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
-                    // }
+                    }
                 }
+
                 $changeControl->update();
                 //toastr()->success('Document Sent');
                 return back();
@@ -7170,20 +7419,55 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                 $history->save();
 
-                $list = Helpers::getQAUserList($changeControl->division_id);
+                // $list = Helpers::getQAUserList($changeControl->division_id);
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "QA Secondry Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Secondry Review Complete");
+                //                 }
+                //             );
+                //         }
+                //     // }
+                // }
+
+
+                 $list = Helpers::getQAHeadUserList($changeControl->division_id); // Notify CFT Person
+
                 foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "QA Secondry Review Complete", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                [
+                                    'data'    => $changeControl,
+                                    'site'    => "LI",
+                                    'history' => "QA Secondry Review Complete",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Secondry Review Complete");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: QA Secondry Review Complete"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do not break execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
-                    // }
+                    }
                 }
 
 
@@ -7520,20 +7804,56 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $history->action_name = 'Not Applicable';
                 $history->save();
 
-                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
+
+                 $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+
                 foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                [
+                                    'data'    => $changeControl,
+                                    'site'    => "LI",
+                                    'history' => "More Information Required",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: More Information Required"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do not break execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
+                    }
                 }
+
 
                 $changeControl->update();
 
@@ -7574,35 +7894,80 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
-                $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+                // $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
+                //   $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
+                // Get all required users
+                $qaList        = Helpers::QCHead($labstate->division_id);
+                $qaHeadList    = Helpers::getQAHeadUserList($labstate->division_id);
+
+
+                // Merge & remove duplicate users
+                $users = collect($qaList)
+                            ->merge($qaHeadList)
+                            ->unique('user_id')
+                            ->values();
+
+                // Send mail in single loop
+                foreach ($users as $u) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
+                                [
+                                    'data'    => $labstate,
+                                    'site'    => "LI",
+                                    'history' => "More Information Required",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comments,
+                                    'user'    => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $labstate) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($labstate->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: More Information Required"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do NOT stop execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
+                    }
                 }
 
-                  $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
-                        }
-                }
 
 
                 $changeControl->update();
@@ -7643,20 +8008,55 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
-                $list = Helpers::getQAReviewerUserList($changeControl->division_id); // Notify CFT Person
+                // $list = Helpers::getQAReviewerUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
+                 $list = Helpers::getQAReviewerUserList($changeControl->division_id); // Notify CFT Person
+
                 foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                [
+                                    'data'    => $changeControl,
+                                    'site'    => "LI",
+                                    'history' => "More Information Required",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: More Information Required"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do not break execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
+                    }
                 }
+
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -7696,21 +8096,55 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
-                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
+
+                 $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+
                 foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                [
+                                    'data'    => $changeControl,
+                                    'site'    => "LI",
+                                    'history' => "More Information Required",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: More Information Required"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do not break execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
+                    }
                 }
-
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7749,34 +8183,78 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
-                $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
-                        }
-                }
+                // $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
 
-                 $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+                //  $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
+
+                // Get HOD & QC Head users
+                $hodList    = Helpers::getHodUserList($changeControl->division_id);
+                $qcHeadList = Helpers::QCHead($changeControl->division_id);
+
+                // Merge & remove duplicate users
+                $users = collect($hodList)
+                            ->merge($qcHeadList)
+                            ->unique('user_id')
+                            ->values();
+
+                // Send mail in single loop
+                foreach ($users as $u) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                [
+                                    'data'    => $changeControl,
+                                    'site'    => "LI",
+                                    'history' => "More Information Required",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: More Information Required"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do not stop execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
+                    }
                 }
 
                 $changeControl->update();
@@ -7817,19 +8295,53 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
                 $history->action_name = 'Not Applicable';
                 $history->save();
-                $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                // $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                //                 }
+                //             );
+                //         }
+                // }
+
+                 $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
+
                 foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "More Information Required", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                [
+                                    'data'    => $changeControl,
+                                    'site'    => "LI",
+                                    'history' => "More Information Required",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: More Information Required"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do not break execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
+                    }
                 }
 
                 $changeControl->update();
@@ -8199,35 +8711,79 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+                // $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Cancel", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                //                 }
+                //             );
+                //         }
+                // }
+
+                // $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
+                // foreach ($list as $u) {
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Cancel", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                 function ($message) use ($email, $changeControl) {
+                //                     $message->to($email)
+                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                //                 }
+                //             );
+                //         }
+                // }
+
+                // Get HOD & QC Head users
+                $hodList    = Helpers::getHodUserList($changeControl->division_id);
+                $qcHeadList = Helpers::QCHead($changeControl->division_id);
+
+                // Merge & remove duplicate users
+                $users = collect($hodList)
+                            ->merge($qcHeadList)
+                            ->unique('user_id')
+                            ->values();
+
+                // Send mail in single loop
+                foreach ($users as $u) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "Cancel", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                [
+                                    'data'    => $changeControl,
+                                    'site'    => "LI",
+                                    'history' => "Cancel",
+                                    'process' => 'Lab Incident',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                                            ->subject(
+                                                "Agio Notification: Lab Incident, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: Cancel"
+                                            );
                                 }
                             );
+                        } catch (\Throwable $e) {
+                            // Log error but do not stop execution
+                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
                         }
+                    }
                 }
 
-                $list = Helpers::getHodUserList($changeControl->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "Cancel", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
-                                }
-                            );
-                        }
-                }
 
             $changeControl->update();
             toastr()->success('Document Sent');
