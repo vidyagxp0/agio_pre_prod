@@ -4,6 +4,8 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use App\Models\MarketComplaint;
+use Illuminate\Support\Facades\Log;
+
 use App\Models\MarketComplaintGrids;
 use App\Models\MarketComplaintAuditTrial;
 use App\Models\MarketComplaintCft;
