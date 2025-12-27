@@ -1612,7 +1612,7 @@ foreach ($pre as $processName => $modelClass) {
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "AI", 'history' => "Submit", 'process' => 'Action Item', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $changeControl, 'site' => "AI", 'history' => "Submit", 'process' => 'Action Item', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $changeControl) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
@@ -1638,7 +1638,7 @@ foreach ($pre as $processName => $modelClass) {
                                     'site'    => "AI",
                                     'history' => "Submit",
                                     'process' => 'Action Item',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($assignedEmail, $changeControl) {
@@ -1740,7 +1740,7 @@ foreach ($pre as $processName => $modelClass) {
                                     'site'    => "CC",
                                     'history' => "Acknowledge Complete",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -1840,7 +1840,7 @@ foreach ($pre as $processName => $modelClass) {
                                     'site'    => "CC",
                                     'history' => "Complete",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -1963,7 +1963,7 @@ public function lastStage(Request $request, $id){
                                     'site'    => "CC",
                                     'history' => "Verification Complete",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -2058,7 +2058,7 @@ public function actionStageCancel(Request $request, $id)
                                     'site'    => "AI",
                                     'history' => "Cancelled",
                                     'process' => 'Action Item',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -2140,7 +2140,7 @@ public function actionmoreinfo(Request $request, $id)
                                     'site' => "AI",
                                     'history' => "More Info Required",
                                     'process' => 'Action Item',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -2205,7 +2205,7 @@ public function actionmoreinfo(Request $request, $id)
                                     'site' => "AI",
                                     'history' => "More Info Required",
                                     'process' => 'Action Item',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -2267,7 +2267,7 @@ public function actionmoreinfo(Request $request, $id)
                                     'site'    => "AI",
                                     'history' => "Submit",
                                     'process' => 'More Information Required',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($assignedEmail, $changeControl) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use App\Models\Capa;
+use App\Jobs\SendMail;
 use App\Models\ActionItem;
 use App\Models\ActionItemHistory;
 use App\Models\ExtensionNewAuditTrail;
@@ -3755,41 +3756,76 @@ class CapaController extends Controller
                
 
                  $list = Helpers::getHodUserList($capa->division_id);
-                    foreach ($list as $u) {
+                 foreach ($list as $u)
+                {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                        $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                        if ($email !== null) {
 
-                        try {   
+                            try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $capa,
-                                    'site' => "CAPA",
+                                $data = [
+                                    'data'    => $capa,
+                                    'site'    => "CAPA",
                                     'history' => "Propose Plan",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
-                                    'user'=> Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Propose Plan"
-                                        );
-                                }
-                            );
+                                    'comment' => $request->commenta,
+                                    'user'    => Auth::user()->name
+                                ];
 
-                        } catch (\Exception $e) {   
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,     // process object
+                                    'CAPA'     // process name
+                                );
 
-                            \Log::error('Mail Error: ' . $e->getMessage()); 
+                            } catch (\Exception $e) {
 
-                        }   
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
+                            }
+                        }
                     }
-                }
+                //     foreach ($list as $u) 
+                // {
+
+                //     $email = Helpers::getUserEmail($u->user_id);
+
+                //     if ($email !== null) {
+
+                //         try {   
+
+                //             Mail::send(
+                //                 'mail.view-mail',
+                //                 [
+                //                     'data' => $capa,
+                //                     'site' => "CAPA",
+                //                     'history' => "Propose Plan",
+                //                     'process' => 'CAPA',
+                //                     'comment' => $request->commenta,
+                //                     'user'=> Auth::user()->name
+                //                 ],
+                //                 function ($message) use ($email, $capa) {
+                //                     $message->to($email)
+                //                         ->subject(
+                //                             "Agio Notification: CAPA, Record #"
+                //                             . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
+                //                             . " - Activity: Propose Plan"
+                //                         );
+                //                 }
+                //             );
+
+                //         } catch (\Exception $e) {   
+
+                //             \Log::error('Mail Error: ' . $e->getMessage()); 
+
+                //         }   
+                //     }
+                // }
 
 
                 $capa->update();
@@ -3905,7 +3941,7 @@ class CapaController extends Controller
                                     'site'    => "CAPA",
                                     'history' => "QA/CQA Review Complete",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -4063,7 +4099,7 @@ class CapaController extends Controller
                                     'site'    => "CAPA",
                                     'history' => "QA/CQA Review Complete",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -4221,7 +4257,7 @@ class CapaController extends Controller
                                     'site' => "CAPA",
                                     'history' => "Approved",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -4380,7 +4416,7 @@ class CapaController extends Controller
                                     'site' => "CAPA",
                                     'history' => "Completed",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -4512,7 +4548,7 @@ class CapaController extends Controller
                                     'site'    => "CAPA",
                                     'history' => "QA/CQA Review Complete",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -4669,7 +4705,7 @@ class CapaController extends Controller
                                     'site' => "CAPA",
                                     'history' => "Cancel",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -4804,7 +4840,7 @@ class CapaController extends Controller
                                     'site'    => "CAPA",
                                     'history' => "QAH/CQA Head Approval Complete",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -4983,7 +5019,7 @@ class CapaController extends Controller
                                     'site'    => "CAPA",
                                     'history' => "Closed-Cancelled",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -5210,7 +5246,7 @@ class CapaController extends Controller
                                     'site'    => "CAPA",
                                     'history' => "More Information Required",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -5339,7 +5375,7 @@ class CapaController extends Controller
                                     'site' => "CAPA",
                                     'history' => "More Information Required",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -5413,7 +5449,7 @@ class CapaController extends Controller
                                     'site' => "CAPA",
                                     'history' => "More Information Required",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
@@ -5502,7 +5538,7 @@ class CapaController extends Controller
                                     'site'    => "CAPA",
                                     'history' => "More Information Required",
                                     'process' => 'CAPA',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->commenta,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $capa) {
