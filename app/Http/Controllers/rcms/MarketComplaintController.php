@@ -9635,7 +9635,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                         'mail.view-mail',
                                         [
                                             'data'    => $marketstat,
-                                            'site'    => "view",
+                                            'site'    => "Market Complaint",
                                             'history' => "QA/CQA Verification Complete",
                                             'process' => 'Market Complaint',
                                             'comment' => $request->comment,
@@ -10135,6 +10135,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
                     }
                 }
+
                 $marketstat->update();
 
                 return back();
