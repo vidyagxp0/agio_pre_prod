@@ -27,6 +27,7 @@ use App\Models\IA_checklist_compression;
 use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendMail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
@@ -4919,38 +4920,43 @@ if ($areIniAttachmentsSame2 != true) {
                                 $history->action_name = 'Update';
                             }
                             $history->save();
-                //        $list = Helpers::getLeadAuditorUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document sent ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+               
 
                     $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                    foreach ($list as $u) {
-                       $email = Helpers::getInitiatorEmail($u->user_id);
-                           if ($email !== null) {
-                           Mail::send(
-                               'mail.view-mail',
-                               ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                               function ($message) use ($email, $changeControl) {
-                                   $message->to($email)
-                                   ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                               }
-                           );
-                       }
-                    }
+                        foreach ($list as $u) {
+
+                            $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {
+
+                                    $data = [
+                                        'data'    => $changeControl,
+                                        'site'    => "External Audit",
+                                        'history' => "More Information Required",
+                                        'process' => 'External Audit',
+                                        'comment' => $history->comments,
+                                        'user'    => Auth::user()->name
+                                    ];
+                                    SendMail::dispatch(
+                                        $data,
+                                        $email,
+                                        $changeControl,      
+                                        'External Audit'      
+                                    );
+
+                                } catch (\Exception $e) {
+
+                                    \Log::error('Queue Dispatch Error', [
+                                        'email' => $email,
+                                        'error' => $e->getMessage()
+                                    ]);
+
+                                }
+
+                            }
+                        }
 
                 $changeControl->update();
                 $checkReviews = InternalAuditResponse::where('ia_id', $id)->get();
@@ -5019,20 +5025,20 @@ if ($areIniAttachmentsSame2 != true) {
                     }
 
 
-                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                    foreach ($list as $u) {
-                       $email = Helpers::getInitiatorEmail($u->user_id);
-                           if ($email !== null) {
-                           Mail::send(
-                               'mail.view-mail',
-                               ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                               function ($message) use ($email, $changeControl) {
-                                   $message->to($email)
-                                   ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                               }
-                           );
-                       }
-                    }
+                    // $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                    // foreach ($list as $u) {
+                    //    $email = Helpers::getInitiatorEmail($u->user_id);
+                    //        if ($email !== null) {
+                    //        Mail::send(
+                    //            'mail.view-mail',
+                    //            ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                    //            function ($message) use ($email, $changeControl) {
+                    //                $message->to($email)
+                    //                ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                    //            }
+                    //        );
+                    //    }
+                    // }
 
                     $changeControl->update();
 
@@ -5161,39 +5167,39 @@ if ($areIniAttachmentsSame2 != true) {
                                 $history->action_name = 'Update';
                             }
                             $history->save();
-                        //     $list = Helpers::getLeadAuditeeUserList();
-                        //     foreach ($list as $u) {
-                        //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        //             $email = Helpers::getInitiatorEmail($u->user_id);
+                        $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);       
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                try {
 
-                        //              if ($email !== null) {
+                                    $data = [
+                                        'data'    => $changeControl,
+                                        'site'    => "Internal Audit",
+                                        'history' => "Issue Report",
+                                        'process' => 'Internal Audit',
+                                        'comment' => $history->comments,
+                                        'user'    => Auth::user()->name
+                                    ];
+                                    SendMail::dispatch(
+                                        $data,
+                                        $email,
+                                        $changeControl,      
+                                        'Internal Audit'      
+                                    );
 
-                        //               Mail::send(
-                        //                   'mail.view-mail',
-                        //                    ['data' => $changeControl],
-                        //                 function ($message) use ($email) {
-                        //                     $message->to($email)
-                        //                         ->subject("Document sent ".Auth::user()->name);
-                        //                 }
-                        //               );
-                        //             }
-                        //      }
-                        //   }
+                                } catch (\Exception $e) {
 
-                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                    foreach ($list as $u) {
-                       $email = Helpers::getInitiatorEmail($u->user_id);
-                           if ($email !== null) {
-                           Mail::send(
-                               'mail.view-mail',
-                               ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                               function ($message) use ($email, $changeControl) {
-                                   $message->to($email)
-                                   ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                               }
-                           );
-                       }
-                    }
+                                    \Log::error('Queue Dispatch Error', [
+                                        'email' => $email,
+                                        'error' => $e->getMessage()
+                                    ]);
+
+                                }
+
+                            }
+                        }
+                  
 
 
                 $changeControl->update();
@@ -5373,20 +5379,38 @@ if ($areIniAttachmentsSame2 != true) {
                             }
                             $history->save();
 
-                            $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                            $list = Helpers::getAuditManagerUserList($changeControl->division_id);
                             foreach ($list as $u) {
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                                    }
-                                );
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                try {
+
+                                    $data = [
+                                        'data'    => $changeControl,
+                                        'site'    => "Internal Audit",
+                                        'history' => "CAPA Plan Proposed",
+                                        'process' => 'Internal Audit',
+                                        'comment' => $history->comments,
+                                        'user'    => Auth::user()->name
+                                    ];
+                                    SendMail::dispatch(
+                                        $data,
+                                        $email,
+                                        $changeControl,      
+                                        'Internal Audit'      
+                                    );
+
+                                } catch (\Exception $e) {
+
+                                    \Log::error('Queue Dispatch Error', [
+                                        'email' => $email,
+                                        'error' => $e->getMessage()
+                                    ]);
+
+                                }
+
                             }
-                            }
+                        }
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -5478,20 +5502,38 @@ if ($areIniAttachmentsSame2 != true) {
                             }
                             $history->save();
 
-                            $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                             $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
                             foreach ($list as $u) {
-                                $email = Helpers::getInitiatorEmail($u->user_id);
-                                    if ($email !== null) {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                                        }
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                try {
+
+                                    $data = [
+                                        'data'    => $changeControl,
+                                        'site'    => "Internal Audit",
+                                        'history' => "Response Reviewed",
+                                        'process' => 'Internal Audit',
+                                        'comment' => $history->comments,
+                                        'user'    => Auth::user()->name
+                                    ];
+                                    SendMail::dispatch(
+                                        $data,
+                                        $email,
+                                        $changeControl,      
+                                        'Internal Audit'      
                                     );
+
+                                } catch (\Exception $e) {
+
+                                    \Log::error('Queue Dispatch Error', [
+                                        'email' => $email,
+                                        'error' => $e->getMessage()
+                                    ]);
+
                                 }
+
                             }
+                        }
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -5864,39 +5906,39 @@ if ($areIniAttachmentsSame2 != true) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
-                    //     $list = Helpers::getAuditManagerUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
+                
+                     $list = Helpers::getAuditManagerUserList($changeControl->division_id);
+                            foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                try {
 
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Rejected ".Auth::user()->name);
-                    //                 }
-                    //               );`
-                    //             }
-                    //      }
-                    //   }
+                                    $data = [
+                                        'data'    => $changeControl,
+                                        'site'    => "Internal Audit",
+                                        'history' => "CAPA Plan Proposed",
+                                        'process' => 'Internal Audit',
+                                        'comment' => $history->comments,
+                                        'user'    => Auth::user()->name
+                                    ];
+                                    SendMail::dispatch(
+                                        $data,
+                                        $email,
+                                        $changeControl,      
+                                        'Internal Audit'      
+                                    );
 
-                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                    foreach ($list as $u) {
-                       $email = Helpers::getInitiatorEmail($u->user_id);
-                           if ($email !== null) {
-                           Mail::send(
-                               'mail.view-mail',
-                               ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                               function ($message) use ($email, $changeControl) {
-                                   $message->to($email)
-                                   ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                               }
-                           );
-                       }
-                    }
+                                } catch (\Exception $e) {
 
+                                    \Log::error('Queue Dispatch Error', [
+                                        'email' => $email,
+                                        'error' => $e->getMessage()
+                                    ]);
+
+                                }
+
+                            }
+                        }
 
             $changeControl->update();
             $history = new InternalAuditStageHistory();
@@ -5975,36 +6017,70 @@ if ($areIniAttachmentsSame2 != true) {
                             // }
                             $history->action_name = 'Not Applicable';
                             $history->save();
-                        //     $list = Helpers::getAuditManagerUserList();
-                        //     foreach ($list as $u) {
-                        //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        //             $email = Helpers::getInitiatorEmail($u->user_id);
-                        //              if ($email !== null) {
+                       
 
-                        //               Mail::send(
-                        //                   'mail.view-mail',
-                        //                    ['data' => $changeControl],
-                        //                 function ($message) use ($email) {
-                        //                     $message->to($email)
-                        //                         ->subject("Document is Rejected ".Auth::user()->name);
-                        //                 }
-                        //               );
-                        //             }
-                        //      }
-                        //   }
+                        $list = Helpers::getQAUserList($changeControl->division_id);
+                            foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                try {
 
-                        $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                        foreach ($list as $u) {
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                                    }
-                                );
+                                    $data = [
+                                        'data'    => $changeControl,
+                                        'site'    => "Internal Audit",
+                                        'history' => "More Info Required",
+                                        'process' => 'Internal Audit',
+                                        'comment' => $history->comments,
+                                        'user'    => Auth::user()->name
+                                    ];
+                                    SendMail::dispatch(
+                                        $data,
+                                        $email,
+                                        $changeControl,      
+                                        'Internal Audit'      
+                                    );
+
+                                } catch (\Exception $e) {
+
+                                    \Log::error('Queue Dispatch Error', [
+                                        'email' => $email,
+                                        'error' => $e->getMessage()
+                                    ]);
+
+                                }
+
+                            }
+                        }
+                        $list = Helpers::getCQAUsersList($changeControl->division_id);
+                            foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                                try {
+
+                                    $data = [
+                                        'data'    => $changeControl,
+                                        'site'    => "Internal Audit",
+                                        'history' => "More Info Required",
+                                        'process' => 'Internal Audit',
+                                        'comment' => $history->comments,
+                                        'user'    => Auth::user()->name
+                                    ];
+                                    SendMail::dispatch(
+                                        $data,
+                                        $email,
+                                        $changeControl,      
+                                        'Internal Audit'      
+                                    );
+
+                                } catch (\Exception $e) {
+
+                                    \Log::error('Queue Dispatch Error', [
+                                        'email' => $email,
+                                        'error' => $e->getMessage()
+                                    ]);
+
+                                }
+
                             }
                         }
 
@@ -6070,38 +6146,40 @@ if ($areIniAttachmentsSame2 != true) {
                             // }
                             $history->action_name = 'Not Applicable';
                             $history->save();
-                        //     $list = Helpers::getAuditManagerUserList();
-                        //     foreach ($list as $u) {
-                        //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        //             $email = Helpers::getInitiatorEmail($u->user_id);
-                        //              if ($email !== null) {
+                            $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                    $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
 
-                        //               Mail::send(
-                        //                   'mail.view-mail',
-                        //                    ['data' => $changeControl],
-                        //                 function ($message) use ($email) {
-                        //                     $message->to($email)
-                        //                         ->subject("Document is Rejected ".Auth::user()->name);
-                        //                 }
-                        //               );
-                        //             }
-                        //      }
-                        //   }
+                                            $data = [
+                                                'data'    => $changeControl,
+                                                'site'    => "Internal Audit",
+                                                'history' => "More Info Required",
+                                                'process' => 'Internal Audit',
+                                                'comment' => $history->comments,
+                                                'user'    => Auth::user()->name
+                                            ];
+                                            SendMail::dispatch(
+                                                $data,
+                                                $email,
+                                                $changeControl,      
+                                                'Internal Audit'      
+                                            );
 
-                        $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                        foreach ($list as $u) {
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                                if ($email !== null) {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
+                                        } catch (\Exception $e) {
+
+                                            \Log::error('Queue Dispatch Error', [
+                                                'email' => $email,
+                                                'error' => $e->getMessage()
+                                            ]);
+
+                                        }
+
                                     }
-                                );
-                            }
-                        }
+                                }
+
+                       
 
 
                 $changeControl->update();
@@ -6219,23 +6297,103 @@ if ($areIniAttachmentsSame2 != true) {
                                     $history->action_name = 'Update';
                                 }
                                 $history->save();
-                //                   $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getLeadAuditorUserList($u->user_id);
-                //              if ($email !== null) {
+                                $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                    $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
 
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is cancel By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                                            $data = [
+                                                'data'    => $changeControl,
+                                                'site'    => "Internal Audit",
+                                                'history' => "Cancel",
+                                                'process' => 'Internal Audit',
+                                                'comment' => $history->comments,
+                                                'user'    => Auth::user()->name
+                                            ];
+                                            SendMail::dispatch(
+                                                $data,
+                                                $email,
+                                                $changeControl,      
+                                                'Internal Audit'      
+                                            );
+
+                                        } catch (\Exception $e) {
+
+                                            \Log::error('Queue Dispatch Error', [
+                                                'email' => $email,
+                                                'error' => $e->getMessage()
+                                            ]);
+
+                                        }
+
+                                    }
+                                }
+                                $list = Helpers::getCQAUsersList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                    $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
+
+                                            $data = [
+                                                'data'    => $changeControl,
+                                                'site'    => "Internal Audit",
+                                                'history' => "Cancel",
+                                                'process' => 'Internal Audit',
+                                                'comment' => $history->comments,
+                                                'user'    => Auth::user()->name
+                                            ];
+                                            SendMail::dispatch(
+                                                $data,
+                                                $email,
+                                                $changeControl,      
+                                                'Internal Audit'      
+                                            );
+
+                                        } catch (\Exception $e) {
+
+                                            \Log::error('Queue Dispatch Error', [
+                                                'email' => $email,
+                                                'error' => $e->getMessage()
+                                            ]);
+
+                                        }
+
+                                    }
+                                }
+                                $list = Helpers::getQAUserList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                    $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
+
+                                            $data = [
+                                                'data'    => $changeControl,
+                                                'site'    => "Internal Audit",
+                                                'history' => "Cancel",
+                                                'process' => 'Internal Audit',
+                                                'comment' => $history->comments,
+                                                'user'    => Auth::user()->name
+                                            ];
+                                            SendMail::dispatch(
+                                                $data,
+                                                $email,
+                                                $changeControl,      
+                                                'Internal Audit'      
+                                            );
+
+                                        } catch (\Exception $e) {
+
+                                            \Log::error('Queue Dispatch Error', [
+                                                'email' => $email,
+                                                'error' => $e->getMessage()
+                                            ]);
+
+                                        }
+
+                                    }
+                                }
+                                
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -6278,6 +6436,102 @@ if ($areIniAttachmentsSame2 != true) {
                                 $history->action_name = 'Update';
                             }
                             $history->save();
+                             $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                    $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
+
+                                            $data = [
+                                                'data'    => $changeControl,
+                                                'site'    => "Internal Audit",
+                                                'history' => "Cancel",
+                                                'process' => 'Internal Audit',
+                                                'comment' => $history->comments,
+                                                'user'    => Auth::user()->name
+                                            ];
+                                            SendMail::dispatch(
+                                                $data,
+                                                $email,
+                                                $changeControl,      
+                                                'Internal Audit'      
+                                            );
+
+                                        } catch (\Exception $e) {
+
+                                            \Log::error('Queue Dispatch Error', [
+                                                'email' => $email,
+                                                'error' => $e->getMessage()
+                                            ]);
+
+                                        }
+
+                                    }
+                                }
+                                $list = Helpers::getCQAUsersList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                    $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
+
+                                            $data = [
+                                                'data'    => $changeControl,
+                                                'site'    => "Internal Audit",
+                                                'history' => "Cancel",
+                                                'process' => 'Internal Audit',
+                                                'comment' => $history->comments,
+                                                'user'    => Auth::user()->name
+                                            ];
+                                            SendMail::dispatch(
+                                                $data,
+                                                $email,
+                                                $changeControl,      
+                                                'Internal Audit'      
+                                            );
+
+                                        } catch (\Exception $e) {
+
+                                            \Log::error('Queue Dispatch Error', [
+                                                'email' => $email,
+                                                'error' => $e->getMessage()
+                                            ]);
+
+                                        }
+
+                                    }
+                                }
+                                $list = Helpers::getQAUserList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                    $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
+
+                                            $data = [
+                                                'data'    => $changeControl,
+                                                'site'    => "Internal Audit",
+                                                'history' => "Cancel",
+                                                'process' => 'Internal Audit',
+                                                'comment' => $history->comments,
+                                                'user'    => Auth::user()->name
+                                            ];
+                                            SendMail::dispatch(
+                                                $data,
+                                                $email,
+                                                $changeControl,      
+                                                'Internal Audit'      
+                                            );
+
+                                        } catch (\Exception $e) {
+
+                                            \Log::error('Queue Dispatch Error', [
+                                                'email' => $email,
+                                                'error' => $e->getMessage()
+                                            ]);
+
+                                        }
+
+                                    }
+                                }
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -6320,6 +6574,102 @@ if ($areIniAttachmentsSame2 != true) {
                                 $history->action_name = 'Update';
                             }
                             $history->save();
+                             $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                    $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
+
+                                            $data = [
+                                                'data'    => $changeControl,
+                                                'site'    => "Internal Audit",
+                                                'history' => "Cancel",
+                                                'process' => 'Internal Audit',
+                                                'comment' => $history->comments,
+                                                'user'    => Auth::user()->name
+                                            ];
+                                            SendMail::dispatch(
+                                                $data,
+                                                $email,
+                                                $changeControl,      
+                                                'Internal Audit'      
+                                            );
+
+                                        } catch (\Exception $e) {
+
+                                            \Log::error('Queue Dispatch Error', [
+                                                'email' => $email,
+                                                'error' => $e->getMessage()
+                                            ]);
+
+                                        }
+
+                                    }
+                                }
+                                $list = Helpers::getCQAUsersList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                    $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
+
+                                            $data = [
+                                                'data'    => $changeControl,
+                                                'site'    => "Internal Audit",
+                                                'history' => "Cancel",
+                                                'process' => 'Internal Audit',
+                                                'comment' => $history->comments,
+                                                'user'    => Auth::user()->name
+                                            ];
+                                            SendMail::dispatch(
+                                                $data,
+                                                $email,
+                                                $changeControl,      
+                                                'Internal Audit'      
+                                            );
+
+                                        } catch (\Exception $e) {
+
+                                            \Log::error('Queue Dispatch Error', [
+                                                'email' => $email,
+                                                'error' => $e->getMessage()
+                                            ]);
+
+                                        }
+
+                                    }
+                                }
+                                $list = Helpers::getQAUserList($changeControl->division_id);
+                                    foreach ($list as $u) {
+                                    $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
+
+                                            $data = [
+                                                'data'    => $changeControl,
+                                                'site'    => "Internal Audit",
+                                                'history' => "Cancel",
+                                                'process' => 'Internal Audit',
+                                                'comment' => $history->comments,
+                                                'user'    => Auth::user()->name
+                                            ];
+                                            SendMail::dispatch(
+                                                $data,
+                                                $email,
+                                                $changeControl,      
+                                                'Internal Audit'      
+                                            );
+
+                                        } catch (\Exception $e) {
+
+                                            \Log::error('Queue Dispatch Error', [
+                                                'email' => $email,
+                                                'error' => $e->getMessage()
+                                            ]);
+
+                                        }
+
+                                    }
+                                }
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";

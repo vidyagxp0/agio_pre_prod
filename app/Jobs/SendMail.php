@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log; 
 
 class SendMail implements ShouldQueue
 {
@@ -37,22 +38,49 @@ class SendMail implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+     public function handle()
     {
-        $process_name = $this->process_name;
-        $process = $this->process;
-        $email = $this->email;
         try {
+
             Mail::send(
                 'mail.view-mail',
                 $this->data,
-                function ($message) use ($email, $process, $process_name) {
-                    $message->to($email)
-                    ->subject("Agio Notification: $process_name, Record #" . str_pad($process->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                function ($message) {
+                    $message->to($this->email)
+                        ->subject(
+                            "Agio Notification: {$this->process_name}, Record #"
+                            . str_pad($this->process->record, 4, '0', STR_PAD_LEFT)
+                            . " - Activity: Propose Plan"
+                        );
                 }
             );
-        } catch(\Exception $e) {
-            info('Error Sending Mail', [$e]);
+
+        } catch (\Exception $e) {
+
+            \Log::error('Queue Mail Failed', [
+                'email' => $this->email,
+                'error' => $e->getMessage()
+            ]);
+
+            throw $e;
         }
     }
+    // public function handle()
+    // {
+    //     $process_name = $this->process_name;
+    //     $process = $this->process;
+    //     $email = $this->email;
+    //     try {
+    //         Mail::send(
+    //             'mail.view-mail',
+    //             $this->data,
+    //             function ($message) use ($email, $process, $process_name) {
+    //                 $message->to($email)
+    //                 ->subject("Agio Notification: $process_name, Record #" . str_pad($process->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+    //             }
+    //         );
+    //     } catch(\Exception $e) {
+    //         info('Error Sending Mail', [$e]);
+    //     }
+    // }
 }
