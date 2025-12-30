@@ -574,6 +574,23 @@
                                 <th class="w-20">CAPA Type</th>
                                 <td class="w-80" colspan="3"> @if($data->capa_type){{ $data->capa_type }}@else Not Applicable @endif</td>
                             </tr>
+
+                            
+                            @if($data->corrective_action) 
+                            <tr>
+
+                                <th class="w-20">Corrective Action</th>
+                                <td class="w-80" colspan="3"> @if($data->corrective_action){{ $data->corrective_action }}@else Not Applicable @endif</td>
+                            </tr>
+                            @endif
+
+                            @if($data->preventive_action) 
+                            <tr>
+
+                                <th class="w-20">Preventive Action</th>
+                                <td class="w-80" colspan="3"> @if($data->preventive_action){{ $data->preventive_action }}@else Not Applicable @endif</td>
+                            </tr>
+                            @endif
                             </table>
                              <!-- <tr>
 
@@ -959,7 +976,7 @@
                                     <td>@if($data->hod_review_completed_on){{ $data->hod_review_completed_on }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
-                                    <th>HOD Review Comment</th>
+                                    <th>HOD Review Complete Comment</th>
                                     <td colspan="3">@if($data->hod_comment){{ $data->hod_comment }}@else Not Applicable @endif</td>
                                 </tr>
 
@@ -971,7 +988,7 @@
                                     <td>@if($data->qa_review_completed_on){{ $data->qa_review_completed_on }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
-                                    <th>QA/CQA Review Comment</th>
+                                    <th>QA/CQA Review Complete Comment</th>
                                     <td colspan="3">@if($data->qa_comment){{ $data->qa_comment }}@else Not Applicable @endif</td>
                                 </tr>
 
@@ -1003,11 +1020,11 @@
                                 <tr>
                                     <th>HOD Final Review Complete By</th>
                                     <td>@if($data->hod_final_review_completed_by){{ $data->hod_final_review_completed_by }}@else Not Applicable @endif</td>
-                                    <th>HOD Final Review Completed On</th>
+                                    <th>HOD Final Review Complete On</th>
                                     <td>@if($data->hod_final_review_completed_on){{ $data->hod_final_review_completed_on }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
-                                    <th>HOD Final Review Comment</th>
+                                    <th>HOD Final Review Complete Comment</th>
                                     <td colspan="3">@if($data->final_comment){{ $data->final_comment }}@else Not Applicable @endif</td>
                                 </tr>
 
@@ -1019,7 +1036,7 @@
                                     <td>@if($data->qa_closure_review_completed_on){{ $data->qa_closure_review_completed_on }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
-                                    <th>QA/CQA Closure Review Comment</th>
+                                    <th>QA/CQA Closure Review Complete Comment</th>
                                     <td colspan="3">@if($data->qa_closure_comment){{ $data->qa_closure_comment }}@else Not Applicable @endif</td>
                                 </tr>
 
@@ -1031,7 +1048,7 @@
                                     <td>@if($data->qah_approval_completed_on){{ $data->qah_approval_completed_on }}@else Not Applicable @endif</td>
                                 </tr>
                                 <tr>
-                                    <th>QAH/CQA Head Approval Comment</th>
+                                    <th>QAH/CQA Head Approval Complete Comment</th>
                                     <td colspan="3">@if($data->qah_comment){{ $data->qah_comment }}@else Not Applicable @endif</td>
                                 </tr>
                             </table>

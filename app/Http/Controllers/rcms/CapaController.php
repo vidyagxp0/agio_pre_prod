@@ -5736,8 +5736,12 @@ class CapaController extends Controller
         $cft = [];
         $parent_id = $id;
         $parent_type = "CAPA";
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $lastAi = ActionItem::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+     
+        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -5767,8 +5771,53 @@ class CapaController extends Controller
             // $p_record = OutOfCalibration::find($id);
             $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'CAPA' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
              $parent_record = $data_record;
+    
+
+              $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+
             $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" . $data1->record . "";
-            return view('frontend.action-item.action-item', compact('expectedParenRecord', 'old_record', 'parentRecord', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data_record', 'data1'));
+            return view('frontend.action-item.action-item', compact('expectedParenRecord', 'old_record', 'parentRecord', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data_record', 'data1','relatedRecords'));
         }
         // else {
         //     return view('frontend.forms.effectiveness-checkkjkjk', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
