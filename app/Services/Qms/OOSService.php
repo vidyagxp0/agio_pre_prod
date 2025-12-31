@@ -26,12 +26,15 @@ class OOSService
         $res = Helpers::getDefaultResponse();
 
         try {
-
+             $lastOOS = OOS::orderBy('record', 'desc')->first();
+            $record_number = $lastOOS ? $lastOOS->record + 1 : 1;
+         
             $input = $request->except(['proposal_for_hypothesis_IB','checklists']);
             $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';
             $input['stage'] = 1;
-            $input['record_number'] = ((RecordNumber::first()->value('counter')) + 1);
+             $input['record_number'] = $record_number;
+          //  $input['record_number'] = ((RecordNumber::first()->value('counter')) + 1);
             $input['proposal_for_hypothesis_IB'] = implode(',', $request->proposal_for_hypothesis_IB);
             $input['checklists'] = implode(',', $request->checklists);
 

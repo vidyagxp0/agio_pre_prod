@@ -40,7 +40,11 @@ class OOSController extends Controller
         $old_records = OOS::select('id', 'division_id', 'record_number')->get();
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $capa_record = Capa::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+       // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $lastAi = OOS::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+       
+
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
@@ -58,6 +62,7 @@ class OOSController extends Controller
         $res = Helpers::getDefaultResponse();
         try {
 
+            // dd($request->all());
             $oos_record = OOSService::create_oss($request);
             // dd($request->impact_assesment_pia);
 
