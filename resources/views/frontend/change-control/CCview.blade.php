@@ -2376,7 +2376,7 @@
 
             <!-- Hidden date input for date selection -->
             <input readonly type="date" name="QualityAssurance_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                    value=""
                    class="hide-input"
                    oninput="handleDateInput(this, 'QualityAssurance_on')" />
         </div>
@@ -2551,7 +2551,7 @@
 
             <!-- Hidden date input for date selection -->
             <input readonly type="date" name="QualityAssurance_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                    value=""
                    class="hide-input"
                    oninput="handleDateInput(this, 'QualityAssurance_on')" />
         </div>
@@ -3037,7 +3037,7 @@
                                                     placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data1->ProductionLiquid_on) }}" />
                                                 <input readonly type="date" name="ProductionLiquid_on"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                     value=""
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'ProductionLiquid_on')" />
                                             </div>
@@ -3201,7 +3201,7 @@
                                                     placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data1->ProductionLiquid_on) }}" />
                                                 <input readonly type="date" name="ProductionLiquid_on"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                     value=""
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'ProductionLiquid_on')" />
                                             </div>
@@ -3362,7 +3362,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Production_Injection_On" name="Production_Injection_On"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3545,7 +3545,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Production_Injection_On" name="Production_Injection_On"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3707,7 +3707,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Store_on" name="Store_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3879,7 +3879,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Store_on" name="Store_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                  
                    value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4383,7 +4383,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4555,7 +4555,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4718,7 +4718,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Engineering_on" name="Engineering_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4890,7 +4890,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Engineering_on" name="Engineering_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5054,7 +5054,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Human_Resource_on" name="Human_Resource_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5226,7 +5226,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Human_Resource_on" name="Human_Resource_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5388,7 +5388,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Microbiology_on" name="Microbiology_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5560,7 +5560,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Microbiology_on" name="Microbiology_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5723,7 +5723,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="RegulatoryAffair_on" name="RegulatoryAffair_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->RegulatoryAffair_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5895,7 +5895,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="RegulatoryAffair_on" name="RegulatoryAffair_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->RegulatoryAffair_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6059,7 +6059,7 @@
 
                                                     <!-- Hidden date input for date selection -->
                                                     <input type="date" id="CorporateQualityAssurance_on" name="CorporateQualityAssurance_on"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        
                                                         value="{{ \Carbon\Carbon::parse($data1->CorporateQualityAssurance_on)->format('Y-m-d') }}"
                                                         class="hide-input"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6231,7 +6231,7 @@
 
                                                     <!-- Hidden date input for date selection -->
                                                     <input type="date" id="CorporateQualityAssurance_on" name="CorporateQualityAssurance_on"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                       
                                                         value="{{ \Carbon\Carbon::parse($data1->CorporateQualityAssurance_on)->format('Y-m-d') }}"
                                                         class="hide-input"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6394,7 +6394,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Environment_Health_Safety_on" name="Environment_Health_Safety_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6566,7 +6566,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Environment_Health_Safety_on" name="Environment_Health_Safety_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6730,7 +6730,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Information_Technology_on" name="Information_Technology_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6902,7 +6902,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Information_Technology_on" name="Information_Technology_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -7060,7 +7060,7 @@
                                                     placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
                                                 <input readonly type="date" name="ContractGiver_on"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                     value=""
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'ContractGiver_on')" />
                                             </div>
@@ -7228,7 +7228,7 @@
                                                     placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data1->ContractGiver_on) }}" />
                                                 <input readonly type="date" name="ContractGiver_on"
-                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                     value=""
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'ContractGiver_on')" />
                                             </div>
@@ -7365,7 +7365,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="Other1_on" readonly placeholder="DD-MMM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data1->Other1_on) }}" />
-                                            <input readonly type="date" name="Other1_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'Other1_on')" />
+                                            <input readonly type="date" name="Other1_on"  value="" class="hide-input" oninput="handleDateInput(this, 'Other1_on')" />
                                         </div>
                                     </div>
                                 </div>
@@ -7603,7 +7603,7 @@
                                     <label for="Others 2 Completed On">Others 2 Review Completed On</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="Other2_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other2_on) }}" />
-                                        <input readonly type="date" name="Other2_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'Other2_on')" />
+                                        <input readonly type="date" name="Other2_on"  value="" class="hide-input" oninput="handleDateInput(this, 'Other2_on')" />
                                     </div>
                                     @error('Other2_on')
                                         <div class="text-danger">{{ $message }}</div>
@@ -7745,7 +7745,7 @@
                                     <label for="Others 3 Completed On">Others 3 Review Completed On</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="Other3_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other3_on) }}" />
-                                        <input readonly type="date" name="Other3_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'Other3_on')" />
+                                        <input readonly type="date" name="Other3_on"  value="" class="hide-input" oninput="handleDateInput(this, 'Other3_on')" />
                                     </div>
                                     @error('Other3_on')
                                         <div class="text-danger">{{ $message }}</div>
@@ -7894,7 +7894,7 @@
                                     <label for="Others 4 Completed On">Others 4 Review Completed On</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="Other4_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other4_on) }}" />
-                                        <input readonly type="date" name="Other4_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'Other4_on')" />
+                                        <input readonly type="date" name="Other4_on"  class="hide-input" oninput="handleDateInput(this, 'Other4_on')" />
                                     </div>
                                     @error('Other4_on')
                                         <div class="text-danger">{{ $message }}</div>
@@ -8042,7 +8042,7 @@
                                     <label for="Others 5 Completed On">Others 5 Review Completed On</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="Other5_on" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data1->Other5_on) }}" />
-                                        <input readonly type="date" name="Other5_on" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'Other5_on')" />
+                                        <input readonly type="date" name="Other5_on"  class="hide-input" oninput="handleDateInput(this, 'Other5_on')" />
                                     </div>
                                     @error('Other5_on')
                                         <div class="text-danger">{{ $message }}</div>

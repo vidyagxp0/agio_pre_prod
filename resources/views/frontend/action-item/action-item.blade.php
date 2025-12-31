@@ -73,7 +73,7 @@
                             <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                          <input type="hidden" name="record" id="record" value="{{ $record_number }}">
+                                          <input type="hidden" name="record" id="record" value="{{ $record }}">
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName($parent_division_id) }}/AI/{{ date('Y') }}/{{ $record}}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}

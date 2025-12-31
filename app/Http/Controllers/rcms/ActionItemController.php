@@ -133,7 +133,7 @@ foreach ($pre as $processName => $modelClass) {
         //$openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->parent_id = $request->parent_id;
         $openState->division_code = $request->division_code;
-         dd($openState);
+        // dd($openState);
         $openState->parent_record_number = $request->parent_record_number;
         $openState->parent_record_number_edit = $request->parent_record_number_edit;
         $openState->parent_type = $request->parent_type;
