@@ -2241,7 +2241,7 @@ class AuditProgramController extends Controller
                                 'site'    => "AP",
                                 'history' => "Submit",
                                 'process' => 'Audit Program',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'    => Auth::user()->name
                             ],
                             function ($message) use ($email, $changeControl) {
@@ -2355,7 +2355,7 @@ class AuditProgramController extends Controller
                                     'site' => "AP",
                                     'history' => "Submit",
                                     'process' => 'Audit Program',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -2464,7 +2464,7 @@ class AuditProgramController extends Controller
                                     'site' => "AP",
                                     'history' => "Audit Completed",
                                     'process' => 'Audit Program',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -2556,7 +2556,7 @@ class AuditProgramController extends Controller
                                 'site'    => "AP",
                                 'history' => "More Info Required",
                                 'process' => 'Audit Program',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'    => Auth::user()->name
                             ],
                             function ($message) use ($email, $changeControl) {
@@ -2639,7 +2639,7 @@ class AuditProgramController extends Controller
                                     'site' => "AP",
                                     'history' => "Cancel",
                                     'process' => 'Audit Program',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -2710,7 +2710,7 @@ class AuditProgramController extends Controller
                                     'site' => "AP",
                                     'history' => "Cancel",
                                     'process' => 'Audit Program',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -2790,7 +2790,7 @@ class AuditProgramController extends Controller
                                     'site' => "AP",
                                     'history' => "Cancel",
                                     'process' => 'Audit Program',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
