@@ -46,13 +46,13 @@ class LabIncidentController extends Controller
     public function labincident()
     {
        $lasteffectivness = LabIncident::orderBy('record', 'desc')->first();
-        $record_number = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;  
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record_number = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;  
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
-        return view('frontend.forms.lab-incident', compact('due_date', 'record_number'));
+        return view('frontend.forms.lab-incident', compact('due_date',));
     }
     public function create(request $request)
     {
@@ -90,14 +90,19 @@ class LabIncidentController extends Controller
         //     'BA' => 'Business Administration',
         // ];
 
-        $lastCapa = LabIncident::orderBy('record', 'desc')->first();
+        $lastLB = LabIncident::orderBy('record', 'desc')->first();
 
-        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = $lastLB ? $lastLB->record + 1 : 1;
+
+         $lastLB = LabIncident::orderBy('record_number', 'desc')->first();
+
+        $record_number = $lastLB ? $lastLB->record_number + 1 : 1;
+       
+       // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
         $data = new LabIncident();
         $data->Form_Type = "lab-incident";
-        $data->record = $record_number;
+        $data->record = $record;
         $data->record_number = $record_number;
         // dd($data);
         $data->initiator_id = Auth::user()->id;

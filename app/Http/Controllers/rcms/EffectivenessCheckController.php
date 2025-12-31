@@ -32,13 +32,13 @@ class EffectivenessCheckController extends Controller
     {
         //$record_number = ((RecordNumber::first()->value('counter')) + 1);
          $old_record = EffectivenessCheck::select('id', 'division_id', 'record')->get();
-        $lastAi = EffectivenessCheck::orderBy('record', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $lastAi = EffectivenessCheck::orderBy('record', 'desc')->first();
+        // $record_number = $lastAi ? $lastAi->record + 1 : 1;
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.forms.effectiveness-check', compact('due_date', 'record_number'));
+        return view('frontend.forms.effectiveness-check', compact('due_date',));
     }
 
     public function index()
@@ -69,7 +69,12 @@ class EffectivenessCheckController extends Controller
     {
         // dd($request->all());
         $lasteffectivness = EffectivenessCheck::orderBy('record', 'desc')->first();
-        $record_number = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;
+        $record = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;
+
+        $lasteffectivness = EffectivenessCheck::orderBy('record_number', 'desc')->first();
+        $record_number = $lasteffectivness ? ((int)$lasteffectivness->record_number + 1) : 1;
+      
+
         $openState = new EffectivenessCheck();
         // $openState->form_type = "effectiveness-check";
         $openState->is_parent = "No";
@@ -77,11 +82,11 @@ class EffectivenessCheckController extends Controller
         $openState->intiation_date = $request->intiation_date;
         $openState->initiator_id = Auth::user()->id;
         // $openState->parent_record = CC::where('id', $request->cc_id)->value('id');
-        $openState->record_number = $request->record_number;
+        $openState->record_number = $record_number;
         $openState->parent_record = $request->parent_record;
         $openState->parent_type = $request->parent_type;
         $openState->parent_id = $request->parent_id;
-        $openState->record = $record_number;
+        $openState->record = $record;
         //   dd($openState);
      //   $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->originator = CC::where('id', $request->cc_id)->value('initiator_id');

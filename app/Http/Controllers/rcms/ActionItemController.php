@@ -126,10 +126,13 @@ foreach ($pre as $processName => $modelClass) {
             toastr()->error("Short description is required");
             return redirect()->back();
         }
+        $lastAi = ActionItem::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+       
         $openState = new ActionItem();
         $openState->cc_id = $request->ccId;
         $openState->initiator_id = Auth::user()->id;
-          $openState->record = $request->record;
+          $openState->record = $record_number;
         //$openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->parent_id = $request->parent_id;
         $openState->division_code = $request->division_code;

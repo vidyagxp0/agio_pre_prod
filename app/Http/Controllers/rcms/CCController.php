@@ -53,8 +53,8 @@ class CCController extends Controller
     {
 
         $riskData = RiskLevelKeywords::all();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 

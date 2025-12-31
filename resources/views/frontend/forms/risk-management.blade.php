@@ -245,9 +245,15 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
-                                            <input readonly type="text" name="record_number"
+
+                                            <input type="hidden" name="record_number" id="record" >
+                                           <input disabled type="text" name="record_number" id="record" placeholder="Record Number">
+                                      
+
+
+                                           {{--   <input readonly type="text" name="record_number"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ $record_number }}">
-                                            {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                           <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-6">

@@ -36,13 +36,13 @@ class ObservationController extends Controller
     {
         // $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $old_record = Observation::select('id', 'division_code', 'record')->get();
-        $lastAi = Observation::orderBy('record', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $lastAi = Observation::orderBy('record', 'desc')->first();
+        // $record_number = $lastAi ? $lastAi->record + 1 : 1;
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.forms.observation', compact('due_date', 'record_number'));
+        return view('frontend.forms.observation', compact('due_date'));
     }
 
     
@@ -57,8 +57,7 @@ class ObservationController extends Controller
          $lastCapa = Observation::orderBy('record', 'desc')->first();
 
         $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-
+     
         $data = new Observation();
         // dd($data);
         $data->record = $record_number;
@@ -67,7 +66,7 @@ class ObservationController extends Controller
         $data->parent_id = $request->parent_id;
         $data->parent_type = $request->parent_type;
         $data->division_code = $request->division_id;
-        $data->record_number = $request->record_number;
+        $data->record_number = $record_number;
         $data->intiation_date = $request->intiation_date;
         $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;

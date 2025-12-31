@@ -294,7 +294,7 @@ DATA FIELDS
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
-                                          <input type="hidden" name="record" id="record" value="{{ $record_number }}">
+                                          <input type="hidden" name="record" id="record" >
                                     {{--<input disabled type="hidden" name="record_number"
                                         value="{{ Helpers::getDivisionName(session()->get('division')) }}/AP/{{ date('Y') }}/{{ $record_number }}">
                                     <input disabled type="text"

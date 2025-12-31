@@ -41,16 +41,16 @@ class RiskManagementController extends Controller
     {
         $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $lastAi = RiskManagement::orderBy('record', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $lastAi = RiskManagement::orderBy('record', 'desc')->first();
+        // $record_number = $lastAi ? $lastAi->record + 1 : 1;
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         $cft = User::get();
         $pre = CC::all();
 
-        return view("frontend.forms.risk-management", compact('due_date','cft', 'pre', 'record_number', 'old_record'));
+        return view("frontend.forms.risk-management", compact('due_date','cft', 'pre', 'old_record'));
     }
 
     public function store(Request $request)
@@ -68,7 +68,7 @@ class RiskManagementController extends Controller
         $lastCapa = RiskManagement::orderBy('record', 'desc')->first();
 
         $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+      //  $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $data = new RiskManagement();
         $data->form_type = "risk-assesment";
         $data->division_id = $request->division_id;

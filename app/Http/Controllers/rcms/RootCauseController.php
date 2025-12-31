@@ -34,15 +34,12 @@ class RootCauseController extends Controller
     public function rootcause()
     {
         // $record_number = ((RecordNumber::first()->value('counter')) + 1);
-         $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
-       
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+       //   $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
+        return view("frontend.forms.root-cause-analysis", compact('due_date',));
     }
 
     public function root_store(Request $request)

@@ -30,13 +30,13 @@ class AuditProgramController extends Controller
         // $old_record = AuditProgram::select('id', 'division_id', 'record')->get();
         // $record_number = ((RecordNumber::first()->value('counter')) + 1);
          $old_record = AuditProgram::select('id', 'division_id', 'record')->get();
-        $lastAi = AuditProgram::orderBy('record', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $lastAi = AuditProgram::orderBy('record', 'desc')->first();
+        // $record_number = $lastAi ? $lastAi->record + 1 : 1;
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.forms.audit-program', compact('due_date', 'record_number', 'old_record'));
+        return view('frontend.forms.audit-program', compact('due_date', 'old_record'));
     }
     public function create(request $request)
     {
@@ -57,11 +57,18 @@ class AuditProgramController extends Controller
         //     toastr()->info("City is required");
         //     return redirect()->back()->withInput();
         // }
+        $lastAi = AuditProgram::orderBy('record', 'desc')->first();
+        $record = $lastAi ? $lastAi->record + 1 : 1;
+       
+        $lastAi = AuditProgram::orderBy('record_number', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record_number + 1 : 1;
+       
+
         $data = new AuditProgram();
         // $data->form_type = "audit-program";
      //   $data->record = ((RecordNumber::first()->value('counter')) + 1);
-       $data->record = $request->record;
-        $data->record_number = $request->record_number;
+       $data->record = $record;
+        $data->record_number = $record_number;
         $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
         $data->division_code = $request->division_code;

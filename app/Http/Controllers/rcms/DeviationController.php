@@ -45,15 +45,15 @@ class DeviationController extends Controller
         // $record_number = (RecordNumber::first()->value('counter')) + 1;
 
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
-        $lastAi = Deviation::orderBy('record', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+        // $lastAi = Deviation::orderBy('record', 'desc')->first();
+        // $record_number = $lastAi ? $lastAi->record + 1 : 1;
        
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $pre = Deviation::all();
-        return response()->view('frontend.forms.deviation.deviation_new', compact('formattedDate', 'due_date', 'old_record', 'pre','record_number'));
+        return response()->view('frontend.forms.deviation.deviation_new', compact('formattedDate', 'due_date', 'old_record', 'pre',));
     }
 
     public function store(Request $request)
@@ -100,21 +100,24 @@ class DeviationController extends Controller
                     break;
             }
 
-         $lastDeviation = Deviation::orderBy('record', 'desc')->first();
-        $record_number = $lastDeviation ? $lastDeviation->record + 1 : 1;
+         $lastDeviation = Deviation::orderBy('record_number', 'desc')->first();
+        $record_number = $lastDeviation ? $lastDeviation->record_number + 1 : 1;
 
        
+         $lastDeviation = Deviation::orderBy('record', 'desc')->first();
+        $record = $lastDeviation ? $lastDeviation->record + 1 : 1;
+
         $deviation = new Deviation();
         $deviation->form_type = "Deviation";
 
        // $deviation->record = ((RecordNumber::first()->value('counter')) + 1);
-          $deviation->record = $request->record; 
+          $deviation->record = $record; 
        $deviation->initiator_id = Auth::user()->id;
 
         $deviation->form_progress = isset($form_progress) ? $form_progress : null;
 
         # -------------new-----------
-        $deviation->record_number = $request->record_number;
+        $deviation->record_number = $record_number;
         $deviation->division_id = $request->division_id;
         $deviation->assign_to = $request->assign_to;
         $deviation->Facility = $request->Facility;

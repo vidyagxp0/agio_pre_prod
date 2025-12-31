@@ -41,29 +41,34 @@ class InternalauditController extends Controller
     {
         $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
     //    $record_number = ((RecordNumber::first()->value('counter')) + 1);
-         $lasteffectivness = InternalAudit::orderBy('record', 'desc')->first();
-        $record_number = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;  
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        //  $lasteffectivness = InternalAudit::orderBy('record', 'desc')->first();
+        // $record_number = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;  
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         // return $old_record;
 
-        return view("frontend.forms.audit", compact('due_date', 'record_number', 'old_record'));
+        return view("frontend.forms.audit", compact('due_date',  'old_record'));
 
     }
     public function create(request $request)
     {
         // return "breaking";
 
-        $lastCapa = InternalAudit::orderBy('record', 'desc')->first();
+        $lastIA = InternalAudit::orderBy('record', 'desc')->first();
 
-        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $record = $lastIA ? $lastIA->record + 1 : 1;
+
+         $lastIA = InternalAudit::orderBy('record_number', 'desc')->first();
+
+        $record_number = $lastIA ? $lastIA->record_number + 1 : 1;
+    // 
+    //    $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
        $internalAudit = new InternalAudit();
         $internalAudit->form_type = "Internal-audit";
-        $internalAudit->record = $record_number;
+        $internalAudit->record = $record;
        $internalAudit->record_number = $record_number;
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->division_id = $request->division_id;
