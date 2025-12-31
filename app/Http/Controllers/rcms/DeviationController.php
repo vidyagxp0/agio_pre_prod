@@ -9385,23 +9385,79 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $Capachild->Capachild = $record_number;
             $record = $record_number;
             $old_records = $old_record;
+         
             $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'DEV' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
-
+       
             $Capachild->save();
 
             return view('frontend.forms.capa', compact('parent_id','relatedRecords','record_number', 'parent_record','parent_type', 'record',  'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name','reference_record', 'parent_division_id', 'parent_record', 'old_records', 'cft','parent_due_date',));
             } elseif ($request->child_type == "Action_Item") {
             $parent_name = "Action Item";
             $actionchild = Deviation::find($id);
+         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $lastAi = ActionItem::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+     
+        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+          $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+      
+      
 
             $record_number_full = Helpers::getDivisionName($actionchild->division_id)
                 . '/' . 'DEV' . '/' . date('Y') . '/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
 
-            $actionchild->actionchild = $record_number_full;
+             $parent_record = $record_number_full;
+         
+              $actionchild->actionchild = $record_number_full;
             $actionchild->save();
 
-// dd( $parent_name, $actionchild, $record_number_full);
-            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'parent_id', 'parent_type','parent_due_date','record_number_full'));
+             $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+           
+          
+            return view('frontend.action-item.action-item', compact('record','due_date','old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'parent_id', 'parent_type','parent_due_date','record_number_full','relatedRecords'));
         }
 
         elseif ($request->child_type == "effectiveness_check")
@@ -9426,6 +9482,13 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $Rootchild = Deviation::find($id);
             $Rootchild->Rootchild = $record_number;
             $Rootchild->save();
+            $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+            $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
+        
+            $record_number = $lastAi ? $lastAi->record + 1 : 1;
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+       
+     
             return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record','parent_due_date','parent_due_date',));
         }
     }

@@ -191,7 +191,7 @@
                                         <input disabled type="text" name="record"
                                             value="{{ Helpers::getDivisionName($parent_division_id) }}/CC/{{ date('Y') }}/{{ $record_number }}">                                        
                                         @else  
-                                         <input type="hidden" name="record" id="record" value="{{ $record_number }}">
+                                         <input type="hidden" name="record" id="record" >
                                         {{--<input disabled type="text" name="record"
                                             value=" {{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ $record_number }}">--}}
                                                <input disabled type="text" name="record" id="record" placeholder="Record Number">
