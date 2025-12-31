@@ -39,15 +39,13 @@ class AuditeeController extends Controller
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
       //  $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
-        $lastAi = Auditee::orderBy('record', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
 
-        return view("frontend.forms.auditee", compact('due_date', 'record_number', 'old_record'));
+        return view("frontend.forms.auditee", compact('due_date', 'old_record'));
     }
 
     public function store(Request $request)
@@ -63,14 +61,16 @@ class AuditeeController extends Controller
         }
          $lastCapa = Auditee::orderBy('record', 'desc')->first();
 
-        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $lastairecord = Auditee::orderBy('record', 'desc')->first();
+        $record = $lastairecord ? $lastairecord->record + 1 : 1;
 
         
 
         $internalAudit = new Auditee();
         $internalAudit->form_type = "External-audit";
-        $internalAudit->record = $record_number;
+        $internalAudit->record = $record;
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->division_id = $request->division_id;
         //$internalAudit->parent_id = $request->parent_id;

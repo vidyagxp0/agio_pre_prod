@@ -204,7 +204,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                          
-                                           <input type="hidden" name="record" id="record" value="{{ $record_number }}">
+                                           <input type="hidden" name="record" id="record" >
                                            <input disabled type="text" name="record_number" id="record" placeholder="Record Number">
                                         {{--  <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/{{ date('y') }}/OOC/{{ $record_number }}"> --}}

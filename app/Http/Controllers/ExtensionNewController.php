@@ -38,10 +38,9 @@ class ExtensionNewController extends Controller
         // $record_number = str_pad($record_numbers, 4, '0', STR_PAD_LEFT);
         
         
-        $old_record = extension_new::select('id', 'division_id', 'record_number')->get();
-        $lastAi = extension_new::orderBy('record_number', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record_number + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        
+        // $record_number = $lastAi ? $lastAi->record_number + 1 : 1;
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
         // dd($record_number);
         $reviewers = DB::table('user_roles')
@@ -104,7 +103,7 @@ class ExtensionNewController extends Controller
         $parent_due_date = '';
         
 
-        return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers', 'relatedRecords', 'record_number','parent_due_date'));
+        return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers', 'relatedRecords','parent_due_date'));
     }
 
     public function store(Request $request)
@@ -126,17 +125,27 @@ class ExtensionNewController extends Controller
             //     'file_attachment_approver' => 'nullable|string',
         ]);
 
+         $lastrecordnumber = extension_new::orderBy('record_number', 'desc')->first();
+        $record_number = $lastrecordnumber ? $lastrecordnumber->record_number + 1 : 1;
+        
+
+        $lastrecord = extension_new::orderBy('record', 'desc')->first();
+        $record = $lastrecord ? $lastrecord->record + 1 : 1;
+        
+
         $extensionNew = new extension_new();
         $extensionNew->type = "Extension";
         $extensionNew->stage = "1";
         $extensionNew->status = "Opened";
 
         // $extensionNew->record_number = DB::table('record_numbers')->value('counter') + 1;
-        $extensionNew->record_number = $request->record_number;
+        $extensionNew->record_number = $record_number;
+        $extensionNew->record = $record;
+
         $extensionNew->site_location_code = $request->site_location_code;
         $extensionNew->division_id = $request->division_id;
         $extensionNew->initiator = Auth::user()->id;
-        $extensionNew->record_number = $request->record;
+        // $extensionNew->record_number = $request->record;
         // dd($request->record_number);
         $extensionNew->parent_id = $request->parent_id;
         $extensionNew->parent_type = $request->parent_type;

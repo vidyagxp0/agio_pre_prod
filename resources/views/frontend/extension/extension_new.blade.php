@@ -113,9 +113,10 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
                                     <input type="hidden" name="record" value="{{ $record_number }}">
 
                                     @else  
-                                    <input type="hidden" name="record" value="{{ $record_number }}">
-                                    <input disabled type="text" name="record_number"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ date('y') }}/{{ $record_number }}">
+                                    <input type="hidden" name="record" value="">
+                                    <input disabled type="text" name="record_number" placeholder="Record Number" >
+                                        {{-- <input disabled type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/Ext/{{ date('y') }}/{{ $record_number }}"> --}}
                                     @endif
                             </div>
                         </div>
