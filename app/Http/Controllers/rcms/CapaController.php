@@ -5748,6 +5748,7 @@ class CapaController extends Controller
         $parent_record = Capa::where('id', $id)->value('record');
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_division_id = Capa::where('id', $id)->value('division_id');
+       
         $parent_initiator_id = Capa::where('id', $id)->value('initiator_id');
         $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
         $parent_short_description = Capa::where('id', $id)->value('short_description');
@@ -5771,8 +5772,7 @@ class CapaController extends Controller
             // $p_record = OutOfCalibration::find($id);
             $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'CAPA' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
              $parent_record = $data_record;
-    
-
+           
               $pre = [
                     'DEV' => \App\Models\Deviation::class,
                 'AP' => \App\Models\AuditProgram::class,

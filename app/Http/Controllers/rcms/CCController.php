@@ -92,11 +92,7 @@ class CCController extends Controller
         $riskData = RiskLevelKeywords::all();
        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $old_record = CC::select('id', 'division_id', 'record')->get();
-        $lastAi = CC::orderBy('record', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        // dd($record_number);
-        $preRiskAssessment = RiskManagement::all();
+         $preRiskAssessment = RiskManagement::all();
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
@@ -117,7 +113,7 @@ class CCController extends Controller
         $cft = User::get();
         $pre = CC::all();
 
-        return view('frontend.change-control.new-change-control', compact("riskData", "preRiskAssessment", "due_date", "hod", "cft", "pre","record_number"));
+        return view('frontend.change-control.new-change-control', compact("riskData", "preRiskAssessment", "due_date", "hod", "cft", "pre",));
     }
 
     public function store(Request $request)
@@ -128,13 +124,16 @@ class CCController extends Controller
         // $openState->Microbiology = $request->Microbiology;
         // $openState->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
         // $openState->supervisor_comment = $request->supervisor_comment;
+        $lastAi = CC::orderBy('record', 'desc')->first();
+
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
 
         $openState = new CC();
         $openState->form_type = "CC";
         $openState->division_id = $request->division_id;
         $openState->initiator_id = Auth::user()->id;
        // $openState->record = DB::table('record_numbers')->value('counter') + 1;
-        $openState->record = $request->record;
+        $openState->record = $record_number;
       
         $openState->due_days = $request->due_days;
         $openState->severity_level1 = $request->severity_level1;

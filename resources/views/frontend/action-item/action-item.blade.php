@@ -69,7 +69,7 @@
                             </div> <!-- RECORD NUMBER -->
                             <div class="row">
 
-                            @if (!empty($parent_id))
+                           @if (!empty($parent_id))
                             <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
