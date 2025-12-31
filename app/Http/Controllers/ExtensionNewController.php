@@ -34,8 +34,15 @@ class ExtensionNewController extends Controller
         // $previousExtensionId = $currentExtensionId - 1;
         // $previousDueDate = extension_new::where('id', $previousExtensionId)->value('proposed_due_date');
         // dd($previousDueDate);
-        $record_numbers = (RecordNumber::first()->value('counter')) + 1;
-        $record_number = str_pad($record_numbers, 4, '0', STR_PAD_LEFT);
+        // $record_numbers = (RecordNumber::first()->value('counter')) + 1;
+        // $record_number = str_pad($record_numbers, 4, '0', STR_PAD_LEFT);
+        
+        
+        
+        // $record_number = $lastAi ? $lastAi->record_number + 1 : 1;
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+        // dd($record_number);
         $reviewers = DB::table('user_roles')
             ->join('users', 'user_roles.user_id', '=', 'users.id')
             ->select('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the select statement
@@ -96,7 +103,7 @@ class ExtensionNewController extends Controller
         $parent_due_date = '';
         
 
-        return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers', 'relatedRecords', 'record_number','parent_due_date'));
+        return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers', 'relatedRecords','parent_due_date'));
     }
 
     public function store(Request $request)
@@ -118,16 +125,27 @@ class ExtensionNewController extends Controller
             //     'file_attachment_approver' => 'nullable|string',
         ]);
 
+         $lastrecordnumber = extension_new::orderBy('record_number', 'desc')->first();
+        $record_number = $lastrecordnumber ? $lastrecordnumber->record_number + 1 : 1;
+        
+
+        $lastrecord = extension_new::orderBy('record', 'desc')->first();
+        $record = $lastrecord ? $lastrecord->record + 1 : 1;
+        
+
         $extensionNew = new extension_new();
         $extensionNew->type = "Extension";
         $extensionNew->stage = "1";
         $extensionNew->status = "Opened";
 
-        $extensionNew->record_number = DB::table('record_numbers')->value('counter') + 1;
+        // $extensionNew->record_number = DB::table('record_numbers')->value('counter') + 1;
+        $extensionNew->record_number = $record_number;
+        $extensionNew->record = $record;
+
         $extensionNew->site_location_code = $request->site_location_code;
         $extensionNew->division_id = $request->division_id;
         $extensionNew->initiator = Auth::user()->id;
-        $extensionNew->record = $request->record;
+        // $extensionNew->record_number = $request->record;
         // dd($request->record_number);
         $extensionNew->parent_id = $request->parent_id;
         $extensionNew->parent_type = $request->parent_type;
@@ -1334,7 +1352,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "More Info Required", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "More Info Required", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
@@ -1396,7 +1414,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "More Info Required", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "More Info Required", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
@@ -1532,7 +1550,7 @@ class ExtensionNewController extends Controller
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $extensionNew) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
@@ -1602,7 +1620,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Review", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Review", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Performed");
@@ -1623,7 +1641,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Review", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Review", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Performed");
@@ -1709,7 +1727,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Review", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Review", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Performed");
@@ -1781,7 +1799,7 @@ class ExtensionNewController extends Controller
                 //         //             if ($email !== null) {
                 //         //             Mail::send(
                 //         //                 'mail.view-mail',
-                //         //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //         //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //         //                 function ($message) use ($email, $extensionNew) {
                 //         //                     $message->to($email)
                 //         //                     ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
@@ -1882,7 +1900,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Reject", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Reject", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
@@ -1902,7 +1920,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Reject", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "Reject", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
@@ -2038,7 +2056,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "CQA Approval Complete", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "CQA Approval Complete", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: CQA Approval Complete Performed");
@@ -2058,7 +2076,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "CQA Approval Complete", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "CQA Approval Complete", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: CQA Approval Complete Performed");
@@ -2078,7 +2096,7 @@ class ExtensionNewController extends Controller
                                    try {
                                        Mail::send(
                                            'mail.view-mail',
-                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "CQA Approval Complete", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                           ['data' => $extensionNew, 'site' => "EX", 'history' => "CQA Approval Complete", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                            function ($message) use ($email, $extensionNew) {
                                                $message->to($email)
                                                ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: CQA Approval Complete Performed");
@@ -2171,7 +2189,7 @@ class ExtensionNewController extends Controller
                 //             if ($email !== null) {
                 //             Mail::send(
                 //                 'mail.view-mail',
-                //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Approved", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Approved", 'process' => 'Extension', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                 //                 function ($message) use ($email, $extensionNew) {
                 //                     $message->to($email)
                 //                     ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");

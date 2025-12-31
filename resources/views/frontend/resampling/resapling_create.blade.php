@@ -62,7 +62,7 @@
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName($parent_division_id) }}/Resampling/{{ date('Y') }}/{{ $record_number }}">
                                         @else
-                                           <input type="hidden" name="record" id="record" value="{{ $record }}">
+                                           <input type="hidden" name="record" id="record" >
                                            <input disabled type="text" name="record_number" id="record" placeholder="Record Number">
                                      
                                          {{-- <input disabled type="text" name="record_number"

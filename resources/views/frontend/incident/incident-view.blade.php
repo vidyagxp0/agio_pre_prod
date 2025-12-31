@@ -1062,7 +1062,7 @@
 
                                                     <input disabled type="text"
                                                         
- value="{{ Helpers::getDivisionName($data->division_id) }}/INC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                                            value="{{ Helpers::getDivisionName($data->division_id) }}/INC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                                     {{-- <input disabled type="text" name="record"> --}}
 
                                                 </div>

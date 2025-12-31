@@ -36,13 +36,10 @@ class OOCController extends Controller
         // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
         $old_record = OutOfCalibration::select('id', 'division_id', 'record')->get();
-        $lastAi = OutOfCalibration::orderBy('record', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $currentDate = Carbon::now();
+                $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.OOC.out_of_calibration',compact('due_date', 'record_number'));
+        return view('frontend.OOC.out_of_calibration',compact('due_date'));
     }
 
 
@@ -52,17 +49,29 @@ class OOCController extends Controller
             toastr()->info("Short Description is required");
             return redirect()->back();
         }
+
+         $lastAirecord = OutOfCalibration::orderBy('record', 'desc')->first();
+        $record = $lastAirecord ? $lastAirecord->record + 1 : 1;
+    
+
+        $lastAirecord_number = OutOfCalibration::orderBy('record_number', 'desc')->first();
+        $record_number = $lastAirecord_number ? $lastAirecord_number->record_number + 1 : 1;
+      
+
         $data = new OutOfCalibration();
         $data->form_type = 'Out Of Calibration';
       //  $data->record = ((RecordNumber::first()->value('counter')) + 1);
-      $data->record = $request->record;
-          
-      $data->initiator_id = Auth::user()->id;
+
+       
+
+
+        $data->record = $record;
+        $data->record_number = $record_number;
+        $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
         $data->description_ooc = $request->description_ooc;
         $data->assign_to = $request->assign_to;
         $data->due_date = $request->due_date;
-        $data->record_number = $request->record_number;
         $data->division_code = $request->division_code;
         $data->initiated_through_capas_ooc_IB = $request->initiated_through_capas_ooc_IB;
         $data->initiated_through_capa_prevent_ooc_IB = $request->initiated_through_capa_prevent_ooc_IB;

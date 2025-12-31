@@ -46,14 +46,12 @@ class ManagementReviewController extends Controller
        // $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $lasteffectivness = ManagementReview::orderBy('record', 'desc')->first();
-        $record_number = $lasteffectivness ? ((int)$lasteffectivness->record + 1) : 1;  
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
 
-        return view("frontend.forms.meeting", compact('due_date', 'record_number'));
+        return view("frontend.forms.meeting", compact('due_date'));
     }
 
     public function managestore(Request $request)
@@ -70,8 +68,11 @@ class ManagementReviewController extends Controller
 
          $lastCapa = ManagementReview::orderBy('record', 'desc')->first();
 
-        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $lastCaparecord = ManagementReview::orderBy('record', 'desc')->first();
+        $record = $lastCaparecord ? $lastCaparecord->record + 1 : 1;
+
         $management = new ManagementReview();
         //$management->record_number = ($request->record_number);
         // $management->assign_to = 1;//$request->assign_to;
@@ -107,7 +108,7 @@ class ManagementReviewController extends Controller
       // $management = new ManagementReview();
         $management->form_type = "Management Review";
         $management->division_id = $request->division_id;
-        $management->record = $record_number;
+        $management->record = $record;
         $management->initiator_id = Auth::user()->id;
         $management->form_progress = isset($form_progress) ? $form_progress : null;
         $management->intiation_date = $request->intiation_date;

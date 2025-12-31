@@ -30,8 +30,7 @@ class ErrataController extends Controller
         // $showdata = errata::find($id);
         //$record_number = ((RecordNumber::first()->value('counter')) + 1);
          $old_record = errata::select('id', 'division_id', 'record')->get();
-        $lastAi = errata::orderBy('record', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+       
        
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
@@ -88,9 +87,11 @@ class ErrataController extends Controller
     public function store(Request $request)
     {
 
+         $lastAi = errata::orderBy('record', 'desc')->first();
+        $record = $lastAi ? $lastAi->record + 1 : 1;
         $data = new errata();
        // $data->record = ((RecordNumber::first()->value('counter')) + 1);
-        $data->record = $request->record;
+        $data->record = $record;
         $data->division_id = $request->division_id;
         $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;

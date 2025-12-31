@@ -42,9 +42,8 @@ class CapaController extends Controller
         // Record number ko pad karke 4 digits ka bana rahe hain
         // $record_number = ((RecordNumber::first()->value('counter')) + 1);
          $old_record = Capa::select('id', 'division_id', 'record')->get();
-        $lastAi = Capa::orderBy('record', 'desc')->first();
-        $record_number = $lastAi ? $lastAi->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+       
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
         // Division ke hisaab se latest record check kar rahe hain
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
@@ -123,16 +122,14 @@ class CapaController extends Controller
             return redirect()->back();
         }
 
-        $lastCapa = Capa::orderBy('record', 'desc')->first();
-
-        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $lastCaparecord = Capa::orderBy('record', 'desc')->first();
+        $record = $lastCaparecord ? $lastCaparecord->record + 1 : 1;
 
         
         $capa = new Capa();
         $capa->form_type = "CAPA";
         //$capa->record = ((RecordNumber::first()->value('counter')) + 1);
-        $capa->record = $record_number;
+        $capa->record = $record;
         // dd($capa);
         $capa->initiator_id = Auth::user()->id;
         $capa->division_id = $request->division_id;

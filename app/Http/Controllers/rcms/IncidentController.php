@@ -51,24 +51,21 @@ class IncidentController extends Controller
         //$data = ((RecordNumber::first()->value('counter')) + 1);
 
         $old_record = Incident::select('id', 'division_id', 'record')->get();
-        $lastAi = Incident::orderBy('record', 'desc')->first();
-        $data = $lastAi ? $lastAi->record + 1 : 1;
-      
-        $data = str_pad($data, 4, '0', STR_PAD_LEFT);
+        
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $pre = Incident::all();
 
         //dd($pre);
 
-        return response()->view('frontend.incident.incident-new', compact('formattedDate','data', 'due_date', 'old_record', 'pre'));
+        return response()->view('frontend.incident.incident-new', compact('formattedDate', 'due_date', 'old_record', 'pre'));
     }
 
     public function store(Request $request)
     {
         // dd($request->all());
         $form_progress = null;
-
+         
         if ($request->form_name == 'general')
         {
             $validator = Validator::make($request->all(), [
@@ -96,14 +93,16 @@ class IncidentController extends Controller
 
          $lastCapa = Incident::orderBy('record', 'desc')->first();
 
-        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-
-
+        $lastairecord = Incident::orderBy('record', 'desc')->first();
+        $record = $lastairecord ? $lastairecord->record + 1 : 1;
+        $lastairecord_number = Incident::orderBy('record_number', 'desc')->first();
+        $record_number = $lastairecord_number ? $lastairecord_number->record_number + 1 : 1;
+    
         $incident = new Incident();
         $incident->form_type = "Incident";
 
-        $incident->record = $record_number;
+        $incident->record = $record;
+        $incident->record_number = $record_number;
         $incident->initiator_id = Auth::user()->id;
 
         $incident->form_progress = isset($form_progress) ? $form_progress : null;

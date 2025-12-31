@@ -115,16 +115,21 @@ foreach ($pre as $processName => $modelClass) {
             toastr()->error("Short description is required");
             return redirect()->back();
         }
+         $lastAirecord = Resampling::orderBy('record', 'desc')->first();
+        $record = $lastAirecord ? $lastAirecord->record + 1 : 1;
+        $lastAirecord_number = Resampling::orderBy('record_number', 'desc')->first();
+        $record_number = $lastAirecord_number ? $lastAirecord_number->record_number + 1 : 1;
+    
 
           $lastCapa = Resampling::orderBy('record', 'desc')->first();
 
-        $record_number = $lastCapa ? $lastCapa->record + 1 : 1;
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+       
 
         $openState = new Resampling();
         $openState->resampling_id = $request->ccId;
         $openState->initiator_id = Auth::user()->id;
-        $openState->record = $record_number;
+        $openState->record = $record;
+        $openState->record_number = $record_number;
         $openState->parent_id = $request->parent_id;
         $openState->division_code = $request->division_code;
         $openState->parent_type = $request->parent_type;
