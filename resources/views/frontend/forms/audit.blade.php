@@ -490,10 +490,8 @@
                                             <b>Record Number</b>
                                         </label>
                                         @if (!empty($parent_division_id))
-                                            <input type="hidden" name="record_number"
-                                                value="{{ Helpers::getDivisionName($parent_division_id) }}/IA/{{ date('Y') }}/{{ $record_number }}">
-                                            <input disabled type="text"
-                                                value="{{ Helpers::getDivisionName($parent_division_id) }}/IA/{{ date('Y') }}/{{ $record_number }}">
+                                            <input type="hidden" name="record_number" placeholder="Record Number">
+                                            <input disabled type="text" placeholder="Record Number">
                                         @else
                                            {{-- <input disabled type="hidden" name="record_number"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}/IA/{{ date('Y') }}/{{ $record_number }}">
