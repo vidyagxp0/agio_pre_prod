@@ -589,9 +589,15 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Record Number">Record Number</label>
-                                <input type="hidden" name="record" value="{{ $record_number }}">
-                                <input disabled type="text" id="record_display" name="record"
-                                       value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS/OOT/{{ date('Y') }}/{{ $record_number }}">
+                                <input type="hidden" name="record">
+                                {{-- <input disabled type="text" id=" " name="record"
+                                       value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS/OOT/{{ date('Y') }}/{{ $record_number }}"> --}}
+
+
+                                <input disabled type="text" name="record" id="record" placeholder="Record Number">
+
+
+                               
                             </div>
                         </div>
 

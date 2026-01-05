@@ -33,12 +33,12 @@ class ResamplingController extends Controller
 
     public function showAction()
     {
-        $old_record = Resampling::select('id', 'division_id', 'record')->get();
-        $lastAi = Resampling::orderBy('record', 'desc')->first();
-        $record = $lastAi ? $lastAi->record + 1 : 1;
+    //     $old_record = Resampling::select('id', 'division_id', 'record')->get();
+    //     $lastAi = Resampling::orderBy('record', 'desc')->first();
+    //     $record = $lastAi ? $lastAi->record + 1 : 1;
        
-       // $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+    //    // $record = ((RecordNumber::first()->value('counter')) + 1);
+    //     $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
 
         $formattedDate = $currentDate->addDays(30);

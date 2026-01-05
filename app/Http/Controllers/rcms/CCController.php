@@ -11,6 +11,7 @@ use App\Models\CapaAuditTrial;
 use App\Models\RootCauseAnalysis;
 use App\Models\ActionItem;
 use App\Models\Capa;
+use App\Models\EffectivenessCheck;
 use App\Models\AdditionalInformation;
 use App\Models\{CC,ChangeControlCftResponse};
 use App\Models\RecordNumber;
@@ -15042,10 +15043,10 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $parent_id = $id;
         $parent_name = "CC";
         $parent_type = "CC";
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $record = ((RecordNumber::first()->value('counter')) + 1);
-        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+        // $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -15071,10 +15072,71 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'CC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parent_record = $data_record;
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('parent_record','parent_id', 'parent_name', 'record', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record', 'parent_type', 'data_record','data'));
+
+            $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+            $lastAi = ActionItem::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+        
+          
+           // $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
+
+              $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+            return view('frontend.action-item.action-item', compact('parent_record','parent_id', 'parent_name', 'record', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record', 'parent_type', 'data_record','data','relatedRecords'));
         }
         if ($request->revision == "RCA") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+
+            $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+            $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+        
+          
+           // $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
             return view('frontend.forms.root-cause-analysis', compact('parent_record','parent_type','parent_id', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record'));
         }
         if ($request->revision == "Capa") {
@@ -15082,6 +15144,15 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $Capachild =CC::find($id);
             $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'CC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+
+            $old_record = Capa::select('id', 'division_id', 'record')->get();
+            $lastAi = Capa::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+        
+          
+           // $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
             return view('frontend.forms.capa', compact('parent_record','parent_id','parent_type', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_records','relatedRecords','reference_record'));
         }
         if ($request->revision == "Extension") {
@@ -15092,6 +15163,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1; 
           
+            $old_record = extension_new::select('id', 'division_id', 'record')->get();
+            $lastAi = extension_new::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number = $record;
+     
             return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
         }
         if ($request->revision == "New Document") {
@@ -15103,6 +15180,15 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
         if ($request->revision == "Effective-Check") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+
+             $old_record = EffectivenessCheck::select('id', 'division_id', 'record')->get();
+            $lastAi = EffectivenessCheck::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+        
+            $record_number =$record;
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+     
             return view('frontend.forms.effectiveness-check', compact('parent_record','parent_type','parent_id', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record',));
         }
         else{
@@ -15555,6 +15641,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
+        
 
         return view("frontend.forms.effectiveness-check", compact('due_date','parent_record','parent_id','parent_type', 'parent_name', 'record_number'));
     }

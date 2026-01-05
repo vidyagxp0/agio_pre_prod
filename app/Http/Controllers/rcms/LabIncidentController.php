@@ -6063,14 +6063,14 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                $parent_type = "Lab Incident";
                $old_records = Capa::select('id', 'division_id', 'record')->get();
                $parent_division_id = LabIncident::where('id', $id)->value('division_id');
-               $record_number = ((RecordNumber::first()->value('counter')) + 1);
-               $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            //    $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            //    $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
                $due_date = $formattedDate->format('d-M-Y');
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
-               $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
-               $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+            //   $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+            //   $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_initiator_id = $id;
                $changeControl = OpenStage::find(1);
                $parent_due_date=LabIncident::where('id', $id)->value('due_date');
@@ -6096,15 +6096,74 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                 //    dd($countData);
                 // return $data;
-                   return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record', 'data_record', 'data','parent_division_id'));
+
+            $data1 = LabIncident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+            $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'LI' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+             $parent_record = $data_record;
+
+                 $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+
+                   return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record', 'data_record', 'data','parent_division_id','relatedRecords'));
 
                }
 
                if ($request->revision == "resampling") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $relatedRecords = Helpers::getAllRelatedRecords();
-                $record = $record_number;
+               // $record = $record_number;
                 $relatedRecords = Helpers::getAllRelatedRecords();
+                $data1 = LabIncident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+                $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'LI' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+                $parent_record = $data_record;
+
+
+                $old_record = Resampling::select('id', 'division_id', 'record')->get();
+                $lastAi = Resampling::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number =$record;
+
                 return view('frontend.resampling.resapling_create', compact('relatedRecords','record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
@@ -6115,7 +6174,11 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
               
-                           $count = extension_new::where('parent_id', $id)
+                $data=LabIncident::find($id);
+                   $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                    $count = Helpers::getChildData($id, $parent_type);
+                 
+                $count = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'Lab Incident')
                     ->count();
 
@@ -6138,21 +6201,60 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                             }
 
                         }   
-               return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data_record','parent_due_date','parent_division_id'));
+
+                 $old_record = extension_new::select('id', 'division_id', 'record')->get();
+                $lastAi = extension_new::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number =$record;
+
+                 $data1 = LabIncident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+                $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'LI' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+                $parent_record = $data_record;
+            //   return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data_record','parent_due_date','parent_division_id'));
+
+             return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'countData', 'extension_record','parent_division_id','parent_due_date'));
 
             }
 
                if ($request->revision == "capa") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                   $record = $record_number;
+                  // $record = $record_number;
                    $Capachild = LabIncident::find($id);
                 //    dd($Capachild->division_id);
                    $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
                    $relatedRecords = Helpers::getAllRelatedRecords();
+
+                    $old_record = Capa::select('id', 'division_id', 'record')->get();
+                    $lastAi = Capa::orderBy('record', 'desc')->first();
+                    $record = $lastAi ? $lastAi->record + 1 : 1;
+            
+                
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number =$record;
                   return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords', 'reference_record'));
                }
                if ($request->revision == "rca") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+
+                
+
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                $data1 = LabIncident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+                $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'LI' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+                $parent_record = $data_record;
+
+
+                $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+                $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+            
+                
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number =$record;
+
                 return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
@@ -6197,6 +6299,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     ->count();
 
              $countData = $count + 1;
+             
 
          if ($request->revision == "Extension"){
             $lastExtension = extension_new::where('parent_id', $id)
@@ -6214,7 +6317,17 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                                 }
                             }
 
-                        }           
+                        } 
+                        
+                        
+                $old_record = extension_new::select('id', 'division_id', 'record')->get();
+                $lastAi = extension_new::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+            
+                
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number =$record;
                    return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'countData', 'extension_record','parent_division_id','parent_due_date'));
 
                }

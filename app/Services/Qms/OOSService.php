@@ -34,6 +34,7 @@ class OOSService
             $input['status'] = 'Opened';
             $input['stage'] = 1;
              $input['record_number'] = $record_number;
+            $input['record'] = $record_number;
           //  $input['record_number'] = ((RecordNumber::first()->value('counter')) + 1);
             $input['proposal_for_hypothesis_IB'] = implode(',', $request->proposal_for_hypothesis_IB);
             $input['checklists'] = implode(',', $request->checklists);
@@ -4119,6 +4120,7 @@ class OOSService
                 'instrument_detail',
             ];
 
+           
             foreach ($grid_inputs as $grid_input)
             {
                 self::update_grid($oos, $request, $grid_input);

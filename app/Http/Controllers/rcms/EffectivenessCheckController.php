@@ -3320,22 +3320,38 @@ public function effectiveness_child(Request $request, $id)
     $parent_id = $id;
     $parent_type = "EffectivenessCheck";
     $old_records = Capa::select('id', 'division_id', 'record')->get();
-    $record_number = ((RecordNumber::first()->value('counter')) + 1);
-    $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+    // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+    // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
     $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
-    $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
-    $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+    // $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+    // $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
     $parent_initiator_id = $id;
     $currentDate = Carbon::now();
     $formattedDate = $currentDate->addDays(30);
     $due_date = $formattedDate->format('d-M-Y');
     $relatedRecords = Helpers::getAllRelatedRecords();
 
+
+
     // if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
     if ($request->child_type == "capa-child") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
         $Capachild = EffectivenessCheck::find($id);
+
+
         $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'EC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+
+
+        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $lastAi = Capa::orderBy('record', 'desc')->first();
+        $record = $lastAi ? $lastAi->record + 1 : 1;
+    
+          
+           // $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number = $record;
+            $parent_record =  $record;
+          
 
         return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
     }

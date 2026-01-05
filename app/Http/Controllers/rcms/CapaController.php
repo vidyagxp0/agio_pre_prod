@@ -16,6 +16,7 @@ use App\Models\RoleGroup;
 use App\Models\CapaGrid;
 use App\Models\Extension;
 use App\Models\extension_new;
+use App\Models\EffectivenessCheck;
 use App\Models\CC;
 use App\Models\Division;
 use Carbon\Carbon;
@@ -5822,7 +5823,17 @@ class CapaController extends Controller
         if ($request->child_type == "rca") {
             // $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             // $record_number = $record;
-            return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id', 'old_record', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft'));
+
+         $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+        $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
+        $record = $lastAi ? $lastAi->record + 1 : 1;
+     
+          
+       // $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $record_number =$record;
+     
+            return view('frontend.forms.root-cause-analysis', compact('record', 'due_date', 'parent_id', 'old_record', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft','record_number'));
         }
         if ($request->child_type == "extension") {
             $parent_name = "CAPA";
@@ -5832,7 +5843,12 @@ class CapaController extends Controller
                 $parent_due_date = $request->due_date;
             }
 
-            $record = ((RecordNumber::first()->value('counter')) + 1);
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+
+            $old_record = extension_new::select('id', 'division_id', 'record')->get();
+            $lastAi = extension_new::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+     
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
             $parent_division_id = Capa::where('id',$id)->value('division_id');
@@ -5851,8 +5867,13 @@ class CapaController extends Controller
         $parent_record = Capa::where('id', $id)->value('record');
         $parent_division_id = Capa::where('id', $id)->value('division_id');
         $parent_type = "CAPA";
-        $parent_id = Capa::find($id)->record;
-        $record = ((RecordNumber::first()->value('counter')) + 1);
+       $parent_id = Capa::find($id)->record;
+        $old_record = EffectivenessCheck::select('id', 'division_id', 'record')->get();
+        $lastAi = EffectivenessCheck::orderBy('record', 'desc')->first();
+        $record = $lastAi ? $lastAi->record + 1 : 1;
+     
+          
+       // $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);

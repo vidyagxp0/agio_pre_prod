@@ -11022,8 +11022,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         // $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = $cc->record;
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
-        $record_number = $cc->record;
-        $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
+        // $record_number = $cc->record;
+        // $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
         $parent_id = $id;
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -11036,11 +11036,21 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            $record_number = $record;
+           // $record_number = $record;
             $relatedRecords = Helpers::getAllRelatedRecords();
             $Capachild = MarketComplaint::find($id);
             //    dd($Capachild->division_id);
             $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+
+
+            $old_record = Capa::select('id', 'division_id', 'record')->get();
+            $lastAi = Capa::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+        
+            
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
 
             return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft', 'relatedRecords','reference_record'));
         } elseif ($request->revision == "Action-Item") {
@@ -11053,10 +11063,68 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $data = MarketComplaint::find($id);
             $parent_division_id  = MarketComplaint::where('id', $id)->value('division_id');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('parent_division_id','record', 'data', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
+
+            
+              $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+                $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+                $lastAi = ActionItem::orderBy('record', 'desc')->first();
+                $record_number = $lastAi ? $lastAi->record + 1 : 1;
+     
+            return view('frontend.action-item.action-item', compact('parent_division_id','record', 'data', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record','relatedRecords'));
         } elseif ($request->revision == "rca") {
             //  return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+
+            $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+            $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+        
+            
+               // $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
+
             return view('frontend.forms.root-cause-analysis', compact('record_number', 'record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
         }
 
@@ -11064,6 +11132,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $relatedRecords = Helpers::getAllRelatedRecords();
             $data=MarketComplaint::find($id);
+
+            
             $parent_division_id  = MarketComplaint::where('id', $id)->value('division_id');
             $parent_due_date = MarketComplaint::where('id', $id)->value('due_date_gi');
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
@@ -11071,6 +11141,36 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                 $count = Helpers::getChildData($id, $parent_type);
                 $countData = $count + 1; 
+
+                 if ($request->revision == "extension"){
+                    $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'Market Complaint')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'closed-reject'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }   
+
+                
+            $old_record = extension_new::select('id', 'division_id', 'record')->get();
+            $lastAi = extension_new::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+     
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number = $record;
+          
+            
+        
+
                 return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
             }
     }
@@ -11115,6 +11215,32 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                 $count = Helpers::getChildData($id, $parent_type);
                 $countData = $count + 1; 
+                  if ($request->revision == "extension"){
+                    $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'Market Complaint')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'closed-reject'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }   
+
+                
+            $old_record = extension_new::select('id', 'division_id', 'record')->get();
+            $lastAi = extension_new::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+     
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number = $record;
+            
                 return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
             }
            

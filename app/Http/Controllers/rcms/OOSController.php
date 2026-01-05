@@ -6618,8 +6618,15 @@ class OOSController extends Controller
         } else {
             $parent_type = 'OOT';
         }
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+         $old_record = OOS::select('id', 'division_id', 'record')->get();
+        $lastAi = OOS::orderBy('record', 'desc')->first();
+        $record = $lastAi ? $lastAi->record + 1 : 1;
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $record_number =$record;
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -6644,6 +6651,14 @@ class OOSController extends Controller
             $Capachild->Capachild = $record_number;
             $Capachild->save();
 
+             $old_record = Capa::select('id', 'division_id', 'record')->get();
+            $lastAi = Capa::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
+
+
+           
             return view('frontend.forms.capa', compact('reference_record','parent_id','relatedRecords','old_records','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
@@ -6656,8 +6671,58 @@ class OOSController extends Controller
             $parentRecord = OOS::where('id', $id)->value('record');
             $actionchild->actionchild = $record_number;
             $actionchild->save();
+
+        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $lastAi = ActionItem::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+     
+      
         // dd($data->due_date);
-            return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data'));
+            $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                    'AP' => \App\Models\AuditProgram::class,
+                    'AI' => \App\Models\ActionItem::class,
+                    'Exte' => \App\Models\extension_new::class,
+                    'Resam' => \App\Models\Resampling::class,
+                    'Obse' => \App\Models\Observation::class,
+                    'RCA' => \App\Models\RootCauseAnalysis::class,
+                    'RA' => \App\Models\RiskAssessment::class,
+                    'MR' => \App\Models\ManagementReview::class,
+                    'EA' => \App\Models\Auditee::class,
+                    'IA' => \App\Models\InternalAudit::class,
+                    'CAPA' => \App\Models\Capa::class,
+                    'CC' => \App\Models\CC::class,
+                    'ND' => \App\Models\Document::class,
+                    'Lab' => \App\Models\LabIncident::class,
+                    'EC' => \App\Models\EffectivenessCheck::class,
+                    'OOSChe' => \App\Models\OOS::class,
+                    'OOT' => \App\Models\OOT::class,
+                    'OOC' => \App\Models\OutOfCalibration::class,
+                    'MC' => \App\Models\MarketComplaint::class,
+                    'NC' => \App\Models\NonConformance::class,
+                    'Incident' => \App\Models\Incident::class,
+                    'FI' => \App\Models\FailureInvestigation::class,
+                    'ERRATA' => \App\Models\errata::class,
+                    'OOSMicr' => \App\Models\OOS_micro::class,
+                    // Add other models as necessary...
+                    ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+
+        
+            return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data','relatedRecords'));
         }
         elseif ($request->child_type == "Resampling")
          {
@@ -6666,6 +6731,13 @@ class OOSController extends Controller
             $actionchild->actionchild = $record_number;
             $relatedRecords = Helpers::getAllRelatedRecords();
             $actionchild->save();
+
+             $old_record = Resampling::select('id', 'division_id', 'record')->get();
+            $lastAi = Resampling::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
+
             return view('frontend.resampling.resapling_create', compact('relatedRecords','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type',));
         }
         elseif ($request->child_type == "Extension")
@@ -6677,7 +6749,41 @@ class OOSController extends Controller
            $data=OOS::find($id);
            $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
            $actionchild->save();
-           return view('frontend.extension.extension_new', compact('relatedRecords','extension_record', 'parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type','parent_due_date'));
+           
+           $count = extension_new::where('parent_id', $id)
+                    ->where('parent_type', $parent_type)
+                    ->count();
+
+             $countData = $count + 1;
+
+         if ($request->child_type == "Extension"){
+
+            $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', $parent_type)
+                                ->orderByDesc('id')
+                                ->first();
+                
+                        if (!$lastExtension) {
+                            $extensionCount = 1;
+                        } else {
+                            if (in_array($lastExtension->status, ['Closed - Done', 'closed-reject'])) {
+                                $extensionCount = $lastExtension->count + 1;
+                            } else {
+                                return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                            }
+                        }
+
+                    }   
+
+                 $old_record = extension_new::select('id', 'division_id', 'record')->get();
+                $lastAi = extension_new::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number =$record;
+
+
+        //    return 'test';
+           return view('frontend.extension.extension_new', compact('relatedRecords','extension_record', 'parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type','parent_due_date','countData'));
        }
 
         else {
@@ -6685,6 +6791,13 @@ class OOSController extends Controller
             $Rootchild = OOS::find($id);
             $Rootchild->Rootchild = $record_number;
             $Rootchild->save();
+
+            $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+            $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
+
             return view('frontend.forms.root-cause-analysis', compact('parent_id','old_records','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
         }
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\rcms;
 use App\Http\Controllers\Controller;
 use App\Models\AuditTrialObservation;
 use App\Models\Observation;
+use Illuminate\Support\Facades\Log;
 use App\Models\RecordNumber;
 use App\Models\User;
 use App\Models\OpenStage;
@@ -3494,11 +3495,11 @@ if ($childCapas->count() > 0) {
         $parent_id = $id;
         $parent_type = "Observation";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
-        $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
-        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        // $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+        // $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
         $parent_division_id = Observation::where('id', $id)->value('division_code');
 
@@ -3512,6 +3513,18 @@ if ($childCapas->count() > 0) {
         // if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+
+            $old_record = Capa::select('id', 'division_id', 'record')->get();
+            $lastAi = Capa::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+        
+            
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
+             $data1 = Observation::select('id', 'division_code', 'record', 'due_date')->where('id', $id)->first();
+                $data_record = Helpers::getDivisionName($data1->division_code) . '/' . 'OBS' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+                $parent_record = $data_record;
             return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record','parent_division_id'));
         }
         if ($request->revision == "Action-Item") {
@@ -3519,11 +3532,74 @@ if ($childCapas->count() > 0) {
             $parent_division_id = Observation::where('id', $id)->value('division_code');
             $parent_record = Helpers::getDivisionName($data->division_code ) . '/' . 'OBS' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            $record = $record_number;
-        return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data','parent_division_id'));
+            // $record = $record_number;
+            
+            $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+            $lastAi = ActionItem::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
+            
+            
+                 $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+                
+
+        return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data','parent_division_id','relatedRecords'));
         }
         if ($request->revision == "RCA") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+              $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+            $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number =$record;
+
+                $data = Observation::find($id);
+            $parent_division_id = Observation::where('id', $id)->value('division_code');
+            $parent_record = Helpers::getDivisionName($data->division_code ) . '/' . 'OBS' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+           // $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+        
             return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','parent_division_id'));
 
         }
