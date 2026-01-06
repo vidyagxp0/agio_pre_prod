@@ -4077,7 +4077,7 @@ class OOSService
                 'sample_intactness_before_analysis1',
                 'test_methods_Procedure1',
                 'Review_of_Media_Buffer_Standards_prep1',
-                'Checklist_for_Revi_of_Media_Buffer_Stand_prep1',
+                'Checklist_for_Revi_of_Media_Buffer_Stand_prep1'    ,
                 'ccheck_for_disinfectant_detail1',
                 'Checklist_for_Review_of_instrument_equip1',
                 'Checklist_for_Review_of_Training_records_Analyst1',
@@ -4119,10 +4119,54 @@ class OOSService
                 'products_details',
                 'instrument_detail',
             ];
-
+// dd($request->file('oos_detail'));
            
             foreach ($grid_inputs as $grid_input)
             {
+
+                   if ($grid_input === 'oos_detail') {
+
+         $oosDetails = $request->input('oos_detail', []);
+        $oosFiles   = $request->file('oos_detail', []);
+
+        $existingGrid = Oosgrids::where([
+            'oos_id' => $oos->id,
+            'identifier' => 'oos_detail'
+        ])->first();
+
+        $existingData = $existingGrid ? $existingGrid->data : [];
+
+        foreach ($oosDetails as $index => $row) {
+
+            // ✅ NEW FILE UPLOADED
+            if (isset($oosFiles[$index]['oos_file_attachment'])) {
+
+                $file = $oosFiles[$index]['oos_file_attachment'];
+                $fileName = time().'_'.$file->getClientOriginalName();
+                $file->move(public_path('upload'), $fileName);
+
+                $oosDetails[$index]['oos_file_attachment'] = $fileName;
+
+            } else {
+                // 🔥 PRESERVE OLD FILE FROM DB
+                $oosDetails[$index]['oos_file_attachment'] =
+                    $existingData[$index]['oos_file_attachment'] ?? null;
+            }
+        }
+
+         Oosgrids::updateOrCreate(
+            [
+                'oos_id'     => $oos->id,
+                'identifier' => 'oos_detail',
+            ],
+            [
+                'data' => $oosDetails
+            ]
+        );
+
+        continue;
+    }
+
                 self::update_grid($oos, $request, $grid_input);
             }
 

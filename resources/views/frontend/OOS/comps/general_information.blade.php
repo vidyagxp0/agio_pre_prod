@@ -732,12 +732,29 @@
                                         <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_test_name]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_test_name') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_results_obtained]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_results_obtained') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_specification_limit]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_specification_limit') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
-                                        <td>
+                                        {{-- <td>
                                             <input {{Helpers::isOOSChemical($data->stage)}} type="file" name="oos_detail[{{ $loop->index }}][oos_file_attachment]"
                                             onchange="showFileName(this, {{ $loop->index }})">
                                             <span id="file-name-{{ $loop->index }}"></span>
+                                        </td> --}}
+
+                                        <td>
+                                            @if(!empty($oos_detail['oos_file_attachment']))
+                                                <a href="{{ asset('upload/'.$oos_detail['oos_file_attachment']) }}"
+                                                target="_blank"
+                                                class="btn btn-sm btn-primary mb-1">
+                                                    <i class="fa fa-eye"></i> View File
+                                                </a>
+                                                <br>
+                                            @endif
+
+                                            <input {{Helpers::isOOSChemical($data->stage)}}
+                                                type="file"
+                                                name="oos_detail[{{ $loop->index }}][oos_file_attachment]"
+                                                onchange="showFileName(this, {{ $loop->index }})">
+
+                                            <span id="file-name-{{ $loop->index }}"></span>
                                         </td>
-                                        {{-- <td><input {{Helpers::isOOSChemical($data->stage)}}  type="file" name="oos_file_attachment[{{ $loop->index }}]"></td> --}}
                                         <td>
                                           <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
