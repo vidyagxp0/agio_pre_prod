@@ -9049,8 +9049,10 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
             $parent_division_id  = Auditee::where('id', $id)->value('division_id');
             $parentRecord = Auditee::where('id', $id)->value('record');
             $parent_type = "External Audit";
-            $record = ((RecordNumber::first()->value('counter')) + 1);
-            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+           $lastAirecord = ActionItem::orderBy('record', 'desc')->first();
+            $record_number = $lastAirecord ? $lastAirecord->record + 1 : 1;
+            $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
             $currentDate = Carbon::now();
             $p_record = Auditee::find($id);
             $data = Auditee::find($id);
@@ -9064,23 +9066,31 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
         if ($request->child_type == "Observations")
         {
             $parent_type = "External Audit";
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
-            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $lastAirecord = Observation::orderBy('record', 'desc')->first();
+            $record_number = $lastAirecord ? $lastAirecord->record + 1 : 1;
+            $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
             // dd($parent_type);
-            return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.observation', compact( 'record','record_number', 'due_date', 'parent_id', 'parent_type'));
         }
 
 
         if ($request->child_type == "Extension")
         {
             $parent_due_date = Auditee::where('id', $id)->value('due_date');
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $lastAirecord = Observation::orderBy('record', 'desc')->first();
+            $record = $lastAirecord ? $lastAirecord->record + 1 : 1;
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+
+            $lastAirecord_number = Observation::orderBy('record_number', 'desc')->first();
+            $record_number = $lastAirecord_number ? $lastAirecord_number->record_number + 1 : 1;
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            $record = ((RecordNumber::first()->value('counter')) + 1);
-            $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+
             $parent_division_id  = Auditee::where('id', $id)->value('division_id');
             $relatedRecords = Helpers::getAllRelatedRecords();
             $data=Auditee::find($id);

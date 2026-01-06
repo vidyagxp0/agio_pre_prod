@@ -2864,15 +2864,24 @@ class AuditProgramController extends Controller
         $parent_id = $id;
 
         $parent_type = "Audit_Program";
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+        
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
         $parent_division_id = AuditProgram::where('id', $id)->value('division_id');
         if ($request->child_type == "Internal_Audit") {
-            return view('frontend.forms.audit', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id'));
+            $lastAuditrecord_number = InternalAudit::orderBy('record_number', 'desc')->first();
+            $record_number = $lastAuditrecord_number ? $lastAuditrecord_number->record_number + 1 : 1;
+
+            $lastAuditrecord = InternalAudit::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+
+            return view('frontend.forms.audit', compact('old_record','record_number','record', 'due_date', 'parent_id', 'parent_type','parent_division_id'));
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";

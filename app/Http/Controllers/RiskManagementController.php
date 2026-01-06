@@ -11677,14 +11677,17 @@ class RiskManagementController extends Controller
 
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Risk Assesment";
+        $parent_type = "risk-assesment";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $parent_record = RiskManagement::where('id', $id)->value('record');
-        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        // $parent_record = RiskManagement::where('id', $id)->value('record');
+        // $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $data1 = RiskManagement::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+        $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'RA' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+        $parent_record = $data_record;
         $parent_division_id = RiskManagement::where('id', $id)->value('division_id');
         $parent_initiator_id = RiskManagement::where('id', $id)->value('initiator_id');
         $parent_intiation_date = RiskManagement::where('id', $id)->value('intiation_date');
@@ -11708,10 +11711,13 @@ class RiskManagementController extends Controller
         $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
         // dd($request->child_type)
         if ($request->child_type == "capa") {
-            $parent_name = "CAPA";
+            $parent_name = "risk-assesment";
+             $parent_type = "risk-assesment";
+              $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
+                $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
             $Capachild = RiskManagement::find($id);
             $Capachild->Capachild = $record_number;
-            $record = $record_number;
+            
             $old_records = $old_record;
             $relatedRecords = Helpers::getAllRelatedRecords();
             $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
@@ -11719,9 +11725,13 @@ class RiskManagementController extends Controller
 
             return view('frontend.forms.capa', compact('parent_id','reference_record',  'relatedRecords', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'record_number'));
         } elseif ($request->child_type == "Action_Item")
-         {$record = ((RecordNumber::first()->value('counter')) + 1);
-            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
-            $parent_name = "Risk Assesment";
+         {
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+            // $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+             $lastAuditrecord = ActionItem::orderBy('record', 'desc')->first();
+                $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+            $parent_name = "risk-assesment";
+             $parent_type = "risk-assesment";
             $actionchild = RiskManagement::find($id);
             $data = RiskManagement::find($id);
             $actionchild->actionchild = $record_number;
@@ -11729,20 +11739,32 @@ class RiskManagementController extends Controller
             $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
             $actionchild->save();
             $parentRecord = RiskManagement::where('id', $id)->value('record');
-            return view('frontend.action-item.action-item', compact('old_record','data', 'parentRecord','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','data_record'));
+            $relatedRecords = Helpers::getAllRelatedRecords();
+
+            return view('frontend.action-item.action-item', compact('old_record','data', 'parentRecord','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','data_record','relatedRecords'));
         }
 
         elseif ($request->child_type == "effectiveness_check")
          {
-            $parent_name = "CAPA";
+            $parent_name = "risk-assesment";
+             $parent_type = "risk-assesment";
             $effectivenesschild = RiskManagement::find($id);
+            $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+
+            $lastAuditrecord_number = Capa::orderBy('record_number', 'desc')->first();
+            $record_number = $lastAuditrecord_number ? $lastAuditrecord_number->record_number + 1 : 1;
             $effectivenesschild->effectivenesschild = $record_number;
             $effectivenesschild->save();
-            return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         elseif ($request->child_type == "Change_control") {
-            $parent_name = "risk_assessment_required";
+            $parent_name = "risk-assesment";
             $Changecontrolchild = RiskManagement::find($id);
+             $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+            $lastAuditrecord_number = Capa::orderBy('record_number', 'desc')->first();
+            $record_number = $lastAuditrecord_number ? $lastAuditrecord_number->record_number + 1 : 1;
             $Changecontrolchild->Changecontrolchild = $record_number;
             $data = RiskAssessment::all();
             $preRiskAssessment = RiskAssessment::all();
@@ -11752,7 +11774,7 @@ class RiskManagementController extends Controller
 
             $Changecontrolchild->save();
 
-            return view('frontend.change-control.new-change-control', compact('pre', 'data', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.change-control.new-change-control', compact('pre', 'data', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         // else {
         //     $parent_name = "Root";

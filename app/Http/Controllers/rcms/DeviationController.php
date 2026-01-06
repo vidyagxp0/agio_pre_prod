@@ -9359,9 +9359,13 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             // }
             $due_date = $formattedDate->format('d-M-Y');
 
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
-            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $lastAuditrecord_number = extension_new::orderBy('record_number', 'desc')->first();
+            $record_number = $lastAuditrecord_number ? $lastAuditrecord_number->record_number + 1 : 1;
 
+            $lastAuditrecord = extension_new::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
             $Extensionchild = Deviation::find($id);
 
            $Extensionchild->Extensionchild = $record_number;
@@ -9377,7 +9381,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
         //    dd($extension_record);
             $Extensionchild->save();
-            return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name','countData', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords','parent_division_id','parent_intiation_date'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name','countData', 'record_number','record', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords','parent_division_id','parent_intiation_date'));
         }
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
         // dd($request->child_type)
@@ -9385,15 +9389,20 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $parent_name = "CAPA";
             $Capachild = Deviation::find($id);
             $relatedRecords = Helpers::getAllRelatedRecords();
+           
+
+            $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+
             $Capachild->Capachild = $record_number;
-            $record = $record_number;
+            // $record = $record_number;
             $old_records = $old_record;
          
             $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'DEV' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
        
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id','relatedRecords','record_number', 'parent_record','parent_type', 'record',  'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name','reference_record', 'parent_division_id', 'parent_record', 'old_records', 'cft','parent_due_date',));
+            return view('frontend.forms.capa', compact('parent_id','relatedRecords','record_number','record', 'parent_record','parent_type', 'record',  'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name','reference_record', 'parent_division_id', 'parent_record', 'old_records', 'cft','parent_due_date',));
             } elseif ($request->child_type == "Action_Item") {
             $parent_name = "Action Item";
             $actionchild = Deviation::find($id);
@@ -9487,12 +9496,17 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $Rootchild->save();
             $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
             $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
-        
+
             $record_number = $lastAi ? $lastAi->record + 1 : 1;
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+            $lastAirecord = RootCauseAnalysis::orderBy('record', 'desc')->first();
+            $record = $lastAirecord ? $lastAirecord->record + 1 : 1;
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+
        
      
-            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record','parent_due_date','parent_due_date',));
+            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record','parent_due_date','parent_due_date',));
         }
     }
 

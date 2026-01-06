@@ -8950,8 +8950,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $parent_record = Incident::where('id', $id)->value('record');
-        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        // $parent_record = Incident::where('id', $id)->value('record');
+        // $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_division_id = Incident::where('id', $id)->value('division_id');
         $parent_initiator_id = Incident::where('id', $id)->value('initiator_id');
         $parent_intiation_date = Incident::where('id', $id)->value('intiation_date');
@@ -8962,8 +8962,16 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             $parent_due_date = "";
             $parent_type = "Incident";
             $parent_name = $request->parent_name;
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
-            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $data1 = Incident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+            $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'INC' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+             $parent_record = $data_record;
+            // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $lastAuditrecord = extension_new::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+
+            $lastrecord_number = extension_new::orderBy('record_number', 'desc')->first();
+            $record_number = $lastrecord_number ? $lastrecord_number->record_number + 1 : 1;
             $Extensionchild = Incident::find($id);
             $Extensionchild->Extensionchild = $record_number;
             $old_records = Incident::select('id', 'division_id', 'record')->get();
@@ -8973,15 +8981,20 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
             $relatedRecords = Helpers::getAllRelatedRecords();
             $Extensionchild->save();
-            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at','relatedRecords', 'extension_record','countData','parent_division_id'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number','record', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at','relatedRecords', 'extension_record','countData','parent_division_id'));
         }
 
         $old_record = Incident::select('id', 'division_id', 'record')->get();
         // dd($request->child_type)
         if ($request->child_type == "Capa") {
-            $parent_name = "CAPA";
-            $record = ((RecordNumber::first()->value('counter')) + 1);
-            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $parent_name = "Incident";
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+            // $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+             $data1 = Incident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+            $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'IN' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+             $parent_record = $data_record;
+            $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
             $Capachild = Incident::find($id);
             $Capachild->Capachild = $record;
             $old_records = Incident::select('id', 'division_id', 'record')->get();
@@ -8994,43 +9007,104 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             return view('frontend.forms.capa', compact('relatedRecords','parent_id','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft', 'reference_record'));
         } elseif ($request->child_type == "Action_Item")
          {
-            $parent_name = "CAPA";
-            $record = ((RecordNumber::first()->value('counter')) + 1);
-            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $parent_name = "Incident";
+            $lastAuditrecord = ActionItem::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+             $data1 = Incident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+            $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'IN' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+             $parent_record = $data_record;
             $actionchild = Incident::find($id);
             $data=Incident::find($id);
             $actionchild->actionchild = $record_number;
             //$p_record = OutOfCalibration::find($id);
             $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'INC' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
+
+             $pre = [
+                'DEV' => \App\Models\Deviation::class,
+            'AP' => \App\Models\AuditProgram::class,
+            'AI' => \App\Models\ActionItem::class,
+            'Exte' => \App\Models\extension_new::class,
+            'Resam' => \App\Models\Resampling::class,
+            'Obse' => \App\Models\Observation::class,
+            'RCA' => \App\Models\RootCauseAnalysis::class,
+            'RA' => \App\Models\RiskAssessment::class,
+            'MR' => \App\Models\ManagementReview::class,
+            'EA' => \App\Models\Auditee::class,
+            'IA' => \App\Models\InternalAudit::class,
+            'CAPA' => \App\Models\Capa::class,
+            'CC' => \App\Models\CC::class,
+            'ND' => \App\Models\Document::class,
+            'Lab' => \App\Models\LabIncident::class,
+            'EC' => \App\Models\EffectivenessCheck::class,
+            'OOSChe' => \App\Models\OOS::class,
+            'OOT' => \App\Models\OOT::class,
+            'OOC' => \App\Models\OutOfCalibration::class,
+            'MC' => \App\Models\MarketComplaint::class,
+            'NC' => \App\Models\NonConformance::class,
+            'Incident' => \App\Models\Incident::class,
+            'FI' => \App\Models\FailureInvestigation::class,
+            'ERRATA' => \App\Models\errata::class,
+            'OOSMicr' => \App\Models\OOS_micro::class,
+            // Add other models as necessary...
+            ];
+
+// Create an empty collection to store the related records
+$relatedRecords = collect();
+
+// Loop through each model and get the records, adding the process name to each record
+foreach ($pre as $processName => $modelClass) {
+   $records = $modelClass::all()->map(function ($record) use ($processName) {
+       $record->process_name = $processName; // Attach the process name to each record
+       return $record;
+   });
+
+   // Merge the records into the collection
+   $relatedRecords = $relatedRecords->merge($records);
+}
             $actionchild->save();
 
             //return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
-            return view('frontend.action-item.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'record', 'data_record','data'));
+            return view('frontend.action-item.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type', 'record', 'data_record','data','relatedRecords'));
 
         }
         elseif ($request->child_type == "effectiveness_check")
          {
-            $parent_name = "CAPA";
+            $parent_name = "Incident";
             $effectivenesschild = Incident::find($id);
+            $lastAuditrecord = EffectivenessCheck::orderBy('record_number', 'desc')->first();
+            $record_number = $lastAuditrecord ? $lastAuditrecord->record_number + 1 : 1;
+            $lastAuditrecord = EffectivenessCheck::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+            $data1 = Incident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+            $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'IN' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+             $parent_record = $data_record;
             $effectivenesschild->effectivenesschild = $record_number;
             $effectivenesschild->save();
 
-        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number','record', 'due_date', 'parent_id', 'parent_type'));
         }
         elseif ($request->child_type == "Change_control") {
-            $parent_name = "CAPA";
+            $parent_name = "Incident";
             $Changecontrolchild = Incident::find($id);
             $Changecontrolchild->Changecontrolchild = $record_number;
-
+             $data1 = Incident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+            $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'IN' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+             $parent_record = $data_record;
             $Changecontrolchild->save();
 
             return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         else {
-            $parent_name = "Root";
+            $parent_name = "Incident";
             $Rootchild = Incident::find($id);
             $Rootchild->Rootchild = $record_number;
             $parent_type = "Incident";
+            $lastAirecord = RootCauseAnalysis::orderBy('record', 'desc')->first();
+            $record_number = $lastAirecord ? $lastAirecord->record + 1 : 1;
+            $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+             $data1 = Incident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+            $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'IN' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+             $parent_record = $data_record;
             $Rootchild->save();
             return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
         }
