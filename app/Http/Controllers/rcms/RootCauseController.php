@@ -5309,19 +5309,22 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
         $parent_division_id = RootCauseAnalysis::where('id', $id)->value('division_id');
 
         $parent_type = "RCA";
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $parent_record = $record_number;
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+         $lastAuditrecord = ActionItem::orderBy('record', 'desc')->first();
+         $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
         $currentDate = Carbon::now();
         $parent_intiation_date = $currentDate;
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
         $p_record = RootCauseAnalysis::find($id);
+        $data1 = RootCauseAnalysis::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+        $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'RCA' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+        $parent_record = $data_record;
         $data = new \stdClass();   // Create an empty object
         $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
         $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
-        $record = $record_number;
         return view('frontend.action-item.action-item', compact('parent_intiation_date','parent_division_id', 'parent_initiator_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record', 'data_record', 'data'));
     }
 
@@ -5332,8 +5335,6 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
         $parent_id = $id;
         $parent_type = "RCA";
         $old_record = Capa::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -5351,24 +5352,26 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
 
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            $record = $record_number;
+             $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
             $old_records = $old_record;
             $relatedRecords = Helpers::getAllRelatedRecords();
             $Capachild = RootCauseAnalysis::find($id);
             $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);       
-            return view('frontend.forms.capa', compact('record_number','due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords','reference_record'));
+            return view('frontend.forms.capa', compact('due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords','reference_record'));
         }
 
         if ($request->revision == "Action-Item") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            $record = $record_number;
+            $lastAuditrecord = ActionItem::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
             $p_record = RootCauseAnalysis::find($id);
             $data = new \stdClass();   // Create an empty object
             $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
             $parent_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);    
             // $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
             // $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
-            return view('frontend.action-item.action-item', compact('record_number','parent_division_id','due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data'));
+            return view('frontend.action-item.action-item', compact('parent_division_id','due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data'));
         }
 
         if ($request->revision == "extension") {
@@ -5378,8 +5381,11 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
             $extension_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1; 
-            $record = $record_number;
+             $lastAuditrecord = extension_new::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
 
+            $lastrecord_number = extension_new::orderBy('record_number', 'desc')->first();
+            $record_number = $lastrecord_number ? $lastrecord_number->record_number + 1 : 1;
             return view('frontend.extension.extension_new', compact('parent_type', 'parent_id', 'record_number','extension_record','parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date','record'));
         }
     }
