@@ -7978,7 +7978,9 @@ $newDataGridFishbone->save();
         }
 
         /*************** Other 3 ***************/
-        if (!is_null($lastCft->Other3_review) != is_null($request->Other3_review) &&  !is_null($request->Other3_review)) {
+      //  if (!is_null($lastCft->Other3_review) != is_null($request->Other3_review) &&  !is_null($request->Other3_review)) {
+          
+        if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'Other 3 Impact Assessment Required';
@@ -9366,6 +9368,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
             $lastAuditrecord = extension_new::orderBy('record', 'desc')->first();
             $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+             $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
+       
             $Extensionchild = Deviation::find($id);
 
            $Extensionchild->Extensionchild = $record_number;
@@ -9377,10 +9381,28 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
            $countData = $count + 1;
                                // $relatedRecords = collect();
 
+         if ($request->child_type == "extension"){
+            $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'Deviation')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'Closed - Reject','Closed Cancelled'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }  
 
 
         //    dd($extension_record);
             $Extensionchild->save();
+          
             return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name','countData', 'record_number','record', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords','parent_division_id','parent_intiation_date'));
         }
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
@@ -9394,6 +9416,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
             $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
 
+            
             $Capachild->Capachild = $record_number;
             // $record = $record_number;
             $old_records = $old_record;

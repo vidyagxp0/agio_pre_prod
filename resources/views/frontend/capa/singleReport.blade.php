@@ -302,7 +302,14 @@
                 <table>
                     <tr>
                         <th class="w-20">Interim Containment</th>
-                        <td class="w-80">@if($data->interim_containnment){{ $data->interim_containnment }}@else Not Applicable @endif</td>
+
+                       <td class="w-80">
+                            @if($data->interim_containnment)
+                                {{ str_replace(' ', '-', ucwords(str_replace('-', ' ', $data->interim_containnment))) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>   
                     </tr>
                     <tr>
                         <th class="w-20"> Containment Comments </th>

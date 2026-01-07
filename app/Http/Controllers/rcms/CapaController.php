@@ -5858,6 +5858,26 @@ class CapaController extends Controller
             $countData = $count + 1;
             $relatedRecords = Helpers::getAllRelatedRecords();
             // $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            
+
+             if ($request->child_type == "extension"){
+            $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'CAPA')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'Closed - Reject','Closed Cancelled'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }  
+
             return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'relatedRecords', 'record_number', 'parent_due_date', 'parent_type', 'extension_record', 'countData','parent_division_id'));
         }
     }
