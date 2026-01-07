@@ -8747,6 +8747,88 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                 $changeControl->cancelled_on_comment = $request->comment;
 
 
+                  $childActionItems = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'External Audit')
+                ->get();
+
+                if ($childActionItems->count() > 0) {
+                    foreach ($childActionItems as $actionItem) {
+                        $lastopenState = clone $actionItem; // save previous values before update
+
+                        // 🔹 Update fields
+                        $actionItem->stage = "0";
+                        $actionItem->status = "Closed-Cancelled";
+                        $actionItem->cancelled_by = Auth::user()->name;
+                        $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $actionItem->cancelled_comment =$request->comment;
+                        $actionItem->save();
+
+                        // 🔹 Create history record
+                        $history = new ActionItemHistory();
+                        $history->cc_id = $actionItem->id;
+                        $history->action = "Cancel";
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->change_from = $lastopenState->status;
+                        $history->change_to = "Closed-Cancelled";
+                        $history->stage = "Cancelled";
+
+                        // 🔹 Previous & Current info
+                        $history->previous = $lastopenState->cancelled_by
+                            ? $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on
+                            : '';
+                        $history->current = $actionItem->cancelled_by . ' , ' . $actionItem->cancelled_on;
+                        $history->action_name = $lastopenState->cancelled_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
+
+                
+             $childActionItems = Observation::where('parent_id', $id)
+                ->where('parent_type', 'External Audit')
+                ->get();
+
+                if ($childActionItems->count() > 0) {
+                    foreach ($childActionItems as $actionItem) {
+                        $lastopenState = clone $actionItem; // save previous values before update
+
+                        // 🔹 Update fields
+                        $actionItem->stage = "0";
+                        $actionItem->status = "Closed-Cancelled";
+                        $actionItem->cancel_by = Auth::user()->name;
+                        $actionItem->cancel_on = Carbon::now()->format('d-M-Y');
+                        $actionItem->cancel_comment =$request->comment;
+                        $actionItem->save();
+
+                        // 🔹 Create history record
+                        $history = new AuditTrialObservation();
+                        $history->Observation_id = $actionItem->id;
+                        $history->action = "Cancel";
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->change_from = $lastopenState->status;
+                        $history->change_to = "Closed-Cancelled";
+                        $history->stage = "Cancelled";
+
+                        // 🔹 Previous & Current info
+                        $history->previous = $lastopenState->cancel_by
+                            ? $lastopenState->cancel_by . ' , ' . $lastopenState->cancel_on
+                            : '';
+                        $history->current = $actionItem->cancel_by . ' , ' . $actionItem->cancel_on;
+                        $history->action_name = $lastopenState->cancel_by ? 'Update' : 'New';
+
+                        $history->save();
+                    }
+                }
 
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
@@ -9060,7 +9142,50 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
             $parent_record=$data_record;
-            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type', 'data_record','data','parent_division_id','parent_record'));
+
+               $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type', 'data_record','data','parent_division_id','parent_record','relatedRecords'));
         }
 
         if ($request->child_type == "Observations")

@@ -2490,8 +2490,10 @@
                                                     <label for="Production Tablet notification">Production Tablet/Capsule / Powder Person 
                                                         <span id="asteriskInvi11" style="display: none"
                                                             class="text-danger">*</span></label>
-                                                    <select name="Production_Table_Person" disabled
-                                                        id="Production_Table_Person">
+                                                
+
+                                                    <select name="Production_Table_Person" class="Production_Table_Person"
+                                                        id="Production_Table_Person" disabled>
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->name }}"
@@ -2876,7 +2878,11 @@
                                                         Person
                                                         <span id="asteriskInvi11" style="display: none"
                                                             class="text-danger">*</span></label>
-                                                    <select name="Production_Injection_Person" disabled
+                                                  
+
+                                                    <select  disabled
+                                                        name="Production_Injection_Person"
+                                                        class="Production_Injection_Person"
                                                         id="Production_Injection_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
