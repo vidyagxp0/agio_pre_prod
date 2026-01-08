@@ -245,6 +245,7 @@ class InternalauditController extends Controller
         $internalAudit->remark_11 = $request->remark_11;
         $internalAudit->remark_12 = $request->remark_12;
         $internalAudit->remark_13 = $request->remark_13;
+
         $internalAudit->remark_14 = $request->remark_14;
         $internalAudit->remark_15 = $request->remark_15;
         $internalAudit->remark_16 = $request->remark_16;
@@ -289,6 +290,7 @@ class InternalauditController extends Controller
         $internalAudit->remark_55 = $request->remark_55;
         $internalAudit->remark_56 = $request->remark_56;
         $internalAudit->remark_57 = $request->remark_57;
+        
         $internalAudit->remark_58 = $request->remark_58;
         $internalAudit->remark_59 = $request->remark_59;
         $internalAudit->remark_60 = $request->remark_60;
@@ -5082,65 +5084,65 @@ if ($areIniAttachmentsSame2 != true) {
                     ]);
                 }
 
-                $extensionchild = extension_new::where('parent_id', $id)
-                    ->where('parent_type', 'Internal Audit')
-                    ->get();
-                    // dd($extensionchild);
-                        $hasPending1 = false;
-                    foreach ($extensionchild as $ext) {
-                            $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
-                                $hasPending1 = true;
-                                break;
-                            }
-                        }
+                // $extensionchild = extension_new::where('parent_id', $id)
+                //     ->where('parent_type', 'Internal Audit')
+                //     ->get();
+                //     // dd($extensionchild);
+                //         $hasPending1 = false;
+                //     foreach ($extensionchild as $ext) {
+                //             $extensionchildStatus = trim(strtolower($ext->status));
+                //             if ($extensionchildStatus !== 'closed - done') {
+                //                 $hasPending1 = true;
+                //                 break;
+                //             }
+                //         }
 
-                    if ($hasPending1) {
-                            Session::flash('swal', [
-                                'title' => 'Extension Child Pending!',
-                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                //     if ($hasPending1) {
+                //             Session::flash('swal', [
+                //                 'title' => 'Extension Child Pending!',
+                //                 'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                //                 'type' => 'warning',
+                //             ]);
 
-                        return redirect()->back();
+                //         return redirect()->back();
                         
-                    } else {
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Sent for Next Stage',
-                            'type' => 'success',
-                        ]);
-                    }
+                //     } else {
+                //         Session::flash('swal', [
+                //             'title' => 'Success!',
+                //             'message' => 'Sent for Next Stage',
+                //             'type' => 'success',
+                //         ]);
+                //     }
 
-                    $observationchild = Observation::where('parent_id', $id)
-                    ->where('parent_type', 'Internal Audit')
-                    ->get();
-                    // dd($extensionchild);
-                        $hasPending2 = false;
-                        foreach ($observationchild as $ext) {
-                            $observationchildStatus = trim(strtolower($ext->status));
-                            if ($observationchildStatus !== 'closed - done') {
-                                $hasPending2 = true;
-                                break;
-                            }
-                        }
+                //     $observationchild = Observation::where('parent_id', $id)
+                //     ->where('parent_type', 'Internal Audit')
+                //     ->get();
+                //     // dd($extensionchild);
+                //         $hasPending2 = false;
+                //         foreach ($observationchild as $ext) {
+                //             $observationchildStatus = trim(strtolower($ext->status));
+                //             if ($observationchildStatus !== 'closed - done') {
+                //                 $hasPending2 = true;
+                //                 break;
+                //             }
+                //         }
 
-                    if ($hasPending2) {
-                            Session::flash('swal', [
-                                'title' => 'Observations Child Pending!',
-                                'message' => 'You cannot proceed until Observations Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                //     if ($hasPending2) {
+                //             Session::flash('swal', [
+                //                 'title' => 'Observations Child Pending!',
+                //                 'message' => 'You cannot proceed until Observations Child is Closed-Done.',
+                //                 'type' => 'warning',
+                //             ]);
 
-                        return redirect()->back();
+                //         return redirect()->back();
                         
-                    } else {
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Sent for Next Stage',
-                            'type' => 'success',
-                        ]);
-                    }
+                //     } else {
+                //         Session::flash('swal', [
+                //             'title' => 'Success!',
+                //             'message' => 'Sent for Next Stage',
+                //             'type' => 'success',
+                //         ]);
+                //     }
 
 
                 $changeControl->stage = "4";
@@ -5759,6 +5761,7 @@ if ($areIniAttachmentsSame2 != true) {
 
         if ($changeControl->stage == 4) {
 
+           
                     $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'Internal Audit')
                     ->get();
@@ -6723,29 +6726,73 @@ if ($areIniAttachmentsSame2 != true) {
                 $parent_id = $id;
                 $parent_type = "Internal Audit";
                 $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
-                $record_number = ((RecordNumber::first()->value('counter')) + 1);
-                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+                // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+                // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+
+                 $old_record = Observation::select('id', 'division_code', 'record')->get();
+                $lastAi = Observation::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number = $record;
+
+
+
                 $currentDate = Carbon::now();
                 $formattedDate = $currentDate->addDays(30);
                 $due_date = $formattedDate->format('d-M-Y');
+                // dd('tet');
                 return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id'));
             }
-
+            
             if ($request->child_type == "Extension")
             {
                 $parent_id = $id;
                 $parent_type = "Internal Audit";
                 $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
-                $record_number = ((RecordNumber::first()->value('counter')) + 1);
-                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-                $record = ((RecordNumber::first()->value('counter')) + 1);
-                $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+                // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+                // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+                // $record = ((RecordNumber::first()->value('counter')) + 1);
+                // $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+
+                 $old_record = extension_new::select('id', 'division_id', 'record')->get();
+                $lastAi = extension_new::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+        
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number = $record;
+           
+              
+
+
                 $parent_due_date = InternalAudit::where('id', $id)->value('due_date');
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $data = InternalAudit::find($id);
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                 $count = Helpers::getChildData($id, $parent_type);
-                $countData = $count + 1;    
+                $countData = $count + 1;
+                   
+                 if ($request->child_type == "Extension"){
+            $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'Internal Audit')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'Closed - Reject','Closed Cancelled'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }  
+
+
+            
                 return view('frontend.extension.extension_new', compact('parent_type','record','record_number','parent_id','parent_due_date','extension_record','parent_division_id', 'relatedRecords','countData',));
             }
 
@@ -6757,11 +6804,11 @@ if ($areIniAttachmentsSame2 != true) {
             
             $old_records = InternalAudit::select('id', 'division_id', 'record')->get();
             $parent_id = $id;
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+          //  $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
-            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            $record = ((RecordNumber::first()->value('counter')) + 1);
-            $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+           // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+            // $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
@@ -6770,9 +6817,65 @@ if ($areIniAttachmentsSame2 != true) {
                 $p_record = InternalAudit::find($id);
                 $data = InternalAudit::find($id);
                 $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
-                return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id','record', 'data_record','data'));
+                 $parent_record = $data_record;
+                $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+                $lastAi = ActionItem::orderBy('record', 'desc')->first();
+                $record_number = $lastAi ? $lastAi->record + 1 : 1;
+                $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+                $record_number = $record;
+                 $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+
+              
+                return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id','record', 'data_record','data','relatedRecords','parent_record'));
             }
             if($request->child_type == 'r_c_a'){
+
+                 $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+                $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+               $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number =$record;
                 return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id'));
             }
             if($request->child_type == 'capa'){
@@ -6780,6 +6883,12 @@ if ($areIniAttachmentsSame2 != true) {
                 $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
 
                 $relatedRecords = Helpers::getAllRelatedRecords();
+
+                 $old_record = Capa::select('id', 'division_id', 'record')->get();
+                $lastAi = Capa::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+               $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number =$record;
 
                 return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_records','relatedRecords','reference_record','parent_division_id'));
             }
@@ -6789,9 +6898,36 @@ if ($areIniAttachmentsSame2 != true) {
                     $parent_due_date = InternalAudit::where('id', $id)->value('due_date');
                     $relatedRecords = Helpers::getAllRelatedRecords();
                     $data = InternalAudit::find($id);
-                    $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'EA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                    $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                     $count = Helpers::getChildData($id, $parent_type);
                     $countData = $count + 1; 
+
+                    //   if ($request->child_type == "Extension"){
+                    // $lastExtension = extension_new::where('parent_id', $id)
+                    //             ->where('parent_type', 'Internal Audit')
+                    //             ->orderByDesc('id')
+                    //             ->first();
+                    
+                    //         if (!$lastExtension) {
+                    //             $extensionCount = 1;
+                    //         } else {
+                    //             if (in_array($lastExtension->status, ['Closed - Done', 'Closed - Reject','Closed Cancelled'])) {
+                    //                 $extensionCount = $lastExtension->count + 1;
+                    //             } else {
+                    //                 return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                    //             }
+                    //         }
+
+                    //     }  
+
+                     $old_record = extension_new::select('id', 'division_id', 'record')->get();
+                $lastAi = extension_new::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+        
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number = $record;
+           
+
                     return view('frontend.extension.extension_new', compact('parent_type','record','record_number','parent_id','parent_due_date','extension_record','parent_division_id', 'relatedRecords','countData',));
             }
             
