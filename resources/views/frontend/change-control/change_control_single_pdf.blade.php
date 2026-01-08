@@ -621,7 +621,7 @@
                         <th class="w-20">Related Records</th>
                         <td class="w-80" colspan="3">
                             <div>
-                                {{ $data->risk_assessment_related_record }}
+                                {{ $data->risk_assessment_related_record ? $data->risk_assessment_related_record : 'Not Applicable'  }}
                                 
                                 
                             </div>
@@ -656,7 +656,7 @@
                         <th class="w-20">Comments</th>
                         <td class="w-80" colspan="3">
                             <div>
-                                {{ $data->migration_action }}
+                                {{ $data->migration_action ? $data->migration_action : 'Not Applicable' }}
                             </div>
                         </td>
                     </tr>

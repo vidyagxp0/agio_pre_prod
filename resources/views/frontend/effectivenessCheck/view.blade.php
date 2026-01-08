@@ -100,7 +100,7 @@
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#closed-modal">
                                 Cancel
-                            </button>
+                            </button>                   
                         @elseif($data->stage == 2 && $data->assign_to == Auth::user()->id)
 
                         {{--@elseif($data->stage == 2 && Helpers::check_roles($extensionNew->site_location_code, 'Effectiveness Check', 3))--}}
@@ -343,7 +343,7 @@
                                                 value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
                                     </select>
-                                    <input type="hidden" name="assign_to" value="{{ $data->assign_to }}">
+                                    {{-- <input type="hidden" name="assign_to" value="{{ $data->assign_to }}"> --}}
                                 </div>
                             </div>
 

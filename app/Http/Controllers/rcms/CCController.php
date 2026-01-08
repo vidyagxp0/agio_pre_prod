@@ -9019,6 +9019,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
             $cftDetails = ChangeControlCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'cc_id' => $id])->distinct('cft_user_id')->count();
+            $selecCft = CcCft::where('cc_id', $id)->first();
 
             if ($changeControl->stage == 1) {
 
@@ -9402,6 +9403,34 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                 'title' => 'Success!',
                                 'message' => 'Sent for Next Stage',
                                 'type' => 'success',
+                            ]);
+                        }    
+                         if ( $selecCft->Production_Table_Review !== 'yes' &&
+                            $selecCft->Production_Injection_Review !== 'yes' &&
+                            $selecCft->ProductionLiquid_Review !== 'yes' &&
+                            $selecCft->Store_Review !== 'yes' &&
+                            $selecCft->ResearchDevelopment_Review !== 'yes' &&
+                            $selecCft->Microbiology_Review !== 'yes' &&
+                            $selecCft->RegulatoryAffair_Review !== 'yes' &&
+                            $selecCft->CorporateQualityAssurance_Review !== 'yes' &&
+                            $selecCft->ContractGiver_Review !== 'yes' &&
+                            $selecCft->Quality_review !== 'yes' &&
+                            $selecCft->Quality_Assurance_Review !== 'yes' &&
+                            $selecCft->Engineering_review !== 'yes' &&
+                            $selecCft->Environment_Health_review !== 'yes' &&
+                            $selecCft->Human_Resource_review !== 'yes') {
+                                                    Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'CFT Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
                             ]);
                         }
                 $changeControl->stage = "4";
@@ -11420,63 +11449,9 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     $history->save();
 
                     // $list = Helpers::getQAHeadUserList($changeControl->division_id); // Notify QA Head
-                    // // foreach ($list as $u) {
-                    // //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    // //         $email = Helpers::getUserEmail($u->user_id);
-                    // //             if ($email !== null) {
-                    // //                 try {
-                    // //                     Mail::send(
-                    // //                         'mail.view-mail',
-                    // //                         ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    // //                         function ($message) use ($email, $changeControl) {
-                    // //                             $message->to($email)
-                    // //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Final Review Complete Performed");
-                    // //                         }
-                    // //                     );
-                    // //                 } catch(\Exception $e) {
-                    // //                     info('Error sending mail', [$e]);
-                    // //                 }
-                    // //         }
-                    // //     // }
-                    // // }
-                    // foreach ($list as $u) {
-                    //     $email = Helpers::getUserEmail($u->user_id);
-                    //     if ($email !== null) {
-                    //         $data = ['data' => $changeControl, 'site'=>"CC", 'history' => "QA/CQA Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name];
-    
-                    //         SendMail::dispatch($data, $email, $changeControl, 'Change Control');
-                    //     }
-                    // }
-
+                   
                     // $list = Helpers::getCQAHeadUsersList($changeControl->division_id); // Notify CQA Head
-                    // // foreach ($list as $u) {
-                    // //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    // //         $email = Helpers::getUserEmail($u->user_id);
-                    // //             if ($email !== null) {
-                    // //                 try {
-                    // //                     Mail::send(
-                    // //                         'mail.view-mail',
-                    // //                         ['data' => $changeControl, 'site' => "CC", 'history' => "QA/CQA Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    // //                         function ($message) use ($email, $changeControl) {
-                    // //                             $message->to($email)
-                    // //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Final Review Complete Performed");
-                    // //                         }
-                    // //                     );
-                    // //                 } catch(\Exception $e) {
-                    // //                     info('Error sending mail', [$e]);
-                    // //                 }
-                    // //         }
-                    // //     // }
-                    // // }
-
-                    // foreach ($list as $u) {
-                    //     $email = Helpers::getUserEmail($u->user_id);
-                    //     if ($email !== null) {
-                    //         $data = ['data' => $changeControl, 'site'=>"CC", 'history' => "QA/CQA Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name];
-    
-                    //         SendMail::dispatch($data, $email, $changeControl, 'Change Control');
-                    //     }
-                    // }
+                    
 
 
                    
@@ -14006,6 +13981,61 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 //      }
                 //   }
                 $changeControl->update();
+                $Cft = CcCft::where('cc_id', $changeControl->id)->first();
+                    if ($Cft) {
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Warehouse_by = null;
+                        $Cft->Warehouse_on = null;
+                        $Cft->Production_Injection_By = null;
+                        $Cft->Production_Injection_On = null;
+                        $Cft->Production_Table_By = null;
+                        $Cft->Production_Table_On = null;
+                        $Cft->RA_by = null;
+                        $Cft->RA_on = null;
+                        $Cft->production_by = null;
+                        $Cft->production_on = null;
+                        $Cft->ResearchDevelopment_by = null;
+                        $Cft->ResearchDevelopment_on = null;
+                        $Cft->Human_Resource_by = null;
+                        $Cft->Human_Resource_on = null;
+                        $Cft->CorporateQualityAssurance_by = null;
+                        $Cft->CorporateQualityAssurance_on = null;
+                        $Cft->Store_by = null;
+                        $Cft->Store_on = null;
+                        $Cft->Engineering_by = null;
+                        $Cft->Engineering_on = null;
+                        $Cft->RegulatoryAffair_by = null;
+                        $Cft->RegulatoryAffair_on = null;
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->ProductionLiquid_by = null;
+                        $Cft->ProductionLiquid_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Microbiology_by = null;
+                        $Cft->Microbiology_on = null;
+                        $Cft->Environment_Health_Safety_by = null;
+                        $Cft->Environment_Health_Safety_on = null;
+                        $Cft->ContractGiver_by = null;
+                        $Cft->ContractGiver_on = null;
+                        $Cft->Other1_by = null;
+                        $Cft->Other1_on = null;
+                        $Cft->Other2_by = null;
+                        $Cft->Other2_on = null;
+                        $Cft->Other3_by = null;
+                        $Cft->Other3_on = null;
+                        $Cft->Other4_by = null;
+                        $Cft->Other4_on = null;
+                        $Cft->Other5_by = null;
+                        $Cft->Other5_on = null;
+
+                        $Cft->save();
+
+                        return back();
+                    }
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
                 $history->doc_id = $id;
@@ -14113,6 +14143,61 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                  
                
                 $changeControl->update();
+                $Cft = CcCft::where('cc_id', $changeControl->id)->first();
+                    if ($Cft) {
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Warehouse_by = null;
+                        $Cft->Warehouse_on = null;
+                        $Cft->Production_Injection_By = null;
+                        $Cft->Production_Injection_On = null;
+                        $Cft->Production_Table_By = null;
+                        $Cft->Production_Table_On = null;
+                        $Cft->RA_by = null;
+                        $Cft->RA_on = null;
+                        $Cft->production_by = null;
+                        $Cft->production_on = null;
+                        $Cft->ResearchDevelopment_by = null;
+                        $Cft->ResearchDevelopment_on = null;
+                        $Cft->Human_Resource_by = null;
+                        $Cft->Human_Resource_on = null;
+                        $Cft->CorporateQualityAssurance_by = null;
+                        $Cft->CorporateQualityAssurance_on = null;
+                        $Cft->Store_by = null;
+                        $Cft->Store_on = null;
+                        $Cft->Engineering_by = null;
+                        $Cft->Engineering_on = null;
+                        $Cft->RegulatoryAffair_by = null;
+                        $Cft->RegulatoryAffair_on = null;
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->ProductionLiquid_by = null;
+                        $Cft->ProductionLiquid_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Microbiology_by = null;
+                        $Cft->Microbiology_on = null;
+                        $Cft->Environment_Health_Safety_by = null;
+                        $Cft->Environment_Health_Safety_on = null;
+                        $Cft->ContractGiver_by = null;
+                        $Cft->ContractGiver_on = null;
+                        $Cft->Other1_by = null;
+                        $Cft->Other1_on = null;
+                        $Cft->Other2_by = null;
+                        $Cft->Other2_on = null;
+                        $Cft->Other3_by = null;
+                        $Cft->Other3_on = null;
+                        $Cft->Other4_by = null;
+                        $Cft->Other4_on = null;
+                        $Cft->Other5_by = null;
+                        $Cft->Other5_on = null;
+
+                        $Cft->save();
+
+                        return back();
+                    }
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
                 $history->doc_id = $id;
@@ -14440,7 +14525,61 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->change_from = $lastDocument->status;
         $history->save();
         $changeControl->update();
+        $Cft = CcCft::where('cc_id', $changeControl->id)->first();
+                    if ($Cft) {
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Warehouse_by = null;
+                        $Cft->Warehouse_on = null;
+                        $Cft->Production_Injection_By = null;
+                        $Cft->Production_Injection_On = null;
+                        $Cft->Production_Table_By = null;
+                        $Cft->Production_Table_On = null;
+                        $Cft->RA_by = null;
+                        $Cft->RA_on = null;
+                        $Cft->production_by = null;
+                        $Cft->production_on = null;
+                        $Cft->ResearchDevelopment_by = null;
+                        $Cft->ResearchDevelopment_on = null;
+                        $Cft->Human_Resource_by = null;
+                        $Cft->Human_Resource_on = null;
+                        $Cft->CorporateQualityAssurance_by = null;
+                        $Cft->CorporateQualityAssurance_on = null;
+                        $Cft->Store_by = null;
+                        $Cft->Store_on = null;
+                        $Cft->Engineering_by = null;
+                        $Cft->Engineering_on = null;
+                        $Cft->RegulatoryAffair_by = null;
+                        $Cft->RegulatoryAffair_on = null;
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->ProductionLiquid_by = null;
+                        $Cft->ProductionLiquid_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Microbiology_by = null;
+                        $Cft->Microbiology_on = null;
+                        $Cft->Environment_Health_Safety_by = null;
+                        $Cft->Environment_Health_Safety_on = null;
+                        $Cft->ContractGiver_by = null;
+                        $Cft->ContractGiver_on = null;
+                        $Cft->Other1_by = null;
+                        $Cft->Other1_on = null;
+                        $Cft->Other2_by = null;
+                        $Cft->Other2_on = null;
+                        $Cft->Other3_by = null;
+                        $Cft->Other3_on = null;
+                        $Cft->Other4_by = null;
+                        $Cft->Other4_on = null;
+                        $Cft->Other5_by = null;
+                        $Cft->Other5_on = null;
 
+                        $Cft->save();
+
+                        return back();
+                    }
         $history = new RcmDocHistory();
         $history->type = "CC";
         $history->doc_id = $id;
@@ -14540,6 +14679,61 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->change_from = $lastDocument->status;
         $history->save();
         $changeControl->update();
+        $Cft = CcCft::where('cc_id', $changeControl->id)->first();
+                    if ($Cft) {
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Warehouse_by = null;
+                        $Cft->Warehouse_on = null;
+                        $Cft->Production_Injection_By = null;
+                        $Cft->Production_Injection_On = null;
+                        $Cft->Production_Table_By = null;
+                        $Cft->Production_Table_On = null;
+                        $Cft->RA_by = null;
+                        $Cft->RA_on = null;
+                        $Cft->production_by = null;
+                        $Cft->production_on = null;
+                        $Cft->ResearchDevelopment_by = null;
+                        $Cft->ResearchDevelopment_on = null;
+                        $Cft->Human_Resource_by = null;
+                        $Cft->Human_Resource_on = null;
+                        $Cft->CorporateQualityAssurance_by = null;
+                        $Cft->CorporateQualityAssurance_on = null;
+                        $Cft->Store_by = null;
+                        $Cft->Store_on = null;
+                        $Cft->Engineering_by = null;
+                        $Cft->Engineering_on = null;
+                        $Cft->RegulatoryAffair_by = null;
+                        $Cft->RegulatoryAffair_on = null;
+                        $Cft->QualityAssurance_by = null;
+                        $Cft->QualityAssurance_on = null;
+                        $Cft->ProductionLiquid_by = null;
+                        $Cft->ProductionLiquid_on = null;
+                        $Cft->Quality_Control_by = null;
+                        $Cft->Quality_Control_on = null;
+                        $Cft->Microbiology_by = null;
+                        $Cft->Microbiology_on = null;
+                        $Cft->Environment_Health_Safety_by = null;
+                        $Cft->Environment_Health_Safety_on = null;
+                        $Cft->ContractGiver_by = null;
+                        $Cft->ContractGiver_on = null;
+                        $Cft->Other1_by = null;
+                        $Cft->Other1_on = null;
+                        $Cft->Other2_by = null;
+                        $Cft->Other2_on = null;
+                        $Cft->Other3_by = null;
+                        $Cft->Other3_on = null;
+                        $Cft->Other4_by = null;
+                        $Cft->Other4_on = null;
+                        $Cft->Other5_by = null;
+                        $Cft->Other5_on = null;
+
+                        $Cft->save();
+
+                        return back();
+                    }
 
         $history = new RcmDocHistory();
         $history->type = "CC";
@@ -14658,7 +14852,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $response->delete();
         });
 
-
         $changeControl->stage = "3";
         $changeControl->status = "QA/CQA Initial Review";
         $changeControl->qa_final_to_qainital_by = Auth::user()->name;
@@ -14743,6 +14936,61 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     }
                 }
         $changeControl->update();
+            $Cft = CcCft::where('cc_id', $changeControl->id)->first();
+                        if ($Cft) {
+                            $Cft->QualityAssurance_by = null;
+                            $Cft->QualityAssurance_on = null;
+                            $Cft->Quality_Control_by = null;
+                            $Cft->Quality_Control_on = null;
+                            $Cft->Warehouse_by = null;
+                            $Cft->Warehouse_on = null;
+                            $Cft->Production_Injection_By = null;
+                            $Cft->Production_Injection_On = null;
+                            $Cft->Production_Table_By = null;
+                            $Cft->Production_Table_On = null;
+                            $Cft->RA_by = null;
+                            $Cft->RA_on = null;
+                            $Cft->production_by = null;
+                            $Cft->production_on = null;
+                            $Cft->ResearchDevelopment_by = null;
+                            $Cft->ResearchDevelopment_on = null;
+                            $Cft->Human_Resource_by = null;
+                            $Cft->Human_Resource_on = null;
+                            $Cft->CorporateQualityAssurance_by = null;
+                            $Cft->CorporateQualityAssurance_on = null;
+                            $Cft->Store_by = null;
+                            $Cft->Store_on = null;
+                            $Cft->Engineering_by = null;
+                            $Cft->Engineering_on = null;
+                            $Cft->RegulatoryAffair_by = null;
+                            $Cft->RegulatoryAffair_on = null;
+                            $Cft->QualityAssurance_by = null;
+                            $Cft->QualityAssurance_on = null;
+                            $Cft->ProductionLiquid_by = null;
+                            $Cft->ProductionLiquid_on = null;
+                            $Cft->Quality_Control_by = null;
+                            $Cft->Quality_Control_on = null;
+                            $Cft->Microbiology_by = null;
+                            $Cft->Microbiology_on = null;
+                            $Cft->Environment_Health_Safety_by = null;
+                            $Cft->Environment_Health_Safety_on = null;
+                            $Cft->ContractGiver_by = null;
+                            $Cft->ContractGiver_on = null;
+                            $Cft->Other1_by = null;
+                            $Cft->Other1_on = null;
+                            $Cft->Other2_by = null;
+                            $Cft->Other2_on = null;
+                            $Cft->Other3_by = null;
+                            $Cft->Other3_on = null;
+                            $Cft->Other4_by = null;
+                            $Cft->Other4_on = null;
+                            $Cft->Other5_by = null;
+                            $Cft->Other5_on = null;
+
+                            $Cft->save();
+
+                            return back();
+                        }
         toastr()->success('Document Sent');
         return back();
 
@@ -15168,7 +15416,23 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $record = $lastAi ? $lastAi->record + 1 : 1;
              $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
-     
+             if ($request->revision == "Extension"){
+            $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'CC')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'Closed - Reject','Closed Cancelled'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        } 
             return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
         }
         if ($request->revision == "New Document") {
