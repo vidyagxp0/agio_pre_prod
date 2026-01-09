@@ -2,7 +2,8 @@
 
     <tr>
         <td>
-            {{ isset($filter_request) ? $audits + 1 : $loop->iteration }}
+            {{-- {{ isset($filter_request) ? $audits + 1 : $loop->iteration }} --}}
+             {{ isset($filter_request) ? $audits + 1 : ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 }}
         </td>
 
         <td>
