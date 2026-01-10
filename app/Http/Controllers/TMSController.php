@@ -36,10 +36,13 @@ class TMSController extends Controller
 {
     public function index(){
         
-        // $inductionTraining = Induction_training::get();  
-          $inductionTraining = Induction_training::paginate(10); 
-        $jobTraining = JobDescription::paginate(10);      
-        $jobTrainings = JobTraining::paginate(10);
+        //   $inductionTraining = Induction_training::paginate(10);
+        $inductionTraining = Induction_training::orderBy('id', 'desc')->paginate(10);
+        $jobTraining = JobDescription::orderBy('id', 'desc')->paginate(10);
+        $jobTrainings = JobTraining::orderBy('id', 'desc')->paginate(10);
+
+        // $jobTraining = JobDescription::paginate(10);      
+        // $jobTrainings = JobTraining::paginate(10);
         if(Helpers::checkRoles(6)){
            $documents = DocumentTraining::where('trainer', Auth::user()->id)
             ->with('root_document')

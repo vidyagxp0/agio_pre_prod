@@ -635,9 +635,9 @@
                         </thead>
                         <tbody>
                                @if (count($jobTrainings) > 0)
-                            @foreach ($jobTrainings->sortByDesc('id') as $index => $job_training)
+                            @foreach ($jobTrainings as $index => $job_training)
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $jobTrainings->firstItem() + $index }}</td>
                                     <td>{{ DB::table('job_trainings')->where('id', $job_training->id)->value('name') }}
                                     </td>
 
@@ -689,7 +689,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>S.NO</th>
+                                <th>S.No</th>
                                 <th>Employee ID</th>
                                 <th>Name Of Employee</th>
                                 <th>Department</th>
@@ -702,9 +702,9 @@
                         </thead>
                         <tbody>
                             @if (count($inductionTraining) > 0)
-                                @foreach ($inductionTraining->sortByDesc('id') as $index => $induction)
+                                @foreach ($inductionTraining as $index => $induction)
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $inductionTraining->firstItem() + $index }}</td>
                                         <td>
                                             @php
                                                 $employee = \App\Models\Employee::where(
@@ -785,7 +785,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($jobTraining->sortByDesc('id') as $induction)
+                        @foreach ($jobTraining as $induction)
                             <tr>
                                 <td>
                                     @php

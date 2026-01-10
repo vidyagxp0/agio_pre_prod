@@ -786,78 +786,80 @@
 
                                                     @php $rowCount = 6; @endphp
 
-<!-- Loop through stored data to display existing rows -->
-@foreach ($storedData as $index => $stored)
-<tr id="row_{{ $rowCount }}">
-    <td>{{ $rowCount }}</td>
-    <td>
-        <select name="data[{{ $rowCount }}][document_name]" id="sopdocument_{{ $rowCount }}" onchange="fetchDocumentDetails0(this, {{ $rowCount }})">
-            <option value="">---Select Document Name---</option>
-            @foreach ($data as $dat)
-            <option value="{{ $dat->document_name }}"
-                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                    data-sop-link="{{ $dat->id }}" 
-                    data-id="{{ $dat->id }}"
-                    {{ $dat->document_name == $stored['document_name'] ? 'selected' : '' }}>
-                {{ $dat->document_name }}
-            </option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="text" name="data[{{ $rowCount }}][type_of_training]" value="{{ $stored['type_of_training'] }}"></td>
-    <td><input type="text" name="data[{{ $rowCount }}][reference_document_no_display]" id="document_number_{{ $rowCount }}" value="{{ $stored['reference_document_no_display'] }}" readonly></td>
-    <input type="hidden" name="data[{{ $rowCount }}][reference_document_no]" id="reference_document_no_{{ $rowCount }}" value="{{ $stored['reference_document_no'] }}">
-    <td>
-        <select name="data[{{ $rowCount }}][trainer]" id="trainer_{{ $rowCount }}">
-            <option value="">-- Select --</option>
-            @foreach ($usersDetails as $u)
-            <option value="{{ $u->id }}" {{ $u->id == $stored['trainer'] ? 'selected' : '' }}>{{ $u->name }}</option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="date" name="data[{{ $rowCount }}][startdate]" id="startdate_{{ $rowCount }}" value="{{ $stored['startdate'] }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td><input type="date" name="data[{{ $rowCount }}][enddate]" id="enddate_{{ $rowCount }}" value="{{ $stored['enddate'] }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td>
-        <a href="/documents/view/{{ $stored['reference_document_no'] }}" id="view_sop_{{ $rowCount }}" target="_blank">View SOP</a>
-    </td>
-</tr>
-@php $rowCount++; @endphp
-@endforeach
+                                                    <!-- Loop through stored data to display existing rows -->
+                                                    @if(!empty($storedData))
+                                                    @foreach ($storedData as $index => $stored)
+                                                    <tr id="row_{{ $rowCount }}">
+                                                        <td>{{ $rowCount }}</td>
+                                                        <td>
+                                                            <select name="data[{{ $rowCount }}][document_name]" id="sopdocument_{{ $rowCount }}" onchange="fetchDocumentDetails0(this, {{ $rowCount }})">
+                                                                <option value="">---Select Document Name---</option>
+                                                                @foreach ($data as $dat)
+                                                                <option value="{{ $dat->document_name }}"
+                                                                        data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                                                                        data-sop-link="{{ $dat->id }}" 
+                                                                        data-id="{{ $dat->id }}"
+                                                                        {{ $dat->document_name == $stored['document_name'] ? 'selected' : '' }}>
+                                                                    {{ $dat->document_name }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="text" name="data[{{ $rowCount }}][type_of_training]" value="{{ $stored['type_of_training'] }}"></td>
+                                                        <td><input type="text" name="data[{{ $rowCount }}][reference_document_no_display]" id="document_number_{{ $rowCount }}" value="{{ $stored['reference_document_no_display'] }}" readonly></td>
+                                                        <input type="hidden" name="data[{{ $rowCount }}][reference_document_no]" id="reference_document_no_{{ $rowCount }}" value="{{ $stored['reference_document_no'] }}">
+                                                        <td>
+                                                            <select name="data[{{ $rowCount }}][trainer]" id="trainer_{{ $rowCount }}">
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($usersDetails as $u)
+                                                                <option value="{{ $u->id }}" {{ $u->id == $stored['trainer'] ? 'selected' : '' }}>{{ $u->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="date" name="data[{{ $rowCount }}][startdate]" id="startdate_{{ $rowCount }}" value="{{ $stored['startdate'] }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                                                        <td><input type="date" name="data[{{ $rowCount }}][enddate]" id="enddate_{{ $rowCount }}" value="{{ $stored['enddate'] }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                                                        <td>
+                                                            <a href="/documents/view/{{ $stored['reference_document_no'] }}" id="view_sop_{{ $rowCount }}" target="_blank">View SOP</a>
+                                                        </td>
+                                                    </tr>
+                                                    @php $rowCount++; @endphp
+                                                    @endforeach
+                                                    @endif
 
-<!-- Template row for adding new entries -->
-<tr id="row_{{ $rowCount }}">
-    <td>{{ $rowCount }}</td>
-    <td>
-        <select name="data[{{ $rowCount }}][document_name]" id="sopdocument_{{ $rowCount }}" onchange="fetchDocumentDetails0(this, {{ $rowCount }})">
-            <option value="">---Select Document Name---</option>
-            @foreach ($data as $dat)
-            <option value="{{ $dat->document_name }}"
-                    data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                    data-sop-link="{{ $dat->id }}" 
-                    data-id="{{ $dat->id }}">
-                {{ $dat->document_name }}
-            </option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="text" name="data[{{ $rowCount }}][type_of_training]"></td>
-    <td><input type="text" name="data[{{ $rowCount }}][reference_document_no_display]" id="document_number_{{ $rowCount }}" readonly></td>
-    <input type="hidden" name="data[{{ $rowCount }}][reference_document_no]" id="reference_document_no_{{ $rowCount }}">
-    <td>
-        <select name="data[{{ $rowCount }}][trainer]" id="trainer_{{ $rowCount }}">
-            <option value="">-- Select --</option>
-            @foreach ($usersDetails as $u)
-            <option value="{{ $u->id }}">{{ $u->name }}</option>
-            @endforeach
-        </select>
-    </td>
-    <td><input type="date" name="data[{{ $rowCount }}][startdate]" id="startdate_{{ $rowCount }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td><input type="date" name="data[{{ $rowCount }}][enddate]" id="enddate_{{ $rowCount }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-    <td>
-        <a href="" id="view_sop_{{ $rowCount }}" target="_blank" style="display:none;">View SOP</a>
-    </td>
-</tr>
-                                                </tbody>
+                                                    <!-- Template row for adding new entries -->
+                                                    <tr id="row_{{ $rowCount }}">
+                                                        <td>{{ $rowCount }}</td>
+                                                        <td>
+                                                            <select name="data[{{ $rowCount }}][document_name]" id="sopdocument_{{ $rowCount }}" onchange="fetchDocumentDetails0(this, {{ $rowCount }})">
+                                                                <option value="">---Select Document Name---</option>
+                                                                @foreach ($data as $dat)
+                                                                <option value="{{ $dat->document_name }}"
+                                                                        data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                                                                        data-sop-link="{{ $dat->id }}" 
+                                                                        data-id="{{ $dat->id }}">
+                                                                    {{ $dat->document_name }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="text" name="data[{{ $rowCount }}][type_of_training]"></td>
+                                                        <td><input type="text" name="data[{{ $rowCount }}][reference_document_no_display]" id="document_number_{{ $rowCount }}" readonly></td>
+                                                        <input type="hidden" name="data[{{ $rowCount }}][reference_document_no]" id="reference_document_no_{{ $rowCount }}">
+                                                        <td>
+                                                            <select name="data[{{ $rowCount }}][trainer]" id="trainer_{{ $rowCount }}">
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($usersDetails as $u)
+                                                                <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="date" name="data[{{ $rowCount }}][startdate]" id="startdate_{{ $rowCount }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                                                        <td><input type="date" name="data[{{ $rowCount }}][enddate]" id="enddate_{{ $rowCount }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                                                        <td>
+                                                            <a href="" id="view_sop_{{ $rowCount }}" target="_blank" style="display:none;">View SOP</a>
+                                                        </td>
+                                                    </tr>
+                                                                                                    </tbody>
                                             </table>
 
                                             <button type="button" onclick="addNewRow()">Add Row</button>
@@ -883,65 +885,65 @@
                 <script>
                      let rowCount = {{ $rowCount }};
 
-function addNewRow() {
-    rowCount++;
-    const tableBody = document.querySelector('#documentTable tbody');
+                    function addNewRow() {
+                        rowCount++;
+                        const tableBody = document.querySelector('#documentTable tbody');
 
-    const newRow = document.createElement('tr');
-    newRow.setAttribute('id', `row_${rowCount}`);
+                        const newRow = document.createElement('tr');
+                        newRow.setAttribute('id', `row_${rowCount}`);
 
-    newRow.innerHTML = `
-        <td>${rowCount}</td>
-        <td>
-            <select name="data[${rowCount}][document_name]" id="sopdocument_${rowCount}" onchange="fetchDocumentDetails0(this, ${rowCount})">
-                <option value="">---Select Document Name---</option>
-                @foreach ($data as $dat)
-                <option value="{{ $dat->document_name }}"
-                        data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
-                        data-sop-link="{{ $dat->id }}" 
-                        data-id="{{ $dat->id }}">
-                    {{ $dat->document_name }}
-                </option>
-                @endforeach
-            </select>
-        </td>
-        <td><input type="text" name="data[${rowCount}][type_of_training]"></td>
-        <td><input type="text" name="data[${rowCount}][reference_document_no_display]" id="document_number_${rowCount}" readonly></td>
-        <input type="hidden" name="data[${rowCount}][reference_document_no]" id="reference_document_no_${rowCount}">
-        <td>
-            <select name="data[${rowCount}][trainer]" id="trainer_${rowCount}">
-                <option value="">-- Select --</option>
-                @foreach ($usersDetails as $u)
-                <option value="{{ $u->id }}">{{ $u->name }}</option>
-                @endforeach
-            </select>
-        </td>
-        <td><input type="date" name="data[${rowCount}][startdate]" id="startdate_${rowCount}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-        <td><input type="date" name="data[${rowCount}][enddate]" id="enddate_${rowCount}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
-        <td>
-            <a href="" id="view_sop_${rowCount}" target="_blank" style="display:none;">View SOP</a>
-        </td>
-    `;
+                        newRow.innerHTML = `
+                            <td>${rowCount}</td>
+                            <td>
+                                <select name="data[${rowCount}][document_name]" id="sopdocument_${rowCount}" onchange="fetchDocumentDetails0(this, ${rowCount})">
+                                    <option value="">---Select Document Name---</option>
+                                    @foreach ($data as $dat)
+                                    <option value="{{ $dat->document_name }}"
+                                            data-doc-number="{{ $dat->sop_type_short }}/{{ $dat->department_id }}/000{{ $dat->id }}/R{{ $dat->major }}" 
+                                            data-sop-link="{{ $dat->id }}" 
+                                            data-id="{{ $dat->id }}">
+                                        {{ $dat->document_name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td><input type="text" name="data[${rowCount}][type_of_training]"></td>
+                            <td><input type="text" name="data[${rowCount}][reference_document_no_display]" id="document_number_${rowCount}" readonly></td>
+                            <input type="hidden" name="data[${rowCount}][reference_document_no]" id="reference_document_no_${rowCount}">
+                            <td>
+                                <select name="data[${rowCount}][trainer]" id="trainer_${rowCount}">
+                                    <option value="">-- Select --</option>
+                                    @foreach ($usersDetails as $u)
+                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td><input type="date" name="data[${rowCount}][startdate]" id="startdate_${rowCount}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                            <td><input type="date" name="data[${rowCount}][enddate]" id="enddate_${rowCount}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"></td>
+                            <td>
+                                <a href="" id="view_sop_${rowCount}" target="_blank" style="display:none;">View SOP</a>
+                            </td>
+                        `;
 
-    tableBody.appendChild(newRow);
-}
+                        tableBody.appendChild(newRow);
+                    }
 
-function fetchDocumentDetails0(selectElement, rowNumber) {
-    var selectedOption = selectElement.options[selectElement.selectedIndex];
-    var documentNumber = selectedOption.getAttribute('data-doc-number');
-    var documentId = selectedOption.getAttribute('data-id');
+                    function fetchDocumentDetails0(selectElement, rowNumber) {
+                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+                        var documentNumber = selectedOption.getAttribute('data-doc-number');
+                        var documentId = selectedOption.getAttribute('data-id');
 
-    document.getElementById(`document_number_${rowNumber}`).value = documentNumber;
-    document.getElementById(`reference_document_no_${rowNumber}`).value = documentId;
+                        document.getElementById(`document_number_${rowNumber}`).value = documentNumber;
+                        document.getElementById(`reference_document_no_${rowNumber}`).value = documentId;
 
-    var sopAnchor = document.getElementById(`view_sop_${rowNumber}`);
-    if (documentId) {
-        sopAnchor.href = `/documents/view/${documentId}`;
-        sopAnchor.style.display = 'inline';
-    } else {
-        sopAnchor.style.display = 'none';
-    }
-}
+                        var sopAnchor = document.getElementById(`view_sop_${rowNumber}`);
+                        if (documentId) {
+                            sopAnchor.href = `/documents/view/${documentId}`;
+                            sopAnchor.style.display = 'inline';
+                        } else {
+                            sopAnchor.style.display = 'none';
+                        }
+                    }
                 </script>
 
                 <script>
