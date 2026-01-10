@@ -2596,7 +2596,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     $changestage->qa_approval_without_capa_by = Auth::user()->name;
                     $changestage->qa_approval_without_capa_on = Carbon::now()->format('d-M-Y');
                     $changestage->qa_approval_without_capa_comment = $request->comment;
-
+                    
                      $history = new AuditTrialObservation();
                     $history->Observation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -2608,7 +2608,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Closed - Done";
+                    $history->change_to =   "Response Verification";
                     $history->change_from = $lastDocument->status;
                     // $history->stage = '';
                     $history->activity_type = 'No CAPAs Required By, No CAPAs Required On';
