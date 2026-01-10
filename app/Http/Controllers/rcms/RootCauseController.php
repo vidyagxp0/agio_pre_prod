@@ -5354,11 +5354,12 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
              $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
             $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+            $record_number= $record;
             $old_records = $old_record;
             $relatedRecords = Helpers::getAllRelatedRecords();
             $Capachild = RootCauseAnalysis::find($id);
             $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);       
-            return view('frontend.forms.capa', compact('due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords','reference_record'));
+            return view('frontend.forms.capa', compact('due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords','reference_record','record_number'));
         }
 
         if ($request->revision == "Action-Item") {
@@ -5371,7 +5372,50 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
             $parent_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);    
             // $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
             // $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
-            return view('frontend.action-item.action-item', compact('parent_division_id','due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data'));
+
+            $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+            return view('frontend.action-item.action-item', compact('parent_division_id','due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data','relatedRecords'));
         }
 
         if ($request->revision == "extension") {
@@ -5386,6 +5430,25 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
 
             $lastrecord_number = extension_new::orderBy('record_number', 'desc')->first();
             $record_number = $lastrecord_number ? $lastrecord_number->record_number + 1 : 1;
+
+             if ($request->revision == "extension"){
+            $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'RCA')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'Closed - Reject','Closed Cancelled'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }  
+           
             return view('frontend.extension.extension_new', compact('parent_type', 'parent_id', 'record_number','extension_record','parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date','record'));
         }
     }

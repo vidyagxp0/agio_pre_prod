@@ -188,8 +188,11 @@
                                     <div class="group-input">
                                         <label for="Record Number">Record Number</label>
                                         @if (!empty($parent_division_id))
-                                        <input disabled type="text" name="record"
-                                            value="{{ Helpers::getDivisionName($parent_division_id) }}/CC/{{ date('Y') }}/{{ $record_number }}">                                        
+                                        {{-- <input disabled type="text" name="record"
+                                            value="{{ Helpers::getDivisionName($parent_division_id) }}/CC/{{ date('Y') }}/{{ $record_number }}">              --}}
+                                             <input type="hidden" name="record" id="record" >
+                                              <input disabled type="text" name="record" id="record" placeholder="Record Number">
+
                                         @else  
                                          <input type="hidden" name="record" id="record" >
                                         {{--<input disabled type="text" name="record"

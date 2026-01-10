@@ -391,8 +391,9 @@
                                     @elseif(
                             $data->stage == 3 && (Helpers::check_roles($data->division_id, 'Risk Assessment', 5) ||
                                 in_array(Auth::user()->id, $valuesArray)))
-                                     <!-- @if (!$cftCompleteUser )
-    -->
+                                     
+
+                             @if (!$cftCompleteUser || $cftCompleteUser->status == 'Pending')
 
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     More Information Required
@@ -401,9 +402,9 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     CFT Review Complete
                                 </button>
+                            @endif 
 
-                                      <!--
-    @endif -->
+                                     
 
                         @elseif($data->stage == 4 && ( Helpers::check_roles($data->division_id, 'Risk Assessment', 63) || Helpers::check_roles($data->division_id, 'Risk Assessment', 7) || Helpers::check_roles($data->division_id, 'Risk Assessment', 49) || Helpers::check_roles($data->division_id, 'Risk Assessment', 48) || Helpers::check_roles($data->division_id, 'Risk Assessment', 18)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">

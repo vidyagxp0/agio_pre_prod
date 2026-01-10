@@ -11080,6 +11080,14 @@ class RiskManagementController extends Controller
                 $riskAssement->QA_Initial_Review_Complete_On   ="Not Applicable";
                 $riskAssement->QA_Initial_Review_Comments = $request->comment;
 
+                  DB::table('risk_assesment_cft_responces')
+                    ->where('risk_id', $id)
+                    ->whereIn('status', ['In-progress', 'Completed'])
+                    ->update([
+                        'status' => 'Pending',
+                        'updated_at' => now(),
+                    ]);
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 // if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On	 == ''){
@@ -11165,8 +11173,64 @@ class RiskManagementController extends Controller
 
 
                 $riskAssement->update();
+                 $Cft = RiskManagmentCft::where('risk_id', $riskAssement->id)->first();
+                                if ($Cft) {
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Warehouse_by = null;
+                                    $Cft->Warehouse_on = null;
+                                    $Cft->Production_Injection_By = null;
+                                    $Cft->Production_Injection_On = null;
+                                    $Cft->Production_Table_By = null;
+                                    $Cft->Production_Table_On = null;
+                                    $Cft->RA_by = null;
+                                    $Cft->RA_on = null;
+                                    $Cft->production_by = null;
+                                    $Cft->production_on = null;
+                                    $Cft->ResearchDevelopment_by = null;
+                                    $Cft->ResearchDevelopment_on = null;
+                                    $Cft->Human_Resource_by = null;
+                                    $Cft->Human_Resource_on = null;
+                                    $Cft->CorporateQualityAssurance_by = null;
+                                    $Cft->CorporateQualityAssurance_on = null;
+                                    $Cft->Store_by = null;
+                                    $Cft->Store_on = null;
+                                    $Cft->Engineering_by = null;
+                                    $Cft->Engineering_on = null;
+                                    $Cft->RegulatoryAffair_by = null;
+                                    $Cft->RegulatoryAffair_on = null;
+                                    $Cft->QualityAssurance_by = null;
+                                    $Cft->QualityAssurance_on = null;
+                                    $Cft->ProductionLiquid_by = null;
+                                    $Cft->ProductionLiquid_on = null;
+                                    $Cft->Quality_Control_by = null;
+                                    $Cft->Quality_Control_on = null;
+                                    $Cft->Microbiology_by = null;
+                                    $Cft->Microbiology_on = null;
+                                    $Cft->Environment_Health_Safety_by = null;
+                                    $Cft->Environment_Health_Safety_on = null;
+                                    $Cft->ContractGiver_by = null;
+                                    $Cft->ContractGiver_on = null;
+                                    $Cft->Other1_by = null;
+                                    $Cft->Other1_on = null;
+                                    $Cft->Other2_by = null;
+                                    $Cft->Other2_on = null;
+                                    $Cft->Other3_by = null;
+                                    $Cft->Other3_on = null;
+                                    $Cft->Other4_by = null;
+                                    $Cft->Other4_on = null;
+                                    $Cft->Other5_by = null;
+                                    $Cft->Other5_on = null;
+
+                                    $Cft->save();
+
+
+
                 toastr()->success('Document Sent');
                 return back();
+                }
             }
             if ($riskAssement->stage == 3) {
                 $riskAssement->stage = "2";
@@ -11759,12 +11823,8 @@ class RiskManagementController extends Controller
             return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         elseif ($request->child_type == "Change_control") {
-            $parent_name = "risk-assesment";
+            $parent_name = "risk_assessment_required";
             $Changecontrolchild = RiskManagement::find($id);
-             $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
-            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
-            $lastAuditrecord_number = Capa::orderBy('record_number', 'desc')->first();
-            $record_number = $lastAuditrecord_number ? $lastAuditrecord_number->record_number + 1 : 1;
             $Changecontrolchild->Changecontrolchild = $record_number;
             $data = RiskAssessment::all();
             $preRiskAssessment = RiskAssessment::all();
@@ -11773,8 +11833,10 @@ class RiskManagementController extends Controller
             $pre = CC::all();
 
             $Changecontrolchild->save();
+            $lastAuditrecord = CC::orderBy('record', 'desc')->first();
+            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
 
-            return view('frontend.change-control.new-change-control', compact('pre', 'data', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.change-control.new-change-control', compact('pre', 'data', 'preRiskAssessment', 'cft','hod','parent_short_description',  'parent_initiator_id', 'parent_intiation_date', 'parent_division_id','record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         // else {
         //     $parent_name = "Root";

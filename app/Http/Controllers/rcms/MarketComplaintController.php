@@ -10838,69 +10838,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
 
 
-                             $list = Helpers::getQAUserList($marketstat->division_id);
-
-                            foreach ($list as $u) {
-                                $email = Helpers::getUserEmail($u->user_id);
-                            
-                                if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            [
-                                                'data' => $marketstat, 
-                                                'site' => "view", 
-                                                'history' => "More Information Required", 
-                                                'process' => 'Market Complaint', 
-                                                'comment' => $request->comment, 
-                                                'user' => Auth::user()->name
-                                            ],
-                                            function ($message) use ($email, $marketstat) {
-                                                $message->to($email)
-                                                    ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                            }
-                                        );
-                                    } catch (\Exception $e) {
-                                        
-                                        Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                            
-                                        
-                                        session()->flash('error', 'Failed to send email to ' . $email);
-                                    }
-                                }
-                            }
-                            
-                            $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                            foreach ($list as $u) {
-                                $email = Helpers::getUserEmail($u->user_id);
-
-                                if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            [
-                                                'data' => $marketstat, 
-                                                'site' => "view", 
-                                                'history' => "More Information Required", 
-                                                'process' => 'Market Complaint', 
-                                                'comment' => $request->comment, 
-                                                'user' => Auth::user()->name
-                                            ],
-                                            function ($message) use ($email, $marketstat) {
-                                                $message->to($email)
-                                                    ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                            }
-                                        );
-                                    } catch (\Exception $e) {
-                                        // Log the error for debugging
-                                        Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                                        // Optionally handle the exception (e.g., notify the user or admin)
-                                        session()->flash('error', 'Failed to send email to ' . $email);
-                                    }
-                                }
-                            }
+                           
 
                     $marketstat->update();
 
@@ -11163,8 +11101,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 
             $old_record = extension_new::select('id', 'division_id', 'record')->get();
             $lastAi = extension_new::orderBy('record', 'desc')->first();
-            $record = $lastAi ? $lastAi->record + 1 : 1;
+
+            $record = $lastAi ? ((int)$lastAi->record + 1) : 1;
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
      
+           
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
           

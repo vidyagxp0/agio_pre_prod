@@ -1210,8 +1210,8 @@
                         </td>
                         <th class="w-20">Research & Developmemt Person</th>
                         <td class="w-30">
-                            @if ($data1->Human_Resource_person)
-                                {{ $data1->Production_Injection_Person }}
+                            @if ($data1->ResearchDevelopment_person)
+                                {{ $data1->ResearchDevelopment_person }}
                             @else
                                 Not Applicable
                             @endif
@@ -1293,7 +1293,7 @@
                         <th class="w-20">Human Resource Person</th>
                         <td class="w-30">
                             @if ($data1->Human_Resource_person)
-                                {{ $data1->Production_Injection_Person }}
+                                {{ $data1->Human_Resource_person }}
                             @else
                                 Not Applicable
                             @endif

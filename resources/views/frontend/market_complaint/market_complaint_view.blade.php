@@ -1286,7 +1286,7 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="details_of_nature_market_complaint_gi"  id="summernote-1" 
-                                    {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->details_of_nature_market_complaint_gi }} </textarea>
+                                    {{ $data->stage == 1 ? '' : 'readonly' }}>{{ trim($data->details_of_nature_market_complaint_gi) }} </textarea>
                                 </div>
                             </div>
 

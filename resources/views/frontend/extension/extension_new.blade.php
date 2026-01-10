@@ -108,9 +108,12 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
                                     @if (!empty($parent_division_id))
-                                        <input disabled type="text" name="record_number"
+                                      <input type="hidden" name="record" value="">
+                                    <input disabled type="text" name="record_number" placeholder="Record Number" >
+                                  
+                                        {{-- <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName($parent_division_id) }}/Ext/{{ date('Y') }}/{{ $record_number }}">   
-                                    <input type="hidden" name="record" value="{{ $record_number }}">
+                                    <input type="hidden" name="record" value="{{ $record_number }}"> --}}
 
                                     @else  
                                     <input type="hidden" name="record" value="">

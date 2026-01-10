@@ -690,67 +690,74 @@
             <div class="block-head">
                 Checklist - Production (Tablet Dispensing & Tablet Granulation) </div>
             <div>
-                @php
-                $checklists = [
-                [
-                'title' => 'STAGE 1 : DISPENSING',
-                'questions' => $questions_packing,
-                'prefix' => 1
-                ],
-                [
-                'title' => 'Stage -02 Granulation',
-                'questions' => $questions_documentation,
-                'prefix' => 2
-                ],
-                [
-                'title' => 'Stage -03 Documentation',
-                'questions' => $questions_documentation_table,
-                'prefix' => 3
-                ]
-                ];
-                @endphp
+                 @php
+$checklists = [
+    [
+        'title' => 'STAGE 1 : DISPENSING',
+        'questions' => $questions_packing,
+        'prefix' => 1,
+        'start_remark' => 1
+    ],
+    [
+        'title' => 'Stage -02 Granulation',
+        'questions' => $questions_documentation,
+        'prefix' => 2,
+        'start_remark' => 14
+    ],
+    [
+        'title' => 'Stage -03 Documentation',
+        'questions' => $questions_documentation_table,
+        'prefix' => 3,
+        'start_remark' => 58
+    ]
+];
+@endphp
 
-                @foreach ($checklists as $checklist)
-                <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                    {{ $checklist['title'] }}
-                </div>
-                <table class="table table-bordered" border="1">
-                    <thead>
-                        <tr>
-                            <th style="width: 5%;">Sr.No.</th>
-                            <th style="width: 40%;">Question</th>
-                            <th style="width: 20%;">Response</th>
-                            <th>Remarks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($checklist['questions'] as $index => $question)
-                        @php
-                        $response = $data->{"response_" . ($index + 1)};
-                        $remark = $data->{"remark_" . ($index + 1)};
-                        @endphp
 
-                        <!-- Check if either response or remark is not empty -->
-                        @if($response || $remark)
-                        <tr>
-                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                            <td>{{ $question }}</td>
-                            <td>
-                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                    {{ $response }}
-                                </div>
-                            </td>
-                            <td style="vertical-align: middle;">
-                                <div style="margin: auto; display: flex; justify-content: center;">
-                                    {{ $remark }}
-                                </div>
-                            </td>
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
-                </table>
+@foreach ($checklists as $checklist)
+
+{{-- Stage Title --}}
+<div class="block"
+     style="color:#4274da; display:inline-block; border-bottom:1px solid #4274da; margin-bottom:8px;">
+    {{ $checklist['title'] }}
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr style="background:#eef2ff; font-weight:600;">
+            <th style="width:5%; text-align:center;">Sr.No.</th>
+            <th style="width:40%;">Question</th>
+            <th style="width:20%; text-align:center;">Response</th>
+            <th style="text-align:center;">Remarks</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach ($checklist['questions'] as $index => $question)
+
+            @php
+                $actualIndex = $checklist['start_remark'] + $index;
+                $response = $data->{"response_" . $actualIndex} ?? null;
+                $remark   = $data->{"remark_" . $actualIndex} ?? null;
+            @endphp
+
+            @if($response || $remark)
+            <tr>
+                <td class="text-center">
+                    {{ $checklist['prefix'] . '.' . ($index + 1) }}
+                </td>
+                <td>{{ $question }}</td>
+                <td class="text-center">{{ $response }}</td>
+                <td class="text-center">{{ $remark }}</td>
+            </tr>
+            @endif
+
                 @endforeach
+            </tbody>
+        </table>
+
+        @endforeach
+
             </div>
             <!-- </div> -->
         </div>
@@ -897,7 +904,40 @@
         </div>
     </div>
 
-     <table>
+    <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist3->tablet_capsule_packing_comment){{ $checklist3->tablet_capsule_packing_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">Sr.No.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->tablet_capsule_packing_attachmen)
+        @foreach(json_decode($data->tablet_capsule_packing_attachmen) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
+     {{-- <table>
 
             <tr>
                 <th class="w-20">Final Comments</th>
@@ -928,7 +968,7 @@
         @endif
 
     </table>
-
+ --}}
 
     @endif
 
@@ -998,60 +1038,60 @@
             <div class="block-head">
                 Checklist - Production (Tablet Compression) </div>
             <div>
-                @php
-                $checklists = [
-                [
-                'title' => 'STAGE 1: COMPRESSION ',
-                'questions' => $questions,
-                'prefix' => 1
-                ],
-                [
-                'title' => 'STAGE 2: DOCUMENTATION',
-                'questions' => $questions_documentation,
-                'prefix' => 2
-                ],
+               @php
+$checklists = [
+    [
+        'title' => 'STAGE 1: COMPRESSION',
+        'questions' => $questions,
+        'prefix' => 1,
+        'start_remark' => 1
+    ],
+    [
+        'title' => 'STAGE 2: DOCUMENTATION',
+        'questions' => $questions_documentation,
+        'prefix' => 2,
+        'start_remark' => 43
+    ],
+];
+@endphp
 
-                ];
-                @endphp
 
-                @foreach ($checklists as $checklist)
-                <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                    {{ $checklist['title'] }}
-                </div>
-                <table class="table table-bordered" border="1">
-                    <thead>
-                        <tr>
-                            <th style="width: 5%;">Sr.No..</th>
-                            <th style="width: 40%;">Question</th>
-                            <th style="width: 20%;">Response</th>
-                            <th>Remarks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($checklist['questions'] as $index => $question)
+                 @foreach ($checklists as $checklist)
+            <div class="block" style="color:#4274da; display:inline-block; border-bottom:1px solid #4274da;">
+                {{ $checklist['title'] }}
+            </div>
+
+            <table class="table table-bordered" border="1">
+                <thead>
+                    <tr style="background:#eef2ff; font-weight:600;">
+                        <th style="width:5%; text-align:center;">Sr.No.</th>
+                        <th style="width:40%;">Question</th>
+                        <th style="width:20%; text-align:center;">Response</th>
+                        <th style="text-align:center;">Remarks</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($checklist['questions'] as $index => $question)
                         @php
-                        $response = $checklist1->{"tablet_compress_response_" . ($index + 1)};
-                        $remark = $checklist1->{"tablet_compress_remark_" . ($index + 1)};
+                            // ✅ Correct mapping
+                            $actualIndex = $checklist['start_remark'] + $index;
+
+                            $response = $checklist1->{"tablet_compress_response_" . $actualIndex} ?? null;
+                            $remark   = $checklist1->{"tablet_compress_remark_" . $actualIndex} ?? null;
                         @endphp
 
-                        <!-- Check if either response or remark is not empty -->
                         @if($response || $remark)
                         <tr>
-                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                            <td class="text-center">
+                                {{ $checklist['prefix'] . '.' . ($index + 1) }}
+                            </td>
                             <td>{{ $question }}</td>
-                            <td>
-                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                    {{ $response }}
-                                </div>
-                            </td>
-                            <td style="vertical-align: middle;">
-                                <div style="margin: auto; display: flex; justify-content: center;">
-                                    {{ $remark }}
-                                </div>
-                            </td>
+                            <td class="text-center">{{ $response }}</td>
+                            <td class="text-center">{{ $remark }}</td>
                         </tr>
                         @endif
-                        @endforeach
+                    @endforeach
                     </tbody>
                 </table>
                 @endforeach
@@ -1059,8 +1099,43 @@
             <!-- </div> -->
         </div>
     </div>
+      <table>
 
-     <table>
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist1->tablet_compress_response_final_comment){{ $checklist1->tablet_compress_response_final_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+
+         
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">Sr.No.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->supproting_attachment)
+        @foreach(json_decode($data->supproting_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
+
+     {{-- <table>
 
             <tr>
                 <th class="w-20">Final Comments</th>
@@ -1090,7 +1165,7 @@
         </tr>
         @endif
 
-    </table>
+    </table> --}}
 
 
     @endif
@@ -1118,7 +1193,9 @@
     'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
     'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
     'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
+    'Is the pressure differential of every particular area are within limit?',
     'All the person working in manufacturing area having proper gowning?',
+    'Have you any SOP regarding Hold time of material during staging?',
     'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
     'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
     'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
@@ -1163,17 +1240,18 @@
             <div>
                 @php
                 $checklists = [
-                [
-                'title' => 'STAGE 1 : COATING',
-                'questions' => $questions,
-                'prefix' => 1
-                ],
-                [
-                'title' => 'STAGE 2: DOCUMENTATION',
-                'questions' => $questions_documentation,
-                'prefix' => 2
-                ],
-
+                    [
+                        'title' => 'STAGE 1 : COATING',
+                        'questions' => $liquidOintmentPackingQuestions,
+                        'prefix' => 1,
+                        'start_remark' => 1   // Stage 1 remarks start from 1
+                    ],
+                    [
+                        'title' => 'STAGE 2: DOCUMENTATION',
+                        'questions' => $documentationQuestions,
+                        'prefix' => 2,
+                        'start_remark' => 44  // Stage 2 remarks start from 44
+                    ],
                 ];
                 @endphp
 
@@ -1190,32 +1268,30 @@
                             <th>Remarks</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($checklist['questions'] as $index => $question)
-                        @php
-                        $response = $checklist2->{"tablet_coating_response_" . ($index + 1)};
-                        $remark = $checklist2->{"tablet_coating_remark_" . ($index + 1)};
-                        @endphp
+                   
 
-                        <!-- Check if either response or remark is not empty -->
-                        @if($response || $remark)
-                        <tr>
-                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                            <td>{{ $question }}</td>
-                            <td>
-                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                    {{ $response }}
-                                </div>
-                            </td>
-                            <td style="vertical-align: middle;">
-                                <div style="margin: auto; display: flex; justify-content: center;">
-                                    {{ $remark }}
-                                </div>
-                            </td>
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
+
+                     <tbody>
+                                @foreach ($checklist['questions'] as $index => $question)
+                                    @php
+                                        // Calculate the correct index for response and remark
+                                        $actualIndex = $checklist['start_remark'] + $index;
+
+                                        $response = $checklist2->{"tablet_coating_response_" . $actualIndex} ?? null;
+                                        $remark   = $checklist2->{"tablet_coating_remark_" . $actualIndex} ?? null;
+                                    @endphp
+
+                                    @if($response || $remark)
+                                    <tr>
+                                        <td class="text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                        <td>{{ $question }}</td>
+                                        <td class="text-center">{{ $response }}</td>
+                                        <td class="text-center">{{ $remark }}</td>
+                                    </tr>
+                                    @endif
+
+                                @endforeach
+                            </tbody>
                 </table>
                 @endforeach
             </div>
@@ -1224,6 +1300,38 @@
     </div>
 
      <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist2->tablet_coating_remark_comment){{ $checklist2->tablet_coating_remark_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">Sr.No.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->tablet_coating_supporting_attachment)
+        @foreach(json_decode($data->tablet_coating_supporting_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+     {{-- <table>
 
             <tr>
                 <th class="w-20">Final Comments</th>
@@ -1253,7 +1361,7 @@
         </tr>
         @endif
 
-    </table>
+    </table> --}}
 
 
 

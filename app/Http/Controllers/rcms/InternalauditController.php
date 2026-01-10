@@ -1998,13 +1998,13 @@ $liquid_ointments = IA_liquid_ointment::where(['ia_id' => $id])->firstOrCreate()
 $liquid_ointments->ia_id = $id;
 
 
- for ($i = 1; $i <= 48; $i++)
+ for ($i = 1; $i <= 50; $i++)
  {
      $string = 'liquid_ointments_response_'. $i;
     $liquid_ointments->$string = $request->$string;
  }
 
- for ($i = 1; $i <= 48; $i++)
+ for ($i = 1; $i <= 50; $i++)
  {
     $string = 'liquid_ointments_remark_'. $i;
      $liquid_ointments->$string = $request->$string;
