@@ -780,7 +780,7 @@
                     </tr>
 
                     <tr>
-                        <th>Root Cause</th>
+                        <th>Probable Root Cause</th>
                         <td class="w-80">@if($data->Root_Cause){{ $data->Root_Cause }}@else Not Applicable @endif</td>
                     </tr>
 
@@ -817,17 +817,7 @@
 
            <div>
     <table>
-        <tr>
-            <th class="w-20">Detail Investigation / Probable Root Cause</th>
-            <td class="w-80" colspan="3">
-                @if ($data->details_investigation_ia)
-                    {{ $data->details_investigation_ia }}
-                @else
-                    Not Applicable
-                @endif
-            </td>
-        </tr>
-
+       
         <tr>
             <th class="w-20">Proposed Corrective Action / Corrective Action Taken</th>
             <td class="w-80" colspan="3">
@@ -860,6 +850,17 @@
                 @endif
             </td>
         </tr>
+         <tr>
+            <th class="w-20">Root Cause</th>
+            <td class="w-80" colspan="3">
+                @if ($data->details_investigation_ia)
+                    {{ $data->details_investigation_ia }}
+                @else
+                    Not Applicable
+                @endif
+            </td>
+        </tr>
+
 
         <tr>
             <th class="w-20">Corrective and Preventive Action</th>
