@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\OOC_Grid;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use App\Models\User;
@@ -4495,7 +4496,7 @@ class OOCController extends Controller
                     // Flash message for success (when the form is filled correctly)
                     Session::flash('swal', [
                         'title' => 'Success!',
-                        'message' => 'Sent for HOD Primary Review',
+                        'message' => 'Sent for Next Stage',
                         'type' => 'success',
                     ]);
                 }
@@ -6194,15 +6195,30 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $oocchange, 'site' => "OOC", 'history' => "Assignable Cause Not Found", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $oocchange) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Assignable Cause Not Found");
-                                }
-                            );
+                          if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $oocchange, 
+                                        'site' => "OOC", 
+                                        'history' => "Assignable Cause Not Found", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Assignable Cause Not Found Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6262,17 +6278,32 @@ class OOCController extends Controller
                {
              // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                 $email = Helpers::getUserEmail($u->user_id);
-                    if ($email !== null)
-                    {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $oocchange, 'site' => "OOC", 'history' => "P-II A Assignable Cause Not Found", 'process' => 'OOC', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                            function ($message) use ($email, $oocchange) {
-                                $message->to($email)
-                                ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: P-II A Assignable Cause Not Found");
+                    
+                    if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $oocchange, 
+                                        'site' => "OOC", 
+                                        'history' => "P-II A Assignable Cause Not Found", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: P-II A Assignable Cause Not Found Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
                             }
-                        );
-                    }
+                        }
               // }
                 }
                 $ooc->update();
@@ -6304,17 +6335,34 @@ class OOCController extends Controller
                      foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                         if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
-                    // }
+
+
+                  // }
                 }
 
                 $history = new OOCAuditTrail();
@@ -6352,16 +6400,33 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                           
+                          if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
+
                     // }
                 }
 
@@ -6398,16 +6463,31 @@ class OOCController extends Controller
                 $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "Request More Info", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info");
-                                }
-                            );
+                        $email = Helpers::getUserEmail($u->user_id); 
+                         if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6448,15 +6528,31 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                        
+                          if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6494,15 +6590,30 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                          if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6540,15 +6651,30 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                         if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6586,15 +6712,31 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                        
+                         if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6633,15 +6775,31 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                        
+                         if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6679,15 +6837,32 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                       
+
+                         if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6727,15 +6902,32 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                       
+
+                         if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6775,15 +6967,30 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                         if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6821,15 +7028,30 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                         if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -6849,14 +7071,29 @@ class OOCController extends Controller
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $ooc, 'site' => "OOC", 'history' => "More Information Required", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $ooc) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $ooc, 
+                                        'site' => "OOC", 
+                                        'history' => "More Information Required", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $ooc) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
+                            }
                         }
                     // }
                 }
@@ -7081,17 +7318,31 @@ class OOCController extends Controller
             {
                 // if($u->q_m_s_divisions_id == $extensionNew->division_id){
               $email = Helpers::getUserEmail($u->user_id);
-                    if ($email !== null)
-                    {
-                        Mail::send(
-                            'mail.view-mail',
-                            ['data' => $oocchange, 'site' => "OOC", 'history' => "Cancel", 'process' => 'OOC', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                            function ($message) use ($email, $oocchange) {
-                                $message->to($email)
-                                ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
+                     if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data' => $oocchange, 
+                                        'site' => "OOC", 
+                                        'history' => "Cancel", 
+                                        'process' => 'OOC', 
+                                        'comment' => $request->comment, 
+                                        'user' => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $oocchange) {
+                                        $message->to($email)
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($oocchange->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                                    }
+                                );
+                            } catch (\Exception $e) {
+                                // Log the error for debugging
+                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                // Optionally handle the exception (e.g., notify the user or admin)
+                                session()->flash('error', 'Failed to send email to ' . $email);
                             }
-                        );
-                    }
+                        }
                // }
             }
             $ooc->update();
@@ -7150,10 +7401,13 @@ class OOCController extends Controller
                $parent_id = $id;
                $parent_type = "OOC";
                $old_record = Capa::select('id', 'division_id', 'record')->get();
-               $record_number = ((RecordNumber::first()->value('counter')) + 1);
-               $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-               $record = ((RecordNumber::first()->value('counter')) + 1);
-               $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+             $parent_record = Helpers::getDivisionName($cc->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($cc->record, 4, '0', STR_PAD_LEFT);  
+
+            //    $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            //    $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            //    $record = ((RecordNumber::first()->value('counter')) + 1);
+            //    $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+
                $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $currentDate = Carbon::now();
@@ -7169,11 +7423,21 @@ class OOCController extends Controller
 
                if ($request->revision == "capa-child") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                $record = $record_number;
+               // $record = $record_number;
                 $old_records = $old_record;
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $Capachild = OutOfCalibration::find($id);
                 $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+              
+                $old_record = Capa::select('id', 'division_id', 'record')->get();
+                $lastAi = Capa::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+            
+                
+            // $record = ((RecordNumber::first()->value('counter')) + 1);
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number =$record;
+
                 return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
                 }
 
@@ -7187,10 +7451,65 @@ class OOCController extends Controller
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $parentRecord = OutOfCalibration::where('id', $id)->value('record');
 
-                   return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record', 'data_record','data','parent_division_id'));
+                    $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+                    $lastAi = ActionItem::orderBy('record', 'desc')->first();
+                    $record = $lastAi ? $lastAi->record + 1 : 1;
+                     $record_number = $record;
+                    $parent_record = Helpers::getDivisionName($cc->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($cc->record, 4, '0', STR_PAD_LEFT);  
+
+                     $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+                      
+                   return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record', 'data_record','data','parent_division_id','relatedRecords'));
                }
                if ($request->revision == "Root-Cause-Analysis") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+
+                $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
+                $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number =$record;
                 return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
@@ -7214,6 +7533,31 @@ class OOCController extends Controller
             if ($request->due_date) {
                $parent_due_date = $request->due_date;
              }
+
+
+             $old_record = extension_new::select('id', 'division_id', 'record')->get();
+            $lastAi = extension_new::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+     
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number = $record;
+            if ($request->revision == "Extension"){
+                    $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'OOC')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'Closed - Reject','Closed Cancelled'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }  
             return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords', 'extension_record','countData','parent_division_id','parent_due_date'));
 
         }
@@ -7277,7 +7621,55 @@ class OOCController extends Controller
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $parentRecord = OutOfCalibration::where('id', $id)->value('record');
-                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record','parentRecord','data_record','data',));
+                 $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+                    $lastAi = ActionItem::orderBy('record', 'desc')->first();
+                    $record = $lastAi ? $lastAi->record + 1 : 1;
+                     $record_number = $record;
+                    $parent_record = Helpers::getDivisionName($cc->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($cc->record, 4, '0', STR_PAD_LEFT);  
+
+                     $pre = [
+                    'DEV' => \App\Models\Deviation::class,
+                'AP' => \App\Models\AuditProgram::class,
+                'AI' => \App\Models\ActionItem::class,
+                'Exte' => \App\Models\extension_new::class,
+                'Resam' => \App\Models\Resampling::class,
+                'Obse' => \App\Models\Observation::class,
+                'RCA' => \App\Models\RootCauseAnalysis::class,
+                'RA' => \App\Models\RiskAssessment::class,
+                'MR' => \App\Models\ManagementReview::class,
+                'EA' => \App\Models\Auditee::class,
+                'IA' => \App\Models\InternalAudit::class,
+                'CAPA' => \App\Models\Capa::class,
+                'CC' => \App\Models\CC::class,
+                'ND' => \App\Models\Document::class,
+                'Lab' => \App\Models\LabIncident::class,
+                'EC' => \App\Models\EffectivenessCheck::class,
+                'OOSChe' => \App\Models\OOS::class,
+                'OOT' => \App\Models\OOT::class,
+                'OOC' => \App\Models\OutOfCalibration::class,
+                'MC' => \App\Models\MarketComplaint::class,
+                'NC' => \App\Models\NonConformance::class,
+                'Incident' => \App\Models\Incident::class,
+                'FI' => \App\Models\FailureInvestigation::class,
+                'ERRATA' => \App\Models\errata::class,
+                'OOSMicr' => \App\Models\OOS_micro::class,
+                // Add other models as necessary...
+                ];
+
+                // Create an empty collection to store the related records
+                $relatedRecords = collect();
+
+                // Loop through each model and get the records, adding the process name to each record
+                foreach ($pre as $processName => $modelClass) {
+                $records = $modelClass::all()->map(function ($record) use ($processName) {
+                    $record->process_name = $processName; // Attach the process name to each record
+                    return $record;
+                });
+
+                // Merge the records into the collection
+                $relatedRecords = $relatedRecords->merge($records);
+                }
+                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record','parentRecord','data_record','data','relatedRecords'));
 
             }
 
@@ -7306,6 +7698,7 @@ class OOCController extends Controller
                    $parent_due_date = $request->due_date;
                  }
                 
+               
                 return view('frontend.extension.extension_new', compact('record_number','extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData','parent_division_id','parent_due_date'));
 
             }
@@ -7320,10 +7713,17 @@ class OOCController extends Controller
                $formattedDate = $currentDate->addDays(30);
                $due_date= $formattedDate->format('d-M-Y');
                $old_record = Capa::select('id', 'division_id', 'record')->get();
-               $record_number = ((RecordNumber::first()->value('counter')) + 1);
-               $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-               $record = ((RecordNumber::first()->value('counter')) + 1);
-               $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            //    $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            //    $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            //    $record = ((RecordNumber::first()->value('counter')) + 1);
+            //    $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+
+                $old_record = extension_new::select('id', 'division_id', 'record')->get();
+                $lastAi = extension_new::orderBy('record', 'desc')->first();
+                $record = $lastAi ? $lastAi->record + 1 : 1;
+        
+                $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+                $record_number = $record;
                $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
@@ -7347,6 +7747,25 @@ class OOCController extends Controller
                 if ($request->due_date) {
                    $parent_due_date = $request->due_date;
                  }
+                
+                  if ($request->revision == "Extension"){
+                    $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'OOC')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'Closed - Reject','Closed Cancelled'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }  
+
                 return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData','parent_division_id','parent_due_date'));
 
             }

@@ -224,11 +224,14 @@
                             @endif
                         </td>
                     </tr>
+                    @php
+                        $docTypes = Helpers::getDocumentTypes();
+                    @endphp
                     <tr>
                         <th class="w-20">Document Type</th>
                         <td class="w-30">
                             @if ($data->document_type)
-                                {{ $data->document_type }}
+                                 {{ $docTypes[$data->document_type] ?? ucfirst($data->document_type) }}
                             @else
                                 Not Applicable
                             @endif
