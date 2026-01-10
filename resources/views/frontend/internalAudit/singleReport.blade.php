@@ -789,6 +789,76 @@ $checklists = [
             <div class="block-head">
                 Checklist - Production (Tablet Dispensing & Tablet Granulation) </div>
             <div>
+<<<<<<< HEAD
+                 @php
+$checklists = [
+    [
+        'title' => 'STAGE 1 : DISPENSING',
+        'questions' => $questions_packing,
+        'prefix' => 1,
+        'start_remark' => 1
+    ],
+    [
+        'title' => 'Stage -02 Granulation',
+        'questions' => $questions_documentation,
+        'prefix' => 2,
+        'start_remark' => 14
+    ],
+    [
+        'title' => 'Stage -03 Documentation',
+        'questions' => $questions_documentation_table,
+        'prefix' => 3,
+        'start_remark' => 58
+    ]
+];
+@endphp
+
+
+@foreach ($checklists as $checklist)
+
+{{-- Stage Title --}}
+<div class="block"
+     style="color:#4274da; display:inline-block; border-bottom:1px solid #4274da; margin-bottom:8px;">
+    {{ $checklist['title'] }}
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr style="background:#eef2ff; font-weight:600;">
+            <th style="width:5%; text-align:center;">Sr.No.</th>
+            <th style="width:40%;">Question</th>
+            <th style="width:20%; text-align:center;">Response</th>
+            <th style="text-align:center;">Remarks</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach ($checklist['questions'] as $index => $question)
+
+            @php
+                $actualIndex = $checklist['start_remark'] + $index;
+                $response = $data->{"response_" . $actualIndex} ?? null;
+                $remark   = $data->{"remark_" . $actualIndex} ?? null;
+            @endphp
+
+            @if($response || $remark)
+            <tr>
+                <td class="text-center">
+                    {{ $checklist['prefix'] . '.' . ($index + 1) }}
+                </td>
+                <td>{{ $question }}</td>
+                <td class="text-center">{{ $response }}</td>
+                <td class="text-center">{{ $remark }}</td>
+            </tr>
+            @endif
+
+                @endforeach
+            </tbody>
+        </table>
+
+        @endforeach
+
+=======
                
 
                 @foreach ($checklists as $checklist)
@@ -872,6 +942,7 @@ $checklists = [
                     </tbody>
                 </table>
                 @endforeach --}}
+>>>>>>> main
             </div>
             <!-- </div> -->
         </div>
@@ -1350,6 +1421,24 @@ $checklists = [
                 Checklist -Tablet Coating
             </div>
             <div>
+<<<<<<< HEAD
+               @php
+$checklists = [
+    [
+        'title' => 'STAGE 1: COMPRESSION',
+        'questions' => $questions,
+        'prefix' => 1,
+        'start_remark' => 1
+    ],
+    [
+        'title' => 'STAGE 2: DOCUMENTATION',
+        'questions' => $questions_documentation,
+        'prefix' => 2,
+        'start_remark' => 43
+    ],
+];
+@endphp
+=======
                 @php
                 $checklists = [
                 [
@@ -1362,8 +1451,34 @@ $checklists = [
                 'questions' => $documentationQuestionscoting,
                 'prefix' => 2
                 ],
+>>>>>>> main
 
 
+<<<<<<< HEAD
+                 @foreach ($checklists as $checklist)
+            <div class="block" style="color:#4274da; display:inline-block; border-bottom:1px solid #4274da;">
+                {{ $checklist['title'] }}
+            </div>
+
+            <table class="table table-bordered" border="1">
+                <thead>
+                    <tr style="background:#eef2ff; font-weight:600;">
+                        <th style="width:5%; text-align:center;">Sr.No.</th>
+                        <th style="width:40%;">Question</th>
+                        <th style="width:20%; text-align:center;">Response</th>
+                        <th style="text-align:center;">Remarks</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($checklist['questions'] as $index => $question)
+                        @php
+                            // ✅ Correct mapping
+                            $actualIndex = $checklist['start_remark'] + $index;
+
+                            $response = $checklist1->{"tablet_compress_response_" . $actualIndex} ?? null;
+                            $remark   = $checklist1->{"tablet_compress_remark_" . $actualIndex} ?? null;
+=======
                 @foreach ($checklists as $checklist)
                 <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
                     {{ $checklist['title'] }}
@@ -1393,6 +1508,7 @@ $checklists = [
                             $remark = $checklist2->{
                                 "tablet_coating_remark_$responseIndex"
                             } ?? null;
+>>>>>>> main
                         @endphp
                         {{-- @php
                         $response = $checklist2->{"tablet_coating_response_" . ($index + 1)};
@@ -1486,6 +1602,205 @@ $checklists = [
     </table> --}}
 
 
+<<<<<<< HEAD
+    @endif
+
+           
+    @php
+    $liquidOintmentPackingQuestions = [
+    'Is status labels displayed on all equipments?',
+    'Equipment cleanliness, check few equipments.',
+    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+    'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? Are these procedures been validated?',
+    'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
+    'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
+    'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
+    'Are there written instructions describing how to use in-process data to control the process?',
+    'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
+    'Is equipment inspected immediately prior to use?',
+    'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
+    'Has a written schedule been established and is it followed for cleaning of equipment?',
+    'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
+    "Is clean equipment clearly identified as 'cleaned' with a cleaning date shown on the equipment tag? Check for few equipments",
+    'Is equipment cleaned promptly after use?',
+    'Is there proper storage of cleaned equipment so as to prevent contamination?',
+    'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
+    'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
+    'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
+    'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
+    'Is the pressure differential of every particular area are within limit?',
+    'All the person working in manufacturing area having proper gowning?',
+    'Have you any SOP regarding Hold time of material during staging?',
+    'Is there a written procedure specifying the frequency of inspection and replacement for air filters?',
+    'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
+    'Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?',
+    'Does the process control address all issues to ensure identity, strength, quality and purity of product?',
+    'Check the calibration labels for instrument calibration status.',
+    'Temperature & RH record log book is available for each staging area.',
+    'Material/Product in out register is available for each staging area.',
+    'Check for area activity record.',
+    'Check for equipment usage record.',
+    'Check for general equipment details and accessory details.',
+    'Check for man & material movement in the area.',
+    'Air handling system qualification, cleaning details and PAO test reports.',
+    'Check for purified water hose pipe status and water hold up.',
+    'Check for the status labeling in the area and, material randomly.',
+    'Check the in-process equipments cleaning status & records.',
+    'Are any unplanned process changes (process excursions) documented in the batch record?',
+    'Are materials and equipment clearly labeled as to identity and, if appropriate, stage of manufacture?',
+    'Is there a preventive maintenance program for all equipment and status of it?',
+    'Do you have any sop for operation of autocoator?',
+    'Have u any usage log book for autocoator.',
+
+
+
+    ];
+
+    $documentationQuestions = [
+    'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
+    'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
+    'Is the batch record is on line up to the current stage of a process?',
+    'In process carried out as per the written instruction describe in batch record?',
+    'Is there any area cleaning record available for all individual areas?',
+    'Current version of SOP’s is available in respective areas?',
+    ];
+    @endphp
+    @if(!empty($checklist2) && in_array('3', explode(',', $data->checklists)))
+    <div class="inner-block">
+        <div class="content-table">
+            <!-- <div class="border-table"> -->
+            <div class="block-head">
+                Checklist -Tablet Coating
+            </div>
+            <div>
+                @php
+                $checklists = [
+                    [
+                        'title' => 'STAGE 1 : COATING',
+                        'questions' => $liquidOintmentPackingQuestions,
+                        'prefix' => 1,
+                        'start_remark' => 1   // Stage 1 remarks start from 1
+                    ],
+                    [
+                        'title' => 'STAGE 2: DOCUMENTATION',
+                        'questions' => $documentationQuestions,
+                        'prefix' => 2,
+                        'start_remark' => 44  // Stage 2 remarks start from 44
+                    ],
+                ];
+                @endphp
+
+                @foreach ($checklists as $checklist)
+                <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                    {{ $checklist['title'] }}
+                </div>
+                <table class="table table-bordered " border="1">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">Sr.No..</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                   
+
+
+                     <tbody>
+                                @foreach ($checklist['questions'] as $index => $question)
+                                    @php
+                                        // Calculate the correct index for response and remark
+                                        $actualIndex = $checklist['start_remark'] + $index;
+
+                                        $response = $checklist2->{"tablet_coating_response_" . $actualIndex} ?? null;
+                                        $remark   = $checklist2->{"tablet_coating_remark_" . $actualIndex} ?? null;
+                                    @endphp
+
+                                    @if($response || $remark)
+                                    <tr>
+                                        <td class="text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
+                                        <td>{{ $question }}</td>
+                                        <td class="text-center">{{ $response }}</td>
+                                        <td class="text-center">{{ $remark }}</td>
+                                    </tr>
+                                    @endif
+
+                                @endforeach
+                            </tbody>
+                </table>
+                @endforeach
+            </div>
+            <!-- </div> -->
+        </div>
+    </div>
+
+     <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist2->tablet_coating_remark_comment){{ $checklist2->tablet_coating_remark_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">Sr.No.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->tablet_coating_supporting_attachment)
+        @foreach(json_decode($data->tablet_coating_supporting_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+     {{-- <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist3->tablet_capsule_packing_comment){{ $checklist3->tablet_capsule_packing_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">Sr.No.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->tablet_capsule_packing_attachmen)
+        @foreach(json_decode($data->tablet_capsule_packing_attachmen) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table> --}}
+
+
+=======
+>>>>>>> main
 
     @endif
 

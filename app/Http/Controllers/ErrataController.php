@@ -29,10 +29,10 @@ class ErrataController extends Controller
         $old_record = errata::select('id', 'division_id', 'record')->get();
         // $showdata = errata::find($id);
         //$record_number = ((RecordNumber::first()->value('counter')) + 1);
-         $old_record = errata::select('id', 'division_id', 'record')->get();
+      //   $old_record = errata::select('id', 'division_id', 'record')->get();
        
        
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        //$record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
         $pre = [
             'DEV' => \App\Models\Deviation::class,
@@ -79,7 +79,7 @@ class ErrataController extends Controller
 
 
 
-        return view('frontend.errata.errata_new', compact('record_number', 'relatedRecords'));
+        return view('frontend.errata.errata_new', compact( 'relatedRecords'));
         // $erratagridnew = ErrataGrid::where('id', $id)->latest()->first();
 
     }
@@ -1695,7 +1695,7 @@ class ErrataController extends Controller
                 $history->previous = 'Not Applicable';
                 $history->activity_type = 'Not Applicable';
 
-                $history->action = 'Reject';
+                $history->action = 'Request More Info';
                 $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1744,7 +1744,7 @@ class ErrataController extends Controller
                 $history->previous = 'Not Applicable';
                 $history->activity_type = 'Not Applicable';
 
-                $history->action = 'Reject';
+                $history->action = 'Request More Info';
                 $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1793,7 +1793,7 @@ class ErrataController extends Controller
                 $history->previous = 'Not Applicable';
                 $history->activity_type = 'Not Applicable';
 
-                $history->action = 'Reject';
+                $history->action = 'Request More Info';
                 $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1863,7 +1863,7 @@ class ErrataController extends Controller
                 $history->previous = 'Not Applicable';
                 $history->activity_type = 'Not Applicable';
 
-                $history->action = 'Reject';
+                $history->action = 'Request More Info';
                 $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;

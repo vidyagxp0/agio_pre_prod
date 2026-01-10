@@ -90,7 +90,7 @@ foreach ($pre as $processName => $modelClass) {
    $relatedRecords = $relatedRecords->merge($records);
 }
 
-        return view('frontend.resampling.resapling_create', compact('due_date', 'relatedRecords','record','old_record'));
+        return view('frontend.resampling.resapling_create', compact('due_date', 'relatedRecords'));
     }
     public function index()
     {
@@ -2567,6 +2567,7 @@ public function resamplingmoreinfo(Request $request, $id)
                 $history->action_name = "Not Applicable";
                 $history->stage = 'Acknowledge';
             $history->save();
+            $changeControl->update();
             $list = Helpers::getAssignToUserList($lastopenState->division_id);
            
             foreach ($list as $u) {
