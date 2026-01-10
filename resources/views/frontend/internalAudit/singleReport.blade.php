@@ -1101,40 +1101,7 @@ $checklists = [
         </div>
     </div>
 
-    <table>
-
-            <tr>
-                <th class="w-20">Final Comments</th>
-                <td class="w-80"> @if($checklist3->tablet_capsule_packing_comment){{ $checklist3->tablet_capsule_packing_comment }}@else Not Applicable @endif</td>
-            </tr>
-        </table>
-    <div class="block-head">
-        Supporting Attachment
-    </div>
-    <table>
-
-        <tr class="table_bg">
-            <th class="w-20">Sr.No.</th>
-            <th class="w-60">Attachment</th>
-        </tr>
-        @if($data->tablet_capsule_packing_attachmen)
-        @foreach(json_decode($data->tablet_capsule_packing_attachmen) as $key => $file)
-        <tr>
-            <td class="w-20">{{ $key + 1 }}</td>
-            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-        </tr>
-        @endforeach
-        @else
-        <tr>
-            <td class="w-20">1</td>
-            <td class="w-20">Not Applicable</td>
-        </tr>
-        @endif
-
-    </table>
-
-
-     {{-- <table>
+     <table>
 
             <tr>
                 <th class="w-20">Final Comments</th>
@@ -1348,7 +1315,6 @@ $checklists = [
         @endif
 
     </table>
- --}}
 
     @endif
 
@@ -1453,6 +1419,8 @@ $checklists = [
                 ],
 >>>>>>> main
 
+                ];
+                @endphp
 
 <<<<<<< HEAD
                  @foreach ($checklists as $checklist)
@@ -1515,17 +1483,24 @@ $checklists = [
                         $remark = $checklist2->{"tablet_coating_remark_" . ($index + 1)};
                         @endphp --}}
 
+                        <!-- Check if either response or remark is not empty -->
                         @if($response || $remark)
                         <tr>
-                            <td class="text-center">
-                                {{ $checklist['prefix'] . '.' . ($index + 1) }}
-                            </td>
+                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
                             <td>{{ $question }}</td>
-                            <td class="text-center">{{ $response }}</td>
-                            <td class="text-center">{{ $remark }}</td>
+                            <td>
+                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
+                                    {{ $response }}
+                                </div>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <div style="margin: auto; display: flex; justify-content: center;">
+                                    {{ $remark }}
+                                </div>
+                            </td>
                         </tr>
                         @endif
-                    @endforeach
+                        @endforeach
                     </tbody>
                 </table>
                 @endforeach
@@ -1533,43 +1508,8 @@ $checklists = [
             <!-- </div> -->
         </div>
     </div>
-      <table>
 
-            <tr>
-                <th class="w-20">Final Comments</th>
-                <td class="w-80"> @if($checklist1->tablet_compress_response_final_comment){{ $checklist1->tablet_compress_response_final_comment }}@else Not Applicable @endif</td>
-            </tr>
-        </table>
-
-         
-    <div class="block-head">
-        Supporting Attachment
-    </div>
-    <table>
-
-        <tr class="table_bg">
-            <th class="w-20">Sr.No.</th>
-            <th class="w-60">Attachment</th>
-        </tr>
-        @if($data->supproting_attachment)
-        @foreach(json_decode($data->supproting_attachment) as $key => $file)
-        <tr>
-            <td class="w-20">{{ $key + 1 }}</td>
-            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-        </tr>
-        @endforeach
-        @else
-        <tr>
-            <td class="w-20">1</td>
-            <td class="w-20">Not Applicable</td>
-        </tr>
-        @endif
-
-    </table>
-
-
-
-     {{-- <table>
+     <table>
 
             <tr>
                 <th class="w-20">Final Comments</th>
@@ -1599,7 +1539,7 @@ $checklists = [
         </tr>
         @endif
 
-    </table> --}}
+    </table>
 
 
 <<<<<<< HEAD
@@ -1990,28 +1930,25 @@ $checklists = [
     $liquidOintmentPacking = [
     'Is status labels displayed on all equipments?',
     'Equipment cleanliness, check few equipments.',
-    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+    'Are machine surfaces that contact materials or finished goods non-reactive, non-absorptive and non-additive so as not to affect the product?',
     'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? Are these procedures been validated?',
     'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
-
     'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
     'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
     'Are there written instructions describing how to use in-process data to control the process?',
     'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
     'Is equipment inspected immediately prior to use?',
-
     'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
     'Has a written schedule been established and is it followed for cleaning of equipment?',
     'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
-    "Is clean equipment clearly identified as 'cleaned' with a cleaning date shown on the equipment tag? Check for few equipments",
+    'Is clean equipment clearly identified as cleaned with a cleaning date shown on the equipment tag? Check for few equipments',
     'Is equipment cleaned promptly after use?',
-
     'Is there proper storage of cleaned equipment so as to prevent contamination?',
     'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
     'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
     'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-
-    'Are all weighing and measuring performed by one qualified person and checked by a second person? Check the weighing balance record.',
+    'Are all weighing and measuring performed by one qualified person and checked by a second person?
+        Check the weighing balance record.',
     'All the person working in packing area having proper gowning?',
     'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
     'Does each equipment have written instructions for maintenance that includes a schedule for maintenance?',
@@ -2020,7 +1957,7 @@ $checklists = [
     'Temperature & RH record log book is available for each staging area.',
     'Check for area activity record.',
     'Check for equipment usage record.',
-    'Check for general equipment details and accessory details.',
+    'Check for general equipment details and accessory details',
     'Check for man & material movement in the area.',
     'Air handling system qualification, cleaning details and PAO test reports.',
     'Check for the status labeling in the area and, material randomly.',
@@ -2038,21 +1975,24 @@ $checklists = [
     'Is there Lux Level of all working table is within acceptance limit?',
     ];
 
-    $liquidOintmentQuestions = [
-    'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
+    $liquidOintmentQuestionsLL = [
+     'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
     'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
-    'Is the batch record is on line up to the current stage of a process?',
+    'Ikjnjkjnkjnks the batch record is on line up to the current stage of a process?',
     'In process carried out as per the written instruction describe in batch record?',
     'Is there any area cleaning record available for all individual areas?',
     'Current version of SOP’s is available in respective areas?',
     ];
     @endphp
     @if(!empty($checklist5) && in_array('7', explode(',', $data->checklists)))
-    <div class="inner-block">
+    
+
+     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
             <div class="block-head">
                 Checklist - Liquid/Ointment Packing </div>
+            <div>
             <div>
                 @php
                 $checklists = [
@@ -2063,7 +2003,7 @@ $checklists = [
                 ],
                 [
                 'title' => 'STAGE 2: DOCUMENTATION',
-                'questions' => $liquidOintmentQuestions,
+                'questions' => $liquidOintmentQuestionsLL,
                 'prefix' => 2
                 ],
 
@@ -2074,21 +2014,36 @@ $checklists = [
                 <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
                     {{ $checklist['title'] }}
                 </div>
-                <table class="table table-bordered" border="1">
+                <table class="table table-bordered " border="1">
                     <thead>
                         <tr>
                             <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
-                            <th style="width: 20%;">Response</th>checklist6
+                            <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($checklist['questions'] as $index => $question)
                         @php
-                        $response = $checklist5->{"liquid_ointments_response_" . ($index + 1)};
-                        $remark = $checklist5->{"liquid_ointments_remark_" . ($index + 1)};
+                            $baseIndex = ($checklist['prefix'] == 1)
+                                ? 0
+                                : count($liquidOintmentPacking);
+
+                            $responseIndex = $baseIndex + $index + 1;
+
+                            $response = $checklist5->{
+                                "liquid_ointments_response_$responseIndex"
+                            } ?? null;
+
+                            $remark = $checklist5->{
+                                "liquid_ointments_remark_$responseIndex"
+                            } ?? null;
                         @endphp
+                        {{-- @php
+                        $response = $checklist2->{"tablet_coating_response_" . ($index + 1)};
+                        $remark = $checklist2->{"tablet_coating_remark_" . ($index + 1)};
+                        @endphp --}}
 
                         <!-- Check if either response or remark is not empty -->
                         @if($response || $remark)
@@ -2120,7 +2075,7 @@ $checklists = [
 
             <tr>
                 <th class="w-20">Final Comments</th>
-                <td class="w-80"> @if($checklist6->dispensing_and_manufacturing_comment){{ $checklist6->dispensing_and_manufacturing_comment }}@else Not Applicable @endif</td>
+                <td class="w-80"> @if($checklist5->Description_oinments_comment){{ $checklist5->Description_oinments_comment }}@else Not Applicable @endif</td>
             </tr>
         </table>
     <div class="block-head">
@@ -2132,8 +2087,8 @@ $checklists = [
             <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
-        @if($data->dispensing_and_manufacturing_attachment)
-        @foreach(json_decode($data->dispensing_and_manufacturing_attachment) as $key => $file)
+        @if($data->file_attach_add_2)
+        @foreach(json_decode($data->file_attach_add_2) as $key => $file)
         <tr>
             <td class="w-20">{{ $key + 1 }}</td>
             <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
@@ -2386,6 +2341,16 @@ $checklists = [
     'Does QA assure that manufacturing and testing records are reviewed before batches are released for sale?',
     'Is there an adequate program for handling complaints, including investigation to determine the causes, corrective actions, verification of the effectiveness of corrective actions, a target time frame for responding; trend analysis, and notification of appropriate parties including management?',
     'Is a log maintained for changes to documents and facility?',
+    'Does QA have authority to review and approve or reject?
+    a)Procedures and specifications?
+    b)Process changes impacting on the identity, quality, and purity of the material?
+    c)Raw materials, packaging materials, in-process materials, and product batches?
+    d)New suppliers or subcontractors?',
+    'Is there an adequate system, described in an SOP, for controlling changes within the production process, including review and approval of changes to processes, documents, and equipment?',
+    'Based on the audit findings and recommendations, are steps taken to correct any areas of noncompliance? Are corrective actions documented? Is their effectiveness verified in subsequent audits?',
+    'If any contractors (e.g., laboratories, packagers) are used, are they periodically audited and is their performance monitored?',
+    'Audit programs - Is there an internal quality audit program that covers all areas of the operation to verify that SOPs and other procedures and policies are being followed, and to determine effectiveness of the quality systems?',
+    'Is there an SOP for investigation of manufacturing deviations and batch failures to determine the cause and institute corrective actions to prevent the situation from recurring?'
     ];
 
 
@@ -2502,29 +2467,37 @@ $checklists = [
     @php
     $checklistEngineering = [
     'Is there a master list of all equipment that specifies those requiring maintenance and/or calibration?',
-    'Are written procedures available for set-up of equipment?',
-    'Are written procedures available for maintenance of equipment?',
-    'Are written procedures available for cleaning of equipment?',
-    'Are written procedures available for calibration of manufacturing equipment?',
-    'Are written procedures available for calibration of control instruments?',
-    'Are records kept for the sequence of products manufactured on particular equipment?',
-    'Are records kept for maintenance and cleaning logs?',
-    'Are records kept for calibration of manufacturing equipment?',
-    'Are records kept for calibration of control instruments?',
+    'Are written procedures available for:
+        a) Set-up of equipment
+        b) Maintenance of equipment
+        c) Cleaning of equipment
+        d) Calibration of manufacturing equipment
+        e) Calibration of control instruments',
+    'Are records kept for:
+        a) The sequence of products manufactured on particular equipment
+        b) Maintenance and cleaning logs
+        c) Calibration of manufacturing equipment
+        d) Calibration of control instruments',
     'Is equipment designed to prevent adulteration of product with lubricants, coolants, fuel, metal fragments, or other extraneous materials?',
     'Are holding, conveying and manufacturing systems designed and constructed so as to allow them to be maintained in a sanitary condition?',
-    'Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments?',
-    'Do SOPs assign responsibilities; include schedules; describe methods, equipment, and materials to be used; and require maintenance of records?',
+    'Is equipment installed with sufficient clearance to allow access to both the equipment and the surrounding area for cleaning and maintenance operations?',
+    'Are freezers equipped with thermometers or other temperature sensing devices / recorders, and with automatic temperature controls and automatic alarms?',
+    'Is equipment operated in a manner that will prevent contamination and cross-contamination and will ensure product integrity?',
+    'If equipment and instruments malfunction or are determined to be defective, are they immediately taken out of use?',
+    'If calibration operations are performed in-house, do SOPs specify proper handling and storage conditions for the traceable standards?',
+    'a)Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments?',
+    'b)Do SOPs assign responsibilities; include schedules; describe methods, equipment, and materials to be used; and require maintenance of records?',
     'If water is purified for use in the process, is the purification system periodically sanitized and appropriately maintained?',
+    'Do SOPs assign responsibilities; include schedules; describe methods, equipment, and materials to be used; and require maintenance of records?',
     'Does a SOP specify that equipment cannot be used if it is beyond the calibration due date, and describe actions to be taken if equipment is used that is found to have been beyond the due date or is found to be out of calibration time?',
-    'Are there SOPs for calibration of critical equipment, and measuring and testing instruments?',
-    'Do SOPs assign responsibilities; include schedules; describe methods; equipment, and materials to be used, including calibration over actual range of use and standards traceable to national standards; and include specifications and tolerances?',
+    'a) Are there SOPs for calibration of critical equipment, and measuring and testing instruments?
+      b) Do SOPs assign responsibilities; include schedules; describe methods; equipment, and materials to be used, including calibration over actual range of use and standards traceable to national standards; and include specifications and tolerances?',
     'Is calibrated equipment labeled with date of calibration and date of next calibration is due?',
     'Is equipment in use observed to be within calibration dating?',
     'Are periodic verifications performed on critical production scales (e.g., for raw material dispensing or portable scales) to assure that they remain within calibration in the time between full calibrations?',
     'Are records maintained for maintenance and calibration operations?',
     'Is there any standard procedure for maintenance and calibration operations?',
-    'Check the filter drying room. Is there procedure for the filter drying? Check 2- 3 filter randomly.',
+    'Check the filter drying room. Is there procedure for the filter drying? Check 2- 3 filter randomly',
     'Do you maintain the filter cleaning record?',
     ];
 
@@ -2587,10 +2560,30 @@ $checklists = [
                     </thead>
                     <tbody>
                         @foreach ($checklist['questions'] as $index => $question)
-                        @php
+                       @php
+                            $no = $index + 1;
+
+                            if ($checklist['prefix'] == 1) {
+                                // Engineering
+                                $response = $checklist9->{"engineering_response_$no"} ?? null;
+                                $remark   = $checklist9->{"engineering_remark_$no"} ?? null;
+                            }
+                            elseif ($checklist['prefix'] == 2) {
+                                // Building
+                                $response = $checklist9->{"building_response_$no"} ?? null;
+                                $remark   = $checklist9->{"building_remark_$no"} ?? null;
+                            }
+                            else {
+                                // HVAC
+                                $response = $checklist9->{"hvac_response_$no"} ?? null;
+                                $remark   = $checklist9->{"hvac_remark_$no"} ?? null;
+                            }
+                            @endphp
+
+                        {{-- @php
                         $response = $checklist9->{"engineering_response_" . ($index + 1)};
                         $remark = $checklist9->{"engineering_remark_" . ($index + 1)};
-                        @endphp
+                        @endphp --}}
 
                         <!-- Check if either response or remark is not empty -->
                         @if($response || $remark)
@@ -3084,7 +3077,7 @@ $checklists = [
                         @foreach ($checklist['questions'] as $index => $question)
                         @php
                         $response = $checklist12->{"checklist_hr_response_" . ($index + 1)};
-                        $remark = $checklist12->{"checklist_hr_response__" . ($index + 1)};
+                        $remark = $checklist12->{"checklist_hr_remark_" . ($index + 1)};
                         @endphp
 
                         <!-- Check if either response or remark is not empty -->
@@ -3236,29 +3229,29 @@ $checklists = [
                 Checklist - Production (Injection Dispensing & Manufacturing)
             </div>
             <div>
-                @php
-                $checklists = [
-                [
-                'title' => 'Checklist for Human Resource',
-                'questions' => $questions_dispensing,
-                'prefix' => 1
-                ],
-                [
-                'title' => 'Checklist for Building Facility',
-                'questions' => $questions_visual_inspection,
-                'prefix' => 2
-                ],
-                [
-                'title' => 'Checklist for HVAC/HEPA',
-                'questions' => $questions_documentation,
-                'prefix' => 3
-                ],
+                        @php
+                        $checklists = [
+                            [
+                                'title' => 'STAGE 1 : Dispensing',
+                                'questions' => $questions_dispensing,
+                                'prefix' => 1,
+                                'type' => 'dispensing',
+                            ],
+                            [
+                                'title' => 'STAGE 2 : Visual Inspection',
+                                'questions' => $questions_visual_inspection,
+                                'prefix' => 2,
+                                'type' => 'visual',
+                            ],
+                            [
+                                'title' => 'STAGE 3 : Documentation',
+                                'questions' => $questions_documentation,
+                                'prefix' => 3,
+                                'type' => 'documentation',
+                            ],
+                        ];
+                        @endphp
 
-
-
-
-                ];
-                @endphp
 
                 @foreach ($checklists as $checklist)
                 <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
@@ -3276,9 +3269,22 @@ $checklists = [
                     <tbody>
                         @foreach ($checklist['questions'] as $index => $question)
                         @php
-                        $response = $checklist13->{"response_dispensing_" . ($index + 1)};
-                        $remark = $checklist13->{"remark_dispensing_" . ($index + 1)};
-                        @endphp
+                            $type = $checklist['type'];
+
+                            if ($type === 'dispensing') {
+                                $response = $checklist13->{"response_dispensing_" . ($index + 1)} ?? null;
+                                $remark   = $checklist13->{"remark_dispensing_" . ($index + 1)} ?? null;
+                            }
+                            elseif ($type === 'visual') {
+                                // ⚠️ VISUAL = INJECTION (controller mapping)
+                                $response = $checklist13->{"response_injection_" . ($index + 1)} ?? null;
+                                $remark   = $checklist13->{"remark_injection_" . ($index + 1)} ?? null;
+                            }
+                            elseif ($type === 'documentation') {
+                                $response = $checklist13->{"response_documentation_" . ($index + 1)} ?? null;
+                                $remark   = $checklist13->{"remark_documentation_" . ($index + 1)} ?? null;
+                            }
+                            @endphp
 
                         <!-- Check if either response or remark is not empty -->
                         @if($response || $remark)
@@ -3413,66 +3419,76 @@ $checklists = [
 
             </div>
             <div>
-                @php
-                $checklists = [
-                [
-                'title' => 'Checklist for Injection Packing',
-                'questions' => $questions_injection_packing,
-                'prefix' => 1
-                ],
-                [
-                'title' => 'Checklist for Building Facility',
-                'questions' => $questions_documentation,
-                'prefix' => 2
-                ],
+               @php
+    $checklists = [
+        [
+            'title' => 'Checklist for Injection Packing',
+            'questions' => $questions_injection_packing,
+            'prefix' => 1
+        ],
+        [
+            'title' => 'Checklist for Building Facility',
+            'questions' => $questions_documentation,
+            'prefix' => 2
+        ],
+    ];
+@endphp
 
+@foreach ($checklists as $checklist)
+<div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+    {{ $checklist['title'] }}
+</div>
 
+<table class="table table-bordered" border="1">
+    <thead>
+        <tr>
+            <th style="width: 5%;">Sr.No.</th>
+            <th style="width: 40%;">Question</th>
+            <th style="width: 20%;">Response</th>
+            <th>Remarks</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($checklist['questions'] as $index => $question)
+            @php
+                // base index calculation (same as first code)
+                $baseIndex = ($checklist['prefix'] == 1)
+                    ? 0
+                    : count($questions_injection_packing);
 
+                $responseIndex = $baseIndex + $index + 1;
 
-                ];
-                @endphp
+                // dynamic response & remark
+                $response = $checklist_production_injection
+                    ->{"response_injection_" . $responseIndex} ?? null;
 
-                @foreach ($checklists as $checklist)
-                <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                    {{ $checklist['title'] }}
-                </div>
-                <table class="table table-bordered" border="1">
-                    <thead>
-                        <tr>
-                            <th style="width: 5%;">Sr.No..</th>
-                            <th style="width: 40%;">Question</th>
-                            <th style="width: 20%;">Response</th>
-                            <th>Remarks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($checklist['questions'] as $index => $question)
-                        @php
-                        $response = $checklist14->{"response_injection_packing_" . ($index + 1)};
-                        $remark = $checklist14->{"remark_injection_packing_" . ($index + 1)};
-                        @endphp
+                $remark = $checklist_production_injection
+                    ->{"remark_injection_" . $responseIndex} ?? null;
+            @endphp
 
-                        <!-- Check if either response or remark is not empty -->
-                        @if($response || $remark)
-                        <tr>
-                            <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                            <td>{{ $question }}</td>
-                            <td>
-                                <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                                    {{ $response }}
-                                </div>
-                            </td>
-                            <td style="vertical-align: middle;">
-                                <div style="margin: auto; display: flex; justify-content: center;">
-                                    {{ $remark }}
-                                </div>
-                            </td>
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
-                </table>
-                @endforeach
+            {{-- show row only if data exists --}}
+            @if($response || $remark)
+            <tr>
+                <td class="text-center">
+                    {{ $checklist['prefix'] . '.' . ($index + 1) }}
+                </td>
+                <td>{{ $question }}</td>
+                <td>
+                    <div style="display:flex; justify-content:center; margin:5%;">
+                        {{ $response }}
+                    </div>
+                </td>
+                <td>
+                    <div style="display:flex; justify-content:center;">
+                        {{ $remark }}
+                    </div>
+                </td>
+            </tr>
+            @endif
+        @endforeach
+    </tbody>
+</table>
+@endforeach
             </div>
             <!-- </div> -->
         </div>
@@ -3567,7 +3583,9 @@ $checklists = [
     'Status label of area & equipment available?',
     'Have you any proper storage area for primary and secondary packing material?',
     'Do you have proper segregation system for keeping product/batch separately?',
+    'Stereo impression record available? Check the record for any 2 batches.',
     'Where you keep the rejected strips / blisters / containers / cartons? ',
+    'Is there any standard practice for destruction of printed aluminum foil & printed cartons?',
     'Is there a written procedure for clearing the packaging area after one packaging operation, and cleaning before the next operation, especially if the area is used for packaging different materials?',
     'Have you any standard procedure for removal of scrap?',
     ];
@@ -3580,78 +3598,6 @@ $checklists = [
     "Current version of SOP's is available in respective areas?",
     ];
     @endphp
-    {{-- <div class="inner-block">
-                                                                <div class="content-table">
-                                                                <!-- <div class="border-table"> -->
-                                                                    <div class="block-head">
-                                                                        Checklist - Production (Powder Manufacturing and Packing)
-
-                                                                    </div>
-                                                                    <div>
-                                                                        @php
-                                                                            $checklists = [
-                                                                                [
-                                                                                    'title' => 'STAGE 1 : POWEDER MFG & FILLING',
-                                                                                    'questions' => $questions_powder_manufacturing_filling,
-                                                                                    'prefix' => 1
-                                                                                ],
-                                                                                [
-                                                                                        'title' => 'Checklist for Packing',
-                                                                                        'questions' => $questions_packing_manufacturing,
-                                                                                        'prefix' => 2
-                                                                                ],
-
-
-
-
-                                                                            ];
-                                                                        @endphp
-
-                                                                        @foreach ($checklists as $checklist)
-                                                                            <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-                                                                                {{ $checklist['title'] }}
-    </div>
-    <table class="table table-bordered" border="1">
-        <thead>
-            <tr>
-                <th style="width: 5%;">Sr.No..</th>
-                <th style="width: 40%;">Question</th>
-                <th style="width: 20%;">Response</th>
-                <th>Remarks</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($checklist['questions'] as $index => $question)
-            @php
-            $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)};
-            $remark = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)};
-            @endphp
-
-            <!-- Check if either response or remark is not empty -->
-            @if($response || $remark)
-            <tr>
-                <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                <td>{{ $question }}</td>
-                <td>
-                    <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
-                        {{ $response }}
-                    </div>
-                </td>
-                <td style="vertical-align: middle;">
-                    <div style="margin: auto; display: flex; justify-content: center;">
-                        {{ $remark }}
-                    </div>
-                </td>
-            </tr>
-            @endif
-            @endforeach
-        </tbody>
-    </table>
-    @endforeach
-    </div>
-    <!-- </div> -->
-    </div>
-    </div> --}}
     @if(!empty($checklist15) && in_array('15', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
@@ -3676,11 +3622,8 @@ $checklists = [
                 [
                 'title' => 'STAGE 3: DOCUMENTATION ',
                 'questions' => $questions_documentation,
-                'prefix' => 2
+                'prefix' => 3
                 ],
-
-
-
                 ];
                 @endphp
 
@@ -3699,10 +3642,22 @@ $checklists = [
                     </thead>
                     <tbody>
                         @foreach ($checklist['questions'] as $index => $question)
-                        @php
-                        $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)};
-                        $remark = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)};
+                       @php
+                        if ($checklist['prefix'] == 1) {
+                            // STAGE 1 : POWDER MFG & FILLING
+                            $response = $checklist15->{"response_powder_manufacturing_filling_" . ($index + 1)} ?? '';
+                            $remark   = $checklist15->{"remark_powder_manufacturing_filling_" . ($index + 1)} ?? '';
+                        } elseif ($checklist['prefix'] == 2 && $checklist['title'] == 'STAGE 2: PACKING') {
+                            // STAGE 2 : PACKING
+                            $response = $checklist15->{"response_packing_manufacturing_" . ($index + 1)} ?? '';
+                            $remark   = $checklist15->{"remark_packing_manufacturing_" . ($index + 1)} ?? '';
+                        } else {
+                            // STAGE 3 : DOCUMENTATION
+                            $response = $checklist15->{"response_documentation_powder_" . ($index + 1)} ?? '';
+                            $remark   = $checklist15->{"remark_documentation_powder_" . ($index + 1)} ?? '';
+                        }
                         @endphp
+
 
                         <!-- Check if either response or remark is not empty -->
                         @if($response || $remark)
