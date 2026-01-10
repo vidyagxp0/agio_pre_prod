@@ -12240,30 +12240,27 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div id="CCForm13" class="inner-block cctabcontent">
                             @php
                                 $liquidOintmentPackingQuestions = [
-                                    'Is status labels displayed on all equipments?',
+                                     'Is status labels displayed on all equipments?',
                                     'Equipment cleanliness, check few equipments.',
-                                    'Are machine surfaces that contact materials or finished goods, non–reactive, non-absorptive and non – additive so as not to affect the product?',
+                                    'Are machine surfaces that contact materials or finished goods non-reactive, non-absorptive and non-additive so as not to affect the product?',
                                     'Are there data to show that cleaning procedures for non-dedicated equipment are adequate to remove the previous materials? Are these procedures been validated?',
                                     'Do you have written procedures for the safe and correct use of cleaning and sanitizing agents? What are the sanitizing agents used in this plant?',
-
                                     'Are there data to show that the residues left by the cleaning and/or sanitizing agent are within acceptable limits when cleaning is performed in accordance with the approved method?',
                                     'Do you have written procedures that describe the sufficient details of the cleaning schedule, methods, equipment and material? Check for procedure compliance',
                                     'Are there written instructions describing how to use in-process data to control the process?',
                                     'Are all pieces of equipment clearly identified with easily visible markings? Check the equipment nos. corresponds to an entry in a log book.',
                                     'Is equipment inspected immediately prior to use?',
-
                                     'Do cleaning instructions include disassembly and drainage procedure, if required to ensure that no cleaning solutions or rinse remains in the equipment?',
                                     'Has a written schedule been established and is it followed for cleaning of equipment?',
                                     'Are seams on product-contact surfaces smooth and properly maintained to minimize accumulation of product, dirt, and organic matter and to avoid growth of microorganisms?',
-                                    "Is clean equipment clearly identified as 'cleaned' with a cleaning date shown on the equipment tag? Check for few equipments",
+                                    'Is clean equipment clearly identified as cleaned with a cleaning date shown on the equipment tag? Check for few equipments',
                                     'Is equipment cleaned promptly after use?',
-
                                     'Is there proper storage of cleaned equipment so as to prevent contamination?',
                                     'Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?',
                                     'Is sewage, trash and other reuse disposed off in a safe and sanitary manner (and with sufficient frequency)?',
                                     'Are written records maintained on equipment cleaning, sanitizing and maintenance on or near each piece of equipment? Check 2 equipment records.',
-
-                                    'Are all weighing and measuring performed by one qualified person and checked by a second person?<br> Check the weighing balance record.',
+                                    'Are all weighing and measuring performed by one qualified person and checked by a second person?
+                                        Check the weighing balance record.',
                                     'All the person working in packing area having proper gowning?',
                                     'Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.',
                                     'Does each equipment have written instructions for maintenance that includes a schedule for maintenance?',
@@ -12272,7 +12269,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     'Temperature & RH record log book is available for each staging area.',
                                     'Check for area activity record.',
                                     'Check for equipment usage record.',
-                                    'Check for general equipment details and accessory details.',
+                                    'Check for general equipment details and accessory details',
                                     'Check for man & material movement in the area.',
                                     'Air handling system qualification, cleaning details and PAO test reports.',
                                     'Check for the status labeling in the area and, material randomly.',
@@ -12293,7 +12290,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 $documentationQuestions = [
                                     'Do records have doer & checker signatures? Check the timings, date and yield etc in the batch production record.',
                                     'Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.',
-                                    'Is the batch record is on line up to the current stage of a process?',
+                                    'Ikjnjkjnkjnks the batch record is on line up to the current stage of a process?',
                                     'In process carried out as per the written instruction describe in batch record?',
                                     'Is there any area cleaning record available for all individual areas?',
                                     'Current version of SOP’s is available in respective areas?',
@@ -12402,19 +12399,19 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                     {{ 2 . '.' . ($index + 1) }}</td>
                                                                 <td>{{ $question }}</td>
                                                                 <td>
-                                                                    @php
-                                                                        $liquidOintmentsResponse =
-                                                                            'liquid_ointments_response_' .
-                                                                            ($index + 43);
-                                                                        $liquidOintmentsRemark =
-                                                                            'liquid_ointments_remark_' . ($index + 43);
+                                                                   @php
+                                                                    $offset = count($liquidOintmentPackingQuestions);
+                                                                    $questionNo = $offset + $index + 1;
+
+                                                                    $liquidOintmentsResponse = 'liquid_ointments_response_' . $questionNo;
+                                                                    $liquidOintmentsRemark   = 'liquid_ointments_remark_' . $questionNo;
                                                                     @endphp
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         <select
-                                                                            name="liquid_ointments_response_{{ $index + 43 }}"
-                                                                            id="liquid_ointments_response_{{ $index + 43 }}"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                    name="liquid_ointments_response_{{ $questionNo }}"
+                                                                                    id="liquid_ointments_response_{{ $questionNo }}"
+                                                                                    style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
@@ -12444,8 +12441,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="liquid_ointments_remark_{{ $index + 43 }}"
-                                                                            style="border-radius: 7px; border: 1.5px solid black;">{{ $checklist5 ? $checklist5->$liquidOintmentsRemark : '' }}</textarea>
+                                                                        <textarea   name="liquid_ointments_remark_{{ $questionNo }}" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklist5 ? $checklist5->$liquidOintmentsRemark : '' }}</textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -12460,11 +12456,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
-                                        <textarea  name="Description_oinments_comment" >
-@if ($checklist5 && $checklist5->{"Description_oinments_comment"})
-{{ $checklist5->{"Description_oinments_comment"} }}
-@endif
-</textarea>
+                                        <textarea  name="Description_oinments_comment" > @if ($checklist5 && $checklist5->{"Description_oinments_comment"}){{ $checklist5->{"Description_oinments_comment"} }}@endif</textarea>
                                     </div>
                                 </div>
 
@@ -12941,38 +12933,33 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <td>{{ $question }}</td>
                                                                 <td>
                                                                     @php
+                                                                        $buildingResponse = 'building_response_' . ($index + 1);
+                                                                        $buildingRemark   = 'building_remark_' . ($index + 1);
+                                                                    @endphp
+                                                                    {{-- @php
                                                                         $engineeringresponce =
                                                                             'engineering_response_' . ($index + 1);
                                                                         $engineeringRemark =
                                                                             'engineering_remark_' . ($index + 1);
-                                                                    @endphp
+                                                                    @endphp --}}
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         <select
                                                                             name="building_response_{{ $index + 1 }}"
                                                                             id="building_response_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                           {{-- <option value="">Select an Option
-                                                                            </option>
-                                                                             <option value="Yes"
-                                                                                @if ($checklist9 && $checklist9->$engineeringresponce == 'Yes') selected @endif>
-                                                                                Yes</option>
-                                                                            <option value="No"
-                                                                                @if ($checklist9 && $checklist9->$engineeringresponce == 'No') selected @endif>
-                                                                                No</option>
-                                                                                <option value="N/A" {{ empty($checklist9->engineeringresponce) || $checklist9->engineeringresponce == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
                                                                                 <option value="Yes"
-                                                                                @if ($checklist9 && isset($checklist9->$engineeringresponce) && $checklist9->$engineeringresponce == 'Yes') selected @endif>
+                                                                                @if ($checklist9 && isset($checklist9->$buildingResponse) && $checklist9->$buildingResponse == 'Yes') selected @endif>
                                                                                 Yes
                                                                             </option>
 
                                                                             <option value="No"
-                                                                                @if ($checklist9 && isset($checklist9->$engineeringresponce) && $checklist9->$engineeringresponce == 'No') selected @endif>
+                                                                                @if ($checklist9 && isset($checklist9->$buildingResponse) && $checklist9->$buildingResponse == 'No') selected @endif>
                                                                                 No
                                                                             </option>
 
                                                                             <option value="N/A"
-                                                                                @if (empty($checklist9) || empty($checklist9->$engineeringresponce) || $checklist9->$engineeringresponce == 'N/A') selected @endif>
+                                                                                @if (empty($checklist9) || empty($checklist9->$buildingResponse) || $checklist9->$buildingResponse == 'N/A') selected @endif>
                                                                                 N/A
                                                                             </option>
 
@@ -12982,9 +12969,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="building_remark_{{ $index + 1 }}" style="border-radius: 7px; border: 1.5px solid black;">
-                                                {{ $checklist9 ? $checklist9->$engineeringRemark : '' }}
-                                            </textarea>
+                                                                        <textarea name="building_remark_{{ $index + 1 }}" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklist9 ? $checklist9->$buildingRemark : '' }}</textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -13016,11 +13001,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                     {{ 3 . '.' . ($index + 1) }}</td>
                                                                 <td>{{ $question }}</td>
                                                                 <td>
-                                                                    @php
-                                                                        $engineeringresponce =
-                                                                            'engineering_response_' . ($index + 1);
-                                                                        $engineeringRemark =
-                                                                            'engineering_remark_' . ($index + 1);
+                                                                   @php
+                                                                        $hvacResponse = 'hvac_response_' . ($index + 1);
+                                                                        $hvacRemark   = 'hvac_remark_' . ($index + 1);
                                                                     @endphp
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
@@ -13028,27 +13011,19 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             name="hvac_response_{{ $index + 1 }}"
                                                                             id="hvac_response_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            {{-- <option value="">Select an Option
-                                                                            </option>
-                                                                            <option value="Yes"
-                                                                                @if ($checklist9 && $checklist9->$engineeringresponce == 'Yes') selected @endif>
-                                                                                Yes</option>
-                                                                            <option value="No"
-                                                                                @if ($checklist9 && $checklist9->$engineeringresponce == 'No') selected @endif>
-                                                                                No</option>
-                                                                                <option value="N/A" {{ empty($checklist9->engineeringresponce) || $checklist9->engineeringresponce == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                           
                                                                                 <option value="Yes"
-                                                                                @if ($checklist9 && isset($checklist9->$engineeringresponce) && $checklist9->$engineeringresponce == 'Yes') selected @endif>
+                                                                                @if ($checklist9 && isset($checklist9->$hvacResponse) && $checklist9->$hvacResponse == 'Yes') selected @endif>
                                                                                 Yes
                                                                             </option>
 
                                                                             <option value="No"
-                                                                                @if ($checklist9 && isset($checklist9->$engineeringresponce) && $checklist9->$engineeringresponce == 'No') selected @endif>
+                                                                                @if ($checklist9 && isset($checklist9->$hvacResponse) && $checklist9->$hvacResponse == 'No') selected @endif>
                                                                                 No
                                                                             </option>
 
                                                                             <option value="N/A"
-                                                                                @if (empty($checklist9) || empty($checklist9->$engineeringresponce) || $checklist9->$engineeringresponce == 'N/A') selected @endif>
+                                                                                @if (empty($checklist9) || empty($checklist9->$hvacResponse) || $checklist9->$hvacResponse == 'N/A') selected @endif>
                                                                                 N/A
                                                                             </option>
 
@@ -13059,7 +13034,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="hvac_remark_{{ $index + 1 }}" style="border-radius: 7px; border: 1.5px solid black;">
-                                                {{ $checklist9 ? $checklist9->$engineeringRemark : '' }}</textarea>
+                                                {{ $checklist9 ? $checklist9->$hvacRemark  : '' }}</textarea>
                                                                     </div>
                                                                 </td>
                                                             </tr>

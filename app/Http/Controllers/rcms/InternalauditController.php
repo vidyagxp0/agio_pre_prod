@@ -2102,18 +2102,34 @@ $Checklist_Capsule->save();
    $engineering_checklist = IA_checklist_engineering::where(['ia_id' => $id])->firstOrCreate();
    $engineering_checklist->ia_id = $id;
 
+    /* ================= ENGINEERING (34) ================= */
+for ($i = 1; $i <= 34; $i++) {
+    $engineering_checklist->{'engineering_response_'.$i} = $request->{'engineering_response_'.$i} ?? null;
+    $engineering_checklist->{'engineering_remark_'.$i}   = $request->{'engineering_remark_'.$i} ?? null;
+}
 
-   for ($i = 1; $i <= 34; $i++)
-   {
-       $string = 'engineering_response_'. $i;
-       $engineering_checklist->$string = $request->$string;
-   }
+/* ================= BUILDING (6) ================= */
+for ($i = 1; $i <= 6; $i++) {
+    $engineering_checklist->{'building_response_'.$i} = $request->{'building_response_'.$i} ?? null;
+    $engineering_checklist->{'building_remark_'.$i}   = $request->{'building_remark_'.$i} ?? null;
+}
 
-   for ($i = 1; $i <= 34; $i++)
-   {
-       $string = 'engineering_remark_'. $i;
-       $engineering_checklist->$string = $request->$string;
-   }
+/* ================= HVAC / HEPA (2) ================= */
+for ($i = 1; $i <= 2; $i++) {
+    $engineering_checklist->{'hvac_response_'.$i} = $request->{'hvac_response_'.$i} ?? null;
+    $engineering_checklist->{'hvac_remark_'.$i}   = $request->{'hvac_remark_'.$i} ?? null;
+}
+//    for ($i = 1; $i <= 34; $i++)
+//    {
+//        $string = 'engineering_response_'. $i;
+//        $engineering_checklist->$string = $request->$string;
+//    }
+
+//    for ($i = 1; $i <= 34; $i++)
+//    {
+//        $string = 'engineering_remark_'. $i;
+//        $engineering_checklist->$string = $request->$string;
+//    }
    // dd($checklistTabletCompression->tablet_compress_remark_1)
    $engineering_checklist->engineering_response_comment = $request->engineering_response_comment;
    $engineering_checklist->save();
