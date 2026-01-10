@@ -63,22 +63,22 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        <label for="RLS Record Number"><b> Record Number</b></label>
                                         @if (!empty($parent_division_id))
-                                          <input type="hidden" name="record" id="record" value="">
+                                          <input type="hidden" name="record" id="record" value="" placeholder="Record Number">
                                            
-                                         <input type="hidden" name="record_number"
+                                         <input type="hidden" name="record_number" placeholder="Record Number"
                                                 value="">
                                             <input disabled type="text"
                                                 value="">
                                           {{-- <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName($parent_division_id) }}/EC/{{ date('Y') }}/{{ $record_number }}">  --}}
                                         @else
-                                         <input type="hidden" name="record" id="record" value="">
+                                         <input type="hidden" name="record" id="record" value="" placeholder="Record Number">
                                            
-                                         <input type="hidden" name="record_number"
+                                         <input type="hidden" name="record_number" placeholder="Record Number"
                                                 value="">
-                                            <input disabled type="text"
+                                            <input disabled type="text" placeholder="Record Number"
                                                 value="">
                                       
                                                
