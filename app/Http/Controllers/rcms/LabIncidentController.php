@@ -6084,7 +6084,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                   $record = $record_number;
+                //    $record = $record_number;
                    $old_record = Capa::select('id', 'division_id', 'record')->get();
 
                     $data=LabIncident::find($id);
@@ -6100,6 +6100,12 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             $data1 = LabIncident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
             $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'LI' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
              $parent_record = $data_record;
+
+            $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+            $lastAi = ActionItem::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+             $record_number =$record;
+      
 
                  $pre = [
                     'DEV' => \App\Models\Deviation::class,
@@ -8043,8 +8049,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 // }
 
                 // Get all required users
-                $qaList        = Helpers::QCHead($labstate->division_id);
-                $qaHeadList    = Helpers::getQAHeadUserList($labstate->division_id);
+                $qaList        = Helpers::QCHead($changeControl->division_id);
+                $qaHeadList    = Helpers::getQAHeadUserList($changeControl->division_id);
 
 
                 // Merge & remove duplicate users
@@ -8063,18 +8069,18 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                             Mail::send(
                                 'mail.view-mail',
                                 [
-                                    'data'    => $labstate,
+                                    'data'    => $changeControl,
                                     'site'    => "LI",
                                     'history' => "More Information Required",
                                     'process' => 'Lab Incident',
                                     'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
-                                function ($message) use ($email, $labstate) {
+                                function ($message) use ($email, $changeControl) {
                                     $message->to($email)
                                             ->subject(
                                                 "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($labstate->record, 4, '0', STR_PAD_LEFT)
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
                                                 . " - Activity: More Information Required"
                                             );
                                 }
@@ -8818,7 +8824,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->change_to = "Opened";
+                $history->change_to = "Cancel";
                 $history->change_from = $lastDocument->status;
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Cancel';
