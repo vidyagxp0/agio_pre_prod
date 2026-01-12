@@ -201,6 +201,7 @@
 
 <body>
 
+  
     <div id="main-container">
         <div class="notification-container">
             <div class="inner-block">
@@ -220,10 +221,10 @@
                         <p>
                             Originator Name :-
                              <!-- {{ Helpers::getInitiatorName($data->initiator_id) }} -->
-                            @if ($data->initiator)
-                                {{ Helpers::getInitiatorName($data->initiator) }}
-                            @else
+                            @if ($data->initiator_id)
                                 {{ Helpers::getInitiatorName($data->initiator_id) }}
+                            @else
+                                {{ Helpers::getInitiatorName($data->initiator) }}
                             @endif
                         </p>
 
