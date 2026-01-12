@@ -715,30 +715,75 @@
                 {{-- @endif --}}
 
 
-                <table>
+                
+                <style>
+                table {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    border-collapse: collapse;
+                    table-layout: fixed;
+                }
+
+                th, td {
+                    word-break: break-word;
+                    word-wrap: break-word;
+                    font-size: 12px;
+                }
+
+                tr {
+                    page-break-inside: avoid;
+                }
+
+                img {
+                    max-width: 100% !important;
+                    height: auto;
+                }
+            </style>
+
+
+                <table style="width:100%; border-collapse: collapse; table-layout: fixed;">
                     <tr>
-                        <th class="w-20">Description of Incident</th>
-                        <td class="w-80">
-                            @if ($data->Description_incident)
-                                {{ strip_tags($data->Description_incident) }}
-                            @else
-                                Not Applicable
-                            @endif
+                        <th class="w-20" style="vertical-align: top;">
+                            <strong>Description of Incident</strong>
+                        </th>
+                        <td class="w-80" style="vertical-align: top; word-break: break-word;">
+                            
+                            {!! strip_tags(
+                                $data->Description_incident,
+                                '<br><table><thead><tbody><tr><th><td>
+                                <p><div><span>
+                                <b><strong><i><u>
+                                <ul><ol><li>
+                                <img><a>
+                                <h1><h2><h3><h4><h5><h6>'
+                            ) !!}
                         </td>
                     </tr>
                 </table>
-                <table>
+
+                 <table style="width:100%; border-collapse: collapse; table-layout: fixed;">
                     <tr>
-                        <th class="w-20">Investigation</th>
-                        <td class="w-80">
-                            @if ($data->investigation)
-                                {{ strip_tags($data->investigation) }}
-                            @else
-                                Not Applicable
-                            @endif
+                        <th class="w-20" style="vertical-align: top;">
+                            <strong>Investigation</strong>
+                        </th>
+                        <td class="w-80" style="vertical-align: top; word-break: break-word;">
+                            
+                            {!! strip_tags(
+                                $data->investigation,
+                                '<br><table><thead><tbody><tr><th><td>
+                                <p><div><span>
+                                <b><strong><i><u>
+                                <ul><ol><li>
+                                <img><a>
+                                <h1><h2><h3><h4><h5><h6>'
+                            ) !!}
                         </td>
                     </tr>
                 </table>
+
+                
+
+
                 <table>
                     <tr>
                         <th class="w-20">Immediate Corrective Action</th>

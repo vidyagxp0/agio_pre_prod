@@ -1109,7 +1109,7 @@ class ErrataController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'HOD Review Completed'
+                        'message' => 'Document Sent Next Stage'
                     ]);
                 }
 

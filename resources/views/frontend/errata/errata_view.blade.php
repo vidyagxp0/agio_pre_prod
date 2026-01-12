@@ -118,7 +118,7 @@
 
                         @if (
                             $showdata->stage == 1 &&
-                                (Helpers::check_roles($showdata->division_id, 'ERRATA', 3) || ($data->initiator_id == Auth::user()->id) ||
+                                (Helpers::check_roles($showdata->division_id, 'ERRATA', 3) || ($showdata->initiator_id == Auth::user()->id) ||
                                     Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
