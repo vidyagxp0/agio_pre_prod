@@ -543,15 +543,19 @@
 
                     <tr>
                         <th class="w-20">Deviation Reported On </th>
-                        <td class="w-30">
+                        <td class="w-30" colspan="3">
                             @if ($data->Deviation_reported_date)
                                 {{ Helpers::getdateFormat($data->Deviation_reported_date) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                {{-- </table>
+                <table>  --}}
+                    <tr>  
                         <th class="w-20">Deviation Related To</th>
-                        <td class="w-30">
+                        <td class="w-30" colspan="3">
                             @if ($data->audit_type)
                                 {{ $data->audit_type }}
                             @else
@@ -559,17 +563,20 @@
                             @endif
                         </td>
                     </tr>
+                {{-- </table>
+                <table> --}}
                     <tr>
 
                         <th class="w-20"> Others</th>
-                        <td class="w-30">
+                        <td class="w-30" colspan="3">
                             @if ($data->others)
                                 {{ $data->others }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-
+                    </tr>
+                    <tr>
                         <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
                         <td class="w-30">
                             @if ($data->Facility_Equipment)
