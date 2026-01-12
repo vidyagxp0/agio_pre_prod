@@ -2875,14 +2875,28 @@ class AuditProgramController extends Controller
         $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
         $parent_division_id = AuditProgram::where('id', $id)->value('division_id');
         if ($request->child_type == "Internal_Audit") {
+
             $lastAuditrecord_number = InternalAudit::orderBy('record_number', 'desc')->first();
-            $record_number = $lastAuditrecord_number ? $lastAuditrecord_number->record_number + 1 : 1;
+            $record_number = $lastAuditrecord_number
+                ? (int) $lastAuditrecord_number->record_number + 1
+                : 1;
 
             $lastAuditrecord = InternalAudit::orderBy('record', 'desc')->first();
-            $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+            $record = $lastAuditrecord
+                ? (int) $lastAuditrecord->record + 1
+                : 1;
 
-            return view('frontend.forms.audit', compact('old_record','record_number','record', 'due_date', 'parent_id', 'parent_type','parent_division_id'));
+            return view('frontend.forms.audit', compact(
+                'old_record',
+                'record_number',
+                'record',
+                'due_date',
+                'parent_id',
+                'parent_type',
+                'parent_division_id'
+            ));
         }
+
         if ($request->child_type == "extension") {
             $parent_due_date = "";
             $parent_name = $request->parent_name;

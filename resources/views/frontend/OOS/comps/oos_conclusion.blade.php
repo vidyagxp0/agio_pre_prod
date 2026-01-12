@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Conclusion Comments s @if($data->stage == 20) <span class="text-danger">*</span>@endif</label>
+                    <label for="Description Deviation">Conclusion Comments @if($data->stage == 20) <span class="text-danger">*</span>@endif</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1"  >
                         {{ $data->conclusion_comments_oosc ?? '' }}
