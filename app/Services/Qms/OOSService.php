@@ -160,11 +160,58 @@ class OOSService
                 'instrument_detail',
             ];
 
+            // foreach ($grid_inputs as $grid_input)
+            // {
+            //     self::store_grid($oos, $request, $grid_input);
+            // }
+
+
             foreach ($grid_inputs as $grid_input)
             {
-                self::store_grid($oos, $request, $grid_input);
+                if ($grid_input === 'oos_detail') {
+
+                    $oosFiles   = $request->file('oos_detail', []);
+
+                    $oosDetails = $request->input('oos_detail', []);
+
+                    foreach ($oosDetails as $index => $row) {
+
+                        // Get the file
+                        $file = $request->file("oos_detail.$index.oos_file_attachment");
+
+                        if ($file instanceof \Illuminate\Http\UploadedFile) {
+
+                            $fileName = time().'_'.$file->getClientOriginalName();
+                            $file->move(public_path('upload'), $fileName);
+
+                            $oosDetails[$index]['oos_file_attachment'] = $fileName;
+
+                        } else {
+                            // No file uploaded
+                            $oosDetails[$index]['oos_file_attachment'] = null;
+                        }
+                    }
+
+                    Oosgrids::create([
+                        'oos_id'     => $oos->id,
+                        'identifier' => 'oos_detail',
+                        'data'       => $oosDetails
+                    ]);
+
+                    continue;
+                }
+
+                $data = $request->input($grid_input, []);
+                if (!empty($data)) {
+                    Oosgrids::create([
+                        'oos_id'     => $oos->id,
+                        'identifier' => $grid_input,
+                        'data'       => $data
+                    ]);
+                }
             }
 
+            
             // ============ OOS Chemical: Start  Audit Trail ==================
 
             if(!empty($request->initiator_id)){

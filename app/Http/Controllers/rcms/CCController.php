@@ -12105,7 +12105,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "HOD Final Review Complete",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -12924,7 +12924,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $changeControl->closure_approved_by = Auth::user()->name;
                 $changeControl->closure_approved_on = Carbon::now()->format('d-M-Y');
                 $changeControl->closure_approved_comment = $request->comments;
-
+                  
                 $history = new RcmDocHistory();
                 $history->cc_id = $id;
 
@@ -12968,7 +12968,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 //      }
                 //   }
 
-                   $usersmerge = collect()
+                $usersmerge = collect()
                 ->merge(Helpers::getQAUserList($changeControl->division_id))
                 ->merge(Helpers::getCQAUsersList($changeControl->division_id))
               
@@ -12989,7 +12989,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "HOD Final Review Complete",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -13089,7 +13089,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $comments->send_for_final_qa_head_approval = Auth::user()->name;
             $comments->send_for_final_qa_head_approval_on = Carbon::now()->format('d-M-Y');
             $comments->send_for_final_qa_head_approval_comment = $request->comments;
-
             $comments->save();
             $history = new RcmDocHistory();
             $history->cc_id = $id;
@@ -13157,7 +13156,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "Send For Final QA/CQA Head Approval",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -13336,7 +13335,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "Send For Final Approval",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {

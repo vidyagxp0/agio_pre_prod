@@ -2456,6 +2456,8 @@ class AuditProgramController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->save();
 
+                  $list = Helpers::getCQAHeadUsersList($changeControl->division_id);
+                 
                     foreach ($list as $u) {
 
                     $email = Helpers::getUserEmail($u->user_id);
