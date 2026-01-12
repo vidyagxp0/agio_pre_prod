@@ -50,9 +50,9 @@ class ProcessSeeder extends Seeder
             "Deviation",
             //new added
             "Market Complaint",
-            "Non Conformance",
+            // "Non Conformance",
             "Incident",
-            "Failure Investigation",
+            // "Failure Investigation",
             "ERRATA",
             // "OOS Microbiology"
         ];

@@ -61,13 +61,13 @@ class MarketComplaintController extends Controller
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
         }
-        
+
         $lastCapa = MarketComplaint::orderBy('record', 'desc')->first();
 
         $record = $lastCapa ? $lastCapa->record + 1 : 1;
 
 
-      
+
       //  $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $marketComplaint = new MarketComplaint();
 
@@ -2465,7 +2465,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->assign_to = $request->assign_to;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
-      
+
         // dd($marketComplaint->details_of_nature_of_market);
         $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
 
@@ -8226,10 +8226,10 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                     if ($marketstat->stage == 1) {
 
-                      
-                         
+
+
                         if (empty($marketstat->complainant_gi) || empty($marketstat->complaint_reported_on_gi) || empty($marketstat->details_of_nature_market_complaint_gi) || empty($marketstat->categorization_of_complaint_gi) || empty($marketstat->is_repeat_gi)|| empty($marketstat->review_of_complaint_sample_gi)|| empty($marketstat->review_of_control_sample_gi) || empty($marketstat->review_of_stability_study_gi) || empty($marketstat->review_of_product_manu_gi) || empty($marketstat->additional_inform)|| empty($marketstat->probable_root_causes_complaint_hodsr)|| empty($marketstat->in_case_Invalide_com)|| empty($marketstat->manufacturer_name_address_ca)|| empty($marketstat->complaint_sample_required_ca)|| empty($marketstat->brief_description_of_complaint_ca) || empty($marketstat->batch_record_review_observation_ca)|| empty($marketstat->analytical_data_review_observation_ca)|| empty($marketstat->retention_sample_review_observation_ca)|| empty($marketstat->qms_events_ifany_review_observation_ca)|| empty($marketstat->repeated_complaints_queries_for_product_ca)|| empty($marketstat->interpretation_on_complaint_sample_ifrecieved_ca)|| empty($marketstat->comments_ifany_ca)) {
-                          
+
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
                                 'message' => 'Pls fill Both  General Information Tab And Complaint Acknowledgement  Tab is yet to be filled!',
@@ -8276,7 +8276,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
                         $history->save();
 
-                       
+
 
                         /////////////
 
@@ -8284,17 +8284,17 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
-                        
+
                             if ($email !== null) {
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "Submit", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "Submit",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -8303,15 +8303,15 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                         }
                                     );
                                 } catch (\Exception $e) {
-                                 
+
                                     Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                   
+
+
                                     session()->flash('error', 'Failed to send email to ' . $email);
                                 }
                             }
                         }
-                        
+
                         $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                         foreach ($list as $u) {
@@ -8322,11 +8322,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "Submit", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "Submit",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -8388,7 +8388,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -8531,23 +8531,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
                         $history->save();
 
-                        
+
 
                          $list = Helpers::getQAUserList($marketstat->division_id);
 
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
-                        
+
                             if ($email !== null) {
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "Complete Review", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "Complete Review",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -8556,15 +8556,15 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                         }
                                     );
                                 } catch (\Exception $e) {
-                                 
+
                                     Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                   
+
+
                                     session()->flash('error', 'Failed to send email to ' . $email);
                                 }
                             }
                         }
-                        
+
                         $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                         foreach ($list as $u) {
@@ -8575,11 +8575,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "Complete Review", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "Complete Review",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -8622,7 +8622,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 'message' => 'CFT Reviews'
                             ]);
                         }
-                        
+
                           // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'Market Complaint')
@@ -8645,7 +8645,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -8668,7 +8668,12 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             $Cft->Quality_Assurance_Review !== 'yes' &&
                             $Cft->Engineering_review !== 'yes' &&
                             $Cft->Environment_Health_review !== 'yes' &&
-                            $Cft->Human_Resource_review !== 'yes') {
+                            $Cft->Human_Resource_review !== 'yes' &&
+                            $Cft->Other1_review !== 'yes' &&
+                            $Cft->Other2_review !== 'yes' &&
+                            $Cft->Other3_review !== 'yes' &&
+                            $Cft->Other4_review !== 'yes' &&
+                            $Cft->Other5_review !== 'yes' ) {
                                                     Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
                                 'message' => 'CFT Tab is yet to be filled!',
@@ -8726,11 +8731,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
                         $history->save();
 
-                       
 
 
-                        
-                        
+
+
+
                         $list = Helpers::getCftUserList($marketstat->division_id);
 
                         foreach ($list as $u) {
@@ -8741,11 +8746,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "Send To CFT", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "Send To CFT",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -9459,17 +9464,17 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                             foreach ($list as $u) {
                                 $email = Helpers::getUserEmail($u->user_id);
-                            
+
                                 if ($email !== null) {
                                     try {
                                         Mail::send(
                                             'mail.view-mail',
                                             [
-                                                'data' => $marketstat, 
-                                                'site' => "view", 
-                                                'history' => "CFT Review Complete", 
-                                                'process' => 'Market Complaint', 
-                                                'comment' => $request->comment, 
+                                                'data' => $marketstat,
+                                                'site' => "view",
+                                                'history' => "CFT Review Complete",
+                                                'process' => 'Market Complaint',
+                                                'comment' => $request->comment,
                                                 'user' => Auth::user()->name
                                             ],
                                             function ($message) use ($email, $marketstat) {
@@ -9478,15 +9483,15 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                             }
                                         );
                                     } catch (\Exception $e) {
-                                    
+
                                         Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                            
-                                    
+
+
                                         session()->flash('error', 'Failed to send email to ' . $email);
                                     }
                                 }
                             }
-                            
+
                             $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                             foreach ($list as $u) {
@@ -9497,11 +9502,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                         Mail::send(
                                             'mail.view-mail',
                                             [
-                                                'data' => $marketstat, 
-                                                'site' => "view", 
-                                                'history' => "CFT Review Complete", 
-                                                'process' => 'Market Complaint', 
-                                                'comment' => $request->comment, 
+                                                'data' => $marketstat,
+                                                'site' => "view",
+                                                'history' => "CFT Review Complete",
+                                                'process' => 'Market Complaint',
+                                                'comment' => $request->comment,
                                                 'user' => Auth::user()->name
                                             ],
                                             function ($message) use ($email, $marketstat) {
@@ -9581,8 +9586,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         //}
                         $history->save();
 
-                        
-                        
+
+
                         // $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                         // foreach ($list as $u) {
@@ -9593,11 +9598,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         //             Mail::send(
                         //                 'mail.view-mail',
                         //                 [
-                        //                     'data' => $marketstat, 
-                        //                     'site' => "view", 
-                        //                     'history' => "QA/CQA Verification Complete", 
-                        //                     'process' => 'Market Complaint', 
-                        //                     'comment' => $request->comment, 
+                        //                     'data' => $marketstat,
+                        //                     'site' => "view",
+                        //                     'history' => "QA/CQA Verification Complete",
+                        //                     'process' => 'Market Complaint',
+                        //                     'comment' => $request->comment,
                         //                     'user' => Auth::user()->name
                         //                 ],
                         //                 function ($message) use ($email, $marketstat) {
@@ -9753,17 +9758,17 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
-                        
+
                             if ($email !== null) {
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "Approval Complete", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "Approval Complete",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -9772,15 +9777,15 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                         }
                                     );
                                 } catch (\Exception $e) {
-                                 
+
                                     Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                   
+
+
                                     session()->flash('error', 'Failed to send email to ' . $email);
                                 }
                             }
                         }
-                        
+
                         $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                         foreach ($list as $u) {
@@ -9791,11 +9796,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "Approval Complete", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "Approval Complete",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -9876,23 +9881,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         //}
                         $history->save();
 
-                       
+
 
                         $list = Helpers::getQAUserList($marketstat->division_id);
 
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
-                        
+
                             if ($email !== null) {
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "Send Letter", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "Send Letter",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -9901,10 +9906,10 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                         }
                                     );
                                 } catch (\Exception $e) {
-                                 
+
                                     Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                   
+
+
                                     session()->flash('error', 'Failed to send email to ' . $email);
                                 }
                             }
@@ -9920,11 +9925,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "Send Letter", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "Send Letter",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -9941,7 +9946,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 }
                             }
                         }
-                        
+
                         $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                         foreach ($list as $u) {
@@ -9952,11 +9957,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "Send Letter", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "Send Letter",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -10026,7 +10031,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
 
 
-           
+
 
                 $marketstat->update();
 
@@ -10080,17 +10085,17 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                 foreach ($list as $u) {
                     $email = Helpers::getUserEmail($u->user_id);
-                
+
                     if ($email !== null) {
                         try {
                             Mail::send(
                                 'mail.view-mail',
                                 [
-                                    'data' => $marketstat, 
-                                    'site' => "view", 
-                                    'history' => "More Information Required", 
-                                    'process' => 'Market Complaint', 
-                                    'comment' => $request->comment, 
+                                    'data' => $marketstat,
+                                    'site' => "view",
+                                    'history' => "More Information Required",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
                                     'user' => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $marketstat) {
@@ -10099,15 +10104,15 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 }
                             );
                         } catch (\Exception $e) {
-                            
+
                             Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                
-                            
+
+
                             session()->flash('error', 'Failed to send email to ' . $email);
                         }
                     }
                 }
-                
+
                 $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                 foreach ($list as $u) {
@@ -10118,11 +10123,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             Mail::send(
                                 'mail.view-mail',
                                 [
-                                    'data' => $marketstat, 
-                                    'site' => "view", 
-                                    'history' => "More Information Required", 
-                                    'process' => 'Market Complaint', 
-                                    'comment' => $request->comment, 
+                                    'data' => $marketstat,
+                                    'site' => "view",
+                                    'history' => "More Information Required",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
                                     'user' => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $marketstat) {
@@ -10190,17 +10195,17 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                 foreach ($list as $u) {
                     $email = Helpers::getUserEmail($u->user_id);
-                
+
                     if ($email !== null) {
                         try {
                             Mail::send(
                                 'mail.view-mail',
                                 [
-                                    'data' => $marketstat, 
-                                    'site' => "view", 
-                                    'history' => "More Information Required", 
-                                    'process' => 'Market Complaint', 
-                                    'comment' => $request->comment, 
+                                    'data' => $marketstat,
+                                    'site' => "view",
+                                    'history' => "More Information Required",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
                                     'user' => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $marketstat) {
@@ -10209,15 +10214,15 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 }
                             );
                         } catch (\Exception $e) {
-                            
+
                             Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                
-                            
+
+
                             session()->flash('error', 'Failed to send email to ' . $email);
                         }
                     }
                 }
-                
+
                 $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                 foreach ($list as $u) {
@@ -10228,11 +10233,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             Mail::send(
                                 'mail.view-mail',
                                 [
-                                    'data' => $marketstat, 
-                                    'site' => "view", 
-                                    'history' => "More Information Required", 
-                                    'process' => 'Market Complaint', 
-                                    'comment' => $request->comment, 
+                                    'data' => $marketstat,
+                                    'site' => "view",
+                                    'history' => "More Information Required",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
                                     'user' => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $marketstat) {
@@ -10372,17 +10377,17 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                 foreach ($list as $u) {
                     $email = Helpers::getUserEmail($u->user_id);
-                
+
                     if ($email !== null) {
                         try {
                             Mail::send(
                                 'mail.view-mail',
                                 [
-                                    'data' => $marketstat, 
-                                    'site' => "view", 
-                                    'history' => "More Information Required", 
-                                    'process' => 'Market Complaint', 
-                                    'comment' => $request->comment, 
+                                    'data' => $marketstat,
+                                    'site' => "view",
+                                    'history' => "More Information Required",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
                                     'user' => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $marketstat) {
@@ -10391,15 +10396,15 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 }
                             );
                         } catch (\Exception $e) {
-                            
+
                             Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                
-                            
+
+
                             session()->flash('error', 'Failed to send email to ' . $email);
                         }
                     }
                 }
-                
+
                 $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                 foreach ($list as $u) {
@@ -10410,11 +10415,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             Mail::send(
                                 'mail.view-mail',
                                 [
-                                    'data' => $marketstat, 
-                                    'site' => "view", 
-                                    'history' => "More Information Required", 
-                                    'process' => 'Market Complaint', 
-                                    'comment' => $request->comment, 
+                                    'data' => $marketstat,
+                                    'site' => "view",
+                                    'history' => "More Information Required",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
                                     'user' => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $marketstat) {
@@ -10525,17 +10530,17 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                 foreach ($list as $u) {
                     $email = Helpers::getUserEmail($u->user_id);
-                
+
                     if ($email !== null) {
                         try {
                             Mail::send(
                                 'mail.view-mail',
                                 [
-                                    'data' => $marketstat, 
-                                    'site' => "view", 
-                                    'history' => "More Information Required", 
-                                    'process' => 'Market Complaint', 
-                                    'comment' => $request->comment, 
+                                    'data' => $marketstat,
+                                    'site' => "view",
+                                    'history' => "More Information Required",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
                                     'user' => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $marketstat) {
@@ -10544,15 +10549,15 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 }
                             );
                         } catch (\Exception $e) {
-                            
+
                             Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                
-                            
+
+
                             session()->flash('error', 'Failed to send email to ' . $email);
                         }
                     }
                 }
-                
+
                 $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                 foreach ($list as $u) {
@@ -10563,11 +10568,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             Mail::send(
                                 'mail.view-mail',
                                 [
-                                    'data' => $marketstat, 
-                                    'site' => "view", 
-                                    'history' => "More Information Required", 
-                                    'process' => 'Market Complaint', 
-                                    'comment' => $request->comment, 
+                                    'data' => $marketstat,
+                                    'site' => "view",
+                                    'history' => "More Information Required",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
                                     'user' => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $marketstat) {
@@ -10668,17 +10673,17 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                     foreach ($list as $u) {
                         $email = Helpers::getUserEmail($u->user_id);
-                    
+
                         if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $marketstat, 
-                                        'site' => "view", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'Market Complaint', 
-                                        'comment' => $request->comment, 
+                                        'data' => $marketstat,
+                                        'site' => "view",
+                                        'history' => "More Information Required",
+                                        'process' => 'Market Complaint',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $marketstat) {
@@ -10687,15 +10692,15 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                     }
                                 );
                             } catch (\Exception $e) {
-                                
+
                                 Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                    
-                                
+
+
                                 session()->flash('error', 'Failed to send email to ' . $email);
                             }
                         }
                     }
-                    
+
                     $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                     foreach ($list as $u) {
@@ -10706,11 +10711,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $marketstat, 
-                                        'site' => "view", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'Market Complaint', 
-                                        'comment' => $request->comment, 
+                                        'data' => $marketstat,
+                                        'site' => "view",
+                                        'history' => "More Information Required",
+                                        'process' => 'Market Complaint',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $marketstat) {
@@ -10777,17 +10782,17 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
-                        
+
                             if ($email !== null) {
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "More Information Required", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "More Information Required",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -10796,15 +10801,15 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                         }
                                     );
                                 } catch (\Exception $e) {
-                                    
+
                                     Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                    
+
+
                                     session()->flash('error', 'Failed to send email to ' . $email);
                                 }
                             }
                         }
-                        
+
                         $list = Helpers::getCQAUsersList($marketstat->division_id);
 
                         foreach ($list as $u) {
@@ -10815,11 +10820,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $marketstat, 
-                                            'site' => "view", 
-                                            'history' => "More Information Required", 
-                                            'process' => 'Market Complaint', 
-                                            'comment' => $request->comment, 
+                                            'data' => $marketstat,
+                                            'site' => "view",
+                                            'history' => "More Information Required",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $marketstat) {
@@ -10838,7 +10843,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
 
 
-                           
+
 
                     $marketstat->update();
 
@@ -10928,8 +10933,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         if ($request->revision == "Action-Item") {
             // return "test";
             $data = MarketComplaint::find($id);
-            $parent_record = Helpers::getDivisionName($data->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);  
-             
+            $parent_record = Helpers::getDivisionName($data->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+
 
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.action-item.action-item', compact('record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data'));
@@ -10950,7 +10955,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
     public function MarketComplaintCapa_ActionChild(Request $request, $id)
     {
         // dd($request->revision);
-       
+
         $cc = MarketComplaint::find($id);
         $cft = [];
 
@@ -10984,8 +10989,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $old_record = Capa::select('id', 'division_id', 'record')->get();
             $lastAi = Capa::orderBy('record', 'desc')->first();
             $record = $lastAi ? $lastAi->record + 1 : 1;
-        
-            
+
+
         // $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number =$record;
@@ -10996,13 +11001,13 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $p_record = MarketComplaint::find($id);
             $data_record = Helpers::getDivisionName($p_record->division_id) . '/' . 'MC' . '/' . date('Y') . '/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             // $parentRecord = MarketComplaint::where('id', $id)->value('record');
-            $parent_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);  
+            $parent_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
 
             $data = MarketComplaint::find($id);
             $parent_division_id  = MarketComplaint::where('id', $id)->value('division_id');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
 
-            
+
               $pre = [
                     'DEV' => \App\Models\Deviation::class,
                 'AP' => \App\Models\AuditProgram::class,
@@ -11048,7 +11053,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $old_record = ActionItem::select('id', 'division_id', 'record')->get();
                 $lastAi = ActionItem::orderBy('record', 'desc')->first();
                 $record_number = $lastAi ? $lastAi->record + 1 : 1;
-     
+
             return view('frontend.action-item.action-item', compact('parent_division_id','record', 'data', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record','relatedRecords'));
         } elseif ($request->revision == "rca") {
             //  return "test";
@@ -11057,8 +11062,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $old_record = RootCauseAnalysis::select('id', 'division_id', 'record')->get();
             $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
             $record = $lastAi ? $lastAi->record + 1 : 1;
-        
-            
+
+
                // $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number =$record;
@@ -11071,21 +11076,21 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $relatedRecords = Helpers::getAllRelatedRecords();
             $data=MarketComplaint::find($id);
 
-            
+
             $parent_division_id  = MarketComplaint::where('id', $id)->value('division_id');
             $parent_due_date = MarketComplaint::where('id', $id)->value('due_date_gi');
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-                    
+
 
                 $count = Helpers::getChildData($id, $parent_type);
-                $countData = $count + 1; 
+                $countData = $count + 1;
 
                  if ($request->revision == "extension"){
                     $lastExtension = extension_new::where('parent_id', $id)
                                 ->where('parent_type', 'Market Complaint')
                                 ->orderByDesc('id')
                                 ->first();
-                    
+
                             if (!$lastExtension) {
                                 $extensionCount = 1;
                             } else {
@@ -11096,21 +11101,21 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 }
                             }
 
-                        }   
+                        }
 
-                
+
             $old_record = extension_new::select('id', 'division_id', 'record')->get();
             $lastAi = extension_new::orderBy('record', 'desc')->first();
 
             $record = $lastAi ? ((int)$lastAi->record + 1) : 1;
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
-     
-           
+
+
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
-          
-            
-        
+
+
+
 
                 return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
             }
@@ -11122,7 +11127,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
     public function MarketCompalinExtensionChild(Request $request, $id)
     {
-      
+
         $cc = MarketComplaint::find($id);
         $cft = [];
 
@@ -11145,23 +11150,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         $parent_short_description = MarketComplaint::where('id', $id)->value('description_gi');
         $parent_division_id = MarketComplaint::where('id', $id)->value('division_id');
         $parent_due_date = MarketComplaint::where('id', $id)->value('due_date_gi');
-       
-       
+
+
         if ($request->revision == "extension") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $relatedRecords = Helpers::getAllRelatedRecords();
             $data=MarketComplaint::find($id);
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-                    
+
 
                 $count = Helpers::getChildData($id, $parent_type);
-                $countData = $count + 1; 
+                $countData = $count + 1;
                   if ($request->revision == "extension"){
                     $lastExtension = extension_new::where('parent_id', $id)
                                 ->where('parent_type', 'Market Complaint')
                                 ->orderByDesc('id')
                                 ->first();
-                    
+
                             if (!$lastExtension) {
                                 $extensionCount = 1;
                             } else {
@@ -11172,19 +11177,19 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                 }
                             }
 
-                        }   
+                        }
 
-                
+
             $old_record = extension_new::select('id', 'division_id', 'record')->get();
             $lastAi = extension_new::orderBy('record', 'desc')->first();
             $record = $lastAi ? $lastAi->record + 1 : 1;
-     
+
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
-            
+
                 return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
             }
-           
+
     }
 
 
@@ -11428,7 +11433,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
         // $martab_grid =MarketComplaintGrids::where(['mc_id' => $id,'identifer'=> 'Sutability'])->first();
 
-        
+
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
@@ -11455,7 +11460,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
     }
 
 
-    
+
 
     public function MarketAuditTrial($id)
     {
