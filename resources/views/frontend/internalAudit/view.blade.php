@@ -15019,11 +15019,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <div class="col-md-12 mb-4">
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
-                                            <textarea  name="remark_formulation_research_development_comment" >
-                                                @if ($checklist17 && $checklist17->{"remark_formulation_research_development_comment"})
-                                                {{ $checklist17->{"remark_formulation_research_development_comment"} }}
-                                                @endif
-                                            </textarea>
+                                            <textarea  name="remark_formulation_research_development_comment" >@if ($checklist17 && $checklist17->{"remark_formulation_research_development_comment"}) {{ $checklist17->{"remark_formulation_research_development_comment"} }} @endif</textarea>
                                         </div>
                                     </div>
 

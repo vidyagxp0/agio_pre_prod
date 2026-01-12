@@ -763,7 +763,7 @@ class MytaskController extends Controller
 
                 // Get records where stage matches accessible stages
                 if (!empty($accessibleStages)) {
-                    $records = $processModel::whereIn('stage', $accessibleStages)->get();
+                    $records = $processModel::whereIn('stage', $accessibleStages)->where('initiator_id', Auth::id())->get();
                     
                     foreach ($records as $record) {
                         // Find the current stage status
