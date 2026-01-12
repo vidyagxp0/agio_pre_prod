@@ -739,14 +739,23 @@
                                         </td> --}}
 
                                         <td>
-                                            @if(!empty($oos_detail['oos_file_attachment']))
+                                            {{-- @if(!empty($oos_detail['oos_file_attachment']))
                                                 <a href="{{ asset('upload/'.$oos_detail['oos_file_attachment']) }}"
                                                 target="_blank"
                                                 class="btn btn-sm btn-primary mb-1">
                                                     <i class="fa fa-eye"></i> View File
                                                 </a>
                                                 <br>
-                                            @endif
+                                            @endif --}}
+
+    @if(!empty($oos_detail['oos_file_attachment']))
+        <a href="{{ asset('upload/'.$oos_detail['oos_file_attachment']) }}"
+           target="_blank"
+           class="btn btn-sm btn-primary mb-1">
+            <i class="fa fa-eye"></i> View File
+        </a>
+    @endif
+
 
                                             <input {{Helpers::isOOSChemical($data->stage)}}
                                                 type="file"
