@@ -726,9 +726,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                             <div class="group-input">
                                                 <label for="Date Due"><b>Date of Initiation</b></label>
                                                 {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('m-d-Y') }}" value="" name="intiation_date"> --}}
-                                                <input disabled type="text" value="{{ date('d-M-Y') }}"
+                                                <input disabled type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}"
                                                     name="intiation_date">
-                                                <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                                <input type="hidden" value="{{ Helpers::getdateFormat($data->intiation_date) }}" name="intiation_date">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
