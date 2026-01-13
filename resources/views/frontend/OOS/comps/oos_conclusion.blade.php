@@ -88,7 +88,7 @@
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Justifi. for Averaging Results s @if($data->stage == 20) <span class="text-danger">*</span>@endif</label>
+                    <label for="Description Deviation">Justify for Averaging Results @if($data->stage == 20) <span class="text-danger">*</span>@endif</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1"  {{ $data->stage == 21 ? 'disabled' : ''  }}>
                                 {{ $data->justifi_for_averaging_results_oosc ?? '' }}
