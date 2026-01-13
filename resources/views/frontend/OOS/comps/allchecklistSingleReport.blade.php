@@ -4172,7 +4172,7 @@
                         );
                         @endphp
                         <div class="block">
-                        <div class="block-head"> CheckList - RM PM</div>
+                        <div class="block-head"> CheckList - RM-PM Sampling</div>
                         <div class="border-table">
                         <table>
                         <tr class="table_bg">
