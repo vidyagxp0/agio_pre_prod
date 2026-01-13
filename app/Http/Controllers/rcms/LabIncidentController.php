@@ -92,11 +92,11 @@ class LabIncidentController extends Controller
 
         $lastLB = LabIncident::orderBy('record', 'desc')->first();
 
-        $record = $lastLB ? $lastLB->record + 1 : 1;
+        $record = $lastLB ? (int) $lastLB->record + 1 : 1;
 
          $lastLB = LabIncident::orderBy('record_number', 'desc')->first();
 
-        $record_number = $lastLB ? $lastLB->record_number + 1 : 1;
+        $record_number = $lastLB ? (int) $lastLB->record_number + 1 : 1;
        
        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 

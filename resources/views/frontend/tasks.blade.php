@@ -3,6 +3,268 @@
     {{-- ======================================
                     DASHBOARD
     ======================================= --}}
+
+    <style>
+                    .custom-scroll-table {
+                        max-height: 420px; /* adjust height as per need */
+                        overflow-y: auto;
+                        border: 1px solid #ddd;
+                    }
+
+                    .custom-table thead th {
+                        position: sticky;
+                        top: 0;
+                        background-color: #5c98e7;
+                        color: #000000;
+                        z-index: 10;
+                        text-align: center;
+                    }
+
+                    .custom-table th, 
+                    .custom-table td {
+                        vertical-align: middle !important;
+                        font-size: 14px;
+                        padding: 10px 8px;
+                    }
+
+                    .custom-table tr:hover {
+                        background-color: #f4f9ff;
+                        transition: 0.2s;
+                    }
+
+                    .badge {
+                        padding: 6px 10px;
+                        border-radius: 8px;
+                    }
+
+                    .custom-button {
+                        border-radius: 25px;
+                        font-weight: 500;
+                    }
+                    .record-btn {
+                        background-color: #0056b3;         /* Blue color */
+                        color: white !important;
+                        font-weight: 600;
+                        border-radius: 10px;
+                        padding: 6px 14px;
+                        text-decoration: none;
+                        transition: all 0.2s ease-in-out;
+                        display: inline-block;
+                    }
+
+                    .record-btn:hover {
+                        background-color: #0056b3;
+                        color: #fff !important;
+                        transform: scale(1.05);
+                    }
+
+                    .record-btn.disabled {
+                        background-color: #a0a0a0;
+                        cursor: not-allowed;
+                    }
+
+
+                </style>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="document-left-block">
+                            <div class="inner-block table-block">
+                                <div class="head" style="justify-content: flex-start">
+                                    <i class="fas fa-tasks"></i> QMS Tasks - All Processes
+                                </div>
+                                
+                                <!-- Task Summary -->
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i> 
+                                    Showing all pending tasks across all QMS processes for your roles.
+                                    @if(count($allTasks) > 0)
+                                        Total Tasks: <strong>{{ count($allTasks) }}</strong>
+                                    @endif
+                                </div>
+                            {{-- 
+                                <div class="record-list mt-4">
+                                    <div class="inner-block">
+                                        @if(count($allTasks) > 0)
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover custom-table">
+                                                    <thead class="table-header" style="background-color: #5c98e7; color: white;">
+                                                        <tr>
+                                                            <th style="width: 10%">Record ID</th>
+                                                            <th style="width: 10%">Record No.</th>
+                                                            <th style="width: 12%">Process</th>
+                                                            <th style="width: 10%">Initiator</th>
+                                                            <th style="width: 15%">Site/Division</th>
+                                                            <th style="width: 15%">Status</th>
+                                                            <th style="width: 28%">Short Description</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($allTasks as $task)
+                                                            <tr style="text-align: center;">
+                                                                <td>
+                                                                    @if($task['route_name'])
+                                                                        <a target="_blank" href="{{ route($task['route_name'], $task['record_id']) }}" class="btn btn-link btn-sm" style="color: #0039bd; text-decoration: underline; font-weight: bold;">
+                                                                            {{ Helpers::recordFormat($task['record_format']) }}
+                                                                        </a>
+                                                                    @else
+                                                                        <span class="text-muted">{{ Helpers::recordFormat($task['record_format']) }}</span>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    <span class="badge badge-secondary">{{ $task['record_number'] }}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span>{{ $task['process'] }}</span>
+                                                                </td>
+                                                                <td>{{ Helpers::getInitiatorName($task['initiator_id']) }}</td>
+                                                                <td>{{ Helpers::getDivisionName($task['division_id']) }}</td>
+                                                            
+                                                                <td>
+                                                                    @php
+                                                                        $statusClass = 'badge-warning';
+                                                                        if (strpos($task['status'], 'Approval') !== false) {
+                                                                            $statusClass = 'badge-info';
+                                                                        } elseif (strpos($task['status'], 'Review') !== false) {
+                                                                            $statusClass = 'badge-primary';
+                                                                        } elseif (strpos($task['status'], 'Complete') !== false || strpos($task['status'], 'Closed') !== false) {
+                                                                            $statusClass = 'badge-success';
+                                                                        } elseif (strpos($task['status'], 'Opened') !== false) {
+                                                                            $statusClass = 'badge-secondary';
+                                                                        }
+                                                                    @endphp
+                                                                    <span >{{ $task['status'] }}</span>
+                                                                </td>
+                                                                <td style="text-align: left;">
+                                                                    {{ Str::limit($task['short_description'], 100) }}
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Refresh Button -->
+                                            <div class="mt-3 text-center">
+                                                <a href="{{ url('mytaskdata') }}" class="btn btn-primary custom-button">
+                                                    <i class="fas fa-sync-alt"></i> Refresh Tasks
+                                                </a>
+                                            </div>
+                                        @else
+                                            <div class="alert alert-warning text-center">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                <h4>No Pending Tasks Found</h4>
+                                                <p>You don't have any pending tasks across all QMS processes for your current roles.</p>
+                                            </div>
+                                            
+                                            <!-- Refresh Button -->
+                                            <div class="text-center mt-3">
+                                                <a href="{{ url('mytaskdata') }}" class="btn btn-primary custom-button">
+                                                    <i class="fas fa-sync-alt"></i> Refresh Tasks
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div> --}}
+
+
+                            <div class="record-list mt-4">
+                                <div class="inner-block">
+                                    <div class="table-responsive custom-scroll-table">
+                                        <table id="tasksTable" class="table table-bordered table-hover custom-table mb-0">
+                                            <thead class="table-header" style="background-color: #5c98e7; color: white; position: sticky; top: 0; z-index: 10;">
+                                                <tr>
+                                                    <th style="width: 8%">Record ID</th>
+                                                    <th style="width: 8%">Record No.</th>
+                                                    <th style="width: 12%">Process</th>
+                                                    <th style="width: 10%">Initiator</th>
+                                                    <th style="width: 15%">Site/Division</th>
+                                                    <th style="width: 15%">Status</th>
+                                                    <th style="width: 32%">Short Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableBody">
+                                                @foreach($allTasks as $task)
+                                                <tr>
+                                                    <td>
+                                                        @if($task['route_name'])
+                                                        <a target="_blank" href="{{ route($task['route_name'], $task['record_id']) }}" class="btn btn-sm record-btn">
+                                                            {{ Helpers::recordFormat($task['record_format']) }}
+                                                        </a>
+                                                        @else
+                                                        <span class="btn btn-sm record-btn disabled" style="opacity: 0.6;">
+                                                            {{ Helpers::recordFormat($task['record_format']) }}
+                                                        </span>
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $task['record_number'] }}</td>
+                                                    <td>{{ $task['process'] }}</td>
+                                                    <td>{{ Helpers::getInitiatorName($task['initiator_id']) }}</td>
+                                                    <td>{{ Helpers::getDivisionName($task['division_id']) }}</td>
+                                                    <td>
+                                                        @php
+                                                        $statusClass = 'badge-warning';
+                                                        if(strpos($task['status'], 'Approval') !== false){ $statusClass='badge-info'; }
+                                                        elseif(strpos($task['status'], 'Review') !== false){ $statusClass='badge-primary'; }
+                                                        elseif(strpos($task['status'], 'Complete') !== false || strpos($task['status'], 'Closed') !== false){ $statusClass='badge-success'; }
+                                                        elseif(strpos($task['status'], 'Opened') !== false){ $statusClass='badge-secondary'; }
+                                                        @endphp
+                                                        <span class="{{ $statusClass }}">{{ $task['status'] }}</span>
+                                                    </td>
+                                                    <td style="text-align:left;">{{ Str::limit($task['short_description'],100) }}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- Pagination Buttons -->
+                                    <div class="mt-3 text-center">
+                                        <button id="prevBtn" class="btn btn-secondary">Prev</button>
+                                        <span id="pageInfo"></span>
+                                        <button id="nextBtn" class="btn btn-secondary">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                            let currentPage = 1;
+                            const rowsPerPage = 10;
+                            const table = document.getElementById("tasksTable");
+                            const tbody = document.getElementById("tableBody");
+                            const rows = Array.from(tbody.querySelectorAll("tr"));
+                            const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+                            function displayPage(page) {
+                                rows.forEach((row, index) => {
+                                    row.style.display = (index >= (page-1)*rowsPerPage && index < page*rowsPerPage) ? '' : 'none';
+                                });
+                                document.getElementById("pageInfo").innerText = "Page " + page + " of " + totalPages;
+                            }
+
+                            document.getElementById("prevBtn").addEventListener("click", () => {
+                                if(currentPage > 1){
+                                    currentPage--;
+                                    displayPage(currentPage);
+                                }
+                            });
+
+                            document.getElementById("nextBtn").addEventListener("click", () => {
+                                if(currentPage < totalPages){
+                                    currentPage++;
+                                    displayPage(currentPage);
+                                }
+                            });
+
+                            displayPage(currentPage);
+                            </script>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
     <style>
         .filter-form {
             background-color: #f9f9f9;
@@ -199,268 +461,6 @@
                         </div>
                     </div> --}}
                 </div>
-                <style>
-                    .custom-scroll-table {
-    max-height: 420px; /* adjust height as per need */
-    overflow-y: auto;
-    border: 1px solid #ddd;
-}
-
-.custom-table thead th {
-    position: sticky;
-    top: 0;
-    background-color: #5c98e7;
-    color: #000000;
-    z-index: 10;
-    text-align: center;
-}
-
-.custom-table th, 
-.custom-table td {
-    vertical-align: middle !important;
-    font-size: 14px;
-    padding: 10px 8px;
-}
-
-.custom-table tr:hover {
-    background-color: #f4f9ff;
-    transition: 0.2s;
-}
-
-.badge {
-    padding: 6px 10px;
-    border-radius: 8px;
-}
-
-.custom-button {
-    border-radius: 25px;
-    font-weight: 500;
-}
-.record-btn {
-    background-color: #0056b3;         /* Blue color */
-    color: white !important;
-    font-weight: 600;
-    border-radius: 10px;
-    padding: 6px 14px;
-    text-decoration: none;
-    transition: all 0.2s ease-in-out;
-    display: inline-block;
-}
-
-.record-btn:hover {
-    background-color: #0056b3;
-    color: #fff !important;
-    transform: scale(1.05);
-}
-
-.record-btn.disabled {
-    background-color: #a0a0a0;
-    cursor: not-allowed;
-}
-
-
-                </style>
-                <div class="row">
-        <div class="col-xl-12 col-lg-12">
-            <div class="document-left-block">
-                <div class="inner-block table-block">
-                    <div class="head" style="justify-content: flex-start">
-                        <i class="fas fa-tasks"></i> QMS Tasks - All Processes
-                    </div>
-                    
-                    <!-- Task Summary -->
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i> 
-                        Showing all pending tasks across all QMS processes for your roles.
-                        @if(count($allTasks) > 0)
-                            Total Tasks: <strong>{{ count($allTasks) }}</strong>
-                        @endif
-                    </div>
-                  {{-- 
-                    <div class="record-list mt-4">
-                        <div class="inner-block">
-                            @if(count($allTasks) > 0)
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover custom-table">
-                                        <thead class="table-header" style="background-color: #5c98e7; color: white;">
-                                            <tr>
-                                                <th style="width: 10%">Record ID</th>
-                                                <th style="width: 10%">Record No.</th>
-                                                <th style="width: 12%">Process</th>
-                                                <th style="width: 10%">Initiator</th>
-                                                <th style="width: 15%">Site/Division</th>
-                                                <th style="width: 15%">Status</th>
-                                                <th style="width: 28%">Short Description</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($allTasks as $task)
-                                                <tr style="text-align: center;">
-                                                    <td>
-                                                        @if($task['route_name'])
-                                                            <a target="_blank" href="{{ route($task['route_name'], $task['record_id']) }}" class="btn btn-link btn-sm" style="color: #0039bd; text-decoration: underline; font-weight: bold;">
-                                                                {{ Helpers::recordFormat($task['record_format']) }}
-                                                            </a>
-                                                        @else
-                                                            <span class="text-muted">{{ Helpers::recordFormat($task['record_format']) }}</span>
-                                                        @endif
-                                                    </td>
-                                                     <td>
-                                                        <span class="badge badge-secondary">{{ $task['record_number'] }}</span>
-                                                    </td>
-                                                    <td>
-                                                        <span>{{ $task['process'] }}</span>
-                                                    </td>
-                                                    <td>{{ Helpers::getInitiatorName($task['initiator_id']) }}</td>
-                                                    <td>{{ Helpers::getDivisionName($task['division_id']) }}</td>
-                                                   
-                                                    <td>
-                                                        @php
-                                                            $statusClass = 'badge-warning';
-                                                            if (strpos($task['status'], 'Approval') !== false) {
-                                                                $statusClass = 'badge-info';
-                                                            } elseif (strpos($task['status'], 'Review') !== false) {
-                                                                $statusClass = 'badge-primary';
-                                                            } elseif (strpos($task['status'], 'Complete') !== false || strpos($task['status'], 'Closed') !== false) {
-                                                                $statusClass = 'badge-success';
-                                                            } elseif (strpos($task['status'], 'Opened') !== false) {
-                                                                $statusClass = 'badge-secondary';
-                                                            }
-                                                        @endphp
-                                                        <span >{{ $task['status'] }}</span>
-                                                    </td>
-                                                    <td style="text-align: left;">
-                                                        {{ Str::limit($task['short_description'], 100) }}
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <!-- Refresh Button -->
-                                <div class="mt-3 text-center">
-                                    <a href="{{ url('mytaskdata') }}" class="btn btn-primary custom-button">
-                                        <i class="fas fa-sync-alt"></i> Refresh Tasks
-                                    </a>
-                                </div>
-                            @else
-                                <div class="alert alert-warning text-center">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    <h4>No Pending Tasks Found</h4>
-                                    <p>You don't have any pending tasks across all QMS processes for your current roles.</p>
-                                </div>
-                                
-                                <!-- Refresh Button -->
-                                <div class="text-center mt-3">
-                                    <a href="{{ url('mytaskdata') }}" class="btn btn-primary custom-button">
-                                        <i class="fas fa-sync-alt"></i> Refresh Tasks
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
-                    </div> --}}
-
-
-                <div class="record-list mt-4">
-                    <div class="inner-block">
-                        <div class="table-responsive custom-scroll-table">
-                            <table id="tasksTable" class="table table-bordered table-hover custom-table mb-0">
-                                <thead class="table-header" style="background-color: #5c98e7; color: white; position: sticky; top: 0; z-index: 10;">
-                                    <tr>
-                                        <th style="width: 8%">Record ID</th>
-                                        <th style="width: 8%">Record No.</th>
-                                        <th style="width: 12%">Process</th>
-                                        <th style="width: 10%">Initiator</th>
-                                        <th style="width: 15%">Site/Division</th>
-                                        <th style="width: 15%">Status</th>
-                                        <th style="width: 32%">Short Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableBody">
-                                    @foreach($allTasks as $task)
-                                    <tr>
-                                        <td>
-                                            @if($task['route_name'])
-                                            <a target="_blank" href="{{ route($task['route_name'], $task['record_id']) }}" class="btn btn-sm record-btn">
-                                                {{ Helpers::recordFormat($task['record_format']) }}
-                                            </a>
-                                            @else
-                                            <span class="btn btn-sm record-btn disabled" style="opacity: 0.6;">
-                                                {{ Helpers::recordFormat($task['record_format']) }}
-                                            </span>
-                                            @endif
-                                        </td>
-                                        <td>{{ $task['record_number'] }}</td>
-                                        <td>{{ $task['process'] }}</td>
-                                        <td>{{ Helpers::getInitiatorName($task['initiator_id']) }}</td>
-                                        <td>{{ Helpers::getDivisionName($task['division_id']) }}</td>
-                                        <td>
-                                            @php
-                                            $statusClass = 'badge-warning';
-                                            if(strpos($task['status'], 'Approval') !== false){ $statusClass='badge-info'; }
-                                            elseif(strpos($task['status'], 'Review') !== false){ $statusClass='badge-primary'; }
-                                            elseif(strpos($task['status'], 'Complete') !== false || strpos($task['status'], 'Closed') !== false){ $statusClass='badge-success'; }
-                                            elseif(strpos($task['status'], 'Opened') !== false){ $statusClass='badge-secondary'; }
-                                            @endphp
-                                            <span class="{{ $statusClass }}">{{ $task['status'] }}</span>
-                                        </td>
-                                        <td style="text-align:left;">{{ Str::limit($task['short_description'],100) }}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Pagination Buttons -->
-                        <div class="mt-3 text-center">
-                            <button id="prevBtn" class="btn btn-secondary">Prev</button>
-                            <span id="pageInfo"></span>
-                            <button id="nextBtn" class="btn btn-secondary">Next</button>
-                        </div>
-                    </div>
-                </div>
-
-                <script>
-                let currentPage = 1;
-                const rowsPerPage = 10;
-                const table = document.getElementById("tasksTable");
-                const tbody = document.getElementById("tableBody");
-                const rows = Array.from(tbody.querySelectorAll("tr"));
-                const totalPages = Math.ceil(rows.length / rowsPerPage);
-
-                function displayPage(page) {
-                    rows.forEach((row, index) => {
-                        row.style.display = (index >= (page-1)*rowsPerPage && index < page*rowsPerPage) ? '' : 'none';
-                    });
-                    document.getElementById("pageInfo").innerText = "Page " + page + " of " + totalPages;
-                }
-
-                document.getElementById("prevBtn").addEventListener("click", () => {
-                    if(currentPage > 1){
-                        currentPage--;
-                        displayPage(currentPage);
-                    }
-                });
-
-                document.getElementById("nextBtn").addEventListener("click", () => {
-                    if(currentPage < totalPages){
-                        currentPage++;
-                        displayPage(currentPage);
-                    }
-                });
-
-                displayPage(currentPage);
-                </script>
-
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-              
-
             </div>
         </div>
     </div>
