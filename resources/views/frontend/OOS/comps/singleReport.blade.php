@@ -2555,7 +2555,7 @@
 
                  {{-- <!-- P-II A QAH/CQAH --> ~Aditya Rajput --}}
 
-                            <div class="block">
+                            {{-- <div class="block">
                                 <div class="block-head">P-II A QAH/CQAH Review</div>
                                 <!-- <div class = "inner-block">
                                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">P-II A QAH/CQAH Remark</label>
@@ -2592,7 +2592,7 @@
                                         @endif
                                     </table>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="block">
                                 <div class="block-head">Phase II B QAH/CQAH Review</div>
@@ -2778,7 +2778,7 @@
                                                     <td class="w-80">@if($data->final_reportable_results_oosc ){{ $data->final_reportable_results_oosc }} @else Not Applicable @endif</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="w-20">Justifi. for Averaging Results</th>
+                                                    <th class="w-20">Justify for Averaging Results</th>
                                                     <td class="w-80">@if($data->justifi_for_averaging_results_oosc ){{ strip_tags($data->justifi_for_averaging_results_oosc) }} @else Not Applicable @endif</td>
                                                 </tr>
                                            </table>

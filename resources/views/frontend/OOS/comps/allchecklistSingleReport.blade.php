@@ -3748,6 +3748,8 @@
             </div>
         </div>
     @endif
+
+                @if($data->Form_type == 'OOS_Chemical' || $data->Form_type == 'OOT')
                         @php
                         $ph_meter_questions = array(
                                 "Was instrument calibrated before start of analysis?",
@@ -4200,3 +4202,4 @@
                         </table>
                         </div>
                         </div>
+                @endif
