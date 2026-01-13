@@ -3748,7 +3748,6 @@
             </div>
         </div>
     @endif
-
                         @php
                         $ph_meter_questions = array(
                                 "Was instrument calibrated before start of analysis?",
@@ -3761,7 +3760,7 @@
                             );
                         @endphp
                         <div class="block">
-                            <div class="block-head"> CheckList - pH-Viscometer-MP</div>
+                            <div class="block-head"> CheckList - pH</div>
                             <div class="border-table">
                                 <table>
                                     <tr class="table_bg">
