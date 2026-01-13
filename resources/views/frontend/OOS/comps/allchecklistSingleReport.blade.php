@@ -3749,6 +3749,7 @@
         </div>
     @endif
 
+                @if($data->Form_type == 'OOS_Chemical' || $data->Form_type == 'OOT')
                         @php
                         $ph_meter_questions = array(
                                 "Was instrument calibrated before start of analysis?",
@@ -3761,7 +3762,7 @@
                             );
                         @endphp
                         <div class="block">
-                            <div class="block-head"> CheckList - pH-Viscometer-MP</div>
+                            <div class="block-head"> CheckList - pH</div>
                             <div class="border-table">
                                 <table>
                                     <tr class="table_bg">
@@ -4201,3 +4202,4 @@
                         </table>
                         </div>
                         </div>
+                @endif
