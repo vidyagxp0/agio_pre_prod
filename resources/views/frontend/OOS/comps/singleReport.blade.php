@@ -1559,7 +1559,7 @@
                     </tr>
                 </table>
 
-                @php
+                    @php
                         $IIB_inv_questions = [
                             "Analyst Interview required?",
                             "Raw data Examination? (Examination of raw data, including chromatograms and spectra; any anomalous or suspect peaks or data)",
@@ -1587,6 +1587,9 @@
                             }
                         }
                     @endphp
+                    <div class="block">
+                        <div class="block-head">Phase IB investigation Checklist</div>
+                    </div>
                     <table border="1" width="100%" cellspacing="0" cellpadding="6">
                         <thead>
                             <tr>
@@ -2434,6 +2437,30 @@
                                 <td class="w-80">@if($data->If_assignable_error ){{ strip_tags($data->If_assignable_error) }} @else Not Applicable @endif</td>
                             </tr>
                        </table>
+                    </div>
+                    <div class="block">
+                    <div class="block-head">Phase IIB inv. Attachment</div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-80"> Attachment </th>
+                                </tr>
+                                @if ($data->phaseII_attachment)
+                                @foreach ($data->phaseII_attachment as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-80">Not Applicable</td>
+                                    </tr>
+                                @endif
+                            </table>
+                        </div>
                     </div>
                     {{-- <div class = "inner-block">
                         <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">If Assignable Cause Identified Perform Re-testing</label>
