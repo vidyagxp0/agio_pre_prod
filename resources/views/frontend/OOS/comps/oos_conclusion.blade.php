@@ -48,9 +48,9 @@
                                         <td><input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion[{{$loop->index }}][summary_results_hypothesis_experimentation_test_pr_no]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_hypothesis_experimentation_test_pr_no') }}"></td>
                                         <td><input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion[{{$loop->index }}][summary_results]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results') }}"></td>
                                         <td><input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_conclusion[{{$loop->index }}][summary_results_analyst_name]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_analyst_name') }}"></td>
-                                        <td><input  {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_conclusion[{{$loop->index }}][summary_results_remarks]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}"></td> 
+                                        <td><input  {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_conclusion[{{$loop->index }}][summary_results_remarks]" value="{{ Helpers::getArrayKey($oos_conclusion, 'summary_results_remarks') }}"></td>
                                         <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                    </tr>  
+                                    </tr>
                                 @endforeach
                             @endif
                         </tbody>
@@ -61,7 +61,7 @@
                 <div class="group-input">
                     <label for="Report Attachments">Specification Limit </label>
                     <input type="text" value="{{$data->specification_limit_oosc}}" name="specification_limit_oosc" {{   $data->stage == 21 ? 'disabled' : '' }}>
-                                                                            
+
                 </div>
             </div>
 
@@ -124,27 +124,27 @@
                 <div class="group-input">
                     <label for="Reference Records">CAPA Ref No.</label>
                     <select multiple id="reference_record" name="capa_ref_no_oosc[]" {{  $data->stage == 21 ? 'disabled' : '' }}
-                        
+
 
                         placeholder="Select Reference Records">
-                        
+
                         @if (!empty($capa_record))
                             @foreach ($capa_record as $new)
                                 @php
                                     $recordValue =
                                         Helpers::getDivisionName($new->division_id) .
                                         '/CAPA/' .
-                                        date('Y') . 
-                                        '/' . 
+                                        date('Y') .
+                                        '/' .
                                         Helpers::recordFormat($new->record);
-            
+
                                     // Ensure $data->capa_ref_no_oosc is properly fetched from the DB
-                                    $selectedValues = is_string($data->capa_ref_no_oosc) 
-                                        ? explode(',', $data->capa_ref_no_oosc) 
-                                        : (is_array($data->capa_ref_no_oosc) 
-                                            ? $data->capa_ref_no_oosc 
+                                    $selectedValues = is_string($data->capa_ref_no_oosc)
+                                        ? explode(',', $data->capa_ref_no_oosc)
+                                        : (is_array($data->capa_ref_no_oosc)
+                                            ? $data->capa_ref_no_oosc
                                             : []);
-            
+
                                     // Check if the recordValue exists in the selected values
                                     $selected = in_array($recordValue, $selectedValues) ? 'selected' : '';
                                 @endphp
@@ -156,7 +156,7 @@
                     </select>
                 </div>
             </div>
-            
+
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if CAPA not required</label>
@@ -177,13 +177,13 @@
                     </select>
                 </div>
             </div>
-           
+
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">Action Item Ref.</label>
                     <select multiple id="related_records" name="action_plan_ref_oosc[]"
                         placeholder="Select Reference Records">
-            
+
                         @if (!empty($old_record))
                             @foreach ($old_record as $new)
                                 @php
@@ -193,13 +193,13 @@
                                         date('Y') .
                                         '/' .
                                         Helpers::recordFormat($new->record);
-            
-                                    $selectedValues = is_string($data->action_plan_ref_oosc) 
-                                        ? explode(',', $data->action_plan_ref_oosc) 
-                                        : (is_array($data->action_plan_ref_oosc) 
-                                            ? $data->action_plan_ref_oosc 
+
+                                    $selectedValues = is_string($data->action_plan_ref_oosc)
+                                        ? explode(',', $data->action_plan_ref_oosc)
+                                        : (is_array($data->action_plan_ref_oosc)
+                                            ? $data->action_plan_ref_oosc
                                             : []);
-            
+
                                     $selected = in_array($recordValue, $selectedValues) ? 'selected' : '';
                                 @endphp
                                 <option value="{{ $recordValue }}" {{ $selected }}>
@@ -210,8 +210,8 @@
                     </select>
                 </div>
             </div>
-            
-            
+
+
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justification for Delay</label>
@@ -261,7 +261,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Conclusion Review Comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1" 
+                    <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1"
                     {{Helpers::isOOSChemical($data->stage)}}>
                         {{ $data->conclusion_review_comments_ocr ? $data->conclusion_review_comments_ocr : '' }}
                     </textarea>
@@ -335,7 +335,7 @@
                     <option value="1" {{ (!empty($data->capa_refer_ocr) && in_array('1', explode(',', $data->capa_refer_ocr[0]))) ? 'selected' : '' }}>1</option>
                     <option value="2" {{ (!empty($data->capa_refer_ocr) && in_array('2', explode(',', $data->capa_refer_ocr[0]))) ? 'selected' : '' }}>2</option>
                   </select>
-                 
+
                 </div>
             </div> --}}
 
@@ -388,13 +388,13 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
-                                oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple 
-                                {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }} >
+                                oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple
+                                {{ in_array($data->stage, [12, 13, 16, 17, 21, 22, 26, 27]) ? 'disabled' : '' }} >
                         </div>
                     </div>
                 </div>
             </div>
-           
+
             {{-- <div class="sub-head">
                 CQ Review Comments
             </div>
@@ -403,11 +403,11 @@
                     <label for="Description Deviation">CQ Review comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="cq_review_comments_ocqr" id="summernote-1">
-                                {{ $data->cq_review_comments_ocqr ?? '' }} 
+                                {{ $data->cq_review_comments_ocqr ?? '' }}
                         </textarea>
                 </div>
             </div>
-            
+
             <div class="col-12">
                 <div class="group-input">
                     <label for="Audit Attachments"> CQ Attachment</label>
@@ -443,7 +443,7 @@
 
             <div class="button-block">
                 @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)
-                
+
                 @else
                 <button type="submit" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

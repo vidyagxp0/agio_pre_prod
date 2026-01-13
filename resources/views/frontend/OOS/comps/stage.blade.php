@@ -10,7 +10,7 @@
     }
 
     #statusBlock > div > div {
-        font-size: 0.7rem; 
+        font-size: 0.7rem;
     }
 </style>
 <div class="inner-block state-block">
@@ -21,7 +21,7 @@
             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
             @endphp
-           
+
              <button class="button_theme1"> <a class="text-white" href="{{ route('oos.audit_trial', $data->id) }}"> Audit Trail </a> </button>
              @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Submit</button>
@@ -33,12 +33,12 @@
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Request For Cancellation </button>
              @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">Cancel</button>
- 
+
              @elseif($data->stage == 4 && ( Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">CQA/QA Head Primary Review Complete</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
- 
+
              @elseif($data->stage == 5 && ( ($data->initiator_id == Auth::user()->id) ||(Helpers::check_roles($data->division_id, 'OOS/OOT', 3) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18))))
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
                  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause">Phase IA Investigation</button>
@@ -118,21 +118,21 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 21 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 4) ))
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">PIhase II Investigation Applicable/Not Applicable</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase III Investigation Applicable/Not Applicable</button>
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button> --}}
              @elseif($data->stage == 22 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) || Helpers::check_roles($data->division_id, 'OOS/OOT', 7)))
-                
+
              <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
              </a> </button>
              <button class="button_theme1"> <a class="text-white" href="{{ url('root-cause-analysis') }}"> Root Cause Analysis
              </a> </button>
              @endif
              <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit</a> </button>
- 
-                
+
+
         </div>
     </div>
-                  
+
 <div class="modal fade" id="signature-modal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -182,7 +182,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        
+
         $('#sendstage').on('submit', function(e) {
             $('.on-submit-disable-button').prop('disabled', true);
         });
@@ -231,7 +231,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        
+
         $('#requestmoreinfo').on('submit', function(e) {
             $('.on-submit-disable-button').prop('disabled', true);
         });
@@ -288,13 +288,13 @@
 </div>
 <script>
     $(document).ready(function() {
-        
+
         $('#assignable').on('submit', function(e) {
             $('.on-submit-disable-button').prop('disabled', true);
         });
     })
 
-    
+
     document.addEventListener('DOMContentLoaded', function() {
         var signatureForms = document.querySelectorAll('.signatureModalForm');
 
@@ -308,7 +308,7 @@
             });
         });
     });
-</script>   
+</script>
 <div class="modal fade" id="cancel-modal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -350,7 +350,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        
+
         $('#cancelstage').on('submit', function(e) {
             $('.on-submit-disable-button').prop('disabled', true);
         });
@@ -397,7 +397,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        
+
         $('#Donestage').on('submit', function(e) {
             $('.on-submit-disable-button').prop('disabled', true);
         });
@@ -444,7 +444,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        
+
         $('#Donestage1').on('submit', function(e) {
             $('.on-submit-disable-button').prop('disabled', true);
         });
@@ -491,7 +491,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        
+
         $('#Donestage2').on('submit', function(e) {
             $('.on-submit-disable-button').prop('disabled', true);
         });
@@ -515,7 +515,7 @@
                         </label> --}}
 
                          @if($data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7  || $data->stage == 8 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 14 || $data->stage == 15 || $data->stage == 16 || $data->stage == 18 || $data->stage == 19 || $data->stage == 20)
-                                
+
                                  <label style="display: flex; align-items: baseline;" for="major">
                         <input style="width: 10px;" type="radio" name="child_type" value="Action_Item">Action Item
                         </label>
@@ -621,13 +621,13 @@
                         </label>
                         <label style="display: flex; align-items: baseline;" for="major">
                                 <input style="width: 10px;" type="radio" name="child_type" value="Resampling">Resampling
-                        </label>   
+                        </label>
                         @if($chemical_count >= 3 || $micro_count >= 3 || $oot_count >= 3)
                         @else
                         <label style="display: flex; align-items: baseline;" for="major">
                             <input style="width: 10px;" type="radio" name="child_type" value="Extension">Extension
                         </label>
-                        @endif 
+                        @endif
                     </div>
                 </div>
                 <!-- Modal footer -->
@@ -648,7 +648,7 @@
             <div class="modal-body">
                 <form action="{{ route('oos.child', $data->id) }}" method="POST">
                     @csrf
-                    
+
                     <div class="group-input">
                         @if($chemical_count >= 3 || $micro_count >= 3 || $oot_count >= 3)
                         @else
@@ -657,7 +657,7 @@
                         </label>
                         @endif
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -674,7 +674,7 @@
                 <div style="padding: 10px;" class="progress-bars">
                     <div style=" display: flex; justify-content: center; padding: 6px;"  class="bg-danger">Closed-Cancelled</div>
                 </div>
-                
+
                 @elseif ($data->stage == 23)
                 <div style="padding: 10px;" class="progress-bars">
                     <div style=" display: flex; justify-content: center; padding: 6px;"  class="bg-danger">Closed-Done</div>
@@ -700,7 +700,7 @@
                     @else
                     <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">HOD Primary Review</div>
                     @endif
-                
+
 
                     {{-- @if ($data->stage < 4) --}}
                     @if ($data->stage == 3)
