@@ -302,6 +302,12 @@
                         <th class="w-20">Source Document Type</th>
                         <td class="w-80">@if($data->source_document_type_gi){{ $data->source_document_type_gi }}@else Not Applicable @endif</td>
                     </tr>
+                    @if($data->source_document_type_gi == 'Others')
+                        <tr>
+                            <th class="w-20">Other Source Document Type</th>
+                            <td class="w-80">@if($data->sourceDocOtherGi){{ $data->sourceDocOtherGi }}@else Not Applicable @endif</td>
+                        </tr>
+                    @endif
                     </table>
                     {{-- <div class = "inner-block">
                         <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Reference System Document</label>
@@ -876,13 +882,34 @@
                     <tr>
                         <th class="w-20">Checklists</th>
                         <td class="w-80">
-                            @if($data->justify_if_no_field_alert_pli)
-                                {{ strip_tags($data->justify_if_no_field_alert_pli) }}
+                            @php
+                                $ChecklistData = $data->checklists;
+
+                                if (is_array($ChecklistData)
+                                    && array_key_exists(0, $ChecklistData)
+                                    && is_string($ChecklistData[0])
+                                    && !empty($ChecklistData[0])) {
+
+                                    $selectedChecklist = explode(',', $ChecklistData[0]);
+
+                                } elseif (is_array($ChecklistData)) {
+
+                                    $selectedChecklist = $ChecklistData;
+
+                                } else {
+
+                                    $selectedChecklist = [];
+                                }
+                            @endphp
+
+                            @if(!empty($selectedChecklist))
+                                {{ implode(', ', $selectedChecklist) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
+
                     <tr>
                         <th class="w-20">Checklist Outcome</th>
                         <td class="w-80">
