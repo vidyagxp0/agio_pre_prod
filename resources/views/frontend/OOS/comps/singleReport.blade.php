@@ -2636,9 +2636,13 @@
                                         <div class="block">
                                             <table>
                                                 <tr>
-                                                    <th class="w-20">CAPA Ref No.</th>
-                                                    <td class="w-30">{{ $data->capa_ref_no_oosc ? $data->capa_ref_no_oosc : 'Not Applicable' }}</td>
-
+                                                    <th class="w-20">CAPA Ref jNo.</th>
+                                                    <td class="w-30">
+                                                        {{ is_array($data->capa_ref_no_oosc)
+                                                            ? $data->capa_ref_no_oosc[0]
+                                                            : ($data->capa_ref_no_oosc ?? 'Not Applicable')
+                                                        }}
+                                                    </td>
                                                     <th class="w-20">Justify If CAPA Not Required</th>
                                                     <td class="w-30">@if($data->justify_if_capa_not_required_oosc ){{ strip_tags($data->justify_if_capa_not_required_oosc) }} @else Not Applicable @endif</td>
                                                 </tr>
