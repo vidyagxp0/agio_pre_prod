@@ -10,7 +10,7 @@ use App\Jobs\SendMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\RecordNumber;
-use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Facades\Log;
 use App\Models\SummaryGrid;
 use App\Models\RoleGroup;
 use App\Models\ChildRecord;
@@ -39,7 +39,7 @@ class AuditeeController extends Controller
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
       //  $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
-        
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
@@ -66,7 +66,7 @@ class AuditeeController extends Controller
         $lastairecord = Auditee::orderBy('record', 'desc')->first();
         $record = $lastairecord ? $lastairecord->record + 1 : 1;
 
-        
+
 
         $internalAudit = new Auditee();
         $internalAudit->form_type = "External-audit";
@@ -1696,7 +1696,7 @@ class AuditeeController extends Controller
             $summaryDetails->identifier = 'Summary Response';
             $summaryDetails->data = $request->SummaryResponse;
             $summaryDetails->save();
-        
+
             // Define the mapping of field keys to more descriptive names
             $fieldNames = [
                 'observation' => 'Observation',
@@ -1705,18 +1705,18 @@ class AuditeeController extends Controller
                 'status' => 'Status',
                 'remarks' => 'Remarks'
             ];
-        
+
             // Track audit trail changes
             if (is_array($request->SummaryResponse)) {
                 foreach ($request->SummaryResponse as $index => $newSummary) {
                     $previousSummary = $existingSummaryDataArray[$index] ?? [];
-        
+
                     // Track changes for each field
                     $fieldsToTrack = ['observation', 'response', 'reference_id', 'status', 'remarks'];
                     foreach ($fieldsToTrack as $field) {
                         $oldValue = $previousSummary[$field] ?? 'Null';
                         $newValue = $newSummary[$field] ?? 'Null';
-        
+
                         // If there's a change, add an entry to the audit trail
                         if ($oldValue !== $newValue) {
                             $auditTrail = new AuditTrialExternal();
@@ -1738,7 +1738,7 @@ class AuditeeController extends Controller
                 }
             }
         }
-        
+
         // Second Grid - Auditors
         if (!empty($request->AuditorNew)) {
             $AuditorsNew = SummaryGrid::where(['summary_id' => $Summary, 'identifier' => 'Auditors'])->firstOrNew();
@@ -1746,7 +1746,7 @@ class AuditeeController extends Controller
             $AuditorsNew->identifier = 'Auditors';
             $AuditorsNew->data = $request->AuditorNew;
             $AuditorsNew->save();
-        
+
             // Define the mapping of field keys to more descriptive names
             $fieldNames = [
                 'auditornew' => 'Auditor Name',
@@ -1754,18 +1754,18 @@ class AuditeeController extends Controller
                 'designation' => 'Designation',
                 'remarks' => 'Remarks'
             ];
-        
+
             // Track audit trail changes
             if (is_array($request->AuditorNew)) {
                 foreach ($request->AuditorNew as $index => $newAuditor) {
                     $previousAuditor = $existingAuditorData[$index] ?? [];
-        
+
                     // Track changes for each field
                     $fieldsToTrack = ['auditornew', 'regulatoryagency', 'designation', 'remarks'];
                     foreach ($fieldsToTrack as $field) {
                         $oldValue = $previousAuditor[$field] ?? 'Null';
                         $newValue = $newAuditor[$field] ?? 'Null';
-        
+
                         // If there's a change, add an entry to the audit trail
                         if ($oldValue !== $newValue) {
                             $auditTrail = new AuditTrialExternal();
@@ -1787,7 +1787,7 @@ class AuditeeController extends Controller
                 }
             }
         }
-        
+
 
 
 
@@ -1814,7 +1814,7 @@ class AuditeeController extends Controller
         $cft = User::get();
 
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
-        
+
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
@@ -3812,7 +3812,7 @@ if (!empty($request->SummaryResponse)) {
                     $auditTrail = new AuditTrialExternal();
                     $auditTrail->ExternalAudit_id = $SummaryUpdate;
                     $auditTrail->activity_type = $fieldNames[$field] . ' (' . ($index + 1) . ')';
-             
+
                     $auditTrail->previous = $oldValue;
                     $auditTrail->current = $newValue;
                     $auditTrail->comment = "";
@@ -3896,7 +3896,7 @@ if (!empty($request->AuditorNew)) {
         'regulatoryagency' => 'External Agency Name',
         'designation' => 'Designation',
         'remarks' => 'Remarks',
-  
+
     ];
 
     // Track audit trail changes
@@ -6162,7 +6162,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Other s 2 Department';
             $history->previous =$lastCft->Other2_Department_person;
-          
+
             $history->current = $request->Other2_Department_person;
             // dd($history);
             $history->comment = "Not Applicable";
@@ -6860,7 +6860,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                                     'type' => 'success',
                                 ]);
                             }
-                   
+
                 if (empty($changeControl->due_date)|| empty($changeControl->audit_type)|| empty($changeControl->initial_comments)||empty($changeControl->external_agencies)||empty($changeControl->start_date_gi) ||empty($changeControl->end_date_gi))
                     {
                         Session::flash('swal', [
@@ -6868,7 +6868,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                             'title' => 'Mandatory Fields!',
                             'message' => 'Pls Fill General Information Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -6932,8 +6932,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $changeControl,      
-                                        'External Audit'      
+                                        $changeControl,
+                                        'External Audit'
                                     );
 
                                 } catch (\Exception $e) {
@@ -6947,14 +6947,14 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                             }
                         }
-                       
-                        
+
+
                         $list = Helpers::getCQAUsersList($changeControl->division_id);
 
-                        
+
                         $list = Helpers::getQAUserList($changeControl->division_id);
 
-              
+
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -6999,7 +6999,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
 
 
-            
+
                          if (!$Cft->Production_Table_Review|| !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review  || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
@@ -7010,7 +7010,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                             return redirect()->back();
                         } else {
                             Session::flash('swal', [
-                                
+
                                 'type' => 'success',
                                 'title' => 'Success',
                                 'message' => 'CFT Reviews'
@@ -7027,7 +7027,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                     $stage->status = "CFT Required";
 
 
-                    
+
                     // $stage->cft_stage = ;
                     $stage->comment = $request->comment;
                     $stage->is_required = 1;
@@ -7068,17 +7068,17 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
-                        
+
                             if ($email !== null) {
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $changeControl, 
-                                            'site' => "External Audit", 
-                                            'history' => "Summary and Response Complete", 
-                                            'process' => 'External Audit', 
-                                            'comment' => $request->comment, 
+                                            'data' => $changeControl,
+                                            'site' => "External Audit",
+                                            'history' => "Summary and Response Complete",
+                                            'process' => 'External Audit',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -7089,30 +7089,30 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                                 } catch (\Exception $e) {
                                     // Log the error for debugging
                                     Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
+
                                     // Optionally handle the exception (e.g., notify the user or admin)
                                     session()->flash('error', 'Failed to send email to ' . $email);
                                 }
                             }
                         }
-                        
+
 
 
                         $list = Helpers::getCQAUsersList($changeControl->division_id);
 
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
-                        
+
                             if ($email !== null) {
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
                                         [
-                                            'data' => $changeControl, 
-                                            'site' => "view", 
-                                            'history' => "Summary and Response Complete", 
-                                            'process' => 'External Audit', 
-                                            'comment' => $request->comment, 
+                                            'data' => $changeControl,
+                                            'site' => "view",
+                                            'history' => "Summary and Response Complete",
+                                            'process' => 'External Audit',
+                                            'comment' => $request->comment,
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -7123,13 +7123,13 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                                 } catch (\Exception $e) {
                                     // Log the error for debugging
                                     Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
+
                                     // Optionally handle the exception (e.g., notify the user or admin)
                                     session()->flash('error', 'Failed to send email to ' . $email);
                                 }
                             }
                         }
-                        
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -7172,7 +7172,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
 
 
-                
+
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
                      $userId = Auth::user()->name;
                     $userAssignments = DB::table('external_audit_c_f_t_s')->where(['external_audit_id' => $id])->first();
@@ -7181,27 +7181,27 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                     if ($userAssignments->Production_Table_Person == $userId && empty($userAssignments->Production_Table_Assessment)) {
                         $incompleteFields[] = 'Review comment (By Production Tablet/Capsule / Powder)';
                     }
-                    
+
                     if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
                         $incompleteFields[] = 'Review Comment (By Production Injection)';
                     }
-                    
+
                     if ($userAssignments->ResearchDevelopment_person == $userId && empty($userAssignments->ResearchDevelopment_assessment)) {
                         $incompleteFields[] = 'Review Comment (By Research & Development)';
                     }
-                    
+
                     if ($userAssignments->Store_person == $userId && empty($userAssignments->Store_assessment)) {
                         $incompleteFields[] = 'Review Comment (By Store)';
                     }
-                    
+
                     if ($userAssignments->Quality_Control_Person == $userId && empty($userAssignments->Quality_Control_assessment)) {
                         $incompleteFields[] = 'Review Comment (By Corporate Quality Assurance) ';
                     }
-                    
+
                     if ($userAssignments->QualityAssurance_person == $userId && empty($userAssignments->QualityAssurance_assessment)) {
                         $incompleteFields[] = 'Review Comment (By Quality Assurance) ';
                     }
-                    
+
                     if ($userAssignments->CorporateQualityAssurance_person == $userId && empty($userAssignments->CorporateQualityAssurance_assessment)) {
                         $incompleteFields[] = 'Corporate Quality Assurance Assessment';
                     }
@@ -7209,32 +7209,32 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                     if ($userAssignments->RegulatoryAffair_person == $userId && empty($userAssignments->RegulatoryAffair_assessment)) {
                         $incompleteFields[] = 'Review Comment (By Regulatory Affair)';
                     }
-                    
+
                     if ($userAssignments->ProductionLiquid_person == $userId && empty($userAssignments->ProductionLiquid_assessment)) {
                         $incompleteFields[] = 'Review Comment (By Production Liquid/ointment)';
                     }
-                    
+
                     if ($userAssignments->Microbiology_person == $userId && empty($userAssignments->Microbiology_assessment)) {
                         $incompleteFields[] = 'Review Comment (By Microbiology)';
                     }
-                    
+
                     if ($userAssignments->Engineering_person == $userId && empty($userAssignments->Engineering_assessment)) {
                         $incompleteFields[] ='Review Comment (By Engineering) ';
                     }
-                    
+
                     if ($userAssignments->Environment_Health_Safety_person == $userId && empty($userAssignments->Health_Safety_assessment)) {
                         $incompleteFields[] = 'Review Comment (By Safety) ';
                     }
-                    
+
                     if ($userAssignments->Human_Resource_person == $userId && empty($userAssignments->Human_Resource_assessment)) {
                         $incompleteFields[] = 'Review Comment (By Human Resource) ';
                     }
-                    
+
                     // if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {
                     //     $incompleteFields[] = 'ContractGiver Assessment';
                     // }
-                    
-                    
+
+
                     if (!empty($incompleteFields)) {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -7243,7 +7243,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                         ]);
                         return redirect()->back();
                     } else {
-                        
+
 
 
 
@@ -7276,7 +7276,7 @@ $history->activity_type = 'Quality Control Review Completed By, Quality Control 
 if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
     $history->previous = "";
 } else {
-    
+
     $history->previous = $lastDocument->Quality_Control_by . ' ,' .Helpers::getdateFormat ($lastDocument->Quality_Control_on);
 }
 
@@ -7961,7 +7961,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                     $history->action_name = 'Update';
                 }
                     $history->save();
-                   
+
 
 
 
@@ -7985,7 +7985,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                             }
                         // }
                     }
-    
+
                     $list = Helpers::getQAHeadUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -8006,7 +8006,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                             }
                         // }
                     }
-    
+
                     $changeControl->update();
                 }
             }
@@ -8160,7 +8160,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
 
 
 
-                
+
 
                     $list = Helpers::getCQAUsersList($changeControl->division_id);
                     foreach ($list as $u) {
@@ -8182,7 +8182,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                             }
                         // }
                     }
-    
+
                     $list = Helpers::getQAUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -8309,7 +8309,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         //     $history->action_name = 'Update';
                         // }
                         $history->save();
-                   
+
                         $list = Helpers::getCQAUsersList($changeControl->division_id);
                         foreach ($list as $u) {
                             // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -8348,7 +8348,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                                     } catch(\Exception $e) {
                                         info('Error sending mail', [$e]);
                                     }
-                                } 
+                                }
                             // }
                         }
 
@@ -8698,7 +8698,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         //         }
                         //     // }
                         // }
-    
+
                         // $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA
                         // foreach ($list as $u) {
                         //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -8788,7 +8788,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                     }
                 }
 
-                
+
              $childActionItems = Observation::where('parent_id', $id)
                 ->where('parent_type', 'External Audit')
                 ->get();
@@ -8854,7 +8854,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         } else {
                             $history->action_name = 'Update';
                         }
-                    
+
                         $history->save();
 
 
@@ -8888,7 +8888,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         //         }
                         //     // }
                         // }
-    
+
                         // $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA
                         // foreach ($list as $u) {
                         //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -8909,7 +8909,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         //         }
                         //     // }
                         // }
-    
+
                 $changeControl->update();
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
@@ -9026,7 +9026,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
     {
         $data = Auditee::find($id);
        $grid_Data = SummaryGrid::where(['summary_id' => $id, 'identifier' => 'Auditors'])->first();
-       
+
        $grid_Data_2 = SummaryGrid::where(['summary_id' => $id, 'identifier' => 'Summary Response'])->first();
 
 
@@ -9213,14 +9213,20 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
         if ($request->child_type == "Extension")
         {
             $parent_due_date = Auditee::where('id', $id)->value('due_date');
+
+            /* ---------- RECORD ---------- */
             $lastAirecord = Observation::orderBy('record', 'desc')->first();
-            $record = $lastAirecord ? $lastAirecord->record + 1 : 1;
+            $record = $lastAirecord
+                ? (int) $lastAirecord->record + 1
+                : 1;
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
 
+            /* ---------- RECORD NUMBER ---------- */
             $lastAirecord_number = Observation::orderBy('record_number', 'desc')->first();
-            $record_number = $lastAirecord_number ? $lastAirecord_number->record_number + 1 : 1;
+            $record_number = $lastAirecord_number
+                ? (int) $lastAirecord_number->record_number + 1
+                : 1;
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-
 
             $parent_division_id  = Auditee::where('id', $id)->value('division_id');
             $relatedRecords = Helpers::getAllRelatedRecords();
@@ -9228,7 +9234,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
             $parent_type = "External Audit";
             $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'EA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $count = Helpers::getChildData($id, $parent_type);
-            $countData = $count + 1; 
+            $countData = $count + 1;
             return view('frontend.extension.extension_new', compact('parent_type','record','record_number','parent_id','parent_due_date','extension_record','parent_division_id', 'relatedRecords','countData',));
 
         }

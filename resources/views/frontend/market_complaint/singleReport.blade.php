@@ -1168,10 +1168,10 @@
 
                     <table>
                         <tr class="table_bg">
-                            <th class="w-3">Sr.No.</th>
-                            <th class="w-10">Name</th>
-                            <th class="w-20">Department</th>
-                            <th class="w-5">Remarks</th>
+                            <th class="w-2">Sr.No.</th>
+                            <th class="w-30">Name</th>
+                            <th class="w-30">Department</th>
+                            <th class="w-30">Remarks</th> 
                             {{-- <th class="w-5">Action</th> --}}
                         </tr>
 

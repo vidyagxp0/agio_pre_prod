@@ -1665,11 +1665,10 @@
                                                 @endif
                                             </div>
                                         </div>
-
+                                        @if ($data->more_info_required_by)
                                         <div class="col-12">
                                             <div class="sub-head">More Info Required</div>
                                         </div>
-
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required By">More Info Required By</label>
@@ -1700,6 +1699,10 @@
                                                 @endif
                                             </div>
                                         </div>
+                                        @endif
+                                        
+
+                                        
 
                                         <div class="col-12">
                                             <div class="sub-head">CAPA Plan Proposed</div>

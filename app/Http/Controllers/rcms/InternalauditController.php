@@ -58,11 +58,13 @@ class InternalauditController extends Controller
 
         $lastIA = InternalAudit::orderBy('record', 'desc')->first();
 
-        $record = $lastIA ? $lastIA->record + 1 : 1;
+        $record = $lastIA ? (int) $lastIA->record + 1 : 1;
 
          $lastIA = InternalAudit::orderBy('record_number', 'desc')->first();
 
-        $record_number = $lastIA ? $lastIA->record_number + 1 : 1;
+        $record_number = $lastIA
+                ? (int) $lastIA->record_number + 1
+                : 1;
     // 
     //    $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
