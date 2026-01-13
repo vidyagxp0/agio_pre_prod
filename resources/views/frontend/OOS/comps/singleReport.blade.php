@@ -21,7 +21,7 @@
         line-height: 1.4;
         color: #000;
         margin-top: 10px;
-         margin-bottom: -60px; 
+         margin-bottom: -60px;
     }
 
     header, footer {
@@ -57,7 +57,7 @@
         /* padding: 20px 35px;  */
         box-sizing: border-box;
     }
-    
+
     .block {
         margin-bottom: 25px;
     }
@@ -271,7 +271,7 @@
                         <td class="w-80" colspan="3">@if($data->description_gi ){{ $data->description_gi  }} @else Not Applicable @endif</td>
                     </tr>
                 </table>
-            </div>    
+            </div>
                 <div class="block">
                 <table>
                     <tr>
@@ -290,7 +290,7 @@
                 <table>
                         <!-- <th class="w-20">If Others</th>
                         <td class="w-80">@if($data->if_others_gi){{ $data->if_others_gi }}@else Not Applicable @endif</td> -->
-                    <tr>    
+                    <tr>
                         <th class="w-20">Is Repeat</th>
                         <td class="w-80">@if($data->is_repeat_gi){{ $data->is_repeat_gi }}@else Not Applicable @endif</td>
                     </tr>
@@ -302,6 +302,12 @@
                         <th class="w-20">Source Document Type</th>
                         <td class="w-80">@if($data->source_document_type_gi){{ $data->source_document_type_gi }}@else Not Applicable @endif</td>
                     </tr>
+                    @if($data->source_document_type_gi == 'Others')
+                        <tr>
+                            <th class="w-20">Other Source Document Type</th>
+                            <td class="w-80">@if($data->sourceDocOtherGi){{ $data->sourceDocOtherGi }}@else Not Applicable @endif</td>
+                        </tr>
+                    @endif
                     </table>
                     {{-- <div class = "inner-block">
                         <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Reference System Document</label>
@@ -330,7 +336,7 @@
                         <td class="w-30">
                             @if($data->oos_observed_on)
                               {{ Helpers::getdateFormat($data->oos_observed_on) }}
-                            @else 
+                            @else
                                Not Applicable
                             @endif
                         </td>
@@ -394,29 +400,29 @@
                     <tr>
                         <th class="w-20">Sample Type</th>
                         <td class="w-80">@if($data->sample_type_gi){{ Helpers::recordFormat($data->sample_type_gi) }}@else Not Applicable @endif</td>
-                    </tr> 
-                    <tr>   
+                    </tr>
+                    <tr>
                         <th class="w-20">Product / Material Name</th>
                         <td class="w-80">@if($data->product_material_name_gi){{ Helpers::recordFormat($data->product_material_name_gi) }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Market</th>
                         <td class="w-80">@if($data->market_gi){{ $data->market_gi }}@else Not Applicable @endif</td>
-                    </tr> 
-                    <tr>  
+                    </tr>
+                    <tr>
                         <th class="w-20">Customer</th>
                         <td class="w-80">@if($data->customer_gi){{ $data->customer_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Specification Details</th>
                         <td class="w-80">@if($data->specification_details){{ Helpers::recordFormat($data->specification_details) }}@else Not Applicable @endif</td>
-                    </tr> 
-                    <tr>      
+                    </tr>
+                    <tr>
                         <th class="w-20">STP Details</th>
                         <td class="w-80">@if($data->STP_details){{ Helpers::recordFormat($data->STP_details) }}@else Not Applicable @endif</td>
                     </tr>
-                </table>   
-                <table> 
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Manufacture/Vendor</th>
                         <td class="w-80">@if($data->manufacture_vendor){{ Helpers::recordFormat($data->manufacture_vendor) }}@else Not Applicable @endif</td>
@@ -597,11 +603,23 @@
                             <td class="w-15">{{ $datagridIII['oos_results_obtained'] ?  $datagridIII['oos_results_obtained']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_specification_limit'] ?  $datagridIII['oos_specification_limit']: "Not Applicable"}}</td>
                             <td class="w-15">
-                                {{ isset($datagridIII['oos_file_attachment']) && is_array($datagridIII['oos_file_attachment']) 
-                                    ? implode(', ', $datagridIII['oos_file_attachment']) 
-                                    : ($datagridIII['oos_file_attachment'] ?? "Not Applicable") 
-                                }}
-                            </td>
+                                @php
+                                    $attachments = $datagridIII['oos_file_attachment'] ?? null;
+
+                                    if (is_array($attachments)) {
+                                        $attachments = array_map(function ($item) {
+                                            return is_array($item)
+                                                ? ($item['name'] ?? json_encode($item))
+                                                : $item;
+                                        }, $attachments);
+
+                                        echo implode(', ', $attachments);
+                                    } else {
+                                        echo $attachments ?? 'Not Applicable';
+                                    }
+                                @endphp
+                                </td>
+
 
                             <td class="w-15">{{ $datagridIII['oos_submit_on'] ?  Helpers::getdateFormat($datagridIII['oos_submit_on'] ?? ''): "Not Applicable" }}
                             </td>
@@ -853,16 +871,53 @@
                 <table>
                     <tr>
                         <th class="w-20">Workbench Evaluation</th>
-                        <td class="w-80">                        
-                             @if($data->Comments_plidata)
-                                {{ trim(str_replace('&nbsp;', ' ', strip_tags($data->Comments_plidata))) }}
+                        <td class="w-80">
+                            @if($data->Comments_plidata)
+                                {{ strip_tags($data->Comments_plidata) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>    
+                    </tr>
                     <tr>
                         <th class="w-20">Checklists</th>
+                        <td class="w-80">
+                            @php
+                                $ChecklistData = $data->checklists;
+
+                                if (is_array($ChecklistData)
+                                    && array_key_exists(0, $ChecklistData)
+                                    && is_string($ChecklistData[0])
+                                    && !empty($ChecklistData[0])) {
+
+                                    $selectedChecklist = explode(',', $ChecklistData[0]);
+
+                                } elseif (is_array($ChecklistData)) {
+
+                                    $selectedChecklist = $ChecklistData;
+
+                                } else {
+
+                                    $selectedChecklist = [];
+                                }
+                            @endphp
+
+                            @if(!empty($selectedChecklist))
+                                {{ implode(', ', $selectedChecklist) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+                @include('frontend.OOS.comps.allchecklistSingleReport')
+
+
+                <table>
+
+                    <tr>
+                        <th class="w-20">Checklist Outcome</th>
                         <td class="w-80">
                             @if($data->justify_if_no_field_alert_pli)
                                 {{ strip_tags($data->justify_if_no_field_alert_pli) }}
@@ -870,24 +925,14 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>    
-                    <tr>
-                        <th class="w-20">Checklist Outcome</th>
-                        <td class="w-80">                        
-                            @if($data->justify_if_no_field_alert_pli)
-                                {{ strip_tags($data->justify_if_no_field_alert_pli) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>    
+                    </tr>
                     <tr>
                         <th class="w-20">Immediate action taken</th>
                         <td class="w-80">@if($data->root_comment ){{ $data->root_comment }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Delay Justification For Investigation</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->justify_if_no_analyst_int_pli)
                                 {{ strip_tags($data->justify_if_no_analyst_int_pli) }}
                             @else
@@ -897,7 +942,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Analyst Interview Details</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->analyst_interview_pli)
                                 {{ strip_tags($data->analyst_interview_pli) }}
                             @else
@@ -908,31 +953,31 @@
 
                     <tr>
                         <th class="w-20">Any Other Cause/Suspected Cause</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->Any_other_cause ){{ $data->Any_other_cause }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Any Other Batches Analyzed</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->Any_other_batches ){{ $data->Any_other_batches }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Details Of Trend</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->details_of_trend ){{ $data->details_of_trend }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Assignable Cause And Rational For Assignable Cause</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->rational_for_assingnable ){{ $data->rational_for_assingnable }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Summary of Investigation</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->summary_of_prelim_investiga_plic)
                                 {{ strip_tags($data->summary_of_prelim_investiga_plic) }}
                             @else
@@ -942,11 +987,11 @@
                     </tr>
                 </table>
 
-                
+
                 {{-- <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Immediate action taken</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->root_comment ){{ $data->root_comment }} @else Not Applicable @endif</span>
-                </div> 
+                </div>
                 <div class="inner-block">
                     <label class="summer" style="font-weight: bold; font-size: 13px; display: inline;">
                         Delay Justification For Investigation
@@ -958,7 +1003,7 @@
                             Not Applicable
                         @endif
                     </span>
-                </div> 
+                </div>
                 <div class="inner-block">
                     <label class="summer" style="font-weight: bold; font-size: 13px; display: inline;">
                         Analyst Interview Details
@@ -970,7 +1015,7 @@
                             Not Applicable
                         @endif
                     </span>
-                </div> 
+                </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Any Other Cause/Suspected Cause</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->Any_other_cause ){{ $data->Any_other_cause }} @else Not Applicable @endif</span>
@@ -1003,7 +1048,7 @@
             </div>
             <div class="block">
                 <table>
-            
+
                     {{-- <tr>  {{ $data->created_at }} Added By {{ $data->originator }}
                         <th class="w-10">Workbench Evaluation</th>
                         <td class="w-90">{{ $data->Comments_plidata ? $data->Comments_plidata : 'Not Applicable' }}</td>
@@ -1012,7 +1057,7 @@
                         <th class="w-10">Checklist Outcome</th>
                         <td class="w-90">{{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : 'Not Applicable' }}</td>
                     </tr> --}}
-                  
+
                       <tr>
                         <th class="w-20">OOS/OOT Cause Identified</th>
                         <td class="w-30">{{ $data->phase_i_investigation_pli ? $data->phase_i_investigation_pli : 'Not Applicable' }}</td>
@@ -1036,7 +1081,7 @@
                     <table>
                         <tr>
                             <th class="w-20">OOS/OOT Category (If Others)</th>
-                            <td class="w-80">                        
+                            <td class="w-80">
                                 @if($data->oos_category_others_plic)
                                     {{ strip_tags($data->oos_category_others_plic) }}
                                 @else
@@ -1072,7 +1117,7 @@
                         <table>
                             <tr>
                                 <th class="w-20">OOS/OOT Review For Similar Nature</th>
-                                <td class="w-80">                            
+                                <td class="w-80">
                                     @if($data->review_comments_plir)
                                         {{ strip_tags($data->review_comments_plir) }}
                                     @else
@@ -1107,7 +1152,7 @@
                         <table>
                             <tr>
                                 <th class="w-20">Results Of Retest/Re-Measurement</th>
-                                <td class="w-80">                            
+                                <td class="w-80">
                                     @if($data->Description_Deviation)
                                         {{ strip_tags($data->Description_Deviation) }}
                                     @else
@@ -1117,7 +1162,7 @@
                             </tr>
                             <tr>
                                 <th class="w-20">Results Of Repeat Testing</th>
-                                <td class="w-80">                            
+                                <td class="w-80">
                                     @if($data->result_of_repeat)
                                         {{ strip_tags($data->result_of_repeat) }}
                                     @else
@@ -1130,7 +1175,7 @@
                                 <td class="w-80">@if($data->impact_assesment_pia ){{ $data->impact_assesment_pia }} @else Not Applicable @endif</td>
                             </tr>
                         </table>
-           
+
                     </div>
 
                     {{-- <div class="inner-block">
@@ -1584,7 +1629,7 @@
 
                     <tr>
                         <th class="w-20">Proposal For Phase IB hypothesis</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->proposal_for_hypothesis_IB)
                                 {{ is_array($data->proposal_for_hypothesis_IB) ? implode(', ', $data->proposal_for_hypothesis_IB) : $data->proposal_for_hypothesis_IB }}
                             @else
@@ -1700,7 +1745,7 @@
                     <th class="w-20">Resampling Required</th>
                     <td class="w-30">{{ $data->resampling_required_ib ? $data->resampling_required_ib : 'Not Applicable' }}</td>
                     <th class="w-20">Repeat Testing Required</th>
-                    <td class="w-30">{{ $data->repeat_testing_ib ? $data->repeat_testing_ib : 'Not Applicable' }}</td> 
+                    <td class="w-30">{{ $data->repeat_testing_ib ? $data->repeat_testing_ib : 'Not Applicable' }}</td>
                   </tr>
                </table>
               </div>
@@ -1906,7 +1951,7 @@
                 <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">P-IB CQAH/QAH Remark</label>
                 <span style="font-size:0.8rem; margin-left:10px">@if($data->QA_Head_primary_remark3 ){{ $data->QA_Head_primary_remark3 }} @else Not Applicable @endif</span>
             </div> --}}
-            
+
               <div class="block">
                 <div class="block-head">Phase IB CQAH/QAH Attachment</div>
                 <div class="border-table">
@@ -1932,7 +1977,7 @@
                 </div>
               </div>
 
-            @include('frontend.OOS.comps.allchecklistSingleReport')
+            {{-- @include('frontend.OOS.comps.allchecklistSingleReport') --}}
 
             <div class="block">
                 <div class="block-head"> Phase II A Investigation </div>
@@ -2216,7 +2261,7 @@
 
                <div class="block">
                 <div class="block-head">P-II A QAH/CQAH Review</div>
-                
+
                 {{-- <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Phase II A Assinable Cause Found</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->phase_ii_a_assi_cause ){{ $data->phase_ii_a_assi_cause }} @else Not Applicable @endif</span>
@@ -2657,15 +2702,15 @@
                                                 <tr>
                                                     <th class="w-20">Conclusion Comments</th>
                                                     <td class="w-80">@if($data->conclusion_comments_oosc ){{ strip_tags($data->conclusion_comments_oosc) }} @else Not Applicable @endif</td>
-                                                </tr> 
+                                                </tr>
                                                 <tr>
                                                     <th class="w-20">Specification Limit</th>
                                                     <td class="w-80">@if($data->specification_limit_oosc ){{ $data->specification_limit_oosc }} @else Not Applicable @endif</td>
-                                                </tr> 
+                                                </tr>
                                                 <tr>
                                                     <th class="w-20">Results to be Reported</th>
                                                     <td class="w-80">{{ $data->results_to_be_reported_oosc ? $data->results_to_be_reported_oosc : 'Not Applicable' }}</td>
-                                                </tr> 
+                                                </tr>
                                                 <tr>
                                                     <th class="w-20">Final Reportable Results</th>
                                                     <td class="w-80">@if($data->final_reportable_results_oosc ){{ $data->final_reportable_results_oosc }} @else Not Applicable @endif</td>

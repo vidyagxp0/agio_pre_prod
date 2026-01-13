@@ -1,5 +1,6 @@
    <!--Start Checklist - Investigation of Bacterial Endotoxin Test CCForm18 -->
 
+   @if($data->Form_type == 'OOS_Micro')
         <div class="inner-block">
             <div class="content-table">
 
@@ -3746,6 +3747,7 @@
                 </div>
             </div>
         </div>
+    @endif
 
                         @php
                         $ph_meter_questions = array(
@@ -3890,7 +3892,7 @@
                         "While performing profilling ,  Does sample withdrawl at specific timeline as per STP?",
                         "Was Glassware used as per STP?",
                         "Was bowl temperature found 37°C ± 0.5 before start of analysis?",
-                        "	Is method validation/verification available ?",
+                        "Is method validation/verification available ?",
                         );
                         @endphp
                         <div class="block">
@@ -3966,7 +3968,10 @@
                         "Is there any system back pressure/Leakage observed during analysis?",
                         "Is system suitability result as per acceptance criteria?",
                         "Is there any hump interfering to peak integration, spilt peak observed?",
-                        "Is Instrument calibrated state ?  ",
+                        "Is peak integrated properly?",
+                        "Is there any anomalous chromatographic elution pattern observed?",
+                        "Were environmental conditions within the proper limits (Temperature/Humidity)?",
+                        "Is Instrument within calibrated state/periods?",
                         "Was cylinder level good before start of analysis?",
                         "Was instrument connected to properly during analysis?(Communication failure)",
                         "Was glass liner cleaned before analysis?",
@@ -3986,6 +3991,7 @@
                         "Was chemical used of GC Grade?",
                         "Was calibrated micropipettes used for analysis?",
                         "Was tips sterilized before used?",
+                        "Is method validation/verification available ?",
                         );
                         @endphp
                         <div class="block">
@@ -4166,7 +4172,7 @@
                         );
                         @endphp
                         <div class="block">
-                        <div class="block-head"> CheckList - RM PM</div>
+                        <div class="block-head"> CheckList - RM-PM Sampling</div>
                         <div class="border-table">
                         <table>
                         <tr class="table_bg">
