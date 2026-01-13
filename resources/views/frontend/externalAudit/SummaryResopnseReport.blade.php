@@ -8,156 +8,186 @@
     <title>Vidyagxp - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
+  <style>
+      
 
-<style>
+    @page {
+         margin: 160px 35px 100px; /* top header, side margin, bottom footer */
+     }
     body {
         font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
-        min-height: 100vh;
+        font-size: 11px;
+        line-height: 1.4;
+        color: #000;
+        margin-top: 10px;
+        margin-bottom: -60px; 
     }
 
-    .w-10 {
-        width: 10%;
+    header, footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        /* padding: 20px 35px; */
+        font-size: 12px;
+        box-sizing: border-box;
     }
 
-    .w-20 {
-        width: 20%;
+    header {
+        top: -140px;
+        border-bottom: none;
     }
 
-    .w-25 {
-        width: 25%;
+    footer {
+        bottom: 0;
+        bottom: -100px;
+        border-top: none;
     }
 
-    .w-30 {
-        width: 30%;
+    .logo img {
+        display: block;
+        margin-left: auto;
+    }
+    /* To remove borders from content part only */
+    .content-area table {
+        border: none !important;
     }
 
-    .w-40 {
-        width: 40%;
+    .inner-block {
+        /* padding: 20px 35px;  */
+        box-sizing: border-box;
+    }
+    
+    .block {
+        margin-bottom: 25px;
     }
 
-    .w-50 {
-        width: 50%;
+    .block-head {
+        font-size: 13px;
+        font-weight: bold;
+        border-bottom: 2px solid #387478;
+        color: #387478;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
     }
 
-    .w-60 {
-        width: 60%;
-    }
-
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    header table,
-    header th,
-    header td,
-    footer table,
-    footer th,
-    footer td,
-    .border-table table,
-    .border-table th,
-    .border-table td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        vertical-align: middle;
+    .table_bg {
+        background-color: #387478;
+        color: #111;
     }
 
     table {
         width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 12px;
     }
 
-    th,
-    td {
-        padding: 5px;
+    th, td {
+        padding: 6px 10px;
+        font-size: 10.5px;
+        border: 1px solid #ccc;
         text-align: left;
+        vertical-align: top;
     }
 
-    footer .head,
-    header .head {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
+    th {
+        background-color: #f2f2f2;
+        font-weight: 600;
     }
 
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
+    .section-gap {
+        margin-top: 20px;
     }
 
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
+    .no-border th, .no-border td {
+        border: none !important;
     }
 
-    footer {
-        width: 100%;
-        position: fixed;
-        display: block;
-        bottom: -40px;
-        left: 0;
-        font-size: 0.9rem;
+    /* .w-5 { width: 5%; } */
+    .w-5 { width: 6%; }
+    .w-8 { width: 8%; }
+    .w-10 { width: 10%; }
+    .w-20 { width: 20%; }
+    .w-30 { width: 30%; }
+    .w-50 { width: 50%; }
+    .w-70 { width: 70%; }
+    .w-80 { width: 80%; }
+    .w-100 { width: 100%; }
+    .text-center { text-align: center; }
+    .border-table {
+        overflow-x: auto;
+    }
+    table th, table td {
+        word-wrap: break-word;
     }
 
-    footer td {
-        text-align: center;
-    }
 
-    .inner-block {
-        padding: 10px;
-    }
+        .head-number {
+            font-weight: bold;
+            font-size: 13px;
+            padding-left: 10px;
+        }
 
-    .inner-block tr {
-        font-size: 0.8rem;
-    }
+        .div-data {
+            font-size: 13px;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
 
-    .inner-block .block {
-        margin-bottom: 30px;
-    }
 
-    .inner-block .block-head {
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #4274da;
-        margin-bottom: 10px;
-        color: #4274da;
-    }
 
-    .inner-block th,
-    .inner-block td {
-        vertical-align: baseline;
-    }
+                .why-why-chart-container {
+                width: 100%;
+                padding: 10px;
+                background: #fff;
+                border-radius: 5px;
+            }
 
-    .table_bg {
-        background: #4274da57;
-    }
-</style>
+            .block-head {
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .table th, .table td {
+                padding: 10px;
+                border: 1px solid #ddd;
+            }
+
+            .problem-statement th {
+                background: #f4bb22;
+                width: 150px;
+            }
+
+            .why-label {
+                color: #393cd4;
+                width: 150px;
+            }
+
+            .answer-label {
+                color: #393cd4;
+                width: 150px;
+            }
+
+            .root-cause th {
+                background: #0080006b;
+                width: 150px;
+            }
+
+            .text-muted {
+                color: gray;
+            }
+    </style>
 
 <body>
 
-    <header>
+    {{-- <header>
         <table>
             <tr>
                 <td class="w-70 head">
@@ -176,6 +206,7 @@
                 <td class="w-30">
                     <strong>External Audit No.</strong>
                 </td>
+                
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
@@ -184,7 +215,43 @@
                 </td>
             </tr>
         </table>
+    </header> --}}
+
+    
+    <header>
+
+    <table>
+            <tr>
+                <td class="w-70" style="text-align: center; vertical-align: middle;">
+                    <div style="font-size: 18px; font-weight: 800; display: inline-block;">
+                    External Audit No.
+                    </div>
+                </td>
+                <td class="w-30">
+                    <div class="logo" style="text-align: center;">
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                        style="max-height: 55px; max-width: 40px;">
+                    </div>
+                </td>
+            </tr>
+        </table>
+       
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                </td>
+                <td class="w-40">
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                </td>
+
+                <td class="w-30">
+                    <strong>Page No.</strong>
+                </td>
+            </tr>
+        </table>
     </header>
+
 
     <footer>
         <table>
@@ -287,7 +354,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
-                            <th class="w-60">Attachment</th>
+                            <th class="w-80">Attachment</th>
                         </tr>
                             @if($data->myfile)
                             @foreach(json_decode($data->myfile) as $key => $file)

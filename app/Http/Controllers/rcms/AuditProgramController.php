@@ -2382,6 +2382,7 @@ class AuditProgramController extends Controller
                         }   
                     }
                 }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2456,44 +2457,53 @@ class AuditProgramController extends Controller
                 $history->change_from = $lastDocument->status;
                 $history->save();
 
-                  $list = Helpers::getCQAHeadUsersList($changeControl->division_id);
-                 
-                    foreach ($list as $u) {
-
-                    $email = Helpers::getUserEmail($u->user_id);
-
-                    if ($email !== null) {
-
-                        try {   
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "AP",
-                                    'history' => "Audit Completed",
-                                    'process' => 'Audit Program',
-                                    'comment' => $request->comment,
-                                    'user'=> Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: Audit Program, Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Audit Completed"
-                                        );
-                                }
-                            );
-
-                        } catch (\Exception $e) {   
-
-                            \Log::error('Mail Error: ' . $e->getMessage()); 
-
-                        }   
-                    }
-                }
                 
+                
+
+                   $QARevlist = Helpers::getQAUserList($changeControl->division_id);
+
+                   $CQARevlist = Helpers::getCQAUsersList($changeControl->division_id);
+
+                   $Hodlist = Helpers::getHodUserList($changeControl->division_id);
+
+                    $usersmerge = collect($QARevlist)->merge($CQARevlist)->merge($Hodlist);
+
+                    $usersmerge = $usersmerge->unique('user_id');
+
+                    foreach ($usersmerge as $u) 
+                    {
+
+                        $email = Helpers::getUserEmail($u->user_id);
+
+                        if ($email !== null) {
+
+                            try {
+
+                                Mail::send(
+                                    'mail.view-mail',
+                                    [
+                                        'data'    => $changeControl,
+                                        'site'    => "AP",
+                                        'history' => "Audit Complete",
+                                        'process' => 'Audit Program',
+                                        'comment' => $request->comment,
+                                        'user'    => Auth::user()->name
+                                    ],
+                                    function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                            ->subject(
+                                                "Agio Notification: Audit Program, Record #"
+                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: Audit Complete"
+                                            );
+                                    }
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                        }
+                    }
                 $changeControl->update();
 
                 toastr()->success('Document Sent');
