@@ -1990,6 +1990,36 @@
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->checklist_outcome_iia ){{ $data->checklist_outcome_iia }} @else Not Applicable @endif</span>
                 </div> --}}
                 <div class="block">
+                    <div class="block-head"> CheckList - Phase II Investigation</div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+                            @if ($phase_two_invss)
+                            @foreach ($phase_two_inv_questions as $phase_two_inv_question)
+                            <tr>
+                                <td class="w-15">{{ $loop->index+1 }}</td>
+                                <td class="w-15">{{ $phase_two_inv_question }}</td>
+                                <td>{{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'response') }} </td>
+                                <td class="w-15">{{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'remarks') }}</td>
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                            @endif
+                        </table>
+                    </div>
+                </div>
+                <div class="block">
                     <table>
                         <tr>
                             <th class="w-20">Checklist Outcome</th>
@@ -2577,6 +2607,7 @@
                                 </div> --}}
 
                                 <div class="block">
+                                    <div class="block-head">Batch Disposition</div>
                                     <table>
                                         <tr>
                                             <th class="w-20">OOS/OOT Category</th>
