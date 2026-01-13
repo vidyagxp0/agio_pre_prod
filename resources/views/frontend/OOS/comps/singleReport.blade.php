@@ -954,25 +954,25 @@
                     <tr>
                         <th class="w-20">Any Other Cause/Suspected Cause</th>
                         <td class="w-80">
-                            @if($data->Any_other_cause ){{ $data->Any_other_cause }} @else Not Applicable @endif
+                            @if($data->Any_other_cause ){{ strip_tags($data->Any_other_cause) }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Any Other Batches Analyzed</th>
                         <td class="w-80">
-                            @if($data->Any_other_batches ){{ $data->Any_other_batches }} @else Not Applicable @endif
+                            @if($data->Any_other_batches ){{ strip_tags($data->Any_other_batches) }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Details Of Trend</th>
                         <td class="w-80">
-                            @if($data->details_of_trend ){{ $data->details_of_trend }} @else Not Applicable @endif
+                            @if($data->details_of_trend ){{ strip_tags($data->details_of_trend) }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Assignable Cause And Rational For Assignable Cause</th>
                         <td class="w-80">
-                            @if($data->rational_for_assingnable ){{ $data->rational_for_assingnable }} @else Not Applicable @endif
+                            @if($data->rational_for_assingnable ){{ strip_tags($data->rational_for_assingnable) }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
@@ -1172,7 +1172,7 @@
                             </tr>
                             <tr>
                                 <th class="w-20">Impact Assessment</th>
-                                <td class="w-80">@if($data->impact_assesment_pia ){{ $data->impact_assesment_pia }} @else Not Applicable @endif</td>
+                                <td class="w-80">@if($data->impact_assesment_pia ){{ strip_tags($data->impact_assesment_pia) }} @else Not Applicable @endif</td>
                             </tr>
                         </table>
 
@@ -1933,6 +1933,10 @@
                         <td class="w-80">@if($data->justification_ib ){{ $data->justification_ib }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Phase IB Assignable Cause Found</th>
+                        <td class="w-80">@if($data->phase_ib_assi_cause ){{ $data->phase_ib_assi_cause }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">P-IB CQAH/QAH Remark</th>
                         <td class="w-80">@if($data->QA_Head_primary_remark3 ){{ $data->QA_Head_primary_remark3 }} @else Not Applicable @endif</td>
                     </tr>
@@ -1989,7 +1993,7 @@
                     <table>
                         <tr>
                             <th class="w-20">Checklist Outcome</th>
-                            <td class="w-80">@if($data->checklist_outcome_iia ){{ $data->checklist_outcome_iia }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->checklist_outcome_iia ){{ strip_tags($data->checklist_outcome_iia) }} @else Not Applicable @endif</td>
                         </tr>
                     </table>
                     <table>
@@ -2001,20 +2005,20 @@
                    <table>
                         <tr>
                             <th class="w-20">Immediate Action Taken</th>
-                            <td class="w-80">@if($data->qa_approver_comments_piii ){{ $data->qa_approver_comments_piii }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->qa_approver_comments_piii ) {{ strip_tags($data->qa_approver_comments_piii) }} @else Not Applicable @endif</td>
                         </tr>
 
                         <tr>
                             <th class="w-20">Delay Justification For Investigation</th>
-                            <td class="w-80">@if($data->reason_manufacturing_delay ){{ $data->reason_manufacturing_delay }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->reason_manufacturing_delay ){{ strip_tags($data->reason_manufacturing_delay) }} @else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Any Other Cause/Suspected Cause</th>
-                            <td class="w-80">@if($data->audit_comments_piii ){{ $data->audit_comments_piii }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->audit_comments_piii ){{ strip_tags($data->audit_comments_piii) }} @else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Summary Investigation</th>
-                            <td class="w-80">@if($data->hypo_exp_reference_piii ){{ $data->hypo_exp_reference_piii }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->hypo_exp_reference_piii ){{ strip_tags($data->hypo_exp_reference_piii) }} @else Not Applicable @endif</td>
                         </tr>
                    </table>
                   </div>
@@ -2072,7 +2076,7 @@
 
                         <tr>
                             <th class="w-20">Impact Assessment</th>
-                            <td class="w-80">@if($data->impact_assessment_IIA ){{ $data->impact_assessment_IIA }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->impact_assessment_IIA ){{ strip_tags($data->impact_assessment_IIA) }} @else Not Applicable @endif</td>
                         </tr>
                    </table>
                   </div>
