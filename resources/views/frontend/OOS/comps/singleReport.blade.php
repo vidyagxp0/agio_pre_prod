@@ -854,8 +854,8 @@
                     <tr>
                         <th class="w-20">Workbench Evaluation</th>
                         <td class="w-80">                        
-                            @if($data->Comments_plidata)
-                                {{ strip_tags($data->Comments_plidata) }}
+                             @if($data->Comments_plidata)
+                                {{ trim(str_replace('&nbsp;', ' ', strip_tags($data->Comments_plidata))) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1501,6 +1501,8 @@
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->details_of_result ){{ $data->details_of_result }} @else Not Applicable @endif</span>
                 </div> --}}
 
+
+
                 <table>
                     <tr>
                         <th class="w-20">Outcome Of Phase IA Investigation</th>
@@ -1510,6 +1512,65 @@
                         <th class="w-20">Reason For Proceeding To Phase IB Investigation</th>
                         <td class="w-80">@if($data->reason_for_proceeding ){{ $data->reason_for_proceeding }} @else Not Applicable @endif</td>
                     </tr>
+                </table>
+
+                @php
+                        $IIB_inv_questions = [
+                            "Analyst Interview required?",
+                            "Raw data Examination? (Examination of raw data, including chromatograms and spectra; any anomalous or suspect peaks or data)",
+                            "The analyst is trained on the method.?",
+                            "Any Previous issues with this test?",
+                            "Other potentially interfering testing/activities occurring at the time of the test?",
+                            "Review of other data ? (Review of other data for other batches performed within the same analyst set)",
+                            "Other OOS results ? (Consideration of any other OOS results obtained on the batch of material under test)",
+                            "Assessment of method validation ? (Assessment of method validation and clarity of instructions in the worksheet)",
+                            "Adequacy of instructions? (Assessment of the adequacy of instructions in the STP procedure)",
+                            "Any issues with environmental temperature/humidity within the area which the test was conducted?",
+                            "Reoccurrence (Whether any similar occurrence(s) with the analysis earlier)?",
+                            "Observation Error (Analyst) [Any other observation Error]?",
+                        ];
+
+                        $IIB_inv_answers = [];
+
+                        if (!empty($checklist_IB_invs->data)) {
+                            // Agar string hai, json_decode karo
+                            if (is_string($checklist_IB_invs->data)) {
+                                $IIB_inv_answers = json_decode($checklist_IB_invs->data, true);
+                            } elseif (is_array($checklist_IB_invs->data)) {
+                                // Agar already array hai, direct assign karo
+                                $IIB_inv_answers = $checklist_IB_invs->data;
+                            }
+                        }
+                    @endphp
+                    <table border="1" width="100%" cellspacing="0" cellpadding="6">
+                        <thead>
+                            <tr>
+                                <th width="5%">#</th>
+                                <th width="55%">Question</th>
+                                <th width="15%">Response</th>
+                                <th width="25%">Remark</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($IIB_inv_questions as $index => $question)
+                                @php
+                                    $answer = $IIB_inv_answers[$index] ?? null;
+                                @endphp
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $question }}</td>
+                                    <td>{{ $answer['response'] ?? 'Not Applicable' }}</td>
+                                    <td>{{ $answer['remark'] ?? '-' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <table>
+
+
+
+
 
                     <tr>
                         <th class="w-20">Summary Of Review</th>

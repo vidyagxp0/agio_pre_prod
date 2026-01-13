@@ -3890,6 +3890,7 @@
                         "While performing profilling ,  Does sample withdrawl at specific timeline as per STP?",
                         "Was Glassware used as per STP?",
                         "Was bowl temperature found 37°C ± 0.5 before start of analysis?",
+                        "	Is method validation/verification available ?",
                         );
                         @endphp
                         <div class="block">
