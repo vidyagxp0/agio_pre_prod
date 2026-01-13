@@ -909,6 +909,12 @@
                             @endif
                         </td>
                     </tr>
+                </table>
+
+                @include('frontend.OOS.comps.allchecklistSingleReport')
+
+
+                <table>
 
                     <tr>
                         <th class="w-20">Checklist Outcome</th>
@@ -1910,7 +1916,7 @@
                 </div>
               </div>
 
-            @include('frontend.OOS.comps.allchecklistSingleReport')
+            {{-- @include('frontend.OOS.comps.allchecklistSingleReport') --}}
 
             <div class="block">
                 <div class="block-head"> Phase II A Investigation </div>
