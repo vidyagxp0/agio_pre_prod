@@ -1559,7 +1559,7 @@
                     </tr>
                 </table>
 
-                @php
+                    @php
                         $IIB_inv_questions = [
                             "Analyst Interview required?",
                             "Raw data Examination? (Examination of raw data, including chromatograms and spectra; any anomalous or suspect peaks or data)",
@@ -1587,6 +1587,9 @@
                             }
                         }
                     @endphp
+                    <div class="block">
+                        <div class="block-head">Phase IB investigation Checklist</div>
+                    </div>
                     <table border="1" width="100%" cellspacing="0" cellpadding="6">
                         <thead>
                             <tr>
