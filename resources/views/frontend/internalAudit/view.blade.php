@@ -11998,7 +11998,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             <option value="No"
                                                                                 @if ($checklist6 && $checklist6->$tabletmanufacturingProperty == 'No') selected @endif>
                                                                                 No</option>
-                                                                                <option value="N/A" {{ empty($checklist6->tabletmanufacturingProperty) || $checklist6->tabletmanufacturingProperty == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                                <option value="N/A" {{ empty($checklist6->$tabletmanufacturingProperty) || $checklist6->$tabletmanufacturingProperty == 'N/A' ? 'selected' : '' }}>N/A</option>
 
                                                                         </select>
                                                                     </div>
@@ -12040,18 +12040,21 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <td>{!! $question !!}</td>                                                                <td>
 
                                                                     @php
+                                                                        $offset = count($dispensingAndManufacturingQuestions);
+                                                                        $questionNo = $offset + $index + 1;
+
                                                                         $tabletmanufacturingProperty =
-                                                                            'dispensing_and_manufacturing_' .
-                                                                            ($index + 1);
+                                                                            'dispensing_and_manufacturing_' . $questionNo;
+
                                                                         $tabletmanufacturingRemark =
-                                                                            'dispensing_and_manufacturing_remark_' .
-                                                                            ($index + 1);
+                                                                            'dispensing_and_manufacturing_remark_' . $questionNo;
                                                                     @endphp
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         <select
-                                                                            name="dispensing_and_manufacturing_{{ $index + 1 }}"
-                                                                            id="dispensing_and_manufacturing_{{ $index + 1 }}"
+                                                                            name="dispensing_and_manufacturing_{{ $questionNo }}"
+
+                                                                            id="dispensing_and_manufacturing_{{ $questionNo }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option
                                                                             </option>
@@ -12061,7 +12064,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             <option value="No"
                                                                                 @if ($checklist6 && $checklist6->$tabletmanufacturingProperty == 'No') selected @endif>
                                                                                 No</option>
-                                                                                <option value="N/A" {{ empty($checklist6->tabletmanufacturingProperty) || $checklist6->tabletmanufacturingProperty == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                                <option value="N/A" {{ empty($checklist6->$tabletmanufacturingProperty) || $checklist6->$tabletmanufacturingProperty == 'N/A' ? 'selected' : '' }}>N/A</option>
 
                                                                         </select>
                                                                     </div>
@@ -12069,7 +12072,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="dispensing_and_manufacturing_remark_{{ $index + 1 }}"
+                                                                        <textarea name="dispensing_and_manufacturing_remark_{{ $questionNo }}"
                                                                             style="border-radius: 7px; border: 1.5px solid black;">{{ $checklist6 ? $checklist6->$tabletmanufacturingRemark : '' }}</textarea>
                                                                     </div>
                                                                 </td>
@@ -12104,17 +12107,22 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <td>{{ $question }}</td>
                                                                 <td>
                                                                     @php
+                                                                        $offset =
+                                                                            count($dispensingAndManufacturingQuestions)
+                                                                            + count($manufdocumentationQuestions);
+
+                                                                        $questionNo = $offset + $index + 1;
+
                                                                         $tabletmanufacturingProperty =
-                                                                            'dispensing_and_manufacturing_' .
-                                                                            (59 + $index + 1);
+                                                                            'dispensing_and_manufacturing_' . $questionNo;
+
                                                                         $tabletmanufacturingRemark =
-                                                                            'dispensing_and_manufacturing_remark_' .
-                                                                            (59 + $index + 1);
+                                                                            'dispensing_and_manufacturing_remark_' . $questionNo;
                                                                     @endphp
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
                                                                         <select
-                                                                            name="dispensing_and_manufacturing_{{ 59 + $index + 1 }}"
+                                                                            name="dispensing_and_manufacturing_{{ $questionNo }}"
                                                                             id="dispensing_and_manufacturing_{{ 59 + $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option
@@ -12125,7 +12133,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             <option value="No"
                                                                                 @if ($checklist6 && $checklist6->$tabletmanufacturingProperty == 'No') selected @endif>
                                                                                 No</option>
-                                                                                <option value="N/A" {{ empty($checklist6->tabletmanufacturingProperty) || $checklist6->tabletmanufacturingProperty == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                                <option value="N/A" {{ empty($checklist6->$tabletmanufacturingProperty) || $checklist6->$tabletmanufacturingProperty == 'N/A' ? 'selected' : '' }}>N/A</option>
 
                                                                         </select>
                                                                     </div>
@@ -12133,7 +12141,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="dispensing_and_manufacturing_remark_{{ 59 + $index + 1 }}"
+                                                                        <textarea name="dispensing_and_manufacturing_remark_{{ $questionNo }}"
                                                                             style="border-radius: 7px; border: 1.5px solid black;">{{ $checklist6 ? $checklist6->$tabletmanufacturingRemark : '' }}</textarea>
                                                                     </div>
                                                                 </td>
