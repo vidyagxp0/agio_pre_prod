@@ -53,7 +53,9 @@
                             class="text-danger"></span></label>
                     <input disabled type="text" name="division_code"
                         value="{{ Helpers::getDivisionName($data->division_id) }}">
-                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                    <input type="hidden" name="division_id" value="{{ Helpers::getDivisionName($data->division_id) }}"
+                    
+                    >
                 </div>
             </div>
             <div class="col-lg-6">
