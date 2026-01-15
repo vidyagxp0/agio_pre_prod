@@ -431,7 +431,7 @@
                                  <div class="col-6">
                                     <div class="group-input">
                                         <label for="related_records">
-                                           Action Item Related Records <span class="text-danger">*</span>
+                                           Action Item Related Records
                                         </label>
 
                                         <select multiple name="related_records[]" id="related_records" 
