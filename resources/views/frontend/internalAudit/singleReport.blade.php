@@ -159,6 +159,21 @@
             </tr>
         </table>
     </header>
+     <footer>
+        <table>
+            <tr>
+                <td class="w-50">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-50">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -4069,21 +4084,7 @@ $checklists = [
 
 
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
+   
 
 </body>
 

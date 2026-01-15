@@ -304,10 +304,10 @@
     <footer>
         <table>
             <tr>
-                <td class="w-30">
+                <td class="w-50">
                     <strong>Printed On :</strong> {{ date('d-M-Y') }}
                 </td>
-                <td class="w-40">
+                <td class="w-50">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
             </tr>
