@@ -6151,7 +6151,7 @@ class OOSController extends Controller
                     //    }
                     // }
 
-                     $list = Helpers::getQAUserList($changestage->division_id);
+                     $list = Helpers::getQAUserList($data->division_id);
 
                                 foreach ($list as $u) {
 
@@ -6162,18 +6162,18 @@ class OOSController extends Controller
                                             Mail::send(
                                                 'mail.view-mail',
                                                 [
-                                                    'data'    => $changestage,
+                                                    'data'    => $data,
                                                     'site'    => "OOS/OOT",
                                                     'history' => "Cancel",
                                                     'process' => 'OOS/OOT',
                                                     'comment' => $request->comment,
                                                     'user'    => Auth::user()->name
                                                 ],
-                                                function ($message) use ($email, $changestage) {
+                                                function ($message) use ($email, $data) {
                                                     $message->to($email)
                                                             ->subject(
                                                                 "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
+                                                                . str_pad($data->record, 4, '0', STR_PAD_LEFT)
                                                                 . " - Activity: Cancel"
                                                             );
                                                 }
