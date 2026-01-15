@@ -60,7 +60,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName($data->division_id) }} / Out Of Calibration
+            {{ Helpers::getDivisionName($ooc->division_id) }} / Out Of Calibration
         </div>
     </div>
 
