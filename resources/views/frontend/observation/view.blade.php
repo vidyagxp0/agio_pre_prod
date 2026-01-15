@@ -404,7 +404,7 @@
                                                 <input readonly type="text" name="division_id"
                                                     value="{{ Helpers::getDivisionName($data->division_code) }}">
                                                 <input type="hidden" name="division_id"
-                                                    value="{{ session()->get('division') }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_code) }}">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">

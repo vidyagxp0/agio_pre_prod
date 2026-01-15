@@ -162,10 +162,10 @@
     <footer>
         <table>
             <tr>
-                <td class="w-30">
+                <td class="w-50">
                     <strong>Printed On :</strong> {{ date('d-M-Y') }}
                 </td>
-                <td class="w-40">
+                <td class="w-50">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
                 {{-- <td class="w-30">
@@ -1796,20 +1796,7 @@
                     </tr>
                 </table>
 
-                <!-- More Information Required -->
-                <table>
-                    <tr>
-                        <th class="w-20">More Information Required By:</th>
-                        <td class="w-30">{!! $data->initial_phase_i_investigation_completed_by ?? 'Not Applicable' !!}</td>
-
-                        <th class="w-20">More Information Required On:</th>
-                        <td class="w-30">{{ $data->initial_phase_i_investigation_completed_on ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th>More Information Required Comment:</th>
-                        <td colspan="3">{!! $data->initial_phase_i_investigation_comment ?? 'Not Applicable' !!}</td>
-                    </tr>
-                </table>
+              
 
                 <!-- QA Head Primary Review -->
                 <table>
