@@ -114,7 +114,7 @@
                                 Acknowledge Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                More Info Required
+                                More Information Required
                             </button>
                         @elseif($data->stage == 3 && $data->assign_to == Auth::user()->id)
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -127,7 +127,7 @@
                                 Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                More Info Required
+                                More Information Required
                             </button>
                         @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">

@@ -501,12 +501,12 @@ class MytaskController extends Controller
     //         return view('frontend.tasks', ['task' => $task]);
     //     }
     // }
-    
+
         public function index(Request $request)
     {
         $loggedInUserId = Auth::id();
         $allTasks = [];
-           
+
         // Define process models and their respective stages
         $processes = [
             'ActionItem' => ['model' => ActionItem::class, 'name' => 'Action Item'],
@@ -738,7 +738,7 @@ class MytaskController extends Controller
         foreach ($processes as $processKey => $process) {
             $processModel = $process['model'];
             $processName = $process['name'];
-            
+
             // Find related processes and user roles
             $findProcess = QMSProcess::where('process_name', $processName)->pluck('id');
             $userRoles = UserRole::whereIn('q_m_s_processes_id', $findProcess)
@@ -763,13 +763,13 @@ class MytaskController extends Controller
 
                 // Get records where stage matches accessible stages
                 if (!empty($accessibleStages)) {
-                    $records = $processModel::whereIn('stage', $accessibleStages)->where('initiator_id', Auth::id())->get();
-                    
+                    $records = $processModel::whereIn('stage', $accessibleStages)->get();
+
                     foreach ($records as $record) {
                         // Find the current stage status
                         $currentStage = collect($stages[$processKey])->firstWhere('id', $record->stage);
                         $status = $currentStage ? $currentStage['status'] : 'Unknown';
-                        
+
                         $allTasks[] = [
                             'process' => $processName,
                             'process_key' => $processKey,

@@ -40,7 +40,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/ Market Complaint
+            {{ Helpers::getDivisionName($data->division_id) }} / Market Complaint
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>

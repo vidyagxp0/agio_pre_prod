@@ -1074,7 +1074,7 @@
                                                     <input disabled type="text" name="division_code"
                                                         value="{{ $divisionName }}">
                                                     <input type="hidden" name="division_id"
-                                                        value="{{ session()->get('division') }}">
+                                                        value="{{ Helpers::getDivisionName($data->division_id) }}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">

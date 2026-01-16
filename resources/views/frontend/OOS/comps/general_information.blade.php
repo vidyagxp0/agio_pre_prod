@@ -53,7 +53,9 @@
                             class="text-danger"></span></label>
                     <input disabled type="text" name="division_code"
                         value="{{ Helpers::getDivisionName($data->division_id) }}">
-                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                    <input type="hidden" name="division_id" value="{{ Helpers::getDivisionName($data->division_id) }}"
+
+                    >
                 </div>
             </div>
             <div class="col-lg-6">
@@ -296,7 +298,7 @@
                     <label for="Tnitiaror Grouo">Source Document Type  <span class="text-danger">*</span></label>
                     <select name="source_document_type_gi" id="Change_Application" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? 'required' : 'readonly' }}>
                         <option value="0">Enter Your Selection Here</option>
-                        <option value="OOT" @if ($data->source_document_type_gi == 'oot') selected @endif>OOT</option>
+                        <option value="OOT" @if ($data->source_document_type_gi == 'OOT') selected @endif>OOT</option>
                         <option value="Lab Incident" @if ($data->source_document_type_gi == 'Lab Incident') selected @endif>Lab Incident</option>
                         <option value="Deviation" @if ($data->source_document_type_gi == 'Deviation') selected @endif>Deviation</option>
                         <option value="Product Non-conformance" @if ($data->source_document_type_gi == 'Product Non-conformance') selected @endif>Product Non-conformance</option>
@@ -482,7 +484,7 @@
                     <label for="Tnitiaror Grouo">Sample Type <span class="text-danger">*</span></label>
                     <select name="sample_type_gi" id="sample_other" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
-                        <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Materia' ?
+                        <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Material' ?
                             'selected' : '' }}>Raw Material</option>
                         <option value="Packing Material"{{ $data->sample_type_gi == 'Packing Material' ?
                             'selected' : '' }}>Packing Material</option>

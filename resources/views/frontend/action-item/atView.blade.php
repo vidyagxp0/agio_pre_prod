@@ -49,7 +49,7 @@
             display: none;
         }
     </style>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
@@ -274,7 +274,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Parent Record Number</b></label>
-                                            
+
                                             <input readonly type="text" name="parent_record_number"
                                                 value="{{ $data->parent_record_number }}">
                                             {{-- @else
@@ -286,7 +286,7 @@
 
 
 
-                               
+
                                 <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="search">
@@ -310,7 +310,7 @@
 
 
 
-                              
+
 
                                 {{-- <div class="col-md-6 new-date-data-field">
                                         <div class="group-input input-date">
@@ -518,12 +518,12 @@
                                             <label for="related_records">
                                                 Action Item Related Records <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                             </label>
-                                            
+
 
                                             <!-- Select Field -->
                                             <select multiple name="related_records[]" id="related_records" placeholder="Select Reference Records"
                                                 data-silent-initial-value-set="true"
-                                                 
+
                                                 >
 
                                                 @if (!empty($relatedRecords))
@@ -553,7 +553,7 @@
 
                                 <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="HOD Persons">HOD Persons <span class="text-danger">*</span></label>
+                                            <label for="HOD Persons">HOD Persons <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span></label>
                                             <select name="hod_preson[]" placeholder="Select HOD Persons" required
                                                 data-search="false" data-silent-initial-value-set="true"
                                                 {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}>
@@ -1730,7 +1730,7 @@
             videoUploadURL: "{{ secure_url('api/upload-files') }}",
             videoMaxSize: 500 * 1024 * 1024,
          });
-         
+
         $(".summernote-disabled").FroalaEditor("edit.off");
     </script>
 

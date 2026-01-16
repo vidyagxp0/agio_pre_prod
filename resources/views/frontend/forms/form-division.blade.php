@@ -14,7 +14,7 @@
                     <div class="division-tabs">
                         <div class="left-block">
                             <div class="head">
-                                Function/Site/Division
+                                Site/Division
                             </div>
                             <div class="tab">
                                 @php
@@ -132,15 +132,24 @@
 
                                     <ul style="list-style-type: disc; padding-left: 35px;">
                                         @foreach ($filteredProcesses as $process)
-                                            <li>
-                                                <label for="process">
-                                                    <input type="hidden" name="process_id" value="{{ $process->id }}">
-                                                    <input type="submit" class="bg-light text-dark"
-                                                        style="width: 100%; height: 60%; background-color: #011627; color: #fdfffc; padding: 7px; border: 0px; bgcolor="#011627"
-                                                        border="0" type="submit" for="process"
-                                                        value="{{ $process->process_name }}" name="process_name" required>
-                                                </label>
-                                            </li>
+                                            @if (!in_array(strtolower($process->process_name), [
+                                                'non conformance',
+                                                'failure investigation'
+                                            ]))
+                                                <li>
+                                                    <label>
+                                                        <input type="hidden" name="process_id" value="{{ $process->id }}">
+                                                        <input
+                                                            type="submit"
+                                                            class="bg-light text-dark"
+                                                            style="width: 100%; height: 60%; background-color: #011627; color: #fdfffc; padding: 7px; border: 0;"
+                                                            value="{{ $process->process_name }}"
+                                                            name="process_name"
+                                                            required
+                                                        >
+                                                    </label>
+                                                </li>
+                                            @endif
                                         @endforeach
                                     </ul>
                                 </div>

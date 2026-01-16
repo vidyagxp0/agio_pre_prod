@@ -518,7 +518,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
-                    @if ($data->stage == 17 || $data->stage == 18 || $data->stage == 19 || $data->stage == 20 || $data->stage == 21)
+                    @if ($data->stage == 17 || $data->stage == 18 || $data->stage == 19 || $data->stage == 20 || $data->stage == 21 || $data->stage == 22)
                       <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>
@@ -956,7 +956,7 @@
                     <div class="row">
                          <!-- Others Field -->
                       <div class="col-12">
-                        <label style="font-weight: bold;" for="Audit Attachments">pH-Viscometer-MP</label>
+                        <label style="font-weight: bold;" for="Audit Attachments">pH</label>
                         <div class="group-input">
                             <div class="why-why-chart">
                                 <table class="table table-bordered">
@@ -1176,7 +1176,7 @@
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
                                                      <!-- <td><input type="text" readonly name="question[]" value="{{ $Dis_solution_question }}"> -->
                                                       <td style="white-space: normal; word-wrap: break-word;">{{ $Dis_solution_question }}</td>
-                                                     
+
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                              <select name="Dis_solution[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
@@ -1315,7 +1315,7 @@
                                                  <tr>
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
                                                      {{-- <td><input type="text" readonly name="question[]" value="{{ $HPLC_GC_question }}"></td> --}}
-                                                    <td style="white-space: normal; word-wrap: break-word;">{{ $HPLC_GC_question }}</td>                                                     
+                                                    <td style="white-space: normal; word-wrap: break-word;">{{ $HPLC_GC_question }}</td>
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                              <select name="HPLC_GC[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
@@ -1528,7 +1528,7 @@
                                                      {{-- <td><input type="text" readonly name="question[]" value="{{ $kF_Potentionmeter_question }}"> </td>--}}
                                                       <td style="white-space: normal; word-wrap: break-word;">{{ $kF_Potentionmeter_question }}</td>
 
-                                                     
+
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                              <select name="kF_Potentionmeter[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
@@ -7900,7 +7900,7 @@
                                                         <td class="flex text-center">{{ $loop->index + 1 }}</td>
                                                         {{-- <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
                                                         </td> --}}
-                                                        <td style="white-space: normal; word-wrap: break-word;">{{ $IIB_inv_question }}</td>                                                     
+                                                        <td style="white-space: normal; word-wrap: break-word;">{{ $IIB_inv_question }}</td>
 
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -8773,7 +8773,7 @@
                                 <label for="Initiator Group">Phase II A HOD Remark
                                 @if($data->stage == 14)
                                    <span class="text-danger">*</span>
-                                @endif 
+                                @endif
                                   </label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
@@ -8924,10 +8924,10 @@
                          <!-- Others Field -->
                          <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Report Attachments">Phase II A Assignable cause found 
+                                <label for="Report Attachments">Phase II A Assignable cause found
                                 @if($data->stage == 16)
                                    <span class="text-danger">*</span>
-                                @endif   
+                                @endif
                                 </label>
                                 <select name="phase_ii_a_assi_cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 16 ? '' : 'disabled' }}>
                                     <option value="">Enter Your Selection Here</option>
@@ -9205,10 +9205,10 @@
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Initiator Group">Phase II B HOD Remark
-                                    
+
                                 @if($data->stage == 18)
                                    <span class="text-danger">*</span>
-                                @endif 
+                                @endif
                                </label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
@@ -9286,7 +9286,7 @@
                                 <label for="Initiator Group">Phase II B CQA/QA Remark
                                 @if($data->stage == 19)
                                    <span class="text-danger">*</span>
-                                @endif     
+                                @endif
                                 </label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>

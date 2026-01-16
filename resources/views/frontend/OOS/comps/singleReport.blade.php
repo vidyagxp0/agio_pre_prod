@@ -21,7 +21,7 @@
         line-height: 1.4;
         color: #000;
         margin-top: 10px;
-         margin-bottom: -60px; 
+         margin-bottom: -60px;
     }
 
     header, footer {
@@ -57,7 +57,7 @@
         /* padding: 20px 35px;  */
         box-sizing: border-box;
     }
-    
+
     .block {
         margin-bottom: 25px;
     }
@@ -166,10 +166,10 @@
     <footer>
         <table>
             <tr>
-                <td class="w-30">
+                <td class="w-50">
                     <strong>Printed On :</strong> {{ date('d-M-Y') }}
                 </td>
-                <td class="w-40">
+                <td class="w-50">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
                 {{-- <td class="w-30">
@@ -271,7 +271,7 @@
                         <td class="w-80" colspan="3">@if($data->description_gi ){{ $data->description_gi  }} @else Not Applicable @endif</td>
                     </tr>
                 </table>
-            </div>    
+            </div>
                 <div class="block">
                 <table>
                     <tr>
@@ -290,7 +290,7 @@
                 <table>
                         <!-- <th class="w-20">If Others</th>
                         <td class="w-80">@if($data->if_others_gi){{ $data->if_others_gi }}@else Not Applicable @endif</td> -->
-                    <tr>    
+                    <tr>
                         <th class="w-20">Is Repeat</th>
                         <td class="w-80">@if($data->is_repeat_gi){{ $data->is_repeat_gi }}@else Not Applicable @endif</td>
                     </tr>
@@ -302,6 +302,12 @@
                         <th class="w-20">Source Document Type</th>
                         <td class="w-80">@if($data->source_document_type_gi){{ $data->source_document_type_gi }}@else Not Applicable @endif</td>
                     </tr>
+                    @if($data->source_document_type_gi == 'Others')
+                        <tr>
+                            <th class="w-20">Other Source Document Type</th>
+                            <td class="w-80">@if($data->sourceDocOtherGi){{ $data->sourceDocOtherGi }}@else Not Applicable @endif</td>
+                        </tr>
+                    @endif
                     </table>
                     {{-- <div class = "inner-block">
                         <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Reference System Document</label>
@@ -330,7 +336,7 @@
                         <td class="w-30">
                             @if($data->oos_observed_on)
                               {{ Helpers::getdateFormat($data->oos_observed_on) }}
-                            @else 
+                            @else
                                Not Applicable
                             @endif
                         </td>
@@ -394,29 +400,29 @@
                     <tr>
                         <th class="w-20">Sample Type</th>
                         <td class="w-80">@if($data->sample_type_gi){{ Helpers::recordFormat($data->sample_type_gi) }}@else Not Applicable @endif</td>
-                    </tr> 
-                    <tr>   
+                    </tr>
+                    <tr>
                         <th class="w-20">Product / Material Name</th>
                         <td class="w-80">@if($data->product_material_name_gi){{ Helpers::recordFormat($data->product_material_name_gi) }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Market</th>
                         <td class="w-80">@if($data->market_gi){{ $data->market_gi }}@else Not Applicable @endif</td>
-                    </tr> 
-                    <tr>  
+                    </tr>
+                    <tr>
                         <th class="w-20">Customer</th>
                         <td class="w-80">@if($data->customer_gi){{ $data->customer_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Specification Details</th>
                         <td class="w-80">@if($data->specification_details){{ Helpers::recordFormat($data->specification_details) }}@else Not Applicable @endif</td>
-                    </tr> 
-                    <tr>      
+                    </tr>
+                    <tr>
                         <th class="w-20">STP Details</th>
                         <td class="w-80">@if($data->STP_details){{ Helpers::recordFormat($data->STP_details) }}@else Not Applicable @endif</td>
                     </tr>
-                </table>   
-                <table> 
+                </table>
+                <table>
                     <tr>
                         <th class="w-20">Manufacture/Vendor</th>
                         <td class="w-80">@if($data->manufacture_vendor){{ Helpers::recordFormat($data->manufacture_vendor) }}@else Not Applicable @endif</td>
@@ -597,11 +603,23 @@
                             <td class="w-15">{{ $datagridIII['oos_results_obtained'] ?  $datagridIII['oos_results_obtained']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_specification_limit'] ?  $datagridIII['oos_specification_limit']: "Not Applicable"}}</td>
                             <td class="w-15">
-                                {{ isset($datagridIII['oos_file_attachment']) && is_array($datagridIII['oos_file_attachment']) 
-                                    ? implode(', ', $datagridIII['oos_file_attachment']) 
-                                    : ($datagridIII['oos_file_attachment'] ?? "Not Applicable") 
-                                }}
-                            </td>
+                                @php
+                                    $attachments = $datagridIII['oos_file_attachment'] ?? null;
+
+                                    if (is_array($attachments)) {
+                                        $attachments = array_map(function ($item) {
+                                            return is_array($item)
+                                                ? ($item['name'] ?? json_encode($item))
+                                                : $item;
+                                        }, $attachments);
+
+                                        echo implode(', ', $attachments);
+                                    } else {
+                                        echo $attachments ?? 'Not Applicable';
+                                    }
+                                @endphp
+                                </td>
+
 
                             <td class="w-15">{{ $datagridIII['oos_submit_on'] ?  Helpers::getdateFormat($datagridIII['oos_submit_on'] ?? ''): "Not Applicable" }}
                             </td>
@@ -853,16 +871,53 @@
                 <table>
                     <tr>
                         <th class="w-20">Workbench Evaluation</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->Comments_plidata)
                                 {{ strip_tags($data->Comments_plidata) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>    
+                    </tr>
                     <tr>
                         <th class="w-20">Checklists</th>
+                        <td class="w-80">
+                            @php
+                                $ChecklistData = $data->checklists;
+
+                                if (is_array($ChecklistData)
+                                    && array_key_exists(0, $ChecklistData)
+                                    && is_string($ChecklistData[0])
+                                    && !empty($ChecklistData[0])) {
+
+                                    $selectedChecklist = explode(',', $ChecklistData[0]);
+
+                                } elseif (is_array($ChecklistData)) {
+
+                                    $selectedChecklist = $ChecklistData;
+
+                                } else {
+
+                                    $selectedChecklist = [];
+                                }
+                            @endphp
+
+                            @if(!empty($selectedChecklist))
+                                {{ implode(', ', $selectedChecklist) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+                @include('frontend.OOS.comps.allchecklistSingleReport')
+
+
+                <table>
+
+                    <tr>
+                        <th class="w-20">Checklist Outcome</th>
                         <td class="w-80">
                             @if($data->justify_if_no_field_alert_pli)
                                 {{ strip_tags($data->justify_if_no_field_alert_pli) }}
@@ -870,24 +925,14 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>    
-                    <tr>
-                        <th class="w-20">Checklist Outcome</th>
-                        <td class="w-80">                        
-                            @if($data->justify_if_no_field_alert_pli)
-                                {{ strip_tags($data->justify_if_no_field_alert_pli) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>    
+                    </tr>
                     <tr>
                         <th class="w-20">Immediate action taken</th>
                         <td class="w-80">@if($data->root_comment ){{ $data->root_comment }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Delay Justification For Investigation</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->justify_if_no_analyst_int_pli)
                                 {{ strip_tags($data->justify_if_no_analyst_int_pli) }}
                             @else
@@ -897,7 +942,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Analyst Interview Details</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->analyst_interview_pli)
                                 {{ strip_tags($data->analyst_interview_pli) }}
                             @else
@@ -908,31 +953,31 @@
 
                     <tr>
                         <th class="w-20">Any Other Cause/Suspected Cause</th>
-                        <td class="w-80">                        
-                            @if($data->Any_other_cause ){{ $data->Any_other_cause }} @else Not Applicable @endif
+                        <td class="w-80">
+                            @if($data->Any_other_cause ){{ strip_tags($data->Any_other_cause) }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Any Other Batches Analyzed</th>
-                        <td class="w-80">                        
-                            @if($data->Any_other_batches ){{ $data->Any_other_batches }} @else Not Applicable @endif
+                        <td class="w-80">
+                            @if($data->Any_other_batches ){{ strip_tags($data->Any_other_batches) }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Details Of Trend</th>
-                        <td class="w-80">                        
-                            @if($data->details_of_trend ){{ $data->details_of_trend }} @else Not Applicable @endif
+                        <td class="w-80">
+                            @if($data->details_of_trend ){{ strip_tags($data->details_of_trend) }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Assignable Cause And Rational For Assignable Cause</th>
-                        <td class="w-80">                        
-                            @if($data->rational_for_assingnable ){{ $data->rational_for_assingnable }} @else Not Applicable @endif
+                        <td class="w-80">
+                            @if($data->rational_for_assingnable ){{ strip_tags($data->rational_for_assingnable) }} @else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
                         <th class="w-20">Summary of Investigation</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->summary_of_prelim_investiga_plic)
                                 {{ strip_tags($data->summary_of_prelim_investiga_plic) }}
                             @else
@@ -942,11 +987,11 @@
                     </tr>
                 </table>
 
-                
+
                 {{-- <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Immediate action taken</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->root_comment ){{ $data->root_comment }} @else Not Applicable @endif</span>
-                </div> 
+                </div>
                 <div class="inner-block">
                     <label class="summer" style="font-weight: bold; font-size: 13px; display: inline;">
                         Delay Justification For Investigation
@@ -958,7 +1003,7 @@
                             Not Applicable
                         @endif
                     </span>
-                </div> 
+                </div>
                 <div class="inner-block">
                     <label class="summer" style="font-weight: bold; font-size: 13px; display: inline;">
                         Analyst Interview Details
@@ -970,7 +1015,7 @@
                             Not Applicable
                         @endif
                     </span>
-                </div> 
+                </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Any Other Cause/Suspected Cause</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->Any_other_cause ){{ $data->Any_other_cause }} @else Not Applicable @endif</span>
@@ -1003,7 +1048,7 @@
             </div>
             <div class="block">
                 <table>
-            
+
                     {{-- <tr>  {{ $data->created_at }} Added By {{ $data->originator }}
                         <th class="w-10">Workbench Evaluation</th>
                         <td class="w-90">{{ $data->Comments_plidata ? $data->Comments_plidata : 'Not Applicable' }}</td>
@@ -1012,7 +1057,7 @@
                         <th class="w-10">Checklist Outcome</th>
                         <td class="w-90">{{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : 'Not Applicable' }}</td>
                     </tr> --}}
-                  
+
                       <tr>
                         <th class="w-20">OOS/OOT Cause Identified</th>
                         <td class="w-30">{{ $data->phase_i_investigation_pli ? $data->phase_i_investigation_pli : 'Not Applicable' }}</td>
@@ -1036,7 +1081,7 @@
                     <table>
                         <tr>
                             <th class="w-20">OOS/OOT Category (If Others)</th>
-                            <td class="w-80">                        
+                            <td class="w-80">
                                 @if($data->oos_category_others_plic)
                                     {{ strip_tags($data->oos_category_others_plic) }}
                                 @else
@@ -1072,7 +1117,7 @@
                         <table>
                             <tr>
                                 <th class="w-20">OOS/OOT Review For Similar Nature</th>
-                                <td class="w-80">                            
+                                <td class="w-80">
                                     @if($data->review_comments_plir)
                                         {{ strip_tags($data->review_comments_plir) }}
                                     @else
@@ -1107,7 +1152,7 @@
                         <table>
                             <tr>
                                 <th class="w-20">Results Of Retest/Re-Measurement</th>
-                                <td class="w-80">                            
+                                <td class="w-80">
                                     @if($data->Description_Deviation)
                                         {{ strip_tags($data->Description_Deviation) }}
                                     @else
@@ -1117,7 +1162,7 @@
                             </tr>
                             <tr>
                                 <th class="w-20">Results Of Repeat Testing</th>
-                                <td class="w-80">                            
+                                <td class="w-80">
                                     @if($data->result_of_repeat)
                                         {{ strip_tags($data->result_of_repeat) }}
                                     @else
@@ -1127,10 +1172,10 @@
                             </tr>
                             <tr>
                                 <th class="w-20">Impact Assessment</th>
-                                <td class="w-80">@if($data->impact_assesment_pia ){{ $data->impact_assesment_pia }} @else Not Applicable @endif</td>
+                                <td class="w-80">@if($data->impact_assesment_pia ){{ strip_tags($data->impact_assesment_pia) }} @else Not Applicable @endif</td>
                             </tr>
                         </table>
-           
+
                     </div>
 
                     {{-- <div class="inner-block">
@@ -1423,6 +1468,8 @@
               </div> --}}
 
               <div class="block">
+                  <div class="block-head">Phase IA CQAH/QAH Review</div>
+              
                 <table>
                     <tr>
                         <th class="w-20">Phase IA CQAH/QAH Remark</th>
@@ -1501,6 +1548,8 @@
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->details_of_result ){{ $data->details_of_result }} @else Not Applicable @endif</span>
                 </div> --}}
 
+
+
                 <table>
                     <tr>
                         <th class="w-20">Outcome Of Phase IA Investigation</th>
@@ -1510,6 +1559,68 @@
                         <th class="w-20">Reason For Proceeding To Phase IB Investigation</th>
                         <td class="w-80">@if($data->reason_for_proceeding ){{ $data->reason_for_proceeding }} @else Not Applicable @endif</td>
                     </tr>
+                </table>
+
+                    @php
+                        $IIB_inv_questions = [
+                            "Analyst Interview required?",
+                            "Raw data Examination? (Examination of raw data, including chromatograms and spectra; any anomalous or suspect peaks or data)",
+                            "The analyst is trained on the method.?",
+                            "Any Previous issues with this test?",
+                            "Other potentially interfering testing/activities occurring at the time of the test?",
+                            "Review of other data ? (Review of other data for other batches performed within the same analyst set)",
+                            "Other OOS results ? (Consideration of any other OOS results obtained on the batch of material under test)",
+                            "Assessment of method validation ? (Assessment of method validation and clarity of instructions in the worksheet)",
+                            "Adequacy of instructions? (Assessment of the adequacy of instructions in the STP procedure)",
+                            "Any issues with environmental temperature/humidity within the area which the test was conducted?",
+                            "Reoccurrence (Whether any similar occurrence(s) with the analysis earlier)?",
+                            "Observation Error (Analyst) [Any other observation Error]?",
+                        ];
+
+                        $IIB_inv_answers = [];
+
+                        if (!empty($checklist_IB_invs->data)) {
+                            // Agar string hai, json_decode karo
+                            if (is_string($checklist_IB_invs->data)) {
+                                $IIB_inv_answers = json_decode($checklist_IB_invs->data, true);
+                            } elseif (is_array($checklist_IB_invs->data)) {
+                                // Agar already array hai, direct assign karo
+                                $IIB_inv_answers = $checklist_IB_invs->data;
+                            }
+                        }
+                    @endphp
+                    <div class="block">
+                        <div class="block-head">Phase IB investigation Checklist</div>
+                    </div>
+                    <table border="1" width="100%" cellspacing="0" cellpadding="6">
+                        <thead>
+                            <tr>
+                                <th width="5%">#</th>
+                                <th width="55%">Question</th>
+                                <th width="15%">Response</th>
+                                <th width="25%">Remark</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($IIB_inv_questions as $index => $question)
+                                @php
+                                    $answer = $IIB_inv_answers[$index] ?? null;
+                                @endphp
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $question }}</td>
+                                    <td>{{ $answer['response'] ?? 'Not Applicable' }}</td>
+                                    <td>{{ $answer['remark'] ?? '-' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <table>
+
+
+
+
 
                     <tr>
                         <th class="w-20">Summary Of Review</th>
@@ -1523,7 +1634,7 @@
 
                     <tr>
                         <th class="w-20">Proposal For Phase IB hypothesis</th>
-                        <td class="w-80">                        
+                        <td class="w-80">
                             @if($data->proposal_for_hypothesis_IB)
                                 {{ is_array($data->proposal_for_hypothesis_IB) ? implode(', ', $data->proposal_for_hypothesis_IB) : $data->proposal_for_hypothesis_IB }}
                             @else
@@ -1639,7 +1750,7 @@
                     <th class="w-20">Resampling Required</th>
                     <td class="w-30">{{ $data->resampling_required_ib ? $data->resampling_required_ib : 'Not Applicable' }}</td>
                     <th class="w-20">Repeat Testing Required</th>
-                    <td class="w-30">{{ $data->repeat_testing_ib ? $data->repeat_testing_ib : 'Not Applicable' }}</td> 
+                    <td class="w-30">{{ $data->repeat_testing_ib ? $data->repeat_testing_ib : 'Not Applicable' }}</td>
                   </tr>
                </table>
               </div>
@@ -1826,6 +1937,17 @@
                         <th class="w-20">If No, Justification</th>
                         <td class="w-80">@if($data->justification_ib ){{ $data->justification_ib }} @else Not Applicable @endif</td>
                     </tr>
+
+                     <tr>
+                        <th class="w-20">Phase IB Assignable Cause Found</th>
+                        <td class="w-80">@if($data->phase_ib_assi_cause ){{ $data->phase_ib_assi_cause }} @else Not Applicable @endif</td>
+                    </tr>
+
+
+                    <tr>
+                        <th class="w-20">Phase IB Assignable Cause Found</th>
+                        <td class="w-80">@if($data->phase_ib_assi_cause ){{ $data->phase_ib_assi_cause }} @else Not Applicable @endif</td>
+                    </tr>
                     <tr>
                         <th class="w-20">P-IB CQAH/QAH Remark</th>
                         <td class="w-80">@if($data->QA_Head_primary_remark3 ){{ $data->QA_Head_primary_remark3 }} @else Not Applicable @endif</td>
@@ -1845,7 +1967,7 @@
                 <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">P-IB CQAH/QAH Remark</label>
                 <span style="font-size:0.8rem; margin-left:10px">@if($data->QA_Head_primary_remark3 ){{ $data->QA_Head_primary_remark3 }} @else Not Applicable @endif</span>
             </div> --}}
-            
+
               <div class="block">
                 <div class="block-head">Phase IB CQAH/QAH Attachment</div>
                 <div class="border-table">
@@ -1871,7 +1993,7 @@
                 </div>
               </div>
 
-            @include('frontend.OOS.comps.allchecklistSingleReport')
+            {{-- @include('frontend.OOS.comps.allchecklistSingleReport') --}}
 
             <div class="block">
                 <div class="block-head"> Phase II A Investigation </div>
@@ -1879,11 +2001,107 @@
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Checklist Outcome</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->checklist_outcome_iia ){{ $data->checklist_outcome_iia }} @else Not Applicable @endif</span>
                 </div> --}}
+
+
+
+               @php
+                    $phase_two_inv_questions = [
+                        "Is correct batch manufacturing record used?",
+                        "Correct quantities of correct ingredients were used in manufacturing?",
+                        "Balances used in dispensing / verification were calibrated using valid standard weights?",
+                        "Equipment used in the manufacturing is as per batch manufacturing record?",
+                        "Processing steps followed in correct sequence as per the BMR?",
+                        "Whether material used in the batch had any OOS result?",
+                        "All the processing parameters were within the range specified in BMR?",
+                        "Environmental conditions during manufacturing are as per BMR?",
+                        "Whether there was any deviation observed during manufacturing?",
+                        "The yields at different stages were within the acceptable range as per BMR?",
+                        "All the equipment’s used during manufacturing are calibrated?",
+                        "Whether there is malfunctioning or breakdown of equipment during manufacturing?",
+                        "Whether the processing equipment was maintained as per preventive maintenance schedule?",
+                        "All the in-process checks were carried out as per the frequency given in BMR & the results were within acceptance limit?",
+                        "Whether there were any failures of utilities (like Power, Compressed air, steam etc.) during manufacturing?",
+                        "Whether other batches/products impacted?",
+                        "Any Other"
+                    ];
+
+                    $phase_two_answers = [];
+
+                    if ($phase_two_invss && !empty($phase_two_invss->data)) {
+                        if (is_string($phase_two_invss->data)) {
+                            $phase_two_answers = json_decode($phase_two_invss->data, true);
+                        } elseif (is_array($phase_two_invss->data)) {
+                            $phase_two_answers = $phase_two_invss->data;
+                        }
+                    }
+                @endphp
+
+                <div class="block-head">CheckList - Phase II Investigation</div>
+                <div class="border-table">
+                    <table border="1" width="100%" cellspacing="0" cellpadding="6">
+                        <tr class="table_bg">
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr>
+
+                        @if(!empty($phase_two_answers))
+                            @foreach($phase_two_inv_questions as $index => $question)
+                                @php
+                                    $answer = $phase_two_answers[$index] ?? [];
+                                @endphp
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $question }}</td>
+                                    <td>{{ $answer['response'] ?? 'Not Applicable' }}</td>
+                                    <td>{{ $answer['remarks'] ?? '-' }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4" style="text-align:center;">Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+
+
+                <div class="block">
+                    <div class="block-head"> CheckList - Phase II Investigation</div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+                            @if ($phase_two_invss)
+                            @foreach ($phase_two_inv_questions as $phase_two_inv_question)
+                            <tr>
+                                <td class="w-15">{{ $loop->index+1 }}</td>
+                                <td class="w-15">{{ $phase_two_inv_question }}</td>
+                                <td>{{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'response') }} </td>
+                                <td class="w-15">{{ Helpers::getArrayKey($phase_two_invss->data[$loop->index], 'remarks') }}</td>
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                            @endif
+                        </table>
+                    </div>
+                </div>
                 <div class="block">
                     <table>
                         <tr>
                             <th class="w-20">Checklist Outcome</th>
-                            <td class="w-80">@if($data->checklist_outcome_iia ){{ $data->checklist_outcome_iia }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->checklist_outcome_iia ){{ strip_tags($data->checklist_outcome_iia) }} @else Not Applicable @endif</td>
                         </tr>
                     </table>
                     <table>
@@ -1895,20 +2113,20 @@
                    <table>
                         <tr>
                             <th class="w-20">Immediate Action Taken</th>
-                            <td class="w-80">@if($data->qa_approver_comments_piii ){{ $data->qa_approver_comments_piii }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->qa_approver_comments_piii ) {{ strip_tags($data->qa_approver_comments_piii) }} @else Not Applicable @endif</td>
                         </tr>
 
                         <tr>
                             <th class="w-20">Delay Justification For Investigation</th>
-                            <td class="w-80">@if($data->reason_manufacturing_delay ){{ $data->reason_manufacturing_delay }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->reason_manufacturing_delay ){{ strip_tags($data->reason_manufacturing_delay) }} @else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Any Other Cause/Suspected Cause</th>
-                            <td class="w-80">@if($data->audit_comments_piii ){{ $data->audit_comments_piii }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->audit_comments_piii ){{ strip_tags($data->audit_comments_piii) }} @else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Summary Investigation</th>
-                            <td class="w-80">@if($data->hypo_exp_reference_piii ){{ $data->hypo_exp_reference_piii }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->hypo_exp_reference_piii ){{ strip_tags($data->hypo_exp_reference_piii) }} @else Not Applicable @endif</td>
                         </tr>
                    </table>
                   </div>
@@ -1966,7 +2184,7 @@
 
                         <tr>
                             <th class="w-20">Impact Assessment</th>
-                            <td class="w-80">@if($data->impact_assessment_IIA ){{ $data->impact_assessment_IIA }} @else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->impact_assessment_IIA ){{ strip_tags($data->impact_assessment_IIA) }} @else Not Applicable @endif</td>
                         </tr>
                    </table>
                   </div>
@@ -2155,7 +2373,7 @@
 
                <div class="block">
                 <div class="block-head">P-II A QAH/CQAH Review</div>
-                
+
                 {{-- <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Phase II A Assinable Cause Found</label>
                     <span style="font-size:0.8rem; margin-left:10px">@if($data->phase_ii_a_assi_cause ){{ $data->phase_ii_a_assi_cause }} @else Not Applicable @endif</span>
@@ -2295,6 +2513,30 @@
                             </tr>
                        </table>
                     </div>
+                    <div class="block">
+                    <div class="block-head">Phase IIB inv. Attachment</div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-80"> Attachment </th>
+                                </tr>
+                                @if ($data->phaseII_attachment)
+                                @foreach ($data->phaseII_attachment as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-80"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-80">Not Applicable</td>
+                                    </tr>
+                                @endif
+                            </table>
+                        </div>
+                    </div>
                     {{-- <div class = "inner-block">
                         <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">If Assignable Cause Identified Perform Re-testing</label>
                         <span style="font-size:0.8rem; margin-left:10px">@if($data->If_assignable_cause ){{ $data->If_assignable_cause }} @else Not Applicable @endif</span>
@@ -2388,7 +2630,7 @@
 
                  {{-- <!-- P-II A QAH/CQAH --> ~Aditya Rajput --}}
 
-                            <div class="block">
+                            {{-- <div class="block">
                                 <div class="block-head">P-II A QAH/CQAH Review</div>
                                 <!-- <div class = "inner-block">
                                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">P-II A QAH/CQAH Remark</label>
@@ -2425,7 +2667,7 @@
                                         @endif
                                     </table>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="block">
                                 <div class="block-head">Phase II B QAH/CQAH Review</div>
@@ -2467,6 +2709,7 @@
                                 </div> --}}
 
                                 <div class="block">
+                                    <div class="block-head">Batch Disposition</div>
                                     <table>
                                         <tr>
                                             <th class="w-20">OOS/OOT Category</th>
@@ -2596,21 +2839,21 @@
                                                 <tr>
                                                     <th class="w-20">Conclusion Comments</th>
                                                     <td class="w-80">@if($data->conclusion_comments_oosc ){{ strip_tags($data->conclusion_comments_oosc) }} @else Not Applicable @endif</td>
-                                                </tr> 
+                                                </tr>
                                                 <tr>
                                                     <th class="w-20">Specification Limit</th>
                                                     <td class="w-80">@if($data->specification_limit_oosc ){{ $data->specification_limit_oosc }} @else Not Applicable @endif</td>
-                                                </tr> 
+                                                </tr>
                                                 <tr>
                                                     <th class="w-20">Results to be Reported</th>
                                                     <td class="w-80">{{ $data->results_to_be_reported_oosc ? $data->results_to_be_reported_oosc : 'Not Applicable' }}</td>
-                                                </tr> 
+                                                </tr>
                                                 <tr>
                                                     <th class="w-20">Final Reportable Results</th>
                                                     <td class="w-80">@if($data->final_reportable_results_oosc ){{ $data->final_reportable_results_oosc }} @else Not Applicable @endif</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="w-20">Justifi. for Averaging Results</th>
+                                                    <th class="w-20">Justify for Averaging Results</th>
                                                     <td class="w-80">@if($data->justifi_for_averaging_results_oosc ){{ strip_tags($data->justifi_for_averaging_results_oosc) }} @else Not Applicable @endif</td>
                                                 </tr>
                                            </table>
@@ -2748,6 +2991,347 @@
                                             </div>
                                         </table>
                                     </div>
+
+
+
+                                <div class="block">
+                                    <div class="block-head">
+                                        Activity Log
+                                    </div>
+                                    <table>
+                                        {{-- Propose Plan --}}
+                                        <tr>
+                                            <th class="w-20">Submit By</th>
+                                            <td class="w-30">@if($data->Submite_by){{ $data->Submite_by }}@else Not Applicable @endif</td>
+                                            <th class="w-20">Submit On</th>
+                                            <td class="w-30">@if($data->Submite_on){{ $data->Submite_on }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Submit Comment</th>
+                                            <td colspan="3">@if($data->Submite_comment){{ $data->Submite_comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+                                        {{-- Cancel --}}
+                                        <tr>
+                                            <th>Request for Cancellation By</th>
+                                            <td>@if($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</td>
+                                            <th>Request for Cancellation  On</th>
+                                            <td>@if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Request for Cancellation Comment</th>
+                                            <td colspan="3">@if($data->comment_cancle){{ $data->comment_cancle }}@else Not Applicable @endif</td>
+                                        </tr>
+
+                                        {{-- HOD Review --}}
+                                        <tr>
+                                            <th>HOD Primary Review Complete By</th>
+                                            <td>@if($data->HOD_Primary_Review_Complete_By){{ $data->HOD_Primary_Review_Complete_By }}@else Not Applicable @endif</td>
+                                            <th>HOD Primary Review Complete On</th>
+                                            <td>@if($data->HOD_Primary_Review_Complete_On){{ $data->HOD_Primary_Review_Complete_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>HOD Primary Review Complete Comment</th>
+                                            <td colspan="3">@if($data->HOD_Primary_Review_Complete_Comment){{ $data->HOD_Primary_Review_Complete_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+                                        {{-- QA/CQA Review --}}
+                                        {{-- <tr>
+                                            <th>Cancel By</th>
+                                            <td>@if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
+                                            <th>Cancel On</th>
+                                            <td>@if($data->qa_review_completed_on){{ $data->qa_review_completed_on }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Cancel Comment</th>
+                                            <td colspan="3">@if($data->comment_cancle){{ $data->comment_cancle }}@else Not Applicable @endif</td>
+                                        </tr> --}}
+
+                                        {{-- Approved --}}
+                                        <tr>
+                                            <th>QA/CQA Head Primary Review Complete By</th>
+                                            <td>@if($data->CQA_Head_Primary_Review_Complete_By){{ $data->CQA_Head_Primary_Review_Complete_By }}@else Not Applicable @endif</td>
+                                            <th>QA/CQA Head Primary Review Complete On</th>
+                                            <td>@if($data->CQA_Head_Primary_Review_Complete_On){{ $data->CQA_Head_Primary_Review_Complete_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>QA/CQA Head Primary Review Complete Comment</th>
+                                            <td colspan="3">@if($data->CQA_Head_Primary_Review_Complete_Comment){{ $data->CQA_Head_Primary_Review_Complete_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+                                        {{-- Completed --}}
+                                        <tr>
+                                            <th>Phase IA Investigation  By</th>
+                                            <td>@if($data->Phase_IA_Investigation_By){{ $data->Phase_IA_Investigation_By }}@else Not Applicable @endif</td>
+                                            <th>Phase IA Investigation  On</th>
+                                            <td>@if($data->Phase_IA_Investiigation_On){{ $data->Phase_IA_Investiigation_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase IA Investigation  Comment</th>
+                                            <td colspan="3">@if($data->Phase_IA_Investigation_Comment){{ $data->Phase_IA_Investigation_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+                                        {{-- HOD Final Review --}}
+                                        <tr>
+                                            <th>Phase IA HOD Review Complete By</th>
+                                            <td>@if($data->Phase_IA_HOD_Review_Complete_By){{ $data->Phase_IA_HOD_Review_Complete_By }}@else Not Applicable @endif</td>
+                                            <th>Phase IA HOD Review Complete On</th>
+                                            <td>@if($data->Phase_IA_HOD_Review_Complete_On){{ $data->Phase_IA_HOD_Review_Complete_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase IA HOD Review Complete Comment</th>
+                                            <td colspan="3">@if($data->Phase_IA_HOD_Review_Complete_Comment){{ $data->Phase_IA_HOD_Review_Complete_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+                                        {{-- QA/CQA Closure Review --}}
+                                        <tr>
+                                            <th> Phase IA QA/CQA Review Complete By</th>
+                                            <td>@if($data->Phase_IA_QA_Review_Complete_By){{ $data->Phase_IA_QA_Review_Complete_By }}@else Not Applicable @endif</td>
+                                            <th> Phase IA QA/CQA Review Complete On</th>
+                                            <td>@if($data->Phase_IA_QA_Review_Complete_On){{ $data->Phase_IA_QA_Review_Complete_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th> Phase IA QA/CQA Review Complete Comment</th>
+                                            <td colspan="3">@if($data->Phase_IA_QA_Review_Complete_Comment){{ $data->Phase_IA_QA_Review_Complete_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+                                        {{-- QAH/CQA Head Approval --}}
+                                          <tr>
+                                            <th>Assignable Cause Not Found By</th>
+                                            <td>@if($data->Assignable_Cause_Not_Found_By){{ $data->Assignable_Cause_Not_Found_By }}@else Not Applicable @endif</td>
+                                            <th>Assignable Cause Not Found On</th>
+                                            <td>@if($data->Assignable_Cause_Not_Found_On){{ $data->Assignable_Cause_Not_Found_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Assignable Cause Not Found Comment</th>
+                                            <td colspan="3">@if($data->Assignable_Cause_Not_Found_Comment){{ $data->Assignable_Cause_Not_Found_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                         <tr>
+                                            <th>Assignable Cause Found By</th>
+                                            <td>@if($data->Assignable_Cause_Found_By){{ $data->Assignable_Cause_Found_By }}@else Not Applicable @endif</td>
+                                            <th>Assignable Cause Found On</th>
+                                            <td>@if($data->Assignable_Cause_Found_On){{ $data->Assignable_Cause_Found_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Assignable Cause Found Comment</th>
+                                            <td colspan="3">@if($data->Assignable_Cause_Found_Comment){{ $data->Assignable_Cause_Found_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+                                         <tr>
+                                            <th>Phase IB Investigation By</th>
+                                            <td>@if($data->Phase_IB_Investigation_By){{ $data->Phase_IB_Investigation_By }}@else Not Applicable @endif</td>
+                                            <th>Phase IB Investigation On</th>
+                                            <td>@if($data->Phase_IB_Investigation_On){{ $data->Phase_IB_Investigation_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase IB Investigation Comment</th>
+                                            <td colspan="3">@if($data->Phase_IB_Investigation_Comment){{ $data->Phase_IB_Investigation_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+                                         <tr>
+                                            <th>Phase IB HOD Review Complete By</th>
+                                            <td>@if($data->Phase_IB_HOD_Review_Complete_By){{ $data->Phase_IB_HOD_Review_Complete_By }}@else Not Applicable @endif</td>
+                                            <th>Phase IB HOD Review Complete On</th>
+                                            <td>@if($data->Phase_IB_HOD_Review_Complete_On){{ $data->Phase_IB_HOD_Review_Complete_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase IB HOD Review Complete Comment</th>
+                                            <td colspan="3">@if($data->Phase_IB_HOD_Review_Complete_Comment){{ $data->Phase_IB_HOD_Review_Complete_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+                                           <tr>
+                                            <th>Phase IB QA/CQA Review Complete By</th>
+                                            <td>@if($data->Phase_IB_QA_Review_Complete_By){{ $data->Phase_IB_QA_Review_Complete_By }}@else Not Applicable @endif</td>
+                                            <th>Phase IB QA/CQA Review Complete On</th>
+                                            <td>@if($data->Phase_IB_QA_Review_Complete_On){{ $data->Phase_IB_QA_Review_Complete_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase IB QA/CQA Review Complete Comment</th>
+                                            <td colspan="3">@if($data->Phase_IB_QA_Review_Complete_Comment){{ $data->Phase_IB_QA_Review_Complete_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+                                        
+
+                                        <tr>
+                                            <th>P-IB Assignable Cause Not Found  By</th>
+                                            <td>@if($data->P_I_B_Assignable_Cause_Not_Found_By){{ $data->P_I_B_Assignable_Cause_Not_Found_By }}@else Not Applicable @endif</td>
+                                            <th>P-IB Assignable Cause Not Found  On</th>
+                                            <td>@if($data->P_I_B_Assignable_Cause_Not_Found_On){{ $data->P_I_B_Assignable_Cause_Not_Found_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>P-IB Assignable Cause Not Found  Comment</th>
+                                            <td colspan="3">@if($data->P_I_B_Assignable_Cause_Not_Found_Comment){{ $data->P_I_B_Assignable_Cause_Not_Found_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+                                        
+
+                                           <tr>
+                                            <th>P-IB Assignable Cause Found By</th>
+                                            <td>@if($data->P_I_B_Assignable_Cause_Found_By){{ $data->P_I_B_Assignable_Cause_Found_By }}@else Not Applicable @endif</td>
+                                            <th>P-IB Assignable Cause Found On</th>
+                                            <td>@if($data->P_I_B_Assignable_Cause_Found_On){{ $data->P_I_B_Assignable_Cause_Found_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>P-IB Assignable Cause Found Comment</th>
+                                            <td colspan="3">@if($data->P_I_B_Assignable_Cause_Found_Comment){{ $data->P_I_B_Assignable_Cause_Found_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+                                          <tr>
+                                            <th>Phase II A Investigation By</th>
+                                            <td>@if($data->Phase_II_A_Investigation_By){{ $data->Phase_II_A_Investigation_By }}@else Not Applicable @endif</td>
+                                            <th>Phase II A Investigation On</th>
+                                            <td>@if($data->Phase_II_A_Investigation_On){{ $data->Phase_II_A_Investigation_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase II A Investigation Comment</th>
+                                            <td colspan="3">@if($data->Phase_II_A_Investigation_Comment){{ $data->Phase_II_A_Investigation_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+                                          <tr>
+                                            <th>Phase II A HOD Review Complete By</th>
+                                            <td>@if($data->Phase_II_A_HOD_Review_Complete_By){{ $data->Phase_II_A_HOD_Review_Complete_By }}@else Not Applicable @endif</td>
+                                            <th>Phase II A HOD Review Complete On</th>
+                                            <td>@if($data->Phase_II_A_HOD_Review_Complete_On){{ $data->Phase_II_A_HOD_Review_Complete_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase II A HOD Review Complete Comment</th>
+                                            <td colspan="3">@if($data->Phase_II_A_HOD_Review_Complete_Comment){{ $data->Phase_II_A_HOD_Review_Complete_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+                                          <tr>
+                                            <th>Phase II A QA/CQA Review Complete By</th>
+                                            <td>@if($data->Phase_II_A_QA_Review_Complete_By){{ $data->Phase_II_A_QA_Review_Complete_By }}@else Not Applicable @endif</td>
+                                            <th>Phase II A QA/CQA Review Complete On</th>
+                                            <td>@if($data->Phase_II_A_QA_Review_Complete_On){{ $data->Phase_II_A_QA_Review_Complete_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase II A QA/CQA Review Complete Comment</th>
+                                            <td colspan="3">@if($data->Phase_II_A_QA_Review_Complete_Comment){{ $data->Phase_II_A_QA_Review_Complete_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+                                          <tr>
+                                            <th>P-II A Assignable Cause Not Found By</th>
+                                            <td>@if($data->P_II_A_Assignable_Cause_Not_Found_By){{ $data->P_II_A_Assignable_Cause_Not_Found_By }}@else Not Applicable @endif</td>
+                                            <th>P-II A Assignable Cause Not Found On</th>
+                                            <td>@if($data->P_II_A_Assignable_Cause_Not_Found_On){{ $data->P_II_A_Assignable_Cause_Not_Found_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>P-II A Assignable Cause Not Found Comment</th>
+                                            <td colspan="3">@if($data->P_II_A_Assignable_Cause_Not_Found_Comment){{ $data->P_II_A_Assignable_Cause_Not_Found_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+
+                                          <tr>
+                                            <th>P-II A Assignable Cause Found By</th>
+                                            <td>@if($data->P_II_A_Assignable_Cause_Found_By){{ $data->P_II_A_Assignable_Cause_Found_By }}@else Not Applicable @endif</td>
+                                            <th>P-II A Assignable Cause Found On</th>
+                                            <td>@if($data->P_II_A_Assignable_Cause_Found_On){{ $data->P_II_A_Assignable_Cause_Found_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>P-II A Assignable Cause Found Comment</th>
+                                            <td colspan="3">@if($data->P_II_A_Assignable_Cause_Found_Comment){{ $data->P_II_A_Assignable_Cause_Found_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+
+                                        
+                                          <tr>
+                                            <th>Phase II B Investigation By</th>
+                                            <td>@if($data->Phase_II_B_Investigation_By){{ $data->Phase_II_B_Investigation_By }}@else Not Applicable @endif</td>
+                                            <th>Phase II B Investigation On</th>
+                                            <td>@if($data->Phase_II_B_Investigation_On){{ $data->Phase_II_B_Investigation_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase II B Investigation Comment</th>
+                                            <td colspan="3">@if($data->Phase_II_B_Investigation_Comment){{ $data->Phase_II_B_Investigation_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+                                        
+                                          <tr>
+                                            <th>Phase II B HOD Review Complete By</th>
+                                            <td>@if($data->Phase_II_B_HOD_Review_Complete_By){{ $data->Phase_II_B_HOD_Review_Complete_By }}@else Not Applicable @endif</td>
+                                            <th>Phase II B HOD Review Complete On</th>
+                                            <td>@if($data->Phase_II_B_HOD_Review_Complete_On){{ $data->Phase_II_B_HOD_Review_Complete_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase II B HOD Review Complete Comment</th>
+                                            <td colspan="3">@if($data->Phase_II_B_HOD_Review_Complete_Comment){{ $data->Phase_II_B_HOD_Review_Complete_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+                                           <tr>
+                                            <th>Phase II B QA/CQA Review Complete By</th>
+                                            <td>@if($data->Phase_II_B_QA_Review_Complete_By){{ $data->Phase_II_B_QA_Review_Complete_By }}@else Not Applicable @endif</td>
+                                            <th>Phase II B QA/CQA Review Complete On</th>
+                                            <td>@if($data->Phase_II_B_QA_Review_Complete_On){{ $data->Phase_II_B_QA_Review_Complete_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phase II B QA/CQA Review Complete Comment</th>
+                                            <td colspan="3">@if($data->Phase_II_B_QA_Review_Complete_Comment){{ $data->Phase_II_B_QA_Review_Complete_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <th>P-II B Assignable Cause Not Found By</th>
+                                            <td>@if($data->P_II_B_Assignable_Cause_Not_Found_By){{ $data->P_II_B_Assignable_Cause_Not_Found_By }}@else Not Applicable @endif</td>
+                                            <th>P-II B Assignable Cause Not Found On</th>
+                                            <td>@if($data->P_II_B_Assignable_Cause_Not_Found_On){{ $data->P_II_B_Assignable_Cause_Not_Found_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>P-II B Assignable Cause Not Found Comment</th>
+                                            <td colspan="3">@if($data->P_II_B_Assignable_Cause_Not_Found_Comment){{ $data->P_II_B_Assignable_Cause_Not_Found_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+                                         <tr>
+                                            <th>P-II B Assignable Cause Found By</th>
+                                            <td>@if($data->P_II_B_Assignable_Cause_Found_By){{ $data->P_II_B_Assignable_Cause_Found_By }}@else Not Applicable @endif</td>
+                                            <th>P-II B Assignable Cause Found On</th>
+                                            <td>@if($data->P_II_B_Assignable_Cause_Found_On){{ $data->P_II_B_Assignable_Cause_Found_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>P-II B Assignable Cause Found Comment</th>
+                                            <td colspan="3">@if($data->P_II_B_Assignable_Cause_Found_Comment){{ $data->P_II_B_Assignable_Cause_Found_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <th>P III Investigation Applicable/Not Applicable By</th>
+                                            <td>@if($data->P_III_Investigation_Applicable_By){{ $data->P_III_Investigation_Applicable_By }}@else Not Applicable @endif</td>
+                                            <th>P III Investigation Applicable/Not Applicable On</th>
+                                            <td>@if($data->P_III_Investigation_Applicable_On){{ $data->P_III_Investigation_Applicable_On }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        <tr>
+                                            <th>P III Investigation Applicable/Not Applicable Comment</th>
+                                            <td colspan="3">@if($data->P_III_Investigation_Applicable_Comment){{ $data->P_III_Investigation_Applicable_Comment }}@else Not Applicable @endif</td>
+                                        </tr>
+                                        
+                                    </table>
+                                </div>
+
                                     {{-- <div class="block">
                                         <div class="block-head"> OOS QA Review </div>
                                         <table>

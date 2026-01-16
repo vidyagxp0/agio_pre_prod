@@ -4994,93 +4994,117 @@ if ($areIniAttachmentsSame2 != true) {
             }
             //for lead auditor
 
-            if($changeControl->stage == 2){
-                $responseData = InternalAuditResponse::where('ia_id', $id)->orderBy('id', 'desc')->first();
-                $stageCheck = new InternalAuditResponse();
+            // ======================= STAGE 2 FIXED =======================
+if ($changeControl->stage == 2) {
 
-                $userId = Auth::user()->id;
-                $userName = Auth::user()->name;
-                $userRoleName = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $now = Carbon::now()->format('d-M-Y');
+    $userId   = Auth::user()->id;
+    $userName = Auth::user()->name;
+    $now      = Carbon::now()->format('d-M-Y');
 
-                $auditorview = InternalAuditorGrid::where(['auditor_id' => $id, 'identifier' => 'Auditors'])->first();
+    // -------- ROLE CHECK --------
+    $isLeadAuditor = false;
+    $isAuditee     = ($changeControl->assign_to == $userId);
 
-                $isLeadAuditor = false;
-                if (!empty($auditorview->data) && is_iterable($auditorview->data)) {
-                    foreach ($auditorview->data as $auditor) {
-                        if (
-                            isset($auditor['auditornew'], $auditor['designation']) &&
-                            $auditor['auditornew'] == $userId &&
-                            $auditor['designation'] === 'Lead Auditor'
-                        ) {
-                            $isLeadAuditor = true;
-                            break;
-                        }
-                    }
-                }
+    $auditorview = InternalAuditorGrid::where([
+        'auditor_id' => $id,
+        'identifier' => 'Auditors'
+    ])->first();
 
-                // Determine role
-                $personRole = $isLeadAuditor ? 'Lead Auditor' : 'Auditee';
-                $commentField = $isLeadAuditor ? 'Auditor_comment' : 'Auditee_comment';
-                // Check if comment is filled in DB field
-                if (empty($changeControl->$commentField)) {
-                    toastr()->error('Please fill the comment before e-signing.');
-                    return back();
-                }
-                if (
-                    $changeControl->$commentField &&
-                    (!isset($responseData) || $responseData->person_role != $personRole)
-                ) {
-                    // Create response
-                    $stageCheck->ia_id = $id;
-                    $stageCheck->user_id = $userId;
-                    $stageCheck->person_role = $personRole;
-                    $stageCheck->status = ($responseData && $responseData->person_role != $personRole) ? 'Complete' : 'In-Progress';
-                    $stageCheck->save();
-
-                    // Update change control based on role
-                    if ($isLeadAuditor) {
-                        $changeControl->audit_preparation_completed_by_lead_auditor = $userName;
-                        $changeControl->audit_preparation_completed_on_lead_auditor = $now;
-                        $changeControl->acknowledge_commnet_lead_auditor = $request->comment;
-                    } else {
-                        $changeControl->audit_preparation_completed_by = $userName;
-                        $changeControl->audit_preparation_completed_on = $now;
-                        $changeControl->acknowledge_commnet = $request->comment;
-                    }
-
-
-                    // $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getInitiatorEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changeControl, 'site' => "Internal Audit", 'history' => "Review", 'process' => 'Internal Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changeControl) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: Internal Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-
-                    $changeControl->update();
-
-                    // Save audit trail
-                    $this->saveAuditHistory($id, $request->comment, $personRole, $lastDocument, $now);
-
-                    // Check if both roles have completed
-                    if ($this->isAuditPreparationComplete($id)) {
-                        $changeControl->stage = 3;
-                        $changeControl->status = 'Audit';
-                        $changeControl->update();
-                    }
-
-                    toastr()->success('Document Sent');
-                    return back();
-                }
+    if (!empty($auditorview->data) && is_iterable($auditorview->data)) {
+        foreach ($auditorview->data as $auditor) {
+            if (
+                isset($auditor['auditornew'], $auditor['designation']) &&
+                $auditor['auditornew'] == $userId &&
+                $auditor['designation'] === 'Lead Auditor'
+            ) {
+                $isLeadAuditor = true;
+                break;
             }
+        }
+    }
+
+    $completedRoles = InternalAuditResponse::where('ia_id', $id)
+        ->pluck('person_role')
+        ->toArray();
+
+    $savedAny = false;
+
+    // ================= AUDITEE =================
+    if (
+        $isAuditee &&
+        !in_array('Auditee', $completedRoles)
+    ) {
+        if (empty($changeControl->Auditee_comment)) {
+            toastr()->error('Auditee comment required.');
+            return back();
+        }
+
+        InternalAuditResponse::create([
+            'ia_id'       => $id,
+            'user_id'     => $userId,
+            'person_role' => 'Auditee',
+            'status'      => 'Complete',
+        ]);
+
+        $changeControl->audit_preparation_completed_by = $userName;
+        $changeControl->audit_preparation_completed_on = $now;
+        $changeControl->acknowledge_commnet = $request->comment;
+
+        $this->saveAuditHistory($id, $request->comment, 'Auditee', $lastDocument, $now);
+
+        $savedAny = true;
+    }
+
+    // ================= LEAD AUDITOR =================
+    if (
+        $isLeadAuditor &&
+        !in_array('Lead Auditor', $completedRoles)
+    ) {
+        if (empty($changeControl->Auditor_comment)) {
+            toastr()->error('Lead Auditor comment required.');
+            return back();
+        }
+
+        InternalAuditResponse::create([
+            'ia_id'       => $id,
+            'user_id'     => $userId,
+            'person_role' => 'Lead Auditor',
+            'status'      => 'Complete',
+        ]);
+
+        $changeControl->audit_preparation_completed_by_lead_auditor = $userName;
+        $changeControl->audit_preparation_completed_on_lead_auditor = $now;
+        $changeControl->acknowledge_commnet_lead_auditor = $request->comment;
+
+        $this->saveAuditHistory($id, $request->comment, 'Lead Auditor', $lastDocument, $now);
+
+        $savedAny = true;
+    }
+
+    if (!$savedAny) {
+        toastr()->error('You have already completed your action.');
+        return back();
+    }
+
+    $changeControl->update();
+
+    // -------- FINAL STAGE CHECK --------
+    $rolesDone = InternalAuditResponse::where('ia_id', $id)
+        ->pluck('person_role')
+        ->toArray();
+
+    if (
+        in_array('Auditee', $rolesDone) &&
+        in_array('Lead Auditor', $rolesDone)
+    ) {
+        $changeControl->stage  = 3;
+        $changeControl->status = 'Audit';
+        $changeControl->update();
+    }
+
+    toastr()->success('Document Sent');
+    return back();
+}
 
             if ($changeControl->stage == 3) {
                 if ((empty($changeControl->checklists) || empty($changeControl->Comments))

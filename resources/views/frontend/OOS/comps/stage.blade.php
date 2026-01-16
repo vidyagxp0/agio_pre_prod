@@ -198,7 +198,7 @@
             <h4 class="modal-title">E-Signature</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('oos.requestmoreinfo_back_stage', $data->id) }}" method="POST">
+            <form  class="signatureModalFormloder" action="{{ route('oos.requestmoreinfo_back_stage', $data->id) }}" method="POST">
             @csrf
             <!-- Modal body -->
             <div class="modal-body">
@@ -221,14 +221,42 @@
                 <input type="comment" name="comment" required>
             </div>
             </div>
-            <div class="modal-footer">
+            {{-- <div class="modal-footer">
             <button type="submit" class="on-submit-disable-button">Submit</button>
             <button type="button" data-bs-dismiss="modal">Close</button>
+            </div> --}}
+
+              <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
             </div>
             </form>
         </div>
     </div>
 </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+                // var signatureForm = document.getElementById('signatureModalFormloder');
+              var signatureForm = document.querySelector('.signatureModalFormloder'); // <-- class use kiya
+
+                signatureForm.addEventListener('submit', function(e) {
+
+                    var submitButton = signatureForm.querySelector('.signatureModalButton');
+                    var spinner = signatureForm.querySelector('.signatureModalSpinner');
+
+                    submitButton.disabled = true;
+
+                    spinner.style.display = 'inline-block';
+                });
+            });
+</script>
 <script>
     $(document).ready(function() {
 

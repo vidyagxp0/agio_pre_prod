@@ -597,7 +597,7 @@ $users = DB::table('users')
                                 <input disabled type="text" name="record" id="record" placeholder="Record Number">
 
 
-                               
+
                             </div>
                         </div>
 
@@ -846,7 +846,7 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
-                  
+
 
                         <div class="col-6 new-date-data-field" id="any-other-section" style="display: none;">
                             <div class="group-input">
@@ -1183,7 +1183,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Details Of Stability Study
-                                <button type="button" name="audit-agenda-grid" id="details_stability">+</button> 
+                                <button type="button" name="audit-agenda-grid" id="details_stability">+</button>
                             </label>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="details_stability_details" style="width: 100%;">
@@ -1472,7 +1472,7 @@ $users = DB::table('users')
                                     <option value="HPLC-GC">CheckList - HPLC-GC</option>
                                     <option value="General-checklist">CheckList - General checklist</option>
                                     <option value="KF-Potentiometer">CheckList - KF-Potentiometer</option>
-                                    <option value="RM-PM">CheckList - RM-PM Sampling</option>
+                                    <option value="RM-PM Sampling">CheckList - RM-PM Sampling</option>
                                     <option value="Bacterial-Endotoxin-Test">Checklist - Bacterial Endotoxin Test</option>
                                     <option value="Sterility">Checklist - Sterility</option>
                                     <option value="Water-Test">Checklist - Microbial Limit Test/Bioburden And Water Test</option>
@@ -12310,7 +12310,7 @@ $users = DB::table('users')
 
 
     const button6 = $('.button6');
-    if (selectedOptions.includes('RM-PM')) {
+    if (selectedOptions.includes('RM-PM Sampling')) {
         button6.show()
         console.log('Show button6');
     } else {

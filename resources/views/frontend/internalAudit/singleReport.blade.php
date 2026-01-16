@@ -159,6 +159,21 @@
             </tr>
         </table>
     </header>
+     <footer>
+        <table>
+            <tr>
+                <td class="w-50">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-50">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -1951,7 +1966,7 @@ $checklists = [
 
             <tr>
                 <th class="w-20">Final Comments</th>
-                <td class="w-80"> @if($checklist5->Description_oinments_comment){{ $checklist5->Description_oinments_comment }}@else Not Applicable @endif</td>
+                <td class="w-80"> @if($checklist6->dispensing_and_manufacturing_comment){{ $checklist6->dispensing_and_manufacturing_comment }}@else Not Applicable @endif</td>
             </tr>
         </table>
     <div class="block-head">
@@ -1963,8 +1978,8 @@ $checklists = [
             <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
-        @if($data->file_attach_add_2)
-        @foreach(json_decode($data->file_attach_add_2) as $key => $file)
+        @if($data->dispensing_and_manufacturing_attachment)
+        @foreach(json_decode($data->dispensing_and_manufacturing_attachment) as $key => $file)
         <tr>
             <td class="w-20">{{ $key + 1 }}</td>
             <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
@@ -3094,6 +3109,7 @@ $checklists = [
     'Current version of SOP’s is available in respective areas?',
     ];
     @endphp
+   
 
     @if(!empty($checklist14) && in_array('14', explode(',', $data->checklists)))
     <div class="inner-block">
@@ -3104,82 +3120,90 @@ $checklists = [
 
             </div>
             <div>
-               @php
-    $checklists = [
-        [
-            'title' => 'Checklist for Injection Packing',
-            'questions' => $questions_injection_packing,
-            'prefix' => 1
-        ],
-        [
-            'title' => 'Checklist for Building Facility',
-            'questions' => $questions_documentation,
-            'prefix' => 2
-        ],
-    ];
-@endphp
+                @php
+                $checklists = [
+                    [
+                        'title' => 'Checklist for Injection Packing',
+                        'questions' => $questions_injection_packing,
+                        'prefix' => 1
+                    ],
+                    [
+                        'title' => 'Checklist for  DOCUMENTATION',
+                        'questions' => $questions_documentation,
+                        'prefix' => 2
+                    ],
+                ];
+                @endphp
+              
 
-@foreach ($checklists as $checklist)
-<div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
-    {{ $checklist['title'] }}
-</div>
+                @foreach ($checklists as $checklist)
+                <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
+                    {{ $checklist['title'] }}
+                </div>
 
-<table class="table table-bordered" border="1">
-    <thead>
-        <tr>
-            <th style="width: 5%;">Sr.No.</th>
-            <th style="width: 40%;">Question</th>
-            <th style="width: 20%;">Response</th>
-            <th>Remarks</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($checklist['questions'] as $index => $question)
-            @php
-                // base index calculation (same as first code)
-                $baseIndex = ($checklist['prefix'] == 1)
-                    ? 0
-                    : count($questions_injection_packing);
+                <table class="table table-bordered" border="1">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">Sr.No.</th>
+                            <th style="width: 40%;">Question</th>
+                            <th style="width: 20%;">Response</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($checklist['questions'] as $index => $question)
+                        @php
+                            if ($checklist['prefix'] == 1) {
+                                // ===== Injection Packing =====
+                                $responseIndex = $index + 1;
 
-                $responseIndex = $baseIndex + $index + 1;
+                                $response = $checklist14
+                                    ->{"response_injection_packing_" . $responseIndex} ?? null;
 
-                // dynamic response & remark
-                $response = $checklist_production_injection
-                    ->{"response_injection_" . $responseIndex} ?? null;
+                                $remark = $checklist14
+                                    ->{"remark_injection_packing_" . $responseIndex} ?? null;
+                            } else {
+                                // ===== Documentation (Production) =====
+                                $docIndex = $index + 1;
 
-                $remark = $checklist_production_injection
-                    ->{"remark_injection_" . $responseIndex} ?? null;
-            @endphp
+                                $response = $checklist14
+                                    ->{"response_documentation_production_" . $docIndex} ?? null;
 
-            {{-- show row only if data exists --}}
-            @if($response || $remark)
-            <tr>
-                <td class="text-center">
-                    {{ $checklist['prefix'] . '.' . ($index + 1) }}
-                </td>
-                <td>{{ $question }}</td>
-                <td>
-                    <div style="display:flex; justify-content:center; margin:5%;">
-                        {{ $response }}
-                    </div>
-                </td>
-                <td>
-                    <div style="display:flex; justify-content:center;">
-                        {{ $remark }}
-                    </div>
-                </td>
-            </tr>
-            @endif
-        @endforeach
-    </tbody>
-</table>
-@endforeach
+                                $remark = $checklist14
+                                    ->{"remark_documentation_production_" . $docIndex} ?? null;
+                            }
+                            @endphp
+
+                            {{-- show row only if data exists --}}
+                            {{-- @if($response || $remark) --}}
+                            @if(!empty($response) || !empty($remark))
+                            <tr>
+                                <td class="text-center">
+                                    {{ $checklist['prefix'] . '.' . ($index + 1) }}
+                                </td>
+                                <td>{{ $question }}</td>
+                                <td>
+                                    <div style="display:flex; justify-content:center; margin:5%;">
+                                        {{ $response }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="display:flex; justify-content:center;">
+                                        {{ $remark }}
+                                    </div>
+                                </td>
+                            </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+                @endforeach
             </div>
             <!-- </div> -->
         </div>
     </div>
 
-     <table>
+        <table>
 
             <tr>
                 <th class="w-20">Final Comments</th>
@@ -4060,21 +4084,7 @@ $checklists = [
 
 
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
+   
 
 </body>
 

@@ -22,7 +22,7 @@
         line-height: 1.4;
         color: #000;
         margin-top: 10px;
-        margin-bottom: -60px; 
+        margin-bottom: -60px;
     }
 
     header, footer {
@@ -58,7 +58,7 @@
         /* padding: 20px 35px;  */
         box-sizing: border-box;
     }
-    
+
     .block {
         margin-bottom: 25px;
     }
@@ -271,7 +271,7 @@
 
 
 <style>
-        
+
         #isPasted {
             width: 690px !important;
             border-collapse: collapse;
@@ -280,7 +280,7 @@
 
         #isPasted td:first-child,
         #isPasted th:first-child {
-            white-space: nowrap; 
+            white-space: nowrap;
             width: 1%;
             vertical-align: top;
         }
@@ -336,7 +336,7 @@
             overflow-x: fixed;
         }
 
-    
+
         #isPasted table {
             width: 100% !important;
             border-collapse: collapse;
@@ -364,7 +364,7 @@
         .note-editable p {
             font-weight: normal !important;
         }
-        
+
     </style>
 
 <body>
@@ -403,8 +403,8 @@
     <footer>
         <table>
             <tr>
-                <td class="w-30"><strong>Printed On :</strong> {{ date('d-M-Y') }}</td>
-                <td class="w-40"><strong>Printed By :</strong> {{ Auth::user()->name }}</td>
+                <td class="w-50"><strong>Printed On :</strong> {{ date('d-M-Y') }}</td>
+                <td class="w-50"><strong>Printed By :</strong> {{ Auth::user()->name }}</td>
                 {{-- <td class="w-30"><strong>Page :</strong> 1 of 1</td> --}}
             </tr>
         </table>
@@ -570,7 +570,7 @@
                                     <div class="bold">Description Of Incidence</div>
                                 </th>
                                 <td class="w-80">{!! strip_tags($data->description_incidence_gi, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}</td>
-                            
+
                     </table>
                     {{-- <div class="custom-procedure-block">
                         <div class="custom-container">
@@ -730,17 +730,17 @@
                 <div class="block-head">
                 Investigation Details
                 </div>
-                 
+
                 <table>
 
                                 <th class="w-20">
                                     <div class="bold">Investigation Details</div>
                                 </th>
                                 <td class="w-80">{!! strip_tags($data->Investigation_Details, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}</td>
-                            
+
                     </table>
 
-                
+
                 {{-- <div class="other-container ">
                     <table>
                         <thead>
@@ -766,7 +766,7 @@
                     </div>
                 </div> --}}
 
-                
+
 
                 <table>
                     <!-- <tr>
@@ -817,7 +817,7 @@
 
            <div>
     <table>
-       
+
         <tr>
             <th class="w-20">Proposed Corrective Action / Corrective Action Taken</th>
             <td class="w-80" colspan="3">
@@ -895,7 +895,7 @@
             </td>
         </tr>
 
-        <tr>    
+        {{-- <tr>
             <th class="w-20">Type of Incidence</th>
             <td class="w-80" colspan="3">
                 @if ($data->type_incidence_ia)
@@ -904,9 +904,9 @@
                     Not Applicable
                 @endif
             </td>
-        </tr>
+        </tr> --}}
 
-        <tr>
+        {{-- <tr>
             <th class="w-20">Other Incidence</th>
             <td class="w-80" colspan="3">
                 @if ($data->other_incidence)
@@ -915,7 +915,7 @@
                     Not Applicable
                 @endif
             </td>
-        </tr>
+        </tr> --}}
 
         <tr>
             <th class="w-20">QC Investigator</th>
@@ -1068,7 +1068,7 @@
                             <th class="w-20">Closure of Incident</th>
                             <td class="w-80" colspan='3'>@if($labtab->closure_incident_c){{ $labtab->closure_incident_c }}@else Not Applicable @endif</td>
                         </tr>
-                        <tr>    
+                        <tr>
                             <th class="w-20">QA Head Comment</th>
                             <td class="w-80" colspan='3'>@if($labtab->qa_hear_remark_c){{ $labtab->qa_hear_remark_c }}@else Not Applicable @endif</td>
                         </tr>
@@ -1119,14 +1119,14 @@
                         <td class="w-30">@if($data->submitted_on){{ $data->submitted_on }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
-                <table>    
-                    <tr>  
+                <table>
+                    <tr>
                         <th class="w-20">Comment</th>
                         <td class="w-80">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
                     <div class="block-head">
-                    QC Head/HOD Initial Review 
+                    QC Head/HOD Initial Review
                 </div>
                 <table>
                     <tr>
@@ -1136,7 +1136,7 @@
                         <td class="w-30">@if($data->review_completed_on){{ $data->review_completed_on }}@else Not Applicable @endif</td>
                       </tr>
                 </table>
-                <table>      
+                <table>
                     <tr>
                         <th class="w-20">Comment</th>
                         <td class="w-80">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
@@ -1153,7 +1153,7 @@
                 </table>
 
                     <div class="block-head">
-                    QA Initial Review 
+                    QA Initial Review
                 </div>
                 <table>
                     <tr>
@@ -1163,7 +1163,7 @@
                         <td class="w-30">@if($data->preliminary_completed_on){{ $data->preliminary_completed_on }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
-                <table>    
+                <table>
                     <tr>
                         <th class="w-20"> Comment</th>
                         <td class="w-80">@if($data->preliminary_completed_comment){{ $data->preliminary_completed_comment }}@else Not Applicable @endif</td>
@@ -1181,7 +1181,7 @@
                 </table>
 
                     <div class="block-head">
-                    Pending Initiator Update 
+                    Pending Initiator Update
                 </div>
                 <table>
                     <tr>
@@ -1191,8 +1191,8 @@
                         <td class="w-30">@if($data->all_activities_completed_on){{ $data->all_activities_completed_on }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
-                <table>    
-                    <tr>    
+                <table>
+                    <tr>
                         <th class="w-20">Comment</th>
                         <td class="w-80">@if($data->all_activities_completed_comment){{ $data->all_activities_completed_comment }}@else Not Applicable @endif</td>
                     </tr>
@@ -1208,7 +1208,7 @@
                 </table>
 
                     <div class="block-head">
-                    QC Head/HOD Secondary Review 
+                    QC Head/HOD Secondary Review
                 </div>
                 <table>
                     <tr>
@@ -1218,7 +1218,7 @@
                         <td class="w-30">@if($data->review_completed_on){{ $data->review_completed_on }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
-                <table>    
+                <table>
                     <tr>
                         <th class="w-20">Comment</th>
                         <td class="w-80">@if($data->solution_validation_comment){{ $data->solution_validation_comment }}@else Not Applicable @endif</td>
@@ -1235,7 +1235,7 @@
                 </table>
 
                     <div class="block-head">
-                    QA Secondary Review 
+                    QA Secondary Review
                 </div>
                 <table>
                     <tr>
@@ -1245,7 +1245,7 @@
                         <td class="w-30">@if($data->extended_inv_complete_on){{ $data->extended_inv_complete_on }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
-                <table>    
+                <table>
                     <tr>
                         <th class="w-20"> Comment</th>
                         <td class="w-80">@if($data->extended_inv_comment){{ $data->extended_inv_comment }}@else Not Applicable @endif</td>
@@ -1273,7 +1273,7 @@
                         <td class="w-30">@if($data->no_assignable_cause_on){{ $data->no_assignable_cause_on }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
-                <table>    
+                <table>
                     <tr>
                         <th class="w-20">Comment</th>
                         <td class="w-80">@if($data->no_assignable_cause_comment){{ $data->no_assignable_cause_comment }}@else Not Applicable @endif</td>
@@ -1302,7 +1302,7 @@
                         <td class="w-30">@if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
                       </tr>
                 </table>
-                <table>      
+                <table>
                     <tr>
                         <th class="w-20">Comment</th>
                         <td class="w-80">@if($data->cancell_comment){{ $data->cancell_comment }}@else Not Applicable @endif</td>

@@ -2639,7 +2639,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-
+        toastr()->success("Record is created Successfully");
         return redirect('rcms/qms-dashboard');
     }
 

@@ -63,7 +63,7 @@
                         <option value="HPLC-GC" @if (in_array('HPLC-GC', $selectedChecklist)) selected @endif>CheckList - HPLC-GC</option>
                         <option value="General-checklist" @if (in_array('General-checklist', $selectedChecklist)) selected @endif>CheckList - General checklist</option>
                         <option value="KF-Potentiometer" @if (in_array('KF-Potentiometer', $selectedChecklist)) selected @endif>CheckList - KF-Potentiometer</option>
-                        <option value="RM-PM" @if (in_array('RM-PM', $selectedChecklist)) selected @endif>CheckList - RM-PM Sampling</option>
+                        <option value="RM-PM Sampling" @if (in_array('RM-PM Sampling', $selectedChecklist)) selected @endif>CheckList - RM-PM Sampling</option>
                         {{-- <option value="Bacterial-Endotoxin-Test" @if (in_array('Bacterial-Endotoxin-Test', $selectedChecklist)) selected @endif>Checklist - Bacterial Endotoxin Test</option>
                         <option value="Sterility" @if (in_array('Sterility', $selectedChecklist)) selected @endif>Checklist - Sterility</option>
                         <option value="Water-Test" @if (in_array('Water-Test', $selectedChecklist)) selected @endif>Checklist - Microbial limit test/Bioburden and Water Test</option>
