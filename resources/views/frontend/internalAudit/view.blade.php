@@ -442,7 +442,15 @@ document.addEventListener("DOMContentLoaded", function () {
                             $personRole = $responseData->person_role ?? null;
 
                         @endphp
+                            @php
+                                $currentUserRole = null;
 
+                                if ($isCommentEditable) {
+                                    $currentUserRole = 'Lead Auditor';
+                                } elseif (Auth::user()->id == $data->assign_to) {
+                                    $currentUserRole = 'Auditee';
+                                }
+                            @endphp
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
@@ -458,31 +466,20 @@ document.addEventListener("DOMContentLoaded", function () {
                             </button>
                         @elseif($data->stage == 2)
                             
-                        {{-- Button for Lead Auditor --}}
-                        @if($isCommentEditable && (!$personRole || $personRole != "Lead Auditor"))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Acknowledgement by Lead Auditor
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More info Required
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button>
-                        @endif
+                        @if($currentUserRole && (!$personRole || $personRole != $currentUserRole))
+        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+            Acknowledgement by {{ $currentUserRole }}
+        </button>
 
-                        {{-- Button for Auditee --}}
-                        @if(Auth::user()->id == $data->assign_to && (!$personRole || $personRole != "Auditee"))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Acknowledgement by Auditee
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More info Required
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button>
-                        @endif
+        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+            More info Required
+        </button>
+
+        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+            Cancel
+        </button>
+    @endif
+
                             
                         @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Internal Audit', 12))
                             </button> <button class="button_theme1" data-bs-toggle="modal"

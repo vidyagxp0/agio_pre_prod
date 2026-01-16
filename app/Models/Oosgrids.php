@@ -17,4 +17,9 @@ class Oosgrids extends Model
     protected $casts = [
         'data' => 'array'
     ];
+
+    public function oos(){
+        return $this->belongsTo(OOS::class,'oos_id');
+    }
+
 }

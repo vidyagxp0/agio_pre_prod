@@ -54,7 +54,7 @@
                     <input disabled type="text" name="division_code"
                         value="{{ Helpers::getDivisionName($data->division_id) }}">
                     <input type="hidden" name="division_id" value="{{ Helpers::getDivisionName($data->division_id) }}"
-                    
+
                     >
                 </div>
             </div>
@@ -484,7 +484,7 @@
                     <label for="Tnitiaror Grouo">Sample Type <span class="text-danger">*</span></label>
                     <select name="sample_type_gi" id="sample_other" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 1 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
-                        <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Materia' ?
+                        <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Material' ?
                             'selected' : '' }}>Raw Material</option>
                         <option value="Packing Material"{{ $data->sample_type_gi == 'Packing Material' ?
                             'selected' : '' }}>Packing Material</option>

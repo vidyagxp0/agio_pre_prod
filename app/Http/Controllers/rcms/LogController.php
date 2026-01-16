@@ -14,6 +14,7 @@ use App\Models\NonConformance;
 use App\Models\OOS_micro;
 use App\Models\LabIncident;
 use App\Models\Ootc;
+use App\Models\OOS;
 use App\Models\MarketComplaint;
 use App\Models\OutOfCalibration;
 use App\Models\Incident;
@@ -22,6 +23,7 @@ use App\Models\InternalAudit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\ActionItem;
 
 
 
@@ -109,11 +111,10 @@ class LogController extends Controller
                                               
             case 'oot':
             
-                $oots =  Ootc::with('ProductGridOot')->get();
+                // $oots =  OOS::get();
 
-
-                $oots = Ootc::with('ProductGridOot')->get();
-                $oosmicro = OOS_micro::get();
+                $oots = OOS::get();
+                // $oosmicro = OOS_micro::get();
             
                  // foreach($oots as $oo)
             // {
@@ -134,18 +135,18 @@ class LogController extends Controller
             
             
                 
-            $oosmicro = OOS_micro::get();
+            // $oosmicro = OOS_micro::get();
 
-            return view('frontend.forms.logs.OOS_OOT_log' , compact('oots','oosmicro'));
+            return view('frontend.forms.logs.OOS_OOT_log' , compact('oots'));
 
 
 
            case 'risk-management':
 
-                $riskmlog = RiskManagement::with(['Action' => function ($query) {
-                    $query->where('type', 'Action_Plan')->take(5); // Limit to 5 records
-                }])->get();
-                
+                // $riskmlog = RiskManagement::with(['actionItems' => function ($query) {
+                //     $query->where('parent_type', 'Action_Plan')->take(5); // Limit to 5 records
+                // }])->get();
+                $riskmlog = RiskManagement::get();
                 // foreach ($riskmlogs as $risk) {
                 //     foreach ($risk->Action as $action) {
                 //         return $action->action; // Return each action record

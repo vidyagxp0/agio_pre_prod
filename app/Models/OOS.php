@@ -368,4 +368,9 @@ class OOS extends Model
     {
         return $this->morphOne(QmsRecordNumber::class, 'recordable');
     }
+
+    public function ProductGridOot(){
+        return $this->hasMany(Oosgrids::class,'oos_id');
+    }
+
 }
