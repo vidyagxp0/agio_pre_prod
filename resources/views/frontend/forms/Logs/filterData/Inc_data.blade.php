@@ -2,21 +2,20 @@
 use Carbon\Carbon;
 @endphp
 @forelse ($Inc as $incident)
-    @foreach ($incident->Grid as $IncGrid)
+    {{-- @foreach ($incident->Grid as $IncGrid) --}}
     @php
-        $unserializedData = unserialize($IncGrid->product_name);
+        $unserializedData = unserialize($incident->product_name);
         $actionValue = isset($unserializedData[0]) ? $unserializedData[0] : 'Not Available';
 
-        $unserializedData_sec = unserialize($IncGrid->batch_no);
+        $unserializedData_sec = unserialize($incident->batch_no);
         $BatchNo = isset($unserializedData_sec[0]) ? $unserializedData_sec[0] : 'Not Available';
     @endphp
 <tr>
-    <td>{{ $loop->parent->index + 1 }}</td> <!-- This ensures a unique serial number for each incident -->
-   
+       <td>{{$loop->index+1}}</td>
     <td>{{ $incident->intiation_date }}</td>
    
     <td>{{ $incident->division ? $incident->division->name : '-' }}/INC/{{ date('Y') }}/{{ str_pad($incident->record, 4, '0', STR_PAD_LEFT) }}</td>
-    <td>{{ $incident->initiator ? $incident->initiator->name : '-' }}</td>
+    <td>{{ Helpers::getInitiatorName($incident->initiator_id) ?? 'Not Available' }}</td>
     <td>{{ $incident->Initiator_Group }}</td>
     <td>{{ $incident->division ? $incident->division->name : '-' }}</td>
     <td>{{ $incident->short_description }}</td>
@@ -28,7 +27,7 @@ use Carbon\Carbon;
     <td>{{ $incident->QA_final_approved_on ? $incident->QA_final_approved_on : 'Under Process' }}</td>
     <td>{{ $incident->status }}</td>
 </tr>
-@endforeach
+{{-- @endforeach --}}
 
 @empty
 <tr>
