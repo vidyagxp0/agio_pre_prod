@@ -18,5 +18,13 @@ class LabIncident extends Model
         return $this->hasMany(lab_incidents_grid::class,'labincident_id');
     
     }
+
+
+    
+public function division()
+{
+    return $this->belongsTo(QMSDivision::class, 'division_id');
+}
+
 }
 

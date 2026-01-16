@@ -22,7 +22,15 @@ protected $fillable = [
 
       public function MarketComplaint()
            {
-               return $this->hasMany(MarketComplaint::class);
+               return $this->hasMany(MarketComplaint::class, 'mc_id');
            }
+           
+
+           public function market_complaint()
+{
+    // Each grid belongs to a single MarketComplaint
+    return $this->belongsTo(MarketComplaint::class, 'mc_id');
+}
+
        
 }
