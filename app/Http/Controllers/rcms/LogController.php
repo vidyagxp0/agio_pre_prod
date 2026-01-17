@@ -14,6 +14,7 @@ use App\Models\NonConformance;
 use App\Models\OOS_micro;
 use App\Models\LabIncident;
 use App\Models\Ootc;
+use App\Models\OOS;
 use App\Models\MarketComplaint;
 use App\Models\OutOfCalibration;
 use App\Models\Incident;
@@ -22,6 +23,7 @@ use App\Models\InternalAudit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\ActionItem;
 
 
 
@@ -33,11 +35,11 @@ class LogController extends Controller
             case 'capa':
                 $capa = Capa::get();
                 
-               
-                return view('frontend.forms.logs.capa_log',compact('capa'));
+                return view('frontend.forms.Logs.capa_log',compact('capa'));
                 break;
             case 'deviation':
                 $deviation = Deviation::get();
+                // dd($deviation);
                 return view('frontend.forms.logs.deviation_log', compact('deviation'));
                 break;
 
@@ -66,8 +68,11 @@ class LogController extends Controller
 
                 case 'lab-incident':
                 
-                    $labincident =LabIncident::with('incidentInvestigationReports')->get();
-                
+                    $labincident =LabIncident::with([
+                        'incidentInvestigationReports',
+                        'division'  
+                    ])->get();
+               
         
                 
                                             
@@ -76,14 +81,24 @@ class LogController extends Controller
                     break;        
                 
 
-             case 'market-complaint':
+            //  case 'market-complaint':
                 
-                $marketcomplaint = MarketComplaint::with('product_details')->get();
+            //     $marketcomplaint = MarketComplaint::with('product_details')->get();
                 
-                    return view('frontend.forms.logs.Market-complaint-registerLog',compact('marketcomplaint'));
+            //         return view('frontend.forms.logs.Market-complaint-registerLog',compact('marketcomplaint'));
                         
-                    break;        
+            //         break;        
                         
+
+            case 'market-complaint':
+                    $marketcomplaint = MarketComplaint::with([
+                        'product_details',
+                        'division'   
+                    ])->get();
+
+                    return view('frontend.forms.logs.Market-complaint-registerLog', compact('marketcomplaint'));
+                break;
+
             case 'ooc':
             
                 $oocs = OutOfCalibration::with('InstrumentDetails', 'assignedUser')->get();
@@ -96,11 +111,10 @@ class LogController extends Controller
                                               
             case 'oot':
             
-                $oots =  Ootc::with('ProductGridOot')->get();
+                // $oots =  OOS::get();
 
-
-                $oots = Ootc::with('ProductGridOot')->get();
-                $oosmicro = OOS_micro::get();
+                $oots = OOS::get();
+                // $oosmicro = OOS_micro::get();
             
                  // foreach($oots as $oo)
             // {
@@ -121,18 +135,18 @@ class LogController extends Controller
             
             
                 
-            $oosmicro = OOS_micro::get();
+            // $oosmicro = OOS_micro::get();
 
-            return view('frontend.forms.logs.OOS_OOT_log' , compact('oots','oosmicro'));
+            return view('frontend.forms.logs.OOS_OOT_log' , compact('oots'));
 
 
 
-            case 'risk-management':
+           case 'risk-management':
 
-                $riskmlog = RiskManagement::with(['Action' => function ($query) {
-                    $query->where('type', 'Action_Plan')->take(5); // Limit to 5 records
-                }])->get();
-                
+                // $riskmlog = RiskManagement::with(['actionItems' => function ($query) {
+                //     $query->where('parent_type', 'Action_Plan')->take(5); // Limit to 5 records
+                // }])->get();
+                $riskmlog = RiskManagement::get();
                 // foreach ($riskmlogs as $risk) {
                 //     foreach ($risk->Action as $action) {
                 //         return $action->action; // Return each action record
@@ -142,6 +156,7 @@ class LogController extends Controller
 
                 
                 return view('frontend.forms.Logs.riskmanagementLog',compact('riskmlog'));
+
 
 
                 
@@ -156,13 +171,16 @@ class LogController extends Controller
                 return view('frontend.forms.Logs.non_conformance_log',compact('nonconformance'));
                
              case 'incident':
-                $Inc = Incident::with(['Grid' => function ($query) {
-                    $query->where('type','Product')->take(3);
-                }] )->take(3)->get();
+                // $Inc = Incident::with(['Grid' => function ($query) {
+                //     $query->where('type','Product')->take(3);
+                // }] )->take(3)->get();
+
+               $Inc= Incident::get();
+                
                 // foreach($Inc as $ias)
                 // foreach ($ias->Grid as $a)
                 // return $a->product_name;
-                    return view('frontend.forms.Logs.incidentLog',compact('Inc'));
+                   return view('frontend.forms.Logs.incidentLog',compact('Inc'));
             return $slug;
                    
             default:

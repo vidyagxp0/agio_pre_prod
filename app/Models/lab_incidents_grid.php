@@ -14,7 +14,7 @@ class lab_incidents_grid extends Model
 
     public function labincident()
     {
-        return $this->belongsTo(LabIncident::class,'labincident_id ');
+        return $this->belongsTo(LabIncident::class,'labincident_id');
     }
 
     

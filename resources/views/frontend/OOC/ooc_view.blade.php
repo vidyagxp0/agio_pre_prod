@@ -278,7 +278,7 @@
                                         HOD Primary Review Complete
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                        More Info Required
+                                        More Information Required
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                         Cancel
@@ -294,7 +294,7 @@
                                         QA Head Primary Review Complete
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                        More Info Required
+                                        More Information Required
                                     </button>
                                     @if (Helpers::getChildData($ooc->id, 'OOC') < 3)
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
@@ -317,7 +317,7 @@
                                         Phase IA HOD Review Complete
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                        Request More Info
+                                        More Information Required
                                     </button>
 
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
@@ -339,7 +339,7 @@
                                         Phase IA QA Review Complete
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                        Request More Info
+                                        More Information Required
                                     </button>
                                     @if (Helpers::getChildData($ooc->id, 'OOC') < 3)
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
@@ -370,7 +370,7 @@
                                         Phase IB Investigation
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                        Request More Info
+                                        More Information Required
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
@@ -380,7 +380,7 @@
                                         Phase IB HOD Review Complete
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                        Request More Info
+                                        More Information Required
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
@@ -392,7 +392,7 @@
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal"
                                         data-bs-target="#rejection-modal">
-                                        Request More Info
+                                        More Information Required
                                     </button>
                                     @if (Helpers::getChildData($ooc->id, 'OOC') < 3)
                                         <button class="button_theme1" data-bs-toggle="modal"
@@ -1312,7 +1312,7 @@
                                     </div>
                                 </div>
 
-                              
+
                                 <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiation Group Code">Initiator Department Code</label>
@@ -1919,7 +1919,7 @@
                                     {{-- <div class="sub-head">Complaint Product Details</div> --}}
                                     <div class="group-input">
                                         <label for="Material Details">
-                                            Instrument Details 
+                                            Instrument Details
                                              @if($ooc->stage ==1)
                                             <span class="text-danger">*</span>
                                          @endif
@@ -2046,7 +2046,7 @@
                                 </script>
 
                                 {{-- by kuldeep end  grid  --}}
-                                
+
 
 
 

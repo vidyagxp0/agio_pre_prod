@@ -6199,6 +6199,35 @@ class OOSController extends Controller
             $data = OOS::find($id);
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
+            if (!$changestage->QA_Head_primary_remark2) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'P-IA CQAH/QAH Review Tab is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                }
+                
+                elseif (!$changestage->conclusion_comments_oosc ||!$changestage->justifi_for_averaging_results_oosc ||!$changestage->justify_if_capa_not_required_oosc ||!$changestage->action_on_affected_batch   ) {
+                    // Flash message for warning (field not filled)
+                     Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'OOS / OTT Conclusion Tab is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
             $data->stage = "23";
             $data->status = "Closed-Done";
             $data->Assignable_Cause_Found_By = Auth::user()->name;
@@ -6331,6 +6360,36 @@ class OOSController extends Controller
             $data = OOS::find($id);
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
+            if (empty($changestage->escalation_required
+                && $changestage->phase_ib_assi_cause && $changestage->QA_Head_primary_remark3
+                )) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Phase-IB CQAH/QAH Remark is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                }
+            elseif (!$changestage->conclusion_comments_oosc ||!$changestage->justifi_for_averaging_results_oosc ||!$changestage->justify_if_capa_not_required_oosc ||!$changestage->action_on_affected_batch   ) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'OOS/ OOT Conclusion Tab is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                      Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
+
             $data->stage = "24";
             $data->status = "Closed-Done";
             $data->P_I_B_Assignable_Cause_Found_By = Auth::user()->name;
@@ -6464,6 +6523,34 @@ class OOSController extends Controller
             $data = OOS::find($id);
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
+            if (empty($changestage->QA_Head_primary_remark4 &&  $changestage->phase_ii_a_assi_cause )) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Phase-II A QAH/CQAH Remark is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                }
+            elseif (!$changestage->conclusion_comments_oosc ||!$changestage->justifi_for_averaging_results_oosc ||!$changestage->justify_if_capa_not_required_oosc ||!$changestage->action_on_affected_batch   ) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'OOS/ OOT Conclusion Tab  is yet to be filled! is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
             $data->stage = "25";
             $data->status = "Closed-Done";
             $data->P_II_A_Assignable_Cause_Found_By = Auth::user()->name;

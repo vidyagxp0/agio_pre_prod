@@ -25,7 +25,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            @if(!empty($parent_division_id)) 
+            @if(!empty($parent_division_id))
                 {{ Helpers::getDivisionName($parent_division_id) }} /
             @else
                 {{ Helpers::getDivisionName(session()->get('division')) }} /
@@ -77,7 +77,7 @@
                                           <input disabled type="text" name="record" id="record" placeholder="Record Number">
                                         {{-- <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName($parent_division_id) }}/AI/{{ date('Y') }}/{{ $record}}"> --}}
-                                       
+
                                         </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -126,7 +126,7 @@
                                 </div>
 
                             @endif
-                               
+
 
                                 <div class="col-lg-6">
                                     @if (!empty($cc->id))
@@ -160,7 +160,7 @@
                                         @endif
                                     </div>
                                 </div> --}}
-    
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -183,7 +183,7 @@
                                         <div class="static">{{ $cc->due_date }}</div>
                                         @endif
                                     </div>
-                                </div> 
+                                </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -265,9 +265,9 @@
                                         display: none;
                                     }
                                 </style> --}}
-                   
 
-                   
+
+
                                 {{-- @if (!empty($parent_type))
                                 <div class="col-lg-6 new-date-data-field">
                                 <label for="Audit Schedule Start Date">Due Date</label>
@@ -279,7 +279,7 @@
                                     <label for="Audit Schedule Start Date">Due Date</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="due_dateq" placeholder="DD-MM-YYYY" />
-                                        <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                        <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="{{ $due_date }}" class="hide-input"
                                             oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
                                     </div>
@@ -303,7 +303,7 @@
                                             <label for="Audit Schedule Start Date">Due Date</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="due_dateq" placeholder="DD-MM-YYYY" />
-                                                <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                                <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     value="{{ $due_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
                                             </div>
@@ -434,11 +434,11 @@
                                            Action Item Related Records
                                         </label>
 
-                                        <select multiple name="related_records[]" id="related_records" 
+                                        <select multiple name="related_records[]" id="related_records"
                                             placeholder="Select Reference Records"
                                             data-silent-initial-value-set="true"
-                                            required>
-                                            
+                                            >
+
                                             @if (!empty($relatedRecords))
                                                 @foreach ($relatedRecords as $records)
                                                     @php
@@ -900,7 +900,7 @@
             ele: '#related_records, #hod'
         });
 
-      
+
 
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
@@ -976,7 +976,7 @@
             $('#rchars').text(textlen);});
     </script>
 
-    
+
 <script>
          var editor = new FroalaEditor('.summernote', {
             key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
@@ -990,7 +990,7 @@
             videoUploadURL: "{{ secure_url('api/upload-files') }}",
             videoMaxSize: 500 * 1024 * 1024,
          });
-         
+
         $(".summernote-disabled").FroalaEditor("edit.off");
     </script>
 

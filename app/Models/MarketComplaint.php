@@ -62,7 +62,20 @@ class MarketComplaint extends Model
 
 
     public function marketcomplaintrecord(){
-      return $this->hasMany(MarketComplaintGrids::class,'');
+      return $this->hasMany(MarketComplaintGrids::class,'mc_id');
     }
 
+
+    public function product_details() {
+    // mc_id in grids table points to id in marketcomplaints
+    return $this->hasMany(MarketComplaintGrids::class, 'mc_id');
+}
+
+
+public function division()
+{
+    return $this->belongsTo(QMSDivision::class, 'division_id');
+}
+
+    
 }
