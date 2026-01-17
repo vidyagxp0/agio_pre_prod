@@ -740,7 +740,7 @@
                             @endif
                         @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Deviation', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Initiator Updated Complete
+                                Initiator Update Complete
                             </button>
                             {{-- @if(Helpers::getChildData($data->id, 'Deviation') < 3) --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
@@ -790,6 +790,9 @@
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Closure Approved
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
                             </button>
                         @elseif($data->stage == 11 && (Helpers::check_roles($data->division_id, 'Deviation', 65) || Helpers::check_roles($data->division_id, 'Deviation', 43) || Helpers::check_roles($data->division_id, 'Deviation', 42) || Helpers::check_roles($data->division_id, 'Deviation', 39)  || Helpers::check_roles($data->division_id, 'Deviation', 9) ))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">

@@ -303,11 +303,7 @@
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Submit
-                                </button></a>
-                            <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal"
-                                    data-bs-target="#cancel-modal">
-                                    Cancel
-                                </button></a>
+                                </button>
 
 
                         @elseif(
@@ -371,10 +367,6 @@
                                 Child
                             </button>
                             @endif
-
-
-
-
                         @elseif(
                             $data->stage == 5 &&
                                 (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
