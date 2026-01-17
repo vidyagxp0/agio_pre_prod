@@ -191,11 +191,43 @@ if($submenu=="Group Permission"){
                                 <p>Group Permission</p>
                             </a>
                         </li>
+                        
 
                     </ul>
                 </li>
 
+                <li class="nav-item {{ $mainmenu == 'EquipmentMaster' ? 'menu-open' : '' }} ">
+                    <a href="#"
+                        class="nav-link  @php
+                        if($mainmenu=="EquipmentMaster"){
+                                    echo "active";
+                                } @endphp">
+                                <i class="nav-icon fa fa-cog"></i>
+                        <p>
+                            Equipment Master
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    
+                    <ul class="nav nav-treeview">
+
+
+                        <li class="nav-item">
+                            <a href="{{ URL::to('admin/eqmaster') }}"
+                                class="nav-link @php
+                        if($submenu=="Master"){
+                            echo "active";
+                        } @endphp">
+                                <i class="far fa-building nav-icon"></i>
+                                <p>Master</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+
                 <li class="nav-item {{ $mainmenu == 'System Configuration' ? 'menu-open' : '' }} ">
+                  
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="System Configuration"){
