@@ -467,18 +467,18 @@ document.addEventListener("DOMContentLoaded", function () {
                         @elseif($data->stage == 2)
                             
                         @if($currentUserRole && (!$personRole || $personRole != $currentUserRole))
-        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-            Acknowledgement by {{ $currentUserRole }}
-        </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Acknowledgement by {{ $currentUserRole }}
+                            </button>
 
-        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-            More info Required
-        </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More info Required
+                            </button>
 
-        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-            Cancel
-        </button>
-    @endif
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
+                        @endif
 
                             
                         @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Internal Audit', 12))
@@ -2299,8 +2299,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <th>Scheduled Start Time</th>
                                                                 <th>Scheduled End Date</th>
                                                                 <th>Scheduled End Time</th>
-                                                                <th>Auditor</th>
-                                                                <th>Auditee</th>
+                                                                <th style="width: 320px;">Auditor</th>
+                                                                <th style="width: 320px;">Auditee</th>
                                                                 <th>Remarks</th>
                                                                 <th>Action</th>
                                                             </tr>
@@ -2334,7 +2334,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             <div class="col-md-6 new-date-data-field">
                                                                                 <div class="group-input input-date">
                                                                                     <div class="calenderauditee">
-                                                                                        <input type="text" style="width: 100px;" id="scheduleEndDate{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($row['scheduleEndDate']) }}"  />
+                                                                                        <input type="text"  id="scheduleEndDate{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($row['scheduleEndDate']) }}"  />
                                                                                         <input type="date" name="auditAgendaData[{{ $key }}][scheduleEndDate]"
                                                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                                             value="{{ $row['scheduleEndDate'] }}"
@@ -2344,7 +2344,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             </div>
                                                                         </td>
                                                                         <td><input type="time" name="auditAgendaData[{{ $key }}][scheduleEndTime]" value="{{ $row['scheduleEndTime'] }}"></td>
-                                                                        <td>
+                                                                        <td style="height: 200px; vertical-align: middle; width: 120px;">
                                                                             <select name="auditAgendaData[{{ $key }}][auditors]" multiple id="auditorsData"
                                                                                  @if($data->stage != 3) readonly @endif>
                                                                                 @if(!empty($users))
@@ -2354,7 +2354,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                                 @endif
                                                                             </select>
                                                                         </td>
-                                                                        <td>
+                                                                        <td style="height: 200px; vertical-align: middle; width: 120px;">
                                                                             <select name="auditAgendaData[{{ $key }}][auditee]" multiple id="auditeeData"
                                                                                 @if($data->stage != 3) readonly @endif>
                                                                                 @if(!empty($users))
