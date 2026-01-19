@@ -2,27 +2,26 @@
 
 namespace App\Exports;
 
-use App\Models\EquipmentMaster;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use App\Models\ProductMaster;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class EquipmentMasterExport implements FromCollection, WithHeadings, WithMapping
+class ProductMasterExport implements FromCollection ,WithHeadings,WithMapping
 {
     private $row = 0;
 
     public function collection()
     {
-        return EquipmentMaster::with('department')->get();
+        return ProductMaster::all();
     }
-
     public function map($equipment): array
     {
         return [
             ++$this->row, 
-            $equipment->department->name ?? 'N/A',
-            $equipment->equipment_name,
-            $equipment->equipment_id,
+            $equipment->product_name ?? 'N/A',
+            $equipment->product_code,
+            $equipment->category
         ];
     }
 
@@ -30,9 +29,9 @@ class EquipmentMasterExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             'Sr No',
-            'Department Name',
-            'Equipment Name',
-            'Equipment ID',
+            'Product Name',
+            'Product Code',
+            'Category',
         ];
     }
 }

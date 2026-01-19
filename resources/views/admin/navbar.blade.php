@@ -204,7 +204,7 @@ if($submenu=="Group Permission"){
                                 } @endphp">
                                 <i class="nav-icon fa fa-cog"></i>
                         <p>
-                            Equipment Master
+                            Equipment Master and Product
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -220,6 +220,16 @@ if($submenu=="Group Permission"){
                         } @endphp">
                                 <i class="far fa-building nav-icon"></i>
                                 <p>Master</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ URL::to('admin/eqproduct') }}"
+                                class="nav-link @php
+                        if($submenu=="Product"){
+                            echo "active";
+                        } @endphp">
+                                <i class="far fa-building nav-icon"></i>
+                                <p>Product</p>
                             </a>
                         </li>
                     </ul>

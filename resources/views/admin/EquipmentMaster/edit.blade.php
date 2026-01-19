@@ -1,5 +1,5 @@
 @php
-    $mainmenu = 'System Configuration';
+    $mainmenu = 'EquipmentMaster';
     $submenu = 'Master';
 @endphp
 
