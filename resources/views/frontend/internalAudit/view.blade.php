@@ -13,7 +13,7 @@
       header .header_rcms_bottom ,.container-fluid.header-bottom,.search-bar{
                     display: none;
                 }
-         
+
 
         .remove-file {
             color: white;
@@ -465,7 +465,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 Cancel
                             </button>
                         @elseif($data->stage == 2)
-                            
+
                         @if($currentUserRole && (!$personRole || $personRole != $currentUserRole))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledgement by {{ $currentUserRole }}
@@ -480,7 +480,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             </button>
                         @endif
 
-                            
+
                         @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Internal Audit', 12))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
@@ -2479,7 +2479,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </script> --}}
                                         <script>
                                             document.addEventListener("DOMContentLoaded", function() {
-                                                let rowIndex = {{ count($json) }};
+                                                let rowIndex = {{ is_array($json) ? count($json) : 0 }};
+
                                                 const analysts = @json($users->toArray() ?? []);
 
                                                 document.getElementById("addSamplePlanning").addEventListener("click", function() {
@@ -3577,7 +3578,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </div>
                                     </div>
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Acknowledgment 
+                                        Acknowledgment
                                     </div>
 
                                     <div class="col-lg-4">
@@ -13016,7 +13017,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             name="hvac_response_{{ $index + 1 }}"
                                                                             id="hvac_response_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                           
+
                                                                                 <option value="Yes"
                                                                                 @if ($checklist9 && isset($checklist9->$hvacResponse) && $checklist9->$hvacResponse == 'Yes') selected @endif>
                                                                                 Yes
@@ -15148,7 +15149,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <form action="{{ route('multiple_child', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
-                    @if($data->stage == 4)   
+                    @if($data->stage == 4)
                         <div class="modal-body">
                             <div class="group-input">
                                 <label for="major">
