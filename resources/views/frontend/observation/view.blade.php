@@ -199,7 +199,8 @@
                                 Cancel
                             </button>
                         @elseif($data->stage == 2 && (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Observation', 11) || Helpers::check_roles($data->division_id, 'Observation', 18)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                           
+                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -214,6 +215,9 @@
                         @elseif($data->stage == 3 && (Helpers::check_roles($data->division_code, 'Observation', 13) || Helpers::check_roles($data->division_code, 'Observation', 7) || Helpers::check_roles($data->division_code, 'Observation', 66) || Helpers::check_roles($data->division_id, 'Observation', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Response Reviewed
+                            </button>
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info Required
                             </button>
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal1">
                                 QA Approval Without CAPA

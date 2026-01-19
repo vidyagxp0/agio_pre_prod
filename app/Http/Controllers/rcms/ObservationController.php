@@ -3246,7 +3246,7 @@ if ($childCapas->count() > 0) {
                                         ],
                                         function ($message) use ($email, $changeControl) {
                                             $message->to($email)
-                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                         }
                                     );
                                 } catch (\Exception $e) {
@@ -3271,6 +3271,24 @@ if ($childCapas->count() > 0) {
                 $changeControl->reject_capa_plan_by = Auth::user()->name;
                 $changeControl->reject_capa_plan_on = Carbon::now()->format('d-M-Y');
                 $changeControl->reject_capa_plan_comment = $request->comment;
+
+
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "Not Applicable";
+                $history->current = "Not Applicable";
+                $history->comment = $request->comment;
+                $history->action = 'More Info Required';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $changeControl->status;
+                $history->change_to =   "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->stage = '';
+                $history->save();
+
 
                     $list = Helpers::getCQAHeadUsersList($changeControl->division_code); // Notify CFT Person
                         foreach ($list as $u) {
