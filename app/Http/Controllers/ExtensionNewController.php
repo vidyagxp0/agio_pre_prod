@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Auditee;
+use App\Models\Capa;
 use App\Models\Deviation;
+use App\Models\CC;
 use App\Models\extension_new;
+use App\Models\EffectivenessCheck;
 use App\Models\extension_new_audit_trail;
 use App\Models\ExtensionAuditTrail;
 use App\Models\ExtensionNewAuditTrail;
+use App\Models\Incident;
+use App\Models\InternalAudit;
+use App\Models\LabIncident;
+use App\Models\MarketComplaint;
+use App\Models\OOS;
+use App\Models\OutOfCalibration;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
+use App\Models\RootCauseAnalysis;
 use App\Models\User;
 use Helpers;
 use Carbon\Carbon;
@@ -28,7 +39,7 @@ class ExtensionNewController extends Controller
     public function index(Request $request)
     {
 
-       
+
         $data = "test";
         // $currentExtensionId = extension_new::max('id') ?? 1;
         // $previousExtensionId = $currentExtensionId - 1;
@@ -36,9 +47,9 @@ class ExtensionNewController extends Controller
         // dd($previousDueDate);
         // $record_numbers = (RecordNumber::first()->value('counter')) + 1;
         // $record_number = str_pad($record_numbers, 4, '0', STR_PAD_LEFT);
-        
-        
-        
+
+
+
         // $record_number = $lastAi ? $lastAi->record_number + 1 : 1;
         // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
@@ -101,7 +112,7 @@ class ExtensionNewController extends Controller
         }
 
         $parent_due_date = '';
-        
+
 
         return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers', 'relatedRecords','parent_due_date'));
     }
@@ -127,11 +138,11 @@ class ExtensionNewController extends Controller
 
          $lastrecordnumber = extension_new::orderBy('record_number', 'desc')->first();
         $record_number = $lastrecordnumber ? $lastrecordnumber->record_number + 1 : 1;
-        
+
 
         $lastrecord = extension_new::orderBy('record', 'desc')->first();
         $record = $lastrecord ? $lastrecord->record + 1 : 1;
-        
+
 
         $extensionNew = new extension_new();
         $extensionNew->type = "Extension";
@@ -919,7 +930,7 @@ class ExtensionNewController extends Controller
             }
             $history->save();
         }
-        
+
         if ($lastDocument->count_data != $extensionNew->count_data) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;
@@ -1242,7 +1253,7 @@ class ExtensionNewController extends Controller
             }
             $history->save();
         }
-      
+
         toastr()->success("Record is updated Successfully");
         return redirect()->back();
     }
@@ -1301,7 +1312,7 @@ class ExtensionNewController extends Controller
             ], 500);
         }
     }
-    
+
     public function moreinfoStateChange(Request $request, $id)
     {
         try {
@@ -1444,7 +1455,7 @@ class ExtensionNewController extends Controller
 
     public function sendstage(Request $request, $id)
     {
-        
+
             if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
@@ -1458,7 +1469,7 @@ class ExtensionNewController extends Controller
                             'title' => 'Mandatory Fields!',
                             'message' => 'General Information Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     }
                      else {
@@ -1571,7 +1582,7 @@ class ExtensionNewController extends Controller
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
                             'message' => 'HOD Review Tab is yet to be filled'
-                        ]);            
+                        ]);
                         return redirect()->back();
                     }
                      else {
@@ -1656,13 +1667,13 @@ class ExtensionNewController extends Controller
                     $extensionNew->update();
                     return back();
                 }
-                
+
 
             } else {
                 toastr()->error('E-signature Not match');
                 return back();
             }
-       
+
     }
 
     public function sendcqaapprovalstage(Request $request, $id)
@@ -1671,7 +1682,7 @@ class ExtensionNewController extends Controller
             if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
-                
+
                 if ($extensionNew->stage == 2) {
                     if (empty($extensionNew->reviewer_remarks))
                     {
@@ -1679,7 +1690,7 @@ class ExtensionNewController extends Controller
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
                             'message' => 'HOD Review Tab is yet to be filled'
-                        ]);            
+                        ]);
                         return redirect()->back();
                     }
                      else {
@@ -1751,7 +1762,7 @@ class ExtensionNewController extends Controller
                 //                 'title' => 'Mandatory Fields!',
                 //                 'message' => 'HOD Review Tab is yet to be filled'
                 //             ]);
-        
+
                 //             return redirect()->back();
                 //         }
                 //         else {
@@ -1814,7 +1825,7 @@ class ExtensionNewController extends Controller
                 //         return back();
                 //     }
                 // } else {
-                    
+
                 //     $extensionNew->update();
                 //     toastr()->success('Document Sent');
                 //     return back();
@@ -1952,10 +1963,17 @@ class ExtensionNewController extends Controller
 
     public function sendCQA(Request $request, $id)
     {
+        
         try {
             if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
+
+                    
+                $effectiveChangeDate = EffectivenessCheck::where(
+                    'id',
+                    $extensionNew->parent_id
+                )->first();                
 
                 if ($extensionNew->stage == 3) {
                     $extensionNew->stage = "5";
@@ -2004,7 +2022,7 @@ class ExtensionNewController extends Controller
                             'title' => 'Mandatory Fields!',
                             'message' => 'CQA Approval Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     }
                      else {
@@ -2013,7 +2031,7 @@ class ExtensionNewController extends Controller
                             'title' => 'Success',
                             'message' => 'Sent for Closed - Done state'
                         ]);
-                    }
+                    }        
 
                     $extensionNew->stage = "6";
                     $extensionNew->status = "Closed - Done";
@@ -2046,6 +2064,69 @@ class ExtensionNewController extends Controller
                     } else {
                         $history->action_name = 'Update';
                     }
+                     if ($extensionNew->status == "Closed - Done") 
+                        {
+                            
+                          $proposedDatechange = $extensionNew->proposed_due_date;
+
+                            switch ($extensionNew->parent_type) {
+
+                                case 'EffectivenessCheck':
+                                    EffectivenessCheck::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+
+                                case 'Deviation':
+                                    Deviation::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+
+                                case 'CC':
+                                    CC::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+
+                                case 'CAPA':
+                                    Capa::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case 'External Audit':
+                                    Auditee::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case ' ':
+                                    Incident::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case 'Internal Audit':
+                                    InternalAudit::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case 'Lab Incident':
+                                    LabIncident::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case 'Market Complaint':
+                                    MarketComplaint::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date_gi' => $proposedDatechange]);
+                                    break;
+                                case 'OOC':
+                                    OutOfCalibration::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                 case 'OOS Chemical':
+                                    OOS::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case 'RCA':
+                                    RootCauseAnalysis::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                
+                                
+                                
+                            }
+                        }
                     $history->save();
 
                  $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify HOD
@@ -2109,6 +2190,18 @@ class ExtensionNewController extends Controller
                        // }
                     }
                     $extensionNew->update();
+
+                    if ($extensionNew->parent_type == 'CC') {
+                        $cc = CC::find($extensionNew->parent_id);
+
+                        if ($cc) {
+                            $cc->due_date = $extensionNew->proposed_due_date;
+                            $cc->save(); // Prefer save() over update() when changing properties
+                            $extensionNew->due_date = $extensionNew->proposed_due_date;
+                            $extensionNew->current_due_dated = $extensionNew->proposed_due_date;
+                            $extensionNew->update();
+                        }
+                    }
                     toastr()->success('Document Sent');
                     return back();
                 }
@@ -2125,11 +2218,20 @@ class ExtensionNewController extends Controller
     }
 
     public static function sendApproved(Request $request, $id)
-    {
+    {                    
+            //     $extensionNew = extension_new::find($id);
+
+            //     $ccChangeDate = CC::where('id',$extensionNew->parent_id)->first();
+            //    dd($ccChangeDate);
         try {
             if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
+
+                 $effectiveChangeDate = EffectivenessCheck::where(
+                    'id',
+                    $extensionNew->parent_id
+                )->first();  
 
                 if ($extensionNew->stage == 3) {
                     if (empty($extensionNew->approver_remarks))
@@ -2139,7 +2241,7 @@ class ExtensionNewController extends Controller
                             'title' => 'Mandatory Fields!',
                             'message' => 'QA/CQA Approval Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     }
                      else {
@@ -2180,7 +2282,70 @@ class ExtensionNewController extends Controller
                     } else {
                         $history->action_name = 'Update';
                     }
-                    $history->save();
+                    if ($extensionNew->status == "Closed - Done") 
+                        {
+                            
+                          $proposedDatechange = $extensionNew->proposed_due_date;
+
+                            switch ($extensionNew->parent_type) {
+
+                                case 'EffectivenessCheck':
+                                    EffectivenessCheck::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+
+                                case 'Deviation':
+                                    Deviation::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+
+                                case 'CC':
+                                    CC::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+
+                                case 'CAPA':
+                                    Capa::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case 'External Audit':
+                                    Auditee::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case 'Incident':
+                                    Incident::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case 'Internal Audit':
+                                    InternalAudit::where('id', $extensionNew->parent_id)
+                                        ->update(['due_l..date' => $proposedDatechange]);
+                                    break;
+                                case 'Lab Incident':
+                                    LabIncident::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case 'Market Complaint':
+                                    MarketComplaint::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date_gi' => $proposedDatechange]);
+                                    break;
+                                case 'OOC':
+                                    OutOfCalibration::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                 case 'OOS Chemical':
+                                    OOS::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                case 'RCA':
+                                    RootCauseAnalysis::where('id', $extensionNew->parent_id)
+                                        ->update(['due_date' => $proposedDatechange]);
+                                    break;
+                                
+                                
+                                
+                            }
+                        }
+                        $history->save();
 
                 //     $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
                 //      foreach ($list as $u) {
@@ -2199,6 +2364,19 @@ class ExtensionNewController extends Controller
                 //     // }
                 // }
                     $extensionNew->update();
+
+
+                    // if ($extensionNew->parent_type == 'CC') {
+                    //     $cc = CC::find($extensionNew->parent_id);
+
+                    //     if ($cc) {
+                    //         $cc->due_date = $extensionNew->proposed_due_date;
+                    //         $cc->save(); // Prefer save() over update() when changing properties
+                    //         // $extensionNew->due_date = $extensionNew->proposed_due_date;
+                    //         // $extensionNew->current_due_dated = $extensionNew->proposed_due_date;
+                    //         $extensionNew->update();
+                    //     }
+                    // }
                     toastr()->success('Document Sent');
                     return back();
                 }
@@ -2348,7 +2526,7 @@ class ExtensionNewController extends Controller
 
         return response()->json(['html' => $responseHtml]);
     }
-    
+
     public static function auditReport($id)
     {
         $doc = extension_new::find($id);

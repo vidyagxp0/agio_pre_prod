@@ -13,7 +13,7 @@
       header .header_rcms_bottom ,.container-fluid.header-bottom,.search-bar{
                     display: none;
                 }
-         
+
 
         .remove-file {
             color: white;
@@ -465,22 +465,22 @@ document.addEventListener("DOMContentLoaded", function () {
                                 Cancel
                             </button>
                         @elseif($data->stage == 2)
-                            
+
                         @if($currentUserRole && (!$personRole || $personRole != $currentUserRole))
-        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-            Acknowledgement by {{ $currentUserRole }}
-        </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Acknowledgement by {{ $currentUserRole }}
+                            </button>
 
-        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-            More info Required
-        </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More info Required
+                            </button>
 
-        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-            Cancel
-        </button>
-    @endif
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
+                        @endif
 
-                            
+
                         @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Internal Audit', 12))
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
@@ -2299,8 +2299,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <th>Scheduled Start Time</th>
                                                                 <th>Scheduled End Date</th>
                                                                 <th>Scheduled End Time</th>
-                                                                <th>Auditor</th>
-                                                                <th>Auditee</th>
+                                                                <th style="width: 320px;">Auditor</th>
+                                                                <th style="width: 320px;">Auditee</th>
                                                                 <th>Remarks</th>
                                                                 <th>Action</th>
                                                             </tr>
@@ -2334,7 +2334,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             <div class="col-md-6 new-date-data-field">
                                                                                 <div class="group-input input-date">
                                                                                     <div class="calenderauditee">
-                                                                                        <input type="text" style="width: 100px;" id="scheduleEndDate{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($row['scheduleEndDate']) }}"  />
+                                                                                        <input type="text"  id="scheduleEndDate{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($row['scheduleEndDate']) }}"  />
                                                                                         <input type="date" name="auditAgendaData[{{ $key }}][scheduleEndDate]"
                                                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                                             value="{{ $row['scheduleEndDate'] }}"
@@ -2344,7 +2344,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             </div>
                                                                         </td>
                                                                         <td><input type="time" name="auditAgendaData[{{ $key }}][scheduleEndTime]" value="{{ $row['scheduleEndTime'] }}"></td>
-                                                                        <td>
+                                                                        <td style="height: 200px; vertical-align: middle; width: 120px;">
                                                                             <select name="auditAgendaData[{{ $key }}][auditors]" multiple id="auditorsData"
                                                                                  @if($data->stage != 3) readonly @endif>
                                                                                 @if(!empty($users))
@@ -2354,7 +2354,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                                 @endif
                                                                             </select>
                                                                         </td>
-                                                                        <td>
+                                                                        <td style="height: 200px; vertical-align: middle; width: 120px;">
                                                                             <select name="auditAgendaData[{{ $key }}][auditee]" multiple id="auditeeData"
                                                                                 @if($data->stage != 3) readonly @endif>
                                                                                 @if(!empty($users))
@@ -2479,7 +2479,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </script> --}}
                                         <script>
                                             document.addEventListener("DOMContentLoaded", function() {
-                                                let rowIndex = {{ count($json) }};
+                                                let rowIndex = {{ is_array($json) ? count($json) : 0 }};
+
                                                 const analysts = @json($users->toArray() ?? []);
 
                                                 document.getElementById("addSamplePlanning").addEventListener("click", function() {
@@ -3577,7 +3578,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </div>
                                     </div>
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Acknowledgment 
+                                        Acknowledgment
                                     </div>
 
                                     <div class="col-lg-4">
@@ -13016,7 +13017,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             name="hvac_response_{{ $index + 1 }}"
                                                                             id="hvac_response_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                           
+
                                                                                 <option value="Yes"
                                                                                 @if ($checklist9 && isset($checklist9->$hvacResponse) && $checklist9->$hvacResponse == 'Yes') selected @endif>
                                                                                 Yes
@@ -15148,7 +15149,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <form action="{{ route('multiple_child', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
-                    @if($data->stage == 4)   
+                    @if($data->stage == 4)
                         <div class="modal-body">
                             <div class="group-input">
                                 <label for="major">

@@ -390,9 +390,9 @@ dd($data->initiator_id , Auth::user()->id);
                                 More Info Required
                             </button>
 
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-                            </button> --}}
+                            </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Review Complete

@@ -10,6 +10,7 @@ use App\Models\RecordNumber;
 use App\Models\User;
 use App\Models\EffectivenessCheckAuditTrail;
 use App\Models\RoleGroup;
+use App\Models\extension_new;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Session;
@@ -1470,6 +1471,38 @@ class EffectivenessCheckController extends Controller
                         'message' => 'Sent for Work Completion state'
                     ]);
                 }
+
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'EffectivenessCheck')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                           if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 // $rules = [
                 //     'Comments' => 'required|max:255',
 
@@ -1608,6 +1641,37 @@ class EffectivenessCheckController extends Controller
                         'message' => 'Sent for HOD Review state'
                     ]);
                 }
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'EffectivenessCheck')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                           if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 // $rules = [
                 //     'Comments' => 'required|max:255',
 
@@ -1742,6 +1806,38 @@ class EffectivenessCheckController extends Controller
                         'message' => 'Sent for QA/CQA Review state'
                     ]);
                 }
+
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'EffectivenessCheck')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                           if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                 // $rules = [
                 //     'Comments' => 'required|max:255',
@@ -1958,6 +2054,38 @@ class EffectivenessCheckController extends Controller
                         'message' => 'Sent for QA/CQA Approval Effective state'
                     ]);
                 }
+
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'EffectivenessCheck')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                           if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
                 $effective->stage = '6';
                 $effective->status = 'QA/CQA Approval - Effective';
                 $effective->effective_by =  Auth::user()->name;
@@ -2064,6 +2192,37 @@ class EffectivenessCheckController extends Controller
                         'message' => 'Sent for Closed  Effective state'
                     ]);
                 }
+                // exetnsion child validation
+                      $extensionchild = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'EffectivenessCheck')
+                    ->get();
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                           if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ){
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
 
                 $effective->stage = '7';
                 $effective->status = 'Closed - Effective';
@@ -3359,4 +3518,74 @@ public function effectiveness_child(Request $request, $id)
 
     // return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
 }
+ public function child_extension(Request $request, $id)
+    {
+        $cft = [];
+        $parent_id = $id;
+        $parent_type = "EffectivenessCheck";
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+        $old_record = EffectivenessCheck::select('id', 'division_id', 'record')->get();
+        $lastAi = EffectivenessCheck::orderBy('record', 'desc')->first();
+        $record_number = $lastAi ? $lastAi->record + 1 : 1;
+     
+        $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $parent_record = EffectivenessCheck::where('id', $id)->value('record');
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_division_id = EffectivenessCheck::where('id', $id)->value('division_id');
+       
+        $parent_initiator_id = EffectivenessCheck::where('id', $id)->value('initiator_id');
+        $parent_intiation_date = EffectivenessCheck::where('id', $id)->value('intiation_date');
+        $parent_short_description = EffectivenessCheck::where('id', $id)->value('short_description');
+       
+        
+      
+        if ($request->child_type == "extension") {
+            $parent_name = "EffectivenessCheck";
+            $parent_due_date = "";
+            $parent_name = $request->$parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
+
+            
+
+            $old_record = extension_new::select('id', 'division_id', 'record')->get();
+            $lastAi = extension_new::orderBy('record', 'desc')->first();
+            $record = $lastAi ? $lastAi->record + 1 : 1;
+     
+            $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+            $record_number = $record;
+            $parent_division_id = EffectivenessCheck::where('id',$id)->value('division_id');
+            $data = EffectivenessCheck::find($id);
+            $extension_record = Helpers::getDivisionName($data->division_id) . '/' . 'CAPA' . '/' . date('Y') . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            $count = Helpers::getChildData($id, $parent_type);
+            $countData = $count + 1;
+            $relatedRecords = Helpers::getAllRelatedRecords();
+            // $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            
+
+             if ($request->child_type == "extension"){
+            $lastExtension = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'EffectivenessCheck')
+                                ->orderByDesc('id')
+                                ->first();
+                    
+                            if (!$lastExtension) {
+                                $extensionCount = 1;
+                            } else {
+                                if (in_array($lastExtension->status, ['Closed - Done', 'Closed - Reject','Closed Cancelled'])) {
+                                    $extensionCount = $lastExtension->count + 1;
+                                } else {
+                                    return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
+                                }
+                            }
+
+                        }  
+
+            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'relatedRecords', 'record_number', 'parent_due_date', 'parent_type', 'extension_record', 'countData','parent_division_id'));
+        }
+    }
 }

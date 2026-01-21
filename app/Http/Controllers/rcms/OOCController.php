@@ -53,17 +53,17 @@ class OOCController extends Controller
 
          $lastAirecord = OutOfCalibration::orderBy('record', 'desc')->first();
         $record = $lastAirecord ? $lastAirecord->record + 1 : 1;
-    
+
 
         $lastAirecord_number = OutOfCalibration::orderBy('record_number', 'desc')->first();
         $record_number = $lastAirecord_number ? $lastAirecord_number->record_number + 1 : 1;
-      
+
 
         $data = new OutOfCalibration();
         $data->form_type = 'Out Of Calibration';
       //  $data->record = ((RecordNumber::first()->value('counter')) + 1);
 
-       
+
 
 
         $data->record = $record;
@@ -87,9 +87,9 @@ class OOCController extends Controller
         $data->initiated_if_other= $request->initiated_if_other;
         $data->is_repeat_ooc= $request->is_repeat_ooc;
         $data->Repeat_Nature= $request->Repeat_Nature;
-      
+
         $data->details_of_ooc= $request->details_of_ooc;
-      
+
         $data->ooc_due_date= $request->ooc_due_date;
         $data->Delay_Justification_for_Reporting= $request->Delay_Justification_for_Reporting;
         $data->HOD_Remarks = $request->HOD_Remarks;
@@ -2218,7 +2218,7 @@ class OOCController extends Controller
         $ooc->qPIBaHremarksnewfield = $request->qPIBaHremarksnewfield;
 
         $ooc->is_repeat_realease_stageii_ooc = $request->is_repeat_realease_stageii_ooc;
-        
+
         // Update Attachments Fields
         if (!empty($request->initial_attachment_qahead_ooc)) {
             $files = [];
@@ -4332,8 +4332,8 @@ class OOCController extends Controller
 
         ////////////////////////////////////////////////////////////////////////////////////
 
-             
-        if (!empty($request->instrumentdetails)) 
+
+        if (!empty($request->instrumentdetails))
         {
             // dd($request->capa_closure_tab1);
             $existingInitialdetails = OOC_Grid::where(['ooc_id' => $oocGrid, 'identifier' => 'Instrument Details'])->first();
@@ -4386,7 +4386,7 @@ class OOCController extends Controller
                     }
                 }
             }
-        
+
         }
 
 
@@ -4488,7 +4488,7 @@ class OOCController extends Controller
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
                         'message' => 'Pls Fill General Information Tab is yet to be filled!',
-                        'type' => 'warning',  
+                        'type' => 'warning',
                     ]);
 
                     return redirect()->back();
@@ -4535,7 +4535,7 @@ class OOCController extends Controller
                     $history->stage='Submit';
                     $history->save();
 
-                   
+
 
                 $list = Helpers::getHodUserList($oocchange->division_id);
 
@@ -4547,11 +4547,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "view", 
-                                        'history' => "Submit", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "view",
+                                        'history' => "Submit",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -4621,7 +4621,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -4661,7 +4661,7 @@ class OOCController extends Controller
                 $history->stage='HOD Primary Review Complete';
                 $history->save();
 
-               
+
                 $list = Helpers::getQAHeadUserList($oocchange->division_id);
 
                     foreach ($list as $u) {
@@ -4672,11 +4672,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "view", 
-                                        'history' => "HOD Primary Review Complete", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "view",
+                                        'history' => "HOD Primary Review Complete",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -4744,7 +4744,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -4786,7 +4786,7 @@ class OOCController extends Controller
                 }
 
                 $history->save();
-             
+
 
 
                 $list = Helpers::getInitiatorUserList($oocchange->division_id);
@@ -4799,11 +4799,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "view", 
-                                        'history' => "QA Head Primary Review Complete", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "view",
+                                        'history' => "QA Head Primary Review Complete",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -4827,7 +4827,7 @@ class OOCController extends Controller
                 return back();
             }
 
-            
+
             if ($oocchange->stage == 4) {
 
                 if (empty($oocchange->qa_comments_ooc)|| empty($oocchange->is_repeat_stae_ooc) || empty($oocchange->phase_ia_investigation_summary) || empty($oocchange->analysis_remarks_stage_ooc) || empty($oocchange->qa_comments_ooc) || empty($oocchange->qa_comments_description_ooc) || empty($oocchange->is_repeat_assingable_ooc) ) {
@@ -4943,7 +4943,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -4986,7 +4986,7 @@ class OOCController extends Controller
 
                 $history->stage='Phase IA Investigation';
                 $history->save();
-               
+
 
 
                     $list = Helpers::getHodUserList($oocchange->division_id);
@@ -4999,11 +4999,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Phase IA Investigation", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Phase IA Investigation",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -5068,7 +5068,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -5077,7 +5077,7 @@ class OOCController extends Controller
                             'type' => 'success',
                         ]);
                     }
-                
+
                 $oocchange->stage = "7";
                 $oocchange->obvious_r_completed_by = Auth::user()->name;
                 $oocchange->obvious_r_completed_on = Carbon::now()->format('d-M-Y');
@@ -5109,7 +5109,7 @@ class OOCController extends Controller
                 }
                 $history->stage='Phase IA HOD Primary Review Complete';
                 $history->save();
-               
+
 
 
                  $list = Helpers::getQAUserList($oocchange->division_id);
@@ -5122,11 +5122,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Phase IA HOD Review Complete", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Phase IA HOD Review Complete",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -5168,8 +5168,8 @@ class OOCController extends Controller
                         'type' => 'success',
                     ]);
                 }
- 
-                
+
+
 
 
 
@@ -5196,7 +5196,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -5238,7 +5238,7 @@ class OOCController extends Controller
                 $history->stage='Phase IA QA Review Complete';
                 $history->save();
 
-                
+
                 $list = Helpers::getQAHeadUserList($oocchange->division_id);
 
                     foreach ($list as $u) {
@@ -5249,11 +5249,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Phase IA QA Review Complete", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Phase IA QA Review Complete",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -5319,7 +5319,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -5357,8 +5357,8 @@ class OOCController extends Controller
                 }
                 $history->stage='Assignable Cause Found';
                 $history->save();
-                
-                
+
+
                   $list = Helpers::getHodUserList($oocchange->division_id);
 
                     foreach ($list as $u) {
@@ -5369,11 +5369,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Assignable Cause Found", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Assignable Cause Found",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -5390,7 +5390,7 @@ class OOCController extends Controller
                             }
                         }
                     }
-                    
+
                 $list = Helpers::getInitiatorUserList($oocchange->division_id);
 
                     foreach ($list as $u) {
@@ -5401,11 +5401,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Assignable Cause Found", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Assignable Cause Found",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -5422,7 +5422,7 @@ class OOCController extends Controller
                             }
                         }
                     }
-                    
+
 
 
                 $list = Helpers::getQAHeadUserList($oocchange->division_id);
@@ -5435,11 +5435,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Assignable Cause Found", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Assignable Cause Found",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -5456,7 +5456,7 @@ class OOCController extends Controller
                             }
                         }
                     }
-                    
+
                 // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Assignable Cause Found', 'Closed-Done');
                 $oocchange->update();
                 toastr()->success('Closed-Done');
@@ -5522,7 +5522,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -5588,11 +5588,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Phase IB Investigation", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Phase IB Investigation",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -5609,7 +5609,7 @@ class OOCController extends Controller
                             }
                         }
                     }
-                    
+
 
                 // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IB Investigation', 'Phase IB HOD Primary Review');
                 $oocchange->update();
@@ -5659,7 +5659,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -5728,11 +5728,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Phase IB HOD Review Complete", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Phase IB HOD Review Complete",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -5749,7 +5749,7 @@ class OOCController extends Controller
                             }
                         }
                     }
-                    
+
 
                 // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IB HOD Review Complete ', 'Phase IB QA Review');
                 $oocchange->update();
@@ -5798,7 +5798,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -5866,11 +5866,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Phase IB QA Review Complete", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Phase IB QA Review Complete",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -5887,7 +5887,7 @@ class OOCController extends Controller
                             }
                         }
                     }
-                    
+
 
                 // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Phase IB QA Review Complete', 'P-IB CQAH/QAH Review');
                 $oocchange->update();
@@ -5936,7 +5936,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -6002,11 +6002,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Approved", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Approved",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -6035,11 +6035,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Approved", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Approved",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -6066,11 +6066,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Approved", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Approved",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -6149,7 +6149,7 @@ class OOCController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -6200,11 +6200,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Assignable Cause Not Found", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Assignable Cause Not Found",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -6278,17 +6278,17 @@ class OOCController extends Controller
                {
              // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                 $email = Helpers::getUserEmail($u->user_id);
-                    
+
                     if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "P-II A Assignable Cause Not Found", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "P-II A Assignable Cause Not Found",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -6320,9 +6320,9 @@ class OOCController extends Controller
         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password))
          {
             $ooc = OutOfCalibration::find($id);
-          
+
             $lastDocument = OutOfCalibration::find($id);
-           
+
 
             if ($ooc->stage == 2) {
                 $ooc->stage = "1";
@@ -6340,11 +6340,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -6367,13 +6367,13 @@ class OOCController extends Controller
 
                 $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
-                $history->action = 'More Info Required';
+                $history->action = 'More Information Required';
                 $history->current = 'Not Applicable';
-                $history->action = 'More Info Required';
+                $history->action = 'More Information Required';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6400,17 +6400,17 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                           
+
                           if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -6432,13 +6432,13 @@ class OOCController extends Controller
 
                 $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
-                $history->action = 'More Info Required';
+                $history->action = 'More Information Required';
                 $history->current = 'Not Applicable';
-                $history->action = 'More Info Required';
+                $history->action = 'More Information Required';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6463,17 +6463,17 @@ class OOCController extends Controller
                 $list = Helpers::getCftUserList($ooc->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
-                        $email = Helpers::getUserEmail($u->user_id); 
+                        $email = Helpers::getUserEmail($u->user_id);
                          if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -6494,13 +6494,13 @@ class OOCController extends Controller
 
                 $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
-                $history->action = 'More Info Required';
+                $history->action = 'More Information Required';
                 $history->current = 'Not Applicable';
-                $history->action = 'More Info Required';
+                $history->action = 'More Information Required';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6528,22 +6528,22 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                        
+
                           if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "Request More Info",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
                                         $message->to($email)
-                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                                            ->subject("Agio Notification: OOC, Record #" . str_pad($ooc->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch (\Exception $e) {
@@ -6559,13 +6559,13 @@ class OOCController extends Controller
 
                 $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
-                $history->action = 'More Info Required';
+                $history->action = 'Request More Info';
                 $history->current = 'Not Applicable';
-                $history->action = 'More Info Required';
+                $history->action = 'Request More Info';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6595,11 +6595,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -6620,13 +6620,13 @@ class OOCController extends Controller
 
                 $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
-                $history->action = 'More Info Required';
+                $history->action = 'More Information Required';
                 $history->current = 'Not Applicable';
-                $history->action = 'More Info Required';
+                $history->action = 'More Information Required';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -6656,11 +6656,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -6681,7 +6681,7 @@ class OOCController extends Controller
 
                  $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
@@ -6712,17 +6712,17 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                        
+
                          if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -6744,7 +6744,7 @@ class OOCController extends Controller
 
                  $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
@@ -6775,17 +6775,17 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                        
+
                          if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -6806,7 +6806,7 @@ class OOCController extends Controller
 
                  $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
@@ -6837,18 +6837,18 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                       
+
 
                          if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -6867,10 +6867,10 @@ class OOCController extends Controller
                     // }
                 }
 
-                
+
                  $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
@@ -6902,18 +6902,18 @@ class OOCController extends Controller
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
-                       
+
 
                          if ($email !== null) {
                             try {
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -6934,7 +6934,7 @@ class OOCController extends Controller
 
                   $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
@@ -6972,11 +6972,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -6997,7 +6997,7 @@ class OOCController extends Controller
 
                   $history = new OOCAuditTrail();
                 $history->ooc_id = $id;
-                
+
                 $history->activity_type = 'Not Applicable';
                 $history->previous = 'Not Applicable';
                 $history->action_name = 'Not Applicable';
@@ -7033,11 +7033,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -7075,11 +7075,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $ooc, 
-                                        'site' => "OOC", 
-                                        'history' => "More Information Required", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $ooc,
+                                        'site' => "OOC",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $ooc) {
@@ -7323,11 +7323,11 @@ class OOCController extends Controller
                                 Mail::send(
                                     'mail.view-mail',
                                     [
-                                        'data' => $oocchange, 
-                                        'site' => "OOC", 
-                                        'history' => "Cancel", 
-                                        'process' => 'OOC', 
-                                        'comment' => $request->comment, 
+                                        'data' => $oocchange,
+                                        'site' => "OOC",
+                                        'history' => "Cancel",
+                                        'process' => 'OOC',
+                                        'comment' => $request->comment,
                                         'user' => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $oocchange) {
@@ -7401,7 +7401,7 @@ class OOCController extends Controller
                $parent_id = $id;
                $parent_type = "OOC";
                $old_record = Capa::select('id', 'division_id', 'record')->get();
-             $parent_record = Helpers::getDivisionName($cc->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($cc->record, 4, '0', STR_PAD_LEFT);  
+             $parent_record = Helpers::getDivisionName($cc->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($cc->record, 4, '0', STR_PAD_LEFT);
 
             //    $record_number = ((RecordNumber::first()->value('counter')) + 1);
             //    $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -7414,7 +7414,7 @@ class OOCController extends Controller
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_initiator_id = $id;
                $parent_division_id = OutOfCalibration::where('id', $id)->value('division_id');
-              
+
                $formattedDate = $currentDate->addDays(30);
                $due_date = $formattedDate->format('d-M-Y');
                $oocOpen = OpenStage::find(1);
@@ -7428,12 +7428,12 @@ class OOCController extends Controller
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $Capachild = OutOfCalibration::find($id);
                 $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
-              
+
                 $old_record = Capa::select('id', 'division_id', 'record')->get();
                 $lastAi = Capa::orderBy('record', 'desc')->first();
                 $record = $lastAi ? $lastAi->record + 1 : 1;
-            
-                
+
+
             // $record = ((RecordNumber::first()->value('counter')) + 1);
                 $record = str_pad($record, 4, '0', STR_PAD_LEFT);
                 $record_number =$record;
@@ -7455,7 +7455,7 @@ class OOCController extends Controller
                     $lastAi = ActionItem::orderBy('record', 'desc')->first();
                     $record = $lastAi ? $lastAi->record + 1 : 1;
                      $record_number = $record;
-                    $parent_record = Helpers::getDivisionName($cc->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($cc->record, 4, '0', STR_PAD_LEFT);  
+                    $parent_record = Helpers::getDivisionName($cc->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($cc->record, 4, '0', STR_PAD_LEFT);
 
                      $pre = [
                     'DEV' => \App\Models\Deviation::class,
@@ -7499,7 +7499,7 @@ class OOCController extends Controller
                 // Merge the records into the collection
                 $relatedRecords = $relatedRecords->merge($records);
                 }
-                      
+
                    return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record', 'data_record','data','parent_division_id','relatedRecords'));
                }
                if ($request->revision == "Root-Cause-Analysis") {
@@ -7527,8 +7527,8 @@ class OOCController extends Controller
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1;
 
-          
-           
+
+
             $parent_due_date =  OutOfCalibration::where('id',$id)->value('due_date');
             if ($request->due_date) {
                $parent_due_date = $request->due_date;
@@ -7538,7 +7538,7 @@ class OOCController extends Controller
              $old_record = extension_new::select('id', 'division_id', 'record')->get();
             $lastAi = extension_new::orderBy('record', 'desc')->first();
             $record = $lastAi ? $lastAi->record + 1 : 1;
-     
+
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
             if ($request->revision == "Extension"){
@@ -7546,7 +7546,7 @@ class OOCController extends Controller
                                 ->where('parent_type', 'OOC')
                                 ->orderByDesc('id')
                                 ->first();
-                    
+
                             if (!$lastExtension) {
                                 $extensionCount = 1;
                             } else {
@@ -7557,7 +7557,7 @@ class OOCController extends Controller
                                 }
                             }
 
-                        }  
+                        }
             return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords', 'extension_record','countData','parent_division_id','parent_due_date'));
 
         }
@@ -7583,7 +7583,7 @@ class OOCController extends Controller
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_division_id = OutOfCalibration::where('id', $id)->value('division_id');
-          
+
                $parent_initiator_id = $id;
 
 
@@ -7625,7 +7625,7 @@ class OOCController extends Controller
                     $lastAi = ActionItem::orderBy('record', 'desc')->first();
                     $record = $lastAi ? $lastAi->record + 1 : 1;
                      $record_number = $record;
-                    $parent_record = Helpers::getDivisionName($cc->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($cc->record, 4, '0', STR_PAD_LEFT);  
+                    $parent_record = Helpers::getDivisionName($cc->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($cc->record, 4, '0', STR_PAD_LEFT);
 
                      $pre = [
                     'DEV' => \App\Models\Deviation::class,
@@ -7697,8 +7697,8 @@ class OOCController extends Controller
                 if ($request->due_date) {
                    $parent_due_date = $request->due_date;
                  }
-                
-               
+
+
                 return view('frontend.extension.extension_new', compact('record_number','extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData','parent_division_id','parent_due_date'));
 
             }
@@ -7721,7 +7721,7 @@ class OOCController extends Controller
                 $old_record = extension_new::select('id', 'division_id', 'record')->get();
                 $lastAi = extension_new::orderBy('record', 'desc')->first();
                 $record = $lastAi ? $lastAi->record + 1 : 1;
-        
+
                 $record = str_pad($record, 4, '0', STR_PAD_LEFT);
                 $record_number = $record;
                $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
@@ -7729,7 +7729,7 @@ class OOCController extends Controller
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_initiator_id = $id;
                $parent_division_id = OutOfCalibration::where('id', $id)->value('division_id');
-              
+
 
                $formattedDate = $currentDate->addDays(30);
                $due_date = $formattedDate->format('d-M-Y');
@@ -7747,13 +7747,13 @@ class OOCController extends Controller
                 if ($request->due_date) {
                    $parent_due_date = $request->due_date;
                  }
-                
+
                   if ($request->revision == "Extension"){
                     $lastExtension = extension_new::where('parent_id', $id)
                                 ->where('parent_type', 'OOC')
                                 ->orderByDesc('id')
                                 ->first();
-                    
+
                             if (!$lastExtension) {
                                 $extensionCount = 1;
                             } else {
@@ -7764,7 +7764,7 @@ class OOCController extends Controller
                                 }
                             }
 
-                        }  
+                        }
 
                 return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData','parent_division_id','parent_due_date'));
 

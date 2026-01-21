@@ -4,6 +4,8 @@
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\AccountController;
 use App\Http\Controllers\admin\DepartmentController;
+use App\Http\Controllers\EquipmentMasterController;
+use App\Http\Controllers\ProductMasterController;
 use App\Http\Controllers\admin\DocumentlanguageController;
 use App\Http\Controllers\admin\DistributionListController;
 use App\Http\Controllers\admin\GroupPermissionController;
@@ -58,6 +60,17 @@ Route::group(['prefix' => 'admin'], function () {
             Route::resource('qms-division', QMSDivisionController::class);
             Route::resource('qms-process', QMSProcessController::class);
             Route::get('/user/{id}/toggle-status', [AccountController::class, 'toggle_status'])->name('account.toggle');
+
+            Route::resource('eqmaster', EquipmentMasterController::class);
+            Route::get('equipment-master/export', [EquipmentMasterController::class, 'export'])->name('eqmaster.export');
+            Route::post('equipment-master/import', [EquipmentMasterController::class, 'import'])->name('eqmaster.import');
+            Route::resource('eqproduct', ProductMasterController::class);
+            Route::get('equipment-eqproduct/export', [ProductMasterController::class, 'export'])->name('eqproduct.export');
+            Route::post('equipment-eqproduct/import', [ProductMasterController::class, 'import'])->name('eqproduct.import');
+            
+
+
+
         }
     );
 });

@@ -113,6 +113,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge Complete
                             </button>
+                             <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button></a>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
@@ -126,6 +129,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button></a>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
@@ -133,6 +139,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Review Complete
                             </button>
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button></a>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
@@ -150,6 +159,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-modal">
                                 Not Effective
                             </button>
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button></a>
                         @elseif($data->stage == 6 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 42) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 39) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Effective Approval Completed
@@ -157,6 +169,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button></a>
                         @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 42) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 39) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-modal">
                                 Not Effective Approval Completed
@@ -164,6 +179,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button></a>
                         @elseif($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 42) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 39) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#not-effective-child-model">
@@ -536,7 +554,7 @@
                                                 style="color: red;">*</span>
                                         </label>
                                         <textarea type="text" name="acknowledge_comment" id="acknowledge_comment"
-                                            {{ $data->stage == 2 ? '' : 'readonly' }} required>{{ $data->acknowledge_comment }}   </textarea>
+                                            {{ $data->stage == 2 && ($data->assign_to == Auth::user()->id) ? '' : 'readonly' }} required>{{ $data->acknowledge_comment }}   </textarea>
                                         {{-- <textarea type="text" id="acknowledge_comment" name="acknowledge_comment">{{ $data->acknowledge_comment }}</textarea> --}}
                                     </div>
                                 </div>
@@ -545,7 +563,7 @@
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Acknowledge Comment</label>
                                         <textarea type="text" name="acknowledge_comment" id="acknowledge_comment"
-                                            {{ $data->stage == 2 ? '' : 'readonly' }}> {{ $data->acknowledge_comment }} </textarea>
+                                            {{ $data->stage == 2 && ($data->assign_to == Auth::user()->id) ? '' : 'readonly' }}> {{ $data->acknowledge_comment }} </textarea>
                                         {{-- <textarea type="text" id="acknowledge_comment" name="acknowledge_comment">{{ $data->acknowledge_comment }}</textarea> --}}
                                     </div>
                                 </div>
@@ -577,7 +595,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $data->stage == 2 ? '' : 'disabled' }} type="file"
+                                            <input {{ $data->stage == 2  && ($data->assign_to == Auth::user()->id) ? '' : 'disabled' }} type="file"
                                                 id="myfile" name="acknowledge_Attachment[]"
                                                 oninput="addMultipleFiles(this, 'acknowledge_Attachment')" multiple>
                                         </div>
@@ -617,14 +635,14 @@
 
                                         </label>
                                         <textarea type="text" name="Effectiveness_Results" id="Effectiveness_Results" required
-                                            {{ $data->stage == 3 ? '' : 'readonly' }} required>{{ $data->Effectiveness_Results }}</textarea>
+                                            {{ $data->stage == 3 && ($data->assign_to == Auth::user()->id) ? '' : 'readonly' }} required>{{ $data->Effectiveness_Results }}</textarea>
                                     </div>
                             </div>
                         @else
                             <div class="group-input">
                                 <label for="Effectiveness Results">Effectiveness Results</label>
                                 <textarea type="text" name="Effectiveness_Results" id="Effectiveness_Results"
-                                    {{$data->stage == 3 ? '' : 'readonly' }}>{{ $data->Effectiveness_Results }} </textarea>
+                                    {{$data->stage == 3 && ($data->assign_to == Auth::user()->id) ? '' : 'readonly' }}>{{ $data->Effectiveness_Results }} </textarea>
                             </div>
                         </div>
                         @endif
@@ -662,7 +680,7 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input {{ $data->stage == 3 ? '' : 'disabled' }} type="file"
+                                        <input {{ $data->stage == 3  && ($data->assign_to == Auth::user()->id) ? '' : 'disabled' }} type="file"
                                             id="myfile" name="Effectiveness_check_Attachment[]"
                                             oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')" multiple>
                                     </div>
@@ -676,7 +694,7 @@
                             <div class="group-input">
                                 <label for="Effectiveness Summary">Effectiveness Summary <span
                                 style="color: red;">*</span></label>
-                                <textarea name="effect_summary" {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->effect_summary }}</textarea>
+                                <textarea name="effect_summary" {{ $data->stage == 3 && ($data->assign_to == Auth::user()->id) ? '' : 'readonly' }}>{{ $data->effect_summary }}</textarea>
                             </div>
                         </div>
                         {{-- <div class="col-12 sub-head">
@@ -1586,6 +1604,39 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="child-modal1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Child</h4>
+                        </div>
+                        <form action="{{ route('effectiveness_child', $data->id) }}" method="POST">
+                            @csrf
+
+                            <div class="modal-body">
+                                @if(Helpers::getChildData($data->id, 'EffectivenessCheck') < 3)
+                                    <div class="group-input">
+                                        <label for="major">
+                                        <input type="radio" name="child_type" value="extension">
+                                            Extension
+                                        </label>
+                                    </div>
+                                @endif
+
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                                <button type="submit">Continue</button>
+                            </div>
+                        </form>
+                        
+                </div>
+    </div>
+        </div>
     <div class="modal fade" id="not-effective-child-model">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
