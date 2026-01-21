@@ -171,7 +171,7 @@
                                         <label for="date_to">Date To</label>
                                         <input type="date" class="custom-select" id="date_to">
                                     </div>
-                                    <div class="filter-item">
+                                    {{-- <div class="filter-item">
                                         <label for="errorstab">Type of Error</label>
                                         <select class="custom-select" id="errorstab">
                                             <option value="null">Select Records</option>
@@ -189,7 +189,7 @@
                                             <option value="Quarterly">Quarterly</option>
                                             <option value="Monthly">Monthly</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -206,11 +206,11 @@
                                             <th>Initiator</th>
                                             <th>Division</th>
                                             <th>Department</th>
-                                            <th>Document Type</th>
+                                            <th>Document title</th>
                                             <th>Type of Error</th>
-                                            <th>Date of Correction of Document</th>
-                                            <th>Due Date</th>
-                                            <th>Closure Date</th>
+                                            <th>Department Head</th>
+                                            {{-- <th>Due Date</th> --}}
+                                            <th>QA reviewer</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>

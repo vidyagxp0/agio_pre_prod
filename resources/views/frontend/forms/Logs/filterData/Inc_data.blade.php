@@ -23,8 +23,8 @@ use Carbon\Carbon;
     <td>{{ $incident->Description_incident }}</td>
     <td>{{ $actionValue }}</td>
     <td>{{ $BatchNo }}</td>
-    <td>{{ $incident->due_date }}</td>
-    <td>{{ $incident->QA_final_approved_on ? $incident->QA_final_approved_on : 'Under Process' }}</td>
+    <td>{{ Helpers::getdateFormat($incident->due_date) ?? '-' }}</td>
+    {{-- <td>{{ $incident->QA_final_approved_on ? $incident->QA_final_approved_on : '-' }}</td> --}}
     <td>{{ $incident->status }}</td>
 </tr>
 {{-- @endforeach --}}

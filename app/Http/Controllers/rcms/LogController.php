@@ -24,7 +24,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\ActionItem;
-
+use App\Models\EffectivenessCheck;
+use App\Models\AuditProgram;
+use App\Models\extension_new;
+use App\Models\Auditee;
+use App\Models\ManagementReview;
+use App\Models\Resampling;
+use App\Models\RootCauseAnalysis;
 
 
 class LogController extends Controller
@@ -88,7 +94,52 @@ class LogController extends Controller
             //         return view('frontend.forms.logs.Market-complaint-registerLog',compact('marketcomplaint'));
                         
             //         break;        
-                        
+               
+            
+             case 'actionitem':
+                    $actions = ActionItem::get();
+                    //  dd($actions);
+                    return view('frontend.forms.Logs.actionItemlogs', compact('actions'));
+                break;
+
+            case 'effectiveness-check':
+                    $effectiveneses = EffectivenessCheck::get();
+                    //  dd($effectiveneses);
+                    return view('frontend.forms.Logs.effectivenesslogs', compact('effectiveneses'));
+                break;   
+
+
+            case 'extension':
+                    $extension_news = extension_new::get();
+                    //  dd($effectiveneses);
+                     return view('frontend.forms.Logs.Extensionlogs', compact('extension_news'));
+                break;  
+                
+            case 'external-audit':
+                    $external_audits = Auditee::get();
+                    //  dd($effectiveneses);
+                     return view('frontend.forms.Logs.external_auditlogs', compact('external_audits'));
+                break;   
+    
+
+            case 'managementreview':
+                    $ManagementReviews = ManagementReview::get();
+                    //  dd($ManagementReviews);
+                      return view('frontend.forms.Logs.ManagementReviewlogs', compact('ManagementReviews'));
+                break;   
+
+            case 'auditprogram':
+                    $AuditPrograms = AuditProgram::get();
+                    
+                    return view('frontend.forms.Logs.auditProgramlogs', compact('AuditPrograms'));
+                break;
+
+             case 'auditprogram':
+                    $AuditPrograms = AuditProgram::get();
+                    
+                    return view('frontend.forms.Logs.auditProgramlogs', compact('AuditPrograms'));
+                break;
+    
 
             case 'market-complaint':
                     $marketcomplaint = MarketComplaint::with([
@@ -141,23 +192,33 @@ class LogController extends Controller
 
 
 
-           case 'risk-management':
-
-                // $riskmlog = RiskManagement::with(['actionItems' => function ($query) {
-                //     $query->where('parent_type', 'Action_Plan')->take(5); // Limit to 5 records
-                // }])->get();
-                $riskmlog = RiskManagement::get();
-                // foreach ($riskmlogs as $risk) {
-                //     foreach ($risk->Action as $action) {
-                //         return $action->action; // Return each action record
-                //     }
-                // }
-                
+            case 'resampling':
 
                 
-                return view('frontend.forms.Logs.riskmanagementLog',compact('riskmlog'));
+                $Resamplings = Resampling::get();
+              
+                
+
+                 return view('frontend.forms.Logs.Resamplinglogs',compact('Resamplings'));
+
+            case 'root-cause-analysis':
+
+                
+                $root_cause_analysises = RootCauseAnalysis::get();
+              
+            //   dd($root_cause_analysises);
+                return view('frontend.forms.Logs.rootcauseanalysislogs',compact('root_cause_analysises'));
 
 
+
+            case 'risk-management':
+
+                
+                $riskmanagements = RiskManagement::get();
+            //  dd($riskmanagements);
+                return view('frontend.forms.Logs.riskmanagementLog',compact('riskmanagements'));
+
+   
 
                 
             case 'inernal-audit':

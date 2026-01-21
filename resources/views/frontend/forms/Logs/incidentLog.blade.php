@@ -255,7 +255,7 @@ table {
                                     <label for="date_to">Date To</label>
                                     <input type="date" class="custom-select" id="date_to" placeholder="DD-MMM-YYY">
                                 </div>
-                                <div class="filter-item">
+                                {{-- <div class="filter-item">
                                     <label for="originator">Incident Related to</label>
                                     <select class="custom-select" id="originator">
                                         <option value="all">All Records</option>
@@ -269,7 +269,7 @@ table {
                                         <option value="all">Quarterly</option>
                                         <option value="all">Monthly</option>
                                     </select>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -291,7 +291,7 @@ table {
                                         <th>Material / Product name</th>
                                         <th>Batch No.</th>
                                         <th>Due Date</th>
-                                        <th>Date of Clouser</th>
+                                        {{-- <th>Date of Clouser</th> --}}
                                         <th>Status</th>
                                     </tr>
                                 </thead>

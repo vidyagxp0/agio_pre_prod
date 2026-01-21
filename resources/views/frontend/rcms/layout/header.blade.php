@@ -486,6 +486,14 @@
         'OOC',
         'OOT',
         'Risk Management',
+        'ActionItem',
+        'AuditProgram',
+        'Effectiveness-Check',
+        'Extension',
+        'External Audit',
+        'ManagementReview',
+        'Resampling',
+        'Root Cause Analysis',
 
     ];
 @endphp

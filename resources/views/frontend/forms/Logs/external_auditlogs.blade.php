@@ -266,7 +266,7 @@
         <div class="scope-bar">
             <button class="print-btn btn btn-primary">Print</button>
         </div>
-        <div class="active" onclick="openTab('internal-audit', this)">Market Complaint Log</div>
+        <div class="active" onclick="openTab('internal-audit', this)">External Audit</div>
         <div class="third-div">Third Div Content</div>
     </div>
     <div class="main-content">
@@ -309,31 +309,14 @@
                                         </select>
                                     </div>
                                     <div class="filter-item">
-                                        <label for="date_from_market">Date From</label>
-                                        <input type="date" class="custom-select form-control" id="date_from_market">
+                                        <label for="date_from_externalAudit">Date From</label>
+                                        <input type="date" class="custom-select form-control" id="date_from_externalAudit">
                                     </div>
                                     <div class="filter-item">
-                                        <label for="date_to_market">Date To</label>
-                                        <input type="date" class="custom-select form-control" id="date_to_market">
+                                        <label for="date_to_externalAudit">Date To</label>
+                                        <input type="date" class="custom-select form-control" id="date_to_externalAudit">
                                     </div>
-                                    {{-- <div class="filter-item">
-                                        <label for="categoryofcomplaint">Category of complaint</label>
-                                        <select class="custom-select form-control" id="categoryofcomplaint">
-                                            <option value="null">Select Records</option>
-                                            <option value="critical">Critical</option>
-                                            <option value="major">Major</option>
-                                            <option value="minor">Minor</option>
-                                        </select>
-                                    </div>
-                                    <div class="filter-item">
-                                        <label for="datewise">Select Period</label>
-                                        <select class="custom-select form-control" id="datewise">
-                                            <option value="all">Select</option>
-                                            <option value="Yearly">Yearly</option>
-                                            <option value="Quarterly">Quarterly</option>
-                                            <option value="Monthly">Monthly</option>
-                                        </select>
-                                    </div> --}}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -343,30 +326,27 @@
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
-                                    <th rowspan="2">Sr. No.</th>
+                                            <th rowspan="2">Sr. No.</th>
                                             <th rowspan="2">Date of Initiation</th>
-                                            <th rowspan="2">Complaint No.</th>
-                                            <th rowspan="2">Description of Complaint</th>
-                                            <th rowspan="2">Originator</th>
-                                            <th rowspan="2">Department</th>
-                                            <th rowspan="2">Division</th>
-                                            <th colspan="4" style="text-align: center">Product Details</th>
-                                            <th rowspan="2">Nature of complaint</th>
-                                            <th rowspan="2">Category of complaint</th>
-                                            <th rowspan="2">Response / Report (Date)</th>
+                                            <th rowspan="2">Record Number</th>
+                                            <th rowspan="2">Site/Location Code</th>
+                                            <th rowspan="2">Initiator</th>
+                                            <th rowspan="2">Initiator Department</th>
                                             <th rowspan="2">Due Date</th>
-                                            <th rowspan="2">Clouser Date</th>
+                                            <th rowspan="2" style="text-align: center">Short Descriptiobn</th>
+                                            <th rowspan="2">Initiated Through</th>
+                                            <th rowspan="2">Type of Audit</th>
+                                            <th rowspan="2">External Agencies</th>
+                                            <th rowspan="2">Description </th>
+                                            <th rowspan="2">Start Date of Audit </th>
+                                            <th rowspan="2">End Date of Audit</th>
                                             <th rowspan="2">Status</th>
+                                            
                                     </tr>
-                                    <tr>
-                                        <th>Product Name & strength</th>
-                                        <th>Batch No.</th>
-                                        <th>Mfg. Date</th>
-                                        <th>Exp. Date</th>
-                                    </tr>
+                                   
                                 </thead>
                                 <tbody id="tableData">
-                                    @include('frontend.forms.Logs.filterData.marketcomplaint_data')
+                                       @include('frontend.forms.Logs.filterData.external_audit_data')
                                 </tbody>
                             </table>
                             <div style="margin-top: 10px; display: flex; justify-content: center;">
@@ -391,36 +371,36 @@
     $('#spinner').hide();
 
     const filterData = {
-        market_department: null,
-        div_idcomplaint: null,
+        externalAudit_department: null,
+        div_idexternalAudit: null,
         period_lab: null,
-        dateMarketFrom: null,
-        dateMarketTo: null,
-        categoryofcomplaints: null
+        dateExternalauditFrom: null,
+        dateExternalauditTo: null,
+        // categoryofcomplaints: null
     };
 
     $('#initiator_group').change(function() {
-        filterData.market_department = $(this).val();
+        filterData.externalAudit_department = $(this).val();
         filterRecords();
     });
 
     $('#division_id').change(function() {
-        filterData.div_idcomplaint = $(this).val();
+        filterData.div_idexternalAudit = $(this).val();
         filterRecords();
     });
 
-    $('#categoryofcomplaint').change(function() {
-        filterData.categoryofcomplaints = $(this).val();
+    // $('#categoryofcomplaint').change(function() {
+    //     filterData.categoryofcomplaints = $(this).val();
+    //     filterRecords();
+    // });
+
+  $('#date_from_externalAudit').change(function() {
+        filterData.dateExternalauditFrom = $(this).val();
         filterRecords();
     });
 
-    $('#date_from_market').change(function() {
-        filterData.dateMarketFrom = $(this).val();
-        filterRecords();
-    });
-
-    $('#date_to_market').change(function() {
-        filterData.dateMarketTo = $(this).val();
+    $('#date_to_externalAudit').change(function() {
+        filterData.dateExternalauditTo = $(this).val();
         filterRecords();
     });
 
@@ -428,13 +408,12 @@
         filterData.period = $(this).val();
         filterRecords();
     });
-
     async function filterRecords() {
         $('#tableData').html('');
         $('#spinner').show();
 
         try {
-            const postUrl = "{{ route('api.marketcomplaint.filter') }}";
+            const postUrl = "{{ route('api.externalAudit.filter') }}";
             const res = await axios.post(postUrl, filterData);
 
             if (res.data.status == 'ok') {

@@ -68,6 +68,15 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::post('/inernal-audit',[LogFilterController::class,'internal_audit_filter'])->name('api.internalaudit.filter');
  Route::post('/lab-incident',[LogFilterController::class,'labincident_filter'])->name('api.laboratoryincident.filter');
  Route::post('/marketcomplaint_data',[LogFilterController::class,'marketcomplaint_filter'])->name('api.marketcomplaint.filter');
+ Route::post('/auditprogram',[LogFilterController::class,'AuditProgramFilter'])->name('api.auditprogram.filter');
+ Route::post('/action',[LogFilterController::class,'ActionItemFilter'])->name('api.action.filter');
+ Route::post('/effectiveness',[LogFilterController::class,'EffectivenessCheckFilter'])->name('api.effectiveness.filter');
+ Route::post('/extension',[LogFilterController::class,'ExtensionFilter'])->name('api.extension.filter');
+ Route::post('/externalAudit',[LogFilterController::class,'externalAuditFilter'])->name('api.externalAudit.filter');
+ Route::post('/managementReview',[LogFilterController::class,'ManagementReviewFilter'])->name('api.managementReview.filter');
+ Route::post('/resampling',[LogFilterController::class,'ResamplingFilter'])->name('api.resampling.filter');
+ Route::post('/rootcauseanalysis',[LogFilterController::class,'RootcauseanalysisFilter'])->name('api.rootcauseanalysis.filter');
+
  Route::post('/ooc',[LogFilterController::class,'ooc_filter'])->name('api.ooc.filter');
  Route::post('/capa',[LogFilterController::class,'capa_filter'])->name('api.capa.filter');
  Route::post('/risk-management',[LogFilterController::class,'risk_management_filter'])->name('api.riskmanagement.filter');

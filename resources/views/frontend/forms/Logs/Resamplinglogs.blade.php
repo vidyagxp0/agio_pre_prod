@@ -266,7 +266,7 @@
         <div class="scope-bar">
             <button class="print-btn btn btn-primary">Print</button>
         </div>
-        <div class="active" onclick="openTab('internal-audit', this)">Market Complaint Log</div>
+        <div class="active" onclick="openTab('internal-audit', this)">Resampling Log</div>
         <div class="third-div">Third Div Content</div>
     </div>
     <div class="main-content">
@@ -281,23 +281,35 @@
                                         <label for="initiator_group">Department</label>
                                         <select name="Initiator_Group" id="initiator_group" class="form-control">
                                             <option value="">Select Record</option>
-                                            <option value="CQA">Corporate Quality Assurance</option>
-                                            <option value="QAB">Quality Assurance Biopharma</option>
-                                            <option value="CQC">Central Quality Control</option>
-                                            <option value="MANU">Manufacturing</option>
-                                            <option value="PSG">Plasma Sourcing Group</option>
-                                            <option value="CS">Central Stores</option>
-                                            <option value="ITG">Information Technology Group</option>
-                                            <option value="MM">Molecular Medicine</option>
-                                            <option value="CL">Central Laboratory</option>
-                                            <option value="TT">Tech team</option>
-                                            <option value="QA">Quality Assurance</option>
-                                            <option value="QM">Quality Management</option>
-                                            <option value="IA">IT Administration</option>
-                                            <option value="ACC">Accounting</option>
-                                            <option value="LOG">Logistics</option>
-                                            <option value="SM">Senior Management</option>
-                                            <option value="BA">Business Administration</option>
+                                              <option value="CQA">Corporate Quality Assurance</option>
+                                                <option value="QA">Quality Assurance</option>
+                                                <option value="QC">Quality Control</option>
+                                                <option value="QM">Quality Control (Microbiology department)</option>
+                                                <option value="PG">Production General</option>
+                                                <option value="PL">Production Liquid Orals</option>
+                                                <option value="PT">Production Tablet and Powder</option>
+                                                <option value="PE">Production External (Ointment, Gels, Creams, and Liquid)</option>
+                                                <option value="PC">Production Capsules</option>
+                                                <option value="PI">Production Injectable</option>
+                                                <option value="EN">Engineering</option>
+                                                <option value="HR">Human Resource</option>
+                                                <option value="ST">Store</option>
+                                                <option value="IT">Information Technology</option>
+                                                <option value="FD">Formulation Development</option>
+                                                <option value="AL">Analytical Research and Development Laboratory</option>
+                                                <option value="PD">Packaging Development</option>
+                                                <option value="PU">Purchase Department</option>
+                                                <option value="DC">Document Cell</option>
+                                                <option value="RA">Regulatory Affairs</option>
+                                                <option value="PV">Pharmacovigilance</option>
+                                                <option value="Safety">Safety</option>
+                                                <option value="Accounts">Accounts</option>
+                                                <option value="Finance">Finance</option>
+                                                <option value="Artwork">Artwork</option>
+                                                <option value="Company secretary">Company secretary</option>
+                                                <option value="Exports">Exports</option>
+                                                <option value="Marketing">Marketing</option>
+                                            
                                         </select>
                                     </div>
                                     <div class="filter-item">
@@ -309,31 +321,14 @@
                                         </select>
                                     </div>
                                     <div class="filter-item">
-                                        <label for="date_from_market">Date From</label>
-                                        <input type="date" class="custom-select form-control" id="date_from_market">
+                                        <label for="date_from_resampling">Date From</label>
+                                        <input type="date" class="custom-select form-control" id="date_from_resampling">
                                     </div>
                                     <div class="filter-item">
-                                        <label for="date_to_market">Date To</label>
-                                        <input type="date" class="custom-select form-control" id="date_to_market">
+                                        <label for="date_to_resampling">Date To</label>
+                                        <input type="date" class="custom-select form-control" id="date_to_resampling">
                                     </div>
-                                    {{-- <div class="filter-item">
-                                        <label for="categoryofcomplaint">Category of complaint</label>
-                                        <select class="custom-select form-control" id="categoryofcomplaint">
-                                            <option value="null">Select Records</option>
-                                            <option value="critical">Critical</option>
-                                            <option value="major">Major</option>
-                                            <option value="minor">Minor</option>
-                                        </select>
-                                    </div>
-                                    <div class="filter-item">
-                                        <label for="datewise">Select Period</label>
-                                        <select class="custom-select form-control" id="datewise">
-                                            <option value="all">Select</option>
-                                            <option value="Yearly">Yearly</option>
-                                            <option value="Quarterly">Quarterly</option>
-                                            <option value="Monthly">Monthly</option>
-                                        </select>
-                                    </div> --}}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -343,30 +338,26 @@
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
-                                    <th rowspan="2">Sr. No.</th>
+                                            <th rowspan="2">Sr. No.</th>
                                             <th rowspan="2">Date of Initiation</th>
-                                            <th rowspan="2">Complaint No.</th>
-                                            <th rowspan="2">Description of Complaint</th>
-                                            <th rowspan="2">Originator</th>
-                                            <th rowspan="2">Department</th>
-                                            <th rowspan="2">Division</th>
-                                            <th colspan="4" style="text-align: center">Product Details</th>
-                                            <th rowspan="2">Nature of complaint</th>
-                                            <th rowspan="2">Category of complaint</th>
-                                            <th rowspan="2">Response / Report (Date)</th>
-                                            <th rowspan="2">Due Date</th>
-                                            <th rowspan="2">Clouser Date</th>
+                                            <th rowspan="2">Record Number</th>
+                                             <th rowspan="2">Site/Location Code</th>
+                                            <th rowspan="2">Initiator</th>
+                                            <th rowspan="2">Assigned To</th>
+                                             <th rowspan="2">Due Date</th>
+                                            <th rowspan="2" style="text-align: center">Short Descriptiobn</th>
+                                            <th rowspan="2">Related Records</th>
+                                            <th rowspan="2">HOD Person</th>
+                                            <th rowspan="2">Description </th>
+                                            <th rowspan="2">Responsible Department</th>
+                                            <th rowspan="2">If Others</th>
                                             <th rowspan="2">Status</th>
+                                            
                                     </tr>
-                                    <tr>
-                                        <th>Product Name & strength</th>
-                                        <th>Batch No.</th>
-                                        <th>Mfg. Date</th>
-                                        <th>Exp. Date</th>
-                                    </tr>
+                                   
                                 </thead>
                                 <tbody id="tableData">
-                                    @include('frontend.forms.Logs.filterData.marketcomplaint_data')
+                                    @include('frontend.forms.Logs.filterData.Resampling_data')
                                 </tbody>
                             </table>
                             <div style="margin-top: 10px; display: flex; justify-content: center;">
@@ -391,36 +382,36 @@
     $('#spinner').hide();
 
     const filterData = {
-        market_department: null,
-        div_idcomplaint: null,
+        resampling_department: null,
+        div_idresampling: null,
         period_lab: null,
-        dateMarketFrom: null,
-        dateMarketTo: null,
-        categoryofcomplaints: null
+        dateresamplingFrom: null,
+        dateresamplingTo: null,
+        // categoryofcomplaints: null
     };
 
     $('#initiator_group').change(function() {
-        filterData.market_department = $(this).val();
+        filterData.resampling_department = $(this).val();
         filterRecords();
     });
 
     $('#division_id').change(function() {
-        filterData.div_idcomplaint = $(this).val();
+        filterData.div_idresampling = $(this).val();
         filterRecords();
     });
 
-    $('#categoryofcomplaint').change(function() {
-        filterData.categoryofcomplaints = $(this).val();
+    // $('#categoryofcomplaint').change(function() {
+    //     filterData.categoryofcomplaints = $(this).val();
+    //     filterRecords();
+    // });
+
+    $('#date_from_resampling').change(function() {
+        filterData.dateresamplingFrom = $(this).val();
         filterRecords();
     });
 
-    $('#date_from_market').change(function() {
-        filterData.dateMarketFrom = $(this).val();
-        filterRecords();
-    });
-
-    $('#date_to_market').change(function() {
-        filterData.dateMarketTo = $(this).val();
+    $('#date_to_resampling').change(function() {
+        filterData.dateresamplingTo = $(this).val();
         filterRecords();
     });
 
@@ -434,7 +425,7 @@
         $('#spinner').show();
 
         try {
-            const postUrl = "{{ route('api.marketcomplaint.filter') }}";
+            const postUrl = "{{ route('api.resampling.filter') }}";
             const res = await axios.post(postUrl, filterData);
 
             if (res.data.status == 'ok') {
@@ -448,3 +439,5 @@
     }
 </script>
 @endsection
+
+

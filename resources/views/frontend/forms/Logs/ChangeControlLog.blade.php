@@ -210,8 +210,7 @@
                                                 <div class=" mb-3">
                                                     <label for="initiator"><Strong>Initiator</Strong></label>
                                                     <select  multiple name="initiator" id="initiator_id" data-search="false" data-silent-initial-value-set="true">
-                                                        {{-- <option value="">Select Initiator</option> --}}
-                                                        @foreach($users as $user)
+                                                         @foreach($users as $user)
                                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
