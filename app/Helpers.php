@@ -1699,6 +1699,12 @@ class Helpers
         ->where('parent_id', $id)
         ->count();
        }
+        elseif($parent_type == 'EffectivenessCheck')
+       {
+        $count = extension_new::where('parent_type', 'EffectivenessCheck')
+        ->where('parent_id', $id)
+        ->count();
+       }
        elseif($parent_type == 'OOS Micro')
        {
         $count = extension_new::where('parent_type', 'OOS Micro')
