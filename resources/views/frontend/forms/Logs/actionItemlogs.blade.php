@@ -372,7 +372,7 @@
                                             <th rowspan="2" style="text-align: center">Short Descriptiobn</th>
                                             {{-- <th rowspan="2">Action Item Related Records  </th> --}}
                                             <th rowspan="2">HOD Persons</th>
-                                            <th rowspan="2">Description  </th>
+                                            <th rowspan="2" style="text-align: center">Description  </th>
                                             <th rowspan="2">Responsible Department</th>
                                             <th rowspan="2">Status</th>
                                             
