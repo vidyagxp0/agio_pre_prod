@@ -114,7 +114,7 @@
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" crossorigin="anonymous"></script>
                     </div>
                          <br>
-                    <div style="padding: 5px;" class="scope-bar d-flex justify-content-end py-1">
+                    {{-- <div style="padding: 5px;" class="scope-bar d-flex justify-content-end py-1">
                         <div class="dropdown">
                         <button class="btn btn-primary" onclick="reloadPage()" style="max-width: 100%; width: auto;  font-size: 16px; text-align: center;"><b>Refresh</b>
                         <i class="fas fa-sync-alt" ></i></button>
@@ -130,21 +130,21 @@
                             </button>
                             
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                {{-- <a class="dropdown-item" href="{{ route('export-csv') }}">
+                                <a class="dropdown-item" href="{{ route('export-csv') }}">
                                     <i class="fas fa-file-csv"></i> CSV Export
                                 </a>
                                 <a class="dropdown-item" href="{{ route('export-excel') }}">
                                     <i class="fas fa-file-excel"></i> Excel Export
-                                </a> --}}
-                                <!-- <a class="dropdown-item" >
+                                </a>
+                              <a class="dropdown-item" >
                                     <i class="fas fa-file-word"></i> Word Download
-                                </a>                     -->
+                                </a>                    
                                 <a class="dropdown-item" href="#" onclick="printTable()">
                                     <i class="fas fa-print"></i> Print
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     
                     
                     
@@ -182,10 +182,11 @@
                             <div class="process-tables-list">
                                 <div class="process-table active" id="internal-audit">
                                     <div class="mt-1 mb-2 bg-white" style="height: auto; padding: 10px; margin: 5px;">
-                                        <div class="d-flex align-items-center">
-                                            <div style="    display: grid;    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;" class="filter-bar row">
-                                                <!-- Department Filter -->
-                                                <div class=" mb-3">
+                                        {{-- <div class="d-flex align-items-center"> --}}
+                                            {{-- <div style="    display: grid;    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;" class="filter-bar row"> --}}
+                                        <div class="container-fluid">
+                                            <div class="row align-items-end">    
+                                                 <div class="col-md-3 mb-3">
                                                     <label for="initiator_group"><Strong>Department</Strong></label>
                                                     <select multiple name="initiator_group[]" id="initiator_group" data-search="false" data-silent-initial-value-set="true">
                                                         @if (!empty($department))
@@ -207,17 +208,17 @@
                                                 @endphp
 
 
-                                                <div class=" mb-3">
+                                                 {{-- <div class="col-md-3 mb-3">
                                                     <label for="initiator"><Strong>Initiator</Strong></label>
                                                     <select  multiple name="initiator" id="initiator_id" data-search="false" data-silent-initial-value-set="true">
                                                          @foreach($users as $user)
                                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
-                                                </div>
+                                                </div> --}}
                                                 
                                                 <!-- Division Filter -->
-                                                <div class=" mb-3">
+                                                 <div class="col-md-3 mb-3">
                                                     <label for="division_id"><Strong>Division</Strong></label>
                                                     <select class="custom-select" id="division_id_cc">
                                                         <option value="">Select Option</option>
@@ -230,27 +231,27 @@
 
                         
                                                 <!-- Start Date Filter -->
-                                                <div class=" mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     <label for="date_from_deviation"><Strong>Start Date</Strong></label>
                                                     <input type="date" class="custom-select" id="date_fromCc">
                                                 </div>
                         
                                                 <!-- End Date Filter -->
-                                                <div class=" mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     <label for="date_to_deviation"><Strong>End Date</Strong></label>
                                                     <input type="date" class="custom-select" id="date_toCc">
                                                 </div>
 
                                                 
                                                 <!-- Filter Dropdown -->
-                                                <div style="margin-bottom: 10px;">
+                                                {{-- <div style="margin-bottom: 10px;">
                                                     <label for="changeControlFilter"> <Strong>Change Control Nature</Strong></label>
                                                     <select id="changeControlFilter" onchange="filterChangeControl()">
                                                         <option value="all">All</option>
                                                         <option value="Permanent">Permanent</option>
                                                         <option value="Temporary">Temporary</option>
                                                     </select>
-                                                </div>
+                                                </div> --}}
                                            </div>
                                         </div>
                                     </div>
@@ -292,7 +293,7 @@
                                 <div>
                                   
                                 </div>
-                                <div style="position: relative; width: 300px;">
+                                {{-- <div style="position: relative; width: 300px;">
                                     <input 
                                         type="text" 
                                         id="searchBar" 
@@ -304,7 +305,7 @@
                                         style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #000; font-size: 16px; cursor: pointer;">
                                         🔍
                                     </span>
-                                </div>
+                                </div> --}}
                             </div>
                             
 

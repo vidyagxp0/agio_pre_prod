@@ -120,7 +120,7 @@
                     </div>
                        <br>
                    
-                    <div style="padding: 5px;" class="scope-bar d-flex justify-content-end py-1">
+                    {{-- <div style="padding: 5px;" class="scope-bar d-flex justify-content-end py-1">
                         <div class="dropdown">
                         <button class="btn btn-primary" onclick="reloadPage()" style="max-width: 100%; width: auto;  font-size: 16px; text-align: center;"><b>Refresh</b>
                         <i class="fas fa-sync-alt" ></i></button>
@@ -136,21 +136,21 @@
                             </button>
                        
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                {{-- <a class="dropdown-item" href="{{ route('export_capa.csv')}}">
+                                <a class="dropdown-item" href="{{ route('export_capa.csv')}}">
                                     <i class="fas fa-file-csv"></i> CSV Export
                                 </a>
                                 <a class="dropdown-item" href="{{ route('export_capa.excel')}}">
                                     <i class="fas fa-file-excel"></i> Excel Export
-                                </a> --}}
-                                {{-- <a class="dropdown-item" >
+                                </a>
+                                 <a class="dropdown-item" >
                                     <i class="fas fa-file-word"></i> Word Download
-                                </a>                     --}}
+                                </a>                   
                                 <a class="dropdown-item" href="#" onclick="printTable()">
                                     <i class="fas fa-print"></i> Print
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
                         @php
@@ -180,10 +180,10 @@
                         <div class="process-tables-list">
                             <div class="process-table active" id="internal-audit">
                                 <div class="mt-1 mb-2 bg-white" style="height: auto; padding: 10px; margin: 5px;">
-                                    <div class="d-flex align-items-center">
-                                        <div style="    display: grid;    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;" class="filter-bar row">
+                                 <div class="container-fluid">
+                                         <div class="row align-items-end">
                                             <!-- Department Filter -->
-                                            <div class=" mb-3">
+                                             <div class="col-md-3 mb-3">
                                                 <label for="initiator_group"><Strong>Department</Strong></label>
                                                 <select multiple name="initiator_group[]" id="initiator_group" data-search="false" data-silent-initial-value-set="true">
                                                     @if (!empty($department))
@@ -203,18 +203,18 @@
                                             @php
                                             $users = DB::table('users')->get();
                                             @endphp
-                                            <div class=" mb-3">
+                                            {{-- <div class=" mb-3">
                                                 <label for="initiator"><Strong>Initiator</Strong></label>
                                                 <select  multiple name="initiator" id="initiator_id" data-search="false" data-silent-initial-value-set="true">
-                                                    {{-- <option value="">Select Initiator</option> --}}
+                                                   
                                                     @foreach($users as $user)
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
-                                            </div>
+                                            </div> --}}
                     
                                             <!-- Division Filter -->
-                                            <div class=" mb-3">
+                                             <div class="col-md-3 mb-3">
                                                 <label for="division_id"><Strong>Division</Strong></label>
                                                 <select class="custom-select" id="division_id_capa">
                                                     <option value="">Select Option</option>
@@ -233,13 +233,13 @@
                                             </div> -->
 
                                             <!-- Start Date Filter -->
-                                            <div class=" mb-3">
+                                            <div class="col-md-3 mb-3">
                                                 <label for="date_from_deviation"><Strong>Start Date</Strong></label>
                                                 <input type="date" class="custom-select" id="date_fromcapacapa">
                                             </div>
                     
                                             <!-- End Date Filter -->
-                                            <div class=" mb-3">
+                                             <div class="col-md-3 mb-3">
                                                 <label for="date_to_deviation"><Strong>End Date</Strong></label>
                                                 <input type="date" class="custom-select" id="date_tocapa">
                                             </div>
@@ -280,7 +280,7 @@
                         <div class="table-block">
                             <!-- Search Bar -->
                             <div style="padding: 10px; display: flex; justify-content: space-between; align-items: center; gap: 5px;">
-                            <div>
+                            {{-- <div>
                                    
                                 </div>
                                 <div style="position: relative; width: 300px;">
@@ -296,7 +296,7 @@
                                     🔍
                                     </span>
                                 </div>
-                            </div>
+                            </div> --}}
     
                           
                           <div class="container-fluid">
