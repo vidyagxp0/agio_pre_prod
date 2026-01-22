@@ -44,7 +44,7 @@
     <td>{{ $action->short_description ?? '-' }}</td>
 
 
-    <td>{{ $action->related_records ?? '-' }}</td>
+    {{-- <td>{{ $action->related_records ?? '-' }}</td> --}}
 
     <td>{{ $action->hod_preson ?? '-' }}</td>
 

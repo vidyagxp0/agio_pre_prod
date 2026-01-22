@@ -122,15 +122,15 @@
                    
                     {{-- <div style="padding: 5px;" class="scope-bar d-flex justify-content-end py-1">
                         <div class="dropdown">
-                        <button class="btn btn-primary" onclick="reloadPage()" style="max-width: 100%; width: auto;  font-size: 16px; text-align: center;"><b>Refresh</b>
-                        <i class="fas fa-sync-alt" ></i></button>
+                            <button class="btn btn-primary" onclick="reloadPage()" style="max-width: 100%; width: auto;  font-size: 16px; text-align: center;"><b>Refresh</b>
+                            <i class="fas fa-sync-alt" ></i></button>
 
-                            <a class=" main-button" href="{{ url('rcms/qms-dashboard') }}">
-                           
-                            <button class="btn btn-primary main-button" type="button" aria-haspopup="true" aria-expanded="false" style="width: 100px;">
-                                <i class="fas fa-sign-out-alt"></i>  <b>Exit</b>
-                            </button>
-                        </a>
+                                <a class=" main-button" href="{{ url('rcms/qms-dashboard') }}">
+                            
+                                <button class="btn btn-primary main-button" type="button" aria-haspopup="true" aria-expanded="false" style="width: 100px;">
+                                    <i class="fas fa-sign-out-alt"></i>  <b>Exit</b>
+                                </button>
+                            </a>
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100px; padding: 5px; margin-right: 10px !important;">
                                 <i class="fas fa-download"></i><b>Download </b>
                             </button>

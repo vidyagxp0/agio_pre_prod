@@ -46,14 +46,14 @@ class LogController extends Controller
             case 'deviation':
                 $deviation = Deviation::get();
                 // dd($deviation);
-                return view('frontend.forms.logs.deviation_log', compact('deviation'));
+                return view('frontend.forms.Logs.deviation_log', compact('deviation'));
                 break;
 
             case 'change-control':
                 $ccontrol = CC::get();
                     
                    
-                    return view('frontend.forms.logs.ChangeControlLog',compact('ccontrol'));
+                    return view('frontend.forms.Logs.ChangeControlLog',compact('ccontrol'));
                     break;
 
                 
@@ -61,14 +61,14 @@ class LogController extends Controller
                         $erratalog = errata::get();
                             
                            
-                            return view('frontend.forms.logs.errata_log',compact('erratalog'));
+                            return view('frontend.forms.Logs.errata_log',compact('erratalog'));
                             break;
         
             case 'failure-investigation':
                         $failure = FailureInvestigation::get();
                                     
                                    
-              return view('frontend.forms.logs.failure_investigation_log',compact('failure'));
+              return view('frontend.forms.Logs.failure_investigation_log',compact('failure'));
               break;        
             
 
@@ -83,7 +83,7 @@ class LogController extends Controller
                 
                                             
                                         
-                    return view('frontend.forms.logs.laboratoryincidentLog',compact('labincident'));
+                    return view('frontend.forms.Logs.laboratoryincidentLog',compact('labincident'));
                     break;        
                 
 
@@ -91,7 +91,7 @@ class LogController extends Controller
                 
             //     $marketcomplaint = MarketComplaint::with('product_details')->get();
                 
-            //         return view('frontend.forms.logs.Market-complaint-registerLog',compact('marketcomplaint'));
+            //         return view('frontend.forms.Logs.Market-complaint-registerLog',compact('marketcomplaint'));
                         
             //         break;        
                
@@ -147,7 +147,7 @@ class LogController extends Controller
                         'division'   
                     ])->get();
 
-                    return view('frontend.forms.logs.Market-complaint-registerLog', compact('marketcomplaint'));
+                    return view('frontend.forms.Logs.Market-complaint-registerLog', compact('marketcomplaint'));
                 break;
 
             case 'ooc':
@@ -157,7 +157,7 @@ class LogController extends Controller
                 $users = User::all();
                 
         
-                    return view('frontend.forms.logs.OOC_log' , compact('oocs','users'));
+                    return view('frontend.forms.Logs.OOC_log' , compact('oocs','users'));
               
                                               
             case 'oot':
@@ -188,7 +188,7 @@ class LogController extends Controller
                 
             // $oosmicro = OOS_micro::get();
 
-            return view('frontend.forms.logs.OOS_OOT_log' , compact('oots'));
+            return view('frontend.forms.Logs.OOS_OOT_log' , compact('oots'));
 
 
 
@@ -224,7 +224,7 @@ class LogController extends Controller
             case 'inernal-audit':
                 $internal_audi = InternalAudit::get();
                 
-                return view('frontend.forms.logs.Internal_audit_Log',compact('internal_audi'));
+                return view('frontend.forms.Logs.Internal_audit_Log',compact('internal_audi'));
          
             case 'non-conformance':
                 $nonconformance = NonConformance::get();
