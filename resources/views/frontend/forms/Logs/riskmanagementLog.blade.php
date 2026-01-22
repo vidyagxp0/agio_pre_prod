@@ -280,9 +280,8 @@
                                             {{-- <th>Periodic Review / Action Plan</th> --}}
                                             <th>Type</th>
                                             <th>Priority Level</th>
-                                            <th>Purpose</th>
-                                            <th>Scope </th>
-                                            <th>Reason for Revision</th>
+                                            {{-- <th>Purpose</th> --}}
+                                            
                                             <th>Status</th>
 
 

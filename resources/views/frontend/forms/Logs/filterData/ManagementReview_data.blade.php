@@ -42,7 +42,7 @@
     <td>{{ $ManagementReview->summary_recommendation ?? '-' }}</td>
      <td>{{ $ManagementReview->review_period_monthly ?? '-' }}</td>
       <td>{{ $ManagementReview->start_date ?? '-' }}</td>
-      <td>{{ $ManagementReview->description ?? '-' }}</td>
+      {{-- <td>{{ $ManagementReview->description ?? '-' }}</td> --}}
       <td>{{ $ManagementReview->status ?? '-' }}</td>
 </tr>
 @empty

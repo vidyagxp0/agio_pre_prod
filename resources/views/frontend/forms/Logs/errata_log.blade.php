@@ -206,7 +206,7 @@
                                             <th>Initiator</th>
                                             <th>Division</th>
                                             <th>Department</th>
-                                            <th>Document title</th>
+                                           
                                             <th>Type of Error</th>
                                             <th>Department Head</th>
                                             {{-- <th>Due Date</th> --}}
@@ -215,7 +215,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tableData">
-                                        @include('frontend.forms.logs.filterData.errata_data')
+                                        @include('frontend.forms.Logs.filterData.errata_data')
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-center" style="margin-top: 10px;">

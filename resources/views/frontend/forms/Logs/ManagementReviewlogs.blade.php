@@ -336,7 +336,7 @@
                                         <th rowspan="2">Type </th>
                                         <th rowspan="2">Review Period </th>
                                         <th rowspan="2">Proposed Scheduled Start Date</th>
-                                        <th rowspan="2">Description</th>
+                                        {{-- <th rowspan="2">Description</th> --}}
                                         <th rowspan="2">Status</th>
                                             
                                     </tr>

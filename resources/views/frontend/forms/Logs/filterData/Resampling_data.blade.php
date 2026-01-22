@@ -44,7 +44,7 @@
 
     <td>{{ $Resampling->short_description ?? '-' }}</td>
 
-    <td>{{ $Resampling->related_records ?? '-' }}</td>
+    {{-- <td>{{ $Resampling->related_records ?? '-' }}</td> --}}
 
     <td>{{ Helpers::getInitiatorName($Resampling->hod_preson) ?? '-' }}</td>
 

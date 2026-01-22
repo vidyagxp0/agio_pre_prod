@@ -296,7 +296,7 @@ table {
                                     </tr>
                                 </thead>
                                 <tbody id="tableData">
-                                    @include('frontend.forms.logs.filterData.Inc_data')
+                                    @include('frontend.forms.Logs.filterData.Inc_data')
                                 </tbody>
 
                                 <div class="d-flex justify-content-center" style="margin-top: 10px;">

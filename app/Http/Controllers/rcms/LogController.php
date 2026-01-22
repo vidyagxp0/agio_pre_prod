@@ -81,9 +81,8 @@ class LogController extends Controller
                
         
                 
-                                            
                                         
-                    return view('frontend.forms.Logs.laboratoryincidentLog',compact('labincident'));
+                    return view('frontend.forms.Logs.laboratoryIncidentLog',compact('labincident'));
                     break;        
                 
 

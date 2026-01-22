@@ -26,9 +26,7 @@
         {{-- <td>{{$actionValue}}</td> --}}
         <td>{{$logs->type ?? ''}}</td>
        <td>{{$logs->priority_level ?? ''}}</td>
-        <td>{{$logs->purpose ?? ''}}</td>
-        <td>{{$logs->scope ?? ''}}</td>
-        <td>{{$logs->reason_for_revision ?? ''}}</td>
+       
         <td>{{$logs->status ?? ''}}</td>
     </tr>
 
