@@ -1,4 +1,4 @@
-@forelse ($riskmlog as $logs)
+@forelse ($riskmanagements as $logs)
     {{-- @foreach ($logs->Action as $riskgrid) --}}
 
     @php
@@ -10,8 +10,8 @@
 
     <tr>
         <td>{{$loop->index+1}}</td>
-        <td>{{$logs->intiation_date}}</td>
-        <td>{{ $logs->division_code }}/RM/{{ date('Y') }}/{{ str_pad($logs->record, 4, '0', STR_PAD_LEFT) }}</td>
+        <td>{{Helpers::getdateFormat($logs->intiation_date) ?? ''}}</td>
+        <td>{{ $logs->division_code }}/RA/{{ date('Y') }}/{{ str_pad($logs->record, 4, '0', STR_PAD_LEFT) }}</td>
         <td>{{$logs->short_description}}</td>
         <td>{{ Helpers::getInitiatorName($logs->initiator_id) ?? 'Not Available' }}</td>
         <td>{{$logs->Initiator_Group}}</td>
@@ -22,13 +22,12 @@
                 -
             @endif
         </td>
-        <td>{{$logs->source_of_risk}}</td>
-        <td>{{$actionValue}}</td>
-        <td>{{$logs->type}}</td>
-        {{-- <td>{{$logs->Output_of_Risk_Management_Review}}find</td> --}}
-        <td>{{$logs->due_date}}</td>
-        <td>{{$logs->risk_analysis_completed_on}}</td>
-        <td>{{$logs->status}}</td>
+        <td>{{$logs->source_of_risk ?? ''}}</td>
+        {{-- <td>{{$actionValue}}</td> --}}
+        <td>{{$logs->type ?? ''}}</td>
+       <td>{{$logs->priority_level ?? ''}}</td>
+       
+        <td>{{$logs->status ?? ''}}</td>
     </tr>
 
     {{-- @endforeach --}}

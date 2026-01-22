@@ -173,7 +173,7 @@
                                         <label for="date_to_deviation">Date To</label>
                                         <input type="date" class="custom-select" id="date_to_deviation">
                                     </div>
-                                    <div class="filter-item">
+                                    {{-- <div class="filter-item">
                                         <label for="deviationRelate">Deviation Related to</label>
                                         <select class="custom-select" id="deviationRelate">
                                             <option value="">Select Option</option>
@@ -202,7 +202,7 @@
                                             <option value="Quarterly">Quarterly</option>
                                             <option value="Monthly">Monthly</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>

@@ -266,7 +266,7 @@
         <div class="scope-bar">
             <button class="print-btn btn btn-primary">Print</button>
         </div>
-        <div class="active" onclick="openTab('internal-audit', this)">Market Complaint Log</div>
+        <div class="active" onclick="openTab('internal-audit', this)">ManagementReview</div>
         <div class="third-div">Third Div Content</div>
     </div>
     <div class="main-content">
@@ -278,8 +278,8 @@
                             <div class="flex-grow-2">
                             <div class="filter-bar d-flex flex-wrap justify-content-between">
                                     <div class="filter-item">
-                                        <label for="initiator_group">Department</label>
-                                        <select name="Initiator_Group" id="initiator_group" class="form-control">
+                                        <label for="initiator_group_code">Department</label>
+                                        <select name="Initiator_Group" id="initiator_group_code" class="form-control">
                                             <option value="">Select Record</option>
                                             <option value="CQA">Corporate Quality Assurance</option>
                                             <option value="QAB">Quality Assurance Biopharma</option>
@@ -302,38 +302,21 @@
                                     </div>
                                     <div class="filter-item">
                                         <label for="division_id">Division</label>
-                                        <select class="custom-select form-control" id="division_id">
-                                            <option value="Null">Select Records</option>
+                                        <select class="custom-select form-control" name="division_id" id="division_id">
+                                            <option value="">Select Records</option>
                                             <option value="1">Corporate</option>
                                             <option value="2">Plant</option>
                                         </select>
                                     </div>
                                     <div class="filter-item">
-                                        <label for="date_from_market">Date From</label>
-                                        <input type="date" class="custom-select form-control" id="date_from_market">
+                                        <label for="date_from_managementreview">Date From</label>
+                                        <input type="date" class="custom-select form-control" id="date_from_managementreview">
                                     </div>
                                     <div class="filter-item">
-                                        <label for="date_to_market">Date To</label>
-                                        <input type="date" class="custom-select form-control" id="date_to_market">
+                                        <label for="date_to_managementreview">Date To</label>
+                                        <input type="date" class="custom-select form-control" id="date_to_managementreview">
                                     </div>
-                                    {{-- <div class="filter-item">
-                                        <label for="categoryofcomplaint">Category of complaint</label>
-                                        <select class="custom-select form-control" id="categoryofcomplaint">
-                                            <option value="null">Select Records</option>
-                                            <option value="critical">Critical</option>
-                                            <option value="major">Major</option>
-                                            <option value="minor">Minor</option>
-                                        </select>
-                                    </div>
-                                    <div class="filter-item">
-                                        <label for="datewise">Select Period</label>
-                                        <select class="custom-select form-control" id="datewise">
-                                            <option value="all">Select</option>
-                                            <option value="Yearly">Yearly</option>
-                                            <option value="Quarterly">Quarterly</option>
-                                            <option value="Monthly">Monthly</option>
-                                        </select>
-                                    </div> --}}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -343,30 +326,24 @@
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
-                                    <th rowspan="2">Sr. No.</th>
-                                            <th rowspan="2">Date of Initiation</th>
-                                            <th rowspan="2">Complaint No.</th>
-                                            <th rowspan="2">Description of Complaint</th>
-                                            <th rowspan="2">Originator</th>
-                                            <th rowspan="2">Department</th>
-                                            <th rowspan="2">Division</th>
-                                            <th colspan="4" style="text-align: center">Product Details</th>
-                                            <th rowspan="2">Nature of complaint</th>
-                                            <th rowspan="2">Category of complaint</th>
-                                            <th rowspan="2">Response / Report (Date)</th>
-                                            <th rowspan="2">Due Date</th>
-                                            <th rowspan="2">Clouser Date</th>
-                                            <th rowspan="2">Status</th>
+                                        <th rowspan="2">Sr. No.</th>
+                                        <th rowspan="2">Date of Initiation</th>
+                                        <th rowspan="2">Record Number</th>
+                                        <th rowspan="2">Site/Location Code</th>
+                                        <th rowspan="2">Initiator</th>
+                                        <th rowspan="2">Initiator Department</th>
+                                        <th rowspan="2" style="text-align: center">Short Descriptiobn</th>
+                                        <th rowspan="2">Type </th>
+                                        <th rowspan="2">Review Period </th>
+                                        <th rowspan="2">Proposed Scheduled Start Date</th>
+                                        {{-- <th rowspan="2">Description</th> --}}
+                                        <th rowspan="2">Status</th>
+                                            
                                     </tr>
-                                    <tr>
-                                        <th>Product Name & strength</th>
-                                        <th>Batch No.</th>
-                                        <th>Mfg. Date</th>
-                                        <th>Exp. Date</th>
-                                    </tr>
+                                   
                                 </thead>
                                 <tbody id="tableData">
-                                    @include('frontend.forms.Logs.filterData.marketcomplaint_data')
+                                    @include('frontend.forms.Logs.filterData.ManagementReview_data')
                                 </tbody>
                             </table>
                             <div style="margin-top: 10px; display: flex; justify-content: center;">
@@ -391,56 +368,59 @@
     $('#spinner').hide();
 
     const filterData = {
-        market_department: null,
-        div_idcomplaint: null,
+        managementreview_department: null,
+        div_idmanagementreview: null,
         period_lab: null,
-        dateMarketFrom: null,
-        dateMarketTo: null,
-        categoryofcomplaints: null
+        datemanagementreviewFrom: null,
+        datemanagementreviewTo: null,
+        // categoryofcomplaints: null
     };
 
-    $('#initiator_group').change(function() {
-        filterData.market_department = $(this).val();
+    $('#initiator_group_code').change(function() {
+        filterData.managementreview_department = $(this).val();
         filterRecords();
     });
 
     $('#division_id').change(function() {
-        filterData.div_idcomplaint = $(this).val();
+        filterData.div_idmanagementreview = $(this).val();
         filterRecords();
     });
 
-    $('#categoryofcomplaint').change(function() {
-        filterData.categoryofcomplaints = $(this).val();
+    // $('#categoryofcomplaint').change(function() {
+    //     filterData.categoryofcomplaints = $(this).val();
+    //     filterRecords();
+    // });
+
+    $('#date_from_managementreview').change(function() {
+        filterData.datemanagementreviewFrom = $(this).val();
         filterRecords();
     });
 
-    $('#date_from_market').change(function() {
-        filterData.dateMarketFrom = $(this).val();
+    $('#date_to_managementreview').change(function() {
+        filterData.datemanagementreviewTo = $(this).val();
         filterRecords();
     });
 
-    $('#date_to_market').change(function() {
-        filterData.dateMarketTo = $(this).val();
-        filterRecords();
-    });
-
-    $('#datewise').change(function() {
-        filterData.period = $(this).val();
-        filterRecords();
-    });
+    // $('#datewise').change(function() {
+    //     filterData.period_lab = $(this).val();
+    //     filterRecords();
+    // });
 
     async function filterRecords() {
         $('#tableData').html('');
         $('#spinner').show();
 
         try {
-            const postUrl = "{{ route('api.marketcomplaint.filter') }}";
+            const postUrl = "{{ route('api.managementReview.filter') }}";
             const res = await axios.post(postUrl, filterData);
 
+            
+        // console.log('Response:', res.data); // 👈 ADD THIS
             if (res.data.status == 'ok') {
                 $('#tableData').html(res.data.body);
             }
         } catch (err) {
+
             console.log('Error in filterRecords', err.message);
         }
 

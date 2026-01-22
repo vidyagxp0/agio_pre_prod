@@ -210,21 +210,17 @@
             <div class="active" onclick="openTab('internal-audit', this)">Risk Management Log</div>
             <div class="third-div">Third Div Content</div>
         </div>
-        <div class="main-content">
-            <div class="container-fluid">
-                <div class="process-tables-list">
-                    <div class="process-table active" id="internal-audit">
-                        <div class="mt-1 mb-2 bg-white " style="height: auto; padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <!-- <div class="scope-bar ml-3">
-                                    <button style="width: 70px;margin-left:5px; margin-bottom:35px"
-                                        class="print-btn btn btn-primary">Print</button>
-                                </div> -->
-                                <!-- <div class="flex-grow-2" style="margin-left:-100px; margin-bottom:30px"> -->
-                                    <div class="filter-bar d-flex justify-content-between" style="flex-wrap: wrap;  display: flex;">
-                                        <div class="filter-item">
-                                            <label for="process">Department</label>
-                                            <select name="Initiator_Group" id="initiator_group" class="form-control">
+         <div class="main-content">
+        <div class="container-fluid">
+            <div class="process-tables-list">
+                <div class="process-table active" id="internal-audit">
+                    <div class="mt-1 mb-2 bg-white" style="height: auto; padding: 10px;">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-2">
+                            <div class="filter-bar d-flex flex-wrap justify-content-between">
+                                    <div class="filter-item">
+                                        <label for="initiator_group">Department</label>
+                                        <select name="Initiator_Group" id="initiator_group" class="form-control">
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="CQA">Corporate Quality Assurance</option>
                                                 <option value="QAB">Quality Assurance Biopharma</option>
@@ -244,95 +240,70 @@
                                                 <option value="SM">Senior Management</option>
                                                 <option value="BA">Business Administration</option>
                                             </select>
-                                        </div>
-                                        <div class="filter-item">
-                                            <label for="criteria">Division</label>
-                                            <select class="custom-select" id="division_id">
-                                                <option value="Null">Select Records</option>
-                                                <option value="1">Corporate</option>
-                                                <option value="2">Plant</option>
-                                            </select>
-                                        </div>
-                                        <div class="filter-item">
-                                            <label for="date_from">Date From</label>
-                                            <input type="date" class="custom-select" id="date_from">
-                                        </div>
-                                        <div class="filter-item">
-                                            <label for="date_to">Date To</label>
-                                            <input type="date" class="custom-select" id="date_to">
-                                        </div>
-                                        <div class="filter-item">
-                                            <label for="originator">Source of Risk/Opportunity</label>
-                                            <select class="custom-select" id="originator" style="width:50%">
-                                                <option value="NA">Search Records</option>
-                                                <option value="Audi">Audit</option>
-                                                <option value="Complaint">Complaint</option>
-                                                <option value="Employee">Employee</option>
-                                                <option value="Others">Others</option>
 
-                                            </select>
-                                        </div>
-                                        <div class="filter-item">
-                                            <label for="datewise">Select Period</label>
-                                            <select class="custom-select" id="datewise">
-                                                <option value="all">Select</option>
-                                                <option value="all">Yearly</option>
-                                                <option value="all">Quarterly</option>
-                                                <option value="all">Mothly</option>
 
-                                            </select>
-                                        </div>
                                     </div>
-                                <!-- </div> -->
+                                    <div class="filter-item">
+                                        <label for="division_id">Division</label>
+                                        <select class="custom-select form-control" id="division_id">
+                                            <option value="Null">Select Records</option>
+                                            <option value="1">Corporate</option>
+                                            <option value="2">Plant</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-item">
+                                        <label for="date_from_risk">Date From</label>
+                                        <input type="date" class="custom-select form-control" id="date_from_risk">
+                                    </div>
+                                    <div class="filter-item">
+                                        <label for="date_to_risk">Date To</label>
+                                        <input type="date" class="custom-select form-control" id="date_to_risk">
+                                    </div>
+                                    
+                                </div>
                             </div>
                         </div>
-
-                        <div class="table-block">
-                            <div class="table-responsive" style="height: 300px; margin-top:20px">
-                                <table class="table table-bordered" style="width: 120%;">
-                                    <thead>
-                                        <tr>
+                    </div>
+                    <div class="table-block">
+                        <div class="table-responsive" style="height: 300px">
+                            <table class="table table-bordered" style="width: 120%;">
+                                <thead>
+                                    <tr>
                                             <th style="width: 5%;">Sr.No.</th>
                                             <th>Date of Initiation</th>
                                             <th>Quality Risk Assesment No.</th>
                                             <th>Short Description</th>
                                             <th>Originator</th>
-                                            <th>Department</th>
+                                            <th>Initiator Department</th>
                                             <th>Division</th>
                                             <th>Source of Risk/Opportunity</th>
-                                            <th>Periodic Review / Action Plan</th>
+                                            {{-- <th>Periodic Review / Action Plan</th> --}}
                                             <th>Type</th>
-                                            {{-- <th>Output of Risk Management Review </th> --}}
-                                            <th>Due Date</th>
-                                            <th>Date of Clouser</th>
+                                            <th>Priority Level</th>
+                                            {{-- <th>Purpose</th> --}}
+                                            
                                             <th>Status</th>
 
 
                                         </tr>
-
-
-                                    </thead>
-
-                                    <tbody id="tableData">
-                                        @include('frontend.forms.logs.filterData.riskmanagement_data')
-
-
-                                    </tbody>
-                                    
-                                    <div class="d-flex justify-content-center" style="margin-top: 10px;">
-                                        <div class="spinner-border text-primary" role="status" id="spinner">
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
-                                    </div>
-                                </table>
+                                   
+                                </thead>
+                                <tbody id="tableData">
+                                    @include('frontend.forms.Logs.filterData.riskmanagement_data')
+                                </tbody>
+                            </table>
+                            <div style="margin-top: 10px; display: flex; justify-content: center;">
+                                <div class="spinner-border text-primary" role="status" id="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
+                <!-- Add more tabs as needed -->
             </div>
         </div>
+    </div>
     </div>
 
     </div>
@@ -367,12 +338,12 @@ $('#initiator_group').change(function() {
  });
 
 
- $('#date_from').change(function() {
+ $('#date_from_risk').change(function() {
 filterData.date_from_risk = $(this).val();
 filterRecords();
 });
 
-$('#date_to').change(function() {
+$('#date_to_risk').change(function() {
     filterData.date_to_risk = $(this).val();
     filterRecords();
 });

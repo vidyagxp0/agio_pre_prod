@@ -178,7 +178,7 @@
                                             <label for="dateto_oot">Date To</label>
                                             <input type="date" class="custom-select" id="dateto_oot">
                                         </div>
-                                        <div class="filter-item">
+                                        {{-- <div class="filter-item">
                                             <label for="source_document_type_gi">Type of Document</label>
                                             <select id="source_document_type_gi">
                                                 <option value="">Enter Your Selection Here</option>
@@ -198,7 +198,7 @@
                                                 <option value="Quarterly">Quarterly</option>
                                                 <option value="Monthly">Monthly</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -214,7 +214,7 @@
                                             <th>Short Description</th>
                                             <th>Type of Document</th>
                                             <th>Product / Material</th>
-                                            <th>Batch No. / AR No.</th>
+                                            {{-- <th>Batch No. / AR No.</th> --}}
                                             <th>Due Date</th>
                                             <th>Closure Date</th>
                                             <th>Status</th>

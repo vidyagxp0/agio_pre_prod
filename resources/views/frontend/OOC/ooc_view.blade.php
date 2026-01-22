@@ -2422,7 +2422,9 @@
 
                                 <div class="col-lg-12" id="rootCauseGroup" style="display: none;">
                                     <div class="group-input">
-                                        <label for="RootCause">Phase IA Investigation Comment</label>
+                                        <label for="RootCause">Phase IA Investigation Comment @if($ooc->stage ==4)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                         <textarea name="rootcausenewfield" id="rootCauseTextarea" rows="4"
                                             placeholder="Describe the root cause here"  {{ $ooc->stage == 0 || $ooc->stage == 3 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                             {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->rootcausenewfield }}</textarea>

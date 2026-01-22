@@ -17,7 +17,7 @@
                 {{ $ootlog->source_document_type_gi ? $ootlog->source_document_type_gi : 'Not Available' }}
             </td>
             <td>{{ $ootlog['product_material_name_gi'] }}</td>
-            <td>{{ $ootlog['lot_batch_no'] }}</td>
+            {{-- <td>{{ $ootlog['lot_batch_no'] }}</td> --}}
             <td>{{ \Carbon\Carbon::parse($ootlog->due_date)->format('j-M-Y') }}</td>
             <td>{{ \Carbon\Carbon::parse($ootlog->Final_Approval_on)->format('j-M-Y') }}</td>
             <td>{{ $ootlog->status }}</td>

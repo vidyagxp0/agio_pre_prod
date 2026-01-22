@@ -473,19 +473,27 @@
 
 @php
     $logs_list = [
+        'ActionItem',
+        'AuditProgram',
         'CAPA',
         'Change Control',
         'Deviation',
         'Errata',
-        'Failure Investigation',
+        'Effectiveness-Check',
+        'Extension',
+          'External Audit',
+        // 'Failure Investigation',
         'Incident',
         'Inernal Audit',
         'Lab Incident',
+         'ManagementReview',
         'Market Complaint',
-        'Non Conformance',
+        // 'Non Conformance',
         'OOC',
         'OOT',
+        'Resampling',
         'Risk Management',
+        'Root Cause Analysis',
 
     ];
 @endphp
