@@ -1949,28 +1949,28 @@ class ErrataController extends Controller
                 return back();
             }
             if ($ErrataControl->stage == 7) {
-                $ErrataControl->stage = "1";
+                $ErrataControl->stage = "6";
                 $ErrataControl->sent_to_open_state_by = Auth::user()->name;
                 $ErrataControl->sent_to_open_state_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->sent_to_open_state_comment = $request->comment;
                 $history = new ErrataAuditTrail();
                 $history->errata_id = $id;
-                $history->activity_type = 'Send To Opened By, Send To Opened On';
+                $history->activity_type = 'Not Applicable';
                 if (is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == '') {
                     $history->previous = "";
                 } else {
                     $history->previous = $lastDocument->sent_to_open_state_by . ' ,' . $lastDocument->sent_to_open_state_on;
                 }
-                $history->action = 'Send To Opened';
+                $history->action = 'Request More Info';
                 $history->current = $ErrataControl->sent_to_open_state_by . ',' . $ErrataControl->sent_to_open_state_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Pending HOD Review";
                 $history->change_from = $lastDocument->status;
-                $history->stage = 'Opened';
+                $history->stage = 'Pending HOD Review';
                 if (is_null($lastDocument->sent_to_open_state_by) || $lastDocument->sent_to_open_state_on == '') {
                     $history->action_name = 'New';
                 } else {
@@ -1986,10 +1986,10 @@ class ErrataController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Send To Opened", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Request More Info", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $ErrataControl) {
                                         $message->to($email)
-                                        ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send To Opened Performed");
+                                        ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
                                     }
                                 );
                             } catch(\Exception $e) {

@@ -200,8 +200,8 @@
                                     Helpers::check_roles($showdata->division_id, 'ERRATA', 39) ||
                                     Helpers::check_roles($showdata->division_id, 'ERRATA', 9) ||
                                     Helpers::check_roles($showdata->division_id, 'ERRATA', 18)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-opened-modal">
-                                Sent To Opened State
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-inform-required-modal">
+                                Request More Info
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">

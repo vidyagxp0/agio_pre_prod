@@ -143,8 +143,8 @@
                                 Cancel
                             </button>
                         @elseif($extensionNew->stage == 2 && (Helpers::check_roles($extensionNew->site_location_code, 'Extension', 4) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18)))
-
-                            @if($extensionNew->count == 3)
+                                
+                            @if(($extensionNew->count == 3) || ($extensionNew->count_data == "number3"))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-reviewed-modal">
                                     Review
                                 </button>
@@ -304,11 +304,22 @@
                                 <div class="">In Review</div>
                             @endif
 
-                            @if($extensionNew->count != 3)
+                            {{-- @if(($extensionNew->count != 3) || ($extensionNew->count_data != "number3"))
                                 @if ($extensionNew->stage >= 3)
                                     <div class="active">In Approved</div>
                                 @else
                                     <div class="">In Approved</div>
+                                @endif
+                            @endif --}}
+                            @if(
+                                ($extensionNew->count != 3) 
+                                && 
+                                ($extensionNew->count_data != "number3")
+                            )
+                                @if ($extensionNew->stage >= 3)
+                                    <div class="active">In Approved</div>
+                                @else
+                                    <div>In Approved</div>
                                 @endif
                             @endif
 
@@ -317,7 +328,7 @@
                                 <div class="{{ $extensionNew->stage >= 5 ? 'active' : '' }}">In CQA Approval</div>
                             @endif -->
 
-                            @if($extensionNew->count == 3)
+                            @if(($extensionNew->count == 3) || ($extensionNew->count_data == "number3")) 
                                 @if($extensionNew->stage >= 5)
                                     <div class="active">In CQA Approval</div>
                                 @else
