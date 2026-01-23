@@ -1647,7 +1647,7 @@ foreach ($pre as $processName => $modelClass) {
                                 function ($message) use ($assignedEmail, $changeControl) {
                                     $message->to($assignedEmail)
                                         ->subject(
-                                            "Agio Notification: Action Item Assigned, Record #"
+                                            "Agio Notification: Action Item, Record #"
                                             . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
                                         );
                                 }
@@ -1740,16 +1740,16 @@ foreach ($pre as $processName => $modelClass) {
                                 'mail.view-mail',
                                 [
                                     'data'    => $changeControl,
-                                    'site'    => "CC",
+                                    'site'    => "AI",
                                     'history' => "Acknowledge Complete",
-                                    'process' => 'Change Control',
+                                    'process' => 'Action Item',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
                                         ->subject(
-                                            "Agio Notification: Change Control, Record #"
+                                            "Agio Notification: Action Item, Record #"
                                             . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
                                             . " - Activity: Acknowledge Complete"
                                         );
@@ -1840,16 +1840,16 @@ foreach ($pre as $processName => $modelClass) {
                                 'mail.view-mail',
                                 [
                                     'data'    => $changeControl,
-                                    'site'    => "CC",
+                                    'site'    => "AI",
                                     'history' => "Complete",
-                                    'process' => 'Change Control',
+                                    'process' => 'Action Item',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
                                         ->subject(
-                                            "Agio Notification: Change Control, Record #"
+                                            "Agio Notification: Action Item, Record #"
                                             . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
                                             . " - Activity: Complete"
                                         );
@@ -1963,16 +1963,16 @@ public function lastStage(Request $request, $id){
                                 'mail.view-mail',
                                 [
                                     'data'    => $changeControl,
-                                    'site'    => "CC",
+                                    'site'    => "AI",
                                     'history' => "Verification Complete",
-                                    'process' => 'Change Control',
+                                    'process' => 'Action Item',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
                                     $message->to($email)
                                         ->subject(
-                                            "Agio Notification: Change Control, Record #"
+                                            "Agio Notification: Action Item, Record #"
                                             . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
                                             . " - Activity: Verification Complete"
                                         );
@@ -2276,7 +2276,7 @@ public function actionmoreinfo(Request $request, $id)
                                 function ($message) use ($assignedEmail, $changeControl) {
                                     $message->to($assignedEmail)
                                         ->subject(
-                                            "Agio Notification: More Information Required Assigned, Record #"
+                                            "Agio Notification: Action Item , Record #"
                                             . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
                                         );
                                 }
