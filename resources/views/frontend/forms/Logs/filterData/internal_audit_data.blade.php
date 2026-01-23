@@ -21,7 +21,7 @@
     <td>{{$logs->Audit_Category ? $logs->Audit_Category : 'NA'}}</td>
     
  
-    <td>{{$logs->initiator_group_code}}</td>
+    <td>{{$logs->Initiator_Group}}</td>
     <td>{{$logs->division ? $logs->division->name : '-'}}</td>
     <td>
         @if($logs->due_date)

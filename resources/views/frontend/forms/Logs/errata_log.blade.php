@@ -195,9 +195,9 @@
                         </div>
 
                         <div class="table-block">
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
+                            <div class="table-responsive" style="height: 500px">
+                                <table class="table table-bordered" style="width: 120%;">
+                                <thead>
                                         <tr>
                                             <th style="width: 5%;">Sr.No.</th>
                                             <th>Date of Initiation</th>

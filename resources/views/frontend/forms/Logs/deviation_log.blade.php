@@ -220,10 +220,10 @@
                                             <th>Department</th>
                                             <th>Initial Deviation Category</th>
                                             <th>Deviation Related to</th>
-                                            <th>No. of Extension</th>
-                                            <th>Closing Date</th>
+                                            {{-- <th>No. of Extension</th> --}}
+                                            {{-- <th>Closing Date</th> --}}
                                             <th>Due Date</th>
-                                            <th>Closed by</th>
+                                            {{-- <th>Closed by</th> --}}
                                             <th>Status</th>
                                         </tr>
                                     </thead>

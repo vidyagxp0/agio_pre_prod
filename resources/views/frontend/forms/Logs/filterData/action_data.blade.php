@@ -46,7 +46,7 @@
 
     {{-- <td>{{ $action->related_records ?? '-' }}</td> --}}
 
-    <td>{{  Helpers::getInitiatorName($action->hod_preson) ?? '-' }}</td>
+    <td>{{  $action->hod_preson ?? '-' }}</td>
 
    
 

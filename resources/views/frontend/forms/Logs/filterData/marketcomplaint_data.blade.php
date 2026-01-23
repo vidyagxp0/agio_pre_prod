@@ -23,13 +23,13 @@ $productDetails= $marketlog->product_details;
             @endif
             <td>{{ $marketlog->division ? $marketlog->division->name : '-' }}/MC/{{ date('Y') }}/{{ str_pad($marketlog->record, 4, '0', STR_PAD_LEFT) }}</td>
            
-            <td>{{ $marketlog->initiator ? $marketlog->initiator->name : '-' }}</td>
+            <td>{{ Helpers::getInitiatorName($marketlog->initiator_id) ?? '-' }}</td>
             <td>{{ $marketlog->initiator_group }}</td>
             <td>{{ $marketlog->division ? $marketlog->division->name : '-' }}</td>
-            <td>{{ $data['info_product_name'] ?? '-' }}</td>
+            {{-- <td>{{ $data['info_product_name'] ?? '-' }}</td>
             <td>{{ $data['info_batch_no'] ?? '-' }}</td>
             <td>{{ $data['info_mfg_date'] ?? '-' }}</td>
-            <td>{{ $data['info_expiry_date'] ?? '-' }}</td>
+            <td>{{ $data['info_expiry_date'] ?? '-' }}</td> --}}
             <td>{{ $marketlog->categorization_of_complaint_gi }}</td>
           
             

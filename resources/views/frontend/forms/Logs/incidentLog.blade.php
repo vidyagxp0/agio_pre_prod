@@ -275,7 +275,7 @@ table {
                     </div>
 
                     <div class="table-block">
-                        <div class="table-responsive" style="height: 300px">
+                        <div class="table-responsive" style="height: 500px">
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>

@@ -1,3 +1,8 @@
+
+@php
+    use Carbon\Carbon;
+@endphp
+
 @forelse ($deviation as $deviations)
     <tr>
         <td>{{$loop->index+1}}</td>
@@ -7,11 +12,19 @@
 <td>{{ $deviations->division ? $deviations->division->name : '-' }}</td>
 <td>{{$deviations->Initiator_Group}}</td>
 <td>{{$deviations->Deviation_category?$deviations->Deviation_category:'NA'}}</td>
-<td>{{$deviations->audit_type}}</td>
-<td></td>
-<td>{{$deviations->QA_final_approved_on ? $deviations->QA_final_approved_on : 'NA'}}</td>
-<td>{{$deviations->due_date}}</td>
-<td>{{$deviations->QA_final_approved_by ? $deviations->QA_final_approved_by : 'NA' }}</td>
+<td style="max-width: 600px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+    title="{{ $deviations->audit_type }}">
+    {{ $deviations->audit_type }}
+</td>
+
+
+
+{{-- <td>{{$deviations->due_date}}</td> --}}
+<td> {{ $deviations->due_date
+            ? Carbon::parse($deviations->due_date)->format('d-M-Y')
+            : 'NA'
+        }}</td>
+{{-- <td>{{$deviations->QA_final_approved_by ? $deviations->QA_final_approved_by : 'NA' }}</td> --}}
 <td>{{$deviations->status}}</td>
 </tr>
 @empty 
