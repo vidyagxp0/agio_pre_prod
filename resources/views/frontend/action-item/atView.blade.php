@@ -285,7 +285,10 @@
                                 @endif
 
 
-
+                                @php
+                                    $isAssignto = (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Action Item', 3) || Helpers::check_roles($data->division_id, 'Action Item', 18));
+                                   
+                                @endphp
 
                                 <div class="col-md-6">
                                         <div class="group-input">
@@ -293,13 +296,16 @@
                                                 Assigned To <span class="text-danger">*</span>
                                             </label>
                                             <select {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
-                                                id="select-state" placeholder="Select..." name="assign_to" required>
+                                                id="select-state" placeholder="Select..." name="assign_to" required  {{ $data->stage == 1 && $isAssignto ? '' : 'disabled' }} >
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $value)
                                                     <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
                                                         value="{{ $value->id }}">{{ $value->name }}</option>
                                                 @endforeach
                                             </select>
+                                              @if ($data->stage != 1)
+                                                <input type="hidden" name="assign_to" value="{{ $data->assign_to }}">
+                                            @endif
                                         </div>
                                     @error('assign_to')
                                         <div class="text-danger">{{ $message }}</div>
@@ -343,13 +349,13 @@
                                                         <div class="calenderauditee">
                                                             <input type="text" name="due_date"
                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
+                                                                {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }} {{ $data->stage == 1 && $isAssignto ? '' : 'readonly' }}
                                                                 id="due_date" readonly
                                                                 placeholder="DD-MMM-YYYY"
                                                                 value="{{ Helpers::getdateFormat($data->due_date) }}" />
                                                             <input type="date" class="hide-input"
                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                            {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
+                                                            {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }} {{ $data->stage == 1 && $isAssignto ? '' : 'readonly' }}
                                                                 value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                                 oninput="handleDateInput(this, 'due_date')" />
                                                         </div>
@@ -422,7 +428,7 @@
                                             characters remaining
                                             <input name="short_description" id="docname" type="text"
                                                 value="{{ $data->short_description }}" maxlength="255" readonly
-                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 && $isAssignto ? '' : 'readonly' }}
                                                 type="text">
 
                                         </div>
@@ -543,7 +549,7 @@
                                             </select>
 
                                             <!-- Hidden Input to Retain Values When Select is Disabled -->
-                                            @if (in_array($data->stage, [0, 2, 3, 4, 5]))
+                                            @if (in_array($data->stage, [0, 2, 3, 4, 5])) {{ $data->stage == 1 && $isAssignto ? '' : 'disabled' }}
                                                 @foreach (explode(',', $data->related_records ?? '') as $record)
                                                     <input type="hidden" name="related_records[]" value="{{ $record }}">
                                                 @endforeach
@@ -556,7 +562,7 @@
                                             <label for="HOD Persons">HOD Persons <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span></label>
                                             <select name="hod_preson[]" placeholder="Select HOD Persons" required
                                                 data-search="false" data-silent-initial-value-set="true"
-                                                {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}>
+                                                {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }} {{ $data->stage == 1 && $isAssignto ? '' : 'disabled' }}>
                                                 <option value="">Select Person</option>
                                                 @foreach ($users as $value)
                                                     <option value="{{ $value->name }}"
@@ -566,6 +572,9 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        @if ($data->stage != 1)
+                                                <input type="hidden" name="hod_preson" value="{{ $data->hod_preson }}">
+                                        @endif
                                     @error('hod_preson')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -717,7 +726,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    <input {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 && $isAssignto ? '' : 'disabled' }}
                                                         type="file" id="myfile" name="file_attach[]"
                                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                                 </div>
@@ -837,6 +846,11 @@
                         </div>
                     </div>
 
+                    @php
+
+                      $assigntoPerson  = (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18))
+                    @endphp
+
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -847,7 +861,7 @@
                                             <label for="qa_comments">Acknowledge Comment @if ($data->stage == 2)
                                                 <span class="text-danger">*</span>
                                             @endif</label>
-                                            <textarea name="acknowledge_comments" {{ $data->stage == 2 ? '' : 'readonly' }} required>{{ $data->acknowledge_comments }}</textarea>
+                                            <textarea name="acknowledge_comments" {{ $data->stage == 2 ? '' : 'readonly' }}  {{ $data->stage == 2 && $assigntoPerson ? '' : 'readonly' }} required>{{ $data->acknowledge_comments }}</textarea>
                                         </div>
                                     </div>
                                     @else
@@ -855,7 +869,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="qa_comments">Acknowledge Comment</label>
-                                            <textarea name="acknowledge_comments" readonly {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->acknowledge_comments }}</textarea>
+                                            <textarea name="acknowledge_comments" readonly {{ $data->stage == 2 ? '' : 'readonly' }} {{ $data->stage == 2 && $assigntoPerson ? '' : 'readonly' }}>{{ $data->acknowledge_comments }}</textarea>
                                         </div>
                                     </div>
                                 @endif
@@ -896,7 +910,7 @@
                                                     <div>Add</div>
                                                     <input
                                                         type="file" id="myfile" name="acknowledge_attach[]"
-                                                        oninput="addMultipleFiles(this, 'acknowledge_attach')" multiple {{ $data->stage == 2 ? '' : 'disabled' }}>
+                                                        oninput="addMultipleFiles(this, 'acknowledge_attach')" multiple {{ $data->stage == 2 ? '' : 'disabled' }} {{ $data->stage == 2 && $assigntoPerson ? '' : 'disabled' }}>
                                                 </div>
                                             </div>
 
@@ -1052,7 +1066,7 @@
                                                     <span class="text-danger">*</span>
                                                 @endif
                                             </label>
-                                            <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="action_taken" required>{{ $data->action_taken }}</textarea>
+                                            <textarea {{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'readonly' }}name="action_taken" required>{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
                                 @else
@@ -1064,7 +1078,7 @@
                                                     <span class="text-danger">*</span>
                                                 @endif--}}
                                             </label>
-                                            <textarea class="tiny" readonly {{ $data->stage == 3 ? '' : 'readonly' }} name="action_taken">{{ $data->action_taken }}</textarea>
+                                            <textarea class="tiny" readonly {{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'readonly' }} name="action_taken">{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
                                 @endif
@@ -1083,7 +1097,7 @@
                                                 <input type="text" id="start_date" placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                                 <input class="hide-input" type="date"
-                                                    name="start_date"{{ $data->stage == 3 ? '' : 'readonly' }}
+                                                    name="start_date"{{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'readonly' }}
                                                     id="start_date_checkdate" value="{{ $data->start_date }}"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" required/>
                                             </div>
@@ -1098,7 +1112,7 @@
                                                     placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                                 <input class="hide-input" type="date" readonly
-                                                    name="start_date"{{ $data->stage == 3 ? '' : 'readonly' }}
+                                                    name="start_date"{{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'readonly' }}
                                                     id="start_date_checkdate" value="{{ $data->start_date }}"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" required/>
                                             </div>
@@ -1119,7 +1133,7 @@
                                                 <input type="text" id="end_date" placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                                 <input class="hide-input" type="date"
-                                                    name="end_date" {{ $data->stage == 3 ? '' : 'readonly' }}
+                                                    name="end_date" {{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'readonly' }}
                                                     id="end_date_checkdate" value="{{ $data->end_date }}"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" required />
                                             </div>
@@ -1134,7 +1148,7 @@
                                                         placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                                     <input class="hide-input" type="date" readonly
-                                                        name="end_date" {{ $data->stage == 3 ? '' : 'readonly' }}
+                                                        name="end_date" {{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'readonly' }}
                                                         id="end_date_checkdate" value="{{ $data->end_date }}"
                                                         oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                                 </div>
@@ -1151,14 +1165,14 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments <span class="text-danger">*</span></label>
-                                        <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="comments" required>{{ $data->comments }}</textarea>
+                                        <textarea {{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'readonly' }} name="comments" required>{{ $data->comments }}</textarea>
                                     </div>
                                 </div>
                             @else
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="comments" readonly>{{ $data->comments }}</textarea>
+                                        <textarea {{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'readonly' }} name="comments" readonly>{{ $data->comments }}</textarea>
                                     </div>
                                 </div>
                             @endif
@@ -1194,7 +1208,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $data->stage == 3 ? '' : 'disabled' }}
+                                            <input {{ $data->stage == 3 ? '' : 'disabled' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'disabled' }}
                                                 type="file" id="myfile" name="Support_doc[]"
                                                 oninput="addMultipleFiles(this, 'Support_doc')" multiple>
                                         </div>
@@ -1290,7 +1304,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input disabled {{ $data->stage == 3 ? '' : 'disabled' }}
+                                            <input disabled {{ $data->stage == 3 ? '' : 'disabled' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'disabled' }}
                                                 type="file" id="myfile" name="Support_doc[]"
                                                 oninput="addMultipleFiles(this, 'Support_doc')" class="tiny" multiple>
                                         </div>
@@ -1314,6 +1328,12 @@
                     </div>
                 </div>
 
+                @php 
+
+                 $QA_CQA  =  (Helpers::check_roles($data->division_id, 'Action Item', 7) || Helpers::check_roles($data->division_id, 'Action Item', 66) || Helpers::check_roles($data->division_id, 'Action Item', 18))
+
+                @endphp
+
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -1325,7 +1345,7 @@
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
-                                        <textarea {{ $data->stage == 4 ? '' : 'readonly' }} name="qa_comments" required>{{ $data->qa_comments }}</textarea>
+                                        <textarea {{ $data->stage == 4 ? '' : 'readonly' }}  {{ $data->stage == 4 && $QA_CQA ? '' : 'readonly' }} name="qa_comments" required>{{ $data->qa_comments }}</textarea>
                                     </div>
                                 </div>
                             @else
@@ -1334,7 +1354,7 @@
                                         <label for="qa_comments">QA/CQA Verification Comments @if ($data->stage == 4)
                                                 <span class="text-danger">*</span>
                                             @endif </label>
-                                        <textarea class="tiny" readonly {{ $data->stage == 4 ? '' : 'readonly' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
+                                        <textarea class="tiny" readonly {{ $data->stage == 4 ? '' : 'readonly' }}  {{ $data->stage == 4 && $QA_CQA ? '' : 'readonly' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
                                     </div>
 
                                 </div>
@@ -1378,7 +1398,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $data->stage == 4 ? '' : 'disabled' }}
+                                                <input {{ $data->stage == 4 ? '' : 'disabled' }}  {{ $data->stage == 4 && $QA_CQA ? '' : 'disabled' }}
                                                     type="file" id="myfile" name="final_attach[]"
                                                     oninput="addMultipleFiles(this, 'final_attach')" multiple>
                                             </div>
@@ -1475,7 +1495,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input disabled
-                                                {{ $data->stage == 3 ? '' : 'disabled' }}
+                                                {{ $data->stage == 3 ? '' : 'disabled' }}  {{ $data->stage == 4 && $QA_CQA ? '' : 'disabled' }}
                                                     type="file" id="myfile" name="final_attach[]"
                                                     oninput="addMultipleFiles(this, 'final_attach')" multiple>
                                             </div>
