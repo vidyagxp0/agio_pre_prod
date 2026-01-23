@@ -20,7 +20,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">All Equipment Product</h3>
+                    <h3 class="card-title">All Product</h3>
                 </div>
 
                     <div class="mb-2 d-flex justify-content-between">

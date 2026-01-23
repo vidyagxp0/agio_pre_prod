@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-header">
-            <h4>Edit Equipment Product</h4>
+            <h4>Edit Product</h4>
         </div>
  
         <div class="card-body">

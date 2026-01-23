@@ -199,7 +199,7 @@ if($submenu=="Group Permission"){
                 <li class="nav-item {{ $mainmenu == 'EquipmentMaster' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
-                        if($mainmenu=="EquipmentMaster"){
+                        if($mainmenu=="Master"){
                                     echo "active";
                                 } @endphp">
                                 <i class="nav-icon fa fa-cog"></i>
