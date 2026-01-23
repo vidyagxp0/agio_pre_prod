@@ -345,7 +345,7 @@
                         </div>
                     </div>
                     <div class="table-block">
-                        <div class="table-responsive" style="height: 300px">
+                        <div class="table-responsive" style="height: 500px">
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
@@ -355,8 +355,8 @@
                                             <th>Originator</th>
                                             <th>Short Description</th>
                                             <th>Audit Category</th>
-                                            <th>Type of Audit</th>
-                                            <th>Auditor Name</th>
+                                            
+                                          
                                             <th>Department</th>
                                             <th>Division</th>
                                             <th>Due Date</th>

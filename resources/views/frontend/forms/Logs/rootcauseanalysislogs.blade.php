@@ -322,7 +322,7 @@
                         </div>
                     </div>
                     <div class="table-block">
-                        <div class="table-responsive" style="height: 300px">
+                        <div class="table-responsive" style="height: 500px">
                             <table class="table table-bordered" style="width: 120%;">
                                  <thead>
                                     <tr>
@@ -338,8 +338,7 @@
                                             <th rowspan="2">Due Date</th>
                                             <th rowspan="2">Initiated Through</th>
                                             <th rowspan="2">Responsible Department</th>
-                                            <th rowspan="2">Description </th>
-                                            <th rowspan="2">Comments </th>
+                                           
                                             <th rowspan="2">Status</th>
                                             
                                     </tr>

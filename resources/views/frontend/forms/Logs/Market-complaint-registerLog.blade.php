@@ -343,27 +343,27 @@
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
-                                    <th rowspan="2">Sr. No.</th>
+                                    <th>Sr. No.</th>
                                             <th rowspan="2">Date of Initiation</th>
                                             <th rowspan="2">Complaint No.</th>
-                                            <th rowspan="2">Description of Complaint</th>
+                                            
                                             <th rowspan="2">Originator</th>
                                             <th rowspan="2">Department</th>
                                             <th rowspan="2">Division</th>
-                                            <th colspan="4" style="text-align: center">Product Details</th>
-                                            <th rowspan="2">Nature of complaint</th>
+                                            {{-- <th colspan="4" style="text-align: center">Product Details</th> --}}
+                                            {{-- <th rowspan="2">Nature of complaint</th> --}}
                                             <th rowspan="2">Category of complaint</th>
-                                            <th rowspan="2">Response / Report (Date)</th>
+                                            
                                             <th rowspan="2">Due Date</th>
-                                            <th rowspan="2">Clouser Date</th>
+                                           
                                             <th rowspan="2">Status</th>
                                     </tr>
-                                    <tr>
+                                    {{-- <tr>
                                         <th>Product Name & strength</th>
                                         <th>Batch No.</th>
                                         <th>Mfg. Date</th>
                                         <th>Exp. Date</th>
-                                    </tr>
+                                    </tr> --}}
                                 </thead>
                                 <tbody id="tableData">
                                     @include('frontend.forms.Logs.filterData.marketcomplaint_data')

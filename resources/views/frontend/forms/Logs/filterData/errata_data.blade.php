@@ -18,7 +18,7 @@
                                             
                                                 
                                             </td>
-                                            <td>{{$logs->department_code ?? ''}}</td>
+                                            <td>{{$logs->Department ?? ''}}</td>
                                          
                                             <td>{{$logs->type_of_error ?? '-'}}</td>
                                             <td>{{ Helpers::getInitiatorName($logs->department_head_to)  ?? '-' }}</td>

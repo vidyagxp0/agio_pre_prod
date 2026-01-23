@@ -19,8 +19,7 @@
     <td>{{$control->short_description}}</td>
     <td>{{$control->proposed_change}}</td>
     <td>{{$control->doc_change}}</td>
-    <td></td>
-    <td></td>
+    
     <td>{{$control->due_date}}</td>
     <td>{{$control->status}}</td>
 

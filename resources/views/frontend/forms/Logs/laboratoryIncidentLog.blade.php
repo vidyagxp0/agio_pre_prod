@@ -339,7 +339,7 @@
                         </div>
                     </div>
                     <div class="table-block">
-                        <div class="table-responsive" style="height: 300px">
+                        <div class="table-responsive" style="height: 500px">
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
@@ -349,7 +349,7 @@
                                             <th>Originator</th>
                                             {{-- <th>Department</th> --}}
                                             <th>Division</th>
-                                            <th>Description of Incident</th>
+                                            <th>Short Description </th>
                                             <th>Stage  </th>
                                             <th>Stability Condition (If Applicable)</th>
                                             <th>Interval (If Applicable)</th>

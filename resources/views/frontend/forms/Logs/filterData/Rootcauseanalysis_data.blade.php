@@ -53,13 +53,6 @@
     <td>{{ $root_cause_analysis->department ?? '-' }}</td>
     
 
-    <td>{{ $root_cause_analysis->description ?? '-' }}</td>
-
-  
-
-    <td>
-        {{ $root_cause_analysis->comments ?? '-' }}
-    </td>
 
     <td>{{ $root_cause_analysis->status ?? '-' }}</td>
 </tr>

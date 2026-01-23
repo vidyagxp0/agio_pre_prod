@@ -114,38 +114,7 @@
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" crossorigin="anonymous"></script>
                     </div>
                          <br>
-                    {{-- <div style="padding: 5px;" class="scope-bar d-flex justify-content-end py-1">
-                        <div class="dropdown">
-                        <button class="btn btn-primary" onclick="reloadPage()" style="max-width: 100%; width: auto;  font-size: 16px; text-align: center;"><b>Refresh</b>
-                        <i class="fas fa-sync-alt" ></i></button>
-
-                            <a class=" main-button" href="{{ url('rcms/qms-dashboard') }}">
-                           
-                            <button class="btn btn-primary main-button" type="button" aria-haspopup="true" aria-expanded="false" style="width: 100px;">
-                                <i class="fas fa-sign-out-alt"></i>  <b>Exit</b>
-                            </button>
-                        </a>
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100px; padding: 5px; margin-right: 10px !important;">
-                                <i class="fas fa-download"></i><b>Download</b>
-                            </button>
-                            
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="{{ route('export-csv') }}">
-                                    <i class="fas fa-file-csv"></i> CSV Export
-                                </a>
-                                <a class="dropdown-item" href="{{ route('export-excel') }}">
-                                    <i class="fas fa-file-excel"></i> Excel Export
-                                </a>
-                              <a class="dropdown-item" >
-                                    <i class="fas fa-file-word"></i> Word Download
-                                </a>                    
-                                <a class="dropdown-item" href="#" onclick="printTable()">
-                                    <i class="fas fa-print"></i> Print
-                                </a>
-                            </div>
-                        </div>
-                    </div> --}}
-                    
+                  
                     
                     
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -179,88 +148,68 @@
 
                                                     @endphp
                         <div class="container-fluid">
-                            <div class="process-tables-list">
-                                <div class="process-table active" id="internal-audit">
-                                    <div class="mt-1 mb-2 bg-white" style="height: auto; padding: 10px; margin: 5px;">
-                                        {{-- <div class="d-flex align-items-center"> --}}
-                                            {{-- <div style="    display: grid;    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;" class="filter-bar row"> --}}
-                                        <div class="container-fluid">
-                                            <div class="row align-items-end">    
-                                                 <div class="col-md-3 mb-3">
-                                                    <label for="initiator_group"><Strong>Department</Strong></label>
-                                                    <select multiple name="initiator_group[]" id="initiator_group" data-search="false" data-silent-initial-value-set="true">
-                                                        @if (!empty($department))
-                                                            @foreach (collect($department)->sort() as $code => $dpt)
-                                                            <option value="{{ $code }}">{{ $dpt }}</option>    
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
+    <div class="process-tables-list">
+        <div class="process-table active" id="internal-audit">
 
-                                                </div>
-                                                
+            <div class="mt-1 mb-2 bg-white" style="padding:10px; margin:5px;">
+                <div class="container-fluid">
+                    <div class="row align-items-end">
 
-
-
-                        
-                                                <!-- Initiator Filter -->
-                                                @php
-                                                $users = DB::table('users')->get();
-                                                @endphp
-
-
-                                                 {{-- <div class="col-md-3 mb-3">
-                                                    <label for="initiator"><Strong>Initiator</Strong></label>
-                                                    <select  multiple name="initiator" id="initiator_id" data-search="false" data-silent-initial-value-set="true">
-                                                         @foreach($users as $user)
-                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div> --}}
-                                                
-                                                <!-- Division Filter -->
-                                                 <div class="col-md-3 mb-3">
-                                                    <label for="division_id"><Strong>Division</Strong></label>
-                                                    <select class="custom-select" id="division_id_cc">
-                                                        <option value="">Select Option</option>
-                                                        <option value="1">Corporate</option>
-                                                        <option value="2">Plant</option>
-                                                    </select>
-                                                </div>
-                                               
-                                            
-
-                        
-                                                <!-- Start Date Filter -->
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="date_from_deviation"><Strong>Start Date</Strong></label>
-                                                    <input type="date" class="custom-select" id="date_fromCc">
-                                                </div>
-                        
-                                                <!-- End Date Filter -->
-                                                <div class="col-md-3 mb-3">
-                                                    <label for="date_to_deviation"><Strong>End Date</Strong></label>
-                                                    <input type="date" class="custom-select" id="date_toCc">
-                                                </div>
-
-                                                
-                                                <!-- Filter Dropdown -->
-                                                {{-- <div style="margin-bottom: 10px;">
-                                                    <label for="changeControlFilter"> <Strong>Change Control Nature</Strong></label>
-                                                    <select id="changeControlFilter" onchange="filterChangeControl()">
-                                                        <option value="all">All</option>
-                                                        <option value="Permanent">Permanent</option>
-                                                        <option value="Temporary">Temporary</option>
-                                                    </select>
-                                                </div> --}}
-                                           </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Department -->
+                        <div class="col-md-3 mb-3">
+                            <label for="initiator_group"><strong>Department</strong></label>
+                            <select
+                                multiple
+                                name="initiator_group[]"
+                                id="initiator_group"
+                                class=""
+                            >
+                                @if (!empty($department))
+                                    @foreach (collect($department)->sort() as $code => $dpt)
+                                        <option value="{{ $code }}">{{ $dpt }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
                         </div>
+
+                        <!-- Division -->
+                        <div class="col-md-3 mb-3">
+                            <label for="division_id_cc"><strong>Division</strong></label>
+                            <select class="form-control" id="division_id_cc">
+                                <option value="">Select Option</option>
+                                <option value="1">Corporate</option>
+                                <option value="2">Plant</option>
+                            </select>
+                        </div>
+
+                        <!-- Start Date -->
+                        <div class="col-md-3 mb-3">
+                            <label for="date_fromCc"><strong>Start Date</strong></label>
+                            <input
+                                type="date"
+                                class="form-control"
+                                id="date_fromCc"
+                            >
+                        </div>
+
+                        <!-- End Date -->
+                        <div class="col-md-3 mb-3">
+                            <label for="date_toCc"><strong>End Date</strong></label>
+                            <input
+                                type="date"
+                                class="form-control"
+                                id="date_toCc"
+                            >
+                        </div>
+
                     </div>
                 </div>
             </div>
+
+        </div>
+    </div>
+</div>
+
             
         
 
@@ -293,19 +242,7 @@
                                 <div>
                                   
                                 </div>
-                                {{-- <div style="position: relative; width: 300px;">
-                                    <input 
-                                        type="text" 
-                                        id="searchBar" 
-                                        placeholder="Search..." 
-                                        onkeyup="filterTable()" 
-                                        style="padding: 10px 35px 10px 10px; width: 100%; border: 1px solid rgb(2, 112, 116); border-radius: 5px; font-size: 14px;"
-                                    >
-                                    <span 
-                                        style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #000; font-size: 16px; cursor: pointer;">
-                                        🔍
-                                    </span>
-                                </div> --}}
+                              
                             </div>
                             
 
@@ -315,21 +252,7 @@
                             <div class="table-responsive" style="height: 500px; overflow-y: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                 <table class="table table-bordered table-hover" style="background-color: #fff; border-collapse: collapse; text-align: left;">
                                                           <thead>
-                                                            {{-- <tr>
-                                                                <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Sr. No.</th>
-                                                                <th style="background-color: #5c98e7; min-width: 80px; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Record No.</th>
-                                                                <th style="background-color: #5c98e7; min-width: 150px; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Change Control No.</th>
-                                                                <th style="background-color: #5c98e7; min-width: 150px; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Initiator Department</th>
-                                                                <th style="background-color: #5c98e7; min-width: 100px; max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Date of Initiation</th>
-                                                                <th style="background-color: #5c98e7; min-width: 150px; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Change Control Nature</th>
-                                                                <th style="background-color: #5c98e7; min-width: 200px; max-width: 250px; white-space: normal; word-wrap: break-word;">Short Description</th>
-                                                                <th style="background-color: #5c98e7; min-width: 120px; max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Accepted / Rejected</th>
-                                                                <th style="background-color: #5c98e7; min-width: 150px; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Approval / Rejected Date</th>
-                                                                <th style="background-color: #5c98e7; min-width: 120px; max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Closure Date</th>
-                                                                <th style="background-color: #5c98e7; min-width: 120px; max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Due Date</th>
-                                                                <th style="background-color: #5c98e7; min-width: 180px; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Review of Implementation On</th>
-                                                                <th style="background-color: #5c98e7; min-width: 200px; max-width: 250px; white-space: normal; word-wrap: break-word;">Remark</th>
-                                                            </tr> --}}
+                                                           
                                                                    <tr>
                                                                     <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Sr. No.</th>
                                                                     <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Date of Initiation</th>
@@ -340,8 +263,8 @@
                                                                     <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Description of Change Control</th>
                                                                     <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Proposed Change </th>
                                                                     <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nature Of Change </th>
-                                                                    <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Approved / Reject </th>
-                                                                    <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">No. of Extension </th>
+                                                                    {{-- <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Approved / Reject </th>
+                                                                    <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">No. of Extension </th> --}}
                                                                     <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Due Date</th>
                                                                     <th style="background-color: #5c98e7; min-width: 50px; max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Status </th>
                                                                 </tr>  

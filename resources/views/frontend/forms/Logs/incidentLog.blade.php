@@ -275,7 +275,7 @@ table {
                     </div>
 
                     <div class="table-block">
-                        <div class="table-responsive" style="height: 300px">
+                        <div class="table-responsive" style="height: 500px">
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
@@ -287,9 +287,9 @@ table {
                                         <th>Division</th>
                                         <th>Short Descriptiobn</th>
                                         <th>Incident Related to</th>
-                                        <th>Description of Incident</th>
-                                        <th>Material / Product name</th>
-                                        <th>Batch No.</th>
+                                        {{-- <th>Description of Incident</th> --}}
+                                        
+                                      
                                         <th>Due Date</th>
                                         {{-- <th>Date of Clouser</th> --}}
                                         <th>Status</th>

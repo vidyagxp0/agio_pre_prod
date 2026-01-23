@@ -48,7 +48,7 @@
 
     <td>{{ Helpers::getInitiatorName($Resampling->hod_preson) ?? '-' }}</td>
 
-    <td>{{ $Resampling->description ?? '-' }}</td>
+    
 
    <td>
         {{ $Resampling->departments 
@@ -57,9 +57,7 @@
         }}
     </td>
 
-    <td>
-        {{ $Resampling->if_others ?? '-' }}
-    </td>
+   
 
     <td>{{ $Resampling->status ?? '-' }}</td>
 </tr>

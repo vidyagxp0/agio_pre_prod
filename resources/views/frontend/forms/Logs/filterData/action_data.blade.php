@@ -46,9 +46,9 @@
 
     {{-- <td>{{ $action->related_records ?? '-' }}</td> --}}
 
-    <td>{{  Helpers::getInitiatorName($action->hod_preson) ?? '-' }}</td>
+    <td>{{  $action->hod_preson ?? '-' }}</td>
 
-    <td>{{ strip_tags($action->description) ?? '-' }}</td>
+   
 
     <td>
         {{ $action->departments ?? '-' }}

@@ -46,7 +46,6 @@
 
     <td>{{  $external_audit->external_agencies ?? '-' }}</td>
     
-    <td>{{ $external_audit->initial_comments ?? '-' }}</td>
     
 
     <td> {{ $external_audit->start_date_gi

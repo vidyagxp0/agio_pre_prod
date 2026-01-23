@@ -322,7 +322,7 @@
                         </div>
                     </div>
                     <div class="table-block">
-                        <div class="table-responsive" style="height: 300px">
+                        <div class="table-responsive" style="height: 500px">
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
@@ -337,8 +337,7 @@
                                             <th rowspan="2">Extension Number</th>
                                             <th rowspan="2">HOD Review</th>
                                             <th rowspan="2">QA/CQA Approval</th>
-                                            <th rowspan="2">Justification / Reason</th>
-                                            <th rowspan="2">Description</th>
+                                           
                                             
                                             <th rowspan="2">Status</th>
                                             

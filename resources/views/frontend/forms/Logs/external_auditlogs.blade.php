@@ -322,7 +322,7 @@
                         </div>
                     </div>
                     <div class="table-block">
-                        <div class="table-responsive" style="height: 300px">
+                        <div class="table-responsive" style="height: 500px">
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
@@ -337,7 +337,7 @@
                                             <th rowspan="2">Initiated Through</th>
                                             <th rowspan="2">Type of Audit</th>
                                             <th rowspan="2">External Agencies</th>
-                                            <th rowspan="2">Description </th>
+                                            
                                             <th rowspan="2">Start Date of Audit </th>
                                             <th rowspan="2">End Date of Audit</th>
                                             <th rowspan="2">Status</th>
