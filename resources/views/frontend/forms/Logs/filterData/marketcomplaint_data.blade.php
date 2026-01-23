@@ -22,7 +22,7 @@ $productDetails= $marketlog->product_details;
                 NA
             @endif
             <td>{{ $marketlog->division ? $marketlog->division->name : '-' }}/MC/{{ date('Y') }}/{{ str_pad($marketlog->record, 4, '0', STR_PAD_LEFT) }}</td>
-            <td>{{ $marketlog->description_gi }}</td>
+           
             <td>{{ $marketlog->initiator ? $marketlog->initiator->name : '-' }}</td>
             <td>{{ $marketlog->initiator_group }}</td>
             <td>{{ $marketlog->division ? $marketlog->division->name : '-' }}</td>
@@ -31,9 +31,15 @@ $productDetails= $marketlog->product_details;
             <td>{{ $data['info_mfg_date'] ?? '-' }}</td>
             <td>{{ $data['info_expiry_date'] ?? '-' }}</td>
             <td>{{ $marketlog->categorization_of_complaint_gi }}</td>
-            <td>{{ optional($marketlog->complaint_reported_on_gi)->format('d-M-Y') }}</td>
-            <td>{{ optional($marketlog->due_date_gi)->format('d-M-Y') }}</td>
-            <td>{{ $marketlog->closed_done_on }}</td>
+          
+            
+            
+              <td>
+                {{ $marketlog->due_date_gi
+                    ? Carbon::parse($marketlog->due_date_gi)->format('d-M-Y')
+                    : 'NA'
+                }}
+            </td>
             <td>{{ $marketlog->status }}</td>
         </tr>
     @endforeach

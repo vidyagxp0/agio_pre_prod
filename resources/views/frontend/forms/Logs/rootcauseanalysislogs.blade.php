@@ -338,8 +338,7 @@
                                             <th rowspan="2">Due Date</th>
                                             <th rowspan="2">Initiated Through</th>
                                             <th rowspan="2">Responsible Department</th>
-                                            <th rowspan="2">Description </th>
-                                            <th rowspan="2">Comments </th>
+                                           
                                             <th rowspan="2">Status</th>
                                             
                                     </tr>

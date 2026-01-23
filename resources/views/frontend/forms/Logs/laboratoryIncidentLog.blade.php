@@ -349,7 +349,7 @@
                                             <th>Originator</th>
                                             {{-- <th>Department</th> --}}
                                             <th>Division</th>
-                                            <th>Description of Incident</th>
+                                            <th>Short Description </th>
                                             <th>Stage  </th>
                                             <th>Stability Condition (If Applicable)</th>
                                             <th>Interval (If Applicable)</th>

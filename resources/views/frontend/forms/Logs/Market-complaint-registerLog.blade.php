@@ -346,16 +346,16 @@
                                     <th rowspan="2">Sr. No.</th>
                                             <th rowspan="2">Date of Initiation</th>
                                             <th rowspan="2">Complaint No.</th>
-                                            <th rowspan="2">Description of Complaint</th>
+                                            
                                             <th rowspan="2">Originator</th>
                                             <th rowspan="2">Department</th>
                                             <th rowspan="2">Division</th>
                                             <th colspan="4" style="text-align: center">Product Details</th>
-                                            <th rowspan="2">Nature of complaint</th>
+                                            {{-- <th rowspan="2">Nature of complaint</th> --}}
                                             <th rowspan="2">Category of complaint</th>
-                                            <th rowspan="2">Response / Report (Date)</th>
+                                            
                                             <th rowspan="2">Due Date</th>
-                                            <th rowspan="2">Clouser Date</th>
+                                           
                                             <th rowspan="2">Status</th>
                                     </tr>
                                     <tr>

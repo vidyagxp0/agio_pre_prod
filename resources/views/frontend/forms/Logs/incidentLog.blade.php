@@ -287,9 +287,9 @@ table {
                                         <th>Division</th>
                                         <th>Short Descriptiobn</th>
                                         <th>Incident Related to</th>
-                                        <th>Description of Incident</th>
-                                        <th>Material / Product name</th>
-                                        <th>Batch No.</th>
+                                        {{-- <th>Description of Incident</th> --}}
+                                        
+                                      
                                         <th>Due Date</th>
                                         {{-- <th>Date of Clouser</th> --}}
                                         <th>Status</th>

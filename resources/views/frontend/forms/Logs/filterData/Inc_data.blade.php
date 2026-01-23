@@ -20,9 +20,9 @@ use Carbon\Carbon;
     <td>{{ $incident->division ? $incident->division->name : '-' }}</td>
     <td>{{ $incident->short_description }}</td>
     <td>{{ $incident->audit_type }}</td>
-    <td>{{ $incident->Description_incident }}</td>
-    <td>{{ $actionValue }}</td>
-    <td>{{ $BatchNo }}</td>
+   
+    
+    
     <td>{{ Helpers::getdateFormat($incident->due_date) ?? '-' }}</td>
     {{-- <td>{{ $incident->QA_final_approved_on ? $incident->QA_final_approved_on : '-' }}</td> --}}
     <td>{{ $incident->status }}</td>

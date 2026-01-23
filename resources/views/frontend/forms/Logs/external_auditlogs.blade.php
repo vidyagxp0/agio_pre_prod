@@ -337,7 +337,7 @@
                                             <th rowspan="2">Initiated Through</th>
                                             <th rowspan="2">Type of Audit</th>
                                             <th rowspan="2">External Agencies</th>
-                                            <th rowspan="2">Description </th>
+                                            
                                             <th rowspan="2">Start Date of Audit </th>
                                             <th rowspan="2">End Date of Audit</th>
                                             <th rowspan="2">Status</th>

@@ -355,8 +355,8 @@
                                             <th>Originator</th>
                                             <th>Short Description</th>
                                             <th>Audit Category</th>
-                                            <th>Type of Audit</th>
-                                            <th>Auditor Name</th>
+                                            
+                                          
                                             <th>Department</th>
                                             <th>Division</th>
                                             <th>Due Date</th>

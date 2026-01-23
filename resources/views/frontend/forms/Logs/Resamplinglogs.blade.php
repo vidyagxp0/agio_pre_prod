@@ -348,9 +348,9 @@
                                             <th rowspan="2" style="text-align: center">Short Descriptiobn</th>
                                             {{-- <th rowspan="2">Related Records</th> --}}
                                             <th rowspan="2">HOD Person</th>
-                                            <th rowspan="2">Description </th>
+                                           
                                             <th rowspan="2">Responsible Department</th>
-                                            <th rowspan="2">If Others</th>
+                                            
                                             <th rowspan="2">Status</th>
                                             
                                     </tr>

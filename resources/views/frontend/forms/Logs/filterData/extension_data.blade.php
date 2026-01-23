@@ -47,9 +47,7 @@
 
     <td>{{  Helpers::getInitiatorName($extension_new->approvers) ?? '-' }}</td>
     
-    <td>{{ $extension_new->justification_reason ?? '-' }}</td>
-    
-    <td>{{ $extension_new->description ?? '-' }}</td>
+  
      <td>{{ $extension_new->status ?? '-' }}</td>
     
 </tr>

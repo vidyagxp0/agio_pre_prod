@@ -176,83 +176,52 @@
                         );
 
                                                     @endphp
-                    <div class="container-fluid">
-                        <div class="process-tables-list">
-                            <div class="process-table active" id="internal-audit">
-                                <div class="mt-1 mb-2 bg-white" style="height: auto; padding: 10px; margin: 5px;">
-                                 <div class="container-fluid">
-                                         <div class="row align-items-end">
-                                            <!-- Department Filter -->
-                                             <div class="col-md-3 mb-3">
-                                                <label for="initiator_group"><Strong>Department</Strong></label>
-                                                <select multiple name="initiator_group[]" id="initiator_group" data-search="false" data-silent-initial-value-set="true">
-                                                    @if (!empty($department))
-                                                        @foreach (collect($department)->sort() as $code => $dpt)
-                                                        <option value="{{ $dpt }}">{{ $dpt }}</option>    
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-    
-                                            </div>
-                                            
-    
-    
-    
-                    
-                                            <!-- Initiator Filter -->
-                                            @php
-                                            $users = DB::table('users')->get();
-                                            @endphp
-                                            {{-- <div class=" mb-3">
-                                                <label for="initiator"><Strong>Initiator</Strong></label>
-                                                <select  multiple name="initiator" id="initiator_id" data-search="false" data-silent-initial-value-set="true">
-                                                   
-                                                    @foreach($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div> --}}
-                    
-                                            <!-- Division Filter -->
-                                             <div class="col-md-3 mb-3">
-                                                <label for="division_id"><Strong>Division</Strong></label>
-                                                <select class="custom-select" id="division_id_capa">
-                                                    <option value="">Select Option</option>
-                                                   <option value="1">Corporate</option>
-                                                        <option value="2">Plant</option>
-                                                </select>
-                                            </div>
-                    
-                                            @php
-                                                $records = DB::table('capas')->get();
-                                                @endphp
-                                            <!-- <div class="mb-3">
-                                                <label for="unique_id">Unique Id:</label>
-                                                <input type="text" multiple name="unique_id" id="unique_id" class="form-control" 
-                                                    value="{{ $records->first()->id ?? '' }}" placeholder="Enter Unique Id">
-                                            </div> -->
+                  <div class="container-fluid">
+    <div class="bg-white p-2 m-1">
 
-                                            <!-- Start Date Filter -->
-                                            <div class="col-md-3 mb-3">
-                                                <label for="date_from_deviation"><Strong>Start Date</Strong></label>
-                                                <input type="date" class="custom-select" id="date_fromcapacapa">
-                                            </div>
-                    
-                                            <!-- End Date Filter -->
-                                             <div class="col-md-3 mb-3">
-                                                <label for="date_to_deviation"><Strong>End Date</Strong></label>
-                                                <input type="date" class="custom-select" id="date_tocapa">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="row align-items-end">
+
+            <!-- Department Filter -->
+            <div class="col-md-3 mb-3">
+                <label for="initiator_group"><strong>Department</strong></label>
+                <select multiple name="initiator_group[]" id="initiator_group"
+                        data-search="false"
+                        data-silent-initial-value-set="true">
+                    @if (!empty($department))
+                        @foreach (collect($department)->sort() as $code => $dpt)
+                            <option value="{{ $dpt }}">{{ $dpt }}</option>
+                        @endforeach
+                    @endif
+                </select>
             </div>
+
+            <!-- Division Filter -->
+            <div class="col-md-3 mb-3">
+                <label for="division_id_capa"><strong>Division</strong></label>
+                <select class="custom-select" id="division_id_capa">
+                    <option value="">Select Option</option>
+                    <option value="1">Corporate</option>
+                    <option value="2">Plant</option>
+                </select>
+            </div>
+
+            <!-- Start Date -->
+            <div class="col-md-3 mb-3">
+                <label for="date_fromcapacapa"><strong>Start Date</strong></label>
+                <input type="date" class="custom-select" id="date_fromcapacapa">
+            </div>
+
+            <!-- End Date -->
+            <div class="col-md-3 mb-3">
+                <label for="date_tocapa"><strong>End Date</strong></label>
+                <input type="date" class="custom-select" id="date_tocapa">
+            </div>
+
         </div>
-        
+
+    </div>
+</div>
+
             
         
 

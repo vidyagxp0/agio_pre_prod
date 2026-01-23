@@ -313,7 +313,7 @@
                                         </select>
                                     </div>
                                     <div class="filter-item">
-                                        <label for="division_id">Division</label>
+                                        <label for="division_id">Site/Location Code</label>
                                         <select class="custom-select form-control" id="division_id">
                                             <option value="Null">Select Records</option>
                                             <option value="1">Corporate</option>
@@ -340,16 +340,16 @@
                                    <tr>
                                         <th style="width: 5%;">Sr.No.</th>
                                         <th>Date of Initiation</th>
-                                        <th>Name of Equipment / Instrument</th>
-                                        <th>Equipment / Instrument ID</th>
+                                        <th>Record No.</th>
+                                        <th>Site/Location Code</th>
                                         <th>Short Description</th>
                                         <th>Originator</th>
-                                        <th>Division</th>
+                                       
                                         <th>Department</th>
-                                        <th>Calibration Discovered By </th>
-                                        <th>Calibration Discovered On</th>
+                                        <th>HOD Person</th>
+                                        <th>QA Person</th>
                                         <th>Due Date</th>
-                                        <th>Date of Clouser</th>
+                                        
                                         <th>Status</th>
                                     </tr>
                                    

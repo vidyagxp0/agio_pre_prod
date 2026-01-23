@@ -337,8 +337,7 @@
                                             <th rowspan="2">Extension Number</th>
                                             <th rowspan="2">HOD Review</th>
                                             <th rowspan="2">QA/CQA Approval</th>
-                                            <th rowspan="2">Justification / Reason</th>
-                                            <th rowspan="2">Description</th>
+                                           
                                             
                                             <th rowspan="2">Status</th>
                                             
