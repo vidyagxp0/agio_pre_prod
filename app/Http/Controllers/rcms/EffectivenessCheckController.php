@@ -2419,8 +2419,10 @@ class EffectivenessCheckController extends Controller
                     $effective->closed_cancelled_on = Carbon::now()->format('d-M-Y');
                     $effective->closed_cancelled_comment = $request->comment;
 
+
+                    
                     $Capachild = Capa::where('parent_id', $id)
-                    ->whereIn('parent_type', 'EffectivenessCheck')
+                    ->where('parent_type', 'EffectivenessCheck')
                     ->get();
 
                     foreach ($Capachild as $child) {
