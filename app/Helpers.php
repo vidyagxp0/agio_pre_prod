@@ -1942,17 +1942,26 @@ class Helpers
     public static function getNameById($id){
         return   Employee::where('id',$id)->value('employee_name');
     }
-    public static function check_roles_initiatorcheck($requiredRoleId, $userId)
+//     public static function check_roles_initiatorcheck($requiredRoleId, $userId)
+// {
+//     $user = User::find($userId);
+
+//     if (!$user || empty($user->role)) {
+//         return false;
+//     }
+
+//     $roles = array_map('trim', explode(',', $user->role));
+
+//     return in_array($requiredRoleId, $roles);
+// }
+public static function check_roles_initiatorcheck($requiredRoleId, $userId)
 {
-    $user = User::find($userId);
 
-    if (!$user || empty($user->role)) {
-        return false;
-    }
 
-    $roles = array_map('trim', explode(',', $user->role));
-
-    return in_array($requiredRoleId, $roles);
+    return DB::table('user_roles')
+        ->where('user_id', $userId)
+        ->where('q_m_s_roles_id', $requiredRoleId)
+        ->exists();
 }
 public static function check_roles_qms_new($role_id, $process_name)
     {
