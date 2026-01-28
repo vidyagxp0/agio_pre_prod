@@ -14260,20 +14260,42 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->stage = 'Plan Proposed';
                 $history->save();
                   $list = Helpers::getHodUserList($changeControl->division_id);
-                foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
+             
+            foreach ($list as $u) {
+
+                            $email = Helpers::getUserEmail($u->user_id);
+
                             if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                    ['data' => $changeControl, 'site' => "CC", 'history' => "More Info Required", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
-                                }
-                            );
+
+                                try {   
+
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl,
+                                            'site' => "CC",
+                                            'history' => "More Info Required",
+                                            'process' => 'Change Control',
+                                            'comment' => $request->comment,
+                                            'user'=> Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject(
+                                                    "Agio Notification: Change Control, Record #"
+                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                    . " - Activity: More Info Required"
+                                                );
+                                        }
+                                    );
+
+                                } catch (\Exception $e) {   
+
+                                    \Log::error('Mail Error: ' . $e->getMessage()); 
+
+                                }   
+                            }
                         }
-                    
-            } 
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
