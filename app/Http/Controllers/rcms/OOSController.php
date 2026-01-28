@@ -6214,7 +6214,7 @@ class OOSController extends Controller
                     // Flash message for warning (field not filled)
                      Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'OOS / OTT Conclusion Tab is yet to be filled!',
+                        'message' => 'Pls Phase IA Assignable Cause Found field Yes And  OOS / OTT Conclusion Tab is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 
@@ -6376,7 +6376,7 @@ class OOSController extends Controller
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'OOS/ OOT Conclusion Tab is yet to be filled!',
+                        'message' => 'Phase IB Assignable Cause Found Filed Yes And  OOS/ OOT Conclusion Tab is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 
@@ -6537,7 +6537,7 @@ class OOSController extends Controller
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'OOS/ OOT Conclusion Tab  is yet to be filled! is yet to be filled!',
+                        'message' => 'Phase II A Assignable cause found filed And OOS/ OOT Conclusion Tab  is yet to be filled! is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 

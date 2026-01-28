@@ -250,6 +250,13 @@
                                             <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                         </div>
                                     </div>  --}}
+                                   @php
+                                    
+                                    $initiator = ($data->initiator_id == Auth::user()->id || Helpers::check_roles($data->division_id, 'Resampling', 18))
+
+                                   @endphp
+
+
 
                                     <div class="col-md-6">
                                         <div class="group-input">
@@ -259,7 +266,7 @@
 
                                             <!-- Select Field -->
                                             <select 
-                                                {{ in_array($data->stage, [0, 2, 3, 4, 5]) ? 'disabled' : '' }} 
+                                                {{ in_array($data->stage, [0, 2, 3, 4, 5]) ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}
                                                 id="select-state" 
                                                 name="assign_to" 
                                                 {{ $data->stage == 1 ? 'required' : '' }}>
@@ -312,8 +319,8 @@
                                         
                                         <div class="calenderauditee">                                     
                                             <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }}/>
-                                            <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 1 ? 'required' : '' }} value="{{ $data->due_date }}" class="hide-input"
+                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }} />
+                                            <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 1 ? 'required' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }} value="{{ $data->due_date }}" class="hide-input"
                                             oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
                                         </div>
                                     </div>
@@ -366,7 +373,7 @@
 
 
                                         <input name="short_description" id="docname" type="text" maxlength="255" required type="text"
-                                        {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} value="{{ $data->short_description }}">
+                                      {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}  {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} value="{{ $data->short_description }}">
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -403,7 +410,7 @@
                                             <select multiple name="related_records[]" id="related_records" placeholder="Select Reference Records"
                                                 data-silent-initial-value-set="true"
                                                 {{ in_array($data->stage, [0, 2, 3, 4, 5]) ? 'disabled' : '' }} 
-                                                {{ $data->stage == 1 ? 'required' : '' }}>
+                                                {{ $data->stage == 1 ? 'required' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}>
 
                                                 @if (!empty($relatedRecords))
                                                     @foreach ($relatedRecords as $records)
@@ -485,7 +492,7 @@
                                                     data-search="false"
                                                     data-silent-initial-value-set="true" 
                                                     id="hod" 
-                                                    {{ in_array($data->stage, [0, 2, 3, 4, 5]) ? 'disabled' : '' }} 
+                                                    {{ in_array($data->stage, [0, 2, 3, 4, 5]) ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}
                                                     {{ $data->stage == 1 ? 'required' : '' }}>
                                                     <option value="">Select Person</option>
                                                     @foreach ($users as $value)
@@ -533,7 +540,7 @@
                                             <label for="description">
                                                 Description <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                             </label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} name="description" {{ $data->stage == 1 ? 'required' : '' }}>{{ $data->description }}</textarea>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} name="description" {{ $data->stage == 1 ? 'required' : '' }}{{ $data->stage == 1 && $initiator ? '' : 'readonly' }} >{{ $data->description }}</textarea>
                                         </div>
                                     </div>
 
@@ -609,7 +616,7 @@
 
                                             <!-- Select Field -->
                                             <select name="departments" id="departments" 
-                                                {{ in_array($data->stage, [0, 2, 3, 4, 5]) ? 'disabled' : '' }} 
+                                                {{ in_array($data->stage, [0, 2, 3, 4, 5]) ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}
                                                   {{ $data->stage == 1 ? 'required' : '' }}>
                                                 <option value="">-- Select --</option>
                                                 <option value="CQA" {{ old('departments', $data->departments) == 'CQA' ? 'selected' : '' }}>Corporate Quality Assurance</option>
@@ -653,7 +660,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="others">If Others</label>
-                                            <textarea name="if_others" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }}>{{ $data->if_others }}</textarea>
+                                            <textarea name="if_others" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}>{{ $data->if_others }}</textarea>
                                         </div>
                                     </div>
 
@@ -697,7 +704,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="file_attach[]" 
-                                                 {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }}
+                                                 {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                             </div>
                                         </div>
@@ -845,12 +852,14 @@
                             <div class="inner-block-content">
                                 <div class="row">
                                 
-
+                                    @php
+                                       $QACQA_Head  =   (Helpers::check_roles($data->division_id, 'Resampling', 42) || Helpers::check_roles($data->division_id, 'Resampling', 9) || Helpers::check_roles($data->division_id, 'Resampling', 39) || Helpers::check_roles($data->division_id, 'Resampling', 43) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Resampling', 18));
+                                    @endphp
                                 
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="qa_comments">QA/CQA Head Remark  @if($data->stage == 2) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="qa_remark" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }}>{{$data->qa_remark}}</textarea>
+                                            <textarea name="qa_remark" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 2 && $QACQA_Head ? '' : 'readonly' }}>{{$data->qa_remark}}</textarea>
                                         </div>
                                     </div>
 
@@ -887,7 +896,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_head[]" 
-                                                    {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 2 && $QACQA_Head ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'qa_head')" multiple>
                                             </div>
                                         </div>
@@ -977,11 +986,15 @@
                         <div id="CCForm3" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
+
+                                    @php
+                                      $assignto =  ($data->assign_to == Auth::user()->id || Helpers::check_roles($data->division_id, 'Resampling', 18));
+                                    @endphp
                                     <div class="sub-head col-12">Acknowledge</div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="action_taken">Action Taken  @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 3 ? 'required' : '' }} name="action_taken">{{ $data->action_taken }}</textarea>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 3 && $assignto ? '' : 'readonly' }} {{ $data->stage == 3 ? 'required' : '' }} name="action_taken">{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
                                     
@@ -1004,7 +1017,7 @@
                                         max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                         value="{{ $data->start_date ? \Carbon\Carbon::parse($data->start_date)->format('Y-m-d') : '' }}"
                                         class="hide-input"
-                                        oninput="handleDateInput(this, 'start_date');updateEndDateMin();"  {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 3 ? 'required' : '' }} />
+                                        oninput="handleDateInput(this, 'start_date');updateEndDateMin();"  {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 3 ? 'required' : '' }} {{ $data->stage == 3 && $assignto ? '' : 'readonly' }} />
                                 </div>
                             </div>
                         </div>
@@ -1026,7 +1039,7 @@
                                     <input type="date" id="end_date_name" name="end_date_name"
                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                         value="{{ $data->end_date ? \Carbon\Carbon::parse($data->end_date)->format('Y-m-d') : '' }}"
-                                        class="hide-input" oninput="handleDateInput(this, 'end_date');"  {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }}{{ $data->stage == 3 ? 'required' : '' }} />
+                                        class="hide-input" oninput="handleDateInput(this, 'end_date');"  {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }}{{ $data->stage == 3 ? 'required' : '' }} {{ $data->stage == 3 && $assignto ? '' : 'readonly' }} />
                                 </div>
                             </div>
                         </div>
@@ -1085,7 +1098,7 @@
                                             <label for="Comments">
                                                 Comments<span class="text-danger">{{ $data->stage == 3 ? '*' : '' }}</span>
                                             </label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }}{{ $data->stage == 3 ? 'required' : '' }} name="comments">{{ $data->comments }}</textarea>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }}{{ $data->stage == 3 ? 'required' : '' }} {{ $data->stage == 3 && $assignto ? '' : 'readonly' }} name="comments">{{ $data->comments }}</textarea>
                                         </div>
                                     </div> 
                                     <!--<div class="col-lg-6 new-date-data-field">
@@ -1141,7 +1154,7 @@
                                             <label for="Comments">
                                                 Sampled By<span class="text-danger">{{ $data->stage == 3 ? '*' : '' }}</span>
                                             </label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 3 ? 'required' : '' }} name="sampled_by">{{ $data->sampled_by }}</textarea>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 3 ? 'required' : '' }} {{ $data->stage == 3 && $assignto ? '' : 'readonly' }} name="sampled_by">{{ $data->sampled_by }}</textarea>
                                         </div>
                                     </div> 
 
@@ -1171,7 +1184,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="Support_doc[]" 
-                                                    {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 3 && $assignto ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'Support_doc')" multiple>
                                             </div>
                                         </div>
@@ -1261,11 +1274,14 @@
                         <div id="CCForm4" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
+                                    @php
+                                        $QA_CQA_verification   =  (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66)|| Helpers::check_roles($data->division_id, 'Resampling', 18));
+                                    @endphp
                                     <div class="sub-head">QA/CQA Verification</div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="qa_comments">QA/CQA Review Comments  @if($data->stage == 4) <span class="text-danger">*</span>@endif</label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 ? 'readonly' : '' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 4 && $QA_CQA_verification ? '' : 'readonly' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
                                         </div>
                                     </div>
 
@@ -1307,7 +1323,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="final_attach[]" 
-                                                   {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 ? 'readonly' : '' }}
+                                                   {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 4 && $QA_CQA_verification ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'final_attach')" multiple>
                                             </div>
                                         </div>
