@@ -441,7 +441,7 @@ class OOSController extends Controller
                             //     }
 
 
-                                 $list = Helpers::getQAUserList($changestage->division_id);
+                                 $list = Helpers::getQAHeadUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
 
@@ -3412,7 +3412,7 @@ class OOSController extends Controller
                     // }
 
 
-                     $list = Helpers::getQAUserList($changestage->division_id);
+                     $list = Helpers::getQAHeadUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
 
@@ -5309,7 +5309,7 @@ class OOSController extends Controller
 
 
 
-                             $list = Helpers::getQAUserList($changestage->division_id);
+                             $list = Helpers::getInitiatorUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
 
@@ -5581,7 +5581,7 @@ class OOSController extends Controller
                     // }
 
 
-                     $list = Helpers::getInitiatorUserList($changestage->division_id);
+                     $list = Helpers::getHodUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
 
@@ -6300,9 +6300,15 @@ class OOSController extends Controller
             //    }
             // }
 
-             $list = Helpers::getInitiatorUserList($changestage->division_id);
-
-                                foreach ($list as $u) {
+            //  $list = Helpers::getInitiatorUserList($changestage->division_id);
+                  $usersmerge = collect()
+                    ->merge(Helpers::getQAUserList($changestage->division_id))
+                    ->merge(Helpers::getCQAUsersList($changestage->division_id))
+                    ->merge(Helpers::getQAReviewerUserList($changestage->division_id))
+                    ->merge(Helpers::getInitiatorUserList($changestage->division_id))
+                    ->merge(Helpers::getHodUserList($changestage->division_id))
+                    ->unique('user_id');
+                                foreach ($usersmerge as $u) {
 
                                     $email = Helpers::getUserEmail($u->user_id);
 
