@@ -670,6 +670,34 @@
                                                                     </div>
                                                                 </a>
                                                             @endif
+                                                         @elseif($datas->type == 'CAPA')
+                                                                @php 
+                                                                    DB::table('capas')
+                                                                    ->where('id', $datas->id)
+                                                                    ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
+                                                            <a href="{{ route('capashow', $datas->id) }}"
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
+                                                                {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
+                                                            </a>
+                                                            @if (!empty($datas->parent_id))
+                                                                <a
+                                                                    href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/capa">
+                                                                    <div class="icon" onclick="showChild()"
+                                                                        data-bs-toggle="tooltip" title="Related Records">
+                                                                        {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                                    </div>
+                                                                </a>
+                                                            @endif
                                                         @elseif($datas->type == 'OOS/OOT')
                                                                 @php 
                                                                     DB::table('o_o_s')
@@ -1007,6 +1035,10 @@
                                                         $findRecord = DB::table('o_o_s')->find($datas->parent_id);
                                                     @endphp
                                                 @elseif ($datas->parent_type == 'CAPA')
+                                                    @php
+                                                        $findRecord = DB::table('capas')->find($datas->parent_id);
+                                                    @endphp
+                                                @elseif ($datas->parent_type == 'Capa')
                                                     @php
                                                         $findRecord = DB::table('capas')->find($datas->parent_id);
                                                     @endphp

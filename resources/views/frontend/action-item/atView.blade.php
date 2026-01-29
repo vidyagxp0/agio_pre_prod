@@ -527,7 +527,7 @@
 
 
                                             <!-- Select Field -->
-                                            <select multiple name="related_records[]" id="related_records" placeholder="Select Reference Records"
+                                            <select multiple name="related_records[]" id="related_records" {{ $data->stage == 1 && $isAssignto ? '' : 'disabled' }} placeholder="Select Reference Records"
                                                 data-silent-initial-value-set="true"
 
                                                 >
@@ -549,7 +549,7 @@
                                             </select>
 
                                             <!-- Hidden Input to Retain Values When Select is Disabled -->
-                                            @if (in_array($data->stage, [0, 2, 3, 4, 5])) {{ $data->stage == 1 && $isAssignto ? '' : 'disabled' }}
+                                            @if (in_array($data->stage, [0, 2, 3, 4, 5])) 
                                                 @foreach (explode(',', $data->related_records ?? '') as $record)
                                                     <input type="hidden" name="related_records[]" value="{{ $record }}">
                                                 @endforeach
