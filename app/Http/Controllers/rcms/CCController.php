@@ -9122,7 +9122,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                             'site' => "CC",
                                             'history' => "Submit",
                                             'process' => 'Change Control',
-                                            'comment' => $request->comment,
+                                            'comment' => $request->comments,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -9279,7 +9279,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                         'site'    => "Change Control",
                                         'history' => "HOD Assessment Complete",
                                         'process' => 'Change Control',
-                                        'comment' => $request->comment,
+                                        'comment' => $request->comments,
                                         'user'    => Auth::user()->name
                                     ],
                                     function ($message) use ($email, $changeControl) {
@@ -9499,7 +9499,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                             'site' => "CC",
                                             'history' => "QA/CQA Initial Assessment Complete",
                                             'process' => 'Change Control',
-                                            'comment' => $request->comment,
+                                            'comment' => $request->comments,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -11332,7 +11332,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "Rejected Complete",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -11475,7 +11475,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "QAH/CQA Head Approval Complete",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -11655,7 +11655,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                             'site' => "CC",
                                             'history' => "Approved",
                                             'process' => 'Change Control',
-                                            'comment' => $request->comment,
+                                            'comment' => $request->comments,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -11818,7 +11818,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                             'site' => "CC",
                                             'history' => "Pending Training Completion",
                                             'process' => 'Change Control',
-                                            'comment' => $request->comment,
+                                            'comment' => $request->comments,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -12311,7 +12311,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "Send For Final QA/CQA Head Approval",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -12468,7 +12468,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                             'site' => "CC",
                                             'history' => "Approved",
                                             'process' => 'Change Control',
-                                            'comment' => $request->comment,
+                                            'comment' => $request->comments,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -12697,7 +12697,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                             'site' => "CC",
                                             'history' => "Initiator Updated Complete",
                                             'process' => 'Change Control',
-                                            'comment' => $request->comment,
+                                            'comment' => $request->comments,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -12821,7 +12821,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "Send For Final Approval",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -13333,7 +13333,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                 [
                                     'data'    => $changeControl,
                                     'site'    => "CC",
-                                    'history' => "Send For Final Approval",
+                                    'history' => "Closure Approved",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
                                     'user'    => Auth::user()->name
@@ -13343,7 +13343,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                         ->subject(
                                             "Agio Notification: Change Control, Record #"
                                             . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Send For Final Approval"
+                                            . " - Activity: Closure Approved"
                                         );
                                 }
                             );
@@ -13397,7 +13397,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
             if ($changeControl->stage == 12) {
                 $changeControl->stage = "11";
-                $changeControl->status = "QA/CQA Closure Approval";
+                $changeControl->status = "Implementation Verification by QA/CQA";
                 $comment->cc_id =$id;
                 $comment->QaClouseToPostImplementationBy = Auth::user()->name;
                 $comment->QaClouseToPostImplementationOn = Carbon::now()->format('d-M-Y');
@@ -13476,7 +13476,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -13605,7 +13605,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                             'site' => "CC",
                                             'history' => "More Info Required",
                                             'process' => 'Change Control',
-                                            'comment' => $request->comment,
+                                            'comment' => $request->comments,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -13696,22 +13696,45 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     $history->stage = 'Plan Proposed';
                     $history->save();
 
-                    //  $list = Helpers::getHodUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Send By".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      }
-                    //   }
+                       $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                     foreach ($list as $u) {
+
+                            $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {   
+
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl,
+                                            'site' => "CC",
+                                            'history' => "More Info Required",
+                                            'process' => 'Change Control',
+                                            'comment' => $request->comments,
+                                            'user'=> Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject(
+                                                    "Agio Notification: Change Control, Record #"
+                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                    . " - Activity: More Info Required"
+                                                );
+                                        }
+                                    );
+
+                                } catch (\Exception $e) {   
+
+                                    \Log::error('Mail Error: ' . $e->getMessage()); 
+
+                                }   
+                            }
+                        }
+
+
+                    
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -13896,7 +13919,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -14121,7 +14144,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -14276,7 +14299,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                             'site' => "CC",
                                             'history' => "More Info Required",
                                             'process' => 'Change Control',
-                                            'comment' => $request->comment,
+                                            'comment' => $request->comments,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -14377,7 +14400,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                             'site' => "CC",
                                             'history' => "Submit",
                                             'process' => 'Change Control',
-                                            'comment' => $request->comment,
+                                            'comment' => $request->comments,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
@@ -14545,6 +14568,43 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->change_to = "Opened";
         $history->change_from = $lastDocument->status;
         $history->save();
+
+          $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                 foreach ($list as $u) {
+
+                            $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {   
+
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl,
+                                            'site' => "CC",
+                                            'history' => "Submit",
+                                            'process' => 'Change Control',
+                                            'comment' => $request->comments,
+                                            'user'=> Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject(
+                                                    "Agio Notification: Change Control, Record #"
+                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                    . " - Activity: Submit"
+                                                );
+                                        }
+                                    );
+
+                                } catch (\Exception $e) {   
+
+                                    \Log::error('Mail Error: ' . $e->getMessage()); 
+
+                                }   
+                            }
+                        }
         $changeControl->update();
         $Cft = CcCft::where('cc_id', $changeControl->id)->first();
                     if ($Cft) {
@@ -14610,42 +14670,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->status = "Send to Opened State";
         $history->save();
         
-          $list = Helpers::getInitiatorUserList($changeControl->division_id);
-                 foreach ($list as $u) {
-
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-
-                                try {   
-
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl,
-                                            'site' => "CC",
-                                            'history' => "Submit",
-                                            'process' => 'Change Control',
-                                            'comment' => $request->comment,
-                                            'user'=> Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Change Control, Record #"
-                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: Submit"
-                                                );
-                                        }
-                                    );
-
-                                } catch (\Exception $e) {   
-
-                                    \Log::error('Mail Error: ' . $e->getMessage()); 
-
-                                }   
-                            }
-                        }
+        
         $changeControl->update();
         toastr()->success('Document Sent');
         return back();
@@ -14699,6 +14724,43 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->change_to =   "HOD Review";
         $history->change_from = $lastDocument->status;
         $history->save();
+         $list = Helpers::getHodUserList($changeControl->division_id);
+                foreach ($list as $u) {
+
+                            $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {   
+
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl,
+                                            'site' => "CC",
+                                            'history' => "More Info Required",
+                                            'process' => 'Change Control',
+                                            'comment' => $request->comments,
+                                            'user'=> Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject(
+                                                    "Agio Notification: Change Control, Record #"
+                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
+                                                    . " - Activity: More Info Required"
+                                                );
+                                        }
+                                    );
+
+                                } catch (\Exception $e) {   
+
+                                    \Log::error('Mail Error: ' . $e->getMessage()); 
+
+                                }   
+                            }
+                        }
+      
         $changeControl->update();
         $Cft = CcCft::where('cc_id', $changeControl->id)->first();
                     if ($Cft) {
@@ -14766,43 +14828,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->save();
       
 
-          $list = Helpers::getHodUserList($changeControl->division_id);
-                foreach ($list as $u) {
-
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-
-                                try {   
-
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl,
-                                            'site' => "CC",
-                                            'history' => "More Info Required",
-                                            'process' => 'Change Control',
-                                            'comment' => $request->comment,
-                                            'user'=> Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Change Control, Record #"
-                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: More Info Required"
-                                                );
-                                        }
-                                    );
-
-                                } catch (\Exception $e) {   
-
-                                    \Log::error('Mail Error: ' . $e->getMessage()); 
-
-                                }   
-                            }
-                        }
-        $changeControl->update();
+         
         toastr()->success('Document Sent');
         return back();
 
@@ -14905,18 +14931,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->change_to =   "QA/CQA Initial Review";
         $history->change_from = $lastDocument->status;
         $history->save();
-        $changeControl->update();
-
-        $history = new RcmDocHistory();
-        $history->type = "CC";
-        $history->doc_id = $id;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->stage_id = $changeControl->stage;
-        $history->status = "Sent to QA Initial Review";
-        $history->save();
-        
-                $usersmerge = collect()
+         $usersmerge = collect()
                 ->merge(Helpers::getCQAUsersList($changeControl->division_id))
                 
                 ->merge(Helpers::getQAUserList($changeControl->division_id))
@@ -14938,7 +14953,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                     'site'    => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
-                                    'comment' => $request->comment,
+                                    'comment' => $request->comments,
                                     'user'    => Auth::user()->name
                                 ],
                                 function ($message) use ($email, $changeControl) {
@@ -14956,7 +14971,19 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         }
                     }
                 }
+       
         $changeControl->update();
+
+        $history = new RcmDocHistory();
+        $history->type = "CC";
+        $history->doc_id = $id;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->stage_id = $changeControl->stage;
+        $history->status = "Sent to QA Initial Review";
+        $history->save();
+        
+               
             $Cft = CcCft::where('cc_id', $changeControl->id)->first();
                         if ($Cft) {
                             $Cft->QualityAssurance_by = null;
