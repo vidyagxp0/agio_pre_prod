@@ -4701,7 +4701,7 @@ class CapaController extends Controller
                                 [
                                     'data' => $capa,
                                     'site' => "CAPA",
-                                    'history' => "Cancel",
+                                    'history' => "QA/CQA Closure Review Completed",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
                                     'user'=> Auth::user()->name
@@ -4711,7 +4711,7 @@ class CapaController extends Controller
                                         ->subject(
                                             "Agio Notification: CAPA, Record #"
                                             . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Cancel"
+                                            . " - Activity: QA/CQA Closure Review Completed"
                                         );
                                 }
                             );
