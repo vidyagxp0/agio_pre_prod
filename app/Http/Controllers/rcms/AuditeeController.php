@@ -8868,26 +8868,26 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
 
 
 
-                        // $list = Helpers::getQAHeadUserList($changeControl->division_id); // Notify QA
-                        // foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        //         $email = Helpers::getUserEmail($u->user_id);
-                        //             if ($email !== null) {
-                        //                 try {
-                        //                     Mail::send(
-                        //                         'mail.view-mail',
-                        //                         ['data' => $changeControl, 'site' => "External Audit", 'history' => "Closed - Cancelled", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                        //                         function ($message) use ($email, $changeControl) {
-                        //                             $message->to($email)
-                        //                             ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closed - Cancelled");
-                        //                         }
-                        //                     );
-                        //             } catch(\Exception $e) {
-                        //                     info('Error sending mail', [$e]);
-                        //                 }
-                        //         }
-                        //     // }
-                        // }
+                        $list = Helpers::getQAHeadUserList($changeControl->division_id); // Notify QA
+                        foreach ($list as $u) {
+                            // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                                $email = Helpers::getUserEmail($u->user_id);
+                                    if ($email !== null) {
+                                        try {
+                                            Mail::send(
+                                                'mail.view-mail',
+                                                ['data' => $changeControl, 'site' => "External Audit", 'history' => "Closed - Cancelled", 'process' => 'External Audit', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                                function ($message) use ($email, $changeControl) {
+                                                    $message->to($email)
+                                                    ->subject("Agio Notification: External Audit, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closed - Cancelled");
+                                                }
+                                            );
+                                    } catch(\Exception $e) {
+                                            info('Error sending mail', [$e]);
+                                        }
+                                }
+                            // }
+                        }
 
                         // $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA
                         // foreach ($list as $u) {
