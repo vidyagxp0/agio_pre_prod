@@ -595,13 +595,19 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
+                    @php
+                        $lockdatafileds1 = !($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Audit Program', 7) || Helpers::check_roles($data->division_id, 'Audit Program', 66) || Helpers::check_roles($data->division_id, 'Audit Program', 18) ));
+                        $lockdatafileds2 = !($data->stage == 2 && Helpers::check_roles($data->division_id, 'Audit Program', 4)|| Helpers::check_roles($data->division_id, 'Audit Program', 18));
+                        $lockdatafileds3 = !($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Audit Program', 9) || Helpers::check_roles($data->division_id, 'Audit Program',39) || Helpers::check_roles($data->division_id, 'Audit Program', 65) || Helpers::check_roles($data->division_id, 'Audit Program', 43) || Helpers::check_roles($data->division_id, 'Audit Program', 42) || Helpers::check_roles($data->division_id, 'Audit Program', 18)));
+                    
+                    @endphp
                     <div class="d-flex" style="gap:20px;">
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('showAuditProgramTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Audit Program', 7) || Helpers::check_roles($data->division_id, 'Audit Program', 66)))
+                        @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Audit Program', 7) || Helpers::check_roles($data->division_id, 'Audit Program', 66) || Helpers::check_roles($data->division_id, 'Audit Program', 18) ))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -611,7 +617,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Audit Program', 4))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Audit Program', 65)|| Helpers::check_roles($data->division_id, 'Audit Program', 42)|| Helpers::check_roles($data->division_id, 'Audit Program', 18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
                             </button>
@@ -622,7 +628,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Audit Program', 9) || Helpers::check_roles($data->division_id, 'Audit Program',39) || Helpers::check_roles($data->division_id, 'Audit Program', 65) || Helpers::check_roles($data->division_id, 'Audit Program', 43) || Helpers::check_roles($data->division_id, 'Audit Program', 42)))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Audit Program', 9) || Helpers::check_roles($data->division_id, 'Audit Program',39) || Helpers::check_roles($data->division_id, 'Audit Program', 65) || Helpers::check_roles($data->division_id, 'Audit Program', 43) || Helpers::check_roles($data->division_id, 'Audit Program', 42) || Helpers::check_roles($data->division_id, 'Audit Program', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
@@ -824,7 +830,9 @@
                                                     Assigned To <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                 </label>
                                                 <select id="assign_to" placeholder="Select..." name="assign_to"
-                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                     @if ($lockdatafileds1)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif
                                                     {{ $data->stage == 1 ? 'required' : '' }}>
                                                     <option value="">Select a value</option>
                                                     @foreach ($users as $key => $value)
@@ -881,7 +889,7 @@
                                                         class="text-danger">*</span></label>
                                                 <span id="rchars">255</span> characters remaining
                                                 <input type="text" name="short_description" id="short_description"
-                                                  {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                  {{ $lockdatafileds1 ? 'readonly' : '' }}
                                                     value="{{ $data->short_description }}" maxlength="255" required>
                                             </div>
                                         </div>
@@ -988,7 +996,9 @@
                                                     Type <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                 </label>
                                                 <select name="type"
-                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                    @if ($lockdatafileds1)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif
                                                     {{ $data->stage == 1 ? 'required' : '' }}
                                                     onchange="toggleOtherField(this)">
                                                     <option value="">-- Select --</option>
@@ -1045,7 +1055,9 @@
                                                     Initiated Through<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                  </label>
                                                 <select name="year"
-                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}{{ $data->stage == 1 ? 'required' : '' }} onchange="toggleTabField(this)">
+                                                 @if ($lockdatafileds1)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif {{ $data->stage == 1 ? 'required' : '' }} onchange="toggleTabField(this)">
                                                     <option value="">-- Select --</option>
                                                     <option value="Yearly Planner"
                                                         @if ($data->year == 'Yearly Planner') selected @endif>Yearly Planner</option>
@@ -1062,7 +1074,7 @@
                                                 <label for="yearly_other">Initiated Through(Others)<span
                                                         class="text-danger">*</span></label>
                                                 <textarea name="yearly_other" id="yearly_container_data"
-                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                    {{$lockdatafileds1 ? 'readonly' : '' }}
                                                     {{ $data->stage == 1 ? 'required' : '' }}
                                                     >{{ $data->yearly_other }}</textarea>
                                             </div>
@@ -1279,7 +1291,7 @@
                                             <label for="audit-agenda-grid">
                                                 Audit Program<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                 <button type="button" name="audit-agenda-grid" id="audit_program"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                     {{ $data->stage == 1 ? 'required' : '' }} >+</button>
                                                
                                             </label>
@@ -1303,14 +1315,14 @@
                                                                 <tr>
                                                                     <td><input disabled type="text"
                                                                             name="audit_program[{{ $loop->index }}][serial_number]"
-                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                            {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                             value="{{ $loop->index + 1 }}"></td>
                                                                     <td>
                                                                         <div class="col-lg-6">
                                                                             <div class="group-input">
                                                                                 <select
                                                                                     name="audit_program[{{ $loop->index }}][Auditees]"
-                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                                    {{ $lockdatafileds1 ? 'disabled' : '' }}>
                                                                                     <option value="">
                                                                                         Select a value
                                                                                     </option>
@@ -1333,7 +1345,7 @@
                                                                                 <div class="calenderauditee">
                                                                                     <input class="click_date"
                                                                                         id="Due_Date_{{ $loop->index }}"
-                                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                                        {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                                         type="text"
                                                                                         name="audit_program[{{ $loop->index }}][Due_Date]"
                                                                                         value="{{ isset($grid['Due_Date']) ? \Carbon\Carbon::parse($grid['Due_Date'])->format('d-M-Y') : '' }}"
@@ -1342,7 +1354,7 @@
                                                                                     <input type="date"
                                                                                         name="audit_program[{{ $loop->index }}][Due_Date]"
                                                                                         id="Due_Date_{{ $loop->index }}_input"
-                                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                                        {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                                         value="{{ isset($grid['Due_Date']) ? $grid['Due_Date'] : '' }}"
                                                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                                         class="hide-input"
@@ -1360,7 +1372,7 @@
                                                                                 <div class="calenderauditee">
                                                                                     <input class="click_date"
                                                                                         id="End_date_{{ $loop->index }}"
-                                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                                        {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                                         type="text"
                                                                                         name="audit_program[{{ $loop->index }}][End_date]"
                                                                                         value="{{ isset($grid['End_date']) ? \Carbon\Carbon::parse($grid['End_date'])->format('d-M-Y') : '' }}"
@@ -1369,7 +1381,7 @@
                                                                                     <input type="date"
                                                                                         name="audit_program[{{ $loop->index }}][End_date]"
                                                                                         id="End_date_{{ $loop->index }}_input"
-                                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                                        {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                                         value="{{ isset($grid['End_date']) ? $grid['End_date'] : '' }}"
                                                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                                         class="hide-input show_date"
@@ -1384,7 +1396,7 @@
                                                                             <div class="group-input">
                                                                                 <select
                                                                                     name="audit_program[{{ $loop->index }}][Lead_Investigator]"
-                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                                    {{ $lockdatafileds1 ? 'disabled' : '' }}>
                                                                                     <option value="">Select a value
                                                                                     </option>
                                                                                     @if ($users->isNotEmpty())
@@ -1402,12 +1414,12 @@
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="audit_program[{{ $loop->index }}][Comment]"
-                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                            {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                             value="{{ isset($grid['Comment']) ? $grid['Comment'] : '' }}">
                                                                     </td>
                                                                     <td>
                                                                         <button type="button"
-                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                            {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                             class="removeBtnaid">remove
 
                                                                         </button>
@@ -1565,7 +1577,7 @@
                                                 <label for="comments">
                                                     Comments<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                 </label>
-                                                <textarea name="comments" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}{{ $data->stage == 1 ? 'required' : '' }}>{{ $data->comments }}</textarea>
+                                                <textarea name="comments" {{ $lockdatafileds1? 'readonly' : '' }}{{ $data->stage == 1 ? 'required' : '' }}>{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -1596,7 +1608,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                            {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                            {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                             type="file" id="myfile" name="attachments[]"
                                                             oninput="addMultipleFiles(this, 'attachments')" multiple>
                                                     </div>
@@ -1610,7 +1622,7 @@
                                             <div class="group-input">
                                                 <label for="related_url">Related URL</label>
                                                 <input name="related_url"
-                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                    {{$lockdatafileds1 ? 'readonly' : '' }}
                                                     value="{{ $data->related_url }}">
                                             </div>
                                         </div>
@@ -1618,7 +1630,7 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="related_url">URl's description</label>
-                                                <input {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                <input {{ $lockdatafileds1 ? 'readonly' : '' }}
                                                     type="text" value="{{ $data->url_description }}"
                                                     name="url_description" id="url_description" />
                                             </div>
@@ -1669,7 +1681,7 @@
                                                     Self Inspection Circular
                                                     <button type="button" name="audit-agenda-grid"
                                                         id="Self_Inspection_circular"
-                                                        {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>+</button>
+                                                        {{ $lockdatafileds1 ? 'readonly' : '' }}>+</button>
                                                  
                                                 </label>
                                                 <div class="table-responsive">
@@ -1695,7 +1707,7 @@
                                                                         <td>
                                                                             <div class="col-lg-6">
                                                                                 <div class="group-input">
-                                                                                    @php
+                                                                                   @php
                                                                                         $selectedDepartment = isset(
                                                                                             $grid2['departments'],
                                                                                         )
@@ -1705,7 +1717,7 @@
                                                                                     <select
                                                                                         name="Self_Inspection_circular[{{ $loop->index }}][departments]"
                                                                                         id="departments_{{ $loop->index }}"
-                                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                                        {{ $lockdatafileds1 ? 'disabled' : '' }}>
                                                                                         <option selected disabled
                                                                                             value="">---select---
                                                                                         </option>
@@ -1730,17 +1742,17 @@
                                                                                     <div class="calenderauditee">
                                                                                         <input class="click_date"
                                                                                             id="date_data{{ $loop->index }}"
-                                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                                            {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                                             type="text"
                                                                                             name="Self_Inspection_circular[{{ $loop->index }}][info_mfg_date]"
                                                                                             value="{{ isset($grid2['info_mfg_date']) ? \Carbon\Carbon::parse($grid2['info_mfg_date'])->format('d-M-Y') : '' }}"
-                                                                                            placeholder="DD-MMM-YYYY"
+                                                                                            placeholder="DD-MMM-YYYY"d
                                                                                             readonly />
                                                                                         <input type="date"
                                                                                             name="Self_Inspection_circular[{{ $loop->index }}][info_mfg_date]"
                                                                                             {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
                                                                                             id="date_data{{ $loop->index }}"
-                                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                                            {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                                             value="{{ isset($grid2['info_mfg_date']) ? $grid2['info_mfg_date'] : '' }}"
                                                                                             class="hide-input show_date"
                                                                                             style="position: absolute; top: 0; left: 0; opacity: 0;"
@@ -1756,7 +1768,7 @@
                                                                             <select name="Self_Inspection_circular[{{ $loop->index }}][Auditor][]" 
                                                                                     id="auditor_{{ $loop->index }}" 
                                                                                     class="auditor-select" 
-                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                                    {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                                     multiple>
                                                                                     
                                                                                 @php
@@ -1800,7 +1812,7 @@
 
                                                                         <td>
                                                                             <button type="button" class="removeBtn"
-                                                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>remove</button>
+                                                                                {{ $lockdatafileds1 ? 'disabled' : '' }}>remove</button>
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -1840,7 +1852,7 @@
                                                     <label for="comment">
                                                         Comments<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="comment" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>{{ $data->comment }}</textarea>
+                                                    <textarea name="comment" {{ $lockdatafileds1 ? 'readonly' : '' }}>{{ $data->comment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -1873,7 +1885,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                                {{ $lockdatafileds1 ? 'readonly' : '' }}
                                                                 type="file" id="myfile" name="Attached_File[]"
                                                                 oninput="addMultipleFiles(this, 'Attached_File')" multiple>
                                                         </div>
@@ -1980,7 +1992,7 @@
                                                     <label for="comment">
                                                         CQA/QA Approval Comments<span class="text-danger">{{ $data->stage == 2 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="cqa_qa_comment" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}{{ $data->stage == 3 ? 'required' : '' }}>{{ $data->cqa_qa_comment }}</textarea>
+                                                    <textarea name="cqa_qa_comment" {{ $lockdatafileds2 ? 'readonly' : '' }}{{ $data->stage == 3 ? 'required' : '' }}>{{ $data->cqa_qa_comment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -2013,7 +2025,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                            {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                            {{$lockdatafileds2 ? 'disabled' : '' }}
                                                                 type="file" id="myfile" name="cqa_qa_Attached_File[]"
                                                                 oninput="addMultipleFiles(this, 'cqa_qa_Attached_File')" multiple>
                                                         </div>
@@ -2052,7 +2064,7 @@
                                                     <label for="comment">
                                                         CQA/QA Review Comment<span class="text-danger">{{ $data->stage == 3 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="cqa_qa_review_comment" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 ? 'readonly' : '' }}{{ $data->stage == 3 ? 'required' : '' }}>{{ $data->cqa_qa_review_comment }}</textarea>
+                                                    <textarea name="cqa_qa_review_comment" {{ $lockdatafileds3 ? 'readonly' : '' }}{{ $data->stage == 3 ? 'required' : '' }}>{{ $data->cqa_qa_review_comment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -2085,7 +2097,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                            {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 ? 'readonly' : '' }}
+                                                            {{ $lockdatafileds3 ? 'readonly' : '' }}
                                                                 type="file" id="myfile" name="cqa_qa_review_Attached_File[]"
                                                                 oninput="addMultipleFiles(this, 'cqa_qa_review_Attached_File')" multiple>
                                                         </div>

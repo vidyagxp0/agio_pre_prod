@@ -150,6 +150,37 @@
                         $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                        ?>
+                       @php
+                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                            $userRoleIdslock = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                            $lockdatafileds1 = !($data->stage == 1 &&
+                             Helpers::check_roles($data->division_id, 'CAPA', 3));
+                            $lockdatafileds2 = !($data->stage == 2 
+                            && Helpers::check_roles($data->division_id, 'CAPA', 4));
+                            $lockdatafileds3 = !($data->stage == 3 && ( 
+                            Helpers::check_roles($data->division_id, 'CAPA', 48)||
+                            Helpers::check_roles($data->division_id, 'CAPA', 49)||
+                            Helpers::check_roles($data->division_id, 'CAPA', 63)
+                            ));
+                            $lockdatafileds4 = !($data->stage == 4 && ( 
+                            Helpers::check_roles($data->division_id, 'CAPA', 64)||
+                            Helpers::check_roles($data->division_id, 'CAPA', 67
+                                )));
+                            $lockdatafileds5 = !($data->stage == 5 && ( 
+                            Helpers::check_roles($data->division_id, 'CAPA', 3)
+                            ));
+                            $lockdatafileds6 = !($data->stage == 6 && ( 
+                            Helpers::check_roles($data->division_id, 'CAPA', 4)
+                            ));
+                            $lockdatafileds7 = !($data->stage == 7 && ( 
+                            Helpers::check_roles($data->division_id, 'CAPA', 7)
+                            ||Helpers::check_roles($data->division_id, 'CAPA', 66)
+                            ));
+                            $lockdatafileds8 = !($data->stage == 8 &&      
+                             (Helpers::check_roles($data->division_id, 'CAPA', 9) || Helpers::check_roles($data->division_id, 'CAPA',39 ) || Helpers::check_roles($data->division_id, 'CAPA',42 ) || Helpers::check_roles($data->division_id, 'CAPA',43 ) ||
+                             Helpers::check_roles($data->division_id, 'CAPA', 65)))
+                        
+                       @endphp
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                             {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('CapaAuditTrial', $data->id) }}">
@@ -281,7 +312,7 @@
                         </button></a>
                         @endif
 
-                           @elseif($data->stage == 9&& (Helpers::check_roles($data->division_id, 'CAPA', 9) || Helpers::check_roles($data->division_id, 'CAPA',39 ) || Helpers::check_roles($data->division_id, 'CAPA',42 ) || Helpers::check_roles($data->division_id, 'CAPA',43 ) ||
+                           @elseif($data->stage == 9 && (Helpers::check_roles($data->division_id, 'CAPA', 9) || Helpers::check_roles($data->division_id, 'CAPA',39 ) || Helpers::check_roles($data->division_id, 'CAPA',42 ) || Helpers::check_roles($data->division_id, 'CAPA',43 ) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 65) || in_array(18, $userRoleIds)))
                            {{-- @if(Helpers::getChildData($data->id, 'CAPA') < 3) --}}
                          <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
@@ -585,7 +616,7 @@
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
 
-                                                <input name="short_description"   id="docname" type="text" value="{{ $data->short_description }}"    maxlength="255" required  {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? "readonly" : "" }} type="text">
+                                                <input name="short_description"   id="docname" type="text" value="{{ $data->short_description }}"    maxlength="255" required  {{$lockdatafileds1 ? "readonly" : "" }} type="text">
                                             </div>
                                             {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
 
@@ -598,7 +629,7 @@
                                                 <label for="Initiator Group">Initiated Through<span
                                                 class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please select related information</small></div>
-                                                <select name="initiated_through"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}
+                                                <select name="initiated_through"{{ $lockdatafileds1 ? 'disabled' : '' }}
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')" required>
                                                     <option value="">Enter Your Selection Here</option><option @if ($data->initiated_through == 'Internal Audit') selected @endif value="Internal Audit">Internal Audit</option>
                                                     <option @if ($data->initiated_through == 'External Audit') selected @endif value="External Audit">External Audit</option>
@@ -636,7 +667,7 @@
                                             <div class="group-input">
                                                 <label for="repeat">Repeat<span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 ? 'd-none' : ''}}">*</span></label>
                                                 <div><small class="text-primary">Please select yes if it is has recurred in past six months</small></div>
-                                                <select name="repeat"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}
+                                                <select name="repeat"{{ $lockdatafileds1 ? 'disabled' : '' }}
                                                     onchange="otherController(this.value, 'Yes', 'repeat_nature')" required>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option @if ($data->repeat == 'Yes') selected @endif
@@ -652,21 +683,21 @@
                                             <div class="group-input" id="repeat_nature">
                                                 <label for="repeat_nature">Repeat Nature<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea name="repeat_nature"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->repeat_nature }}</textarea>
+                                                <textarea name="repeat_nature"{{ $lockdatafileds1 ? 'readonly' : '' }}>{{ $data->repeat_nature }}</textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Problem Description">Problem Description<span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 ? 'd-none' : ''}}">*</span></label>
-                                                <textarea name="problem_description"{{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }} required>{{ $data->problem_description }}</textarea>
+                                                <textarea name="problem_description"{{$lockdatafileds1 ? 'readonly' : '' }} required>{{ $data->problem_description }}</textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="CAPA Team">CAPA Team<span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 ? 'd-none' : ''}}">*</span></label>
-                                                <select {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}
+                                                <select {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                     multiple id="Audit" placeholder="Select..." name="capa_team[]" required>
                                                     @foreach ($users as $value)
                                                      {{-- <option {{ $data->capa_team == $value->id ? 'selected' : '' }}  value="{{ $value->id }}">{{ $value->name }}</option>  --}}
@@ -684,10 +715,10 @@
                                                 <label for="RLS Record Number"><b>Reference Records</b></label>
                                                 @if($data->parent_record_number)
                                                 <input readonly type="text" name="parent_record_number"
-                                                    value="{{ $data->parent_record_number }}" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>
+                                                    value="{{ $data->parent_record_number }}" {{$lockdatafileds1 ? 'readonly' : '' }}>
                                                 @else
                                                 <input type="text" name="parent_record_number_edit"
-                                                value="{{ $data->parent_record_number_edit }}" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>
+                                                value="{{ $data->parent_record_number_edit }}" {{$lockdatafileds1 ? 'readonly' : '' }}>
                                                 @endif
                                             </div>
                                         </div>
@@ -775,11 +806,11 @@
                                             <div class="group-input">
                                                 <label for="Details">Investigation Summary<span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 ? 'd-none' : ''}}">*</span></label>
                                                 {{-- <input type="text" name="investigation" value="{{ $data->investigation }}"> --}}
-                                                <textarea name="investigation" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }} required>{{ $data->investigation }}</textarea>
+                                                <textarea name="investigation" {{ $lockdatafileds1 ? 'readonly' : '' }} required>{{ $data->investigation }}</textarea>
                                             </div>
                                             <div class="group-input">
                                                 <label for="Details">Root Cause<span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 ? 'd-none' : ''}}">*</span></label>
-                                                <textarea name="rcadetails" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }} required>{{ $data->rcadetails }}</textarea>
+                                                <textarea name="rcadetails" {{ $lockdatafileds1 ? 'readonly' : '' }} required>{{ $data->rcadetails }}</textarea>
                                             </div>
                                         </div>
 
@@ -787,7 +818,7 @@
                                             <div class="group-input">
                                                 <label for="Material Details">
                                                     Product / Material Details
-                                                    <button type="button" name="ann" id="material"   {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled' : '' }}>+</button>
+                                                    <button type="button" name="ann" id="material"   {{ $lockdatafileds1 ? 'disabled' : '' }}>+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="productmaterial">
                                                     <thead>
@@ -809,36 +840,36 @@
                                                                 <tr>
                                                                     <td><input disabled type="text"
                                                                             name="serial_number[]"
-                                                                            value="{{ $key + 1 }}" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}></td>
+                                                                            value="{{ $key + 1 }}" {{ $lockdatafileds1 ? 'readonly' : '' }}></td>
                                                                     <td><input type="text" name="material_name[]"
                                                                             value="{{ $material_name }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
+                                                                            {{ $lockdatafileds1 ? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text" name="material_batch_no[]"
                                                                             value="{{ unserialize($data2->material_batch_no)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
+                                                                            {{ $lockdatafileds1 ? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text" name="material_mfg_date[]"
                                                                             class="material_mfg_date"
                                                                             placeholder="DD-MMM-YYYY"
                                                                             value="{{ unserialize($data2->material_mfg_date)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}>
+                                                                            {{ $lockdatafileds1  ? 'disabled' : '' }}>
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="material_expiry_date[]"
                                                                             class="material_expiry_date"
                                                                             placeholder="DD-MMM-YYYY"
                                                                             value="{{ unserialize($data2->material_expiry_date)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled' : '' }}>
+                                                                            {{ $lockdatafileds1 ? 'disabled' : '' }}>
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="material_batch_desposition[]"
                                                                             value="{{ unserialize($data2->material_batch_desposition)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
+                                                                            {{ $lockdatafileds1 ? 'readonly' : '' }}>
                                                                     </td>
                                                                     <td><input type="text" name="material_remark[]"
                                                                             value="{{ unserialize($data2->material_remark)[$key] ?? '' }}"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>
+                                                                            {{ $lockdatafileds1 ? 'readonly' : '' }}>
                                                                     </td>
                                                                     {{-- <td>
                                                                         <select name="material_batch_status[]"
@@ -860,7 +891,7 @@
                                                                     <td>
                                                                         <select name="material_batch_status[]"
                                                                             class="batch_status"
-                                                                            {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled ' : '' }}>
+                                                                            {{ $lockdatafileds1 ? 'disabled ' : '' }}>
                                                                             <option value="">-- Select value --
                                                                             </option>
                                                                             <option value="Hold"
@@ -876,7 +907,7 @@
                                                                     </td>
 
                                                                     <td><button type="button" class="removeRowBtn"
-                                                                        {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled' : '' }} >Remove</button>
+                                                                        {{$lockdatafileds1 ? 'disabled' : '' }} >Remove</button>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -1012,7 +1043,7 @@
                                                 <label for="Material Details">
                                                     Equipment/Instruments Details<button type="button" name="ann"
                                                     id="equipment_add"
-                                                    {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled' : '' }} >+</button>
+                                                    {{ $lockdatafileds1 ? 'disabled' : '' }} >+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="equi_details">
                                                     <thead>
@@ -1030,23 +1061,23 @@
                                                         @foreach (unserialize($data3->equipment) as $key => $temps)
                                                             <tr>
                                                                 <td>
-                                                                    <input type="text" name="serial_number[]" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}
+                                                                    <input type="text" name="serial_number[]" {{  $lockdatafileds1 ? 'readonly' : '' }}
                                                                            value="{{ $key + 1 }}">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" name="equipment[]" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}
+                                                                    <input type="text" name="equipment[]" {{  $lockdatafileds1 ? 'readonly' : '' }}
                                                                            value="{{ unserialize($data3->equipment)[$key] ?? '' }}">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" name="equipment_instruments[]"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}
+                                                                    <input type="text" name="equipment_instruments[]"{{  $lockdatafileds1 ? 'readonly' : '' }}
                                                                            value="{{ unserialize($data3->equipment_instruments)[$key] ?? '' }}">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" name="equipment_comments[]" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}
+                                                                    <input type="text" name="equipment_comments[]" {{  $lockdatafileds1 ? 'readonly' : '' }}
                                                                            value="{{ unserialize($data3->equipment_comments)[$key] ?? '' }}">
                                                                 </td>
                                                                 <td>
-                                                                    <button type="button" class="removeRowBtn" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'disabled' : '' }}>Remove</button>
+                                                                    <button type="button" class="removeRowBtn" {{  $lockdatafileds1? 'disabled' : '' }}>Remove</button>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -1102,7 +1133,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Details">Details<span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 ? 'd-none' : ''}}">*</span></label>    
-                                                    <textarea name="details_new" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }} required>{{ $data->details_new }}</textarea>
+                                                    <textarea name="details_new" {{ $lockdatafileds1 ? 'readonly' : '' }} required>{{ $data->details_new }}</textarea>
 
                                             </div>
                                         </div>
@@ -1130,7 +1161,7 @@
                                                 <label for="search">
                                                     CAPA Type<span class="text-danger">*</span>
                                                 </label>
-                                                <select id="capa_type" placeholder="Select..." name="capa_type" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : ''}} required>
+                                                <select id="capa_type" placeholder="Select..." name="capa_type" {{ $lockdatafileds1 ? 'disabled' : ''}} required>
                                                     <option value="">Select a value</option>
                                                     <option {{ $data->capa_type == "Corrective Action" ? 'selected' : '' }} value="Corrective Action">Corrective Action</option>
                                                     <option {{ $data->capa_type == "Preventive Action" ? 'selected' : '' }} value="Preventive Action">Preventive Action</option>
@@ -1145,13 +1176,13 @@
                                         <div class="col-12 corrective-action-field">
                                             <div class="group-input">
                                                 <label for="Corrective Action">Corrective Action <span class="required-star">*</span></label>
-                                                <textarea name="corrective_action" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->corrective_action }}</textarea>
+                                                <textarea name="corrective_action" {{ $lockdatafileds1 ? 'readonly' : '' }}>{{ $data->corrective_action }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12 preventive-action-field">
                                             <div class="group-input">
                                                 <label for="Preventive Action">Preventive Action<span class="required-star">*</span></label>
-                                                <textarea name="preventive_action" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>{{ $data->preventive_action }}</textarea>
+                                                <textarea name="preventive_action" {{$lockdatafileds1 ? 'readonly' : '' }}>{{ $data->preventive_action }}</textarea>
                                             </div>
                                         </div>
 
@@ -1256,7 +1287,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="qafile" name="capafileattachement[]"
-                                                            oninput="addMultipleFiles(this, 'capafileattachement')" multiple {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>
+                                                            oninput="addMultipleFiles(this, 'capafileattachement')" multiple {{$lockdatafileds1 ? 'disabled' : '' }}>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1293,7 +1324,9 @@
             <div class="col-12">
                 <div class="group-input">
                     <label for="QA Review & Closure" >HOD Remark @if($data->stage == 2)<span class="text-danger">*</span>@endif</label>
-                    <textarea name="hod_remarks" {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->hod_remarks}}</textarea>
+                    <textarea name="hod_remarks"  @if ($lockdatafileds2)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif >{{ $data->hod_remarks}}</textarea>
                 </div>
             </div>
             <div class="col-12">
@@ -1325,7 +1358,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="hod_attachment[]"
-                                oninput="addMultipleFiles(this, 'hod_attachment')" multiple {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>
+                                oninput="addMultipleFiles(this, 'hod_attachment')" multiple {{ $lockdatafileds2 ? 'disabled' : '' }}>
                         </div>
                     </div>
                 </div>
@@ -1395,7 +1428,9 @@
             <div class="col-12">
                 <div class="group-input">
                     <label for="Comments"> QA/CQA Review Comment  @if($data->stage == 3)<span class="text-danger">*</span>@endif</label>
-                    <textarea name="capa_qa_comments" {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->capa_qa_comments }}</textarea>
+                    <textarea name="capa_qa_comments"  @if ($lockdatafileds3)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif>{{ $data->capa_qa_comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
@@ -1427,7 +1462,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="qa_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>
+                                oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $lockdatafileds3 ? 'disabled' : '' }}>
                         </div>
                     </div>
                 </div>
@@ -1495,7 +1530,9 @@
                                             <div class="group-input">
                                                 <label for="Interim Containnment">Effectiveness check required<span
                                                 class="text-danger">*</span></label>
-                                                <select name="effectivness_check"{{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4|| $data->stage == 5 ||$data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? 'readonly' : '' }}>
+                                                <select name="effectivness_check" @if ($lockdatafileds8)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif>
                                                     <option value="">-----Select---</option>
                                                     <option
                                                         {{ $data->effectivness_check == 'Yes' ? 'selected' : '' }}
@@ -1510,7 +1547,7 @@
 
                                             <div class="group-input">
                                                 <label for="QA Review & Closure">QA/CQA Head Closure Review Comment @if($data->stage == 8)<span class="text-danger">*</span>@endif</label>
-                                                <textarea name="qa_review" {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 9 ? 'readonly' : '' }}>{{ $data->qa_review }}</textarea>
+                                                <textarea name="qa_review" {{ $lockdatafileds8 ? 'readonly' : '' }}>{{ $data->qa_review }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1540,8 +1577,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                        {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 9 ? 'readonly' : '' }}
-                                                            type="file" id="myfile" name="closure_attachment[]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 9 ? 'readonly' : '' }}
+                                                            type="file" id="myfile" name="closure_attachment[]" {{ $lockdatafileds8 ? 'disabled' : '' }}
                                                             oninput="addMultipleFiles(this, 'closure_attachment1')"
                                                             multiple>
                                                     </div>
@@ -1641,7 +1677,9 @@
             <div class="col-12">
                 <div class="group-input">
                     <label for="Comments"> HOD Final Review Comments @if($data->stage == 6)<span class="text-danger">*</span>@endif</label>
-                    <textarea name="hod_final_review" {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->hod_final_review }}</textarea>
+                    <textarea name="hod_final_review"@if ($lockdatafileds6)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif >{{ $data->hod_final_review }}</textarea>
                 </div>
             </div>
             <!-- <div class="col-12">
@@ -1775,7 +1813,9 @@
             <div class="col-12">
                 <div class="group-input">
                     <label for="Comments"> Initiator CAPA Update Comment @if($data->stage == 5)<span class="text-danger">*</span>@endif</label>
-                    <textarea name="initiator_comment" {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->initiator_comment }}</textarea>
+                    <textarea name="initiator_comment" @if ($lockdatafileds5)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif>{{ $data->initiator_comment }}</textarea>
                 </div>
             </div>
             <div class="col-12">
@@ -1807,7 +1847,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="initiator_capa_attachment[]"
-                                oninput="addMultipleFiles(this, 'initiator_capa_attachment')" multiple {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>
+                                oninput="addMultipleFiles(this, 'initiator_capa_attachment')" multiple {{ $lockdatafileds5 ? 'disabled' : '' }}>
                         </div>
                     </div>
 
@@ -1873,7 +1913,7 @@
             <div class="col-12">
                 <div class="group-input">
                     <label for="Comments"> QA/CQA Closure Review Comment @if($data->stage == 7)<span class="text-danger">*</span>@endif</label>
-                    <textarea name="qa_cqa_qa_comments" {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->qa_cqa_qa_comments }}</textarea>
+                    <textarea name="qa_cqa_qa_comments" {{ $lockdatafileds7 ? 'readonly' : '' }}>{{ $data->qa_cqa_qa_comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
@@ -1905,7 +1945,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfileb" name="qa_closure_attachment[]"
-                                oninput="addMultipleFiles(this, 'qa_closure_attachment')" multiple {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>
+                                oninput="addMultipleFiles(this, 'qa_closure_attachment')" multiple {{ $lockdatafileds7 ? 'disabled' : '' }}>
                         </div>
                     </div>
                 </div>
@@ -1973,7 +2013,9 @@
                 <div class="group-input">
 
                     <label for="Comments"> QA/CQA Approval Comment @if($data->stage == 4)<span class="text-danger">*</span>@endif </label>
-                    <textarea name="qah_cq_comments" {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->qah_cq_comments }}</textarea>
+                    <textarea name="qah_cq_comments"  @if ($lockdatafileds4)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif   >{{ $data->qah_cq_comments }}</textarea>
                 </div>
             </div>
             <!-- <div class="col-12">
@@ -2040,7 +2082,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                        {{ $data->stage == 0|| $data->stage == 1 || $data->stage == 2 || $data->stage == 3 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}
+                                                        {{ $lockdatafileds4 ? 'disabled' : '' }}
                                                             type="file" id="myfile" name="qah_cq_attachment[]"
                                                             oninput="addMultipleFiles(this, 'qah_cq_attachment')" multiple>
                                                     </div>

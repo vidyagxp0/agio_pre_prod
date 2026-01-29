@@ -200,6 +200,19 @@
                             ->whereNull('deleted_at')
                             ->first();
                         // dd($cftCompleteUser);
+
+                           $lockdatafileds1 = !($data->stage == 1 && ( Helpers::check_roles($data->division_id, 'Change Control', 3) ));
+                           $lockdatafileds2 = !($data->stage == 2 && ( Helpers::check_roles($data->division_id, 'Change Control', 4)));
+                           $lockdatafileds3 = !($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)));
+                           $lockdatafileds5 = !($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)));
+                           $lockdatafileds6 = !($data->stage == 6 && (Helpers::check_roles($data->division_id, 'Change Control', 50)));
+                           $lockdatafileds7 = !($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Change Control', 39) || Helpers::check_roles($data->division_id, 'Change Control', 43) || Helpers::check_roles($data->division_id, 'Change Control', 42) || Helpers::check_roles($data->division_id, 'Change Control', 9) || Helpers::check_roles($data->division_id, 'Change Control', 65)));
+                           $lockdatafileds9 = !($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Change Control', 3)|| Helpers::check_roles($data->division_id, 'Change Control', 18)));
+                           $lockdatafileds10 = !($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)));
+                           $lockdatafileds11 = !($data->stage == 11 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)));
+                           $lockdatafileds12 = !($data->stage == 12 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42) || Helpers::check_roles($data->division_id, 'Change Control', 9) || Helpers::check_roles($data->division_id, 'Change Control', 43) || Helpers::check_roles($data->division_id, 'Change Control', 65)|| Helpers::check_roles($data->division_id, 'Change Control', 18)));
+
+                           
                     @endphp
 
 
@@ -839,20 +852,22 @@
                                                             <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                         </label>
 
-                                                        @if($data->stage == 1)
-                                                            <select name="risk_assessment_required" id="risk_assessment_required" required>
+                                                        {{-- @if($data->stage == 1 ) --}}
+                                                            <select name="risk_assessment_required" id="risk_assessment_required" @if ($lockdatafileds1)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif required>
                                                                 <option value="">-- Select --</option>
                                                                 <option value="yes" {{ $data->risk_assessment_required == 'yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="no" {{ $data->risk_assessment_required == 'no' ? 'selected' : '' }}>No</option>
                                                             </select>
-                                                        @else
-                                                            <select name="risk_assessment_required_display" id="risk_assessment_required" disabled>
+                                                        {{-- @else --}}
+                                                            {{-- <select name="risk_assessment_required_display" id="risk_assessment_required" disabled>
                                                                 <option value="">-- Select --</option>
                                                                 <option value="yes" {{ $data->risk_assessment_required == 'yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="no" {{ $data->risk_assessment_required == 'no' ? 'selected' : '' }}>No</option>
-                                                            </select>
+                                                            </select> --}}
                                                             <input type="hidden" name="risk_assessment_required" value="{{ $data->risk_assessment_required }}">
-                                                        @endif
+                                                        {{-- @endif --}}
                                                     </div>
                                                 </div>
 
@@ -867,7 +882,7 @@
                                                 <div class="group-input">
                                                     <label for="Justification">Justification <span class="text-danger">*</span></label>
                                                     <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." 
-                                                        {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{$data->stage == 1 ? '' : 'readonly'}}>{{ $data->risk_identification ?? '' }}</textarea>
+                                                        {{ $lockdatafileds1 ? 'readonly' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
                                                     <span id="justification_error" class="text-danger" style="display: none;">This field is required.</span>
                                                 </div>
                                             </div>
@@ -889,7 +904,7 @@
                                                         <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
 
-                                                    @if($data->stage == 1)
+                                                    @if($data->stage == 1 && !$lockdatafileds1)
                                                         <select name="hod_person" id="hod_person" required>
                                                             <option value="">Select HOD Person</option>
                                                             @if($users)
@@ -933,7 +948,7 @@
 
 
                                                     <input name="short_description" id="docname" type="text" maxlength="255" required type="text"
-                                                        {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} value="{{ $data->short_description }}">
+                                                        {{ $lockdatafileds1  ? 'readonly' : '' }} value="{{ $data->short_description }}">
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -949,7 +964,7 @@
                                                         @endif
                                                     </label>
 
-                                                    @if($data->stage == 1)
+                                                    @if($data->stage == 1 &&  !$lockdatafileds1)
                                                         <select name="severity" id="change_related_to" required>
                                                             <option value="">-- Select --</option>
                                                             <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
@@ -1029,7 +1044,7 @@
                                                 </label>
                                                 <div><small class="text-primary">Please select related information</small></div>
 
-                                                @if($data->stage == 1)
+                                                @if($data->stage == 1 && !$lockdatafileds1 )
                                                     <select name="initiated_through" id="initiated_through" required>
                                                         <option value="">Enter Your Selection Here</option>
                                                         <option value="recall" {{ $data->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
@@ -1129,7 +1144,7 @@
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="nature-change">Nature Of Change</label>
-                                                    @if($data->stage == 1)
+                                                    @if($data->stage == 1 && !$lockdatafileds1)
                                                         <select name="doc_change" required>
                                                             <option value="">-- Select --</option>
                                                             <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }} value="Temporary">Temporary</option>
@@ -1149,7 +1164,7 @@
                                                 <div class="group-input">
                                                     <label for="others">If Others<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="others" {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $data->If_Others }}</textarea>
+                                                    <textarea name="others" {{ $data->stage == 1 && !$lockdatafileds1 ? 'required' : 'readonly' }}>{{ $data->If_Others }}</textarea>
                                                 </div>
                                             </div>
 
@@ -1159,7 +1174,7 @@
                                                     <label for="others">Description of Change
                                                         <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="bd_domestic" {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $data->bd_domestic }}</textarea>
+                                                    <textarea name="bd_domestic" {{ $data->stage == 1 && !$lockdatafileds1 ? 'required' : 'readonly' }}>{{ $data->bd_domestic }}</textarea>
                                                 </div>
                                             </div>
 
@@ -1231,7 +1246,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="in_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{  $lockdatafileds1 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'in_attachment')" multiple>
                                             </div>
                                         </div>
@@ -1348,7 +1363,7 @@
                                                     $selectedRecords = explode(',', $data->risk_assessment_related_record);
                                                 @endphp
 
-                                                @if ($data->stage == 1)
+                                                @if ($data->stage == 1 && !$lockdatafileds1)
                                                     <select multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]">
                                                         @if (!empty($preRiskAssessment))
                                                             @foreach ($preRiskAssessment as $new)
@@ -1392,7 +1407,7 @@
                                                     <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
                                                     <textarea name="migration_action" id="migration_action"
-                                                     {{ $data->stage == 1  ? '' : 'readonly' }}
+                                                     {{ !$lockdatafileds1 ? '' : 'readonly' }}
                                                       
                                                      >{{ $data->migration_action }}</textarea>
                                                 </div>
@@ -1429,7 +1444,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile" name="risk_assessment_atch[]"
-                                                            oninput="addMultipleFiles(this, 'risk_assessment_atch')"  {{ $data->stage == 1  ? '' : 'disabled' }} multiple>
+                                                            oninput="addMultipleFiles(this, 'risk_assessment_atch')"  {{ $lockdatafileds1  ? 'disabled' : '' }} multiple>
                                                     </div>
                                                  
 
@@ -1461,7 +1476,7 @@
                                                     <label for="current-practice">Current Practice
                                                        <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="current_practice" {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->current_practice }}</textarea>
+                                                    <textarea name="current_practice" {{ $lockdatafileds1 ?  'readonly' :'required'  }}>{{ $docdetail->current_practice }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1469,7 +1484,7 @@
                                                     <label for="proposed_change">Proposed Change
                                                          <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="proposed_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->proposed_change }}</textarea>
+                                                    <textarea name="proposed_change"  {{ $lockdatafileds1 ? 'readonly' : 'required' }} >{{ $docdetail->proposed_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1477,7 +1492,7 @@
                                                     <label for="reason_change">Reason for Change
                                                         <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="reason_change" {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->reason_change }}</textarea>
+                                                    <textarea name="reason_change" {{ $lockdatafileds1 ?  'readonly' : 'required' }}>{{ $docdetail->reason_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1485,7 +1500,7 @@
                                                     <label for="other_comment">Any Other Comments
                                                          <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="other_comment"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->other_comment }}</textarea>
+                                                    <textarea name="other_comment"  {{ $lockdatafileds1 ? 'readonly' : 'required' }} >{{ $docdetail->other_comment }}</textarea>
                                                 </div>
                                             </div>
                                             <!-- <div class="col-12">
@@ -1520,7 +1535,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="change_details_attachments[]"
-                                                                {{ $data->stage == 2 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                                {{ $lockdatafileds1 ? 'disabled' : '' }}
                                                                 oninput="addMultipleFiles(this, 'change_details_attachments')" multiple>
                                                         </div>
                                                     </div>
@@ -1617,7 +1632,7 @@
                                             <label for="qa-eval-comments">HOD Assessment Comments  @if($data->stage == 2) <span class="text-danger">*</span>@endif
                                         </label>
                                     
-                                            <textarea name="hod_assessment_comments"  {{ $data->stage == 2 ? 'required' : 'readonly' }}>{{$cc_cfts->hod_assessment_comments}}</textarea>
+                                            <textarea name="hod_assessment_comments"  {{ $lockdatafileds2 ? 'readonly' : 'required' }}>{{$cc_cfts->hod_assessment_comments}}</textarea>
                                         </div>
 
 
@@ -1645,7 +1660,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="hod_assessment_attachment[]"
-                                                    {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $lockdatafileds2 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'hod_assessment_attachment')" multiple>
                                             </div>
                                         </div>
@@ -1942,7 +1957,7 @@
                                                         @if($data->stage == 3) <span class="text-danger">*</span>@endif
                                                     </label>
 
-                                                    @if($data->stage == 3)
+                                                    @if(!$lockdatafileds3)
                                                         <select name="severity_level1" required>
                                                             <option value="">-- Select --</option>
                                                             <option value="minor" {{ $data->severity_level1 == 'minor' ? 'selected' : '' }}>Minor</option>
@@ -1963,7 +1978,7 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="qa_comments">QA/CQA Initial Review Comments @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
-                                                    <textarea name="qa_review_comments" {{ $data->stage == 3  ? 'required' : 'readonly' }} {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
+                                                    <textarea name="qa_review_comments" {{ $lockdatafileds3  ? 'readonly' :'required' }} {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
                                                 </div>
                                             </div>
 
@@ -1989,7 +2004,7 @@
                                             <label for="related_records">Related Records</label>
 
                                             <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                                data-silent-initial-value-set="true" id="related_records"  {{ $data->stage == 0 || $data->stage == 13  ? 'disabled' : '' }}>
+                                                data-silent-initial-value-set="true" id="related_records"  {{ $lockdatafileds3 ? 'disabled' : '' }}>
 
                                                  @if (!empty($relatedRecords))
                                                         @foreach ($relatedRecords as $records)
@@ -2050,7 +2065,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_head[]"
-                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $lockdatafileds3 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_head')" multiple>
                                             </div>
                                         </div>
@@ -2260,7 +2275,7 @@
                                                 <div class="group-input">
                                                     <label for="Quality Assurance"> Quality Assurance  Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="Quality_Assurance_Review" id="Quality_Assurance_Review">
+                                                    <select name="Quality_Assurance_Review" id="Quality_Assurance_Review" {{$lockdatafileds3 ? "disabled" : ''}}>
                                                         <option value="">-- Select --</option>
                                                        
                                                     <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value='yes'>Yes</option>
@@ -2289,7 +2304,9 @@
                                                             style="display: {{ $data1->Quality_Assurance_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="QualityAssurance_person"
+                                                    <select  @if ($lockdatafileds3)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif name="QualityAssurance_person"
                                                         class="QualityAssurance_person" id="QualityAssurance_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
@@ -2596,7 +2613,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Production Tablet"> Production Tablet/Capsule/Powder Review Required <span class="text-danger">*</span></label>
-                                                    <select name="Production_Table_Review" id="Production_Table_Review" required>
+                                                    <select name="Production_Table_Review" id="Production_Table_Review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Production_Table_Review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -2625,7 +2642,9 @@
                                                             style="display: {{ $data1->Production_Table_Review == 'yes' ? 'inline' : 'none' }}"
                                                             class="text-danger">*</span>
                                                     </label>
-                                                    <select @if ($data->stage == 4) disabled @endif name="Production_Table_Person"
+                                                    <select @if ($lockdatafileds3)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif name="Production_Table_Person"
                                                         class="Production_Table_Person" id="Production_Table_Person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
@@ -2925,7 +2944,7 @@
                                                 <div class="group-input">
                                                     <label for="Production Liquid">Production Liquid/Ointment Review Required? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" required>
+                                                    <select name="ProductionLiquid_Review" id="ProductionLiquid_Review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->ProductionLiquid_Review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -3248,7 +3267,7 @@
                                                 <div class="group-input">
                                                     <label for="Production Injection"> Production Injection Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="Production_Injection_Review" id="Production_Injection_Review" required>
+                                                    <select name="Production_Injection_Review" id="Production_Injection_Review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Production_Injection_Review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -3593,7 +3612,7 @@
                                                 <div class="group-input">
                                                     <label for="Store"> Stores Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="Store_Review" id="Store_Review" required>
+                                                    <select name="Store_Review" id="Store_Review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Store_Review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -3930,7 +3949,7 @@
                                                 <div class="group-input">
                                                     <label for="Quality Control"> Quality Control Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="Quality_review" id="Quality_review_Review" required>
+                                                    <select name="Quality_review" id="Quality_review_Review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Quality_review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -4263,7 +4282,7 @@
                                                 <div class="group-input">
                                                     <label for="Research Development"> Research & Development Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review" required>
+                                                    <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->ResearchDevelopment_Review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -8107,7 +8126,7 @@
                                                     </label>
 
                                                     @if($data->stage == 5)
-                                                        <select name="RA_data_person" class="RA_data_person" id="RA_head_required" {{ $data->stage == 5 ? 'required' : '' }}>
+                                                        <select name="RA_data_person" class="RA_data_person" id="RA_head_required" {{ $lockdatafileds5 ? 'disabled' : 'required' }}>
                                                             <option value="">--Select--</option>
                                                             <option value="Yes" {{ $cc_cfts->RA_data_person == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $cc_cfts->RA_data_person == 'No' ? 'selected' : '' }}>No</option>
@@ -8188,7 +8207,7 @@
                                                     </label>
 
                                                     @if($data->stage == 5)
-                                                        <select name="QA_CQA_person" class="QA_CQA_person" id="QA_CQA_person" {{ $data->stage == 5 ? 'required' : '' }}>
+                                                        <select name="QA_CQA_person" class="QA_CQA_person" id="QA_CQA_person" {{ $lockdatafileds5 ? 'disabled' : 'required' }}>
                                                             <option value="">-- Select --</option>
                                                             @foreach ($users as $user)
                                                                 <option value="{{ $user->name }}" {{ $user->name == $cc_cfts->QA_CQA_person ? 'selected' : '' }}>
@@ -8223,7 +8242,7 @@
                                             <label for="qa-eval-comments">QA/CQA Final Review Comments
                                                 @if($data->stage==5) <span class="text-danger">*</span>@endif
                                             </label>
-                                            <textarea name="qa_final_comments"{{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
+                                            <textarea name="qa_final_comments"{{ $lockdatafileds5 ? 'readonly' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
                                         </div>
 
 
@@ -8251,7 +8270,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_final_attach[]"
-                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}
+                                                    {{ $lockdatafileds5 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_final_attach')" multiple>
                                             </div>
                                         </div>
@@ -8351,7 +8370,7 @@
                                                 <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                             </div>
                                             <textarea class="tiny" name="ra_tab_comments" id="ra_tab_comments"
-                                                {{ $data->stage == 1 || $data->stage == 2 || $data->stage == 4 || $data->stage == 5 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ isset($data1->ra_tab_comments) ? $data1->ra_tab_comments : '' }}</textarea>
+                                                {{ $lockdatafileds6 ? 'readonly' : '' }} >{{ isset($data1->ra_tab_comments) ? $data1->ra_tab_comments : '' }}</textarea>
                                         </div>
                                     </div>
 
@@ -8379,7 +8398,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="RA_attachment_second[]"
-                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{$lockdatafileds6 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'RA_attachment_second')" multiple>
                                             </div>
                                         </div>
@@ -8473,7 +8492,7 @@
                                         <div class="group-input">
                                             <label for="qa-eval-comments">QA/CQA Head / Designee Approval Comments
                                             @if($data->stage == 7) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="qa_cqa_comments"  {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{$cc_cfts->qa_cqa_comments}}</textarea>
+                                            <textarea name="qa_cqa_comments"  {{ $lockdatafileds7 ? 'readonly' : '' }}>{{$cc_cfts->qa_cqa_comments}}</textarea>
                                         </div>
 
 
@@ -8501,7 +8520,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_cqa_attach[]"
-                                                    {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{  $lockdatafileds7 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_cqa_attach')" multiple>
                                             </div>
                                         </div>
@@ -8653,7 +8672,7 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments"> Initiator Update Comments @if($data->stage == 9) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="intial_update_comments" {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{$cc_cfts->intial_update_comments}}</textarea>
+                                            <textarea name="intial_update_comments" {{ $lockdatafileds9 ? 'readonly' : '' }}>{{$cc_cfts->intial_update_comments}}</textarea>
                                         </div>
 
 
@@ -8681,7 +8700,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="intial_update_attach[]"
-                                                    {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{  $lockdatafileds9 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'intial_update_attach')" multiple>
                                             </div>
                                         </div>
@@ -8892,11 +8911,11 @@
                                     <div class="inner-block-content">
                                         <div class="group-input">
                                             <label for="qa-appro-comments">Implementation Verification by QA/CQA Comments @if($data->stage == 11) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="implementation_verification_comments" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $cc_cfts->implementation_verification_comments }}</textarea>
+                                            <textarea name="implementation_verification_comments" {{ $lockdatafileds11 ? 'readonly' : '' }}>{{ $cc_cfts->implementation_verification_comments }}</textarea>
                                         </div>
                                         <div class="group-input">
                                             <label for="feedback">Training Feedback</label>
-                                            <textarea name="feedback" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $approcomments->feedback }}</textarea>
+                                            <textarea name="feedback" {{  $lockdatafileds11 ? 'readonly' : '' }}>{{ $approcomments->feedback }}</textarea>
                                         </div>
 
                                         <div class="col-12">
@@ -8923,7 +8942,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="tran_attach[]"
-                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $lockdatafileds11 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'tran_attach')" multiple>
                                             </div>
                                         </div>
@@ -9093,7 +9112,7 @@
 
                                 <div class="group-input">
                                     <label for="qa-closure-comments">QA/CQA Closure Comments @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
-                                    <textarea name="qa_closure_comments" {{$data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
+                                    <textarea name="qa_closure_comments" {{$lockdatafileds12 ? 'readonly' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
                                 </div>
 
 
@@ -9108,7 +9127,9 @@
                                         </label>
 
                                         @if($data->stage == 12)
-                                            <select name="effect_check" class="effect_check" id="effect_check" required>
+                                            <select name="effect_check" class="effect_check" id="effect_check" @if ($lockdatafileds12)
+                                                        style="pointer-events: none; background-color: #e9ecef;"
+                                                    @endif required>
                                                 <option value="">--Select--</option>
                                                 <option value="Yes" {{ $cc_cfts->effect_check == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                 <option value="No" {{ $cc_cfts->effect_check == 'No' ? 'selected' : '' }}>No</option>
@@ -9147,7 +9168,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="attach_list[]"
-                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{ $lockdatafileds12 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'attach_list')" multiple>
                                             </div>
                                         </div>
@@ -9899,7 +9920,7 @@
                     <div class="col-lg-6">
                         <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
                             <label for="QA Final Review Comments">Closure Approved Comment :-</label>
-                            <div class="">{{ isset($commnetData->closure_approved_comment) ?$commnetData->closure_approved_comment :'Not Applicable' }}</div>
+                            <div class="">{{ isset($commnetData->closure_approved_comment) ? $commnetData->closure_approved_comment :'Not Applicable' }}</div>
                         </div>
                     </div>
 
