@@ -1400,7 +1400,7 @@ class EffectivenessCheckController extends Controller
 
                     $history->save();
 
-                    $list = Helpers::getInitiatorUserList($effective->division_id);
+                    $list = Helpers::getInitiatorUserList($effective->assign_to);
                     $getMail = User::where('id', $effective->assign_to)->value('email');
                     $userIds = collect($list)->pluck('user_id')->toArray();
                     $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
