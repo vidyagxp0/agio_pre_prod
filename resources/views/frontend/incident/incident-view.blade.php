@@ -1538,9 +1538,9 @@
         <select multiple name="audit_type[]" id="audit_type"
             {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
 
-            <option value="Equipment/Instrument"
+            <option value="Equipment/Instrument/System"
                 {{ strpos($data->audit_type, 'Equipment/Instrument/System') !== false ? 'selected' : '' }}>
-                Equipment/ Instrument/System
+                Equipment/Instrument/System
             </option>
 
             <option value="Material"
