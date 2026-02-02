@@ -5723,7 +5723,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "More Information Required",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -5818,7 +5818,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "More Information Required",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -5914,7 +5914,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "More Information Required",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -5986,7 +5986,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "More Information Required",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -6051,7 +6051,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "More Information Required",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -6126,7 +6126,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "More Information Required",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -6220,11 +6220,12 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             $lastDocument = Incident::find($id);
 
             $incident->stage = "0";
-            $incident->status = "Closed-Cancel";
+            $incident->status = "Closed-Cancelled";
             $incident->cancelled_by = Auth::user()->name;
             $incident->cancelled_on = Carbon::now()->format('d-M-Y');
             $incident->Hod_Cancelled_by = Auth::user()->name;
             $incident->Hod_Cancelled_on = Carbon::now()->format('d-M-Y');
+            $incident->Hod_Cancelled_cmt = $request->comment;
             $history = new IncidentAuditTrail();
             $history->incident_id = $id;
             $history->activity_type = 'Cancel By, Cancel On';
@@ -6302,7 +6303,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "Cancel",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $history->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -6738,10 +6739,10 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                                 $data = [
                                     'data'    => $incident,
-                                    'site'    => "view",
+                                    'site'    => "Incident",
                                     'history' => "Submit",
                                     'process' => 'Incident',
-                                    'comment' => $history->comments,
+                                    'comment' => $history->comment,
                                     'user'    => Auth::user()->name
                                 ];
                                 SendMail::dispatch(
@@ -6820,102 +6821,102 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
 
                     //rca child validation
-                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                        ->where('parent_type', 'Incident')
-                        ->get();
-                            $hasPendingRCA = false;
-                        foreach ($rcachilds as $ext) {
-                                $rcachildstatus = trim(strtolower($ext->status));
-                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 
-                                    'closed-cancelled' ) {
-                                    $hasPendingRCA = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingRCA) {
-                        // $rcachildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingRCA) {
-                            Session::flash('swal', [
-                                'title' => 'RCA Child Pending!',
-                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                    //     ->where('parent_type', 'Incident')
+                    //     ->get();
+                    //         $hasPendingRCA = false;
+                    //     foreach ($rcachilds as $ext) {
+                    //             $rcachildstatus = trim(strtolower($ext->status));
+                    //             if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 
+                    //                 'closed-cancelled' ) {
+                    //                 $hasPendingRCA = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingRCA) {
+                    //     // $rcachildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingRCA) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'RCA Child Pending!',
+                    //             'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
-                    //action item child validation
+                    // //action item child validation
 
-                    $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', 'Incident')
-                        ->get();
-                            $hasPendingaction = false;
-                        foreach ($actionchilds as $ext) {
-                                $actionchildstatus = trim(strtolower($ext->status));
-                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
-                                    $hasPendingaction = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingaction) {
-                        // $actionchildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingaction) {
-                            Session::flash('swal', [
-                                'title' => 'Action Item Child Pending!',
-                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // $actionchilds = ActionItem::where('parent_id', $id)
+                    //     ->where('parent_type', 'Incident')
+                    //     ->get();
+                    //         $hasPendingaction = false;
+                    //     foreach ($actionchilds as $ext) {
+                    //             $actionchildstatus = trim(strtolower($ext->status));
+                    //             if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
+                    //                 $hasPendingaction = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingaction) {
+                    //     // $actionchildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingaction) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'Action Item Child Pending!',
+                    //             'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
-                    //CAPA child validations 
-                    $capachilds = Capa::where('parent_id', $id)
-                        ->where('parent_type', 'Incident')
-                        ->get();
-                        $hasPendingcapa = false;
-                        foreach($capachilds as $ext) {
-                                $capachildstatus = trim(strtolower($ext->status));
-                                if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
-                                    $hasPendingcapa = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingcapa) {
-                        // $capachildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingcapa) {
-                            Session::flash('swal', [
-                                'title' => 'CAPA Child Pending!',
-                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // //CAPA child validations 
+                    // $capachilds = Capa::where('parent_id', $id)
+                    //     ->where('parent_type', 'Incident')
+                    //     ->get();
+                    //     $hasPendingcapa = false;
+                    //     foreach($capachilds as $ext) {
+                    //             $capachildstatus = trim(strtolower($ext->status));
+                    //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
+                    //                 $hasPendingcapa = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingcapa) {
+                    //     // $capachildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingcapa) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'CAPA Child Pending!',
+                    //             'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
 
 
@@ -6962,10 +6963,10 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                                 $data = [
                                     'data'    => $incident,
-                                    'site'    => "view",
+                                    'site'    => "Incident",
                                     'history' => "HOD Review Complete",
                                     'process' => 'Incident',
-                                    'comment' => $history->comments,
+                                    'comment' => $history->comment,
                                     'user'    => Auth::user()->name
                                 ];
                                 SendMail::dispatch(
@@ -7191,10 +7192,10 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                                 $data = [
                                     'data'    => $incident,
-                                    'site'    => "view",
+                                    'site'    => "Incident",
                                     'history' => "QA Initial Review Complete",
                                     'process' => 'Incident',
-                                    'comment' => $history->comments,
+                                    'comment' => $history->comment,
                                     'user'    => Auth::user()->name
                                 ];
                                 SendMail::dispatch(
@@ -7329,10 +7330,10 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                                 $data = [
                                     'data'    => $incident,
-                                    'site'    => "view",
+                                    'site'    => "Incident",
                                     'history' => "QAH/Designee Approval Complete",
                                     'process' => 'Incident',
-                                    'comment' => $history->comments,
+                                    'comment' => $history->comment,
                                     'user'    => Auth::user()->name
                                 ];
                                 SendMail::dispatch(
@@ -7677,7 +7678,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "Pending Initiator Update Complete",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $history->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -7803,7 +7804,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "HOD Final Review Complete",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $history->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -7838,7 +7839,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "HOD Final Review Complete",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $history->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -7873,7 +7874,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'site'    => "Incident",
                                         'history' => "HOD Final Review Complete",
                                         'process' => 'Incident',
-                                        'comment' => $history->comments,
+                                        'comment' => $history->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -8028,10 +8029,10 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'mail.view-mail',
                                         [
                                             'data' => $incident,
-                                            'site' => "INC",
+                                            'site' => "Incident",
                                             'history' => "More Information Required",
                                             'process' => 'Incident',
-                                            'comment' => $request->commenta,
+                                            'comment' => $request->comment,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $incident) {
@@ -8187,10 +8188,10 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         'mail.view-mail',
                                         [
                                             'data' => $incident,
-                                            'site' => "INC",
+                                            'site' => "Incident",
                                             'history' => "More Information Required",
                                             'process' => 'Incident',
-                                            'comment' => $request->commenta,
+                                            'comment' => $request->comment,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $incident) {
@@ -8268,7 +8269,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "Incident", 'history' => "Submit", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
                                     ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
@@ -8318,7 +8319,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "Incident", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
                                     ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
@@ -8390,7 +8391,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "Incident", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
                                     ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
@@ -8462,7 +8463,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "Incident", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
                                     ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
@@ -8514,7 +8515,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "Incident", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
                                     ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
@@ -8566,7 +8567,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             if ($email !== null) {
                             Mail::send(
                                 'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                                ['data' => $incident, 'site' => "Incident", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                 function ($message) use ($email, $incident) {
                                     $message->to($email)
                                     ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");

@@ -4947,7 +4947,7 @@ if ($areIniAttachmentsSame2 != true) {
                             $history->save();
                
 
-                    $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                    $list = Helpers::getLeadAuditeeUsersList($changeControl->division_id);
                         foreach ($list as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
@@ -4961,7 +4961,7 @@ if ($areIniAttachmentsSame2 != true) {
                                         'site'    => "Internal Audit",
                                         'history' => "Schedule Audit",
                                         'process' => 'Internal Audit',
-                                        'comment' => $history->comment,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -4997,6 +4997,8 @@ if ($areIniAttachmentsSame2 != true) {
             // ======================= STAGE 2 FIXED =======================
 if ($changeControl->stage == 2) {
 
+        $changeControl->stage  = 3;
+        $changeControl->status = 'Audit';
     $userId   = Auth::user()->id;
     $userName = Auth::user()->name;
     $now      = Carbon::now()->format('d-M-Y');
@@ -5086,7 +5088,7 @@ if ($changeControl->stage == 2) {
         return back();
     }
 
-                    $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+                    $list = Helpers::getLeadAuditorUsersList($changeControl->division_id);
 
                     foreach ($list as $u) {
 
@@ -5263,7 +5265,7 @@ if ($changeControl->stage == 2) {
                                         'site'    => "Internal Audit",
                                         'history' => "Issue Report",
                                         'process' => 'Internal Audit',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -5475,7 +5477,7 @@ if ($changeControl->stage == 2) {
                                         'site'    => "Internal Audit",
                                         'history' => "CAPA Plan Proposed",
                                         'process' => 'Internal Audit',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -5587,10 +5589,25 @@ if ($changeControl->stage == 2) {
                             }
                             $history->save();
 
-                             $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
-                            foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+                            $allUsers = collect()
+                                ->merge(Helpers::getLeadAuditeeUserList($changeControl->division_id))
+                                ->merge(Helpers::getLeadAuditorUsersList($changeControl->division_id))
+                                ->merge(Helpers::getCQAUsersList($changeControl->division_id));
+
+                            $emails = collect();
+
+                            foreach ($allUsers as $u) {
+                                $email = Helpers::getUserEmail($u->user_id);
+                                if ($email) {
+                                    $emails->push($email);
+                                }
+                            }
+
+                          
+                            $uniqueEmails = $emails->unique();
+
+                            foreach ($uniqueEmails as $email) {
+
                                 try {
 
                                     $data = [
@@ -5598,14 +5615,15 @@ if ($changeControl->stage == 2) {
                                         'site'    => "Internal Audit",
                                         'history' => "Response Reviewed",
                                         'process' => 'Internal Audit',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
+
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $changeControl,      
-                                        'Internal Audit'      
+                                        $changeControl,
+                                        'Internal Audit'
                                     );
 
                                 } catch (\Exception $e) {
@@ -5614,11 +5632,9 @@ if ($changeControl->stage == 2) {
                                         'email' => $email,
                                         'error' => $e->getMessage()
                                     ]);
-
                                 }
-
                             }
-                        }
+
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -5871,97 +5887,97 @@ if ($changeControl->stage == 2) {
                         ]);
                     }
 
-                    $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', 'Internal Audit')
-                        ->get();
-                            $hasPendingaction = false;
-                            foreach ($actionchilds as $ext) {
-                                $actionchildstatus = trim(strtolower($ext->status));
-                                if ($actionchildstatus !== 'closed - done') {
-                                    $hasPendingaction = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingaction) {
-                        // $actionchildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingaction) {
-                            Session::flash('swal', [
-                                'title' => 'Action Item Child Pending!',
-                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // $actionchilds = ActionItem::where('parent_id', $id)
+                    //     ->where('parent_type', 'Internal Audit')
+                    //     ->get();
+                    //         $hasPendingaction = false;
+                    //         foreach ($actionchilds as $ext) {
+                    //             $actionchildstatus = trim(strtolower($ext->status));
+                    //             if ($actionchildstatus !== 'closed - done') {
+                    //                 $hasPendingaction = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingaction) {
+                    //     // $actionchildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingaction) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'Action Item Child Pending!',
+                    //             'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
-                    $capachilds = Capa::where('parent_id', $id)
-                        ->where('parent_type', 'Internal Audit')
-                        ->get();
-                            $hasPending = false;
-                            foreach ($capachilds as $ext) {
-                                $capachildstatus = trim(strtolower($ext->status));
-                                if ($capachildstatus !== 'closed - done') {
-                                    $hasPending = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPending) {
-                        // $capachildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPending) {
-                            Session::flash('swal', [
-                                'title' => 'CAPA Child Pending!',
-                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // $capachilds = Capa::where('parent_id', $id)
+                    //     ->where('parent_type', 'Internal Audit')
+                    //     ->get();
+                    //         $hasPending = false;
+                    //         foreach ($capachilds as $ext) {
+                    //             $capachildstatus = trim(strtolower($ext->status));
+                    //             if ($capachildstatus !== 'closed - done') {
+                    //                 $hasPending = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPending) {
+                    //     // $capachildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPending) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'CAPA Child Pending!',
+                    //             'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
-                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                        ->where('parent_type', 'Internal Audit')
-                        ->get();
-                            $hasPendingRCA = false;
-                            foreach ($rcachilds as $ext) {
-                                $rcachildstatus = trim(strtolower($ext->status));
-                                if ($rcachildstatus !== 'closed - done') {
-                                    $hasPendingRCA = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingRCA) {
-                        // $rcachildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingRCA) {
-                            Session::flash('swal', [
-                                'title' => 'RCA Child Pending!',
-                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
+                    // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                    //     ->where('parent_type', 'Internal Audit')
+                    //     ->get();
+                    //         $hasPendingRCA = false;
+                    //         foreach ($rcachilds as $ext) {
+                    //             $rcachildstatus = trim(strtolower($ext->status));
+                    //             if ($rcachildstatus !== 'closed - done') {
+                    //                 $hasPendingRCA = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingRCA) {
+                    //     // $rcachildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingRCA) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'RCA Child Pending!',
+                    //             'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
             $changeControl->stage = "5";
             $changeControl->status = "Response Verification";
@@ -6002,9 +6018,9 @@ if ($changeControl->stage == 2) {
                                     $data = [
                                         'data'    => $changeControl,
                                         'site'    => "Internal Audit",
-                                        'history' => "CAPA Plan Proposed",
+                                        'history' => "No CAPAs Required",
                                         'process' => 'Internal Audit',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -6116,7 +6132,7 @@ if ($changeControl->stage == 2) {
                                         'site'    => "Internal Audit",
                                         'history' => "More Info Required",
                                         'process' => 'Internal Audit',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -6148,7 +6164,7 @@ if ($changeControl->stage == 2) {
                                         'site'    => "Internal Audit",
                                         'history' => "More Info Required",
                                         'process' => 'Internal Audit',
-                                        'comment' => $history->comments,
+                                        'comment' => $request->comment,
                                         'user'    => Auth::user()->name
                                     ];
                                     SendMail::dispatch(
@@ -6243,7 +6259,7 @@ if ($changeControl->stage == 2) {
                                                 'site'    => "Internal Audit",
                                                 'history' => "More Info Required",
                                                 'process' => 'Internal Audit',
-                                                'comment' => $history->comments,
+                                                'comment' => $request->comment,
                                                 'user'    => Auth::user()->name
                                             ];
                                             SendMail::dispatch(
@@ -6383,102 +6399,52 @@ if ($changeControl->stage == 2) {
                                     $history->action_name = 'Update';
                                 }
                                 $history->save();
-                                $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
-                                    foreach ($list as $u) {
-                                    $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                        try {
+                    $allUsers = collect()
+                        ->merge(Helpers::getLeadAuditeeUserList($changeControl->division_id))
+                        ->merge(Helpers::getCQAUsersList($changeControl->division_id))
+                        ->merge(Helpers::getQAUserList($changeControl->division_id));
 
-                                            $data = [
-                                                'data'    => $changeControl,
-                                                'site'    => "Internal Audit",
-                                                'history' => "Cancel",
-                                                'process' => 'Internal Audit',
-                                                'comment' => $history->comment,
-                                                'user'    => Auth::user()->name
-                                            ];
-                                            SendMail::dispatch(
-                                                $data,
-                                                $email,
-                                                $changeControl,      
-                                                'Internal Audit'      
-                                            );
+                    $uniqueEmails = collect();
 
-                                        } catch (\Exception $e) {
+                    foreach ($allUsers as $u) {
+                        $email = Helpers::getUserEmail($u->user_id);
+                        if ($email) {
+                            $uniqueEmails->push($email);
+                        }
+                    }
 
-                                            \Log::error('Queue Dispatch Error', [
-                                                'email' => $email,
-                                                'error' => $e->getMessage()
-                                            ]);
+                    // 🔑 Remove duplicate emails
+                    $uniqueEmails = $uniqueEmails->unique();
 
-                                        }
+                    foreach ($uniqueEmails as $email) {
 
-                                    }
-                                }
-                                $list = Helpers::getCQAUsersList($changeControl->division_id);
-                                    foreach ($list as $u) {
-                                    $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                        try {
+                        try {
 
-                                            $data = [
-                                                'data'    => $changeControl,
-                                                'site'    => "Internal Audit",
-                                                'history' => "Cancel",
-                                                'process' => 'Internal Audit',
-                                                'comment' => $history->comments,
-                                                'user'    => Auth::user()->name
-                                            ];
-                                            SendMail::dispatch(
-                                                $data,
-                                                $email,
-                                                $changeControl,      
-                                                'Internal Audit'      
-                                            );
+                            $data = [
+                                'data'    => $changeControl,
+                                'site'    => "Internal Audit",
+                                'history' => "Cancel",
+                                'process' => 'Internal Audit',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
 
-                                        } catch (\Exception $e) {
+                            SendMail::dispatch(
+                                $data,
+                                $email,
+                                $changeControl,
+                                'Internal Audit'
+                            );
 
-                                            \Log::error('Queue Dispatch Error', [
-                                                'email' => $email,
-                                                'error' => $e->getMessage()
-                                            ]);
+                        } catch (\Exception $e) {
 
-                                        }
+                            \Log::error('Queue Dispatch Error', [
+                                'email' => $email,
+                                'error' => $e->getMessage()
+                            ]);
+                        }
+                    }
 
-                                    }
-                                }
-                                $list = Helpers::getQAUserList($changeControl->division_id);
-                                    foreach ($list as $u) {
-                                    $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                        try {
-
-                                            $data = [
-                                                'data'    => $changeControl,
-                                                'site'    => "Internal Audit",
-                                                'history' => "Cancel",
-                                                'process' => 'Internal Audit',
-                                                'comment' => $history->comments,
-                                                'user'    => Auth::user()->name
-                                            ];
-                                            SendMail::dispatch(
-                                                $data,
-                                                $email,
-                                                $changeControl,      
-                                                'Internal Audit'      
-                                            );
-
-                                        } catch (\Exception $e) {
-
-                                            \Log::error('Queue Dispatch Error', [
-                                                'email' => $email,
-                                                'error' => $e->getMessage()
-                                            ]);
-
-                                        }
-
-                                    }
-                                }
                                 
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
@@ -6522,102 +6488,52 @@ if ($changeControl->stage == 2) {
                                 $history->action_name = 'Update';
                             }
                             $history->save();
-                             $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
-                                    foreach ($list as $u) {
-                                    $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                        try {
+                            $allUsers = collect()
+                            ->merge(Helpers::getLeadAuditeeUserList($changeControl->division_id))
+                            ->merge(Helpers::getCQAUsersList($changeControl->division_id))
+                            ->merge(Helpers::getQAUserList($changeControl->division_id));
 
-                                            $data = [
-                                                'data'    => $changeControl,
-                                                'site'    => "Internal Audit",
-                                                'history' => "Cancel",
-                                                'process' => 'Internal Audit',
-                                                'comment' => $history->comments,
-                                                'user'    => Auth::user()->name
-                                            ];
-                                            SendMail::dispatch(
-                                                $data,
-                                                $email,
-                                                $changeControl,      
-                                                'Internal Audit'      
-                                            );
+                        $uniqueEmails = collect();
 
-                                        } catch (\Exception $e) {
+                        foreach ($allUsers as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email) {
+                                $uniqueEmails->push($email);
+                            }
+                        }
 
-                                            \Log::error('Queue Dispatch Error', [
-                                                'email' => $email,
-                                                'error' => $e->getMessage()
-                                            ]);
+                        // 🔑 Remove duplicate emails
+                        $uniqueEmails = $uniqueEmails->unique();
 
-                                        }
+                        foreach ($uniqueEmails as $email) {
 
-                                    }
-                                }
-                                $list = Helpers::getCQAUsersList($changeControl->division_id);
-                                    foreach ($list as $u) {
-                                    $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                        try {
+                            try {
 
-                                            $data = [
-                                                'data'    => $changeControl,
-                                                'site'    => "Internal Audit",
-                                                'history' => "Cancel",
-                                                'process' => 'Internal Audit',
-                                                'comment' => $history->comments,
-                                                'user'    => Auth::user()->name
-                                            ];
-                                            SendMail::dispatch(
-                                                $data,
-                                                $email,
-                                                $changeControl,      
-                                                'Internal Audit'      
-                                            );
+                                $data = [
+                                    'data'    => $changeControl,
+                                    'site'    => "Internal Audit",
+                                    'history' => "Cancel",
+                                    'process' => 'Internal Audit',
+                                    'comment' =>  $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
 
-                                        } catch (\Exception $e) {
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $changeControl,
+                                    'Internal Audit'
+                                );
 
-                                            \Log::error('Queue Dispatch Error', [
-                                                'email' => $email,
-                                                'error' => $e->getMessage()
-                                            ]);
+                            } catch (\Exception $e) {
 
-                                        }
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
+                            }
+                        }
 
-                                    }
-                                }
-                                $list = Helpers::getQAUserList($changeControl->division_id);
-                                    foreach ($list as $u) {
-                                    $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                        try {
-
-                                            $data = [
-                                                'data'    => $changeControl,
-                                                'site'    => "Internal Audit",
-                                                'history' => "Cancel",
-                                                'process' => 'Internal Audit',
-                                                'comment' => $history->comments,
-                                                'user'    => Auth::user()->name
-                                            ];
-                                            SendMail::dispatch(
-                                                $data,
-                                                $email,
-                                                $changeControl,      
-                                                'Internal Audit'      
-                                            );
-
-                                        } catch (\Exception $e) {
-
-                                            \Log::error('Queue Dispatch Error', [
-                                                'email' => $email,
-                                                'error' => $e->getMessage()
-                                            ]);
-
-                                        }
-
-                                    }
-                                }
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -6660,102 +6576,52 @@ if ($changeControl->stage == 2) {
                                 $history->action_name = 'Update';
                             }
                             $history->save();
-                             $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
-                                    foreach ($list as $u) {
-                                    $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                        try {
+                            $allUsers = collect()
+                    ->merge(Helpers::getLeadAuditeeUserList($changeControl->division_id))
+                    ->merge(Helpers::getCQAUsersList($changeControl->division_id))
+                    ->merge(Helpers::getQAUserList($changeControl->division_id));
 
-                                            $data = [
-                                                'data'    => $changeControl,
-                                                'site'    => "Internal Audit",
-                                                'history' => "Cancel",
-                                                'process' => 'Internal Audit',
-                                                'comment' => $history->comments,
-                                                'user'    => Auth::user()->name
-                                            ];
-                                            SendMail::dispatch(
-                                                $data,
-                                                $email,
-                                                $changeControl,      
-                                                'Internal Audit'      
-                                            );
+                $uniqueEmails = collect();
 
-                                        } catch (\Exception $e) {
+                foreach ($allUsers as $u) {
+                    $email = Helpers::getUserEmail($u->user_id);
+                    if ($email) {
+                        $uniqueEmails->push($email);
+                    }
+                }
 
-                                            \Log::error('Queue Dispatch Error', [
-                                                'email' => $email,
-                                                'error' => $e->getMessage()
-                                            ]);
+                // 🔑 Remove duplicate emails
+                $uniqueEmails = $uniqueEmails->unique();
 
-                                        }
+                foreach ($uniqueEmails as $email) {
 
-                                    }
-                                }
-                                $list = Helpers::getCQAUsersList($changeControl->division_id);
-                                    foreach ($list as $u) {
-                                    $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                        try {
+                    try {
 
-                                            $data = [
-                                                'data'    => $changeControl,
-                                                'site'    => "Internal Audit",
-                                                'history' => "Cancel",
-                                                'process' => 'Internal Audit',
-                                                'comment' => $history->comments,
-                                                'user'    => Auth::user()->name
-                                            ];
-                                            SendMail::dispatch(
-                                                $data,
-                                                $email,
-                                                $changeControl,      
-                                                'Internal Audit'      
-                                            );
+                        $data = [
+                            'data'    => $changeControl,
+                            'site'    => "Internal Audit",
+                            'history' => "Cancel",
+                            'process' => 'Internal Audit',
+                            'comment' => $request->comment,
+                            'user'    => Auth::user()->name
+                        ];
 
-                                        } catch (\Exception $e) {
+                        SendMail::dispatch(
+                            $data,
+                            $email,
+                            $changeControl,
+                            'Internal Audit'
+                        );
 
-                                            \Log::error('Queue Dispatch Error', [
-                                                'email' => $email,
-                                                'error' => $e->getMessage()
-                                            ]);
+                    } catch (\Exception $e) {
 
-                                        }
+                        \Log::error('Queue Dispatch Error', [
+                            'email' => $email,
+                            'error' => $e->getMessage()
+                        ]);
+                    }
+                }
 
-                                    }
-                                }
-                                $list = Helpers::getQAUserList($changeControl->division_id);
-                                    foreach ($list as $u) {
-                                    $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                        try {
-
-                                            $data = [
-                                                'data'    => $changeControl,
-                                                'site'    => "Internal Audit",
-                                                'history' => "Cancel",
-                                                'process' => 'Internal Audit',
-                                                'comment' => $history->comments,
-                                                'user'    => Auth::user()->name
-                                            ];
-                                            SendMail::dispatch(
-                                                $data,
-                                                $email,
-                                                $changeControl,      
-                                                'Internal Audit'      
-                                            );
-
-                                        } catch (\Exception $e) {
-
-                                            \Log::error('Queue Dispatch Error', [
-                                                'email' => $email,
-                                                'error' => $e->getMessage()
-                                            ]);
-
-                                        }
-
-                                    }
-                                }
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
