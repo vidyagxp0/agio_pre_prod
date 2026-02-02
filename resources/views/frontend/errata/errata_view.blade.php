@@ -872,22 +872,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                    @foreach (unserialize($griddata->ListOfImpactingDocument) as $key => $temps)
+                                                @if(!empty($impactDocs))
+                                                    @foreach ($impactDocs as $key => $temps)
                                                         <tr>
+                                                            <td>
+                                                                <input disabled type="text" value="{{ $key + 1 }}">
+                                                            </td>
 
-                                                                <td><input disabled type="text" name="serial_number[]"
-                                                                        value="{{ $key + 1 }}">
-                                                                </td>
-                                                                <td><input type="text" name="ListOfImpactingDocument[]" required {{ $showdata->stage != 1 ? 'readonly' : '' }}
-                                                                        {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($griddata->ListOfImpactingDocument)[$key] ? unserialize($griddata->ListOfImpactingDocument)[$key] : '' }}">
-                                                                </td>
+                                                            <td>
+                                                                <input type="text"
+                                                                    name="ListOfImpactingDocument[]"
+                                                                    required
+                                                                    {{ $showdata->stage != 1 ? 'readonly' : '' }}
+                                                                    {{ in_array($showdata->stage, [0,8]) ? 'disabled' : '' }}
+                                                                    value="{{ $temps }}">
+                                                            </td>
 
-
-                                                            <td><button type="text"
-                                                                    class="removeRowBtn">Remove</button></td>
+                                                            <td>
+                                                                <button type="button" class="removeRowBtn">Remove</button>
+                                                            </td>
                                                         </tr>
                                                     @endforeach
+                                                @endif
                                             </tbody>
 
                                         </table>

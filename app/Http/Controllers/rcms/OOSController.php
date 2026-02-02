@@ -5015,7 +5015,7 @@ class OOSController extends Controller
                             // }
 
 
-                             $list = Helpers::getQAUserList($changestage->division_id);
+                             $list = Helpers::getQAHeadUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
 
@@ -5128,7 +5128,7 @@ class OOSController extends Controller
                             //    }
                             // }
 
-                             $list = Helpers::getQAUserList($changestage->division_id);
+                             $list = Helpers::getQAHeadUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
 
@@ -6151,7 +6151,41 @@ class OOSController extends Controller
                     //    }
                     // }
 
-                     $list = Helpers::getQAUserList($data->division_id);
+                     $list = Helpers::getInitiatorUserList($data->division_id);
+
+                                foreach ($list as $u) {
+
+                                    $email = Helpers::getUserEmail($u->user_id);
+
+                                    if (!empty($email)) {
+                                        try {
+                                            Mail::send(
+                                                'mail.view-mail',
+                                                [
+                                                    'data'    => $data,
+                                                    'site'    => "OOS/OOT",
+                                                    'history' => "Cancel",
+                                                    'process' => 'OOS/OOT',
+                                                    'comment' => $request->comment,
+                                                    'user'    => Auth::user()->name
+                                                ],
+                                                function ($message) use ($email, $data) {
+                                                    $message->to($email)
+                                                            ->subject(
+                                                                "Agio Notification: OOS/OOT, Record #"
+                                                                . str_pad($data->record, 4, '0', STR_PAD_LEFT)
+                                                                . " - Activity: Cancel"
+                                                            );
+                                                }
+                                            );
+                                        } catch (\Throwable $e) {
+                                            // Log error but do NOT break execution
+                                            \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
+                                        }
+                                    }
+                                }
+
+                                $list = Helpers::getQAHeadUserList($data->division_id);
 
                                 foreach ($list as $u) {
 
@@ -6306,6 +6340,7 @@ class OOSController extends Controller
                     ->merge(Helpers::getCQAUsersList($changestage->division_id))
                     ->merge(Helpers::getQAReviewerUserList($changestage->division_id))
                     ->merge(Helpers::getInitiatorUserList($changestage->division_id))
+                    ->merge(Helpers::getQAHeadUserList($changestage->division_id))
                     ->merge(Helpers::getHodUserList($changestage->division_id))
                     ->unique('user_id');
                                 foreach ($usersmerge as $u) {

@@ -2118,7 +2118,7 @@ class EffectivenessCheckController extends Controller
                     $history->action_name = 'Update';
                 }
 
-                $list = Helpers::getQAUserList($effective->division_id);
+                $list = Helpers::getQAHeadUserList($effective->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
                 $userId = $users->pluck('id')->implode(',');
@@ -2375,7 +2375,7 @@ class EffectivenessCheckController extends Controller
                                     'site'    => 'Effectiveness-Check',
                                     'history' => 'Effective Approval Completed',
                                     'process' => 'Effectiveness-Check',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name,
                                 ],
                                 function ($message) use ($email, $effective) {
@@ -2633,7 +2633,7 @@ class EffectivenessCheckController extends Controller
 
                 $history->save();
 
-                $list = Helpers::getQAUserList($effective->division_id);
+                $list = Helpers::getQAHeadUserList($effective->division_id);
                 $userIds = collect($list)->pluck('user_id')->toArray();
                 $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
                 $userId = $users->pluck('id')->implode(',');

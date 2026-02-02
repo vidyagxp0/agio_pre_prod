@@ -2428,7 +2428,7 @@ class MarketComplaintController extends Controller
 
     public function update(Request $request, $id)
     {
-//dd($request->all());
+// dd($request->all());
         $form_progress = null;
 
         // $marketComplaint = MarketComplaint::find($id);
@@ -8280,7 +8280,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                         /////////////
 
-                        $list = Helpers::getQAUserList($marketstat->division_id);
+                        $list = Helpers::getQAHeadUserList($marketstat->division_id);
 
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
@@ -10669,7 +10669,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->stage = 'Opened';
                 $history->save();
 
-                    $list = Helpers::getQAUserList($marketstat->division_id);
+                    $list = Helpers::getQAHeadUserList($marketstat->division_id);
 
                     foreach ($list as $u) {
                         $email = Helpers::getUserEmail($u->user_id);
@@ -10701,37 +10701,6 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
                     }
 
-                    $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                    foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
-
-                        if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data' => $marketstat,
-                                        'site' => "view",
-                                        'history' => "More Information Required",
-                                        'process' => 'Market Complaint',
-                                        'comment' => $request->comment,
-                                        'user' => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $marketstat) {
-                                        $message->to($email)
-                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                    }
-                                );
-                            } catch (\Exception $e) {
-                                // Log the error for debugging
-                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                                // Optionally handle the exception (e.g., notify the user or admin)
-                                session()->flash('error', 'Failed to send email to ' . $email);
-                            }
-                        }
-                    }
                 $marketstat->update();
 
                 return back();
@@ -10760,24 +10729,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                     $history->stage = 'Opened';
                     $history->save();
 
-                    // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
-                    //         foreach ($list as $u) {
-                    //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                    //             $email = Helpers::getUserEmail($u->user_id);
-                    //             // dd($email);
-                    //             if ($email !== null) {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "Cancel", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                    //                     function ($message) use ($email, $marketstat) {
-                    //                         $message->to($email)
-                    //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
-                    //                     }
-                    //                 );
-                    //             }
-                    //             // }
-                    //         }
-
+                   
                        $list = Helpers::getQAUserList($marketstat->division_id);
 
                         foreach ($list as $u) {
@@ -10884,6 +10836,73 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $history->change_from = "Supervisor Review";
             $history->stage = 'Closed - Cancelled';
             $history->save();
+
+                    $list = Helpers::getQAUserList($changeControl->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl,
+                                            'site' => "view",
+                                            'history' => "Cancel",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+
+                        $list = Helpers::getCQAUsersList($changeControl->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $changeControl,
+                                            'site' => "view",
+                                            'history' => "Cancel",
+                                            'process' => 'Market Complaint',
+                                            'comment' => $request->comment,
+                                            'user' => Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $changeControl) {
+                                            $message->to($email)
+                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                                        }
+                                    );
+                                } catch (\Exception $e) {
+                                    // Log the error for debugging
+                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+
+                                    // Optionally handle the exception (e.g., notify the user or admin)
+                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                }
+                            }
+                        }
+
+
+            
             $changeControl->update();
             toastr()->success('Document Sent');
             return back();

@@ -1313,7 +1313,7 @@
                                          @endif
                                     </label>
                                     <select name="categorization_of_complaint_gi" onchange=""
-                                        {{ $data->stage == 1 && $istab1 ? '' : 'disabled' }} required>
+                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required>
                                         <option value="">-- select --</option>
                                         <option value="Critical"
                                             {{ $data->categorization_of_complaint_gi == 'Critical' ? 'selected' : '' }}>
@@ -1326,7 +1326,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                    <input type="hidden" name="categorization_of_complaint_gi" value="{{ $data->categorization_of_complaint_gi }}">
+                                    <!-- <input type="hidden" name="categorization_of_complaint_gi" value="{{ $data->categorization_of_complaint_gi }}"> -->
                             </div>
 
                             <div class="col-lg-12">
@@ -1337,7 +1337,7 @@
                                          @endif
                                     </label>
                                     <select name="is_repeat_gi" id="is_repeat_gi"
-                                        {{ $data->stage == 1 && $istab1 ? '' : 'disabled' }} required>
+                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required>
                                         <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>--
                                             select --</option>
                                         <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes
@@ -1346,7 +1346,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                        <input type="hidden" name="is_repeat_gi" value="{{ $data->is_repeat_gi }}">
+                                        <!-- <input type="hidden" name="is_repeat_gi" value="{{ $data->is_repeat_gi }}"> -->
                             </div>
 
                             <div class="col-md-12 mb-3" id="repeat_nature_div" style="display: none;">
@@ -1456,7 +1456,7 @@
                                             <span class="text-danger">*</span>
                                          @endif </label>
                                     <select
-                                        name="probable_root_causes_complaint_hodsr"  {{ $data->stage == 1 && $istab1 ? '' : 'disabled' }}
+                                        name="probable_root_causes_complaint_hodsr"  {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}
                                         id="probable_root_causes_complaint_hodsr" required>
                                         {{-- <option value="">-- select --</option> --}}
                                         <option value=""
@@ -1472,7 +1472,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                    <input type="hidden" name="probable_root_causes_complaint_hodsr" value="{{ $data->probable_root_causes_complaint_hodsr }}">
+                                    <!-- <input type="hidden" name="probable_root_causes_complaint_hodsr" value="{{ $data->probable_root_causes_complaint_hodsr }}"> -->
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
