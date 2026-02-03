@@ -9104,42 +9104,30 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     //         SendMail::dispatch($data, $email, $changeControl, 'Change Control');
                     //     }
                     // }
+                        $list = Helpers::getHodUserList($changeControl->division_id);
 
-
-                      $list = Helpers::getHodUserList($changeControl->division_id);
                         foreach ($list as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if ($email !== null) {
 
-                                try {   
+                                try {
 
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl,
-                                            'site' => "CC",
-                                            'history' => "Submit",
-                                            'process' => 'Change Control',
-                                            'comment' => $request->comments,
-                                            'user'=> Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Change Control, Record #"
-                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: Submit"
-                                                );
-                                        }
-                                    );
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "CC",
+                                        'history' => "Submit",
+                                        'process' => 'Change Control',
+                                        'comment' => $request->comments,
+                                        'user'=> Auth::user()->name
+                                    ];
 
-                                } catch (\Exception $e) {   
+                                    SendMail::dispatch($data, $email, $changeControl, 'Change Control');
 
-                                    \Log::error('Mail Error: ' . $e->getMessage()); 
-
-                                }   
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
                             }
                         }
 
@@ -9272,24 +9260,20 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                             try {
 
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $changeControl,
-                                        'site'    => "Change Control",
-                                        'history' => "HOD Assessment Complete",
-                                        'process' => 'Change Control',
-                                        'comment' => $request->comments,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Change Control, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: HOD Assessment Complete"
-                                            );
-                                    }
+                                $data = [
+                                    'data'    => $changeControl,
+                                    'site'    => "Change Control",
+                                    'history' => "HOD Assessment Complete",
+                                    'process' => 'Change Control',
+                                    'comment' => $request->comments,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $changeControl,
+                                    'Change Control'
                                 );
 
                             } catch (\Exception $e) {
@@ -9490,28 +9474,24 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                             if ($email !== null) {
 
-                                try {   
+                                try {
+                                     $data = [
+                                    'data'    => $changeControl,
+                                    'site'    => "Change Control",
+                                    'history' => "QA/CQA Initial Assessment Complete",
+                                    'process' => 'Change Control',
+                                    'comment' => $request->comments,
+                                    'user'    => Auth::user()->name
+                                ];
 
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl,
-                                            'site' => "CC",
-                                            'history' => "QA/CQA Initial Assessment Complete",
-                                            'process' => 'Change Control',
-                                            'comment' => $request->comments,
-                                            'user'=> Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Change Control, Record #"
-                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: QA/CQA Initial Assessment Complete"
-                                                );
-                                        }
-                                    );
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $changeControl,
+                                    'Change Control'
+                                );
 
+                                   
                                 } catch (\Exception $e) {   
 
                                     \Log::error('Mail Error: ' . $e->getMessage()); 
@@ -10409,24 +10389,20 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                             try {
 
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $changeControl,
-                                        'site'    => "Change Control",
-                                        'history' => "CFT Review Complete",
-                                        'process' => 'Change Control',
-                                        'comment' => $request->comments,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Change Control, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: CFT Review Complete"
-                                            );
-                                    }
+                              $data = [
+                                    'data'    => $changeControl,
+                                    'site'    => "Change Control",
+                                    'history' => "CFT Review Complete",
+                                    'process' => 'Change Control',
+                                    'comment' => $request->comments,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $changeControl,
+                                    'Change Control'
                                 );
 
                             } catch (\Exception $e) {
@@ -10573,25 +10549,21 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 try {   
 
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl,
-                                            'site' => "CC",
-                                            'history' => "RA Approval Required",
-                                            'process' => 'Change Control',
-                                            'comment' => $request->comments,
-                                            'user'=> Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Change Control Required, Record #"
-                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: RA Approval Required"
-                                                );
-                                        }
-                                    );
+                                  $data = [
+                                    'data'    => $changeControl,
+                                    'site'    => "Change Control",
+                                    'history' => "RA Approval Required",
+                                    'process' => 'Change Control',
+                                    'comment' => $request->comments,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $changeControl,
+                                    'Change Control'
+                                );
 
                                 } catch (\Exception $e) {   
 
