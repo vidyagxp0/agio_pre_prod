@@ -9403,44 +9403,7 @@ class RiskManagementController extends Controller
                     }
                     $history->save();
 
-                    //  $list = Helpers::getHodDesigneeUserList($riskAssement->division_id);
-                    // foreach ($list as $u) {
-                    //     // if($u->q_m_s_divisions_id == $riskAssement->division_id){
-                    //         $email = Helpers::getUserEmail($u->user_id);
-                    //             if ($email !== null) {
-                    //             try {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $riskAssement, 'site' => "Risk Assessment", 'history' => "Submit", 'process' => 'Risk Assessment', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //                     function ($message) use ($email, $riskAssement) {
-                    //                         $message->to($email)
-                    //                         ->subject("Agio Notification: Risk Assesment, Record #" . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
-                    //                     }
-                    //                 );
-                    //             } catch(\Exception $e) {
-                    //                 info('Error sending mail', [$e]);
-                    //             }
-                    //         }
-                    //     // }
-                    // }
-
-
-                    //   $list = Helpers::getHodUserList($riskAssement->division_id);
-                    //     foreach ($list as $u) {
-                    //             $email = Helpers::getUserEmail($u->user_id);
-                    //                 if ($email !== null) {
-                    //                 Mail::send(
-                    //                     'mail.view-mail',
-                    //                     ['data' => $riskAssement, 'site' => "Risk Assessment", 'history' => "Submit", 'process' => 'Risk Assessment', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //                     function ($message) use ($email, $riskAssement) {
-                    //                         $message->to($email)
-                    //                        ->subject("Agio Notification: Risk Assessment, Record #" . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
-                    //                     }
-                    //                 );
-                    //             }
-                            
-                    //     }
-
+                   
 
 
                 $list = Helpers::getHodUserList($riskAssement->division_id); // Notify Initiator User
@@ -10497,97 +10460,97 @@ class RiskManagementController extends Controller
                         ]);
                     }
 
-                     $capachilds = Capa::where('parent_id', $id)
-                ->where('parent_type', 'Risk Assesment')
-                ->get();
-                    $hasPending = false;
-                foreach ($capachilds as $ext) {
-                        $capachildstatus = trim(strtolower($ext->status));
-                       if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
-                            $hasPending = true;
-                            break;
-                        }
-                    }
-               if ($hasPending) {
-                // $capachildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPending) {
-                       Session::flash('swal', [
-                           'title' => 'CAPA Child Pending!',
-                           'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                           'type' => 'warning',
-                       ]);
+            //          $capachilds = Capa::where('parent_id', $id)
+            //     ->where('parent_type', 'Risk Assesment')
+            //     ->get();
+            //         $hasPending = false;
+            //     foreach ($capachilds as $ext) {
+            //             $capachildstatus = trim(strtolower($ext->status));
+            //            if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
+            //                 $hasPending = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPending) {
+            //     // $capachildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPending) {
+            //            Session::flash('swal', [
+            //                'title' => 'CAPA Child Pending!',
+            //                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
-                $actionchilds = ActionItem::where('parent_id', $id)
-                ->where('parent_type', 'Risk Assesment')
-                ->get();
-                    $hasPendingaction = false;
-                foreach ($actionchilds as $ext) {
-                        $actionchildstatus = trim(strtolower($ext->status));
-                      if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                            $hasPendingaction = true;
-                            break;
-                        }
-                    }
-               if ($hasPendingaction) {
-                // $actionchildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPendingaction) {
-                       Session::flash('swal', [
-                           'title' => 'Action Item Child Pending!',
-                           'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                           'type' => 'warning',
-                       ]);
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
+            //     $actionchilds = ActionItem::where('parent_id', $id)
+            //     ->where('parent_type', 'Risk Assesment')
+            //     ->get();
+            //         $hasPendingaction = false;
+            //     foreach ($actionchilds as $ext) {
+            //             $actionchildstatus = trim(strtolower($ext->status));
+            //           if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+            //                 $hasPendingaction = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPendingaction) {
+            //     // $actionchildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPendingaction) {
+            //            Session::flash('swal', [
+            //                'title' => 'Action Item Child Pending!',
+            //                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
-               $ccchilds = CC::where('parent_id', $id)
-                ->where('parent_type', 'Risk Assesment')
-                ->get();
-                    $hasPending = false;
-                foreach ($ccchilds as $ext) {
-                        $ccchildstatus = trim(strtolower($ext->status));
-                        if ($ccchildstatus !== 'closed - done' && $ccchildstatus !== 'closed - rejected'  && $ccchildstatus !== 'closed-cancelled') {
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
+            //    $ccchilds = CC::where('parent_id', $id)
+            //     ->where('parent_type', 'Risk Assesment')
+            //     ->get();
+            //         $hasPending = false;
+            //     foreach ($ccchilds as $ext) {
+            //             $ccchildstatus = trim(strtolower($ext->status));
+            //             if ($ccchildstatus !== 'closed - done' && $ccchildstatus !== 'closed - rejected'  && $ccchildstatus !== 'closed-cancelled') {
                        
-                            $hasPending = true;
-                            break;
-                        }
-                    }
-               if ($hasPending) {
-                // $ccchildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPending) {
-                       Session::flash('swal', [
-                           'title' => 'Change Control Child Pending!',
-                           'message' => 'You cannot proceed until Change Control Child is Closed-Done.',
-                           'type' => 'warning',
-                       ]);
+            //                 $hasPending = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPending) {
+            //     // $ccchildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPending) {
+            //            Session::flash('swal', [
+            //                'title' => 'Change Control Child Pending!',
+            //                'message' => 'You cannot proceed until Change Control Child is Closed-Done.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
                     $riskAssement->stage = "5";
                     $riskAssement->status = "In Approval";
                     $riskAssement->QA_Initial_Review_Complete_By = Auth::user()->name;
@@ -10625,8 +10588,8 @@ class RiskManagementController extends Controller
                     
 
 
-                    $qaList     = Helpers::getQAUserList($riskAssement->division_id);
-                    $cqaList    = Helpers::getCQAUsersList($riskAssement->division_id);
+                    $qaList     = Helpers::getQAHeadUserList($riskAssement->division_id);
+                    $cqaList    = Helpers::getCQAHeadUsersList($riskAssement->division_id);
                     
                     $users = collect($qaList)
                                 ->merge($cqaList)
@@ -10732,13 +10695,11 @@ class RiskManagementController extends Controller
                    
 
 
-                    $qaList     = Helpers::getQAUserList($riskAssement->division_id);
-                    $cqaList    = Helpers::getCQAUsersList($riskAssement->division_id);
+                    $qaList     = Helpers::getHodUserList($riskAssement->division_id);
                     $cftList    = Helpers::getCftUserList($riskAssement->division_id);
                     $initiatorList    = Helpers::getInitiatorUserList($riskAssement->division_id);
                     
                     $users = collect($qaList)
-                                ->merge($cqaList)
                                 ->merge($cftList)
                                 ->merge($initiatorList)
                                 ->unique('user_id')

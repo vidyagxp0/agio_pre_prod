@@ -6516,78 +6516,17 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
             $history->save();
 
-            // $list = Helpers::getQAUserList($labstate->division_id); // Notify CFT Person
-            // foreach ($list as $u) {
-            //         $email = Helpers::getUserEmail($u->user_id);
-            //             if ($email !== null) {
-            //             Mail::send(
-            //                 'mail.view-mail',
-            //                 ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-            //                 function ($message) use ($email, $labstate) {
-            //                     $message->to($email)
-            //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-            //                 }
-            //             );
-            //         }
-            // }
-
-            //   $list = Helpers::getQAHeadUserList($labstate->division_id); // Notify CFT Person
-            // foreach ($list as $u) {
-            //         $email = Helpers::getUserEmail($u->user_id);
-            //             if ($email !== null) {
-            //             Mail::send(
-            //                 'mail.view-mail',
-            //                 ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-            //                 function ($message) use ($email, $labstate) {
-            //                     $message->to($email)
-            //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-            //                 }
-            //             );
-            //         }
-            // }
-
-
-
-            // $list = Helpers::getInitiatorUserList($labstate->division_id); // Notify CFT Person
-            // foreach ($list as $u) {
-            //         $email = Helpers::getUserEmail($u->user_id);
-            //             if ($email !== null) {
-            //             Mail::send(
-            //                 'mail.view-mail',
-            //                 ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-            //                 function ($message) use ($email, $labstate) {
-            //                     $message->to($email)
-            //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-            //                 }
-            //             );
-            //         }
-            // }
-
-            // $list = Helpers::getHodUserList($labstate->division_id); // Notify CFT Person
-            // foreach ($list as $u) {
-            //         $email = Helpers::getUserEmail($u->user_id);
-            //             if ($email !== null) {
-            //             Mail::send(
-            //                 'mail.view-mail',
-            //                 ['data' => $labstate, 'site' => "LI", 'history' => "Approved", 'process' => 'Lab Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-            //                 function ($message) use ($email, $labstate) {
-            //                     $message->to($email)
-            //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($labstate->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved");
-            //                 }
-            //             );
-            //         }
-            // }
+           
 
             // Get all required users
-                $qaList        = Helpers::getQAUserList($labstate->division_id);
-                $qaHeadList    = Helpers::getQAHeadUserList($labstate->division_id);
+                $qaList        = Helpers::getQAReviewerUserList($labstate->division_id);
+                $qaHeadList    = Helpers::QCHead($labstate->division_id);
                 $initiatorList = Helpers::getInitiatorUserList($labstate->division_id);
-                $initiatorHod = Helpers::getHodUserList($labstate->division_id);
+              
                 // Merge & remove duplicate users
                 $users = collect($qaList)
                             ->merge($qaHeadList)
                             ->merge($initiatorList)
-                            ->merge($initiatorHod)
                             ->unique('user_id')
                             ->values();
 
@@ -7132,7 +7071,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                                     ->get();
                                         $hasPending = false;
                                     foreach ($Extensionchilds as $ext) {
-                                            $capachildstatus = trim(strtolower($ext->status));
+                                            $extensionchildStatus = trim(strtolower($ext->status));
                                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
                                                 $hasPending = true;
                                                 break;
@@ -7344,7 +7283,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                                 [
                                     'data'    => $changeControl,
                                     'site'    => "LI",
-                                    'history' => "Submit",
+                                    'history' => "QC Head/HOD Secondary Review Complete",
                                     'process' => 'Lab Incident',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
@@ -7354,7 +7293,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                                             ->subject(
                                                 "Agio Notification: Lab Incident, Record #"
                                                 . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: Submit"
+                                                . " - Activity: QC Head/HOD Secondary Review Complete"
                                             );
                                 }
                             );
@@ -7515,22 +7454,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     }
 
                 $history->save();
-                // $list = Helpers::getCftUserList($changeControl->division_id); // Notify CFT Person
-                // foreach ($list as $u) {
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "LI", 'history' => "Root Cause Not Found", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                 function ($message) use ($email, $changeControl) {
-                //                     $message->to($email)
-                //                     ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Root Cause Not Found");
-                //                 }
-                //             );
-                //         }
-                //     // }
-                // }
-
+               
                 $changeControl->update();
                 //toastr()->success('Document Sent');
                 return back();
