@@ -9455,7 +9455,7 @@ class RiskManagementController extends Controller
                                 'mail.view-mail',
                                 [
                                     'data'    => $riskAssement,
-                                    'site'    => "Risk Assessment",
+                                    'site'    => "RA",
                                     'history' => "Submit",
                                     'process' => 'Risk Assessment',
                                     'comment' => $request->comment,
@@ -9594,7 +9594,7 @@ class RiskManagementController extends Controller
                                 'mail.view-mail',
                                 [
                                     'data'    => $riskAssement,
-                                    'site'    => "Risk Assessment",
+                                    'site'    => "RA",
                                     'history' => "Hod Review Complete",
                                     'process' => 'Risk Assessment',
                                     'comment' => $request->comment,
@@ -10436,7 +10436,7 @@ class RiskManagementController extends Controller
                                     'mail.view-mail',
                                     [
                                         'data'    => $riskAssement,
-                                        'site'    => "Risk Assessment",
+                                        'site'    => "RA",
                                         'history' => "CFT Review Complete",
                                         'process' => 'Risk Assessment',
                                         'comment' => $request->comment,
@@ -10644,7 +10644,7 @@ class RiskManagementController extends Controller
                                     'mail.view-mail',
                                     [
                                         'data'    => $riskAssement,
-                                        'site'    => "Risk Assessment",
+                                        'site'    => "RA",
                                         'history' => "QA/CQA Review Complete",
                                         'process' => 'Risk Assessment',
                                         'comment' => $request->comment,
@@ -10755,7 +10755,7 @@ class RiskManagementController extends Controller
                                     'mail.view-mail',
                                     [
                                         'data'    => $riskAssement,
-                                        'site'    => "Risk Assessment",
+                                        'site'    => "RA",
                                         'history' => "In Approved",
                                         'process' => 'Risk Assessment',
                                         'comment' => $request->comment,
@@ -11007,7 +11007,7 @@ class RiskManagementController extends Controller
                                 'mail.view-mail',
                                 [
                                     'data'    => $riskAssement,
-                                    'site'    => "Risk Assessment",
+                                    'site'    => "RA",
                                     'history' => "More Info Required",
                                     'process' => 'Risk Assessment',
                                     'comment' => $request->comment,
@@ -11043,7 +11043,7 @@ class RiskManagementController extends Controller
                                 'mail.view-mail',
                                 [
                                     'data'    => $riskAssement,
-                                    'site'    => "Risk Assessment",
+                                    'site'    => "RA",
                                     'history' => "More Info Required",
                                     'process' => 'Risk Assessment',
                                     'comment' => $request->comment,
@@ -11147,7 +11147,7 @@ class RiskManagementController extends Controller
                                 'mail.view-mail',
                                 [
                                     'data'    => $riskAssement,
-                                    'site'    => "Risk Assessment",
+                                    'site'    => "RA",
                                     'history' => "More Info Required",
                                     'process' => 'Risk Assessment',
                                     'comment' => $request->comment,
@@ -11300,7 +11300,7 @@ class RiskManagementController extends Controller
                                 'mail.view-mail',
                                 [
                                     'data'    => $riskAssement,
-                                    'site'    => "Risk Assessment",
+                                    'site'    => "RA",
                                     'history' => "More Info Required",
                                     'process' => 'Risk Assessment',
                                     'comment' => $request->comment,
@@ -11480,7 +11480,7 @@ class RiskManagementController extends Controller
                                 'mail.view-mail',
                                 [
                                     'data'    => $riskAssement,
-                                    'site'    => "Risk Assessment",
+                                    'site'    => "RA",
                                     'history' => "More Info Required",
                                     'process' => 'Risk Assessment',
                                     'comment' => $request->comment,
@@ -11559,7 +11559,7 @@ class RiskManagementController extends Controller
                                 'mail.view-mail',
                                 [
                                     'data'    => $riskAssement,
-                                    'site'    => "Risk Assessment",
+                                    'site'    => "RA",
                                     'history' => "More Info Required",
                                     'process' => 'Risk Assessment',
                                     'comment' => $request->comment,
@@ -11874,6 +11874,41 @@ class RiskManagementController extends Controller
                 $history->change_from = "Supervisor Review";
                 $history->stage='Closed - Cancelled';
                 $history->save();
+
+                $list = Helpers::getHodUserList($riskAssement->division_id); // Notify Initiator User
+
+                foreach ($list as $u) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if ($email) {
+                        try {
+                            Mail::send(
+                                'mail.view-mail',
+                                [
+                                    'data'    => $riskAssement,
+                                    'site'    => "RA",
+                                    'history' => "Cancel",
+                                    'process' => 'Risk Assessment',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ],
+                                function ($message) use ($email, $riskAssement) {
+                                    $message->to($email)
+                                            ->subject(
+                                                "Agio Notification: Risk Assessment, Record #"
+                                                . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
+                                                . " - Activity: Cancel"
+                                            );
+                                }
+                            );
+                        } catch (\Throwable $e) {
+                            \Log::error(
+                                'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
+                            );
+                        }
+                    }
+                }
                 $riskAssement->update();
                 toastr()->success('Document Sent');
                 return back();

@@ -9939,6 +9939,27 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     }
                     $history->save();
 
+                     $list = Helpers::getQAUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Request for Cancellation", 'process' => 'Deviation', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request for Cancellation Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
+
 
                     // $list = Helpers::getHodUserList();
                     // foreach ($list as $u) {
@@ -10054,7 +10075,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     $history->save();
 
 
-                 $list = Helpers::getHodUserList($deviation->division_id);
+                 $list = Helpers::getQAHeadUserList($deviation->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $deviation->division_id){
                             $email = Helpers::getUserEmail($u->user_id);
@@ -10520,7 +10541,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                 $cftDetails = DeviationCftsResponse::withoutTrashed()->where(['status' => 'In-progress', 'deviation_id' => $id])->distinct('cft_user_id')->count();
 
                 if ($deviation->stage == 1) {
-                    if ($deviation->form_progress !== 'general-open')
+                    if ($deviation->stage == 1)
                     {
                         // dd('emnter');
                         Session::flash('swal', [
@@ -10732,52 +10753,52 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     return back();
                 }
                 if ($deviation->stage == 3) {
-                    if ($deviation->form_progress !== 'cft')
-                    {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'QA/CQA initial review and CFT Mandatory Tab is yet to be filled!'
-                        ]);
+            //         if ($deviation->form_progress !== 'cft')
+            //         {
+            //             Session::flash('swal', [
+            //                 'type' => 'warning',
+            //                 'title' => 'Mandatory Fields!',
+            //                 'message' => 'QA/CQA initial review and CFT Mandatory Tab is yet to be filled!'
+            //             ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for CFT review state'
-                        ]);
-                    }
-                     $extensionchild = extension_new::where('parent_id', $id)
-                ->where('parent_type', 'Deviation')
-                ->get();
-                    $hasPending2 = false;
-                foreach ($extensionchild as $ext) {
-                        $extensionchildStatus = trim(strtolower($ext->status));
-                        if ($extensionchildStatus !== 'closed - done') {
-                            $hasPending2 = true;
-                            break;
-                        }
-                    }
+            //             return redirect()->back();
+            //         } else {
+            //             Session::flash('swal', [
+            //                 'type' => 'success',
+            //                 'title' => 'Success',
+            //                 'message' => 'Sent for CFT review state'
+            //             ]);
+            //         }
+            //          $extensionchild = extension_new::where('parent_id', $id)
+            //     ->where('parent_type', 'Deviation')
+            //     ->get();
+            //         $hasPending2 = false;
+            //     foreach ($extensionchild as $ext) {
+            //             $extensionchildStatus = trim(strtolower($ext->status));
+            //             if ($extensionchildStatus !== 'closed - done') {
+            //                 $hasPending2 = true;
+            //                 break;
+            //             }
+            //         }
 
-               if ($hasPending2) {
-                // $extensionchildStatus = trim(strtolower($extensionchild->status));
-                       Session::flash('swal', [
-                           'title' => 'Extension Child Pending!',
-                           'message' => 'You cannot proceed until Extension Child is Closed-Done.',
-                           'type' => 'warning',
-                       ]);
+            //    if ($hasPending2) {
+            //     // $extensionchildStatus = trim(strtolower($extensionchild->status));
+            //            Session::flash('swal', [
+            //                'title' => 'Extension Child Pending!',
+            //                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
+            //        return redirect()->back();
                 
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Sent for Next Stage',
-                       'type' => 'success',
-                   ]);
-               }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Sent for Next Stage',
+            //            'type' => 'success',
+            //        ]);
+            //    }
 
 
                     $getCftData = DeviationCft::where('deviation_id', $id)->first();
@@ -12161,6 +12182,26 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     }
                     $history->save();
                   
+                     $list = Helpers::getHodUserList($deviation->division_id);
+                    foreach ($list as $u) {
+                        // if($u->q_m_s_divisions_id == $deviation->division_id){
+                            $email = Helpers::getUserEmail($u->user_id);
+                                if ($email !== null) {
+                                try {
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $deviation, 'site'=>"DEV", 'history' => "Initiator Updated Complete", 'process' => 'Deviation', 'comment' => $deviation->pending_initiator_approved_comment, 'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $deviation) {
+                                            $message->to($email)
+                                            ->subject("Agio Notification: Deviation, Record #" . str_pad($deviation->record, 4, '0', STR_PAD_LEFT) . " - Activity: Initiator Updated Complete Performed");
+                                        }
+                                    );
+                                } catch(\Exception $e) {
+                                    info('Error sending mail', [$e]);
+                                }
+                            }
+                        // }
+                    }
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
