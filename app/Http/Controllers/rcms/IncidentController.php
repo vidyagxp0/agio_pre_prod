@@ -5972,7 +5972,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
                 
-                 $list = Helpers::getInitiatorUserList($incident->division_id);
+                 $list = Helpers::getQAHeadUserList($incident->division_id);
                         foreach ($list as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
@@ -6037,7 +6037,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->change_to =   "Pending Initiator Update";
                 $history->change_from = "HOD Final Review";
 
-                 $list = Helpers::getHodUserList($incident->division_id);
+                 $list = Helpers::getInitiatorUserList($incident->division_id);
                         foreach ($list as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
@@ -6112,7 +6112,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->change_from = "QA Final Review";
 
 
-                 $list = Helpers::getQAReviewerUserList($incident->division_id);
+                 $list = Helpers::getHodUserList($incident->division_id);
                         foreach ($list as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
@@ -6190,6 +6190,41 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
 
                 // $list = Helpers::getQAReviewerUserList($incident->division_id);
+                    $list = Helpers::getQAReviewerUserList($incident->division_id);
+                        foreach ($list as $u) {
+
+                            $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {
+
+                                    $data = [
+                                        'data'    => $incident,
+                                        'site'    => "Incident",
+                                        'history' => "More Information Required",
+                                        'process' => 'Incident',
+                                        'comment' => $request->comment,
+                                        'user'    => Auth::user()->name
+                                    ];
+                                    SendMail::dispatch(
+                                        $data,
+                                        $email,
+                                        $incident,      
+                                        'Incident'      
+                                    );
+
+                                } catch (\Exception $e) {
+
+                                    \Log::error('Queue Dispatch Error', [
+                                        'email' => $email,
+                                        'error' => $e->getMessage()
+                                    ]);
+
+                                }
+
+                            }
+                        }
 
                 
 
@@ -8030,7 +8065,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         [
                                             'data' => $incident,
                                             'site' => "Incident",
-                                            'history' => "More Information Required",
+                                            'history' => "QA Final Review Complete",
                                             'process' => 'Incident',
                                             'comment' => $request->comment,
                                             'user'=> Auth::user()->name
@@ -8040,7 +8075,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                                 ->subject(
                                                     "Agio Notification: Incident, Record #"
                                                     . str_pad($incident->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: More Information Required"
+                                                    . " - Activity: QA Final Review Complete"
                                                 );
                                         }
                                     );
@@ -8174,8 +8209,16 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
                     $history->save();
 
-                    $list = Helpers::getQAReviewerUserList($incident->division_id);
-                     foreach ($list as $u)
+                    $usersmerge = collect()
+                    ->merge(Helpers::getQAUserList($incident->division_id))
+                    ->merge(Helpers::getCQAUsersList($incident->division_id))
+                    ->merge(Helpers::getQAReviewerUserList($incident->division_id))
+                    ->merge(Helpers::getInitiatorUserList($incident->division_id))
+                    ->merge(Helpers::getQAHeadUserList($incident->division_id))
+                    ->merge(Helpers::getHodUserList($incident->division_id))
+                    ->unique('user_id');
+                    // $list = Helpers::getQAReviewerUserList($incident->division_id);
+                     foreach ($usersmerge as $u)
                     {
 
                             $email = Helpers::getUserEmail($u->user_id);
@@ -8189,7 +8232,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                         [
                                             'data' => $incident,
                                             'site' => "Incident",
-                                            'history' => "More Information Required",
+                                            'history' => "Approved",
                                             'process' => 'Incident',
                                             'comment' => $request->comment,
                                             'user'=> Auth::user()->name
@@ -8199,7 +8242,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                                 ->subject(
                                                     "Agio Notification: Incident, Record #"
                                                     . str_pad($incident->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: More Information Required"
+                                                    . " - Activity: Approved"
                                                 );
                                         }
                                     );
