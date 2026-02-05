@@ -210,7 +210,7 @@
     <!-- ------------------------------grid-3-------------------------script -->
 
 
-<script>
+    <script>
         $(document).ready(function() {
             $('#oos_details').click(function(e) {
                 function generateTableRow(serialNumber) {
@@ -744,7 +744,9 @@
 
             <!-- General Information -->
             @include('frontend.OOS.comps.general_information')
-
+            @php
+               $istab2 = $data->stage == 2 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 4) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18));
+            @endphp
             <div id="CCForm27" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -759,7 +761,7 @@
                                 </div>
                                 <textarea name="hod_remark1"
                                     class="form-control {{$errors->has('hod_remark1') ? 'is-invalid' : ''}}"
-                                    {{ $data->stage == 2 ? 'required' : 'readonly' }}>{{$data->hod_remark1}}</textarea>
+                                    {{ $istab2 ? 'required' : 'readonly' }}>{{$data->hod_remark1}}</textarea>
                                 @if($errors->has('hod_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark1') }}
@@ -794,7 +796,7 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input  {{ $data->stage == 2 ? '' : 'readonly' }} type="file" id="myfile" name="hod_attachment1[]"
+                                        <input  {{ $istab2 ? '' : 'disabled' }} type="file" id="myfile" name="hod_attachment1[]"
                                             oninput="addMultipleFiles(this, 'hod_attachment1')"
                                             multiple>
                                     </div>
@@ -816,6 +818,10 @@
                 </div>
 
             </div>
+
+            @php
+                $istab3 = $data->stage == 3 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18));
+            @endphp
             <div id="CCForm28" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -833,7 +839,7 @@
                                 <textarea
                                     name="QA_Head_remark1"
                                     class="form-control {{$errors->has('QA_Head_remark1') ? 'is-invalid' : ''}}"
-                                    {{ $data->stage == 3 ? '' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
+                                    {{ $istab3 ? '' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_remark1}}</textarea>
                                     @if($errors->has('QA_Head_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_remark1') }}
@@ -869,7 +875,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" {{$data->stage == 1 || $data->stage == 2 ? '' : 'readonly' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_attachment1')" {{ $istab3 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -890,6 +896,10 @@
                 </div>
 
             </div>
+
+            @php
+                $istab4 = $data->stage == 4 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18));
+            @endphp
             <div id="CCForm29" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -907,7 +917,7 @@
                                 <textarea
                                     name="QA_Head_primary_remark1"
                                     class="form-control {{$errors->has('QA_Head_primary_remark1') ? 'is-invalid' : ''}}"
-                                    {{ $data->stage == 4 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
+                                    {{ $istab4 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->QA_Head_primary_remark1}}</textarea>
                                     @if($errors->has('QA_Head_primary_remark1'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('QA_Head_primary_remark1') }}
@@ -943,7 +953,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="QA_Head_primary_attachment1[]"
-                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" {{ $data->stage == 4 ? '' : 'readonly' }} multiple>
+                                            oninput="addMultipleFiles(this, 'QA_Head_primary_attachment1')" {{ $istab4 ? '' : 'disabled' }} multiple>
                                     </div>
                                 </div>
                             </div>
@@ -966,7 +976,9 @@
             </div>
 
             @include('frontend.OOS.comps.preliminary')
-
+            @php
+                $istab5 = $data->stage == 5 && (($data->initiator_id == Auth::user()->id) ||(Helpers::check_roles($data->division_id, 'OOS/OOT', 3) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)));
+            @endphp
             @php
             $ph_meter_questions = array(
                     "Was instrument calibrated before start of analysis?",
@@ -7877,6 +7889,9 @@
                 </div>
             </div>
 
+            @php
+                $istab9 = $data->stage == 9 && (($data->initiator_id == Auth::user()->id) || ( Helpers::check_roles($data->division_id, 'OOS/OOT', 3) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)));
+            @endphp
             <div id="CCForm42" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -7972,28 +7987,16 @@
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary Of Review <span class="text-danger">*</span></label>
-                                <textarea class="summernote" id="summernote-1" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->summaryy_of_review }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="summaryy_of_review">{{ $data->summaryy_of_review }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Probable Cause Identification <span class="text-danger">*</span></label>
-                                <textarea class="summernote" id="summernote-1" name="Probable_cause_iden" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Probable_cause_iden }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Probable_cause_iden" >{{ $data->Probable_cause_iden }}</textarea>
                             </div>
                         </div>
-                        {{-- <div class="col-lg-6 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Proposal for Phase IB hypothesis</label>
-                                    <select name="proposal_for_hypothesis_IB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
-                                    <option value="" >--Select---</option>
-                                    <option value="Re-injection of the original vial" {{ $data->proposal_for_hypothesis_IB == 'Re-injection of the original vial' ? 'selected' : '' }}>Re-injection of the original vial</option>
-                                    <option value="Re-filtration and Injection from final dilution" {{ $data->proposal_for_hypothesis_IB == 'Re-filtration and Injection from final dilution' ? 'selected' : '' }}>Re-filtration and Injection from final dilution</option>
-                                    <option value="Re-dilution from the tock solution and injection" {{ $data->proposal_for_hypothesis_IB == 'Re-dilution from the tock solution and injection' ? 'selected' : '' }}>Re-dilution from the tock solution and injection</option>
-                                    <option value="Re-sonication / re-shaking due to probable incomplete solubility and analyze" {{ $data->proposal_for_hypothesis_IB == 'Re-sonication / re-shaking due to probable incomplete solubility and analyze' ? 'selected' : '' }}>Re-sonication / re-shaking due to probable incomplete solubility and analyze</option>
-                                    <option value="Other" {{ $data->proposal_for_hypothesis_IB == 'Other' ? 'selected' : '' }}>Other</option>
-                                    </select>
-                            </div>
-                        </div> --}}
+
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="checklists">Proposal For Phase IB hypothesis</label>
@@ -8020,13 +8023,13 @@
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Others</label>
-                                <textarea class="summernote" id="summernote-1" name="proposal_for_hypothesis_others" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->proposal_for_hypothesis_others }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="proposal_for_hypothesis_others">{{ $data->proposal_for_hypothesis_others }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details Of Results (Including original OOS/OOT results for side by side comparison) <span class="text-danger">*</span></label>
-                                <textarea class="summernote" id="summernote-1" name="details_of_result" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->details_of_result }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="details_of_result" >{{ $data->details_of_result }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8048,13 +8051,13 @@
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Proposal For Hypothesis Testing To Confirm Probable Cause Identified <span class="text-danger">*</span></label>
-                                <textarea class="summernote" id="summernote-1" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Proposal_for_Hypothesis" >{{ $data->Proposal_for_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary Of Hypothesis <span class="text-danger">*</span> </label>
-                                <textarea class="summernote" id="summernote-1" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Summary_of_Hypothesis">{{ $data->Summary_of_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8091,7 +8094,7 @@
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation Of Phase IB investigation Timeline <span class="text-danger">*</span></label>
-                                <textarea class="summernote" id="summernote-1" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Evaluation_Timeline }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Evaluation_Timeline" >{{ $data->Evaluation_Timeline }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8139,7 +8142,7 @@
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat Testing Plan</label>
-                                <textarea class="summernote" id="summernote-1" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_testing_plan }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Repeat_testing_plan">{{ $data->Repeat_testing_plan }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8152,16 +8155,7 @@
                                 </select>
                             </div>
                         </div>
-                        {{-- <div class="col-lg-6 new-time-data-field">
-                            <div class="group-input input-time">
-                                <label for="If Others">Production Person</label>
-                                    <select name="production_person_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
-                                    <option value="" >--Select---</option>
-                                    <option value="Yes" {{ $data->production_person_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="No" {{ $data->production_person_ib == 'No' ? 'selected' : '' }}>No</option>
-                                </select>
-                            </div>
-                        </div> --}}
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Assigned To">Production Person <span class="text-danger">*</span></label>
@@ -8182,25 +8176,25 @@
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat Analysis Method/Resampling <span class="text-danger">*</span></label>
-                                <textarea class="summernote" id="summernote-1" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_analysis_method }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Repeat_analysis_method" >{{ $data->Repeat_analysis_method }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Details Of Repeat Analysis <span class="text-danger">*</span></label></label>
-                                <textarea class="summernote" id="summernote-1" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Details_repeat_analysis }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Details_repeat_analysis" >{{ $data->Details_repeat_analysis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Impact Assessment <span class="text-danger">*</span></label></label>
-                                <textarea class="summernote" id="summernote-1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Impact_assessment1 }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Impact_assessment1">{{ $data->Impact_assessment1 }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Conclusion <span class="text-danger">*</span></label></label>
-                                <textarea class="summernote" id="summernote-1" name="Conclusion1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Conclusion1 }}</textarea>
+                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Conclusion1">{{ $data->Conclusion1 }}</textarea>
                             </div>
                         </div>
 
@@ -8791,7 +8785,9 @@
 
             </div>
             @include('frontend.OOS.comps.phase_two_investigation')
-
+            @php
+              $istab8 = $data->stage == 8 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18));
+            @endphp  
             <div id="CCForm36" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -9674,6 +9670,7 @@
                 ['view', ['fullscreen', 'codeview', 'help']]
             ]
         });
+
 
         let referenceCount = 1;
 
