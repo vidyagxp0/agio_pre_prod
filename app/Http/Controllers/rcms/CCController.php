@@ -9076,42 +9076,32 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                     $history->save();
 
-                    $emails = collect(Helpers::getHodUserList($changeControl->division_id))
-                        ->map(function ($u) {
-                            return Helpers::getUserEmail($u->user_id);
-                        })
-                        ->filter()      // null remove
-                        ->unique()      // duplicate email remove
-                        ->values();
+                   $list = Helpers::getHodUserList($changeControl->division_id);
 
-                        foreach ($emails as $email) {
+                        foreach ($list as $u) {
 
-                        $data = [
-                            'data'    => $changeControl,
-                            'site'    => "CC",
-                            'history' => "Submit",
-                            'process' => 'Change Control',
-                            'comment' => $request->comments,
-                            'user'    => Auth::user()->name
-                        ];
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                        try {
+                            if ($email !== null) {
 
-                            SendMail::dispatch(
-                                $data,
-                                $email,
-                                $changeControl,
-                                'Change Control'
-                            );
+                                try {
 
-                        } catch (\Exception $e) {
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "CC",
+                                        'history' => "Submit",
+                                        'process' => 'Change Control',
+                                        'comment' => $request->comments,
+                                        'user'=> Auth::user()->name
+                                    ];
 
-                            \Log::error('Queue Dispatch Error', [
-                                'email' => $email,
-                                'error' => $e->getMessage()
-                            ]);
+                                    SendMail::dispatch($data, $email, $changeControl, 'Change Control');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
+                            }
                         }
-                    }
 
 
                     $changeControl->update();
@@ -9226,7 +9216,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     $history->save();
 
                     //  $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA
-                    $QARevlist = Helpers::getQAUserList($changeControl->division_id);
+                     $QARevlist = Helpers::getQAUserList($changeControl->division_id);
 
                     $CQARevlist = Helpers::getCQAUsersList($changeControl->division_id);
 
@@ -10658,31 +10648,30 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                         if ($email !== null) {
 
+
                             try {
 
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $changeControl,
-                                        'site'    => "Change Control",
-                                        'history' => "RA Approval Complete",
-                                        'process' => 'Change Control',
-                                        'comment' => $request->comments,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Change Control, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: RA Approval Complete"
-                                            );
-                                    }
+                                $data = [
+                                    'data'    => $changeControl,
+                                    'site'    => "Change Control",
+                                    'history' => "RA Approval Complete",
+                                    'process' => 'Change Control',
+                                    'comment' => $request->comments,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $changeControl,
+                                    'Change Control'
                                 );
 
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
+
+                           
                         }
                     }
 
@@ -10795,31 +10784,29 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                     if ($email !== null) {
 
-                        try {
+                    try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
+                                $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "CC",
+                                    'site'    => "Change Control",
                                     'history' => "Rejected",
-                                    'process' => 'Change Control    ',
+                                    'process' => 'Change Control',
                                     'comment' => $request->comments,
                                     'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: Change Control  , Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Rejected"
-                                        );
-                                }
-                            );
+                                ];
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
-                        }
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $changeControl,
+                                    'Change Control'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+
+                       
                     }
                 }
 
@@ -11100,31 +11087,28 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                     if ($email !== null) {
 
-                        try {
+                    try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
+                                $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "CC",
+                                    'site'    => "Change Control",
                                     'history' => "Rejected",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
                                     'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: Change Control, Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Rejected"
-                                        );
-                                }
-                            );
+                                ];
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
-                        }
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $changeControl,
+                                    'Change Control'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+ 
                     }
                 }
 
@@ -11243,31 +11227,29 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                     if ($email !== null) {
 
-                        try {
+                          try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
+                                $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "CC",
+                                    'site'    => "Change Control",
                                     'history' => "QAH/CQA Head Approval Complete",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
                                     'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: Change Control, Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: QAH/CQA Head Approval Complete"
-                                        );
-                                }
-                            );
+                                ];
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
-                        }
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $changeControl,
+                                    'Change Control'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+
+                       
                     }
                 }
 
