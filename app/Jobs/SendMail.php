@@ -50,7 +50,7 @@ class SendMail implements ShouldQueue
                         ->subject(
                             "Agio Notification: {$this->process_name}, Record #"
                             . str_pad($this->process->record, 4, '0', STR_PAD_LEFT)
-                            . " - Activity: Propose Plan"
+                            . " - Activity: {$this->data['history']}"
                         );
                 }
             );

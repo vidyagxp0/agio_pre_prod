@@ -2129,7 +2129,7 @@ class OOCController extends Controller
         $lastDocumentOoc = OutOfCalibration::find($id);
         $ooc = OutOfCalibration::find($id);
         $lastDocumentOocs = $ooc->replicate();
-        $ooc->initiator_id = Auth::user()->id;
+        // $ooc->initiator_id = Auth::user()->id;
         // $ooc->intiation_date = $request->intiation_date;
         $ooc->assign_to = $request->assign_to;
         $ooc->due_date = $request->due_date;
@@ -4548,7 +4548,7 @@ class OOCController extends Controller
                                     'mail.view-mail',
                                     [
                                         'data' => $oocchange,
-                                        'site' => "view",
+                                        'site' => "OOC",
                                         'history' => "Submit",
                                         'process' => 'OOC',
                                         'comment' => $request->comment,
@@ -4673,7 +4673,7 @@ class OOCController extends Controller
                                     'mail.view-mail',
                                     [
                                         'data' => $oocchange,
-                                        'site' => "view",
+                                        'site' => "OOC",
                                         'history' => "HOD Primary Review Complete",
                                         'process' => 'OOC',
                                         'comment' => $request->comment,
@@ -4800,7 +4800,7 @@ class OOCController extends Controller
                                     'mail.view-mail',
                                     [
                                         'data' => $oocchange,
-                                        'site' => "view",
+                                        'site' => "OOC",
                                         'history' => "QA Head Primary Review Complete",
                                         'process' => 'OOC',
                                         'comment' => $request->comment,
@@ -6191,7 +6191,7 @@ class OOCController extends Controller
 
                 $history->save();
 
-                $list = Helpers::getCftUserList($oocchange->division_id); // Notify CFT Person
+                $list = Helpers::getInitiatorUserList($oocchange->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
                         $email = Helpers::getUserEmail($u->user_id);

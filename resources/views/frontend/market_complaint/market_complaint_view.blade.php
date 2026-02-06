@@ -666,6 +666,11 @@
                             @php
                                 $getDiv = Helpers::getDivisionName($data->division_id);
                                 // $substract = strtoupper(Str::substr($getDiv, 0, 2));
+
+                                $istab1 = (Helpers::check_roles($data->division_id, 'Market Complaint', 66) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18));
+                                   
                             @endphp
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -694,47 +699,18 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input ">
-                                    <label for="Date Due"><b>Date of Initiation</b></label>
-                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-                                </div>
-                            </div> --}}
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Date Due"><b>Date of Initiation</b></label>
-                                    @php
-                                        $formattedDate = \Carbon\Carbon::parse($data->intiation_date)->format('j-F-Y');
-                                    @endphp
-                                    <input disabled type="text" value="{{ $formattedDate }}" name="intiation_date_display">
-                                    <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
-                                </div>
-                              </div> --}}
-                                        <div class="col-lg-6">
-                                             <div class="group-input">
-                                                <label for="Date Due">Date of Initiation</label>
-                                                <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                    name="intiation_date"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                            
+                            <div class="col-lg-6">
+                                    <div class="group-input">
+                                    <label for="Date Due">Date of Initiation</label>
+                                    <input readonly type="text"
+                                        value="{{ Helpers::getdateFormat($data->intiation_date) }}"
+                                        name="intiation_date"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
 
-                                            </div>
-                                        </div>
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Assigned to">Assign To  </label>
-                                    <select name="assign_to"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                        <option value="">-- Select --</option>
-                                        @foreach ($users as $key => $value)
-                                            <option value="{{ $value->id }}"
-                                                @if ($data->assign_to == $value->id) selected @endif>
-                                                {{ $value->name }}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
-                            </div> --}}
+                            </div>
 
+                            
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Short Description">Short Description @if($data->stage ==1)
@@ -742,279 +718,58 @@
                                          @endif</label>
                                     <span id="rchars">255</span> Characters remaining
                                     <input name="description_gi"
-                                    {{ $data->stage == 1 ? '' : 'readonly' }} id="docname"
+                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} id="docname"
                                         required value="{{ $data->description_gi }}" maxlength="255">
 
                                 </div>
                             </div>
 
 
-                        {{--
-
-                            <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="due-date">Due Date
-
-                                        @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif
-                                        </label>
-
-
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY"
-                                                value="{{ Helpers::getdateFormat($data->due_date_gi) }}"
-                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} ||
-                                                {{ $data->stage == 0 || $data->stage == 14 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}  />
-                                            <input type="date" id="due_date" name="due_date_gi"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                value="{{ $data->due_date_gi }}"
-                                                oninput="handleDateInput(this, 'due_date_display')"
-                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} ||
-                                                {{ $data->stage == 0 || $data->stage == 14 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : 'readonly' }}  />
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <script>
-                                    function handleDateInput(dateInput, displayId) {
-                                        const displayElement = document.getElementById(displayId);
-                                        if (displayElement) {
-                                            const dateValue = new Date(dateInput.value);
-                                            const options = {
-                                                year: 'numeric',
-                                                month: 'short',
-                                                day: '2-digit'
-                                            };
-                                            displayElement.value = dateValue.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                        }
-                                    }
-                                </script>
-                        --}}
-
-                        {{--
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="Due Date">Due Date datat
-                                     @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif
-                                    </label>
-
-                                    <div class="calenderauditee">
-                                        @php
-                                            // Set formattedDate to an empty string if due_date is not set
-                                            $formattedDate = str_contains(
-                                                'NaN-undefined-NaN',
-                                                $data->due_date_gi,
-                                            )
-                                                ? ''
-                                                : $data->due_date_gi;
-                                        @endphp
-
-                                        <input
-                                            type="text" {{ $data->stage == 1 ? '' : 'readonly' }}
-                                            id="due_date_gi" name="due_date_gi"
-                                            placeholder="Select Due Date"
-                                            value="{{ Helpers::getdateFormat($formattedDate) }}" readonly />
-                                    </div>
-                                    <script>
-                                        $(document).ready(function() {
-                                            $("#due_date_gi").datepicker({
-                                                dateFormat: "dd-M-yy",
-                                                onClose: function(dateText, inst) {
-                                                    if (!dateText) {
-                                                        $(this).val('');
-                                                     }
-                                                }
-                                            });
-
-                                            $("#due_date_gi").on('keydown', function(e) {
-                                                e.preventDefault();
-                                            });
-                                        });
-                                    </script>
-                                </div>
-                            </div>
-                         --}}
-
-
-
-
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Audit Schedule Start Date">Due Date<span
-                                        class="text-danger">*</span></label>
-                                         <div class="calenderauditee">
-                                            <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date_gi) }}"
-                                                {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}/>
-                                            <input type="date" id="due_dateq" name="due_date_gi"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1 ? 'readonly' : '' }} value="{{ $data->due_date_gi }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" required/>
-                                        </div>
+                                    <label for="Audit Schedule Start Date">Due Date<span
+                                    class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
+                                        <input type="text"  id="due_dateq"  placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date_gi) }}"
+                                            {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}/>
+                                        <input type="date" id="due_dateq" name="due_date_gi"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} value="{{ $data->due_date_gi }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" required/>
                                     </div>
                                 </div>
-
-
-
-                                <script>
-                                    function handleDateInput(input, targetId) {
-                                                    var dateInput = document.getElementById(targetId);
-                                                    var originalValue = dateInput.getAttribute('data-original-value');
-
-                                                    if (input.value !== originalValue) {
-                                                        dateInput.value = input.value; // Update only if different from the original value
-                                                    } else {
-                                                        input.value = dateInput.value; // Preserve the existing value if no change
-                                                    }
-                                                }
-                                </script>
-
-                                <script>
-                                    function handleDateInput(dateInput, displayId) {
-                                        const date = new Date(dateInput.value);
-                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                    }
-
-                                    // Call this function initially to ensure the correct format is shown on page load
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const dateInput = document.querySelector('input[name="due_date"]');
-                                        handleDateInput(dateInput, 'due_date_display');
-                                    });
-                                    </script>
-
-                                    <style>
-                                    .hide-input {
-                                        display: none;
-                                    }
-                                    </style>
-
-
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Initiator Department  <span class="text-danger"></span></label>
-                                    <select name="initiator_group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                        <option selected disabled value="">---select---</option>
-                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_groups)
-                                            <option value="{{ $initiator_group}}" @if ($data->initiator_group == $initiator_groups) selected @endif>
-                                                {{ $initiator_group }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
                             </div>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Initiator Group Code">Department Code</label>
-                                    <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                </div>
-                            </div>
-
 
                             <script>
-                                document.getElementById('initiator_group').addEventListener('change', function() {
-                                    var selectedValue = this.value;
-                                    document.getElementById('initiator_group_code_gi').value = selectedValue;
-                                });
+                                function handleDateInput(input, targetId) {
+                                    var dateInput = document.getElementById(targetId);
+                                    var originalValue = dateInput.getAttribute('data-original-value');
 
-                                // Set the group code on page load if a value is already selected
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    var initiatorGroupElement = document.getElementById('initiator_group');
-                                    if (initiatorGroupElement.value) {
-                                        document.getElementById('initiator_group_code_gi').value = initiatorGroupElement.value;
+                                    if (input.value !== originalValue) {
+                                        dateInput.value = input.value; // Update only if different from the original value
+                                    } else {
+                                        input.value = dateInput.value; // Preserve the existing value if no change
                                     }
+                                }
+                            </script>
+
+                            <script>
+                                function handleDateInput(dateInput, displayId) {
+                                    const date = new Date(dateInput.value);
+                                    const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                    document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                }
+
+                                // Call this function initially to ensure the correct format is shown on page load
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const dateInput = document.querySelector('input[name="due_date"]');
+                                    handleDateInput(dateInput, 'due_date_display');
                                 });
-                            </script> --}}
+                                </script>
 
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Initiator Department <span
-                                            class="text-danger"></span></label>
-                                    <select name="initiator_group" id="initiator_group"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                        <option selected disabled value="">---select---</option>
-                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                            <option value="{{ $initiator_group }}" data-code="{{ $code }}"
-                                                @if ($data->initiator_group == $initiator_group) selected @endif>
-                                                {{ $initiator_group }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div> --}}
-
-
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group"><b>Initiator Department</b></label>
-                                    <select name="initiator_group"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                        id="initiator_group">
-                                        <option value="">-- Select --</option>
-                                        <option value="CQA" @if ($data->initiator_group == 'CQA') selected @endif>Corporate
-                                            Quality Assurance</option>
-                                        <option value="QA" @if ($data->initiator_group == 'QA') selected @endif>Quality
-                                            Assurance</option>
-                                        <option value="QC" @if ($data->initiator_group == 'QC') selected @endif>Quality
-                                            Control</option>
-                                        <option value="QM" @if ($data->initiator_group == 'QM') selected @endif>Quality
-                                            Control (Microbiology department)
-                                        </option>
-                                        <option value="PG" @if ($data->initiator_group == 'PG') selected @endif>
-                                            Production General</option>
-                                        <option value="PL" @if ($data->initiator_group == 'PL') selected @endif>
-                                            Production Liquid Orals</option>
-                                        <option value="PT" @if ($data->initiator_group == 'PT') selected @endif>
-                                            Production Tablet and Powder</option>
-                                        <option value="PE" @if ($data->initiator_group == 'PE') selected @endif>
-                                            Production External (Ointment, Gels, Creams and Liquid)</option>
-                                        <option value="PC" @if ($data->initiator_group == 'PC') selected @endif>
-                                            Production Capsules</option>
-                                        <option value="PI" @if ($data->initiator_group == 'PI') selected @endif>
-                                            Production Injectable</option>
-                                        <option value="EN" @if ($data->initiator_group == 'EN') selected @endif>
-                                            Engineering</option>
-                                        <option value="HR" @if ($data->initiator_group == 'HR') selected @endif>Human
-                                            Resource</option>
-                                        <option value="ST" @if ($data->initiator_group == 'ST') selected @endif>Store
-                                        </option>
-                                        <option value="IT" @if ($data->initiator_group == 'IT') selected @endif>
-                                            Electronic Data Processing
-                                        </option>
-                                        <option value="FD" @if ($data->initiator_group == 'FD') selected @endif>
-                                            Formulation Development
-                                        </option>
-                                        <option value="AL" @if ($data->initiator_group == 'AL') selected @endif>
-                                            Analytical research and Development Laboratory
-                                        </option>
-                                        <option value="PD" @if ($data->initiator_group == 'PD') selected @endif>
-                                            Packaging Development
-                                        </option>
-
-                                        <option value="PU" @if ($data->initiator_group == 'PU') selected @endif>Purchase
-                                            Department
-                                        </option>
-                                        <option value="DC" @if ($data->initiator_group == 'DC') selected @endif>Document
-                                            Cell
-                                        </option>
-                                        <option value="RA" @if ($data->initiator_group == 'RA') selected @endif>
-                                            Regulatory Affairs
-                                        </option>
-                                        <option value="PV" @if ($data->initiator_group == 'PV') selected @endif>
-                                            Pharmacovigilance
-                                        </option>
-
-                                    </select>
-                                </div>
-                                @error('initiator_group')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div> --}}
+                                <style>
+                                .hide-input {
+                                    display: none;
+                                }
+                            </style>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -1030,19 +785,8 @@
                                     <input type="text" name="initiator_group_code_gi"
                                         value="{{ $data->initiator_group_code_gi }}" id="initiator_group_code"
                                         readonly>
-                                    {{-- <div class="default-name"> <span
-                                    id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
                                 </div>
                             </div>
-
-                            {{-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group Code">Initiator Department Code</label>
-                                    <input type="text" name="initiator_group_code_gi"
-                                        value="{{ $data->initiator_group_code_gi }}" id="initiator_group_code_gi"
-                                        readonly>
-                                </div>
-                            </div> --}}
 
                             <script>
                                 document.getElementById('initiator_group').addEventListener('change', function() {
@@ -1051,90 +795,7 @@
                                 });
                             </script>
 
-                            {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Initiator Group Code">Department Code</label>
-                                    <input readonly type="text" name="initiator_group_code_gi"
-                                        id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                </div>
-                            </div> --}}
-
-                            {{-- <script>
-                                document.getElementById('initiator_group').addEventListener('change', function() {
-                                    var selectedOption = this.options[this.selectedIndex];
-                                    var selectedCode = selectedOption.getAttribute('data-code');
-                                    document.getElementById('initiator_group_code_gi').value = selectedCode;
-                                });
-
-                                // Set the group code on page load if a value is already selected
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    var initiatorGroupElement = document.getElementById('initiator_group');
-                                    if (initiatorGroupElement.value) {
-                                        var selectedOption = initiatorGroupElement.options[initiatorGroupElement.selectedIndex];
-                                        var selectedCode = selectedOption.getAttribute('data-code');
-                                        document.getElementById('initiator_group_code_gi').value = selectedCode;
-                                    }
-                                });
-                            </script> --}}
-
-
-                            {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Initiator Group">Initiated Through</label>
-                                    <div><small class="text-primary">Please select related information</small></div>
-                                    <select name="initiated_through_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="initiated_through_gi">
-                                        <option value="">-- select --</option>
-                                        <option value="recall"
-                                            {{ $data->initiated_through_gi == 'recall' ? 'selected' : '' }}>Recall</option>
-                                        <option value="return"
-                                            {{ $data->initiated_through_gi == 'return' ? 'selected' : '' }}>Return</option>
-                                        <option value="deviation"
-                                            {{ $data->initiated_through_gi == 'deviation' ? 'selected' : '' }}>Deviation
-                                        </option>
-                                        <option value="complaint"
-                                            {{ $data->initiated_through_gi == 'complaint' ? 'selected' : '' }}>Complaint
-                                        </option>
-                                        <option value="regulatory"
-                                            {{ $data->initiated_through_gi == 'regulatory' ? 'selected' : '' }}>Regulatory
-                                        </option>
-                                        <option value="lab-incident"
-                                            {{ $data->initiated_through_gi == 'lab-incident' ? 'selected' : '' }}>Lab
-                                            Incident</option>
-                                        <option value="improvement"
-                                            {{ $data->initiated_through_gi == 'improvement' ? 'selected' : '' }}>
-                                            Improvement</option>
-                                        <option value="others"
-                                            {{ $data->initiated_through_gi == 'others' ? 'selected' : '' }}>Others</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="If Other">If Other</label>
-                                    <div>
-                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
-                                    </div>
-                                    <textarea  name="if_other_gi" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->if_other_gi }}</textarea>
-                                </div>
-                            </div> --}}
-
-                            {{-- <script>
-                                $(document).ready(function() {
-                                    $('#summernote-1').summernote({
-                                        callbacks: {
-                                            onInit: function() {
-                                                @if ($data->stage >= 0 && $data->stage <= 8)
-                                                    $('#summernote-1').summernote('disable'); // Disable  editor
-                                                    $('#summernote-1').prop('disabled', true); // Disable textarea
-                                                @endif
-                                            }
-                                        }
-                                    });
-                                });
-                            </script> --}}
-
+                           
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">Information Attachment</label>
@@ -1169,7 +830,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file"
-                                                id="initial_attachment_gi"{{ $data->stage == 1 ? '' : 'disabled' }}
+                                                id="initial_attachment_gi" {{ $data->stage == 1 && $istab1 ? '' : 'disabled' }}
                                                 name="initial_attachment_gi[]"
                                                 oninput="addMultipleFiles(this,'initial_attachment_gi')" multiple>
                                         </div>
@@ -1214,7 +875,7 @@
                                     <label for="complainant_gi">Complainant @if($data->stage ==1)
                                             <span class="text-danger">*</span>
                                          @endif</label>
-                                    <textarea name="complainant_gi" class="form-control" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $data->complainant_gi }}</textarea>
+                                    <textarea name="complainant_gi" class="form-control" {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required>{{ $data->complainant_gi }}</textarea>
                                 </div>
                             </div>
 
@@ -1241,44 +902,65 @@
                                         @endphp
 
                                         <input
-                                            type="text" {{ $data->stage == 1 ? '' : 'readonly' }}
+                                            type="text" 
                                             id="complaint_dat" name="complaint_reported_on_gi"
                                             placeholder="Select Due Date"
-                                            value="{{ Helpers::getdateFormat($formattedDate) }}" readonly />
+                                            value="{{ Helpers::getdateFormat($formattedDate) }}" />
                                     </div>
-                                    <script>
+                                    {{-- <script>
                                         $(document).ready(function() {
                                             $("#complaint_dat").datepicker({
                                                 dateFormat: "dd-M-yy",
                                                 onClose: function(dateText, inst) {
                                                     if (!dateText) {
-                                                        $(this).val(''); // Ensure input stays empty if no date is selected
+                                                        $(this).val('');
                                                     }
                                                 }
                                             });
 
-                                            // Prevent manual typing by setting the field to readonly
                                             $("#complaint_dat").on('keydown', function(e) {
                                                 e.preventDefault();
                                             });
+                                        });
+                                    </script> --}}
+                                    <script>
+                                        $(document).ready(function () {
+
+                                            // init datepicker
+                                            $("#complaint_dat").datepicker({
+                                                dateFormat: "dd-M-yy",
+                                                onClose: function (dateText) {
+                                                    if (!dateText) {
+                                                        $(this).val('');
+                                                    }
+                                                }
+                                            });
+
+                                            // 🔐 STAGE + ROLE CHECK
+                                            @if(!($data->stage == 1 && $istab1))
+                                                // disable datepicker
+                                                $("#complaint_dat").datepicker("disable");
+
+                                                // hard readonly
+                                                $("#complaint_dat")
+                                                    .prop("readonly", true)
+                                                    .addClass("bg-light");
+                                            @endif
+
                                         });
                                     </script>
                                 </div>
                             </div>
 
 
-
-
-
-                             <div class="col-md-12 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of Control Sample">Details of Nature of Market Complaint  @if($data->stage ==1)
                                             <span class="text-danger">*</span>
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="details_of_nature_market_complaint_gi"  id="summernote-1"
-                                    {{ $data->stage == 1 ? '' : 'readonly' }}>{{ trim($data->details_of_nature_market_complaint_gi) }} </textarea>
+                                    <textarea class="summernote" data-stage="1" name="details_of_nature_market_complaint_gi"  id="summernote-1">{{ trim($data->details_of_nature_market_complaint_gi) }} </textarea>
                                 </div>
                             </div>
 
@@ -1292,12 +974,7 @@
                                             <span class="text-danger">*</span>
                                          @endif
                                         <button type="button" id="Details"
-                                        {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                        <!-- <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal-Market_complaint"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span> -->
+                                        {{ $data->stage == 1 && $istab1 ? '' : 'disabled' }}>+</button>
                                     </label>
                                     <table class="table table-bordered" id="ProductsDetails" style="width: 100%;">
                                 <thead>
@@ -1323,17 +1000,17 @@
                                                 <td><input type="text"
                                                         name="serial_number_gi[{{ $index }}][info_product_name]"
                                                         value="{{ $detail['info_product_name'] ?? '' }}"
-                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required></td>
                                                 <td><input type="text"
                                                         name="serial_number_gi[{{ $index }}][info_batch_no]"
                                                         value="{{ $detail['info_batch_no'] ?? '' }}"
-                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required></td>
                                                 <td>
                                                     <div class="new-date-data-field">
                                                         <div class="group-input input-date">
                                                             <div class="calenderauditee">
                                                                 <input
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}
                                                                     class="click_date"
                                                                     id="text_date_{{ $index }}_info_mfg_date"
                                                                     type="text"
@@ -1343,7 +1020,7 @@
                                                                     readonly
                                                                     onclick="document.getElementById('date_{{ $index }}_info_mfg_date').click();" />
                                                                 <input type="date"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}
                                                                     name="serial_number_gi[{{ $index }}][info_mfg_date]"
                                                                     value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('Y-m-d') : '' }}"
                                                                     id="date_{{ $index }}_info_mfg_date"
@@ -1359,7 +1036,7 @@
                                                         <div class="group-input input-date">
                                                             <div class="calenderauditee">
                                                                 <input
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}
                                                                     class="click_date"
                                                                     id="text_date_{{ $index }}_info_expiry_date"
                                                                     type="text"
@@ -1369,7 +1046,7 @@
                                                                     readonly
                                                                     onclick="document.getElementById('date_{{ $index }}_info_expiry_date').click();" />
                                                                 <input type="date"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}
                                                                     name="serial_number_gi[{{ $index }}][info_expiry_date]"
                                                                     value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('Y-m-d') : '' }}"
                                                                     id="date_{{ $index }}_info_expiry_date"
@@ -1383,20 +1060,20 @@
                                                 <td><input type="text"
                                                         name="serial_number_gi[{{ $index }}][info_batch_size]"
                                                         value="{{ $detail['info_batch_size'] ?? '' }}"
-                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required></td>
                                                 <td><input type="text"
                                                         name="serial_number_gi[{{ $index }}][info_pack_size]"
                                                         value="{{ $detail['info_pack_size'] ?? '' }}"
-                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required></td>
                                                 <td><input type="text"
                                                         name="serial_number_gi[{{ $index }}][info_dispatch_quantity]"
                                                         value="{{ $detail['info_dispatch_quantity'] ?? '' }}"
-                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required></td>
                                                 <td><input type="text"
                                                         name="serial_number_gi[{{ $index }}][info_remarks]"
                                                         value="{{ $detail['info_remarks'] ?? '' }}"
-                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
-                                                <td><button type="button" class="removeRowBtn" {{ $data->stage == 1 ? '' : 'readonly' }}>Remove</button></td>
+                                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required></td>
+                                                <td><button type="button" class="removeRowBtn" {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}>Remove</button></td>
                                             </tr>
                                         @endforeach
                                     @else
@@ -1410,69 +1087,68 @@
                             </div>
 
                             <script>
-                            $(document).ready(function () {
-                                let indexDetail = {{ $productsgi && is_array($productsgi->data) ? count($productsgi->data) : 0 }};
+                                $(document).ready(function () {
+                                    let indexDetail = {{ $productsgi && is_array($productsgi->data) ? count($productsgi->data) : 0 }};
 
-                                $('#Details').click(function (e) {
-                                    e.preventDefault();
+                                    $('#Details').click(function (e) {
+                                        e.preventDefault();
 
-                                    function generateTableRow(serialNumber) {
-                                        let html =
-                                            '<tr>' +
-                                            '<td>' + (serialNumber + 1) + '</td>' +
-                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_product_name]"></td>' +
-                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_no]"></td>' +
-                                            '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
-                                            '<input id="text_date_' + indexDetail + '_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail +
-                                            '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + indexDetail +
-                                            '_info_mfg_date\').click();" />' +
-                                            '<input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]"' +
-                                                'id="date_' + indexDetail + '_info_mfg_date" class="hide-input show_date"' +
+                                        function generateTableRow(serialNumber) {
+                                            let html =
+                                                '<tr>' +
+                                                '<td>' + (serialNumber + 1) + '</td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_product_name]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_no]"></td>' +
+                                                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                                                '<input id="text_date_' + indexDetail + '_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail +
+                                                '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + indexDetail +
+                                                '_info_mfg_date\').click();" />' +
+                                                '<input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]"' +
+                                                    'id="date_' + indexDetail + '_info_mfg_date" class="hide-input show_date"' +
+                                                    ' style="position: absolute; top: 0; left: 0; opacity: 0;"' +
+                                                    'onchange="handleDateInput(this, \'text_date_' + indexDetail + '_info_mfg_date\'); setExpiryMinDateDynamic(' + indexDetail + ');" />' +
+                                                '</div></div></div></td>' +
+                                                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                                                '<input id="text_date_' + indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' + indexDetail +
+                                                '][info_expiry_date]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + indexDetail +
+                                                '_info_expiry_date\').click();" />' +
+                                                '<input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]"' +
+                                                ' id="date_' + indexDetail + '_info_expiry_date" class="hide-input show_date"' +
                                                 ' style="position: absolute; top: 0; left: 0; opacity: 0;"' +
-                                                'onchange="handleDateInput(this, \'text_date_' + indexDetail + '_info_mfg_date\'); setExpiryMinDateDynamic(' + indexDetail + ');" />' +
-                                            '</div></div></div></td>' +
-                                            '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
-                                            '<input id="text_date_' + indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' + indexDetail +
-                                            '][info_expiry_date]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + indexDetail +
-                                            '_info_expiry_date\').click();" />' +
-                                            '<input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]"' +
-                                            ' id="date_' + indexDetail + '_info_expiry_date" class="hide-input show_date"' +
-                                            ' style="position: absolute; top: 0; left: 0; opacity: 0;"' +
-                                            ' onchange="handleDateInput(this, \'text_date_' + indexDetail + '_info_expiry_date\')" />' +
-                                            '</div></div></div></td>' +
-                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_size]"></td>' +
-                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
-                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +
-                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_remarks]"></td>' +
-                                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                            '</tr>';
+                                                ' onchange="handleDateInput(this, \'text_date_' + indexDetail + '_info_expiry_date\')" />' +
+                                                '</div></div></div></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_size]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +
+                                                '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_remarks]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                '</tr>';
 
-                                        indexDetail++;
-                                        return html;
-                                    }
+                                            indexDetail++;
+                                            return html;
+                                        }
 
-                                    const tableBody = $('#ProductsDetails tbody');
-                                    const rowCount = tableBody.children('tr').length;
-                                    const newRow = generateTableRow(rowCount);
-                                    tableBody.append(newRow);
+                                        const tableBody = $('#ProductsDetails tbody');
+                                        const rowCount = tableBody.children('tr').length;
+                                        const newRow = generateTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+
+                                    $(document).on('click', '.removeRowBtn', function () {
+                                        $(this).closest('tr').remove();
+                                    });
                                 });
 
-                                $(document).on('click', '.removeRowBtn', function () {
-                                    $(this).closest('tr').remove();
-                                });
-                            });
-
-                            function handleDateInput(dateInput, textInputId) {
-                                const date = new Date(dateInput.value);
-                                const formattedDate = date.toLocaleDateString('en-GB', {
-                                    day: '2-digit',
-                                    month: 'short',
-                                    year: 'numeric'
-                                }).replace(/ /g, '-');
-                                document.getElementById(textInputId).value = formattedDate;
-                            }
-                        </script>
-
+                                function handleDateInput(dateInput, textInputId) {
+                                    const date = new Date(dateInput.value);
+                                    const formattedDate = date.toLocaleDateString('en-GB', {
+                                        day: '2-digit',
+                                        month: 'short',
+                                        year: 'numeric'
+                                    }).replace(/ /g, '-');
+                                    document.getElementById(textInputId).value = formattedDate;
+                                }
+                            </script>
 
                             <script>
                                 function handleStartDateChange(startDateInput, endDateInputId) {
@@ -1532,12 +1208,7 @@
                                             <span class="text-danger">*</span>
                                          @endif
                                         <button type="button" id="traceblity_add"
-                                            {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                        <!-- <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Traceability"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span> -->
+                                            {{ $data->stage == 1 && $istab1 ? '' : 'disabled' }}>+</button>
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="traceblity" style="width: 100%;">
@@ -1562,30 +1233,30 @@
                                                             <td><input disabled type="text"
                                                                     name="trace_ability[{{ $index }}][serial]"
                                                                     value="{{ $traceabilityIndex++ }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }} required>
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="trace_ability[{{ $index }}][product_name_tr]"
                                                                     value="{{ $tracebil['product_name_tr'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }} required>
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="trace_ability[{{ $index }}][batch_no_tr]"
                                                                     value="{{ $tracebil['batch_no_tr'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }} required>
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="trace_ability[{{ $index }}][manufacturing_location_tr]"
                                                                     value="{{ $tracebil['manufacturing_location_tr'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }} required>
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="trace_ability[{{ $index }}][remarks_tr]"
                                                                     value="{{ $tracebil['remarks_tr'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }} required>
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required>
                                                             </td>
                                                             <td><button type="text"
-                                                                    class="removeRowBtn"{{ $data->stage == 1 ? '' : 'readonly' }}>Remove</button>
+                                                                    class="removeRowBtn"{{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}>Remove</button>
                                                             </td>
 
                                                         </tr>
@@ -1642,7 +1313,7 @@
                                          @endif
                                     </label>
                                     <select name="categorization_of_complaint_gi" onchange=""
-                                        {{ $data->stage == 1 ? '' : 'readonly' }} required>
+                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required>
                                         <option value="">-- select --</option>
                                         <option value="Critical"
                                             {{ $data->categorization_of_complaint_gi == 'Critical' ? 'selected' : '' }}>
@@ -1655,6 +1326,7 @@
                                         </option>
                                     </select>
                                 </div>
+                                    <!-- <input type="hidden" name="categorization_of_complaint_gi" value="{{ $data->categorization_of_complaint_gi }}"> -->
                             </div>
 
                             <div class="col-lg-12">
@@ -1665,7 +1337,7 @@
                                          @endif
                                     </label>
                                     <select name="is_repeat_gi" id="is_repeat_gi"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }} required>
+                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} required>
                                         <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>--
                                             select --</option>
                                         <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes
@@ -1674,6 +1346,7 @@
                                         </option>
                                     </select>
                                 </div>
+                                        <!-- <input type="hidden" name="is_repeat_gi" value="{{ $data->is_repeat_gi }}"> -->
                             </div>
 
                             <div class="col-md-12 mb-3" id="repeat_nature_div" style="display: none;">
@@ -1686,7 +1359,7 @@
                                             require completion</small>
                                     </div>
                                     <textarea  name="repeat_nature_gi" id="repeat_nature_gi"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->repeat_nature_gi }}</textarea>
+                                        {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}>{{ $data->repeat_nature_gi }}</textarea>
                                 </div>
                             </div>
 
@@ -1711,45 +1384,6 @@
                                 });
                             </script>
 
-
-                            {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="is_repeat_gi">Is Repeat</label>
-                                    <select name="is_repeat_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                        <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>--
-                                            select --</option>
-                                        <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes
-                                        </option>
-                                        <option value="no" {{ $data->is_repeat_gi == 'no' ? 'selected' : '' }}>No
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Repeat Nature">Repeat Nature</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="repeat_nature_gi" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} id="summernote-1">{{ $data->repeat_nature_gi }}
-
-                                    </textarea>
-                                </div>
-                            </div> --}}
-
-
-                            {{-- <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Review of Complaint Sample">Review of Complaint Sample</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="review_of_complaint_sample_gi" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_complaint_sample_gi }}
-                                    </textarea>
-                                </div>
-                            </div> --}}
-
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of Control Sample">Review of Complaint Sample @if($data->stage ==1)
@@ -1757,8 +1391,7 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="review_of_complaint_sample_gi"  id="summernote-1"
-                                    {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->review_of_complaint_sample_gi }} </textarea>
+                                    <textarea class="summernote" data-stage="1" name="review_of_complaint_sample_gi"  id="summernote-1">{{ $data->review_of_complaint_sample_gi }} </textarea>
                                 </div>
                             </div>
 
@@ -1769,8 +1402,7 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="review_of_control_sample_gi"  id="summernote-1"
-                                    {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->review_of_control_sample_gi }}</textarea>
+                                    <textarea class="summernote" data-stage="1" name="review_of_control_sample_gi"  id="summernote-1">{{ $data->review_of_control_sample_gi }}</textarea>
                                 </div>
                             </div>
 
@@ -1783,8 +1415,8 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="review_of_stability_study_gi" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_stability_study_gi }}
+                                    <textarea class="summernote" data-stage="1" name="review_of_stability_study_gi" id="summernote-1"
+                                        >{{ $data->review_of_stability_study_gi }}
                                 </textarea>
                                 </div>
                             </div>
@@ -1798,8 +1430,8 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="review_of_product_manu_gi" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->review_of_product_manu_gi }}
+                                    <textarea class="summernote" data-stage="1" name="review_of_product_manu_gi" id="summernote-1"
+                                         >{{ $data->review_of_product_manu_gi }}
                                 </textarea>
                                 </div>
                             </div>
@@ -1813,7 +1445,7 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="additional_inform" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->additional_inform }}
+                                    <textarea class="summernote" data-stage="1" name="additional_inform" id="summernote-1">{{ $data->additional_inform }}
                                 </textarea>
                                 </div>
                             </div>
@@ -1824,7 +1456,7 @@
                                             <span class="text-danger">*</span>
                                          @endif </label>
                                     <select
-                                        name="probable_root_causes_complaint_hodsr" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                        name="probable_root_causes_complaint_hodsr"  {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}
                                         id="probable_root_causes_complaint_hodsr" required>
                                         {{-- <option value="">-- select --</option> --}}
                                         <option value=""
@@ -1840,6 +1472,7 @@
                                         </option>
                                     </select>
                                 </div>
+                                    <!-- <input type="hidden" name="probable_root_causes_complaint_hodsr" value="{{ $data->probable_root_causes_complaint_hodsr }}"> -->
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -1848,373 +1481,15 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="in_case_Invalide_com" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->in_case_Invalide_com }}
+                                    <textarea class="summernote" data-stage="1" name="in_case_Invalide_com" id="summernote-1"
+                                         >{{ $data->in_case_Invalide_com }}
                                 </textarea>
                                 </div>
                             </div>
-                            {{-- <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause">
-                                        Report Review (Final Review shall be done after QA Verification)
-                                        <button type="button" id="team_members"
-                                        {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_ReportReview"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="team_members_details" style="width: %;">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 100px;">Sr. No.</th>
-                                                    <th>Names</th>
-                                                    <th>Designation</th>
-                                                    <th>Department</th>
-                                                    <th>Sign</th>
-                                                    <th>Date</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $teammebindex = 1;
-                                                @endphp
-
-                                                @if (!empty($team_members) && is_array($team_members->data))
-                                                    @foreach ($team_members->data as $index => $tem_meb)
-                                                    <tr>
-                                                        <td>
-                                                            <input disabled type="text"
-                                                                name="serial_number[{{ $index }}]"
-                                                                value="{{ $teammebindex++ }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text"
-                                                                name="Team_Members[{{ $index }}][names_tm]"
-                                                                value="{{ array_key_exists('names_tm', $tem_meb) ? $tem_meb['names_tm'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text"
-                                                                name="Team_Members[{{ $index }}][designation]"
-                                                                value="{{ array_key_exists('designation', $tem_meb) ? $tem_meb['designation'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text"
-                                                                name="Team_Members[{{ $index }}][department_tm]"
-                                                                value="{{ array_key_exists('department_tm', $tem_meb) ? $tem_meb['department_tm'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text"
-                                                                name="Team_Members[{{ $index }}][sign_tm]"
-                                                                value="{{ array_key_exists('sign_tm', $tem_meb) ? $tem_meb['sign_tm'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <!-- Display formatted date -->
-                                                                        <input class="click_date"
-                                                                            id="date_{{ $index }}_date_tm_display"
-                                                                            type="text"
-                                                                            name="Team_Members[{{ $index }}][date_tm]"
-                                                                            placeholder="DD-MMM-YYYY" readonly
-                                                                            value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('d-M-Y') : '' }}"
-                                                                            {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                            onclick="showDatePicker('date_{{ $index }}_date_tm')" />
-
-                                                                        <!-- Hidden input for actual date -->
-                                                                        <input type="date"
-                                                                            name="Team_Members[{{ $index }}][date_tm]"
-                                                                            value="{{ !empty($tem_meb['date_tm']) ? \Carbon\Carbon::parse($tem_meb['date_tm'])->format('Y-m-d') : '' }}"
-                                                                            id="date_{{ $index }}_date_tm"
-                                                                            class="hide-input show_date"
-                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                            onchange="handleDateInput(this, 'date_{{ $index }}_date_tm_display')"
-                                                                            {{ $data->stage == 1 ? '' : 'readonly' }} />
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <button type="button" class="removeRowBtn"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>Remove</button>
-                                                        </td>
-                                                    </tr>
-
-                                                    @endforeach
-                                                    {{-- @else
-                                                <tr>
-                                                    <td colspan="9">No product details found</td>
-                                                </tr>
-                                                @endif
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div> --}}
-
-
-                            {{-- <script>
-                                function showDatePicker(dateInputId) {
-                                    document.getElementById(dateInputId).click();
-                                }
-
-                                function handleDateInput(dateInput, displayInputId) {
-                                    var date = new Date(dateInput.value);
-                                    var formattedDate = date.toLocaleDateString('en-GB', {
-                                        day: '2-digit',
-                                        month: 'short',
-                                        year: 'numeric'
-                                    }).replace(/ /g, '-');
-                                    document.getElementById(displayInputId).value = formattedDate;
-                                }
-                            </script> --}}
-
-                            {{-- <script>
-                                $(document).ready(function() {
-                                    let indexTeam = {{ !empty($team_members) && is_array($team_members->data) ? count($team_members->data) : 0 }};
-
-                                    $('#team_members').click(function(e) {
-                                        e.preventDefault();
-
-                                        function generateTableRow(teamSerialNumber) {
-                                            let html = `
-                                                <tr>
-                                                    <td><input disabled type="text" name="Team_Members[${teamSerialNumber}][serial]" value="${teamSerialNumber + 1}"></td>
-                                                    <td><input type="text" name="Team_Members[${indexTeam}][names_tm]"></td>
-                                                    <td><input type="text" name="Team_Members[${indexTeam}][designation]"></td>
-                                                    <td><input type="text" name="Team_Members[${indexTeam}][department_tm]"></td>
-                                                    <td><input type="text" name="Team_Members[${indexTeam}][sign_tm]"></td>
-                                                    <td>
-                                                        <div class="new-date-data-field">
-                                                            <div class="group-input input-date">
-                                                                <div class="calenderauditee">
-                                                                    <input id="date_${indexTeam}_date_tm" type="text" name="Team_Members[${indexTeam}][date_tm]" placeholder="DD-MMM-YYYY" />
-                                                                    <input type="date" name="Team_Members[${indexTeam}][date_tm]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_${indexTeam}_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_${indexTeam}_date_tm')" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                </tr>`;
-                                            indexTeam++;
-                                            return html;
-                                        }
-
-                                        let tableBody = $('#team_members_details tbody');
-                                        let rowCount = tableBody.children('tr').length;
-                                        let newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                    });
-                                });
-                            </script> --}}
-
-
-                            {{-- <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause">
-                                        Report Approval by Head QA/CQA (Final Approval shall be done after QA Verification)
-                                        <button type="button" id="report_approval"
-                                            {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_ReportApproval"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="report_approval_details"
-                                            style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 100px;">Sr. No.</th>
-                                                    <th>Names</th>
-                                                    <th>Designation</th>
-                                                    <th>Department</th>
-                                                    <th>Sign</th>
-                                                    <th>Date</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $reportindex = 1;
-                                                @endphp
-                                                @if (!empty($report_approval) && is_array($report_approval->data))
-                                                    @foreach ($report_approval->data as $index => $rep_ap)
-                                                        <tr>
-                                                            <td><input disabled type="text"
-                                                                    name="Report_Approval[{{ $index }}][serial]"
-                                                                    value="{{ $reportindex++ }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Report_Approval[{{ $index }}][names_rrv]"
-                                                                    value="{{ $rep_ap['names_rrv'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Report_Approval[{{ $index }}][designation]"
-                                                                    value="{{ $rep_ap['designation'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Report_Approval[{{ $index }}][department_rrv]"
-                                                                    value="{{ $rep_ap['department_rrv'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Report_Approval[{{ $index }}][sign_rrv]"
-                                                                    value="{{ $rep_ap['sign_rrv'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>
-                                                            </td>
-
-
-                                                            <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input class="click_date"
-                                                                                id="date_{{ $index }}_date_rrv_display"
-                                                                                type="text"
-                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
-                                                                                placeholder="DD-MMM-YYYY" readonly
-                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('d-M-Y') : '' }}"
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                onclick="showDatePicker('date_{{ $index }}_date_rrv')" />
-
-                                                                            <input type="date"
-                                                                                name="Report_Approval[{{ $index }}][date_rrv]"
-                                                                                value="{{ !empty($rep_ap['date_rrv']) ? \Carbon\Carbon::parse($rep_ap['date_rrv'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_date_rrv"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                onchange="handleDateInput(this, 'date_{{ $index }}_date_rrv_display')"
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }} />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td><button type="button" class="removeRowBtn"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>Remove</button>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div> --}}
-
-
-
-                            {{-- <script>
-                                function showDatePicker(dateInputId) {
-                                    document.getElementById(dateInputId).click();
-                                }
-
-                                function handleDateInput(dateInput, displayInputId) {
-                                    var date = new Date(dateInput.value);
-                                    var formattedDate = date.toLocaleDateString('en-GB', {
-                                        day: '2-digit',
-                                        month: 'short',
-                                        year: 'numeric'
-                                    }).replace(/ /g, '-');
-                                    document.getElementById(displayInputId).value = formattedDate;
-                                }
-                            </script>
-
-                            <script>
-                                $(document).ready(function() {
-                                    let indexReaprovel =
-                                        {{ $report_approval && is_array($report_approval->data) ? count($report_approval->data) : 0 }};
-
-                                    $('#report_approval').click(function(e) {
-                                        e.preventDefault();
-
-                                        function generateTableRow(serialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td><input disabled type="text" name="Report_Approval[' + serialNumber +
-                                                '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber +
-                                                '][names_rrv]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber +
-                                                '][designation]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber +
-                                                '][department_rrv]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber +
-                                                '][sign_rrv]"></td>' +
-                                                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                serialNumber + '_date_rrv" type="text" name="Report_Approval[' + serialNumber +
-                                                '][date_rrv]" placeholder="DD-MMM-YYYY" readonly value="" /> <input type="date" name="Report_Approval[' +
-                                                serialNumber + '][date_rrv]" value="" id="date_' + serialNumber +
-                                                '_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                serialNumber + '_date_rrv\')" /> </div></div></div></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            indexReaprovel++;
-                                            return html;
-                                        }
-
-                                        var tableBody = $('#report_approval_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                    });
-
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                    });
-                                });
-
-                                function handleDateInput(dateInput, textInputId) {
-                                    const textInput = document.getElementById(textInputId);
-                                    if (dateInput.value) {
-                                        const date = new Date(dateInput.value);
-                                        const formattedDate = date.toLocaleDateString('en-GB', {
-                                            day: '2-digit',
-                                            month: 'short',
-                                            year: 'numeric'
-                                        }).replace(/ /g, '-');
-                                        textInput.value = formattedDate;
-                                    } else {
-                                        textInput.value = '';
-                                    }
-                                }
-                            </script> --}}
-
+                            
                             <div class="button-block">
                                 <button type="submit" class="saveButton"
                                     id="saveButton"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
-
-                                {{-- <script>
-                            function showAlert(event) {
-                                event.preventDefault(); // Prevent form submission
-                                var alertMessage = document.getElementById('alert-message').innerText;
-                                alert(alertMessage);
-                            }
-
-                            document.addEventListener('DOMContentLoaded', function () {
-                                var stage = {{ $data->stage }};
-                            });
-                        </script> --}}
 
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -2255,8 +1530,8 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->manufacturer_name_address_ca }}
+                                    <textarea class="summernote" data-stage="1" name="manufacturer_name_address_ca" id="summernote-1"
+                                        >{{ $data->manufacturer_name_address_ca }}
                                     </textarea>
                                 </div>
                             </div>
@@ -2270,11 +1545,7 @@
                                          @endif
                                         <button type="button" id="promate_add"
                                         {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                        <!-- <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_Material"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span> -->
+                     
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="prod_mate_details" style="width: 100%;">
@@ -2301,98 +1572,98 @@
                                                         <tr>
                                                             <td>{{ ++$productmateIndex }}</td>
                                                             <td><input
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}type="text"
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}  type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][product_name_ca]"
-                                                                    value="{{ array_key_exists('product_name_ca', $Prodmateriyal) ? $Prodmateriyal['product_name_ca'] : '' }}" required>
+                                                                    value="{{ array_key_exists('product_name_ca', $Prodmateriyal) ? $Prodmateriyal['product_name_ca'] : '' }} " required>
                                                             </td>
                                                             <td><input
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} 
                                                                     type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][batch_no_pmd_ca]"
                                                                     value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}" required>
                                                             </td>
                                                             <td>
-    <div class="new-date-data-field">
-        <div class="group-input input-date">
-            <div class="calenderauditee">
-                <input
-                    {{ $data->stage == 1 ? '' : 'readonly' }}
-                    class="click_date"
-                    id="text_date_{{ $index }}_mfg_date_pmd_ca"
-                    type="text"
-                    name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
-                    placeholder="DD-MMM-YYYY"
-                    value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                    readonly
-                    onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input
+                                                                                {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} 
+                                                                                class="click_date"
+                                                                                id="text_date_{{ $index }}_mfg_date_pmd_ca"
+                                                                                type="text"
+                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                                                                                readonly
+                                                                                onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
 
-                <input type="date"
-                    {{ $data->stage == 1 ? '' : 'readonly' }}
-                    name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
-                    value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                    id="date_{{ $index }}_mfg_date_pmd_ca"
-                    class="hide-input show_date"
-                    style="position: absolute; top: 0; left: 0; opacity: 0;"
-                    onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca'); setExpiryMinDate('{{ $index }}');" />
-            </div>
-        </div>
-    </div>
-</td>
+                                                                            <input type="date"
+                                                                                {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} 
+                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
+                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_mfg_date_pmd_ca"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca'); setExpiryMinDate('{{ $index }}');" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
 
-<td>
-    <div class="new-date-data-field">
-        <div class="group-input input-date">
-            <div class="calenderauditee">
-                <input
-                    {{ $data->stage == 1 ? '' : 'readonly' }}
-                    class="click_date"
-                    id="text_date_{{ $index }}_expiry_date_pmd_ca"
-                    type="text"
-                    name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
-                    placeholder="DD-MMM-YYYY"
-                    value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                    readonly
-                    onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
+                                                            <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">
+                                                                            <input
+                                                                                {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} 
+                                                                                class="click_date"
+                                                                                id="text_date_{{ $index }}_expiry_date_pmd_ca"
+                                                                                type="text"
+                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
+                                                                                placeholder="DD-MMM-YYYY"
+                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                                                                                readonly
+                                                                                onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
 
-                <input type="date"
-                    {{ $data->stage == 1 ? '' : 'readonly' }}
-                    name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
-                    value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                    id="date_{{ $index }}_expiry_date_pmd_ca"
-                    class="hide-input show_date"
-                    style="position: absolute; top: 0; left: 0; opacity: 0;"
-                    onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
-            </div>
-        </div>
-    </div>
-</td>
+                                                                            <input type="date"
+                                                                                {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} 
+                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
+                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                                                                                id="date_{{ $index }}_expiry_date_pmd_ca"
+                                                                                class="hide-input show_date"
+                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
 
                                                             <td><input
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} 
                                                                     type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][batch_size_pmd_ca]"
                                                                     value="{{ array_key_exists('batch_size_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_size_pmd_ca'] : '' }}" required>
                                                             </td>
                                                             <td><input
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} 
                                                                     type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][pack_profile_pmd_ca]"
                                                                     value="{{ array_key_exists('pack_profile_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['pack_profile_pmd_ca'] : '' }}" required>
                                                             </td>
                                                             <td><input
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} 
                                                                     type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][released_quantity_pmd_ca]"
                                                                     value="{{ array_key_exists('released_quantity_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['released_quantity_pmd_ca'] : '' }}" required>
                                                             </td>
                                                             <td><input
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} 
                                                                     type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][remarks_ca]"
                                                                     value="{{ array_key_exists('remarks_ca', $Prodmateriyal) ? $Prodmateriyal['remarks_ca'] : '' }}" required>
                                                             </td>
                                                             <td><button
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} 
                                                                     type="text" class="removeRowBtn">Remove</button>
                                                             </td>
                                                         </tr>
@@ -2440,10 +1711,8 @@
                                 var newRow = generateTableRow(rowCount);
                                 tableBody.append(newRow);
                                 indexMaetDetails++;
-                            });
+                             });
                             </script>
-
-
 
                             <script>
                                 function setExpiryMinDate(index) {
@@ -2457,105 +1726,8 @@
                                         }
                                     }
                                 }
-                                </script>
+                            </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            {{--<script>
-                                $(document).ready(function() {
-                                    let indexMaetDetails =
-                                        {{ $product_materialDetails && is_array($product_materialDetails->data) ? count($product_materialDetails->data) : 0 }};
-                                    $('#promate_add').click(function(e) {
-                                        e.preventDefault();
-
-                                        function generateTableRow(productserialno) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td>' + (productserialno + 1) + '</td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][product_name_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][batch_no_pmd_ca]"></td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="text_date_' +
-                                                productserialno + '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' +
-                                                productserialno +
-                                                '][mfg_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' +
-                                                productserialno +
-                                                '_mfg_date_pmd_ca\').click();"/> <input type="date" name="Product_MaterialDetails[' +
-                                                productserialno +
-                                                '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                productserialno +
-                                                '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' +
-                                                productserialno +
-                                                '_mfg_date_pmd_ca\')" onchange="handleStartDateChange(this, \'date_' +
-                                                productserialno +
-                                                '_expiry_date_pmd_ca\')" /> </div></div></div> </td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="text_date_' +
-                                                productserialno +
-                                                '_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' +
-                                                productserialno +
-                                                '][expiry_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' +
-                                                productserialno +
-                                                '_expiry_date_pmd_ca\').click();"/> <input type="date" name="Product_MaterialDetails[' +
-                                                productserialno +
-                                                '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                productserialno +
-                                                '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' +
-                                                productserialno + '_expiry_date_pmd_ca\')" /> </div></div></div> </td>';
-
-
-                                            // '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                            // productserialno +
-                                            // '_mfg_date_pmd_ca" type="text" readonly name="Product_MaterialDetails[' +
-                                            // productserialno +
-                                            // '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' +
-                                            // productserialno +
-                                            // '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                            // productserialno +
-                                            // '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                            // productserialno + '_mfg_date_pmd_ca\')" /> </div></div></div> </td>' +
-                                            // '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                            // productserialno +
-                                            // '_expiry_date_pmd_ca" type="text" readonly name="Product_MaterialDetails[' +
-                                            // productserialno +
-                                            // '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY"/> <input type="date" name="Product_MaterialDetails[' +
-                                            // productserialno +
-                                            // '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                            // productserialno +
-                                            // '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                            // productserialno + '_expiry_date_pmd_ca\')" /> </div></div></div> </td>' +
-                                            '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][batch_size_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][pack_profile_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][released_quantity_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][remarks_ca]"></td>' +
-                                                '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            return html;
-                                        }
-
-                                        var tableBody = $('#prod_mate_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                        indexMaetDetails++;
-                                    });
-                                });
-                            </script>--}}
 
                             <script>
                                 function updateExpiryMinDate(index) {
@@ -2609,40 +1781,10 @@
                                     // input.setAttribute('min', new Date().toISOString().split('T')[0]);
                                 });
                             </script>
-
-                            {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Complaint Sample Required">Complaint Sample Required @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif</label>
-                                    <select name="complaint_sample_required_ca"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required>
-                                        <option value="">-- select --</option>
-                                        <option value="yes"
-                                            {{ isset($data) && $data->complaint_sample_required_ca == 'yes' ? 'selected' : '' }}>
-                                            Yes</option>
-                                        <option value="no"
-                                            {{ isset($data) && $data->complaint_sample_required_ca == 'no' ? 'selected' : '' }}>
-                                            No</option>
-                                        <option value="na"
-                                            {{ isset($data) && $data->complaint_sample_required_ca == 'na' ? 'selected' : '' }}>
-                                            NA</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Analytical Data review observation">Complaint Sample Status @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="complaint_sample_status_ca"  id="summernote-1"
-                                    {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->complaint_sample_status_ca }}</textarea>
-                                </div>
-                            </div> --}}
+                            @php
+                                $canEdit1 = ($data->stage == 1 && $istab1);
+                            @endphp
+                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Complaint Sample Required">Complaint Sample Required
@@ -2650,14 +1792,20 @@
                                             <span class="text-danger">*</span>
                                         @endif
                                     </label>
-                                    <select name="complaint_sample_required_ca" id="complaint_sample_required_ca"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required>
+                                    <select name="complaint_sample_required_ca"
+                                        id="complaint_sample_required_ca"
+                                        {{ $canEdit1 ? '' : 'disabled' }}>
                                         <option value="">-- select --</option>
-                                        <option value="yes" {{ isset($data) && $data->complaint_sample_required_ca == 'yes' ? 'selected' : '' }}>Yes</option>
-                                        <option value="no" {{ isset($data) && $data->complaint_sample_required_ca == 'no' ? 'selected' : '' }}>No</option>
-                                        <option value="na" {{ isset($data) && $data->complaint_sample_required_ca == 'na' ? 'selected' : '' }}>NA</option>
+                                        <option value="yes" {{ $data->complaint_sample_required_ca == 'yes' ? 'selected' : '' }}>Yes</option>
+                                        <option value="no"  {{ $data->complaint_sample_required_ca == 'no'  ? 'selected' : '' }}>No</option>
+                                        <option value="na"  {{ $data->complaint_sample_required_ca == 'na'  ? 'selected' : '' }}>NA</option>
                                     </select>
                                 </div>
+                                @if(!$canEdit1)
+                                    <input type="hidden"
+                                        name="complaint_sample_required_ca"
+                                        value="{{ $data->complaint_sample_required_ca }}">
+                                @endif
                             </div>
 
                             <div class="col-md-12 mb-3" id="complaint_sample_status_div"
@@ -2673,8 +1821,8 @@
                                             Please insert "NA" in the data field if it does not require completion
                                         </small>
                                     </div>
-                                    <textarea class="summernote" name="complaint_sample_status_ca" id="summernote-1"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->complaint_sample_status_ca }}</textarea>
+                                    <textarea class="summernote" data-stage="1" name="complaint_sample_status_ca" id="summernote-1"
+                                        >{{ $data->complaint_sample_status_ca }}</textarea>
                                 </div>
                             </div>
 
@@ -2685,8 +1833,8 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="brief_description_of_complaint_ca"  id="summernote-1"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->brief_description_of_complaint_ca }}</textarea>
+                                    <textarea class="summernote" data-stage="1" name="brief_description_of_complaint_ca"  id="summernote-1"
+                                        >{{ $data->brief_description_of_complaint_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -2698,8 +1846,8 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="batch_record_review_observation_ca"  id="summernote-1"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->batch_record_review_observation_ca }}</textarea>
+                                    <textarea class="summernote" data-stage="1" name="batch_record_review_observation_ca"  id="summernote-1"
+                                        >{{ $data->batch_record_review_observation_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -2710,8 +1858,8 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="analytical_data_review_observation_ca"  id="summernote-1"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->analytical_data_review_observation_ca }}</textarea>
+                                    <textarea class="summernote" data-stage="1" name="analytical_data_review_observation_ca"  id="summernote-1"
+                                        >{{ $data->analytical_data_review_observation_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -2723,8 +1871,8 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1"
-                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->retention_sample_review_observation_ca }}
+                                    <textarea class="summernote" data-stage="1" name="retention_sample_review_observation_ca" id="summernote-1"
+                                    >{{ $data->retention_sample_review_observation_ca }}
                                 </textarea>
                                 </div>
                             </div>
@@ -2736,8 +1884,8 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1"
-                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->stability_study_data_review_ca }}
+                                    <textarea class="summernote" data-stage="1" name="stability_study_data_review_ca" id="summernote-1"
+                                    >{{ $data->stability_study_data_review_ca }}
                                 </textarea>
                                 </div>
                             </div>
@@ -2750,8 +1898,8 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="qms_events_ifany_review_observation_ca"  id="summernote-1"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->qms_events_ifany_review_observation_ca }}</textarea>
+                                    <textarea class="summernote" data-stage="1" name="qms_events_ifany_review_observation_ca"  id="summernote-1"
+                                        >{{ $data->qms_events_ifany_review_observation_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -2762,8 +1910,8 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="repeated_complaints_queries_for_product_ca"  id="summernote-1"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->repeated_complaints_queries_for_product_ca }}</textarea>
+                                    <textarea class="summernote" data-stage="1" name="repeated_complaints_queries_for_product_ca"  id="summernote-1"
+                                        >{{ $data->repeated_complaints_queries_for_product_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -2773,8 +1921,8 @@
                                         class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="interpretation_on_complaint_sample_ifrecieved_ca"  id="summernote-1"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->interpretation_on_complaint_sample_ifrecieved_ca }}</textarea>
+                                    <textarea class="summernote" data-stage="1" name="interpretation_on_complaint_sample_ifrecieved_ca"  id="summernote-1"
+                                        >{{ $data->interpretation_on_complaint_sample_ifrecieved_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -2784,8 +1932,8 @@
                                          @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="comments_ifany_ca"  id="summernote-1"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->comments_ifany_ca }}</textarea>
+                                    <textarea class="summernote" data-stage="1" name="comments_ifany_ca"  id="summernote-1"
+                                        >{{ $data->comments_ifany_ca }}</textarea>
                                 </div>
                             </div>
 
@@ -2826,6 +1974,10 @@
                                                 }
                                             </style>
                                             <tbody>
+                                                @php
+                                                    $canEdit = ($data->stage == 1 && $istab1);
+                                                @endphp
+
                                                 <tr>
                                                     <td class="flex text-center">1</td>
                                                     <td>Complaint sample Required</td>
@@ -2833,7 +1985,7 @@
                                                         <label class="label-head">
                                                             <span class="input-head">
                                                                 <input type="radio" name="csr1_yesno"
-                                                                    value="yes" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    value="yes"  {{ $canEdit ? '' : 'readonly' }}
                                                                     {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'yes' ? 'checked' : '' }}
                                                                     onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
                                                             </span>
@@ -2842,23 +1994,18 @@
                                                         <label class="label-head">
                                                             <span class="input-head">
                                                                 <input type="radio" name="csr1_yesno"
-                                                                    value="no" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                    value="no" {{ $canEdit ? '' : 'readonly' }}
                                                                     {{ isset($proposalData['Complaint sample Required']['csr3']) && $proposalData['Complaint sample Required']['csr3'] == 'no' ? 'checked' : '' }}
                                                                     onchange="toggleInputs('csr1_yesno', 'csr1', 'csr2')">
                                                             </span>
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    {{-- <td>
-                                                        <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="csr1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr1'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td> --}}
+
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="csr2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $proposalData['Complaint sample Required']['csr2'] ?? '' }}</textarea>
+                                                            <textarea  {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} name="csr2"
+                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['Complaint sample Required']['csr2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2868,29 +2015,24 @@
                                                     <td class="main-head">
                                                         <label class="label-head">
                                                             <input type="radio" name="afc1_yesno"
-                                                                value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                value="yes" {{ $canEdit ? '' : 'readonly' }}
                                                                 {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'yes' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
                                                             <span>Yes</span>
                                                         </label>
                                                         <label class="label-head">
                                                             <input type="radio" name="afc1_yesno"
-                                                                value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                value="no" {{ $canEdit ? '' : 'readonly' }}
                                                                 {{ isset($proposalData['Additional info. From Complainant']['afc3']) && $proposalData['Additional info. From Complainant']['afc3'] == 'no' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')">
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    {{-- <td>
-                                                        <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" >{{ $proposalData['Additional info. From Complainant']['afc1'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td> --}}
+
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? '' }}</textarea>
+                                                            <textarea  {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} name="afc2"
+                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2900,29 +2042,24 @@
                                                     <td class="main-head">
                                                         <label class="label-head">
                                                             <input type="radio" name="acs1_yesno"
-                                                                value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                value="yes" {{ $canEdit ? '' : 'readonly' }}
                                                                 {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'yes' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
                                                             <span>Yes</span>
                                                         </label>
                                                         <label class="label-head">
                                                             <input type="radio" name="acs1_yesno"
-                                                                value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                value="no" {{ $canEdit ? '' : 'readonly' }}
                                                                 {{ isset($proposalData['Analysis of complaint Sample']['acs3']) && $proposalData['Analysis of complaint Sample']['acs3'] == 'no' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')">
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    {{-- <td>
-                                                        <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="acs1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td> --}}
+
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="acs2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? '' }}</textarea>
+                                                            <textarea {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}  name="acs2"
+                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2932,29 +2069,24 @@
                                                     <td class="main-head">
                                                         <label class="label-head">
                                                             <input type="radio" name="qrm1_yesno"
-                                                                value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                value="yes" {{ $canEdit ? '' : 'readonly' }}
                                                                 {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'yes' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
                                                             <span>Yes</span>
                                                         </label>
                                                         <label class="label-head">
                                                             <input type="radio" name="qrm1_yesno"
-                                                                value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                value="no" {{ $canEdit ? '' : 'readonly' }}
                                                                 {{ isset($proposalData['QRM Approach']['qrm3']) && $proposalData['QRM Approach']['qrm3'] == 'no' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')">
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    {{-- <td>
-                                                        <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" >{{ $proposalData['QRM Approach']['qrm1'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td> --}}
+
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $proposalData['QRM Approach']['qrm2'] ?? '' }}</textarea>
+                                                            <textarea {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}  name="qrm2"
+                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['QRM Approach']['qrm2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2964,29 +2096,23 @@
                                                     <td class="main-head">
                                                         <label class="label-head">
                                                             <input type="radio" name="oth1_yesno"
-                                                                value="yes"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                value="yes" {{ $canEdit ? '' : 'readonly' }}
                                                                 {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'yes' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
                                                             <span>Yes</span>
                                                         </label>
                                                         <label class="label-head">
                                                             <input type="radio" name="oth1_yesno"
-                                                                value="no"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                                value="no" {{ $canEdit ? '' : 'readonly' }}
                                                                 {{ isset($proposalData['Others']['oth3']) && $proposalData['Others']['oth3'] == 'no' ? 'checked' : '' }}
                                                                 onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')">
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    {{-- <td>
-                                                        <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="oth1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth1'] ?? '' }}</textarea>
-                                                        </div>
-                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="oth2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $proposalData['Others']['oth2'] ?? '' }}</textarea>
+                                                            <textarea  name="oth2"
+                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }}  required>{{ $proposalData['Others']['oth2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -3042,7 +2168,7 @@
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->Expecteddate_of_investigation_completion ?? '' }}"
                                                 oninput="handleDateInput(this, 'due_date_display_expected')"
-                                                {{ $data->stage == 1 ? '' : 'readonly' }} />
+                                                {{ $data->stage == 1 && $istab1 ? '' : 'readonly' }} />
 
 
                                         </div>
@@ -3070,47 +2196,6 @@
                                     }
                                 </style>
 
-
-
-
-
-
-                            {{-- <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">Ackowledgment Attachment</label>
-                                    <div>
-                                        <small class="text-primary">
-                                            Please Attach all relevant or supporting documents
-                                        </small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="initial_attachment_ca">
-
-                                            @if ($data->initial_attachment_ca)
-                                                @foreach (json_decode($data->initial_attachment_ca) as $file)
-                                                    <h6 type="button" class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="initial_attachment_ca"
-                                                name="initial_attachment_ca[]"
-                                                oninput="addMultipleFiles(this,'initial_attachment_ca')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="initial_attachment_ca">Acknowledgment Attachment</label>
@@ -3141,7 +2226,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="initial_attachment_ca[]"
-                                            {{ $data->stage == 1 ? '' : 'disabled' }}
+                                            {{ $data->stage == 1 && $istab1 ? '' : 'disabled' }}
                                                 oninput="addMultipleFiles(this, 'initial_attachment_ca')" multiple>
                                         </div>
                                     </div>
@@ -3231,35 +2316,24 @@
                     </div>
                 </div>
 
-                </div>
 
                 <!----- QA/CQa----->
-
+                    @php
+                      $istab2  = (Helpers::check_roles($data->division_id, 'Market Complaint', 9) ||
+                                 Helpers::check_roles($data->division_id, 'Market Complaint', 42) ||
+                                  Helpers::check_roles($data->division_id, 'Market Complaint', 43) ||
+                                  Helpers::check_roles($data->division_id, 'Market Complaint', 39) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 65) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18))
+                    @endphp
                 <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="sub-head">
                             QA/CQA Head Review
                         </div>
                         <div class="row">
-                            {{-- <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Closure Comment">QA/CQA Head Comment </label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                            require completion</small></div>
-                    <textarea class="" name="qa_head_comment"
-                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_head_comment }}
-                    </textarea>
-                </div>
-            </div> --}}
-                            {{-- <div class="col-md-12 mb-3">
-            <div class="group-input">
-                <label for="Closure Comment">QA/CQA Head Comment </label>
-                <div><small class="text-primary">Please insert "NA" in the data field if it does
-                        not require completion</small></div>
-                <textarea class="" name="qa_head_comment" id=""
-                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_head_comment }}</textarea>
-            </div>
-        </div> --}}
+                   
+     
                             <div class="col-md-12">
                                 @if ($data->stage == 2)
                                     <div class="group-input">
@@ -3267,57 +2341,21 @@
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
-                                        <textarea class="tiny" name="qa_head_comment" id="summernote-4" required {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->qa_head_comment }}</textarea>
+                                        <textarea class="tiny" name="qa_head_comment" id="summernote-4" required {{ $data->stage == 2 && $istab2 ? '' : 'readonly' }}>{{ $data->qa_head_comment }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
                                         <label for="QA/CQA Head Comment">QA/CQA Head Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
-                                        <textarea readonly class="tiny" name="qa_head_comment" id="summernote-4" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->qa_head_comment }}</textarea>
+                                        <textarea readonly class="tiny" name="qa_head_comment" id="summernote-4" {{ $data->stage == 2 && $istab2 ? '' : 'readonly' }}>{{ $data->qa_head_comment }}</textarea>
                                     </div>
                                 @endif
                                 @error('qa_head_comment')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            {{--
-        <div class="col-12">
-            <div class="group-input">
-                <label for="Inv Attachments">QA/CQA Head Attachment</label>
-                <div>
-                    <small class="text-primary">
-                        Please Attach all relevant or supporting documents
-                    </small>
-                </div>
-                <div class="file-attachment-field">
-                    <div class="file-attachment-list" id="qa_cqa_he_attach">
-
-                        @if ($data->qa_cqa_he_attach)
-                            @foreach (json_decode($data->qa_cqa_he_attach) as $file)
-                                <h6 type="button" class="file-container text-dark"
-                                    style="background-color: rgb(243, 242, 240);">
-                                    <b>{{ $file }}</b>
-                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                            class="fa fa-eye text-primary"
-                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                    <a type="button" class="remove-file"
-                                        data-file-name="{{ $file }}"><i
-                                            class="fa-solid fa-circle-xmark"
-                                            style="color:red; font-size:20px;"></i></a>
-                                </h6>
-                            @endforeach
-                        @endif
-                    </div>
-                    <div class="add-btn">
-                        <div>Add</div>
-                        <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                            type="file" id="qa_cqa_he_attach" name="qa_cqa_he_attach[]"
-                            oninput="addMultipleFiles(this,'qa_cqa_he_attach')" multiple>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
+                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="qa_cqa_he_attach">QA/CQA Head Attachment</label>
@@ -3348,7 +2386,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="qa_cqa_he_attach[]"
-                                            {{ $data->stage == 2 ? '' : 'disabled' }}
+                                            {{ $data->stage == 2 && $istab2 ? '' : 'disabled' }}
                                                 oninput="addMultipleFiles(this, 'qa_cqa_he_attach')" multiple>
                                         </div>
                                     </div>
@@ -3438,7 +2476,12 @@
                         </div>
                     </div>
                 </div>
+                    @php
 
+                      $istab4  = (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 66) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18))
+                    @endphp
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -3448,12 +2491,8 @@
                                 <label for="root_cause">
                                     Investigation Team  <span
                                     class="text-danger">*</span>
-                                    <button type="button" id="investigation_team_add" {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
-                                    <!-- <span class="text-primary" data-bs-toggle="modal"
-                                        data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
-                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                        (Launch Instruction)
-                                    </span> -->
+                                    <button type="button" id="investigation_team_add" {{ $data->stage == 3 && $istab4 ? '' : 'disabled' }}>+</button>
+
                                 </label>
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="Investing_team" style="width: 100%;">
@@ -3576,20 +2615,6 @@
                         });
                         </script>
 
-
-
-
-                            {{-- <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Review of Batch manufacturing record (BMR)">Review
-                                    of Batch Manufacturing
-                                    Record (BMR) </label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                        not require completion</small></div>
-                                <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1"
-                                required  {{ $data->stage == 3 ? '' : 'disabled' }}  >{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
-                            </div>
-                        </div> --}}
                             <div class="col-md-12">
                                 @if ($data->stage == 3)
                                     <div class="group-input">
@@ -3597,7 +2622,7 @@
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1" required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
+                                        <textarea class="summernote" data-stage="3" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1" required >{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3605,7 +2630,7 @@
                                             Manufacturing Record (BMR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
-                                        <textarea readonly class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1" {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
+                                        <textarea readonly class="summernote" data-stage="3" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1" >{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
                                     </div>
                                 @endif
                                 @error('review_of_batch_manufacturing_record_BMR_gi')
@@ -3623,8 +2648,8 @@
                                             class="text-danger">*</span> </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
-                                        required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }} </textarea>
+                                        <textarea class="summernote" data-stage="3" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
+                                        required >{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }} </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3634,8 +2659,8 @@
                                             Manufacturing </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" readonly name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
-                                          {{ $data->stage == 3 ? '' : 'readonly' }} >{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}</textarea>
+                                        <textarea class="summernote" data-stage="3" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
+                                           >{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}</textarea>
                                     </div>
                                 @endif
 
@@ -3649,8 +2674,8 @@
                                             class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
-                                        required  {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}</textarea>
+                                        <textarea class="summernote" data-stage="3" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
+                                        required  >{{ $data->review_of_Batch_Packing_record_bpr_gi }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3658,8 +2683,8 @@
                                             (BPR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
-                                         {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}  </textarea>
+                                        <textarea readonly class="summernote" data-stage="3" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
+                                        >{{ $data->review_of_Batch_Packing_record_bpr_gi }}  </textarea>
                                     </div>
                                 @endif
 
@@ -3674,8 +2699,8 @@
                                             class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1"
-                                        required  {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}</textarea>
+                                        <textarea class="summernote" data-stage="3" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1"
+                                        required >{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3684,8 +2709,8 @@
                                             Packing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }} </textarea>
+                                        <textarea readonly class="summernote" data-stage="3" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1"
+                                            >{{ $data->review_of_packing_materials_used_in_batch_packing_gi }} </textarea>
                                     </div>
                                 @endif
 
@@ -3699,8 +2724,8 @@
                                         class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_analytical_data_gi" id="summernote-1"
-                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_analytical_data_gi }}
+                                        <textarea class="summernote" data-stage="3" name="review_of_analytical_data_gi" id="summernote-1"
+                                        required >{{ $data->review_of_analytical_data_gi }}
                                        </textarea>
                                     </div>
                                 @else
@@ -3708,8 +2733,8 @@
                                         <label for="Review of Analytical Data">Review of Analytical Data</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="review_of_analytical_data_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_analytical_data_gi }}
+                                        <textarea class="summernote" data-stage="3" name="review_of_analytical_data_gi" id="summernote-1"
+                                            >{{ $data->review_of_analytical_data_gi }}
                                         </textarea>
                                     </div>
                                 @endif
@@ -3722,8 +2747,8 @@
                                     <div>
                                         <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                     </div>
-                                    <textarea class="summernote" name="review_of_complaint_sample_if" id="summernote-1"
-                                    required    {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_complaint_sample_if }}</textarea>
+                                    <textarea class="summernote" data-stage="3" name="review_of_complaint_sample_if" id="summernote-1"
+                                    required >{{ $data->review_of_complaint_sample_if }}</textarea>
                                 </div>
                             </div>
 
@@ -3737,8 +2762,8 @@
                                             class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
-                                        required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
+                                        <textarea class="summernote" data-stage="3" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
+                                        required >{{ $data->review_of_training_record_of_concern_persons_gi }}
                                         </textarea>
                                     </div>
                                 @else
@@ -3748,8 +2773,8 @@
                                             Of Concern Persons</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
+                                        <textarea class="summernote" data-stage="3" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
+                                            >{{ $data->review_of_training_record_of_concern_persons_gi }}
                                          </textarea>
                                     </div>
                                 @endif
@@ -3765,9 +2790,9 @@
                                             class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1"
-                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->rev_eq_inst_qual_calib_record_gi }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1"
+                                        required >{{ $data->rev_eq_inst_qual_calib_record_gi }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3776,9 +2801,9 @@
                                             of Equipment/Instrument qualification/Calibration Record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->rev_eq_inst_qual_calib_record_gi }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1"
+                                            >{{ $data->rev_eq_inst_qual_calib_record_gi }}
+                                        </textarea>
                                     </div>
                                 @endif
 
@@ -3792,9 +2817,9 @@
                                             class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1"
-                                        required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1"
+                                        required >{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3802,9 +2827,9 @@
                                             Equipment Break-down and Maintenance Record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi"
-                                            id="summernote-1" {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
-                    </textarea>
+                                        <textarea  class="summernote" data-stage="3" name="review_of_equipment_break_down_and_maintainance_record_gi"
+                                            id="summernote-1">{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
+                                        </textarea>
                                     </div>
                                 @endif
 
@@ -3818,9 +2843,9 @@
                                             class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_past_history_of_product_gi" id="summernote-1"
-                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_past_history_of_product_gi }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="review_of_past_history_of_product_gi" id="summernote-1"
+                                        required >{{ $data->review_of_past_history_of_product_gi }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3828,9 +2853,9 @@
                                             Product</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="review_of_past_history_of_product_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_past_history_of_product_gi }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="review_of_past_history_of_product_gi" id="summernote-1"
+                                            >{{ $data->review_of_past_history_of_product_gi }}
+                                        </textarea>
                                     </div>
                                 @endif
 
@@ -3845,7 +2870,7 @@
                                         <span
                                                 class="text-danger">*</span>
                                         <button type="button" id="brain-stroming"
-                                            {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
+                                            {{ $data->stage == 3 && $istab4 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal-Market_Complaint_BrainStorming"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -3877,26 +2902,26 @@
                                                             <td><input disabled type="text"
                                                                     name="brain_stroming_details[{{ $index }}][serial]"
                                                                     value="{{ $brainindex++ }}"
-                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
+                                                                    {{ $data->stage == 3 && $istab4 ? '' : 'readonly' }}>
                                                             </td>
                                                             <td>
                                                                 <textarea name="brain_stroming_details[{{ $index }}][possibility_bssd]"
-                                                                          {{ $data->stage == 3 ? '' : 'readonly' }}
+                                                                          {{ $data->stage == 3 && $istab4 ? '' : 'readonly' }}
                                                                           rows="2" style="width: 100%;">{{ $bra_st_s['possibility_bssd'] }}</textarea>
                                                             </td>
                                                             <td>
                                                                 <textarea name="brain_stroming_details[{{ $index }}][factscontrols_bssd]"
-                                                                          {{ $data->stage == 3 ? '' : 'readonly' }}
+                                                                          {{ $data->stage == 3 && $istab4 ? '' : 'readonly' }}
                                                                           rows="2" style="width: 100%;">{{ $bra_st_s['factscontrols_bssd'] }}</textarea>
                                                             </td>
                                                             <td>
                                                                 <textarea name="brain_stroming_details[{{ $index }}][probable_cause_bssd]"
-                                                                          {{ $data->stage == 3 ? '' : 'readonly' }}
+                                                                          {{ $data->stage == 3 && $istab4 ? '' : 'readonly' }}
                                                                           rows="2" style="width: 100%;">{{ $bra_st_s['probable_cause_bssd'] }}</textarea>
                                                             </td>
                                                             <td>
                                                                 <textarea name="brain_stroming_details[{{ $index }}][remarks_bssd]"
-                                                                          {{ $data->stage == 3 ? '' : 'readonly' }}
+                                                                          {{ $data->stage == 3 && $istab4 ? '' : 'readonly' }}
                                                                           rows="2" style="width: 100%;">{{ $bra_st_s['remarks_bssd'] }}</textarea>
                                                             </td>
 
@@ -3921,7 +2946,7 @@
                                                                     {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                             </td> --}}
                                                             <td><button type="button" class="removeRowBtn"
-                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>Remove</button>
+                                                                    {{ $data->stage == 3 && $istab4 ? '' : 'readonly' }}>Remove</button>
                                                             </td>
 
                                                         </tr>
@@ -3997,9 +3022,9 @@
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="conclusion_pi" id="summernote-1"
-                                        required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_pi }}
-                     </textarea>
+                                        <textarea class="summernote" data-stage="3" name="conclusion_pi" id="summernote-1"
+                                        required>{{ $data->conclusion_pi }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -4008,9 +3033,9 @@
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="conclusion_pi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_pi }}
-                     </textarea>
+                                        <textarea class="summernote" data-stage="3" name="conclusion_pi" id="summernote-1"
+                                           >{{ $data->conclusion_pi }}
+                                        </textarea>
                                     </div>
                                 @endif
                             </div>
@@ -4022,18 +3047,18 @@
                                         class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="conclusion_hodsr" id="summernote-1"
-                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="conclusion_hodsr" id="summernote-1"
+                                        required>{{ $data->conclusion_hodsr }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
                                         <label for="Conclusion">Root Cause Analysis</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="conclusion_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="conclusion_hodsr" id="summernote-1"
+                                            >{{ $data->conclusion_hodsr }}
+                                        </textarea>
                                     </div>
                                 @endif
                             </div>
@@ -4045,18 +3070,18 @@
                                         class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="root_cause_analysis_hodsr" id="summernote-1"
-                                        required  {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->root_cause_analysis_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="root_cause_analysis_hodsr" id="summernote-1"
+                                        required>{{ $data->root_cause_analysis_hodsr }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
                                         <label for="Root Cause Analysis">Other Methodology</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="root_cause_analysis_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->root_cause_analysis_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="root_cause_analysis_hodsr" id="summernote-1"
+                                            >{{ $data->root_cause_analysis_hodsr }}
+                                        </textarea>
                                     </div>
                                 @endif
 
@@ -4070,9 +3095,9 @@
                                             class="text-danger">*</span> </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="the_probable_root" id="summernote-1"
-                                        required    {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->the_probable_root }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="the_probable_root" id="summernote-1"
+                                        required>{{ $data->the_probable_root }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -4081,42 +3106,14 @@
                                             Cause </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="the_probable_root" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->the_probable_root }}
-                     </textarea>
+                                        <textarea class="summernote" data-stage="3" name="the_probable_root" id="summernote-1"
+                                            >{{ $data->the_probable_root }}
+                                        </textarea>
                                     </div>
                                 @endif
 
                             </div>
-                            {{-- <div class="sub-head col-12">HOD Review</div>
-
-            <div class="col-md-12 mb-3">
-                <div class="group-input">
-                    <label for="Conclusion">Conclusion</label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                            not require completion</small></div>
-                    <textarea class="summernote" name="conclusion_hodsr" id="summernote-1"
-                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_hodsr }}
-                    </textarea>
-                </div>
-            </div> --}}
-
-
-
-                            {{-- <div class="col-md-12 mb-3">
-                <div class="group-input">
-                    <label
-                        for="The most probable root causes identified of the complaint are as below">The probable root causes or Root Cause
-                        <span
-                        class="text-danger">*</span>
-                    </label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                            not require completion</small></div>
-                    <textarea class="summernote" name="probable_root_causes_complaint_hodsr" id="summernote-1"
-                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->probable_root_causes_complaint_hodsr }}
-                    </textarea>
-                </div>
-            </div> --}}
+                            
 
                             <div class="col-md-12 mb-3">
                                 @if ($data->stage == 3)
@@ -4125,18 +3122,18 @@
                                         class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="impact_assessment_hodsr" id="summernote-1"
-                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->impact_assessment_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="impact_assessment_hodsr" id="summernote-1"
+                                        required >{{ $data->impact_assessment_hodsr }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
                                         <label for="Impact Assessment">Impact Assessment </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="impact_assessment_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->impact_assessment_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="impact_assessment_hodsr" id="summernote-1"
+                                            >{{ $data->impact_assessment_hodsr }}
+                                        </textarea>
                                     </div>
                                 @endif
 
@@ -4151,18 +3148,18 @@
                                         class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="corrective_action_hodsr" id="summernote-1"
-                                        required  {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->corrective_action_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="corrective_action_hodsr" id="summernote-1"
+                                        required>{{ $data->corrective_action_hodsr }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
                                         <label for="Corrective Action">Corrective Action </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="corrective_action_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->corrective_action_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="corrective_action_hodsr" id="summernote-1"
+                                            >{{ $data->corrective_action_hodsr }}
+                                        </textarea>
                                     </div>
                                 @endif
 
@@ -4176,18 +3173,18 @@
                                         class="text-danger">*</span> </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="preventive_action_hodsr" id="summernote-1"
-                                          {{ $data->stage == 3 ? '' : 'readonly' }} required>{{ $data->preventive_action_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="preventive_action_hodsr" id="summernote-1"
+                                          required>{{ $data->preventive_action_hodsr }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
                                         <label for="Preventive Action">Preventive Action </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="preventive_action_hodsr" id="summernote-1"
-                                          {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->preventive_action_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="preventive_action_hodsr" id="summernote-1"
+                                          >{{ $data->preventive_action_hodsr }}
+                                        </textarea>
                                     </div>
                                 @endif
 
@@ -4200,18 +3197,18 @@
                                         class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1"
-                                        required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->summary_and_conclusion_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="summary_and_conclusion_hodsr" id="summernote-1"
+                                        required>{{ $data->summary_and_conclusion_hodsr }}
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
                                         <label for="Summary and Conclusion">Summary And Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1"
-                                        required    {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->summary_and_conclusion_hodsr }}
-                    </textarea>
+                                        <textarea class="summernote" data-stage="3" name="summary_and_conclusion_hodsr" id="summernote-1"
+                                        required>{{ $data->summary_and_conclusion_hodsr }}
+                                        </textarea>
                                     </div>
                                 @endif
 
@@ -4222,7 +3219,7 @@
 
 
 
-                           <div class="col-12">
+            <div class="col-12">
                 <div class="group-input">
                     <label for="Inv Attachments">Investigation attachment</label>
                     <div>
@@ -4251,64 +3248,22 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="investigation_attach" {{ $data->stage == 3 ? '' : 'disabled' }}
+                            <input type="file" id="investigation_attach" {{ $data->stage == 3 && $istab4 ? '' : 'disabled' }}
                                 name="investigation_attach[]"
                                 oninput="addMultipleFiles(this,'investigation_attach')"
-                                {{ $data->stage == 3 ? '' : 'readonly' }} multiple>
+                                multiple>
                         </div>
                     </div>
                 </div>
             </div>
 
-         {{--
-            <div class="col-md-12 mb-3">
-                <div class="group-input">
-                    <label for="Comments">Comments(if Any)</label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                            not require completion</small></div>
-                    <textarea class="" name="comments_if_any_hodsr" id=""
-                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->comments_if_any_hodsr }}
-                    </textarea>
-                </div>
-            </div> --}}
-
-                            {{-- <div class="col-12">
-                    <div class="group-input">
-                        <label for="Support_doc">Supporting Documents</label>
-                        <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="Support_doc"></div>
-                            <div class="add-btn">
-                                <div>Add</div>
-                                <input type="file" id="myfile" name="Support_doc[]"
-                                    oninput="addMultipleFiles(this, 'Support_doc')" multiple>
-                            </div>
-                        </div>
 
                     </div>
-                </div> --}}
-                        </div>
                         <div class="button-block">
                             <button type="submit" class="saveButton" id="saveButton"
-                                {{ $data->stage == 3 ? '' : 'readonly' }}>Save</button>
+                                {{ $data->stage == 3 && $istab4 ? '' : 'readonly' }}>Save</button>
 
-                            {{-- <div id="alert-message" style="display:none;">
-            Your stage is Closed - Done You Cannot Edit or Save.
-        </div>
-
-
-        <script>
-            function showAlert(event) {
-                event.preventDefault(); // Prevent form submission
-                var alertMessage = document.getElementById('alert-message').innerText;
-                alert(alertMessage);
-            }
-
-            document.addEventListener('DOMContentLoaded', function () {
-                var stage = {{ $data->stage }};
-
-
-            });
-        </script> --}}
+                            
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
@@ -5072,23 +4027,23 @@
                                     </div>
                                 </div>
                                <div class="col-lg-6 productionInjection">
-    <div class="group-input">
-        <label>Production Injection Review Completed On</label>
+                                <div class="group-input">
+                                    <label>Production Injection Review Completed On</label>
 
-        <!-- Display formatted date -->
-        <input type="text"
-            readonly
-            value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}"
-            placeholder="DD-MMM-YYYY">
+                                    <!-- Display formatted date -->
+                                    <input type="text"
+                                        readonly
+                                        value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}"
+                                        placeholder="DD-MMM-YYYY">
 
-        <!-- Actual date value -->
-        <input type="date"
-            id="Production_Injection_On"
-            name="Production_Injection_On"
-            value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
-            class="d-none">
-    </div>
-</div>
+                                    <!-- Actual date value -->
+                                    <input type="date"
+                                        id="Production_Injection_On"
+                                        name="Production_Injection_On"
+                                        value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
+                                        class="d-none">
+                                </div>
+                            </div>
 
 
 
@@ -9607,7 +8562,7 @@
                                 @endif
                                 </div>
                             </div> --}}
-{{-- by kp code  --}}
+                            {{-- by kp code  --}}
                             <div class="col-lg-6 other1_reviews">
                                 <div class="group-input">
                                     <label for="Person1">Other's 1 Person
@@ -9644,17 +8599,7 @@
                                     <textarea class="tiny" name="Other1_assessment" id="summernote-41" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_assessment }}</textarea>
                                 </div>
                             </div>
-                        {{--
-                            <div class="col-md-12 mb-3 other1_reviews">
-                                <div class="group-input">
-                                    <label for="Feedback1">Other's 1 Feedback</label>
-                                    <textarea class="tiny" name="Other1_feedback" id="summernote-42" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_feedback }}</textarea>
-                                </div>
-                            </div>
-                        --}}
-
-
-
+                        
                             <div class="col-12 other1_reviews">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Other's 1 Attachments</label>
@@ -9730,71 +8675,7 @@
                                     });
                                 });
                             </script>
-{{--
-                        @else
-                            <div class="sub-head">
-                                Other's 1 (Additional Person Review From Departments If Required)
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Review Required1">Other's 1 Review Required?</label>
-                                    <select disabled name="Other1_review" id="Other1_review">
-                                        <option value="">-- Select --</option>
-                                        <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
-                                        <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
-                                        <option value="NA" @if ($data1->Other1_review == 'NA') selected @endif>NA</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            @php
-                                $userRoles = DB::table('user_roles')
-                                    ->where(['q_m_s_divisions_id' => $data->division_id])
-                                    ->select('user_id')
-                                    ->distinct()
-                                    ->get();
-                                $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                            @endphp
-
-                            <div class="col-lg-12 Other1_reviews">
-                                <div class="group-input">
-                                    <label for="Department1">Other's 1 Department
-                                        <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span>
-                                    </label>
-                                    <select name="Other1_Department_person" id="Other1_Department_person" @if ($data->stage == 4) disabled @endif>
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>{{ $name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Impact Assessment12">Impact Assessment (By Other's 1)</label>
-                                    <textarea disabled class="tiny" name="Other1_assessment" id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Feedback1">Other's 1 Feedback</label>
-                                    <textarea disabled class="tiny" name="Other1_feedback" id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <div class="group-input">
-                                    <label for="Review Completed By1">Other's 1 Review Completed By</label>
-                                    <input disabled type="text" value="{{ $data1->Other1_by }}" name="Other1_by" id="Other1_by">
-                                </div>
-                            </div>
-
-
-                        @endif --}}
+                     
                         <div class="sub-head">
                             Other's 2 (Additional Person Review From Departments If Required)
                         </div>
@@ -9854,7 +8735,8 @@
                             $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                         @endphp
 
-                        {{-- <div class="col-lg-6 Other2_reviews">
+                        {{-- by kp code  --}}
+                        <div class="col-lg-6 Other2_reviews">
                             <div class="group-input">
                                 <label for="Person2">Other's 2 Person <span id="asterisko2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                                 <select name="Other2_person" id="Other2_person" @if ($data->stage != 3) disabled @endif>
@@ -9873,46 +8755,12 @@
                         <div class="col-lg-12 Other2_reviews">
                             <div class="group-input">
                                 <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                <select name="Other2_Department_person" id="Other2_Department_person" @if ($data->stage != 3) disabled @endif>
-                                    <option value="">-- Select --</option>
-                                    @foreach (Helpers::getDepartments() as $key => $name)
-                                        <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>{{ $name }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($data->stage != 3)
-                                <!-- Hidden field to retain the value if select is disabled -->
-                                <input type="hidden" name="Other2_Department_person" value="{{ $data1->Other2_Department_person }}">
-                            @endif
+
+                                <input type="text" name="Other2_Department_person" id="Other2_Department_person"
+                                        value="{{ old('Other2_Department_person', $data1->Other2_Department_person ?: '') }}"
+                                        @if ($data->stage != 3) readonly @endif>
                             </div>
-                        </div> --}}
-{{-- by kp code  --}}
-                         <div class="col-lg-6 Other2_reviews">
-                                <div class="group-input">
-                                    <label for="Person2">Other's 2 Person <span id="asterisko2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                    <select name="Other2_person" id="Other2_person" @if ($data->stage != 3) disabled @endif>
-                                        <option value="">-- Select --</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}" @if ($data1->Other2_person == $user->name) selected @endif>{{ $user->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($data->stage != 3)
-                                    <!-- Hidden field to retain the value if select is disabled -->
-                                    <input type="hidden" name="Other2_person" value="{{ $data1->Other2_person }}">
-                                @endif
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-lg-12 Other2_reviews">
-                                <div class="group-input">
-                                    <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-
-                                    <input type="text" name="Other2_Department_person" id="Other2_Department_person"
-                                            value="{{ old('Other2_Department_person', $data1->Other2_Department_person ?: '') }}"
-                                            @if ($data->stage != 3) readonly @endif>
-                                </div>
-                            </div>
+                        </div>
 
                         <div class="col-md-12 mb-3 Other2_reviews">
                             <div class="group-input">
@@ -9920,14 +8768,6 @@
                                 <textarea class="tiny" name="Other2_Assessment" id="summernote-43" @if ($data->stage != 4 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_Assessment }}</textarea>
                             </div>
                         </div>
-                       {{--
-                        <div class="col-md-12 mb-3 Other2_reviews">
-                            <div class="group-input">
-                                <label for="Feedback2"> Other's 2 Feedback</label>
-                                <textarea class="tiny" name="Other2_feedback" id="summernote-44" @if ($data->stage != 4 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_feedback }}</textarea>
-                            </div>
-                        </div>
-                        --}}
 
                         <div class="col-12 Other2_reviews">
                             <div class="group-input">
@@ -10031,38 +8871,7 @@
                             $userRoleIds = $userRoles->pluck('user_id')->toArray();
                             $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
                         @endphp
-
-                        {{-- <div class="col-lg-6 Other3_reviews">
-                            <div class="group-input">
-                                <label for="Person3">Other's 3 Person <span id="asterisko3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                <select name="Other3_person" id="Other3_person" @if ($data->stage != 3) disabled @endif>
-                                    <option value="">-- Select --</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->name }}" @if ($data1->Other3_person == $user->name) selected @endif>{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($data->stage != 3)
-                                <!-- Hidden field to retain the value if select is disabled -->
-                                <input type="hidden" name="Other3_person" value="{{ $data1->Other3_person }}">
-                            @endif
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 Other3_reviews">
-                            <div class="group-input">
-                                <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                <select name="Other3_Department_person" id="Other3_Department_person" @if ($data->stage != 3) disabled @endif>
-                                    <option value="">-- Select --</option>
-                                    @foreach (Helpers::getDepartments() as $key => $name)
-                                        <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>{{ $name }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($data->stage != 3)
-                                <!-- Hidden field to retain the value if select is disabled -->
-                                <input type="hidden" name="Other3_Department_person" value="{{ $data1->Other3_Department_person }}">
-                            @endif
-                            </div>
-                        </div> --}}
+                        
                         {{-- code by kp --}}
                         <div class="col-lg-6 Other3_reviews">
                             <div class="group-input">
@@ -10097,14 +8906,6 @@
                             </div>
                         </div>
 
-                       {{--
-                        <div class="col-md-12 mb-3 Other3_reviews">
-                            <div class="group-input">
-                                <label for="feedback3">Other's 3 Feedback</label>
-                                <textarea class="tiny" name="Other3_feedback" id="summernote-46" @if ($data->stage != 4 || Auth::user()->name != $data1->Other3_person) readonly @endif>{{ $data1->Other3_feedback }}</textarea>
-                            </div>
-                        </div>
-                        --}}
                         <div class="col-12 Other3_reviews">
                             <div class="group-input">
                                 <label for="Audit Attachments">Other's 3 Attachments</label>
@@ -10200,50 +9001,6 @@
                             </div>
                         </div>
 
-                        {{-- <div class="col-lg-6 Other4_reviews">
-                            <div class="group-input">
-                                <label for="Person4">Other's 4 Person <span id="asterisko4" class="text-danger">*</span></label>
-                                <select name="Other4_person" id="Other4_person" @if ($data->stage != 3) disabled @endif>
-                                    <option value="">-- Select --</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->name }}" @if ($data1->Other4_person == $user->name) selected @endif>{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($data->stage != 3)
-                                <!-- Hidden field to retain the value if select is disabled -->
-                                <input type="hidden" name="Other4_person" value="{{ $data1->Other4_person }}">
-                            @endif
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="col-lg-6 Other4_reviews">
-                            <div class="group-input">
-                                <label for="hod_Other4_person">HOD Other's 4 Person <span id="asterisko4" class="text-danger">*</span></label>
-                                <select name="hod_Other4_person" id="hod_Other4_person" @if ($data->stage == 4) disabled @endif>
-                                    <option value="">-- Select --</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->name }}" @if ($data5->hod_Other4_person == $user->name) selected @endif>{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="col-lg-12 Other4_reviews">
-                            <div class="group-input">
-                                <label for="Department4">Other's 4 Department <span id="asteriskod4" class="text-danger">*</span></label>
-                                <select name="Other4_Department_person" id="Other4_Department_person" @if ($data->stage != 3) disabled @endif>
-                                    <option value="">-- Select --</option>
-                                    @foreach (Helpers::getDepartments() as $key => $name)
-                                        <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>{{ $name }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($data->stage != 3)
-                                    <!-- Hidden field to retain the value if select is disabled -->
-                                    <input type="hidden" name="Other4_Department_person" value="{{ $data1->Other4_Department_person }}">
-                                @endif
-                            </div>
-                        </div> --}}
-
                         {{-- code by kp --}}
                         <div class="col-lg-6 Other4_reviews">
                             <div class="group-input">
@@ -10278,15 +9035,7 @@
                                     @if ($data->stage != 4 || Auth::user()->name != $data1->Other4_person) readonly @endif>{{ $data1->Other4_Assessment }}</textarea>
                             </div>
                         </div>
-                        {{--
-                        <div class="col-md-12 mb-3 Other4_reviews">
-                            <div class="group-input">
-                                <label for="feedback4">Other's 4 Status of Action Item</label>
-                                <textarea class="tiny" name="Other4_feedback" id="summernote-48"
-                                    @if ($data->stage != 4 || Auth::user()->name != $data1->Other4_person) readonly @endif>{{ $data1->Other4_feedback }}</textarea>
-                            </div>
-                        </div>
-                        --}}
+                        
                         <div class="col-12 Other4_reviews">
                             <div class="group-input">
                                 <label for="Audit Attachments">Other's 4 Attachments</label>
@@ -10382,49 +9131,7 @@
                             </div>
                         </div>
 
-                        {{-- <div class="col-lg-6 Other5_reviews">
-                            <div class="group-input">
-                                <label for="Person5">Other's 5 Person <span id="asterisko5" class="text-danger">*</span></label>
-                                <select name="Other5_person" id="Other5_person" @if ($data->stage != 3) disabled @endif>
-                                    <option value="">-- Select --</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->name }}" @if ($data1->Other5_person == $user->name) selected @endif>{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($data->stage != 3)
-                                <!-- Hidden field to retain the value if select is disabled -->
-                                <input type="hidden" name="Other5_person" value="{{ $data1->Other5_person }}">
-                            @endif
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="col-lg-6 Other5_reviews">
-                            <div class="group-input">
-                                <label for="hod_Other5_person">HOD Other's 5 Person <span id="asterisko5" class="text-danger">*</span></label>
-                                <select name="hod_Other5_person" id="hod_Other5_person" @if ($data->stage == 4) disabled @endif>
-                                    <option value="">-- Select --</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->name }}" @if ($data5->hod_Other5_person == $user->name) selected @endif>{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="col-lg-12 Other5_reviews">
-                            <div class="group-input">
-                                <label for="Department5">Other's 5 Department <span id="asteriskod5" class="text-danger">*</span></label>
-                                <select name="Other5_Department_person" id="Other5_Department_person" @if ($data->stage != 3) disabled @endif>
-                                    <option value="">-- Select --</option>
-                                    @foreach (Helpers::getDepartments() as $key => $name)
-                                        <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>{{ $name }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($data->stage != 3)
-                                    <!-- Hidden field to retain the value if select is disabled -->
-                                    <input type="hidden" name="Other5_Department_person" value="{{ $data1->Other5_Department_person }}">
-                                @endif
-                            </div>
-                        </div> --}}
+                        
                         {{-- code by kp --}}
 
                         <div class="col-lg-6 Other5_reviews">
@@ -10461,15 +9168,6 @@
                             </div>
                         </div>
 
-                        {{--
-                        <div class="col-md-12 mb-3 Other5_reviews">
-                            <div class="group-input">
-                                <label for="productionfeedback">Other's 5 Status of Action Item</label>
-                                <textarea class="tiny" name="Other5_feedback" id="summernote-50"
-                                @if ($data->stage != 4 || Auth::user()->name != $data1->Other5_person) readonly @endif>{{ $data1->Other5_feedback }}</textarea>
-                            </div>
-                        </div>
-                        --}}
                         <div class="col-12 Other5_reviews">
                             <div class="group-input">
                                 <label for="Audit Attachments">Other's 5 Attachments</label>
@@ -10515,47 +9213,52 @@
                         </div>
                         </div>
 
-                    <div class="button-block">
-                        <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                            type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 12 ? 'disabled' : '' }}
-                            id="ChangesaveButton" class="saveButton saveAuditFormBtn d-flex"
-                            style="align-items: center;">
-                            <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
-                                role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            Save
-                        </button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                            type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                            id="ChangeNextButton" class="nextButton">Next</button>
-                        <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a
-                                href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                        @if (
-                            $data->stage == 2 ||
-                                $data->stage == 3 ||
-                                $data->stage == 4 ||
-                                $data->stage == 5 ||
-                                $data->stage == 6 ||
-                                $data->stage == 7)
-                            {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
-                                    class="button  launch_extension" data-bs-toggle="modal"
-                                    data-bs-target="#launch_extension">
-                                    Launch Extension
-                                </a> --}}
-                        @endif
-                        <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                            data-bs-target="#effectivenss_extension">
-                                                                                                                                                                            Launch Effectiveness Check
-                                                                                                                                                                        </a> -->
+                        <div class="button-block">
+                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 12 ? 'disabled' : '' }}
+                                id="ChangesaveButton" class="saveButton saveAuditFormBtn d-flex"
+                                style="align-items: center;">
+                                <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
+                                    role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                Save
+                            </button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
+                                type="button"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                id="ChangeNextButton" class="nextButton">Next</button>
+                            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a
+                                    href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                            @if (
+                                $data->stage == 2 ||
+                                    $data->stage == 3 ||
+                                    $data->stage == 4 ||
+                                    $data->stage == 5 ||
+                                    $data->stage == 6 ||
+                                    $data->stage == 7)
+                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
+                                        class="button  launch_extension" data-bs-toggle="modal"
+                                        data-bs-target="#launch_extension">
+                                        Launch Extension
+                                    </a> --}}
+                            @endif
+                            <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
+                                                                                                                                                                                data-bs-target="#effectivenss_extension">
+                                                                                                                                                                                Launch Effectiveness Check
+                                                                                                                                                                            </a> -->
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
+            @php
 
+                $istab6  = (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 66) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18))
+            @endphp
             <div id="CCForm6" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -10569,7 +9272,7 @@
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea  name="qa_cqa_comments" {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->qa_cqa_comments }}</textarea>
+                                    <textarea  name="qa_cqa_comments" {{ $data->stage == 5 && $istab6 ? '' : 'readonly' }}>{{ $data->qa_cqa_comments }}</textarea>
                                 </div>
                             @else
                                 <div class="group-input">
@@ -10578,48 +9281,12 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea  name="qa_cqa_comments"
-                                    {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->qa_cqa_comments }}
+                                    {{ $data->stage == 5 && $istab6 ? '' : 'readonly' }}>{{ $data->qa_cqa_comments }}
                                     </textarea>
                                 </div>
                             @endif
-
                         </div>
-
-                        {{-- <div class="col-12">
-                            <div class="group-input">
-                                <label for="Inv Attachments">QA/CQA Verify Attachment</label>
-                                <div>
-                                    <small class="text-primary">
-                                        Please Attach all relevant or supporting documents
-                                    </small>
-                                </div>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="qa_cqa_attachments">
-                                        @if ($data->qa_cqa_attachments)
-                                            @foreach (json_decode($data->qa_cqa_attachments) as $file)
-                                                <h6 type="button" class="file-container text-dark"
-                                                    style="background-color: rgb(243, 242, 240);">
-                                                    <b>{{ $file }}</b>
-                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                            class="fa fa-eye text-primary"
-                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a type="button" class="remove-file"
-                                                        data-file-name="{{ $file }}"><i
-                                                            class="fa-solid fa-circle-xmark"
-                                                            style="color:red; font-size:20px;"></i></a>
-                                                </h6>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                            type="file" id="qa_cqa_attachments" name="qa_cqa_attachments[]"
-                                            oninput="addMultipleFiles(this,'qa_cqa_attachments')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
+                        
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="qa_cqa_attachments">QA/CQA Attachment</label>
@@ -10650,7 +9317,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="qa_cqa_attachments[]"
-                                        {{ $data->stage == 5 ? '' : 'disabled' }}
+                                        {{ $data->stage == 5 && $istab6 ? '' : 'disabled' }}
                                             oninput="addMultipleFiles(this, 'qa_cqa_attachments')" multiple>
                                     </div>
                                 </div>
@@ -10740,22 +9407,22 @@
                 </div>
             </div>
 
+            @php
+
+                $istab7  =  (Helpers::check_roles($data->division_id, 'Market Complaint', 9) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 39) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 42) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 43) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 65) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18))
+            @endphp
             <div id="CCForm7" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
                         QA/CQA Head Approval
                     </div>
                     <div class="row">
-                        {{-- <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Closure Comment">QA/CQA Head Approval Comment</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                        require completion</small></div>
-                                <textarea class="summernote" name="qa_cqa_head_comm" id="summernote-1"
-                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_cqa_head_comm }}
-                                    </textarea>
-                            </div>
-                        </div> --}}
+
                         <div class="col-md-12">
                             @if ($data->stage == 6)
                                 <div class="group-input">
@@ -10763,14 +9430,14 @@
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea class="tiny" name="qa_cqa_head_comm" id="summernote-4" required {{ $data->stage == 6 ? '' : 'readonly' }}>{{ $data->qa_cqa_head_comm }}</textarea>
+                                    <textarea class="tiny" name="qa_cqa_head_comm" id="summernote-4" required {{ $data->stage == 6 && $istab7  ? '' : 'readonly' }}>{{ $data->qa_cqa_head_comm }}</textarea>
                                 </div>
                             @else
                                 <div class="group-input">
                                     <label for="QA/CQA Head Comment">QA/CQA Head Approval Comment</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea readonly class="tiny" name="qa_cqa_head_comm" id="summernote-4" {{ $data->stage == 6 ? '' : 'readonly' }}>{{ $data->qa_cqa_head_comm }}</textarea>
+                                    <textarea readonly class="tiny" name="qa_cqa_head_comm" id="summernote-4" {{ $data->stage == 6 && $istab7 ? '' : 'readonly' }}>{{ $data->qa_cqa_head_comm }}</textarea>
                                 </div>
                             @endif
                             @error('qa_cqa_head_comm')
@@ -10778,42 +9445,6 @@
                             @enderror
                         </div>
 
-                        {{-- <div class="col-12">
-                            <div class="group-input">
-                                <label for="Inv Attachments">QA/CQA Head Approval Attachment</label>
-                                <div>
-                                    <small class="text-primary">
-                                        Please Attach all relevant or supporting documents
-                                    </small>
-                                </div>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="qa_cqa_head_attach">
-
-                                        @if ($data->qa_cqa_head_attach)
-                                            @foreach (json_decode($data->qa_cqa_head_attach) as $file)
-                                                <h6 type="button" class="file-container text-dark"
-                                                    style="background-color: rgb(243, 242, 240);">
-                                                    <b>{{ $file }}</b>
-                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                            class="fa fa-eye text-primary"
-                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a type="button" class="remove-file"
-                                                        data-file-name="{{ $file }}"><i
-                                                            class="fa-solid fa-circle-xmark"
-                                                            style="color:red; font-size:20px;"></i></a>
-                                                </h6>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                            type="file" id="qa_cqa_head_attach" name="qa_cqa_head_attach[]"
-                                            oninput="addMultipleFiles(this,'qa_cqa_head_attach')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="qa_cqa_head_attach">QA/CQA Head Approval Attachment</label>
@@ -10844,7 +9475,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="qa_cqa_head_attach[]"
-                                        {{ $data->stage == 6 ? '' : 'disabled' }}
+                                        {{ $data->stage == 6 && $istab7 ? '' : 'disabled' }}
                                             oninput="addMultipleFiles(this, 'qa_cqa_head_attach')" multiple>
                                     </div>
                                 </div>
@@ -10935,7 +9566,12 @@
                 </div>
             </div>
 
+            @php
 
+                $istab8  =  (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 66) ||
+                                    Helpers::check_roles($data->division_id, 'Market Complaint', 18))
+            @endphp
             <div id="CCForm8" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">
@@ -10949,7 +9585,7 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea  name="closure_comment_c"{{ $data->stage == 7 ? '' : 'readonly' }}>{{ $data->closure_comment_c }}</textarea>
+                                    <textarea  name="closure_comment_c"{{ $data->stage == 7 && $istab8 ? '' : 'readonly' }}>{{ $data->closure_comment_c }}</textarea>
                                 </div>
                             </div>
                         @else
@@ -10960,49 +9596,12 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea  name="closure_comment_c"
-                                    {{ $data->stage == 7 ? '' : 'readonly' }}>{{ $data->closure_comment_c }}
+                                    {{ $data->stage == 7 && $istab8 ? '' : 'readonly' }}>{{ $data->closure_comment_c }}
                                     </textarea>
                                 </div>
                             </div>
                         @endif
 
-
-                        {{-- <div class="col-12">
-                            <div class="group-input">
-                                <label for="Inv Attachments">Closure Attachment</label>
-                                <div>
-                                    <small class="text-primary">
-                                        Please Attach all relevant or supporting documents
-                                    </small>
-                                </div>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_c">
-
-                                        @if ($data->initial_attachment_c)
-                                            @foreach (json_decode($data->initial_attachment_c) as $file)
-                                                <h6 type="button" class="file-container text-dark"
-                                                    style="background-color: rgb(243, 242, 240);">
-                                                    <b>{{ $file }}</b>
-                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                            class="fa fa-eye text-primary"
-                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a type="button" class="remove-file"
-                                                        data-file-name="{{ $file }}"><i
-                                                            class="fa-solid fa-circle-xmark"
-                                                            style="color:red; font-size:20px;"></i></a>
-                                                </h6>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                            type="file" id="initial_attachment_c" name="initial_attachment_c[]"
-                                            oninput="addMultipleFiles(this,'initial_attachment_c')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="initial_attachment_c">Closure Attachment</label>
@@ -11033,7 +9632,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="initial_attachment_c[]"
-                                        {{ $data->stage == 7 ? '' : 'disabled' }}
+                                        {{ $data->stage == 7 && $istab8 ? '' : 'disabled' }}
                                             oninput="addMultipleFiles(this, 'initial_attachment_c')" multiple>
                                     </div>
                                 </div>
@@ -11122,9 +9721,6 @@
                     </div>
                 </div>
             </div>
-
-
-
 
 
             <div id="CCForm9" class="inner-block cctabcontent">
@@ -11504,28 +10100,69 @@
             ele: '#reference_record, #notify_to'
         });
 
-        $('#summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
+        // $('#summernote').summernote({
+        //     toolbar: [
+        //         ['style', ['style']],
+        //         ['font', ['bold', 'underline', 'clear', 'italic']],
+        //         ['color', ['color']],
+        //         ['para', ['ul', 'ol', 'paragraph']],
+        //         ['table', ['table']],
+        //         ['insert', ['link', 'picture', 'video']],
+        //         ['view', ['fullscreen', 'codeview', 'help']]
+        //     ]
+        // });
 
-        $('.summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
+        // $('.summernote').summernote({
+        //     toolbar: [
+        //         ['style', ['style']],
+        //         ['font', ['bold', 'underline', 'clear', 'italic']],
+        //         ['color', ['color']],
+        //         ['para', ['ul', 'ol', 'paragraph']],
+        //         ['table', ['table']],
+        //         ['insert', ['link', 'picture', 'video']],
+        //         ['view', ['fullscreen', 'codeview', 'help']]
+        //     ]
+        // });
+
+        const snToolbar = [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear', 'italic']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ];
+
+        // single id summernote
+        // $('#summernote').summernote({
+        //     toolbar: snToolbar
+        // });
+
+        $('.summernote').each(function () {
+
+            const editorStage = $(this).data('stage');
+
+            $(this).summernote({
+                // height: 200,
+                toolbar: snToolbar
+            });
+
+            // STAGE + ROLE CHECK (PER EDITOR)
+            let canEdit = false;
+
+        if (editorStage == 1) {
+            canEdit = @json($istab1);
+        }
+
+        if (editorStage == 3) {
+            canEdit = @json($istab4);
+        }
+
+        if (!canEdit) {
+            $(this).summernote('disable');
+        }
+
         });
 
         let referenceCount = 1;

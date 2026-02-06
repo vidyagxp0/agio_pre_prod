@@ -1695,7 +1695,7 @@ class ErrataController extends Controller
                 $history->previous = 'Not Applicable';
                 $history->activity_type = 'Not Applicable';
 
-                $history->action = 'Request More Info';
+                $history->action = 'More Info Required';
                 $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1715,10 +1715,10 @@ class ErrataController extends Controller
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Reject", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "More Info Required", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                         function ($message) use ($email, $ErrataControl) {
                                             $message->to($email)
-                                            ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
+                                            ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                         }
                                     );
                                 } catch(\Exception $e) {
@@ -1744,7 +1744,7 @@ class ErrataController extends Controller
                 $history->previous = 'Not Applicable';
                 $history->activity_type = 'Not Applicable';
 
-                $history->action = 'Request More Info';
+                $history->action = 'More Info Required';
                 $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1764,10 +1764,10 @@ class ErrataController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Reject", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "More Info Required", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $ErrataControl) {
                                         $message->to($email)
-                                        ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
+                                        ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                     }
                                 );
                             } catch(\Exception $e) {
@@ -1793,7 +1793,7 @@ class ErrataController extends Controller
                 $history->previous = 'Not Applicable';
                 $history->activity_type = 'Not Applicable';
 
-                $history->action = 'Request More Info';
+                $history->action = 'More Info Required';
                 $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1813,10 +1813,10 @@ class ErrataController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Reject", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "More Info Required", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $ErrataControl) {
                                         $message->to($email)
-                                        ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
+                                        ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                     }
                                 );
                             } catch(\Exception $e) {
@@ -1834,10 +1834,10 @@ class ErrataController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Reject", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "More Info Required", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $ErrataControl) {
                                         $message->to($email)
-                                        ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject Performed");
+                                        ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                     }
                                 );
                             } catch(\Exception $e) {
@@ -1863,7 +1863,7 @@ class ErrataController extends Controller
                 $history->previous = 'Not Applicable';
                 $history->activity_type = 'Not Applicable';
 
-                $history->action = 'Request More Info';
+                $history->action = 'More Info Required';
                 $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1883,10 +1883,10 @@ class ErrataController extends Controller
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Request More Info", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "More Info Required", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                         function ($message) use ($email, $ErrataControl) {
                                             $message->to($email)
-                                            ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
+                                            ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                         }
                                     );
                                 } catch(\Exception $e) {
@@ -1912,7 +1912,7 @@ class ErrataController extends Controller
                 $history->previous = 'Not Applicable';
                 $history->activity_type = 'Not Applicable';
 
-                $history->action = 'Request More Info';
+                $history->action = 'More Info Required';
                 $history->current = 'Not Applicable';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1932,10 +1932,10 @@ class ErrataController extends Controller
                                 try {
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Request More Info", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "More Info Required", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                         function ($message) use ($email, $ErrataControl) {
                                             $message->to($email)
-                                            ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
+                                            ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                         }
                                     );
                                 } catch(\Exception $e) {
@@ -1950,6 +1950,7 @@ class ErrataController extends Controller
             }
             if ($ErrataControl->stage == 7) {
                 $ErrataControl->stage = "6";
+                $ErrataControl->status = "Pending HOD Review";
                 $ErrataControl->sent_to_open_state_by = Auth::user()->name;
                 $ErrataControl->sent_to_open_state_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->sent_to_open_state_comment = $request->comment;
@@ -1961,7 +1962,7 @@ class ErrataController extends Controller
                 } else {
                     $history->previous = $lastDocument->sent_to_open_state_by . ' ,' . $lastDocument->sent_to_open_state_on;
                 }
-                $history->action = 'Request More Info';
+                $history->action = 'More Info Required';
                 $history->current = $ErrataControl->sent_to_open_state_by . ',' . $ErrataControl->sent_to_open_state_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -1986,10 +1987,10 @@ class ErrataController extends Controller
                             try {
                                 Mail::send(
                                     'mail.view-mail',
-                                    ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "Request More Info", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    ['data' => $ErrataControl, 'site'=>"Errata", 'history' => "More Info Required", 'process' => 'Errata', 'comment' => $request->comment, 'user'=> Auth::user()->name],
                                     function ($message) use ($email, $ErrataControl) {
                                         $message->to($email)
-                                        ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed");
+                                        ->subject("Agio Notification: Errata, Record #" . str_pad($ErrataControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed");
                                     }
                                 );
                             } catch(\Exception $e) {
@@ -2005,7 +2006,7 @@ class ErrataController extends Controller
             }
             if ($ErrataControl->stage == 6) {
                 $ErrataControl->stage = "5";
-                $ErrataControl->status = "Pending QA/CQA Head Approval";
+                $ErrataControl->status = "Pending HOD Review";
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3108,18 +3109,32 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 
 //
 
-            $data1 = ErrataGrid::where('ert_id', $id)->where('type', "erata_type")->first();
+            // $data1 = ErrataGrid::where('ert_id', $id)->where('type', "erata_type")->first();
+            $data1 = ErrataGrid::where('ert_id', $id)
+                ->where('type', 'erata_type')
+                ->first();
 
+            //  SAFETY GUARD
+            if (!$data1) {
+                $data1 = new ErrataGrid();
+                $data1->ert_id = $id;
+                $data1->type = 'erata_type';
+                $data1->ListOfImpactingDocument = serialize([]);
+                $data1->save();
+            }
             // Safely unserialize and use fallback to empty array if null
             $previousDetails = [
-                'ListOfImpactingDocument' => !is_null($data1->ListOfImpactingDocument) ? unserialize($data1->ListOfImpactingDocument) : null
+                'ListOfImpactingDocument' => !empty($data1->ListOfImpactingDocument)
+                    ? unserialize($data1->ListOfImpactingDocument)
+                    : []
             ];
 
-                // Serialize fields if they are not empty
-                if (!empty($request->ListOfImpactingDocument)) {
-                    $data1->ListOfImpactingDocument = serialize($request->ListOfImpactingDocument);
-                }
-                $data1->update();
+                            // Serialize fields if they are not empty
+            if (!empty($request->ListOfImpactingDocument)) {
+                $data1->ListOfImpactingDocument = serialize($request->ListOfImpactingDocument);
+            }
+            $data1->update();
+
 
 
             // Define the mapping of database fields to the descriptive field names

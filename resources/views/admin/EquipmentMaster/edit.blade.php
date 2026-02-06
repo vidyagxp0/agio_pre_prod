@@ -1,6 +1,6 @@
 @php
     $mainmenu = 'EquipmentMaster';
-    $submenu = 'Master';
+    $submenu = 'Equipment';
 @endphp
 
 
@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-header">
-            <h4>Edit Master</h4>
+            <h4>Edit Equipment</h4>
         </div>
  
         <div class="card-body">

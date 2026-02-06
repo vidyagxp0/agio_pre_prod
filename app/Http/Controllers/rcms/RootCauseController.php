@@ -3949,66 +3949,66 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                         'message' => 'Sent for HOD Final Review state'
                     ]);
                 }
-                  $capachilds = Capa::where('parent_id', $id)
-                ->where('parent_type', 'RCA')
-                ->get();
-                    $hasPending = false;
-                foreach ($capachilds as $ext) {
-                        $capachildstatus = trim(strtolower($ext->status));
-                        if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled') {
-                            $hasPending = true;
-                            break;
-                        }
-                    }
-               if ($hasPending) {
-                // $capachildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPending) {
-                       Session::flash('swal', [
-                           'title' => 'CAPA Child Pending!',
-                           'message' => 'You cannot proceed — some Capa Child is still pending.',
-                           'type' => 'warning',
-                       ]);
+            //       $capachilds = Capa::where('parent_id', $id)
+            //     ->where('parent_type', 'RCA')
+            //     ->get();
+            //         $hasPending = false;
+            //     foreach ($capachilds as $ext) {
+            //             $capachildstatus = trim(strtolower($ext->status));
+            //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled') {
+            //                 $hasPending = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPending) {
+            //     // $capachildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPending) {
+            //            Session::flash('swal', [
+            //                'title' => 'CAPA Child Pending!',
+            //                'message' => 'You cannot proceed — some Capa Child is still pending.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
-                $actionchilds = ActionItem::where('parent_id', $id)
-                ->where('parent_type', 'RCA')
-                ->get();
-                    $hasPendingaction = false;
-                foreach ($actionchilds as $ext) {
-                        $actionchildstatus = trim(strtolower($ext->status));
-                        if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled') {
-                            $hasPendingaction = true;
-                            break;
-                        }
-                    }
-               if ($hasPendingaction) {
-                // $actionchildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPendingaction) {
-                       Session::flash('swal', [
-                           'title' => 'Action Item Child Pending!',
-                           'message' => 'You cannot proceed — some Action Item Child is still pending.',
-                           'type' => 'warning',
-                       ]);
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
+            //     $actionchilds = ActionItem::where('parent_id', $id)
+            //     ->where('parent_type', 'RCA')
+            //     ->get();
+            //         $hasPendingaction = false;
+            //     foreach ($actionchilds as $ext) {
+            //             $actionchildstatus = trim(strtolower($ext->status));
+            //             if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled') {
+            //                 $hasPendingaction = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPendingaction) {
+            //     // $actionchildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPendingaction) {
+            //            Session::flash('swal', [
+            //                'title' => 'Action Item Child Pending!',
+            //                'message' => 'You cannot proceed — some Action Item Child is still pending.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
                // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'RCA')
@@ -4105,71 +4105,6 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
 
 
 
-            // if ($root->stage == 3) {
-            //     $root->stage = "4";
-            //     $root->status = "Pending  Review";
-            //     $root->submitted_by = Auth::user()->name;
-            //     $root->submitted_on = Carbon::now()->format('d-M-Y');
-
-
-
-            //     $history = new RootAuditTrial();
-            //     $history->root_id = $id;
-            //     $history->activity_type = 'Activity Log';
-            //     $history->previous ="Pending QA Review";
-            //     $history->current = $root->submitted_by;
-            //     $history->comment = $request->comment;
-            //     $history->action = 'QA Review Complete';
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $lastDocument->status;
-            //     $history->change_to =   "Not Applicable";
-            //     $history->change_from = $lastDocument->status;
-            //     $history->action_name = 'Update';
-            //     $history->stage = 'Pending QA Review';
-            //     $history->save();
-            //     $root->update();
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
-
-            // if ($root->stage == 4) {
-            //     $root->stage = "5";
-            //     $root->status = 'Pending QA Review';
-
-            //     $root->submitted_by = Auth::user()->name;
-            //     $root->submitted_on = Carbon::now()->format('d-M-Y');
-
-            //     $history = new RootAuditTrial();
-            //     $history->root_id = $id;
-            //     $history->activity_type = 'Activity Log';
-            //     $history->previous ="Pending QA Review";
-            //     $history->current = $root->submitted_by;
-            //     $history->comment = $request->comment;
-            //     $history->action = 'Approved';
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $lastDocument->status;
-            //     $history->change_to =   "Not Applicable";
-            //     $history->change_from = $lastDocument->status;
-            //     $history->action_name = 'Update';
-            //     $history->stage = 'Pending QA Review';
-
-            //     $history->save();
-
-
-
-
-
-
-
-
-            //     $root->update();
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
             if ($root->stage == 5) {
                 if (!$root->hod_final_comments) {
 
@@ -4520,70 +4455,109 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
               
 
 
-                $list = Helpers::getQAUserList($root->division_id);
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
-                        }
-                    // }
-                }
+                // $list = Helpers::getQAUserList($root->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
 
                 
-                $list = Helpers::getInitiatorUserList($root->division_id);
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
-                        }
-                    // }
-                }
+                // $list = Helpers::getInitiatorUserList($root->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
 
-                $list = Helpers::getHodUserList($root->division_id);
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
-                        }
-                    // }
-                }
+                // $list = Helpers::getHodUserList($root->division_id);
+                // foreach ($list as $u) {
+                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //         $email = Helpers::getUserEmail($u->user_id);
+                //             if ($email !== null) {
+                //             try {
+                //                 Mail::send(
+                //                     'mail.view-mail',
+                //                     ['data' => $root, 'site'=>"RCA", 'history' => "QAH/CQAH Closure", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                //                     function ($message) use ($email, $root) {
+                //                         $message->to($email)
+                //                         ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: QAH/CQAH Closure Performed");
+                //                     }
+                //                 );
+                //             } catch(\Exception $e) {
+                //                 info('Error sending mail', [$e]);
+                //             }
+                //         }
+                //     // }
+                // }
 
+
+
+                
+            $users = collect(Helpers::getQAUserList($root->division_id))
+                        ->merge(Helpers::getInitiatorUserList($root->division_id))
+                        ->merge(Helpers::getHodUserList($root->division_id));
+            $emails = $users->map(function ($u) {
+                                    return Helpers::getUserEmail($u->user_id);
+                                })
+                                ->filter() 
+                                ->unique()
+                                ->values();
+
+
+                foreach ($emails as $email) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            [
+                                'data'    => $root,
+                                'site'    => "RCA",
+                                'history' => "QAH/CQAH Closure",
+                                'process' => 'Root Cause Analysis',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name,
+                            ],
+                            function ($message) use ($email, $root) {
+                                $message->to($email)
+                                        ->subject(
+                                            "Agio Notification: Root Cause Analysis, Record #"
+                                            . str_pad($root->record, 4, '0', STR_PAD_LEFT)
+                                            . " - Activity: QAH/CQAH Closure Performed"
+                                        );
+                            }
+                        );
+                    } catch (\Throwable $e) {
+                        Log::error('RCA Mail Error for ' . $email . ': ' . $e->getMessage());
+                    }
+                }
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -4760,8 +4734,47 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
             }
             $history->save();
 
+          $list = Helpers::getHodUserList($root->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $root, 'site'=>"RCA", 'history' => "Cancel", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $root) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
           
-          
+                $list = Helpers::getQAUserList($root->division_id);
+                foreach ($list as $u) {
+                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
+                            try {
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $root, 'site'=>"RCA", 'history' => "Cancel", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $root) {
+                                        $message->to($email)
+                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
+                                    }
+                                );
+                            } catch(\Exception $e) {
+                                info('Error sending mail', [$e]);
+                            }
+                        }
+                    // }
+                }
 
             $root->update();
             $history = new RootCauseAnalysisHistory();
