@@ -852,22 +852,29 @@
                                                             <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                         </label>
 
-                                                        {{-- @if($data->stage == 1 ) --}}
-                                                            <select name="risk_assessment_required" id="risk_assessment_required" @if ($lockdatafileds1)
-                                                        style="pointer-events: none; background-color: #e9ecef;"
-                                                    @endif required>
-                                                                <option value="">-- Select --</option>
-                                                                <option value="yes" {{ $data->risk_assessment_required == 'yes' ? 'selected' : '' }}>Yes</option>
-                                                                <option value="no" {{ $data->risk_assessment_required == 'no' ? 'selected' : '' }}>No</option>
-                                                            </select>
-                                                        {{-- @else --}}
-                                                            {{-- <select name="risk_assessment_required_display" id="risk_assessment_required" disabled>
-                                                                <option value="">-- Select --</option>
-                                                                <option value="yes" {{ $data->risk_assessment_required == 'yes' ? 'selected' : '' }}>Yes</option>
-                                                                <option value="no" {{ $data->risk_assessment_required == 'no' ? 'selected' : '' }}>No</option>
-                                                            </select> --}}
-                                                            <input type="hidden" name="risk_assessment_required" value="{{ $data->risk_assessment_required }}">
-                                                        {{-- @endif --}}
+                                                       <select 
+                                                            name="risk_assessment_required" 
+                                                            id="risk_assessment_required"
+                                                            @if ($lockdatafileds1)
+                                                                disabled
+                                                                style="background-color: #e9ecef;"
+                                                            @endif
+                                                            required
+                                                        >
+                                                            <option value="">-- Select --</option>
+                                                            <option value="yes" {{ $data->risk_assessment_required == 'yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="no" {{ $data->risk_assessment_required == 'no' ? 'selected' : '' }}>No</option>
+                                                        </select>
+
+                                                        @if ($lockdatafileds1)
+                                                            <input 
+                                                                type="hidden" 
+                                                                name="risk_assessment_required" 
+                                                                value="{{ $data->risk_assessment_required }}"
+                                                            >
+                                                        @endif
+
+                                                           
                                                     </div>
                                                 </div>
 

@@ -204,7 +204,7 @@ if($submenu=="Group Permission"){
                                 } @endphp">
                                 <i class="nav-icon fa fa-cog"></i>
                         <p>
-                            Equipment Master and Product
+                            Masters
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -219,7 +219,7 @@ if($submenu=="Group Permission"){
                             echo "active";
                         } @endphp">
                                 <i class="far fa-building nav-icon"></i>
-                                <p>Master</p>
+                                <p>Equipment</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -379,7 +379,7 @@ if($submenu=="Download Control"){
                     </ul>
                 </li>
 
-  <li class="nav-item {{ $mainmenu == 'Product & Material' ? 'menu-open' : '' }} ">
+  {{-- <li class="nav-item {{ $mainmenu == 'Product & Material' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="Product & Material"){
@@ -418,7 +418,7 @@ if($submenu=="Material"){
                         </li>
 
                     </ul>
-                </li>
+                </li> --}}
 
                 <li class="nav-item">
                     <a href="{{ URL('admin/risk-level') }}"

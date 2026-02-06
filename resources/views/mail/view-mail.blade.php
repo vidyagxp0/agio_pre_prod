@@ -230,7 +230,13 @@
                             @endif
                         </p>
 
-                        <p>Date Opened:- {{ $data->created_at->format('d-M-Y H:i:s') }}</p>
+                        <p>Date Opened:- 
+                            @if($data->intiation_date)
+                               {{ Helpers::getDateFormat($data->intiation_date) }}
+                            @else
+                               {{ $data->created_at->format('d-M-Y H:i:s') }}
+                            @endif
+                        </p>
 
                         <p>Comment:- {{ $comment }}.</p>
 
@@ -260,8 +266,10 @@
                                     <td>
                                         @if ($process == 'Extension')
                                             {{ Helpers::record($data->record_number) }}
-                                        @else
+                                        @elseif($process == 'OOS/OOT')
                                             {{ Helpers::record($data->dashboard_unique_id) }}
+                                        @else
+                                            {{ Helpers::record($data->dashboard_unique_id) }}    
                                         @endif
                                     </td>
 
@@ -287,6 +295,8 @@
                                     {{ $data->description_ooc }}
                                     @elseif($process == 'OOS/OOT')
                                     {{ $data->description_gi }}
+                                    @elseif($process == 'Market Complaint')
+                                    {{ $data->description_gi }}
                                     @else
                                     {{ $data->short_description }}
                                     @endif
@@ -297,6 +307,8 @@
                                         {{ Helpers::getDateFormat($data->due_date) }}    
                                         @elseif($process == 'OOS/OOT')
                                         {{ Helpers::getDateFormat($data->due_date) }}    
+                                        @elseif($process == 'Market Complaint')
+                                        {{ Helpers::getDateFormat($data->due_date_gi) }} 
                                         @else
                                         {{ $data->due_date ?  Helpers::getDateFormat($data->due_date) : 'Not Applicable' }}                                        @endif
                                     </td>
