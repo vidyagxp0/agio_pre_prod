@@ -12,6 +12,7 @@ use App\Models\EffectivenessCheckAuditTrail;
 use App\Models\RoleGroup;
 use App\Models\extension_new;
 use Carbon\Carbon;
+use App\Jobs\SendMail;
 use PDF;
 use Illuminate\Support\Facades\Session;
 use App\Models\Capa;
@@ -1432,17 +1433,34 @@ class EffectivenessCheckController extends Controller
                     }
 
                     if($getMail !== null){
+                        // try {
+                        //     Mail::send(
+                        //         'mail.view-mail',
+                        //         ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Submit", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                        //         function ($message) use ($getMail,  $effective) {
+                        //             $message->to($getMail)
+                        //             ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                        //         }
+                        //     );
+                        // } catch(\Exception $e) {
+                        //     info('Error sending mail', [$e]);
+                        // }
+
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Submit", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($getMail,  $effective) {
-                                    $message->to($getMail)
-                                    ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
+
+                            $data = [
+                                'data' => $effective,
+                                'site' => "EC",
+                                'history' => "Submit",
+                                'process' => 'Effectiveness-Check',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $getMail, $effective, 'Effectiveness-Check');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }                  
                     $effective->update();
@@ -1566,33 +1584,51 @@ class EffectivenessCheckController extends Controller
 
                         if ($email !== null) {
 
-                            try {   
+                            // try {   
 
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         [
+                            //             'data' => $effective,
+                            //             'site' => "Effectiveness-Check",
+                            //             'history' => "Acknowledge Complete",
+                            //             'process' => 'Effectiveness-Check',
+                            //             'comment' => $request->comments,
+                            //             'user'=> Auth::user()->name
+                            //         ],
+                            //         function ($message) use ($email, $effective) {
+                            //             $message->to($email)
+                            //                 ->subject(
+                            //                     "Agio Notification: Effectiveness-Check, Record #"
+                            //                     . str_pad($effective->record, 4, '0', STR_PAD_LEFT)
+                            //                     . " - Activity: Acknowledge Complete"
+                            //                 );
+                            //         }
+                            //     );
+
+                            // } catch (\Exception $e) {   
+
+                            //     \Log::error('Mail Error: ' . $e->getMessage()); 
+
+                            // }  
+                            
+                              try {
+
+                                    $data = [
                                         'data' => $effective,
-                                        'site' => "Effectiveness-Check",
+                                        'site' => "EC",
                                         'history' => "Acknowledge Complete",
                                         'process' => 'Effectiveness-Check',
                                         'comment' => $request->comments,
                                         'user'=> Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $effective) {
-                                        $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Effectiveness-Check, Record #"
-                                                . str_pad($effective->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: Acknowledge Complete"
-                                            );
-                                    }
-                                );
+                                    ];
 
-                            } catch (\Exception $e) {   
+                                    SendMail::dispatch($data, $email, $effective, 'Effectiveness-Check');
 
-                                \Log::error('Mail Error: ' . $e->getMessage()); 
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
 
-                            }   
                         }
                     }
 
@@ -1753,26 +1789,40 @@ class EffectivenessCheckController extends Controller
                                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                                     $email = Helpers::getUserEmail($u->user_id);
                                         if ($email !== null) {
+                                        // try {
+                                        //     Mail::send(
+                                        //         'mail.view-mail',
+                                        //         ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Complete", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                                        //         function ($message) use ($email,  $effective) {
+                                        //             $message->to($email)
+                                        //             ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete");
+                                        //         }
+                                        //     );
+                                        // } catch(\Exception $e) {
+                                        //     info('Error sending mail', [$e]);
+                                        // }
+
                                         try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Complete", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                                function ($message) use ($email,  $effective) {
-                                                    $message->to($email)
-                                                    ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete");
-                                                }
-                                            );
-                                        } catch(\Exception $e) {
-                                            info('Error sending mail', [$e]);
-                                        }
+
+                                                $data = [
+                                                    'data' => $effective,
+                                                    'site' => "EC",
+                                                    'history' => "Complete",
+                                                    'process' => 'Effectiveness-Check',
+                                                    'comment' => $request->comments,
+                                                    'user'=> Auth::user()->name
+                                                ];
+
+                                                SendMail::dispatch($data, $email, $effective, 'Effectiveness-Check');
+
+                                            } catch (\Exception $e) {
+                                                \Log::error('Mail Error: ' . $e->getMessage());
+                                            }
                                     }
                                 // }
                             }
 
-                            $history->save();
-
-              
-
+                    $history->save();
                     $effective->update();
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
@@ -1986,41 +2036,57 @@ class EffectivenessCheckController extends Controller
                         }
                     }
 
+
+                   $list = Helpers::getHodUserList($effective->division_id);
+
                     // Send mail (single loop)
                     foreach ($list as $u) {
 
                         $email = Helpers::getUserEmail($u->user_id);
 
                         if (!empty($email)) {
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         [
+                            //             'data'    => $effective,
+                            //             'site'    => "Effectiveness-Check",
+                            //             'history' => "HOD Review Complete",
+                            //             'process' => 'Effectiveness-Check',
+                            //             'comment' => $request->comment,
+                            //             'user'    => Auth::user()->name
+                            //         ],
+                            //         function ($message) use ($email, $effective) {
+                            //             $message->to($email)
+                            //                     ->subject(
+                            //                         "Agio Notification: Effectiveness-Check, Record #"
+                            //                         . str_pad($effective->record, 4, '0', STR_PAD_LEFT)
+                            //                         . " - Activity: HOD Review Complete"
+                            //                     );
+                            //         }
+                            //     );
+                            // } catch (\Exception $e) {
+                            //     \Log::error('Mail send error: ' . $e->getMessage());
+                            // }
+
                             try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $effective,
-                                        'site'    => "Effectiveness-Check",
-                                        'history' => "HOD Review Complete",
-                                        'process' => 'Effectiveness-Check',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $effective) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Effectiveness-Check, Record #"
-                                                    . str_pad($effective->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: HOD Review Complete"
-                                                );
-                                    }
-                                );
+
+                                $data = [
+                                    'data' => $effective,
+                                    'site' => "EC",
+                                    'history' => "HOD Review Complete",
+                                    'process' => 'Effectiveness-Check',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $effective, 'Effectiveness-Check');
+
                             } catch (\Exception $e) {
-                                \Log::error('Mail send error: ' . $e->getMessage());
+                                \Log::error('Mail Error: ' . $e->getMessage());
                             }
                         }
                     }
-
-
-                
-              
 
                     $effective->update();
                     $history = new CCStageHistory();
@@ -2146,21 +2212,43 @@ class EffectivenessCheckController extends Controller
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-                foreach ($list as $u) {
+                    $usersmerge = collect()
+                    ->merge(Helpers::getQAHeadUserList($effective->division_id))
+                    ->merge(Helpers::getCQAHeadUsersList($effective->division_id))
+                    ->unique('user_id');
+
+                foreach ($usersmerge as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Effective", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email,  $effective) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Effective", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //         function ($message) use ($email,  $effective) {
+                            //             $message->to($email)
+                            //             ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective");
+                            //         }
+                            //     );
+                            // } catch(\Exception $e) {
+                            //     info('Error sending mail', [$e]);
+                            // }
+
+                             try {
+
+                                $data = [
+                                    'data' => $effective,
+                                    'site' => "EC",
+                                    'history' => "Effective",
+                                    'process' => 'Effectiveness-Check',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $effective, 'Effectiveness-Check');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
                             }
                         }
                     // }
@@ -2362,38 +2450,33 @@ class EffectivenessCheckController extends Controller
                 }
 
                 // 5️⃣ Send Mail to all merged users
-                foreach ($usersMerge as $u) {
+               foreach ($users as $user) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
-
-                    if (!empty($email)) {
+                    if (!empty($user->email)) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $effective,
-                                    'site'    => 'Effectiveness-Check',
-                                    'history' => 'Effective Approval Completed',
-                                    'process' => 'Effectiveness-Check',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name,
-                                ],
-                                function ($message) use ($email, $effective) {
-                                    $message->to($email)
-                                            ->subject(
-                                                'Agio Notification: Effectiveness-Check, Record #'
-                                                . str_pad($effective->record, 4, '0', STR_PAD_LEFT)
-                                                . ' - Activity: Effective Approval Completed'
-                                            );
-                                }
+
+                            $data = [
+                                'data'    => $effective,
+                                'site'    => "EC",
+                                'history' => "Effective Approval Completed",
+                                'process' => 'Effectiveness-Check',
+                                'comment' => $request->comment ?? '',
+                                'user'    => Auth::user()->name,
+                            ];
+
+                            // For testing (bypass queue)
+                            SendMail::dispatchSync(
+                                $data,
+                                $user->email,
+                                $effective,
+                                'Effectiveness-Check'
                             );
+
                         } catch (\Exception $e) {
                             \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
-
-
              
                 $effective->update();
                 toastr()->success('Document Sent');
@@ -2489,25 +2572,42 @@ class EffectivenessCheckController extends Controller
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
+                $list = Helpers::getInitiatorUserList($effective->division_id);
                 foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                        if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Cancel", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email,  $effective) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
+
+                            $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {   
+
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        [
+                                            'data' => $effective,
+                                            'site' => "EC",
+                                            'history' => "Closed Done",
+                                            'process' => 'Change Control',
+                                            'comment' => $request->comments,
+                                            'user'=> Auth::user()->name
+                                        ],
+                                        function ($message) use ($email, $effective) {
+                                            $message->to($email)
+                                                ->subject(
+                                                    "Agio Notification: Effectiveness Check, Record #"
+                                                    . str_pad($effective->record, 4, '0', STR_PAD_LEFT)
+                                                    . " - Activity: More Info Required"
+                                                );
+                                        }
+                                    );
+
+                                } catch (\Exception $e) {   
+
+                                    \Log::error('Mail Error: ' . $e->getMessage()); 
+
+                                }   
                             }
                         }
-                        // }
-                    }
                     
                     
                 //     $list = Helpers::getCQAUsersList($effective->division_id);
@@ -2661,22 +2761,43 @@ class EffectivenessCheckController extends Controller
                         \Log::error('Mail failed to send: ' . $e->getMessage());
                     }
                 }
-                foreach ($list as $u) {
+                 $usersmerge = collect()
+                    ->merge(Helpers::getQAHeadUserList($effective->division_id))
+                    ->merge(Helpers::getCQAHeadUsersList($effective->division_id))
+                    ->unique('user_id');
+                foreach ($usersmerge as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Not Effective", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //         function ($message) use ($email,  $effective) {
+                            //             $message->to($email)
+                            //             ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Not Effective");
+                            //         }
+                            //     );
+                            // } catch(\Exception $e) {
+                            //     info('Error sending mail', [$e]);
+                            // }
+
                             try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Not Effective", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email,  $effective) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: Not Effective");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
+
+                                $data = [
+                                    'data' => $effective,
+                                    'site' => "EC",
+                                    'history' => "Not Effective",
+                                    'process' => 'Effectiveness-Check',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $effective, 'Effectiveness-Check');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
                         }
                     // }
                 }
@@ -2979,18 +3100,36 @@ class EffectivenessCheckController extends Controller
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "More Information Required", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email,  $effective) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "More Information Required", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //         function ($message) use ($email,  $effective) {
+                            //             $message->to($email)
+                            //             ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                            //         }
+                            //     );
+                            // } catch(\Exception $e) {
+                            //     info('Error sending mail', [$e]);
+                            // }
+
+                             try {
+
+                            $data = [
+                                'data' => $effective,
+                                'site' => "EC",
+                                'history' => "More Information Required",
+                                'process' => 'Effectiveness-Check',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $effective, 'Effectiveness-Check');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
+                        }
+
                         }
                     // }
                 }
@@ -3067,18 +3206,35 @@ class EffectivenessCheckController extends Controller
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "More Information Required", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email,  $effective) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "More Information Required", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //         function ($message) use ($email,  $effective) {
+                            //             $message->to($email)
+                            //             ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                            //         }
+                            //     );
+                            // } catch(\Exception $e) {
+                            //     info('Error sending mail', [$e]);
+                            // }
+
+                             try {
+
+                                $data = [
+                                    'data' => $effective,
+                                    'site' => "EC",
+                                    'history' => "More Information Required",
+                                    'process' => 'Effectiveness-Check',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $effective, 'Effectiveness-Check');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
                         }
                     // }
                 }
@@ -3169,9 +3325,7 @@ class EffectivenessCheckController extends Controller
                         }
                     // }
                 }
-
-              
-                
+  
                 $effective->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -3242,18 +3396,35 @@ class EffectivenessCheckController extends Controller
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "More Information Required", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email,  $effective) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "More Information Required", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //         function ($message) use ($email,  $effective) {
+                            //             $message->to($email)
+                            //             ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                            //         }
+                            //     );
+                            // } catch(\Exception $e) {
+                            //     info('Error sending mail', [$e]);
+                            // }
+
+                             try {
+
+                            $data = [
+                                'data' => $effective,
+                                'site' => "EC",
+                                'history' => "More Information Required",
+                                'process' => 'Effectiveness-Check',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $effective, 'Effectiveness-Check');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
+                        }
                         }
                     // }
                 }
@@ -3331,18 +3502,35 @@ class EffectivenessCheckController extends Controller
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Submit", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //         function ($message) use ($email,  $effective) {
+                            //             $message->to($email)
+                            //             ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
+                            //         }
+                            //     );
+                            // } catch(\Exception $e) {
+                            //     info('Error sending mail', [$e]);
+                            // }
+
                             try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "Submit", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email,  $effective) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
+                                $data = [
+                                    'data' => $effective,
+                                    'site' => "EC",
+                                    'history' => "More Information Required",
+                                    'process' => 'Effectiveness-Check',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $effective, 'Effectiveness-Check');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
                             }
+
                         }
                     // }
                 }
