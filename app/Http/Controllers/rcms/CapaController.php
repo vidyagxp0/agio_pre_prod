@@ -3764,10 +3764,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "Propose Plan",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -3775,7 +3775,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -3928,10 +3928,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "HOD Review Complete",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -3939,7 +3939,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -4051,10 +4051,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "QA/CQA Review Complete",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -4062,7 +4062,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -4173,10 +4173,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "Approved",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -4184,7 +4184,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -4295,10 +4295,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "Completed",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -4306,7 +4306,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -4421,10 +4421,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "HOD Final Review Completed",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -4432,7 +4432,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -4548,10 +4548,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "QA/CQA Closure Review Completed",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -4559,7 +4559,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -4677,10 +4677,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "QAH/CQA Head Approval Complete",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -4688,7 +4688,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -4852,10 +4852,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "Cancel",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -4863,7 +4863,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -4941,10 +4941,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "More Information Required",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -4952,7 +4952,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -5024,10 +5024,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "More Information Required",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -5035,7 +5035,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -5095,10 +5095,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "More Information Required",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -5106,7 +5106,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -5181,10 +5181,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "More Information Required",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -5192,7 +5192,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -5253,10 +5253,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "More Information Required",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -5264,7 +5264,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -5321,10 +5321,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "More Information Required",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -5332,7 +5332,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -5404,10 +5404,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "More Information Required",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -5415,7 +5415,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
@@ -5493,10 +5493,10 @@ class CapaController extends Controller
 
                                 $data = [
                                     'data'    => $capa,
-                                    'site'    => "Change Control",
+                                    'site'    => "CAPA",
                                     'history' => "Cancel",
-                                    'process' => 'Change Control',
-                                    'comment' => $request->comments,
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -5504,7 +5504,7 @@ class CapaController extends Controller
                                     $data,
                                     $email,
                                     $capa,
-                                    'Change Control'
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
