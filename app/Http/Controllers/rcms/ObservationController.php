@@ -2237,6 +2237,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     $history->action_name = 'Update';
                 }
 
+
                 $list = Helpers::getLeadAuditeeUsersList($changestage->division_code); // Notify CFT Person
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
@@ -2247,7 +2248,7 @@ if (is_array($request->action) && !empty($request->action)) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changestage, 
-                                            'site' => "OV", 
+                                            'site' => "OBS", 
                                             'history' => "Submit", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -2443,7 +2444,7 @@ if (is_array($request->action) && !empty($request->action)) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changestage, 
-                                            'site' => "RP", 
+                                            'site' => "OBS", 
                                             'history' => "CAPA Plan Proposed", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -2634,7 +2635,7 @@ if (is_array($request->action) && !empty($request->action)) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changestage, 
-                                            'site' => "Observation", 
+                                            'site' => "OBS", 
                                             'history' => "No CAPAs Required", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -2664,7 +2665,7 @@ if (is_array($request->action) && !empty($request->action)) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changestage, 
-                                            'site' => "Observation", 
+                                            'site' => "OBS", 
                                             'history' => "No CAPAs Required", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -2694,7 +2695,7 @@ if (is_array($request->action) && !empty($request->action)) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changestage, 
-                                            'site' => "Observation", 
+                                            'site' => "OBS", 
                                             'history' => "No CAPAs Required", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -2725,7 +2726,7 @@ if (is_array($request->action) && !empty($request->action)) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changestage, 
-                                            'site' => "Observation", 
+                                            'site' => "OBS", 
                                             'history' => "No CAPAs Required", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -2806,8 +2807,15 @@ if (is_array($request->action) && !empty($request->action)) {
                     $history->action_name = 'Update';
                 }
 
-                $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
-                     foreach ($list as $u) {
+                 $usersmerge = collect()
+                ->merge(Helpers::getQAUserList($changestage->division_code))
+                ->merge(Helpers::getAuditManagerUsersList($changestage->division_code))
+                ->merge(Helpers::getLeadAuditorUsersList($changestage->division_code))
+                ->merge(Helpers::getLeadAuditeeUsersList($changestage->division_code))
+                ->unique('user_id');
+
+                // $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
+                     foreach ($usersmerge as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
                         
                             if ($email !== null) {
@@ -2816,7 +2824,7 @@ if (is_array($request->action) && !empty($request->action)) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changestage, 
-                                            'site' => "Observation", 
+                                            'site' => "OBS", 
                                             'history' => "Response Reviewed", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -2838,37 +2846,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         }
 
 
-                $list = Helpers::getQAUserList($changestage->division_code); // Notify CFT Person
-                     foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                        
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changestage, 
-                                            'site' => "Observation", 
-                                            'history' => "Response Reviewed", 
-                                            'process' => 'Observation', 
-                                            'comment' => $request->comment, 
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changestage) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                 
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                   
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
-
+                
                 $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -2894,139 +2872,139 @@ if (is_array($request->action) && !empty($request->action)) {
 
                 
 
-             $childCapas = Capa::where('parent_id', $id)
-    ->where('parent_type', 'Observation')
-    ->get();
+                $childCapas = Capa::where('parent_id', $id)
+                ->where('parent_type', 'Observation')
+                ->get();
 
-if ($childCapas->count() > 0) {
-    foreach ($childCapas as $capa) {
-        $lastDocument = clone $capa; // save old state for history
+                if ($childCapas->count() > 0) {
+                    foreach ($childCapas as $capa) {
+                        $lastDocument = clone $capa; // save old state for history
 
-        // 🔹 Update individual CAPA record
-        $capa->stage = "0";
-        $capa->status = "Closed-Cancelled";
-        $capa->cancelled_by = Auth::user()->name;
-        $capa->cancelled_on = Carbon::now()->format('d-M-Y');
-        $capa->cancel_comment = $request->comment;
-        $capa->save();
+                        // 🔹 Update individual CAPA record
+                        $capa->stage = "0";
+                        $capa->status = "Closed-Cancelled";
+                        $capa->cancelled_by = Auth::user()->name;
+                        $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $capa->cancel_comment = $request->comment;
+                        $capa->save();
 
-        // 🔹 Create Audit Trail entry
-        $history = new CapaAuditTrial();
-        $history->capa_id = $capa->id;
-        $history->activity_type = 'Cancel By, Cancel On';
-        $history->action = 'Cancel';
-        $history->comment = $request->comment;
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $lastDocument->status;
-        $history->change_from = $lastDocument->status;
-        $history->change_to = "Closed-Cancelled";
-        $history->stage = 'Cancelled';
+                        // 🔹 Create Audit Trail entry
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $capa->id;
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->action = 'Cancel';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_from = $lastDocument->status;
+                        $history->change_to = "Closed-Cancelled";
+                        $history->stage = 'Cancelled';
 
-        // Previous / Current audit info
-        $history->previous = $lastDocument->cancelled_by
-            ? $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on
-            : '';
-        $history->current = $capa->cancelled_by . ' , ' . $capa->cancelled_on;
-        $history->action_name = $lastDocument->cancelled_by ? 'Update' : 'New';
+                        // Previous / Current audit info
+                        $history->previous = $lastDocument->cancelled_by
+                            ? $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on
+                            : '';
+                        $history->current = $capa->cancelled_by . ' , ' . $capa->cancelled_on;
+                        $history->action_name = $lastDocument->cancelled_by ? 'Update' : 'New';
 
-        $history->save();
-    }
-}
+                        $history->save();
+                    }
+                }
 
 
                 $childActionItems = ActionItem::where('parent_id', $id)
                 ->where('parent_type', 'Observation')
                 ->get();
 
-            if ($childActionItems->count() > 0) {
-                foreach ($childActionItems as $actionItem) {
-                    $lastopenState = clone $actionItem; // save previous values before update
+                if ($childActionItems->count() > 0) {
+                    foreach ($childActionItems as $actionItem) {
+                        $lastopenState = clone $actionItem; // save previous values before update
 
-                    // 🔹 Update fields
-                    $actionItem->stage = "0";
-                    $actionItem->status = "Closed-Cancelled";
-                    $actionItem->cancelled_by = Auth::user()->name;
-                    $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
-                    $actionItem->cancelled_comment =$request->comment;
-                    $actionItem->save();
+                        // 🔹 Update fields
+                        $actionItem->stage = "0";
+                        $actionItem->status = "Closed-Cancelled";
+                        $actionItem->cancelled_by = Auth::user()->name;
+                        $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $actionItem->cancelled_comment =$request->comment;
+                        $actionItem->save();
 
-                    // 🔹 Create history record
-                    $history = new ActionItemHistory();
-                    $history->cc_id = $actionItem->id;
-                    $history->action = "Cancel";
-                    $history->activity_type = 'Cancel By, Cancel On';
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastopenState->status;
-                    $history->change_from = $lastopenState->status;
-                    $history->change_to = "Closed-Cancelled";
-                    $history->stage = "Cancelled";
+                        // 🔹 Create history record
+                        $history = new ActionItemHistory();
+                        $history->cc_id = $actionItem->id;
+                        $history->action = "Cancel";
+                        $history->activity_type = 'Cancel By, Cancel On';
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->change_from = $lastopenState->status;
+                        $history->change_to = "Closed-Cancelled";
+                        $history->stage = "Cancelled";
 
-                    // 🔹 Previous & Current info
-                    $history->previous = $lastopenState->cancelled_by
-                        ? $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on
-                        : '';
-                    $history->current = $actionItem->cancelled_by . ' , ' . $actionItem->cancelled_on;
-                    $history->action_name = $lastopenState->cancelled_by ? 'Update' : 'New';
+                        // 🔹 Previous & Current info
+                        $history->previous = $lastopenState->cancelled_by
+                            ? $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on
+                            : '';
+                        $history->current = $actionItem->cancelled_by . ' , ' . $actionItem->cancelled_on;
+                        $history->action_name = $lastopenState->cancelled_by ? 'Update' : 'New';
 
-                    $history->save();
+                        $history->save();
+                    }
                 }
-            }
                  $childroot = RootCauseAnalysis::where('parent_id', $id)
                 ->where('parent_type', 'Observation')
                 ->get();
 
-            if ($childroot->count() > 0) {
-                foreach ($childroot as $root) {
-                    $lastopenState = clone $root; // save previous values before update
+                if ($childroot->count() > 0) {
+                    foreach ($childroot as $root) {
+                        $lastopenState = clone $root; // save previous values before update
 
-                    // 🔹 Update fields
-                    $root->stage = "0";
-                    $root->status = "Closed-Cancelled";
-                    $root->cancelled_by = Auth::user()->name;
-                    $root->cancelled_on = Carbon::now()->format('d-M-Y');
-                    $root->cancel_comment = $request->comment;
-                    $root->save();
+                        // 🔹 Update fields
+                        $root->stage = "0";
+                        $root->status = "Closed-Cancelled";
+                        $root->cancelled_by = Auth::user()->name;
+                        $root->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $root->cancel_comment = $request->comment;
+                        $root->save();
 
-                    // 🔹 Create history record
-                    $history = new RootAuditTrial();
-                    $history->root_id = $id;
-                    $history->activity_type = 'Cancelled By,Cancelled On';
-                    // $history->previous = $lastDocument->cancelled_by;
-                    $history->previous = "";
-                    $history->current = $root->cancelled_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->action = "Cancel";
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "Closed-Cancelled";
-                    $history->change_from = $lastDocument->status;
-
-                    $history->stage = 'Cancelled ';
-                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                        // 🔹 Create history record
+                        $history = new RootAuditTrial();
+                        $history->root_id = $id;
+                        $history->activity_type = 'Cancelled By,Cancelled On';
+                        // $history->previous = $lastDocument->cancelled_by;
                         $history->previous = "";
-                    } else {
-                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                        $history->current = $root->cancelled_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->action = "Cancel";
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->change_to =   "Closed-Cancelled";
+                        $history->change_from = $lastDocument->status;
+
+                        $history->stage = 'Cancelled ';
+                        if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                            $history->previous = "";
+                        } else {
+                            $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
+                        }
+                        $history->current = $root->cancelled_by . ' , ' . $root->cancelled_on;
+                        if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
+                            $history->action_name = 'New';
+                        } else {
+                            $history->action_name = 'Update';
+                        }
+                        $history->save();
+
                     }
-                    $history->current = $root->cancelled_by . ' , ' . $root->cancelled_on;
-                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-                    $history->save();
+                }
 
-            }
-
-                $list = Helpers::getLeadAuditeeUsersList($changeControl->division_code); // Notify CFT Person
-
-                     foreach ($list as $u) {
+                $list = Helpers::getLeadAuditeeUsersList($changeControl->division_code);                                 
+                        foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
                         
                             if ($email !== null) {
@@ -3035,15 +3013,15 @@ if ($childCapas->count() > 0) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changeControl, 
-                                            'site' => "Observation", 
-                                            'history' => "Response Reviewed", 
+                                            'site' => "OBS", 
+                                            'history' => "Cancel", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
                                             'user' => Auth::user()->name
                                         ],
                                         function ($message) use ($email, $changeControl) {
                                             $message->to($email)
-                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Response Reviewed Performed");
+                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
                                         }
                                     );
                                 } catch (\Exception $e) {
@@ -3055,108 +3033,6 @@ if ($childCapas->count() > 0) {
                                 }
                             }
                         }
-
-
-
-                $list = Helpers::getQAUserList($changeControl->division_code); // Notify CFT Person
-
-                    foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                        
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl, 
-                                            'site' => "Observation", 
-                                            'history' => "Closed-Cancelled", 
-                                            'process' => 'Observation', 
-                                            'comment' => $request->comment, 
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closed-Cancelled Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                 
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                   
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
-
-                    
-
-
-                $list = Helpers::getCQAUsersList($changeControl->division_code); // Notify CFT Person
-
-               foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                        
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl, 
-                                            'site' => "Observation", 
-                                            'history' => "Closed-Cancelled", 
-                                            'process' => 'Observation', 
-                                            'comment' => $request->comment, 
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closed-Cancelled Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                 
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                   
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        } 
-                         $list = Helpers::getLeadAuditeeUsersList($changeControl->division_code); // Notify CFT Person
-
-                          foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                        
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl, 
-                                            'site' => "Observation", 
-                                            'history' => "Closed-Cancelled", 
-                                            'process' => 'Observation', 
-                                            'comment' => $request->comment, 
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Closed-Cancelled Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                 
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                   
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        } 
-            }
-
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3198,7 +3074,7 @@ if ($childCapas->count() > 0) {
                 $history->stage = '';
                 $history->save();
 
-                    $list = Helpers::getQAUserList($changeControl->division_code); // Notify CFT Person
+                    $list = Helpers::getLeadAuditorUsersList($changeControl->division_code); // Notify CFT Person
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
                         
@@ -3208,7 +3084,7 @@ if ($childCapas->count() > 0) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changeControl, 
-                                            'site' => "OV", 
+                                            'site' => "OBS", 
                                             'history' => "More Info Required", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -3238,7 +3114,7 @@ if ($childCapas->count() > 0) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changeControl, 
-                                            'site' => "OV", 
+                                            'site' => "OBS", 
                                             'history' => "Submit", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -3290,7 +3166,7 @@ if ($childCapas->count() > 0) {
                 $history->save();
 
 
-                    $list = Helpers::getCQAHeadUsersList($changeControl->division_code); // Notify CFT Person
+                    $list = Helpers::getLeadAuditeeUsersList($changeControl->division_code); // Notify CFT Person
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
                         
@@ -3300,7 +3176,7 @@ if ($childCapas->count() > 0) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changeControl, 
-                                            'site' => "OV", 
+                                            'site' => "OBS", 
                                             'history' => "More Info Required", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -3330,7 +3206,7 @@ if ($childCapas->count() > 0) {
                                     'mail.view-mail',
                                     [
                                         'data' => $changeControl, 
-                                        'site' => "OV", 
+                                        'site' => "OBS", 
                                         'history' => "More Info Required", 
                                         'process' => 'Observation', 
                                         'comment' => $request->comment, 
@@ -3413,7 +3289,7 @@ if ($childCapas->count() > 0) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changeControl, 
-                                            'site' => "OV", 
+                                            'site' => "OBS", 
                                             'history' => "No CAPAs Required", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -3445,7 +3321,7 @@ if ($childCapas->count() > 0) {
                                         'mail.view-mail',
                                         [
                                             'data' => $changeControl, 
-                                            'site' => "OV", 
+                                            'site' => "OBS", 
                                             'history' => "No CAPAs Required", 
                                             'process' => 'Observation', 
                                             'comment' => $request->comment, 
@@ -3475,7 +3351,7 @@ if ($childCapas->count() > 0) {
                                     'mail.view-mail',
                                     [
                                         'data' => $changeControl, 
-                                        'site' => "OV", 
+                                        'site' => "OBS", 
                                         'history' => "No CAPAs Required", 
                                         'process' => 'Observation', 
                                         'comment' => $request->comment, 

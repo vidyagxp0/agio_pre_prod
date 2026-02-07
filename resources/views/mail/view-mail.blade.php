@@ -211,6 +211,8 @@
                         <p>{{ $process }} No.:-
                             @if($process == 'Extension')
                                 {{ Helpers::getDivisionName($data->site_location_code) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record_number) }}
+                            @elseif($process == 'Observation')
+                                {{ Helpers::getDivisionName($data->division_code) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record) }}
                             @else
                                 {{ Helpers::getDivisionName($data->division_id) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record) }}
                             @endif
@@ -274,6 +276,8 @@
                                     <td>
                                         @if ($process == 'Extension')
                                             {{ Helpers::getDivisionName($data->site_location_code) }}
+                                        @elseif ($process == 'Observation')
+                                            {{ Helpers::getDivisionName($data->division_code) }}
                                         @else
                                             {{ Helpers::getDivisionName($data->division_id) }}
                                         @endif
@@ -283,6 +287,7 @@
                                         {{ $data->Form_type }}
                                     </td>
                                     @endif
+                                    
                                     <td>
                                     @if ($process == 'Lab Incident')
                                     {{ $data->short_desc }}
