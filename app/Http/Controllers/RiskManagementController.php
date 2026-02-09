@@ -11,6 +11,7 @@ use App\Models\CapaAuditTrial;
 use App\Models\RoleGroup;
 use App\Models\ActionItem;
 use App\Models\Capa;
+use App\Jobs\SendMail;
 use App\Models\User;
 use App\Models\RiskManagmentCft;
 use App\Models\RiskAssesmentCftResponce;
@@ -9403,9 +9404,6 @@ class RiskManagementController extends Controller
                     }
                     $history->save();
 
-                   
-
-
                 $list = Helpers::getHodUserList($riskAssement->division_id); // Notify Initiator User
 
                 foreach ($list as $u) {
@@ -9413,35 +9411,24 @@ class RiskManagementController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $riskAssement,
-                                    'site'    => "RA",
-                                    'history' => "Submit",
-                                    'process' => 'Risk Assessment',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $riskAssement) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Risk Assessment, Record #"
-                                                . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: Submit"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            \Log::error(
-                                'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
-                            );
+                    try {
+
+                            $data = [
+                                'data' => $riskAssement,
+                                'site' => "RA",
+                                'history' => "Complete",
+                                'process' => 'Risk Assessment',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $riskAssement, 'Risk Assessment');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
-
-
                     $riskAssement->update();
                     return back();
                 }
@@ -9552,35 +9539,24 @@ class RiskManagementController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $riskAssement,
-                                    'site'    => "RA",
-                                    'history' => "Hod Review Complete",
-                                    'process' => 'Risk Assessment',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $riskAssement) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Risk Assessment, Record #"
-                                                . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: Hod Review Complete"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            \Log::error(
-                                'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
-                            );
+                    try {
+
+                            $data = [
+                                'data' => $riskAssement,
+                                'site' => "RA",
+                                'history' => "Complete",
+                                'process' => 'Risk Assessment',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $riskAssement, 'Risk Assessment');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
-
-
 
                     $riskAssement->update();
                     toastr()->success('Document Sent');
@@ -9606,16 +9582,8 @@ class RiskManagementController extends Controller
                     //         'message' => 'Sent for In QA/CQA Review!'
                     //     ]);
                     // }
-
-
-
-
-
-
-
-                    
                 
-             ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
                      $userId = Auth::user()->name;
                     $userAssignments = DB::table('risk_managment_cfts')->where(['risk_id' => $id])->first();
                     $incompleteFields = [];
@@ -10394,46 +10362,24 @@ class RiskManagementController extends Controller
                         $email = Helpers::getUserEmail($u->user_id);
 
                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $riskAssement,
-                                        'site'    => "RA",
-                                        'history' => "CFT Review Complete",
-                                        'process' => 'Risk Assessment',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $riskAssement) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Risk Assessment, Record #"
-                                                    . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: CFT Review Complete Performed"
-                                                );
-                                    }
-                                );
-                            } catch (\Throwable $e) {
+                        try {
 
-                                // Log error (safe for production)
-                                \Log::error('Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage());
+                                $data = [
+                                    'data' => $riskAssement,
+                                    'site' => "RA",
+                                    'history' => "Complete",
+                                    'process' => 'Risk Assessment',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
 
-                                // Optional: flash only once if needed (recommended not inside loop)
-                                // session()->flash('error', 'Some notification emails could not be sent.');
+                                SendMail::dispatch($data, $email, $riskAssement, 'Risk Assessment');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
                             }
                         }
                     }
-
-
-
-
-
-
-
-
-
-
 
                         $riskAssement->update();
                     }
@@ -10584,10 +10530,6 @@ class RiskManagementController extends Controller
                     }
                     $history->save();
 
-
-                    
-
-
                     $qaList     = Helpers::getQAHeadUserList($riskAssement->division_id);
                     $cqaList    = Helpers::getCQAHeadUsersList($riskAssement->division_id);
                     
@@ -10603,32 +10545,20 @@ class RiskManagementController extends Controller
 
                         if (!empty($email)) {
                             try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $riskAssement,
-                                        'site'    => "RA",
-                                        'history' => "QA/CQA Review Complete",
-                                        'process' => 'Risk Assessment',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $riskAssement) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Risk Assessment, Record #"
-                                                    . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: QA/CQA Review Complete Performed"
-                                                );
-                                    }
-                                );
-                            } catch (\Throwable $e) {
 
-                                // Log error (safe for production)
-                                \Log::error('Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage());
+                                $data = [
+                                    'data' => $riskAssement,
+                                    'site' => "RA",
+                                    'history' => "Complete",
+                                    'process' => 'Risk Assessment',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
 
-                                // Optional: flash only once if needed (recommended not inside loop)
-                                // session()->flash('error', 'Some notification emails could not be sent.');
+                                SendMail::dispatch($data, $email, $riskAssement, 'Risk Assessment');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
                             }
                         }
                     }
@@ -10690,11 +10620,6 @@ class RiskManagementController extends Controller
                     }
                     $history->save();
 
-
-
-                   
-
-
                     $qaList     = Helpers::getHodUserList($riskAssement->division_id);
                     $cftList    = Helpers::getCftUserList($riskAssement->division_id);
                     $initiatorList    = Helpers::getInitiatorUserList($riskAssement->division_id);
@@ -10711,33 +10636,21 @@ class RiskManagementController extends Controller
                         $email = Helpers::getUserEmail($u->user_id);
 
                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $riskAssement,
-                                        'site'    => "RA",
-                                        'history' => "In Approved",
-                                        'process' => 'Risk Assessment',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $riskAssement) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Risk Assessment, Record #"
-                                                    . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: In Approved Performed"
-                                                );
-                                    }
-                                );
-                            } catch (\Throwable $e) {
+                           try {
 
-                                // Log error (safe for production)
-                                \Log::error('Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage());
+                                $data = [
+                                    'data' => $riskAssement,
+                                    'site' => "RA",
+                                    'history' => "In Approval",
+                                    'process' => 'Risk Assessment',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
 
-                                // Optional: flash only once if needed (recommended not inside loop)
-                                // session()->flash('error', 'Some notification emails could not be sent.');
+                                SendMail::dispatch($data, $email, $riskAssement, 'Risk Assessment');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
                             }
                         }
                     }
@@ -11103,35 +11016,24 @@ class RiskManagementController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $riskAssement,
-                                    'site'    => "RA",
-                                    'history' => "More Info Required",
-                                    'process' => 'Risk Assessment',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $riskAssement) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Risk Assessment, Record #"
-                                                . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Info Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            \Log::error(
-                                'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
-                            );
+                         try {
+
+                            $data = [
+                                'data' => $riskAssement,
+                                'site' => "RA",
+                                'history' => "More Information Required",
+                                'process' => 'Risk Assesment',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $riskAssement, 'Risk Assesment');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
-
-
 
                 $riskAssement->update();
                  $Cft = RiskManagmentCft::where('risk_id', $riskAssement->id)->first();
@@ -11187,8 +11089,6 @@ class RiskManagementController extends Controller
 
                                     $Cft->save();
 
-
-
                 toastr()->success('Document Sent');
                 return back();
                 }
@@ -11228,9 +11128,6 @@ class RiskManagementController extends Controller
                 // }
                 $history->save();
 
-                
-
-
                     // $list = Helpers::getHodUserList($riskAssement->division_id);
                     //     foreach ($list as $u) {
                     //             $email = Helpers::getUserEmail($u->user_id);
@@ -11247,8 +11144,6 @@ class RiskManagementController extends Controller
                             
                     //     }
 
-
-
                 $list = Helpers::getHodUserList($riskAssement->division_id); // Notify Initiator User
 
                 foreach ($list as $u) {
@@ -11257,219 +11152,168 @@ class RiskManagementController extends Controller
 
                     if ($email) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $riskAssement,
-                                    'site'    => "RA",
-                                    'history' => "More Info Required",
-                                    'process' => 'Risk Assessment',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $riskAssement) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Risk Assessment, Record #"
-                                                . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Info Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            \Log::error(
-                                'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
-                            );
+
+                            $data = [
+                                'data' => $riskAssement,
+                                'site' => "RA",
+                                'history' => "More Information Required",
+                                'process' => 'Risk Assesment',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $riskAssement, 'Risk Assesment');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
-
-
-
-
 
                 $riskAssement->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($riskAssement->stage == 2) {
-                $riskAssement->stage = "1";
-                $riskAssement->status = "Opened";
+          if ((int) $riskAssement->stage === 2) {
 
-                $riskAssement->risk_analysis_completed_by = 'Not Applicable';
-                $riskAssement->risk_analysis_completed_on = 'Not Applicable';
-                // $riskAssement->more_actions_needed_1 = $request->comment;
-                 $childCapas = Capa::where('parent_id', $id)
-                ->where('parent_type', 'RCA')
-                ->get();
+                    // 🔹 Save previous state for Risk audit
+                    $lastRiskState = clone $riskAssement;
 
-            if ($childCapas->count() > 0) {
+                    // 🔹 Update Risk Assessment
+                    $riskAssement->stage = 1;
+                    $riskAssement->status = "Opened";
+                    $riskAssement->risk_analysis_completed_by = 'Not Applicable';
+                    $riskAssement->risk_analysis_completed_on = 'Not Applicable';
+                    $riskAssement->cancelled_by = Auth::user()->name;
+                    $riskAssement->save();
 
-                foreach ($childCapas as $capa) {
-                    $lastDocument = clone $capa; // save old state for history
+                    /* =========================
+                    🔹 Cancel Child CAPAs
+                    ==========================*/
+                    $childCapas = Capa::where('parent_id', $id)
+                        ->where('parent_type', 'RCA')
+                        ->get();
 
-                    // 🔹 2. Update CAPA fields
-                    $capa->stage = "0";
-                    $capa->status = "Closed-Cancelled";
-                    $capa->cancelled_by = Auth::user()->name;
-                    $capa->cancelled_on = Carbon::now()->format('d-M-Y');
-                    $capa->cancel_comment = $request->comment;
-                    $capa->save();
+                    foreach ($childCapas as $capa) {
 
-                    // 🔹 3. Create Audit Trail
-                    $history = new CapaAuditTrial();
-                    $history->capa_id = $capa->id;
-                    $history->activity_type = 'Cancel By, Cancel On';
-                    $history->action = 'Cancel';
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->change_from = $lastDocument->status;
-                    $history->change_to = "Closed-Cancelled";
-                    $history->stage = 'Cancelled';
+                        $lastCapaState = clone $capa;
 
-                    // Previous / Current audit info
-                    $history->previous = $lastDocument->cancelled_by
-                        ? $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on
-                        : '';
-                    $history->current = $capa->cancelled_by . ' , ' . $capa->cancelled_on;
-                    $history->action_name = $lastDocument->cancelled_by ? 'Update' : 'New';
+                        $capa->stage = 0;
+                        $capa->status = "Closed-Cancelled";
+                        $capa->cancelled_by = Auth::user()->name;
+                        $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $capa->cancel_comment = $request->comment ?? '';
+                        $capa->save();
 
-                    $history->save();
-                }
-            }
-                $childActionItems = ActionItem::where('parent_id', $id)
-                ->where('parent_type', 'RCA')
-                ->get();
+                        CapaAuditTrial::create([
+                            'capa_id'     => $capa->id,
+                            'activity_type' => 'Cancel By, Cancel On',
+                            'action'      => 'Cancel',
+                            'comment'     => $request->comment ?? '',
+                            'user_id'     => Auth::id(),
+                            'user_name'   => Auth::user()->name,
+                            'user_role'   => RoleGroup::where('id', Auth::user()->role)->value('name'),
+                            'origin_state'=> $lastCapaState->status,
+                            'change_from' => $lastCapaState->status,
+                            'change_to'   => 'Closed-Cancelled',
+                            'stage'       => 'Cancelled',
+                            'previous'    => $lastCapaState->cancelled_by
+                                                ? $lastCapaState->cancelled_by.' , '.$lastCapaState->cancelled_on
+                                                : '',
+                            'current'     => $capa->cancelled_by.' , '.$capa->cancelled_on,
+                            'action_name' => $lastCapaState->cancelled_by ? 'Update' : 'New',
+                        ]);
+                    }
 
-            if ($childActionItems->count() > 0) {
-                foreach ($childActionItems as $actionItem) {
-                    $lastopenState = clone $actionItem; // save previous values before update
+                    /* =========================
+                    🔹 Cancel Child Action Items
+                    ==========================*/
+                    $childActionItems = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'RCA')
+                        ->get();
 
-                    // 🔹 Update fields
-                    $actionItem->stage = "0";
-                    $actionItem->status = "Closed-Cancelled";
-                    $actionItem->cancelled_by = Auth::user()->name;
-                    $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
-                    $actionItem->cancelled_comment = $request->comment;
-                    $actionItem->save();
+                    foreach ($childActionItems as $actionItem) {
 
-                    // 🔹 Create history record
-                    $history = new ActionItemHistory();
-                    $history->cc_id = $actionItem->id;
-                    $history->action = "Cancel";
-                    $history->activity_type = 'Cancel By, Cancel On';
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastopenState->status;
-                    $history->change_from = $lastopenState->status;
-                    $history->change_to = "Closed-Cancelled";
-                    $history->stage = "Cancelled";
+                        $lastActionState = clone $actionItem;
 
-                    // 🔹 Previous & Current info
-                    $history->previous = $lastopenState->cancelled_by
-                        ? $lastopenState->cancelled_by . ' , ' . $lastopenState->cancelled_on
-                        : '';
-                    $history->current = $actionItem->cancelled_by . ' , ' . $actionItem->cancelled_on;
-                    $history->action_name = $lastopenState->cancelled_by ? 'Update' : 'New';
+                        $actionItem->stage = 0;
+                        $actionItem->status = "Closed-Cancelled";
+                        $actionItem->cancelled_by = Auth::user()->name;
+                        $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $actionItem->cancelled_comment = $request->comment ?? '';
+                        $actionItem->save();
 
-                    $history->save();
-                }
-            }
+                        ActionItemHistory::create([
+                            'cc_id'        => $actionItem->id,
+                            'action'       => 'Cancel',
+                            'activity_type'=> 'Cancel By, Cancel On',
+                            'comment'      => $request->comment ?? '',
+                            'user_id'      => Auth::id(),
+                            'user_name'    => Auth::user()->name,
+                            'user_role'    => RoleGroup::where('id', Auth::user()->role)->value('name'),
+                            'origin_state' => $lastActionState->status,
+                            'change_from'  => $lastActionState->status,
+                            'change_to'    => 'Closed-Cancelled',
+                            'stage'        => 'Cancelled',
+                            'previous'     => $lastActionState->cancelled_by
+                                                ? $lastActionState->cancelled_by.' , '.$lastActionState->cancelled_on
+                                                : '',
+                            'current'      => $actionItem->cancelled_by.' , '.$actionItem->cancelled_on,
+                            'action_name'  => $lastActionState->cancelled_by ? 'Update' : 'New',
+                        ]);
+                    }
 
-                $history = new RiskAuditTrail();
-                $history->risk_id = $id;
-                // if(is_null($lastDocument->risk_analysis_completed_by) || $lastDocument->risk_analysis_completed_on == ''){
-                //     $history->previous = "";
-                // }else{
-                //     $history->previous = $lastDocument->risk_analysis_completed_by. ' ,' . $lastDocument->risk_analysis_completed_on;
-                // }
-                $history->activity_type = 'Not Applicable';
-                $history->previous = "Not Applicable";
-                $history->current = $riskAssement->risk_analysis_completed_by;
-                $history->comment = $request->comment;
-                $history->action  = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Opened";
-                $history->change_from = "HOD Review";
-                $history->action_name = "More Information Required";
-                $history->stage = 'Cancelled';
-                // if(is_null($lastDocument->risk_analysis_completed_by) || $lastDocument->risk_analysis_completed_on == ''){
-                //     $history->previous = "";
-                // }else{
-                //     $history->previous = $lastDocument->risk_analysis_completed_by. ' ,' . $lastDocument->risk_analysis_completed_on;
-                // }
-                $history->save();
+                    /* =========================
+                    🔹 Risk Audit Trail
+                    ==========================*/
+                    RiskAuditTrail::create([
+                        'risk_id'      => $id,
+                        'activity_type'=> 'Not Applicable',
+                        'previous'     => 'Not Applicable',
+                        'current'      => 'Not Applicable',
+                        'comment'      => $request->comment ?? '',
+                        'action'       => 'Not Applicable',
+                        'user_id'      => Auth::id(),
+                        'user_name'    => Auth::user()->name,
+                        'user_role'    => RoleGroup::where('id', Auth::user()->role)->value('name'),
+                        'origin_state' => $lastRiskState->status,
+                        'change_from'  => 'HOD Review',
+                        'change_to'    => 'Opened',
+                        'action_name'  => 'More Information Required',
+                        'stage'        => 'Opened',
+                    ]);
 
-                
-                
+                    /* =========================
+                    🔹 Send Mail to Initiator
+                    ==========================*/
+                    $initiators = Helpers::getInitiatorUserList($riskAssement->division_id);
 
-                        // $list = Helpers::getInitiatorUserList($riskAssement->division_id);
-                        // foreach ($list as $u) {
-                        //         $email = Helpers::getUserEmail($u->user_id);
-                        //             if ($email !== null) {
-                        //             Mail::send(
-                        //                 'mail.view-mail',
-                        //                 ['data' => $riskAssement, 'site' => "Risk Assessment", 'history' => "More Information Required", 'process' => 'Risk Assessment', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                        //                 function ($message) use ($email, $riskAssement) {
-                        //                     $message->to($email)
-                        //                    ->subject("Agio Notification: Risk Assessment, Record #" . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                        //                 }
-                        //             );
-                        //         }
-                            
-                        // }
+                    foreach ($initiators as $u) {
 
+                        $email = Helpers::getUserEmail($u->user_id);
 
-
-                $list = Helpers::getInitiatorUserList($riskAssement->division_id); // Notify Initiator User
-
-                foreach ($list as $u) {
-
-                    $email = Helpers::getUserEmail($u->user_id);
-
-                    if ($email) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
+                        if ($email) {
+                            SendMail::dispatchSync(
                                 [
                                     'data'    => $riskAssement,
-                                    'site'    => "RA",
-                                    'history' => "More Info Required",
+                                    'site'    => 'RA',
+                                    'history' => 'More Information Required',
                                     'process' => 'Risk Assessment',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
+                                    'comment' => $request->comment ?? '',
+                                    'user'    => Auth::user()->name,
                                 ],
-                                function ($message) use ($email, $riskAssement) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Risk Assessment, Record #"
-                                                . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Info Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            \Log::error(
-                                'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
+                                $email,
+                                $riskAssement,
+                                'Risk Assessment'
                             );
                         }
                     }
+
+                    toastr()->success('Document Sent');
+                    return back();
                 }
 
 
-                $riskAssement->cancelled_by = Auth::user()->name;
-                $riskAssement->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
             if ($riskAssement->stage == 1) {
                 $riskAssement->stage = "0";
                 $riskAssement->status = "Closed - Cancelled";
@@ -11487,9 +11331,6 @@ class RiskManagementController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Cancelled';
                 $history->save();
-
-               
-
 
                     // $list = Helpers::getHodUserList($riskAssement->division_id);
                     //     foreach ($list as $u) {
@@ -11515,30 +11356,47 @@ class RiskManagementController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $riskAssement,
-                                    'site'    => "RA",
-                                    'history' => "More Info Required",
-                                    'process' => 'Risk Assessment',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $riskAssement) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Risk Assessment, Record #"
-                                                . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Info Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            \Log::error(
-                                'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
-                            );
+                        // try {
+                        //     Mail::send(
+                        //         'mail.view-mail',
+                        //         [
+                        //             'data'    => $riskAssement,
+                        //             'site'    => "RA",
+                        //             'history' => "More Info Required",
+                        //             'process' => 'Risk Assessment',
+                        //             'comment' => $request->comment,
+                        //             'user'    => Auth::user()->name
+                        //         ],
+                        //         function ($message) use ($email, $riskAssement) {
+                        //             $message->to($email)
+                        //                     ->subject(
+                        //                         "Agio Notification: Risk Assessment, Record #"
+                        //                         . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
+                        //                         . " - Activity: More Info Required"
+                        //                     );
+                        //         }
+                        //     );
+                        // } catch (\Throwable $e) {
+                        //     \Log::error(
+                        //         'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
+                        //     );
+                        // }
+
+                         try {
+
+                            $data = [
+                                'data' => $riskAssement,
+                                'site' => "RA",
+                                'history' => "More Information Required",
+                                'process' => 'Risk Assessment',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $riskAssement, 'Risk Assessment');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }

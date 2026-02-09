@@ -3066,73 +3066,36 @@ class EffectivenessCheckController extends Controller
                 // $history->stage = '6';
                 $history->save();
                
-                $list = Helpers::getInitiatorUserList($effective->division_id);
-                $userIds = collect($list)->pluck('user_id')->toArray();
-                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-                $userId = $users->pluck('id')->implode(',');
-                if(!empty($users)){
-                    try {
-                        $history = new EffectivenessCheckAuditTrail();
-                        $history->extension_id = $id;
-                        $history->activity_type = "Not Applicable";
-                        $history->previous = "Not Applicable";
-                        $history->current = "Not Applicable";
-                        $history->action = 'Notification';
-                        $history->comment = "";
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = "Not Applicable";
-                        $history->change_to = "Not Applicable";
-                        $history->change_from = "Opened";
-                        $history->stage = "";
-                        $history->action_name = "";
-                        $history->mailUserId = $userId;
-                        $history->role_name = "Initiator";
-                        $history->save(); 
-                    } catch (\Throwable $e) {
-                        \Log::error('Mail failed to send: ' . $e->getMessage());
-                    }
-                }
+              $assignedUserId = $request->assign_to ?? $effective->assign_to;
 
+if (!empty($assignedUserId)) {
 
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            // try {
-                            //     Mail::send(
-                            //         'mail.view-mail',
-                            //         ['data' =>  $effective, 'site'=>"Effectiveness-Check", 'history' => "More Information Required", 'process' => 'Effectiveness-Check', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                            //         function ($message) use ($email,  $effective) {
-                            //             $message->to($email)
-                            //             ->subject("Agio Notification: Effectiveness-Check, Record #" . str_pad( $effective->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                            //         }
-                            //     );
-                            // } catch(\Exception $e) {
-                            //     info('Error sending mail', [$e]);
-                            // }
+    $email = Helpers::getUserEmail($assignedUserId);
 
-                             try {
+    if (!empty($email)) {
+        try {
 
-                            $data = [
-                                'data' => $effective,
-                                'site' => "EC",
-                                'history' => "More Information Required",
-                                'process' => 'Effectiveness-Check',
-                                'comment' => $request->comments,
-                                'user'=> Auth::user()->name
-                            ];
+            $data = [
+                'data'    => $effective,
+                'site'    => "Effectiveness-Check",
+                'history' => "Submit",
+                'process' => 'Effectiveness-Check',
+                'comment' => $request->comment,
+                'user'    => Auth::user()->name
+            ];
 
-                            SendMail::dispatch($data, $email, $effective, 'Effectiveness-Check');
+            SendMail::dispatch(
+                $data,
+                $email,
+                $effective,
+                'Effectiveness-Check'
+            );
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
-                        }
-
-                        }
-                    // }
-                }
+        } catch (\Exception $e) {
+            \Log::error('Assigned User Mail Error: ' . $e->getMessage());
+        }
+    }
+}
 
                 
 
