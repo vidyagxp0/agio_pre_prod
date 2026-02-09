@@ -10,6 +10,7 @@ use App\Models\RoleGroup;
 use App\Models\LabIncident;
 use App\Models\Observation;
 use App\Models\InternalAudit;
+use App\Jobs\SendMail;
 // use App\Models\CC;
 use App\Models\ManagementReview;
 use App\Models\MarketComplaint;
@@ -1608,23 +1609,7 @@ foreach ($pre as $processName => $modelClass) {
                 $history->save();
 
 
-                // $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
-                // foreach ($list as $u) {
-                //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //         $email = Helpers::getUserEmail($u->user_id);
-                //             if ($email !== null) {
-                //             Mail::send(
-                //                 'mail.view-mail',
-                //                 ['data' => $changeControl, 'site' => "AI", 'history' => "Submit", 'process' => 'Action Item', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                //                 function ($message) use ($email, $changeControl) {
-                //                     $message->to($email)
-                //                     ->subject("Agio Notification: Action Item, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
-                //                 }
-                //             );
-                //         }
-                //     // }
-                // }
-                // $list = Helpers::getInitiatorUserList($changeControl->division_id); 
+               
 
                 if (!empty($changeControl->assign_to)) {
 
@@ -1632,32 +1617,26 @@ foreach ($pre as $processName => $modelClass) {
 
                     if ($assignedEmail !== null) {
 
-                        try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "AI",
-                                    'history' => "Submit",
-                                    'process' => 'Action Item',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($assignedEmail, $changeControl) {
-                                    $message->to($assignedEmail)
-                                        ->subject(
-                                            "Agio Notification: Action Item, Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                        );
-                                }
-                            );
+                     try {
+
+                            $data = [
+                                'data'    => $changeControl,
+                                'site'    => "AI",
+                                'history' => "Submit",
+                                'process' => 'Action Item',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
+
+                            // ✅ yahin galti thi
+                            SendMail::dispatch($data, $assignedEmail, $changeControl, 'Action Item');
 
                         } catch (\Exception $e) {
-
-                            \Log::error('Assigned To Mail Error: ' . $e->getMessage());
-
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
+
+                      
                     }
                 }
 
@@ -1720,47 +1699,39 @@ foreach ($pre as $processName => $modelClass) {
                 $history->change_to = "Work Completion";
                 $history->change_from = $lastopenState->status;
                 $history->save();
+
+               
                 
                 $hodList       = Helpers::getQAUserList($changeControl->division_id);
                 $initiatorList = Helpers::getCQAUsersList($changeControl->division_id);
 
-                $usersmerge = collect($hodList)->merge($initiatorList);
-
-                $usersmerge = $usersmerge->unique('user_id');
+                $usersmerge = collect($hodList)->merge($initiatorList)->unique('user_id');
 
                 foreach ($usersmerge as $u) {
 
                     $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
-
+                    if (!empty($email)) {
                         try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "AI",
-                                    'history' => "Acknowledge Complete",
-                                    'process' => 'Action Item',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: Action Item, Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Acknowledge Complete"
-                                        );
-                                }
-                            );
+                            $data = [
+                                'data'    => $changeControl,
+                                'site'    => "AI",
+                                'history' => "Acknowledge Complete",
+                                'process' => 'Action Item',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
+
+                            // ✅ yahin galti thi
+                            SendMail::dispatch($data, $email, $changeControl, 'Action Item');
 
                         } catch (\Exception $e) {
                             \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
+
 
 
                 $changeControl->update();
@@ -1821,7 +1792,7 @@ foreach ($pre as $processName => $modelClass) {
                 $history->change_from = $lastopenState->status;
                 $history->save();
                 
-                 $hodList       = Helpers::getQAUserList($changeControl->division_id);
+                $hodList       = Helpers::getQAUserList($changeControl->division_id);
                 $initiatorList = Helpers::getCQAUsersList($changeControl->division_id);
 
                 $usersmerge = collect($hodList)->merge($initiatorList);
@@ -1834,31 +1805,25 @@ foreach ($pre as $processName => $modelClass) {
 
                     if ($email !== null) {
 
-                        try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "AI",
-                                    'history' => "Complete",
-                                    'process' => 'Action Item',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: Action Item, Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Complete"
-                                        );
-                                }
-                            );
+                         try {
+
+                            $data = [
+                                'data'    => $changeControl,
+                                'site'    => "AI",
+                                'history' => "Complete",
+                                'process' => 'Action Item',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
+
+                            // ✅ yahin galti thi
+                            SendMail::dispatch($data, $email, $changeControl, 'Action Item');
 
                         } catch (\Exception $e) {
                             \Log::error('Mail Error: ' . $e->getMessage());
                         }
+
                     }
                 }
                 $changeControl->update();
@@ -1957,31 +1922,25 @@ public function lastStage(Request $request, $id){
 
                     if ($email !== null) {
 
-                        try {
+                         try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "AI",
-                                    'history' => "Verification Complete",
-                                    'process' => 'Action Item',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: Action Item, Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Verification Complete"
-                                        );
-                                }
-                            );
+                            $data = [
+                                'data'    => $changeControl,
+                                'site'    => "AI",
+                                'history' => "Verification Complete",
+                                'process' => 'Action Item',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
+
+                            // ✅ yahin galti thi
+                            SendMail::dispatch($data, $email, $changeControl, 'Action Item');
 
                         } catch (\Exception $e) {
                             \Log::error('Mail Error: ' . $e->getMessage());
                         }
+
+                       
                     }
                 }
             $history->save();
@@ -2052,31 +2011,25 @@ public function actionStageCancel(Request $request, $id)
 
                     if ($email !== null) {
 
-                        try {
+                    try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "AI",
-                                    'history' => "Cancelled",
-                                    'process' => 'Action Item',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: Action Item, Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Cancelled"
-                                        );
-                                }
-                            );
+                            $data = [
+                                'data'    => $changeControl,
+                                'site'    => "AI",
+                                'history' => "Cancelled",
+                                'process' => 'Action Item',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
+
+                            // ✅ yahin galti thi
+                            SendMail::dispatch($data, $email, $changeControl, 'Action Item');
 
                         } catch (\Exception $e) {
                             \Log::error('Mail Error: ' . $e->getMessage());
                         }
+
+                        
                     }
                 }
 
@@ -2134,33 +2087,25 @@ public function actionmoreinfo(Request $request, $id)
 
                     if ($email !== null) {
 
-                        try {   
+                    try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "AI",
-                                    'history' => "More Info Required",
-                                    'process' => 'Action Item',
-                                    'comment' => $request->comment,
-                                    'user'=> Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: Action Item, Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: More Info Required"
-                                        );
-                                }
-                            );
+                            $data = [
+                                'data'    => $changeControl,
+                                'site'    => "AI",
+                                'history' => "More Info Required",
+                                'process' => 'Action Item',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
 
-                        } catch (\Exception $e) {   
+                            // ✅ yahin galti thi
+                            SendMail::dispatch($data, $email, $changeControl, 'Action Item');
 
-                            \Log::error('Mail Error: ' . $e->getMessage()); 
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
+                        }
 
-                        }   
+                       
                     }
                 }
             $changeControl->update();
@@ -2199,33 +2144,25 @@ public function actionmoreinfo(Request $request, $id)
 
                     if ($email !== null) {
 
-                        try {   
+                    try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "AI",
-                                    'history' => "More Info Required",
-                                    'process' => 'Action Item',
-                                    'comment' => $request->comment,
-                                    'user'=> Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: Action Item, Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: More Info Required"
-                                        );
-                                }
-                            );
+                            $data = [
+                                'data'    => $changeControl,
+                                'site'    => "AI",
+                                'history' => "More Info Required",
+                                'process' => 'Action Item',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
 
-                        } catch (\Exception $e) {   
+                            // ✅ yahin galti thi
+                            SendMail::dispatch($data, $email, $changeControl, 'Action Item');
 
-                            \Log::error('Mail Error: ' . $e->getMessage()); 
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
+                        }
 
-                        }   
+                       
                     }
                 }
             $changeControl->update();
@@ -2261,32 +2198,25 @@ public function actionmoreinfo(Request $request, $id)
 
                     if ($assignedEmail !== null) {
 
-                        try {
+                     try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "AI",
-                                    'history' => "Submit",
-                                    'process' => 'More Information Required',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($assignedEmail, $changeControl) {
-                                    $message->to($assignedEmail)
-                                        ->subject(
-                                            "Agio Notification: Action Item , Record #"
-                                            . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                        );
-                                }
-                            );
+                            $data = [
+                                'data'    => $changeControl,
+                                'site'    => "AI",
+                                'history' => "More Info Required",
+                                'process' => 'Action Item',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
+
+                            // ✅ yahin galti thi
+                            SendMail::dispatch($data, $assignedEmail, $changeControl, 'Action Item');
 
                         } catch (\Exception $e) {
-
-                            \Log::error('Assigned To Mail Error: ' . $e->getMessage());
-
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
+
+                       
                     }
                 }
             $changeControl->update();
