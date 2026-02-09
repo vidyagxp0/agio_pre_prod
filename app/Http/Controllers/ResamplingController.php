@@ -1702,7 +1702,7 @@ foreach ($pre as $processName => $modelClass) {
                         }
                         $history->save();
 
-                        $list = Helpers::getQAUserList($changeControl->division_id);
+                        $list = Helpers::getQAHeadUserList($changeControl->division_id);
 
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
@@ -2253,7 +2253,7 @@ public function resamplingStageCancel(Request $request, $id)
             $history->change_from = $lastopenState->status;
             $history->stage = "Cancelled";
             $history->save();
-             $list = Helpers::getQAUserList($changeControl->division_id);
+             $list = Helpers::getQAHeadUserList($changeControl->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     $email = Helpers::getUserEmail($u->user_id);
@@ -2458,7 +2458,7 @@ public function resamplingmoreinfo(Request $request, $id)
             // $history->change_from = $lastopenState->status;
             // $history->save();
 
-            $list = Helpers::getQAUserList($changeControl->division_id);
+            $list = Helpers::getQAHeadUserList($changeControl->division_id);
             foreach ($list as $u) {
                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     $email = Helpers::getUserEmail($u->user_id);
