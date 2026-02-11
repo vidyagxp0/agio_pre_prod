@@ -939,7 +939,7 @@
                                             // 🔐 STAGE + ROLE CHECK
                                             @if(!($data->stage == 1 && $istab1))
                                                 // disable datepicker
-                                                $("#complaint_dat").datepicker("disable");
+                                                $("#complaint_dat").datepicker("readonly");
 
                                                 // hard readonly
                                                 $("#complaint_dat")
@@ -2747,8 +2747,8 @@
                                     <div>
                                         <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                     </div>
-                                    <textarea class="summernote" data-stage="3" name="review_of_complaint_sample_if" id="summernote-1"
-                                    required >{{ $data->review_of_complaint_sample_if }}</textarea>
+                                    <textarea class="summernote"  data-stage="3"  name="review_of_complaint_sample_if" id="summernote-1"  {{ $data->stage == 3 ? 'required' : '' }}
+                                     >{{ $data->review_of_complaint_sample_if }}</textarea>
                                 </div>
                             </div>
 

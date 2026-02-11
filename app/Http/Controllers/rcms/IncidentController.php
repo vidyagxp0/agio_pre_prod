@@ -6195,7 +6195,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                             $email = Helpers::getUserEmail($u->user_id);
 
-                            if ($email !== null) {
+                            if (!($email)) {
 
                                 try {
 
@@ -6324,12 +6324,16 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             $history->status = $incident->status;
             $history->save();
 
-             $list = Helpers::getHodUserList($incident->division_id);
-                        foreach ($list as $u) {
+                    $usersmail = collect()
+                            ->merge(Helpers::getHodUserList($incident->division_id))
+                            ->merge(Helpers::getInitiatorUserList($incident->division_id))
+                            ->unique('user_id')
+                            ->values();
+                        foreach ($usersmail as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
 
-                            if ($email !== null) {
+                            if (!empty($email)) {
 
                                 try {
 
@@ -6763,12 +6767,14 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    $list = Helpers::getHodUserList($incident->division_id);
+                    $list = Helpers::getHodUserList($incident->division_id)
+                            ->unique('user_id')
+                            ->values();
                     foreach ($list as $u) {
 
                         $email = Helpers::getUserEmail($u->user_id);
 
-                        if ($email !== null) {
+                        if (!empty($email)) {
 
                             try {
 
@@ -6987,19 +6993,21 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
                     $history->save();
 
-                    $list = Helpers::getQAReviewerUserList($incident->division_id);
+                    $list = Helpers::getQAReviewerUserList($incident->division_id)
+                            ->unique('user_id')
+                            ->values();
                     foreach ($list as $u) {
 
                         $email = Helpers::getUserEmail($u->user_id);
 
-                        if ($email !== null) {
+                        if (!empty($email) ) {
 
                             try {
 
                                 $data = [
                                     'data'    => $incident,
                                     'site'    => "Incident",
-                                    'history' => "HOD Review Complete",
+                                    'history' => "HOD Initial Review Complete",
                                     'process' => 'Incident',
                                     'comment' => $history->comment,
                                     'user'    => Auth::user()->name
@@ -7085,101 +7093,101 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
 
                       //rca child validation
-                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                        ->where('parent_type', 'Incident')
-                        ->get();
-                            $hasPendingRCA = false;
-                        foreach ($rcachilds as $ext) {
-                                $rcachildstatus = trim(strtolower($ext->status));
-                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==   'closed-cancelled' ) {
-                                    $hasPendingRCA = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingRCA) {
-                        // $rcachildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingRCA) {
-                            Session::flash('swal', [
-                                'title' => 'RCA Child Pending!',
-                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                    //     ->where('parent_type', 'Incident')
+                    //     ->get();
+                    //         $hasPendingRCA = false;
+                    //     foreach ($rcachilds as $ext) {
+                    //             $rcachildstatus = trim(strtolower($ext->status));
+                    //             if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==   'closed-cancelled' ) {
+                    //                 $hasPendingRCA = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingRCA) {
+                    //     // $rcachildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingRCA) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'RCA Child Pending!',
+                    //             'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
                     //action item child validation
 
-                    $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', 'Incident')
-                        ->get();
-                            $hasPendingaction = false;
-                        foreach ($actionchilds as $ext) {
-                                $actionchildstatus = trim(strtolower($ext->status));
-                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
-                                    $hasPendingaction = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingaction) {
-                        // $actionchildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingaction) {
-                            Session::flash('swal', [
-                                'title' => 'Action Item Child Pending!',
-                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // $actionchilds = ActionItem::where('parent_id', $id)
+                    //     ->where('parent_type', 'Incident')
+                    //     ->get();
+                    //         $hasPendingaction = false;
+                    //     foreach ($actionchilds as $ext) {
+                    //             $actionchildstatus = trim(strtolower($ext->status));
+                    //             if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
+                    //                 $hasPendingaction = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingaction) {
+                    //     // $actionchildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingaction) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'Action Item Child Pending!',
+                    //             'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
                     //CAPA child validations 
-                    $capachilds = Capa::where('parent_id', $id)
-                        ->where('parent_type', 'Incident')
-                        ->get();
-                        $hasPendingcapa = false;
-                        foreach($capachilds as $ext) {
-                                $capachildstatus = trim(strtolower($ext->status));
-                                if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
-                                    $hasPendingcapa = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingcapa) {
-                        // $capachildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingcapa) {
-                            Session::flash('swal', [
-                                'title' => 'CAPA Child Pending!',
-                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // $capachilds = Capa::where('parent_id', $id)
+                    //     ->where('parent_type', 'Incident')
+                    //     ->get();
+                    //     $hasPendingcapa = false;
+                    //     foreach($capachilds as $ext) {
+                    //             $capachildstatus = trim(strtolower($ext->status));
+                    //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
+                    //                 $hasPendingcapa = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingcapa) {
+                    //     // $capachildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingcapa) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'CAPA Child Pending!',
+                    //             'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
 
                     //dd($incident->stage);
@@ -7216,12 +7224,14 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
                     $history->save();
 
-                    $list = Helpers::getInitiatorUserList($incident->division_id);
+                    $list = Helpers::getQAHeadUserList($incident->division_id)
+                            ->unique('user_id')
+                            ->values();
                     foreach ($list as $u) {
 
                         $email = Helpers::getUserEmail($u->user_id);
 
-                        if ($email !== null) {
+                        if (!empty($email)) {
 
                             try {
 
@@ -7354,12 +7364,13 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                     $history->save();
 
-                    $list = Helpers::getHodUserList($incident->division_id);
+                    $list = Helpers::getInitiatorUserList($incident->division_id)->unique('user_id')
+                            ->values();
                     foreach ($list as $u) {
 
                         $email = Helpers::getUserEmail($u->user_id);
 
-                        if ($email !== null) {
+                        if (!empty($email)) {
 
                             try {
 
@@ -7430,103 +7441,103 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         ]);
                     }
 
-                      //rca child validation
-                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                        ->where('parent_type', 'Incident')
-                        ->get();
-                            $hasPendingRCA = false;
-                        foreach ($rcachilds as $ext) {
-                                $rcachildstatus = trim(strtolower($ext->status));
-                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==
-                                    'closed-cancelled' ) {
-                                    $hasPendingRCA = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingRCA) {
-                        // $rcachildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingRCA) {
-                            Session::flash('swal', [
-                                'title' => 'RCA Child Pending!',
-                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    //   //rca child validation
+                    // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                    //     ->where('parent_type', 'Incident')
+                    //     ->get();
+                    //         $hasPendingRCA = false;
+                    //     foreach ($rcachilds as $ext) {
+                    //             $rcachildstatus = trim(strtolower($ext->status));
+                    //             if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==
+                    //                 'closed-cancelled' ) {
+                    //                 $hasPendingRCA = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingRCA) {
+                    //     // $rcachildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingRCA) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'RCA Child Pending!',
+                    //             'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
-                    //action item child validation
+                    // //action item child validation
 
-                    $actionchilds = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', 'Incident')
-                        ->get();
-                            $hasPendingaction = false;
-                        foreach ($actionchilds as $ext) {
-                                $actionchildstatus = trim(strtolower($ext->status));
-                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
-                                    $hasPendingaction = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingaction) {
-                        // $actionchildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingaction) {
-                            Session::flash('swal', [
-                                'title' => 'Action Item Child Pending!',
-                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // $actionchilds = ActionItem::where('parent_id', $id)
+                    //     ->where('parent_type', 'Incident')
+                    //     ->get();
+                    //         $hasPendingaction = false;
+                    //     foreach ($actionchilds as $ext) {
+                    //             $actionchildstatus = trim(strtolower($ext->status));
+                    //             if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
+                    //                 $hasPendingaction = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingaction) {
+                    //     // $actionchildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingaction) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'Action Item Child Pending!',
+                    //             'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
-                    //CAPA child validations 
-                    $capachilds = Capa::where('parent_id', $id)
-                        ->where('parent_type', 'Incident')
-                        ->get();
-                        $hasPendingcapa = false;
-                        foreach($capachilds as $ext) {
-                                $capachildstatus = trim(strtolower($ext->status));
-                                if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
-                                    $hasPendingcapa = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingcapa) {
-                        // $capachildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingcapa) {
-                            Session::flash('swal', [
-                                'title' => 'CAPA Child Pending!',
-                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // //CAPA child validations 
+                    // $capachilds = Capa::where('parent_id', $id)
+                    //     ->where('parent_type', 'Incident')
+                    //     ->get();
+                    //     $hasPendingcapa = false;
+                    //     foreach($capachilds as $ext) {
+                    //             $capachildstatus = trim(strtolower($ext->status));
+                    //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
+                    //                 $hasPendingcapa = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingcapa) {
+                    //     // $capachildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingcapa) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'CAPA Child Pending!',
+                    //             'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
 
 
@@ -7699,12 +7710,13 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         }
                         $history->save();
 
-                        $list = Helpers::getQAReviewerUserList($incident->division_id);
+                        $list = Helpers::getHodUserList($incident->division_id)->unique('user_id')
+                            ->values();
                         foreach ($list as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
 
-                            if ($email !== null) {
+                            if (!empty($email)) {
 
                                 try {
 
@@ -7825,12 +7837,14 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
                     $history->save();
 
-                    $list = Helpers::getQAReviewerUserList($incident->division_id);
+                    
+                    $list = Helpers::getQAReviewerUserList($incident->division_id)->unique('user_id')
+                            ->values();
                         foreach ($list as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
 
-                            if ($email !== null) {
+                            if (!empty($email)) {
 
                                 try {
 
@@ -7860,76 +7874,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                             }
                         }
-                    $list = Helpers::getInitiatorUserList($incident->division_id);
-                        foreach ($list as $u) {
-
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-
-                                try {
-
-                                    $data = [
-                                        'data'    => $incident,
-                                        'site'    => "Incident",
-                                        'history' => "HOD Final Review Complete",
-                                        'process' => 'Incident',
-                                        'comment' => $history->comment,
-                                        'user'    => Auth::user()->name
-                                    ];
-                                    SendMail::dispatch(
-                                        $data,
-                                        $email,
-                                        $incident,      
-                                        'Incident'      
-                                    );
-
-                                } catch (\Exception $e) {
-
-                                    \Log::error('Queue Dispatch Error', [
-                                        'email' => $email,
-                                        'error' => $e->getMessage()
-                                    ]);
-
-                                }
-
-                            }
-                        }
-                    $list = Helpers::getHodUserList($incident->division_id);
-                        foreach ($list as $u) {
-
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-
-                                try {
-
-                                    $data = [
-                                        'data'    => $incident,
-                                        'site'    => "Incident",
-                                        'history' => "HOD Final Review Complete",
-                                        'process' => 'Incident',
-                                        'comment' => $history->comment,
-                                        'user'    => Auth::user()->name
-                                    ];
-                                    SendMail::dispatch(
-                                        $data,
-                                        $email,
-                                        $incident,      
-                                        'Incident'      
-                                    );
-
-                                } catch (\Exception $e) {
-
-                                    \Log::error('Queue Dispatch Error', [
-                                        'email' => $email,
-                                        'error' => $e->getMessage()
-                                    ]);
-
-                                }
-
-                            }
-                        }
+                  
                    
 
                     $incident->update();
@@ -8004,15 +7949,15 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
 
 
-                    if ($rca && $rca->status !== 'Closed-Done') {
-                        Session::flash('swal', [
-                            'title' => 'RCA record pending!',
-                            'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
-                            'type' => 'warning',
-                        ]);
+                    // if ($rca && $rca->status !== 'Closed-Done') {
+                    //     Session::flash('swal', [
+                    //         'title' => 'RCA record pending!',
+                    //         'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    }
+                    //     return redirect()->back();
+                    // }
 
                     // return "PAUSE";
 
@@ -8049,43 +7994,42 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
                     $history->save();
 
-                    $list = Helpers::getQAHeadUserList($incident->division_id);
+                    $list = Helpers::getQAHeadUserList($incident->division_id)->unique('user_id')
+                            ->values();
 
-                     foreach ($list as $u)
-                    {
+                     foreach ($list as $u) {
 
-                            $email = Helpers::getUserEmail($u->user_id);
+                        $email = Helpers::getUserEmail($u->user_id);
 
-                            if ($email !== null) {
+                        if (!empty($email)) {
 
-                                try {   
+                            try {
 
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $incident,
-                                            'site' => "Incident",
-                                            'history' => "QA Final Review Complete",
-                                            'process' => 'Incident',
-                                            'comment' => $request->comment,
-                                            'user'=> Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $incident) {
-                                            $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Incident, Record #"
-                                                    . str_pad($incident->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: QA Final Review Complete"
-                                                );
-                                        }
-                                    );
+                                $data = [
+                                    'data'    => $incident,
+                                    'site'    => "Incident",
+                                    'history' => "QA Final Review Complete",
+                                    'process' => 'Incident',
+                                    'comment' => $history->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $incident,      
+                                    'Incident'      
+                                );
 
-                                } catch (\Exception $e) {   
+                            } catch (\Exception $e) {
 
-                                    \Log::error('Mail Error: ' . $e->getMessage()); 
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
 
-                                }   
                             }
+
+                        }
                     }
 
                     $incident->update();
@@ -8210,49 +8154,46 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     $history->save();
 
                     $usersmerge = collect()
-                    ->merge(Helpers::getQAUserList($incident->division_id))
-                    ->merge(Helpers::getCQAUsersList($incident->division_id))
+                    
                     ->merge(Helpers::getQAReviewerUserList($incident->division_id))
                     ->merge(Helpers::getInitiatorUserList($incident->division_id))
                     ->merge(Helpers::getQAHeadUserList($incident->division_id))
                     ->merge(Helpers::getHodUserList($incident->division_id))
                     ->unique('user_id');
                     // $list = Helpers::getQAReviewerUserList($incident->division_id);
-                     foreach ($usersmerge as $u)
-                    {
+                     foreach ($usersmerge as $u) {
 
-                            $email = Helpers::getUserEmail($u->user_id);
+                        $email = Helpers::getUserEmail($u->user_id);
 
-                            if ($email !== null) {
+                        if (!empty($email)) {
 
-                                try {   
+                            try {
 
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $incident,
-                                            'site' => "Incident",
-                                            'history' => "Approved",
-                                            'process' => 'Incident',
-                                            'comment' => $request->comment,
-                                            'user'=> Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $incident) {
-                                            $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Incident, Record #"
-                                                    . str_pad($incident->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: Approved"
-                                                );
-                                        }
-                                    );
+                                $data = [
+                                    'data'    => $incident,
+                                    'site'    => "Incident",
+                                    'history' => "Approved",
+                                    'process' => 'Incident',
+                                    'comment' => $history->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $incident,      
+                                    'Incident'      
+                                );
 
-                                } catch (\Exception $e) {   
+                            } catch (\Exception $e) {
 
-                                    \Log::error('Mail Error: ' . $e->getMessage()); 
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
 
-                                }   
                             }
+
+                        }
                     }
                     
 
@@ -8343,6 +8284,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $incident->hod_more_info_required_on = Carbon::now()->format('d-M-Y');
                 $incident->hod_more_info_required_comment = $request->comment;
                 $history = new IncidentAuditTrail();
+                $history->action='More Info Required';
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
@@ -8355,22 +8297,42 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->stage = 'HOD Review';
                 $history->save();
 
-                $list = Helpers::getInitiatorUserList($incident->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $incident->division_id){
+                $list = Helpers::getInitiatorUserList($incident->division_id)->unique('user_id')
+                            ->values();
+                foreach ($list as $u)
+                    {
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $incident, 'site' => "Incident", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $incident) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+
+                        if (!empty($email)) {
+
+                            try {
+
+                                $data = [
+                                    'data'    => $incident,
+                                    'site'    => "Incident",
+                                    'history' => "More Info Required",
+                                    'process' => 'Incident',
+                                    'comment' => $history->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $incident,      
+                                    'Incident'      
+                                );
+
+                            } catch (\Exception $e) {
+
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
+
+                            }
+
                         }
-                    // }
-                }
+                    }
 
                 $incident->update();
                 $history = new IncidentHistory();
@@ -8381,26 +8343,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->stage_id = $incident->stage;
                 $history->status = $incident->status;
                 $history->save();
-                // $list = Helpers::getHodUserList();
-                // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
-                //         $email = Helpers::getInitiatorEmail($u->user_id);
-                //         if ($email !== null) {
-                //             try {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $incident],
-                //                     function ($message) use ($email) {
-                //                         $message->to($email)
-                //                             ->subject("Activity Performed By " . Auth::user()->name);
-                //                     }
-                //                 );
-                //             } catch (\Exception $e) {
-                //                 //log error
-                //             }
-                //         }
-                //     }
-                // }
+              
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -8414,7 +8357,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->action='More Info Required By';
+                $history->action='More Info Required';
                 $history->current = $incident->qa_more_info_required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -8427,22 +8370,43 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                 $history->save();
 
-                $list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $incident->division_id){
+                $list = Helpers::getHodUserList($incident->division_id)->unique('user_id')
+                            ->values();
+               foreach ($list as $u)
+                    {
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $incident, 'site' => "Incident", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $incident) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+
+                        if (!empty($email)) {
+
+                            try {
+
+                                $data = [
+                                    'data'    => $incident,
+                                    'site'    => "Incident",
+                                    'history' => "More Info Required",
+                                    'process' => 'Incident',
+                                    'comment' => $history->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $incident,      
+                                    'Incident'      
+                                );
+
+                            } catch (\Exception $e) {
+
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
+
+                            }
+
                         }
-                    // }
-                }
+                    }
+
 
                 $incident->update();
                 $history = new IncidentHistory();
@@ -8454,26 +8418,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->status = $incident->status;
 
                 $history->save();
-                // $list = Helpers::getHodUserList();
-                // foreach ($list as $u) {
-                //     if ($u->q_m_s_divisions_id == $incident->division_id) {
-                //         $email = Helpers::getInitiatorEmail($u->user_id);
-                //         if ($email !== null) {
-                //             try {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $incident],
-                //                     function ($message) use ($email) {
-                //                         $message->to($email)
-                //                             ->subject("Activity Performed By " . Auth::user()->name);
-                //                     }
-                //                 );
-                //             } catch (\Exception $e) {
-                //                 //log error
-                //             }
-                //         }
-                //     }
-                // }
+               
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -8499,22 +8444,43 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->stage = 'More Info Required';
                 $history->save();
 
-                $list = Helpers::getQAReviewerUserList($incident->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $incident->division_id){
+                $list = Helpers::getQAUserList($incident->division_id)->unique('user_id')
+                            ->values();
+               foreach ($list as $u)
+                    {
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $incident, 'site' => "Incident", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $incident) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+
+                        if (!empty($email)) {
+
+                            try {
+
+                                $data = [
+                                    'data'    => $incident,
+                                    'site'    => "Incident",
+                                    'history' => "More Info Required",
+                                    'process' => 'Incident',
+                                    'comment' => $history->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $incident,      
+                                    'Incident'      
+                                );
+
+                            } catch (\Exception $e) {
+
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
+
+                            }
+
                         }
-                    // }
-                }
+                    }
+
 
                 $incident->update();
                 $history = new IncidentHistory();
@@ -8535,13 +8501,13 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $incident->status = "QAH/Designee Approval";
                 $incident->QAH_Designee_More_Info_Required_by = Auth::user()->name;
                 $incident->QAH_Designee_More_Info_Required_on = Carbon::now()->format('d-M-Y');
-                $history->QAH_Designee_More_Info_Required_comment = $request->comment;
+                $incident->QAH_Designee_More_Info_Required_comment = $request->comment;
 
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
-                $history->action=' More Information Required';
+                $history->action='More Information Required';
                 $history->current = $incident->QAH_Designee_More_Info_Required_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -8551,22 +8517,43 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->stage = 'More Information Required';
                 $history->save();
 
-                $list = Helpers::getQAHeadUserList($incident->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $incident->division_id){
+                $list = Helpers::getQAHeadUserList($incident->division_id) ->unique('user_id')
+                            ->values();
+                foreach ($list as $u)
+                    {
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $incident, 'site' => "Incident", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $incident) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+
+                        if (!empty($email)) {
+
+                            try {
+
+                                $data = [
+                                    'data'    => $incident,
+                                    'site'    => "Incident",
+                                    'history' => "More Info Required",
+                                    'process' => 'Incident',
+                                    'comment' => $history->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $incident,      
+                                    'Incident'      
+                                );
+
+                            } catch (\Exception $e) {
+
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
+
+                            }
+
                         }
-                    // }
-                }
+                    }
+
 
                 $incident->update();
                 $history = new IncidentHistory();
@@ -8603,22 +8590,42 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->stage = 'More Info Required';
                 $history->save();
 
-                $list = Helpers::getInitiatorUserList($incident->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $incident->division_id){
+                $list = Helpers::getInitiatorUserList($incident->division_id) ->unique('user_id')
+                            ->values();
+                    {
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $incident, 'site' => "Incident", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $incident) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+
+                        if (!empty($email)) {
+
+                            try {
+
+                                $data = [
+                                    'data'    => $incident,
+                                    'site'    => "Incident",
+                                    'history' => "More Info Required",
+                                    'process' => 'Incident',
+                                    'comment' => $history->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $incident,      
+                                    'Incident'      
+                                );
+
+                            } catch (\Exception $e) {
+
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
+
+                            }
+
                         }
-                    // }
-                }
+                    }
+
 
                 $incident->update();
                 $history = new IncidentHistory();
@@ -8653,22 +8660,43 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->stage = 'More Info Required';
                 $history->save();
 
-                $list = Helpers::getHodUserList($incident->division_id); // Notify CFT Person
-                foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $incident->division_id){
+                $list = Helpers::getHodUserList($incident->division_id) ->unique('user_id')
+                            ->values();
+                foreach ($list as $u)
+                    {
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $incident, 'site' => "view", 'history' => "More Information Required", 'process' => 'Incident', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $incident) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Incident, Record #" . str_pad($incident->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                                }
-                            );
+
+                        if (!empty($email)) {
+
+                            try {
+
+                                $data = [
+                                    'data'    => $incident,
+                                    'site'    => "Incident",
+                                    'history' => "More Info Required",
+                                    'process' => 'Incident',
+                                    'comment' => $history->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $incident,      
+                                    'Incident'      
+                                );
+
+                            } catch (\Exception $e) {
+
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
+
+                            }
+
                         }
-                    // }
-                }
+                    }
+
 
                 $incident->update();
                 $history = new IncidentHistory();
@@ -8683,36 +8711,72 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 return back();
             }
 
-            //if ($incident->stage == 8) {
-            //    $incident->stage = "7";
-            //    $incident->status = "QA Final Review";
-            //    $incident->qa_more_info_required_by = Auth::user()->name;
-            //    $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-            //    $history = new IncidentAuditTrail();
-            //    $history->incident_id = $id;
-            //    $history->activity_type = 'Activity Log';
-            //    $history->previous = "";
-            //    $history->action='More Information Required';
-            //    $history->current = $incident->qa_more_info_required_by;
-            //    $history->comment = $request->comment;
-            //    $history->user_id = Auth::user()->id;
-            //    $history->user_name = Auth::user()->name;
-            //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //    $history->origin_state = $lastDocument->status;
-            //    $history->stage = 'More Info Required';
-            //    $history->save();
-            //    $incident->update();
-            //    $history = new IncidentHistory();
-            //    $history->type = "Incident";
-            //    $history->doc_id = $id;
-            //    $history->user_id = Auth::user()->id;
-            //    $history->user_name = Auth::user()->name;
-            //    $history->stage_id = $incident->stage;
-            //    $history->status = $incident->status;
-            //    $history->save();
-            //    toastr()->success('Document Sent');
-            //    return back();
-            //}
+            if ($incident->stage == 8) {
+               $incident->stage = "7";
+               $incident->status = "QA Final Review";
+               $incident->qa_more_info_required_by = Auth::user()->name;
+               $incident->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+               $history = new IncidentAuditTrail();
+               $history->incident_id = $id;
+               $history->activity_type = 'Activity Log';
+               $history->previous = "";
+               $history->action='More Information Required';
+               $history->current = $incident->qa_more_info_required_by;
+               $history->comment = $request->comment;
+               $history->user_id = Auth::user()->id;
+               $history->user_name = Auth::user()->name;
+               $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+               $history->origin_state = $lastDocument->status;
+               $history->stage = 'More Info Required';
+               $history->save();
+               $list = Helpers::getQAReviewerUserList($incident->division_id) ->unique('user_id')
+                            ->values();
+                foreach ($list as $u)
+                    {
+                        $email = Helpers::getUserEmail($u->user_id);
+
+                        if (!empty($email)) {
+
+                            try {
+
+                                $data = [
+                                    'data'    => $incident,
+                                    'site'    => "Incident",
+                                    'history' => "More Info Required",
+                                    'process' => 'Incident',
+                                    'comment' => $history->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $incident,      
+                                    'Incident'      
+                                );
+
+                            } catch (\Exception $e) {
+
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
+
+                            }
+
+                        }
+                    }
+               $incident->update();
+               $history = new IncidentHistory();
+               $history->type = "Incident";
+               $history->doc_id = $id;
+               $history->user_id = Auth::user()->id;
+               $history->user_name = Auth::user()->name;
+               $history->stage_id = $incident->stage;
+               $history->status = $incident->status;
+               $history->save();
+               toastr()->success('Document Sent');
+               return back();
+            }
         } else {
             toastr()->error('E-signature Not match');
             return back();

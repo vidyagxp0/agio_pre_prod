@@ -597,7 +597,7 @@
                     @endphp
                     @php
                         $lockdatafileds1 = !($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Audit Program', 7) || Helpers::check_roles($data->division_id, 'Audit Program', 66) || Helpers::check_roles($data->division_id, 'Audit Program', 18) ));
-                        $lockdatafileds2 = !($data->stage == 2 && Helpers::check_roles($data->division_id, 'Audit Program', 4)|| Helpers::check_roles($data->division_id, 'Audit Program', 18));
+                        $lockdatafileds2 = !($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Audit Program', 65)|| Helpers::check_roles($data->division_id, 'Audit Program', 42)|| Helpers::check_roles($data->division_id, 'Audit Program', 18)));
                         $lockdatafileds3 = !($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Audit Program', 9) || Helpers::check_roles($data->division_id, 'Audit Program',39) || Helpers::check_roles($data->division_id, 'Audit Program', 65) || Helpers::check_roles($data->division_id, 'Audit Program', 43) || Helpers::check_roles($data->division_id, 'Audit Program', 42) || Helpers::check_roles($data->division_id, 'Audit Program', 18)));
                     
                     @endphp
@@ -617,7 +617,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Audit Program', 65)|| Helpers::check_roles($data->division_id, 'Audit Program', 42)|| Helpers::check_roles($data->division_id, 'Audit Program', 18))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Audit Program', 65)|| Helpers::check_roles($data->division_id, 'Audit Program', 42)|| Helpers::check_roles($data->division_id, 'Audit Program', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
                             </button>

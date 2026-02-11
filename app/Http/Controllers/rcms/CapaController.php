@@ -3754,14 +3754,13 @@ class CapaController extends Controller
                
 
                  $list = Helpers::getHodUserList($capa->division_id);
-                 foreach ($list as $u)
-                {
+                 foreach ($list as $u) {
 
-                        $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                        if ($email !== null) {
-
-                            try {
+                            if ($email !== null) {
+  
+                                  try {
 
                                 $data = [
                                     'data'    => $capa,
@@ -3775,19 +3774,15 @@ class CapaController extends Controller
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $capa,     // process object
-                                    'CAPA'     // process name
+                                    $capa,
+                                    'CAPA'
                                 );
 
                             } catch (\Exception $e) {
-
-                                \Log::error('Queue Dispatch Error', [
-                                    'email' => $email,
-                                    'error' => $e->getMessage()
-                                ]);
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                             }
                         }
-                    }
                 //     foreach ($list as $u) 
                 // {
 
@@ -3923,40 +3918,35 @@ class CapaController extends Controller
 
                 $usersmerge = $usersmerge->unique('user_id');
 
-                foreach ($usersmerge as $u) 
-                {
+                 foreach ($usersmerge as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
+                                $data = [
                                     'data'    => $capa,
                                     'site'    => "CAPA",
-                                    'history' => "QA/CQA Review Complete",
+                                    'history' => "HOD Review Complete",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: QA/CQA Review Complete"
-                                        );
-                                }
-                            );
+                                ];
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
 
                 $capa->update();
                 //toastr()->success('Document Sent');
@@ -3980,38 +3970,7 @@ class CapaController extends Controller
                         'type' => 'success',
                     ]);
                 }
-                //Action child
-
-                   $actionchilds = ActionItem::where('parent_id', $id)
-                                ->where('parent_type', 'CAPA')
-                                ->get();
-                                    $hasPendingaction = false;
-                                foreach ($actionchilds as $ext) {
-                                        $actionchildstatus = trim(strtolower($ext->status));
-                                       if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                                            $hasPendingaction = true;
-                                            break;
-                                        }
-                                    }
-                            if ($hasPendingaction) {
-                                // $actionchildstatus = trim(strtolower($extensionchild->status));
-                                if ($hasPendingaction) {
-                                    Session::flash('swal', [
-                                        'title' => 'Action Item Child Pending!',
-                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                        'type' => 'warning',
-                                    ]);
-
-                                return redirect()->back();
-                                }
-                            } else {
-                                // Flash message for success (when the form is filled correctly)
-                                Session::flash('swal', [
-                                    'title' => 'Success!',
-                                    'message' => 'Document Sent',
-                                    'type' => 'success',
-                                ]);
-                            }
+               
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CAPA')
@@ -4082,39 +4041,35 @@ class CapaController extends Controller
 
                 $usersmerge = $usersmerge->unique('user_id');
 
-                foreach ($usersmerge as $u) {
+                 foreach ($usersmerge as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
+                                $data = [
                                     'data'    => $capa,
                                     'site'    => "CAPA",
                                     'history' => "QA/CQA Review Complete",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: QA/CQA Review Complete"
-                                        );
-                                }
-                            );
+                                ];
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
 
 
                 $capa->update();
@@ -4140,39 +4095,7 @@ class CapaController extends Controller
                     ]);
                 }
 
-                //Action Item Child
-
-                   $actionchilds = ActionItem::where('parent_id', $id)
-                                ->where('parent_type', 'CAPA')
-                                ->get();
-                                    $hasPendingaction = false;
-                                foreach ($actionchilds as $ext) {
-                                        $actionchildstatus = trim(strtolower($ext->status));
-                                        if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                                            $hasPendingaction = true;
-                                            break;
-                                        }
-                                    }
-                            if ($hasPendingaction) {
-                                // $actionchildstatus = trim(strtolower($extensionchild->status));
-                                if ($hasPendingaction) {
-                                    Session::flash('swal', [
-                                        'title' => 'Action Item Child Pending!',
-                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                        'type' => 'warning',
-                                    ]);
-
-                                return redirect()->back();
-                                }
-                            } else {
-                                // Flash message for success (when the form is filled correctly)
-                                Session::flash('swal', [
-                                    'title' => 'Success!',
-                                    'message' => 'Document Sent',
-                                    'type' => 'success',
-                                ]);
-                            }
-
+                
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CAPA')
@@ -4240,41 +4163,35 @@ class CapaController extends Controller
                
 
                  $list = Helpers::getInitiatorUserList($capa->division_id);
-                foreach ($list as $u) {
+                 foreach ($list as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {   
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $capa,
-                                    'site' => "CAPA",
+                                $data = [
+                                    'data'    => $capa,
+                                    'site'    => "CAPA",
                                     'history' => "Approved",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
-                                    'user'=> Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Approved"
-                                        );
-                                }
-                            );
+                                    'user'    => Auth::user()->name
+                                ];
 
-                        } catch (\Exception $e) {   
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
 
-                            \Log::error('Mail Error: ' . $e->getMessage()); 
-
-                        }   
-                    }
-                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
+                        }
 
                 $capa->update();
                 //toastr()->success('Document Sent');
@@ -4299,38 +4216,7 @@ class CapaController extends Controller
                     ]);
                 }
 
-                //Action item child
-                   $actionchilds = ActionItem::where('parent_id', $id)
-                                ->where('parent_type', 'CAPA')
-                                ->get();
-                                    $hasPendingaction = false;
-                                foreach ($actionchilds as $ext) {
-                                        $actionchildstatus = trim(strtolower($ext->status));
-                                         if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                                            $hasPendingaction = true;
-                                            break;
-                                        }
-                                    }
-                            if ($hasPendingaction) {
-                                // $actionchildstatus = trim(strtolower($extensionchild->status));
-                                if ($hasPendingaction) {
-                                    Session::flash('swal', [
-                                        'title' => 'Action Item Child Pending!',
-                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                        'type' => 'warning',
-                                    ]);
-
-                                return redirect()->back();
-                                }
-                            } else {
-                                // Flash message for success (when the form is filled correctly)
-                                Session::flash('swal', [
-                                    'title' => 'Success!',
-                                    'message' => 'Document Sent',
-                                    'type' => 'success',
-                                ]);
-                            }
-
+               
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CAPA')
@@ -4399,41 +4285,35 @@ class CapaController extends Controller
                 
 
                    $list = Helpers::getHodUserList($capa->division_id);
-                       foreach ($list as $u) {
+                      foreach ($list as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {   
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $capa,
-                                    'site' => "CAPA",
+                                $data = [
+                                    'data'    => $capa,
+                                    'site'    => "CAPA",
                                     'history' => "Completed",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
-                                    'user'=> Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Completed"
-                                        );
-                                }
-                            );
+                                    'user'    => Auth::user()->name
+                                ];
 
-                        } catch (\Exception $e) {   
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
 
-                            \Log::error('Mail Error: ' . $e->getMessage()); 
-
-                        }   
-                    }
-                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
+                        }
                 $capa->update();
                 //toastr()->success('Document Sent');
                 return back();
@@ -4533,37 +4413,33 @@ class CapaController extends Controller
 
                 foreach ($usersmerge as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
+                                $data = [
                                     'data'    => $capa,
                                     'site'    => "CAPA",
-                                    'history' => "QA/CQA Review Complete",
+                                    'history' => "HOD Final Review Completed",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: QA/CQA Review Complete"
-                                        );
-                                }
-                            );
+                                ];
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
                 $capa->update();
                 //toastr()->success('Document Sent');
                 return back();
@@ -4588,37 +4464,7 @@ class CapaController extends Controller
                 }
 
 
-                 //Action item child
-                   $actionchilds = ActionItem::where('parent_id', $id)
-                                ->where('parent_type', 'CAPA')
-                                ->get();
-                                    $hasPendingaction = false;
-                                foreach ($actionchilds as $ext) {
-                                        $actionchildstatus = trim(strtolower($ext->status));
-                                         if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                                            $hasPendingaction = true;
-                                            break;
-                                        }
-                                    }
-                            if ($hasPendingaction) {
-                                // $actionchildstatus = trim(strtolower($extensionchild->status));
-                                if ($hasPendingaction) {
-                                    Session::flash('swal', [
-                                        'title' => 'Action Item Child Pending!',
-                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                        'type' => 'warning',
-                                    ]);
-
-                                return redirect()->back();
-                                }
-                            } else {
-                                // Flash message for success (when the form is filled correctly)
-                                Session::flash('swal', [
-                                    'title' => 'Success!',
-                                    'message' => 'Document Sent',
-                                    'type' => 'success',
-                                ]);
-                            }
+                 
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CAPA')
@@ -4687,42 +4533,40 @@ class CapaController extends Controller
                 
 
 
-                 $list = Helpers::getQAHeadUserList($capa->division_id);
-                       foreach ($list as $u) {
+                $QAHList = Helpers::getQAHeadUserList($capa->division_id);
+                $CQAHlist = Helpers::getCQAHeadUserList($capa->division_id);
+              $usersmerge = collect($QAHList)->merge($CQAHlist);
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                $usersmerge = $usersmerge->unique('user_id');
+                    foreach ($usersmerge as $u) {
 
-                    if ($email !== null) {
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                        try {   
+                            if ($email !== null) {
+  
+                                  try {
 
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $capa,
-                                    'site' => "CAPA",
-                                    'history' => "Cancel",
+                                $data = [
+                                    'data'    => $capa,
+                                    'site'    => "CAPA",
+                                    'history' => "QA/CQA Closure Review Completed",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
-                                    'user'=> Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Cancel"
-                                        );
-                                }
-                            );
+                                    'user'    => Auth::user()->name
+                                ];
 
-                        } catch (\Exception $e) {   
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
 
-                            \Log::error('Mail Error: ' . $e->getMessage()); 
-
-                        }   
-                    }
-                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
+                        }
                 $capa->update();
                 //toastr()->success('Document Sent');
                 return back();
@@ -4825,37 +4669,33 @@ class CapaController extends Controller
 
                 foreach ($usersmerge as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
+                                $data = [
                                     'data'    => $capa,
                                     'site'    => "CAPA",
                                     'history' => "QAH/CQA Head Approval Complete",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: QAH/CQA Head Approval Complete"
-                                        );
-                                }
-                            );
+                                ];
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
                 $capa->update();
                 //toastr()->success('Document Sent');
                 return back();
@@ -5004,37 +4844,33 @@ class CapaController extends Controller
 
                 foreach ($usersmerge as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
+                                $data = [
                                     'data'    => $capa,
                                     'site'    => "CAPA",
-                                    'history' => "Closed-Cancelled",
+                                    'history' => "Cancel",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Closed-Cancelled"
-                                        );
-                                }
-                            );
+                                ];
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";
@@ -5096,24 +4932,34 @@ class CapaController extends Controller
                 $history->save();
                 $list = Helpers::getInitiatorUserList($capa->division_id);
                 foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $capa->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+
+                            $email = Helpers::getUserEmail($u->user_id);
+
                             if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->hod_comment1, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $capa) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
-                                    }
+  
+                                  try {
+
+                                $data = [
+                                    'data'    => $capa,
+                                    'site'    => "CAPA",
+                                    'history' => "More Information Required",
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
                                 );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                             }
                         }
-                    // }
-                }
 
 
                  
@@ -5169,24 +5015,34 @@ class CapaController extends Controller
               
                  $list = Helpers::getHodUserList($capa->division_id);
                       foreach ($list as $u) {
-                    // if($u->q_m_s_divisions_id == $capa->division_id){
-                        $email = Helpers::getUserEmail($u->user_id);
+
+                            $email = Helpers::getUserEmail($u->user_id);
+
                             if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $capa, 'site'=>"CAPA", 'history' => "More Info Required ", 'process' => 'Capa', 'comment' => $capa->qa_commenta, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $capa) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Capa, Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required  Performed");
-                                    }
+  
+                                  try {
+
+                                $data = [
+                                    'data'    => $capa,
+                                    'site'    => "CAPA",
+                                    'history' => "More Information Required",
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
                                 );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                             }
                         }
-                    // }
-                }
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";
@@ -5231,37 +5087,33 @@ class CapaController extends Controller
 
                 foreach ($usersmerge as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
+                                $data = [
                                     'data'    => $capa,
                                     'site'    => "CAPA",
                                     'history' => "More Information Required",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: More Information Required"
-                                        );
-                                }
-                            );
+                                ];
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
                 $capa->update();
                 $history->save();
 
@@ -5314,7 +5166,40 @@ class CapaController extends Controller
                 //     $history->action_name = 'Update';
                 // }
                 $history->save();
+                $usersmerge = collect()
+                ->merge(Helpers::getQAApproverUserList($capa->division_id))
+                ->merge(Helpers::getCQAApproverUsersList($capa->division_id))
+                ->unique('user_id');
 
+                foreach ($usersmerge as $u) {
+
+                            $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+  
+                                  try {
+
+                                $data = [
+                                    'data'    => $capa,
+                                    'site'    => "CAPA",
+                                    'history' => "More Information Required",
+                                    'process' => 'CAPA',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
+                        }
                 $capa->update();
 
 
@@ -5360,39 +5245,33 @@ class CapaController extends Controller
              $list = Helpers::getInitiatorUserList($capa->division_id);
                        foreach ($list as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {   
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $capa,
-                                    'site' => "CAPA",
+                                $data = [
+                                    'data'    => $capa,
+                                    'site'    => "CAPA",
                                     'history' => "More Information Required",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
-                                    'user'=> Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: More Information Required"
-                                        );
-                                }
-                            );
+                                    'user'    => Auth::user()->name
+                                ];
 
-                        } catch (\Exception $e) {   
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
 
-                            \Log::error('Mail Error: ' . $e->getMessage()); 
-
-                        }   
-                    }
-                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
+                        }
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -5434,39 +5313,33 @@ class CapaController extends Controller
             $list = Helpers::getHodUserList($capa->division_id);
                 foreach ($list as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {   
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $capa,
-                                    'site' => "CAPA",
+                                $data = [
+                                    'data'    => $capa,
+                                    'site'    => "CAPA",
                                     'history' => "More Information Required",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
-                                    'user'=> Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: More Information Required"
-                                        );
-                                }
-                            );
+                                    'user'    => Auth::user()->name
+                                ];
 
-                        } catch (\Exception $e) {   
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
 
-                            \Log::error('Mail Error: ' . $e->getMessage()); 
-
-                        }   
-                    }
-                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
+                        }
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -5521,39 +5394,35 @@ class CapaController extends Controller
                 ->merge(Helpers::getCQAUsersList($capa->division_id))
                 ->unique('user_id');
 
-                foreach ($usersmerge as $u) {
+               foreach ($usersmerge as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
+                                $data = [
                                     'data'    => $capa,
                                     'site'    => "CAPA",
                                     'history' => "More Information Required",
                                     'process' => 'CAPA',
                                     'comment' => $request->comment,
                                     'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: More Information Required"
-                                        );
-                                }
-                            );
+                                ];
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
              
             $capa->update();
             $history = new CapaHistory();
@@ -5614,41 +5483,35 @@ class CapaController extends Controller
 
 
                 $list = Helpers::getInitiatorUserList($capa->division_id);
-                         foreach ($list as $u) {
+                        foreach ($list as $u) {
 
-                    $email = Helpers::getUserEmail($u->user_id);
+                            $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
+                            if ($email !== null) {
+  
+                                  try {
 
-                        try {   
-
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $capa,
-                                    'site' => "CAPA",
-                                    'history' => "More Information Required",
+                                $data = [
+                                    'data'    => $capa,
+                                    'site'    => "CAPA",
+                                    'history' => "Cancel",
                                     'process' => 'CAPA',
-                                    'comment' => $request->commenta,
-                                    'user'=> Auth::user()->name
-                                ],
-                                function ($message) use ($email, $capa) {
-                                    $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: CAPA, Record #"
-                                            . str_pad($capa->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: More Information Required"
-                                        );
-                                }
-                            );
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
 
-                        } catch (\Exception $e) {   
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $capa,
+                                    'CAPA'
+                                );
 
-                            \Log::error('Mail Error: ' . $e->getMessage()); 
-
-                        }   
-                    }
-                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
+                        }
                     
 
                 toastr()->success('Document Sent');
