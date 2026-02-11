@@ -326,6 +326,22 @@
             container.append(textarea)
         }
     </script>
+        <style>
+            
+            .progress-bars div.current {
+                background-color: #2196F3;
+                color: black;
+                font-weight: bold;
+                animation: pulse-blue 1.5s infinite;
+            }
+
+            /* Blue Pulse Animation */
+            @keyframes pulse-blue {
+                0% { background-color: #de8d0a; }
+                50% { background-color: #dfac54; }
+                100% { background-color: #de8d0a; }
+            }
+        </style>
 
     <div class="form-field-head">
         <div class="division-bar">
@@ -461,6 +477,9 @@ dd($data->initiator_id , Auth::user()->id);
 
                 </div>
                 <div class="status">
+                    @php 
+                            $currentStage = $data->stage;
+                    @endphp
                     <div class="head">Current Status</div>
                     {{-- ------------------------------By Pankaj-------------------------------- --}}
                     @if ($data->stage == 0)
@@ -469,58 +488,20 @@ dd($data->initiator_id , Auth::user()->id);
                         </div>
                     @else
                         <div class="progress-bars">
-                            @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
-                            @endif
-                            @if ($data->stage >= 2)
-                                <div class="active">HOD Review</div>
-                            @else
-                                <div class="">HOD Review</div>
-                            @endif
-                            @if ($data->stage >= 3)
-                                <div class="active">Initial QA/CQA Review</div>
-                            @else
-                                <div class="">Initial QA/CQA Review</div>
-                            @endif
 
+                            <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
 
-                            @if ($data->stage >= 4)
-                                <div class="active">Investigation in Progress </div>
-                            @else
-                                <div class="">Investigation in Progress</div>
-                            @endif
-                            @if ($data->stage >= 5)
-                                <div class="active">HOD Final Review</div>
-                            @else
-                                <div class="">HOD Final Review</div>
-                            @endif
+                            <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">HOD Review</div>
 
+                            <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}">Initial QA/CQA Review</div>
 
-                            {{-- @if ($data->stage >= 3)
-                                <div class="active">Pending Group Review Discussion</div>
-                            @else
-                                <div class="">Pending Group Review Discussion</div>
-                            @endif
+                            <div class="{{ $currentStage > 4 ? 'active' : ($currentStage == 4 ? 'current' : '') }}">Investigation in Progress</div>
 
-                            @if ($data->stage >= 4)
-                                <div class="active">Pending Group Review</div>
-                            @else
-                                <div class="">Pending Group Review</div>
-                            @endif --}}
+                            <div class="{{ $currentStage > 5 ? 'active' : ($currentStage == 5 ? 'current' : '') }}">HOD Final Review</div>
 
+                            <div class="{{ $currentStage > 6 ? 'active' : ($currentStage == 6 ? 'current' : '') }}">Final QA/CQA Review</div>
 
-                            @if ($data->stage >= 6)
-                                <div class="active">Final QA/CQA Review </div>
-                            @else
-                                <div class="">Final QA/CQA Review </div>
-                            @endif
-                            @if ($data->stage >= 7)
-                                <div class="active">QAH/CQAH Final Approval</div>
-                            @else
-                                <div class="">QAH/CQAH Final Approval</div>
-                            @endif
+                            <div class="{{ $currentStage > 7 ? 'active' : ($currentStage == 7 ? 'current' : '') }}">QAH/CQAH Final Approval</div>
                             @if ($data->stage >= 8)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
@@ -543,18 +524,70 @@ dd($data->initiator_id , Auth::user()->id);
                 <!-- Tab links -->
                 <div class="cctab">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Investigation</button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm9')">HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initial QA/CQA  Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
-                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation & Root Cause</button> --}}
-
                     <button class="cctablinks" onclick="openCity(event, 'CCForm10')">HOD Final Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA/CQA Final Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QAH/CQAH /Designee Final Approval</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                 </div>
+                <script>
+                    function activateTabBasedOnStage(stage) {
+                        const tabContents = document.querySelectorAll('.cctabcontent');
+                        const tabLinks = document.querySelectorAll('.cctablinks');
+                        
+                        tabContents.forEach(content => content.style.display = 'none');
+                        tabLinks.forEach(link => link.classList.remove('active'));
+                        
+                        let tabToActivate = '';
+                        
+                        if (stage == 1) {
+                            tabToActivate = 'CCForm1'; 
+                        } else if (stage == 2) {
+                            tabToActivate = 'CCForm9'; 
+                        }  else if (stage == 3) {
+                            tabToActivate = 'CCForm4'; 
+                        } else if (stage == 4) {
+                            tabToActivate = 'CCForm2'; 
+                        } else if (stage == 5) {
+                            tabToActivate = 'CCForm10'; 
+                        } else if (stage == 6) {
+                            tabToActivate = 'CCForm11'; 
+                        } else if (stage == 7) {
+                            tabToActivate = 'CCForm12'; 
+                        } else if (stage == 8){
+                            tabToActivate = 'CCForm7';
+                        }
 
+                        if (tabToActivate) {
+                            const tabContent = document.getElementById(tabToActivate);
+                            const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+                            
+                            if (tabContent) tabContent.style.display = 'block';
+                            if (tabLink) tabLink.classList.add('active');
+                        }
+                    }
+
+                    function openCity(evt, cityName) {
+                        const tabContents = document.querySelectorAll('.cctabcontent');
+                        tabContents.forEach(content => content.style.display = 'none');
+                        
+                        const tabLinks = document.querySelectorAll('.cctablinks');
+                        tabLinks.forEach(link => link.classList.remove('active'));
+                        
+                        document.getElementById(cityName).style.display = 'block';
+                        evt.currentTarget.classList.add('active');
+                        
+                        currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+                    }
+
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                        
+                        activateTabBasedOnStage(currentStage);
+                    });
+                </script>
                 <form id="" action="{{ route('root_update', $data->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div id="step-form">

@@ -414,6 +414,63 @@
                     </div>
 
                 </div>
+                <style>
+                    /* Linear Connected Progress Bar */
+                    .progress-bars {
+                        display: flex;
+                        border-radius: 30px;
+                        overflow: hidden;
+                        border: 1px solid #e0e0e0;
+                        background: #f5f5f5;
+                    }
+                    
+                    .progress-bars div {
+                        padding: 8px 12px;
+                        font-size: 14px;
+                        flex-grow: 1;
+                        text-align: center;
+                        position: relative;
+                        transition: all 0.3s ease;
+                        border-right: 1px solid #fff;
+                    }
+                    
+                    .progress-bars div:last-child {
+                        border-right: none;
+                    }
+                    
+                    /* Completed Stages - Solid Green */
+                    .progress-bars div.completed {
+                        background-color: #4CAF50;
+                        color: black;
+                    }
+                    
+                    /* CURRENT Stage - Animated Blue (Pending Action) */
+                    .progress-bars div.current {
+                        background-color: #fec009;
+                        color: black;
+                        font-weight: bold;
+                        animation: pulse-blue 1.5s infinite;
+                    }
+                    
+                    /* Pending Stages - Light Gray */
+                    .progress-bars div.pending {
+                        background-color: #f5f5f5;
+                        color: black;
+                    }
+                    
+                    /* Closed States */
+                    .progress-bars div.closed {
+                        background-color: #f44336;
+                        color: white;
+                    }
+                    
+                    /* Blue Pulse Animation */
+                    @keyframes pulse-blue {
+                        0% { background-color: #de8d0a; }
+                        50% { background-color: #dfac54; }
+                        100% { background-color: #de8d0a; }
+                    }
+                </style>
                 <div class="status">
                     <div class="head">Current Status</div>
                     @if ($data->stage == 0)
@@ -426,45 +483,32 @@
                         </div>
                     @else
 
-                        <div class="progress-bars" >
-                            @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
-                            @endif
-                            @if ($data->stage >= 2)
-                                <div class="active">HOD Assessment</div>
-                            @else
-                                <div class="">HOD Assessment</div>
-                            @endif
-                            @if ($data->stage >= 3)
-                                <div class="active">QA/CQA Initial
-                                    Assessment</div>
-                            @else
-                                <div class="">QA/CQA Initial
-                                    Assessment</div>
-                            @endif
-                            @if ($data->stage >= 4)
-                                <div class="active">CFT Assessment</div>
-                            @else
-                                <div class="">CFT Assessment</div>
-                            @endif
-                            @if ($data->stage >= 5)
-                                <div class="active">QA/CQA Final Review</div>
-                            @else
-                                <div class="">QA/CQA Final Review</div>
-                            @endif
-                            @if (($data->stage > 6 || $data->status == 'Pending RA Approval') )
-    <div id="pending-ra-stage" class="active">Pending RA Approval</div>
-@else
-    <div id="pending-ra-stage" class="">Pending RA Approval</div>
-@endif
+                        <div class="progress-bars d-flex">
+                            @php
+                                $currentStage = $data->stage;
+                            @endphp   
 
-                            @if ($data->stage >= 7)
-                                <div class="active">QA/CQA Head/Manager Designee Approval</div>
+                            <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
+
+                            <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">HOD Assessment</div>
+
+                            <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}">QA/CQA Initial Assessment</div>
+                        
+                            <div class="{{ $currentStage > 4 ? 'active' : ($currentStage == 4 ? 'current' : '') }}">CFT Assessment</div>
+
+                            <div class="{{ $currentStage > 5 ? 'active' : ($currentStage == 5 ? 'current' : '') }}">QA/CQA Final Review</div>
+                            {{-- @if (($data->stage > 6 || $data->status == 'Pending RA Approval') )
+                                <div id="pending-ra-stage" class="active">Pending RA Approval</div>
                             @else
-                                <div class="">QA/CQA Head/Manager Designee Approval</div>
-                            @endif
+                                <div id="pending-ra-stage" class="">Pending RA Approval</div>
+                            @endif --}}
+                            <div id="pending-ra-stage"
+                                class="{{ ($data->stage > 6 || $data->status == 'Pending RA Approval') 
+                                            ? ($data->stage == 6 ? 'current' : 'active') 
+                                            : '' }}">Pending RA Approval
+                            </div>
+
+                            <div class="{{ $currentStage > 7 ? 'active' : ($currentStage == 7 ? 'current' : '') }}">QA/CQA Head/Manager Designee Approval</div>
 
                             @if ($data->stage >= 9)
                                 <div class="active" @if($data->stage == 8) style="display: none" @endif>Pending Initiator Update</div>
@@ -490,33 +534,12 @@
                                 <div class="" @if($data->stage == 8) style="display: none" @endif>QA/CQA Closure Approval</div>
                             @endif
 
-
-
                             @if ($data->stage >= 13)
                                 <div class="active bg-danger" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
                             @else
                                 <div class="" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
                             @endif
 
-
-
-                            <!-- @if ($data->stage >= 9)
-                                <div class="active" @if($data->stage == 8) style="display: none" @endif>Post Implementation</div>
-                            @else
-                                <div class="" @if($data->stage == 8) style="display: none" @endif>Post Implementation</div>
-                            @endif
-
-                            @if ($data->stage >= 10)
-                                <div class="active" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
-                            @else
-                                <div class="" @if($data->stage == 8) style="display: none" @endif>QA Closure Approval</div>
-                            @endif
-
-                            @if ($data->stage >= 11)
-                                <div class="active bg-danger" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
-                            @else
-                                <div class="" @if($data->stage == 8) style="display: none" @endif>Closed - Done</div>
-                            @endif -->
                         </div>
                     @endif
                 </div>
@@ -552,6 +575,73 @@
                             <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
                         </div>
 
+                        <script>
+                            function activateTabBasedOnStage(stage) {
+                                const tabContents = document.querySelectorAll('.cctabcontent');
+                                const tabLinks = document.querySelectorAll('.cctablinks');
+                                
+                                tabContents.forEach(content => content.style.display = 'none');
+                                tabLinks.forEach(link => link.classList.remove('active'));
+                                
+                                let tabToActivate = '';
+                                
+                                if (stage == 1) {
+                                    tabToActivate = 'CCForm1'; 
+                                } else if (stage == 2) {
+                                    tabToActivate = 'CCForm12'; 
+                                }  else if (stage == 3) {
+                                    tabToActivate = 'CCForm3'; 
+                                } else if (stage == 4) {
+                                    tabToActivate = 'CCForm11'; 
+                                } else if (stage == 5) {
+                                    tabToActivate = 'CCForm14'; 
+                                } else if (stage == 6) {
+                                    tabToActivate = 'CCForm15'; 
+                                } else if (stage == 7) {
+                                    tabToActivate = 'CCForm17'; 
+                                } else if (stage == 9) {
+                                    tabToActivate = 'CCForm5'; 
+                                } else if (stage == 10){
+                                    tabToActivate = 'CCForm6';
+                                } else if (stage == 11) {
+                                    tabToActivate = 'CCForm16';
+                                }else if (stage == 12){
+                                    tabToActivate = 'CCForm9';
+                                }else if (stage == 13){
+                                    tabToActivate = 'CCForm10';
+                                }else if (stage == 0){
+                                    tabToActivate = 'CCForm10';
+                                }                     
+
+                            
+                                if (tabToActivate) {
+                                    const tabContent = document.getElementById(tabToActivate);
+                                    const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+                                    
+                                    if (tabContent) tabContent.style.display = 'block';
+                                    if (tabLink) tabLink.classList.add('active');
+                                }
+                            }
+
+                            function openCity(evt, cityName) {
+                                const tabContents = document.querySelectorAll('.cctabcontent');
+                                tabContents.forEach(content => content.style.display = 'none');
+                                
+                                const tabLinks = document.querySelectorAll('.cctablinks');
+                                tabLinks.forEach(link => link.classList.remove('active'));
+                                
+                                document.getElementById(cityName).style.display = 'block';
+                                evt.currentTarget.classList.add('active');
+                                
+                                currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+                            }
+
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                                
+                                activateTabBasedOnStage(currentStage);
+                            });
+                        </script>
                         <form id="CCFormInput" action="{{ route('CC.update', $data->id) }}" method="POST"
                             enctype="multipart/form-data">
                         <input type="hidden" name="stage" id="stage" value="{{ $data->stage }}" >

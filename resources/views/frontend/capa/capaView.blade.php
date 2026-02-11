@@ -79,21 +79,6 @@
         }
     </script>
 
-    {{-- <script>
-        function otherController(value, checkValue, blockID) {
-            let block = document.getElementById(blockID)
-            let blockTextarea = block.getElementsByTagName('textarea')[0];
-            let blockLabel = block.querySelector('label span.text-danger');
-            if (value === checkValue) {
-                blockLabel.classList.remove('d-none');
-                blockTextarea.setAttribute('required', 'required');
-            } else {
-                blockLabel.classList.add('d-none');
-                blockTextarea.removeAttribute('required');
-            }
-        }
-    </script> --}}
-
     <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID);
@@ -119,16 +104,10 @@
         });
     </script>
 
-    {{-- <div class="form-field-head">
-        <div class="division-bar">
-            <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName($data->division_id) }}/ CAPA
-        </div>
-    </div> --}}
      <div id="rcms_form-head">
         <div class="container-fluid">
             <div class="inner-block">
-                {{-- <div class="head">PR-0001</div> --}}
+                
                 <div class="slogan">
                     <strong>Site Division/Project :</strong>
                     {{ Helpers::getDivisionName($data->division_id) }} / CAPA
@@ -136,6 +115,64 @@
             </div>
         </div>
     </div>
+    <style>
+        /* Linear Connected Progress Bar */
+        .progress-bars {
+            display: flex;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            background: #f5f5f5;
+        }
+        
+        .progress-bars div {
+            padding: 8px 12px;
+            font-size: 14px;
+            flex-grow: 1;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            border-right: 1px solid #fff;
+        }
+        
+        .progress-bars div:last-child {
+            border-right: none;
+        }
+        
+        /* Completed Stages - Solid Green */
+        .progress-bars div.completed {
+            background-color: #4CAF50;
+            color: black;
+        }
+        
+        /* CURRENT Stage - Animated Blue (Pending Action) */
+        .progress-bars div.current {
+            background-color: #de8d0a;
+            color: black;
+            font-weight: bold;
+            animation: pulse-blue 1.5s infinite;
+        }
+        
+        /* Pending Stages - Light Gray */
+        .progress-bars div.pending {
+            background-color: #f5f5f5;
+            color: black;
+        }
+        
+        /* Closed States */
+        .progress-bars div.closed {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        /* Blue Pulse Animation */
+    
+        @keyframes pulse-blue {
+            0% { background-color: #de8d0a; }
+            50% { background-color: #dfac54; }
+            100% { background-color: #de8d0a; }
+        }
+    </style>
 
     {{-- ---------------------- --}}
     <div id="change-control-view">
@@ -183,8 +220,7 @@
                        @endphp
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
-                            {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('CapaAuditTrial', $data->id) }}">
-                                Audit Trail </a> </button> --}}
+
                             <a class="button_theme1 text-white" href="{{ url('CapaAuditTrial', $data->id) }}">
                                 Audit Trail
                             </a>
@@ -209,18 +245,10 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                            {{-- <a href="#cancel-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancel
-                            </button></a> --}}
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> --}}
-                        @elseif($data->stage == 3  &&
-                        ( 
-                            Helpers::check_roles($data->division_id, 'CAPA', 48)||
+
+                        @elseif($data->stage == 3  &&( Helpers::check_roles($data->division_id, 'CAPA', 48)||
                             Helpers::check_roles($data->division_id, 'CAPA', 49)||
-                            Helpers::check_roles($data->division_id, 'CAPA', 63)
-                            ))
+                            Helpers::check_roles($data->division_id, 'CAPA', 63)))
                               <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                More Info Required
                             </button></a>
@@ -233,20 +261,15 @@
                                 Child
                             </button></a>
 
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> --}}
                         @elseif($data->stage == 4 &&  (Helpers::check_roles($data->division_id, 'CAPA', 67) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 64) ))
                           <a href="#signature-modal">  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Approved
                             </button></a>
-                            {{-- @if(Helpers::getChildData($data->id, 'CAPA') < 3) --}}
                             <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#child-modal">
                                 Child
                             </button></a>
-                            {{-- @endif --}}
                             <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                  More Info Required
                               </button></a>
@@ -255,10 +278,6 @@
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                  Complete
                             </button></a>
-                            {{-- <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
-                                 More Info Required
-                              </button></a> --}}
-
                             <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#child-modal">
                                 Child
@@ -282,44 +301,42 @@
                              @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'CAPA', 7) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 66)))
 
-                              <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Closure Review Complete
 
-                             </button></a>
-                             <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
+                            </button></a>
+                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                   More Info Required
                                </button></a>
-                               {{-- @if(Helpers::getChildData($data->id, 'CAPA') < 3) --}}
                                <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#child-modal">
                                 Child
                             </button></a>
-                           {{-- @endif --}}
+
                             @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'CAPA', 9) || Helpers::check_roles($data->division_id, 'CAPA',39 ) || Helpers::check_roles($data->division_id, 'CAPA',42 ) || Helpers::check_roles($data->division_id, 'CAPA',43 ) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 65)))
 
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                {{-- QA/CQA Approval Complete --}}
                                 QAH/CQA Head Approval Complete
-                           </button></a>
+                            </button></a>
 
-                           <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
-                                More Info Required
-                           </button></a>
-                           @if(Helpers::getChildData($data->id, 'CAPA') < 3)
-                           <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <a href="#modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
+                                    More Info Required
+                            </button></a>
+                            @if(Helpers::getChildData($data->id, 'CAPA') < 3)
+                            <a href="#child-modal1"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                             Child
-                        </button></a>
-                        @endif
+                            </button></a>
+                            @endif
 
                            @elseif($data->stage == 9 && (Helpers::check_roles($data->division_id, 'CAPA', 9) || Helpers::check_roles($data->division_id, 'CAPA',39 ) || Helpers::check_roles($data->division_id, 'CAPA',42 ) || Helpers::check_roles($data->division_id, 'CAPA',43 ) ||
                             Helpers::check_roles($data->division_id, 'CAPA', 65) || in_array(18, $userRoleIds)))
-                           {{-- @if(Helpers::getChildData($data->id, 'CAPA') < 3) --}}
+
                          <a href="#child-modal"><button id="major" type="button" class="button_theme1" data-bs-toggle="modal"
                              data-bs-target="#child-modal1l">
                              Child
                          </button></a>
-                         {{-- @endif --}}
+
                         @endif
                          <a class="button_theme1 text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a>
@@ -331,68 +348,40 @@
                 <div class="status">
                     <div class="head">Current Status</div>
                     {{-- ------------------------------By Pankaj-------------------------------- --}}
+                    @php
+                        $currentStage = $data->stage;
+                    @endphp
                     @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
                     @else
-                        <div class="progress-bars">
-                            @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
-                            @endif
+                        <div class="progress-bars d-flex">
 
-                            @if ($data->stage >= 2)
-                                <div class="active">HOD Review</div>
-                            @else
-                                <div class="">HOD Review</div>
-                            @endif
+                            <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
 
-                            @if ($data->stage >= 3)
-                                <div class="active">QA/CQA Review</div>
-                            @else
-                                <div class="">QA/CQA Review</div>
-                            @endif
+                            <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">HOD Review</div>
 
-                            @if ($data->stage >= 4)
-                                <div class="active">QA/CQA Approval</div>
-                            @else
-                                <div class="">QA/CQA Approval</div>
-                            @endif
+                            <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}">QA/CQA Review</div>
 
+                            <div class="{{ $currentStage > 4 ? 'active' : ($currentStage == 4 ? 'current' : '') }}">QA/CQA Approval</div>
 
-                            @if ($data->stage >= 5)
-                                <div class="active">CAPA In progress</div>
-                            @else
-                                <div class="">CAPA In progress</div>
-                            @endif
-                            @if ($data->stage >= 6)
-                                <div class="active">HOD Final Review</div>
-                            @else
-                                <div class="">HOD Final Review</div>
-                            @endif
-                            @if ($data->stage >= 7)
-                            <div class="active">QA/CQA Closure Review</div>
-                                @else
-                            <div class="">QA/CQA Closure Review</div>
-                            @endif
-                            @if ($data->stage >= 8)
-                            <div class="active">QAH/CQAH Approval </div>
-                               @else
-                            <div class="">QAH/CQAH Approval </div>
-                              @endif
-                              @if ($data->stage >= 9)
+                            <div class="{{ $currentStage > 5 ? 'active' : ($currentStage == 5 ? 'current' : '') }}">CAPA In progress</div>
+
+                            <div class="{{ $currentStage > 6 ? 'active' : ($currentStage == 6 ? 'current' : '') }}">HOD Final Review</div>
+
+                            <div class="{{ $currentStage > 7 ? 'active' : ($currentStage == 7 ? 'current' : '') }}">QA/CQA Closure Review</div>
+        
+                            <div class="{{ $currentStage > 8 ? 'active' : ($currentStage == 8 ? 'current' : '') }}">QAH/CQAH Approval</div>
+                            @if ($data->stage >= 9)
                               <div class="bg-danger">Closed - Done</div>
-                          @else
-                              <div class="">Closed - Done</div>
-                          @endif
+                            @else
+                                <div class="">Closed - Done</div>
+                            @endif
+
                     @endif
-
-
                 </div>
-                {{-- @endif --}}
-                {{-- ---------------------------------------------------------------------------------------- --}}
+
             </div>
         </div>
 
@@ -413,13 +402,70 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QA/CQA Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm15')">QA/CQA Approval</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Initiator CAPA update </button>
-                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button> --}}
-                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm13')">HOD Final Review</button>
                          <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Closure Review</button>
                          <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
+
+                    <script>
+                        function activateTabBasedOnStage(stage) {
+                            const tabContents = document.querySelectorAll('.cctabcontent');
+                            const tabLinks = document.querySelectorAll('.cctablinks');
+                            
+                            tabContents.forEach(content => content.style.display = 'none');
+                            tabLinks.forEach(link => link.classList.remove('active'));
+                            
+                            let tabToActivate = '';
+                            
+                            if (stage == 1) {
+                                tabToActivate = 'CCForm1'; 
+                            } else if (stage == 2) {
+                                tabToActivate = 'CCForm11'; 
+                            }  else if (stage == 3) {
+                                tabToActivate = 'CCForm12'; 
+                            } else if (stage == 4) {
+                                tabToActivate = 'CCForm15'; 
+                            } else if (stage == 5) {
+                                tabToActivate = 'CCForm18'; 
+                            } else if (stage == 6) {
+                                tabToActivate = 'CCForm13'; 
+                            } else if (stage == 7) {
+                                tabToActivate = 'CCForm14'; 
+                            } else if (stage == 8){
+                                tabToActivate = 'CCForm5';
+                            } else if (stage == 9){
+                                tabToActivate = 'CCForm6';
+                            }
+                            
+                            if (tabToActivate) {
+                                const tabContent = document.getElementById(tabToActivate);
+                                const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+                                
+                                if (tabContent) tabContent.style.display = 'block';
+                                if (tabLink) tabLink.classList.add('active');
+                            }
+                        }
+
+                        function openCity(evt, cityName) {
+                            const tabContents = document.querySelectorAll('.cctabcontent');
+                            tabContents.forEach(content => content.style.display = 'none');
+                            
+                            const tabLinks = document.querySelectorAll('.cctablinks');
+                            tabLinks.forEach(link => link.classList.remove('active'));
+                            
+                            document.getElementById(cityName).style.display = 'block';
+                            evt.currentTarget.classList.add('active');
+                            
+                            currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+                        }
+
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                            
+                            activateTabBasedOnStage(currentStage);
+                        });
+                    </script>
 
                     <form action="{{ route('capaUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
                         @csrf

@@ -595,7 +595,63 @@
     </div>
 
     <!-- Deviation Form Starts -->
-
+    <style>
+        /* Linear Connected Progress Bar */
+        .progress-bars {
+            display: flex;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            background: #f5f5f5;
+        }
+        
+        .progress-bars div {
+            padding: 8px 12px;
+            font-size: 14px;
+            flex-grow: 1;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            border-right: 1px solid #fff;
+        }
+        
+        .progress-bars div:last-child {
+            border-right: none;
+        }
+        
+        /* Completed Stages - Solid Green */
+        .progress-bars div.completed {
+            background-color: #4CAF50;
+            color: black;
+        }
+        
+        /* CURRENT Stage - Animated Blue (Pending Action) */
+        .progress-bars div.current {
+            background-color: #de8d0a;
+            color: black;
+            font-weight: bold;
+            animation: pulse-blue 1.5s infinite;
+        }
+        
+        /* Pending Stages - Light Gray */
+        .progress-bars div.pending {
+            background-color: #f5f5f5;
+            color: black;
+        }
+        
+        /* Closed States */
+        .progress-bars div.closed {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        /* Blue Pulse Animation */
+        @keyframes pulse-blue {
+            0% { background-color: #de8d0a; }
+            50% { background-color: #dfac54; }
+            100% { background-color: #de8d0a; }
+        }
+    </style>
     <div id="change-control-view">
         <div class="container-fluid">
 
@@ -829,78 +885,57 @@
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
                     @else
-                        <div class="progress-bars" style="font-size: 15px;">
-                            @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
-                            @endif
+                        <div class="progress-bars d-flex" style="font-size: 15px;">
+                            @php
+                                $currentStage = $data->stage;
+                                $hideForCancel = $currentStage == 11 ? 'display:none;' : '';
+                            @endphp  
 
-                            @if ($data->stage >= 2)
-                                <div class="active">HOD Review </div>
-                            @else
-                                <div class="">HOD Review</div>
-                            @endif
+                            <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
 
-                            @if ($data->stage >= 3)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
-                                    Initial Assessment</div>
-                            @else
-                                <div class="" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
-                                    Initial Assessment</div>
-                            @endif
+                            <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">
+                                HOD Review
+                            </div>
 
+                            <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}" style="{{ $hideForCancel }}">
+                                QA/CQA Initial Assessment
+                            </div>
 
-                            @if ($data->stage >= 4)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>CFT
-                                    Review</div>
-                            @else
-                                <div class="" @if ($data->stage == 11) style="display: none" @endif>CFT
-                                    Review</div>
-                            @endif
+                            <div class="{{ $currentStage > 4 ? 'active' : ($currentStage == 4 ? 'current' : '') }}" style="{{ $hideForCancel }}">
+                                CFT Review
+                            </div>
 
+                            <div class="{{ $currentStage > 5 ? 'active' : ($currentStage == 5 ? 'current' : '') }}" style="{{ $hideForCancel }}">
+                                QA/CQA Final Assessment
+                            </div>
 
-                            @if ($data->stage >= 5)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
-                                    Final Assessment</div>
-                            @else
-                                <div class="" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
-                                    Final Assessment</div>
-                            @endif
-                            @if ($data->stage >= 6)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
-                                    Head/Manager Designee Approval</div>
-                            @else
-                                <div class="" @if ($data->stage == 11) style="display: none" @endif>QA/CQA
-                                    Head/Manager Designee Approval</div>
-                            @endif
-                            @if ($data->stage >= 7)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>Pending
-                                    Initiator Update</div>
-                            @else
-                                <div class="">Pending Initiator Update</div>
-                            @endif
-                            @if ($data->stage >= 8)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>HOD
-                                    Final Review</div>
-                            @else
-                                <div class="" @if ($data->stage == 11) style="display: none" @endif>HOD
-                                    Final Review</div>
-                            @endif
-                            @if ($data->stage >= 9)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>
-                                    Implementation verification by QA/CQA</div>
-                            @else
-                                <div class="">Implementation verification by QA/CQA</div>
-                            @endif
-                            @if ($data->stage >= 10)
-                                <div class="active" @if ($data->stage == 11) style="display: none" @endif>Head
-                                    QA/CQA / Designee Closure Approval</div>
-                            @else
-                                <div class="" @if ($data->stage == 11) style="display: none" @endif>Head
-                                    QA/CQA / Designee Closure Approval</div>
-                            @endif
-                            @if ($data->stage >= 11)
+                            <div class="{{ $currentStage > 6 ? 'active' : ($currentStage == 6 ? 'current' : '') }}" style="{{ $hideForCancel }}">
+                                QA/CQA Head/Manager Designee Approval
+                            </div>
+
+                            <div class="{{ $currentStage > 7 ? 'active' : ($currentStage == 7 ? 'current' : '') }}" style="{{ $hideForCancel }}">
+                                Pending Initiator Update
+                            </div>
+
+                            <div class="{{ $currentStage > 8 ? 'active' : ($currentStage == 8 ? 'current' : '') }}" style="{{ $hideForCancel }}">
+                                HOD Final Review
+                            </div>
+
+                            <div class="{{ $currentStage > 9 ? 'active' : ($currentStage == 9 ? 'current' : '') }}" style="{{ $hideForCancel }}">
+                                Implementation verification by QA/CQA
+                            </div>
+
+                            <div class="{{ $currentStage > 10 ? 'active' : ($currentStage == 10 ? 'current' : '') }}" style="{{ $hideForCancel }}">
+                                Head QA/CQA / Designee Closure Approval
+                            </div>
+
+                            {{-- Pending Cancellation --}}
+                            <div 
+                                class="{{ $currentStage > 11 ? 'active' : ($currentStage == 11 ? 'current' : '') }}"
+                                style="{{ $currentStage != 11 ? 'display:none;' : '' }}">
+                                Pending Cancellation
+                            </div>
+                            {{-- @if ($data->stage >= 11)
                                 <div class="active" @if ($data->stage == 1) style="display: none" @endif
                                     @if ($data->stage == 2) style="display: none" @endif
                                     @if ($data->stage == 3) style="display: none" @endif
@@ -926,7 +961,7 @@
                                     @if ($data->stage == 10) style="display: none" @endif
                                     @if ($data->stage == 12) style="display: none" @endif>Pending Cancellation
                                 </div>
-                            @endif
+                            @endif --}}
                             @if ($data->stage >= 12)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
@@ -1060,23 +1095,76 @@
                     <button id="investigationButton" class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm9')">Investigation</button>
                     <button id="qrmButton" class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm11')">QRM</button>
                     <button id="capaButton" class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm10')">CAPA</button>
-
-
-
-                    {{-- <button class="cctablinks " id="Investigation_button" onclick="openCity(event, 'CCForm9')"
-                        style="display: none">Investigation</button> --}}
-                    {{-- <button class="cctablinks " id="QRM_button" onclick="openCity(event, 'CCForm11')"
-                        style="display: none">QRM</button> --}}
-                    {{-- <button class="cctablinks " id="CAPA_button" onclick="openCity(event, 'CCForm10')"
-                        style="display: none">CAPA</button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Pending Initiator Update</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm15')">HOD Final Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Implementation Verification</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Head QA/CQA / Designee Closure Approval</button>
-                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
-
                     <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                 </div>
+
+                <script>
+                    function activateTabBasedOnStage(stage) {
+                        const tabContents = document.querySelectorAll('.cctabcontent');
+                        const tabLinks = document.querySelectorAll('.cctablinks');
+                        
+                        tabContents.forEach(content => content.style.display = 'none');
+                        tabLinks.forEach(link => link.classList.remove('active'));
+                        
+                        let tabToActivate = '';
+                        
+                        if (stage == 1) {
+                            tabToActivate = 'CCForm1'; 
+                        } else if (stage == 2) {
+                            tabToActivate = 'CCForm8'; 
+                        }  else if (stage == 3) {
+                            tabToActivate = 'CCForm2'; 
+                        } else if (stage == 4) {
+                            tabToActivate = 'CCForm7'; 
+                        } else if (stage == 5) {
+                            tabToActivate = 'CCForm16'; 
+                        } else if (stage == 6) {
+                            tabToActivate = 'CCForm17'; 
+                        } else if (stage == 7) {
+                            tabToActivate = 'CCForm14'; 
+                        } else if (stage == 8) {
+                            tabToActivate = 'CCForm15'; 
+                        } else if (stage == 9) {
+                            tabToActivate = 'CCForm4'; 
+                        } else if (stage == 10) {
+                            tabToActivate = 'CCForm5'; 
+                        } else if (stage == 12) {
+                            tabToActivate = 'CCForm6'; 
+                        }                    
+
+                    
+                        if (tabToActivate) {
+                            const tabContent = document.getElementById(tabToActivate);
+                            const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+                            
+                            if (tabContent) tabContent.style.display = 'block';
+                            if (tabLink) tabLink.classList.add('active');
+                        }
+                    }
+
+                    function openCity(evt, cityName) {
+                        const tabContents = document.querySelectorAll('.cctabcontent');
+                        tabContents.forEach(content => content.style.display = 'none');
+                        
+                        const tabLinks = document.querySelectorAll('.cctablinks');
+                        tabLinks.forEach(link => link.classList.remove('active'));
+                        
+                        document.getElementById(cityName).style.display = 'block';
+                        evt.currentTarget.classList.add('active');
+                        
+                        currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+                    }
+
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                        
+                        activateTabBasedOnStage(currentStage);
+                    });
+                </script>
 
                 <form id="auditForm" action="{{ route('deviationupdate', $data->id) }}" method="post"
                     enctype="multipart/form-data">

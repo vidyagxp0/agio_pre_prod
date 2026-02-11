@@ -398,6 +398,66 @@
                     </div>
 
                 </div>
+                <style>
+                    /* Linear Connected Progress Bar */
+                    .progress-bars {
+                        display: flex;
+                        border-radius: 30px;
+                        overflow: hidden;
+                        border: 1px solid #e0e0e0;
+                        background: #f5f5f5;
+                    }
+                    
+                    .progress-bars div {
+                        padding: 8px 12px;
+                        font-size: 14px;
+                        flex-grow: 1;
+                        text-align: center;
+                        position: relative;
+                        transition: all 0.3s ease;
+                        border-right: 1px solid #fff;
+                    }
+                    
+                    .progress-bars div:last-child {
+                        border-right: none;
+                    }
+                    
+                    /* Completed Stages - Solid Green */
+                    .progress-bars div.completed {
+                        background-color: #4CAF50;
+                        color: black;
+                    }
+                    
+                    /* CURRENT Stage - Animated Blue (Pending Action) */
+                    .progress-bars div.current {
+                        background-color: #de8d0a;
+                        color: black;
+                        font-weight: bold;
+                        animation: pulse-blue 1.5s infinite;
+                    }
+                    
+                    /* Pending Stages - Light Gray */
+                    .progress-bars div.pending {
+                        background-color: #f5f5f5;
+                        color: black;
+                    }
+                    
+                    /* Closed States */
+                    .progress-bars div.closed {
+                        background-color: #f44336;
+                        color: white;
+                    }
+                    
+                    /* Blue Pulse Animation */
+                    @keyframes pulse-blue {
+                        0% { background-color: #de8d0a; }
+                        50% { background-color: #dfac54; }
+                        100% { background-color: #de8d0a; }
+                    }
+                </style>
+                        @php
+                            $currentStage = $data->stage;
+                        @endphp
                 <div class="status">
                     <div class="head">Current Status</div>
                     {{-- ------------------------------By Pankaj-------------------------------- --}}
@@ -407,44 +467,30 @@
                         </div>
                     @else
                         <div class="progress-bars">
-                            @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
-                            @endif
 
-                            @if ($data->stage >= 2)
-                                <div class="active">Summary and Response </div>
-                            @else
-                                <div class="">Summary and Response </div>
-                            @endif
+                            {{-- Stage 1 --}}
+                            <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">
+                                Opened
+                            </div>
 
-                            @if ($data->stage >= 3)
-                                <div class="active">CFT Review </div>
-                            @else
-                                <div class="">CFT Review </div>
-                            @endif
+                            <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">
+                                Summary and Response
+                            </div>
 
-                            @if ($data->stage >= 4)
-                                <div class="active"> QA/CQA Head Approval</div>
-                            @else
-                                <div class="">QA/CQA Head Approval</div>
-                            @endif
-                            {{-- @if ($data->stage >= 5)
-                                <div class="active">CAPA Execution in Progress</div>
-                            @else
-                                <div class="">CAPA Execution in Progress</div>
-                            @endif --}}
+                            <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}">
+                                CFT Review
+                            </div>
+
+                            <div class="{{ $currentStage > 4 ? 'active' : ($currentStage == 4 ? 'current' : '') }}">
+                                QA/CQA Head Approval
+                            </div>
+
                             @if ($data->stage >= 5)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
                             @endif
                     @endif
-
-
-
-
 
                 </div>
                 {{-- @endif --}}
@@ -469,14 +515,62 @@
                     <!-- Tab links -->
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                        <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button> -->
-                        <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button> -->
-                        <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> -->
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Summary Response</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA/CQA Head Approval</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
+
+                    <script>
+                        function activateTabBasedOnStage(stage) {
+                            const tabContents = document.querySelectorAll('.cctabcontent');
+                            const tabLinks = document.querySelectorAll('.cctablinks');
+                            
+                            tabContents.forEach(content => content.style.display = 'none');
+                            tabLinks.forEach(link => link.classList.remove('active'));
+                            
+                            let tabToActivate = '';
+                            
+                            if (stage == 1) {
+                                tabToActivate = 'CCForm1'; 
+                            } else if (stage == 2) {
+                                tabToActivate = 'CCForm5'; 
+                            }  else if (stage == 3) {
+                                tabToActivate = 'CCForm7'; 
+                            } else if (stage == 4) {
+                                tabToActivate = 'CCForm8'; 
+                            } else if (stage == 5) {
+                                tabToActivate = 'CCForm6'; 
+                            }
+
+                            if (tabToActivate) {
+                                const tabContent = document.getElementById(tabToActivate);
+                                const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+                                
+                                if (tabContent) tabContent.style.display = 'block';
+                                if (tabLink) tabLink.classList.add('active');
+                            }
+                        }
+
+                        function openCity(evt, cityName) {
+                            const tabContents = document.querySelectorAll('.cctabcontent');
+                            tabContents.forEach(content => content.style.display = 'none');
+                            
+                            const tabLinks = document.querySelectorAll('.cctablinks');
+                            tabLinks.forEach(link => link.classList.remove('active'));
+                            
+                            document.getElementById(cityName).style.display = 'block';
+                            evt.currentTarget.classList.add('active');
+                            
+                            currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+                        }
+
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                            
+                            activateTabBasedOnStage(currentStage);
+                        });
+                    </script>
 
                     <form action="{{ route('updateExternalAudit', $data->id) }}" method="post"
                         enctype="multipart/form-data">
