@@ -2226,8 +2226,8 @@ class AuditProgramController extends Controller
                 
                 
 
-            $hodList     = Helpers::getQAUserList($changeControl->division_id);
-            $initiatorList = Helpers::getCQAUsersList($changeControl->division_id);
+            $hodList     = Helpers::getQAHeadUserList($changeControl->division_id);
+            $initiatorList = Helpers::getCQAHeadUsersList($changeControl->division_id);
 
             $usersmerge = collect($hodList)->merge($initiatorList);
 
@@ -2274,28 +2274,7 @@ class AuditProgramController extends Controller
             }
             if ($changeControl->stage == 2) {
 
-            //     $mandatoryFields = [
-            //         'cqa_qa_comment'
-            //    ];
-               
-            //    foreach ($mandatoryFields as $field) {
-            //        if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
-            //            Session::flash('swal', [
-            //                'type' => 'warning',
-            //                'title' => 'Mandatory Fields!',
-            //                'message' => "Please fill all required fields before proceeding. Missing: $field"
-            //            ]);
-            //            return redirect()->back();
-            //        }
-            //    }
-               
-            //    // If all fields are filled, proceed
-            //    Session::flash('swal', [
-            //        'type' => 'success',
-            //        'title' => 'Success',
-            //        'message' => 'Document Sent'
-            //    ]);
-            // dd($changeControl->cqa_qa_comment);
+           
 
             if (empty($changeControl->cqa_qa_comment))
                 {
@@ -2346,7 +2325,12 @@ class AuditProgramController extends Controller
                     }
                     $history->save();
                     // $list = Helpers::getCftUserList($changeControl->division_id);
-                   $list = Helpers::getCQAHeadUsersList($changeControl->division_id);
+                   $list = collect()
+                    ->merge(Helpers::getCQAReviewerUsersList($changeControl->division_id))
+                    ->merge(Helpers::getQAReviewerUserList($changeControl->division_id))
+                    ->unique('user_id');
+
+
                     foreach ($list as $u) {
 
                     $email = Helpers::getUserEmail($u->user_id);
@@ -2360,7 +2344,7 @@ class AuditProgramController extends Controller
                                 [
                                     'data' => $changeControl,
                                     'site' => "AP",
-                                    'history' => "Submit",
+                                    'history' => "Approve",
                                     'process' => 'Audit Program',
                                     'comment' => $request->comment,
                                     'user'=> Auth::user()->name
@@ -2370,7 +2354,7 @@ class AuditProgramController extends Controller
                                         ->subject(
                                             "Agio Notification: Audit Program, Record #"
                                             . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: Submit"
+                                            . " - Activity: Approve"
                                         );
                                 }
                             );

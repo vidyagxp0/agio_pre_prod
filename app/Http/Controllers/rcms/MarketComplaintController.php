@@ -5,7 +5,7 @@ namespace App\Http\Controllers\rcms;
 use App\Http\Controllers\Controller;
 use App\Models\MarketComplaint;
 use Illuminate\Support\Facades\Log;
-
+use App\Jobs\SendMail;
 use App\Models\MarketComplaintGrids;
 use App\Models\MarketComplaintAuditTrial;
 use App\Models\MarketComplaintCft;
@@ -8277,72 +8277,44 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->save();
 
 
+                $users = collect()
+                    ->merge(Helpers::getQAHeadUserList($marketstat->division_id))
+                    ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                    ->unique('user_id');
 
-                        /////////////
+                    $emails = $users
+                    ->map(function ($u) {
+                        return Helpers::getUserEmail($u->user_id);
+                    })
+                    ->filter()      // null hatao
+                    ->unique()      // 🔥 duplicate email hatao
+                    ->values();
 
-                        $list = Helpers::getQAHeadUserList($marketstat->division_id);
+                    foreach ($emails as $email) {
 
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
+                           try {
 
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "Submit",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
+                        $data = [
+                            'data'    => $marketstat,
+                            'site'    => "MC",
+                            'history' => "Submit",
+                            'process' => 'Market Complaint',
+                            'comment' => $request->comment,
+                            'user'    => Auth::user()->name
+                        ];
 
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                        SendMail::dispatch(
+                            $data,
+                            $email,
+                            $marketstat,
+                            'Market Complaint'
+                        );
 
-
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
-
-                        $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "Submit",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
+                    } catch (\Exception $e) {
+                        \Log::error('Mail Error: ' . $e->getMessage());
+                    }
+                     }
+                        
 
                         $marketstat->update();
                         toastr()->success('Document Set');
@@ -8397,96 +8369,96 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             'type' => 'success',
                         ]);
                     }
-                      $capachilds = Capa::where('parent_id', $id)
-                ->where('parent_type', 'Market Complaint')
-                ->get();
-                    $hasPending = false;
-                foreach ($capachilds as $ext) {
-                        $capachildstatus = trim(strtolower($ext->status));
-                        if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled') {
-                            $hasPending = true;
-                            break;
-                        }
-                    }
-               if ($hasPending) {
-                // $capachildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPending) {
-                       Session::flash('swal', [
-                           'title' => 'CAPA Child Pending!',
-                           'message' => 'You cannot proceed — some Capa Child is still pending.',
-                           'type' => 'warning',
-                       ]);
+            //           $capachilds = Capa::where('parent_id', $id)
+            //     ->where('parent_type', 'Market Complaint')
+            //     ->get();
+            //         $hasPending = false;
+            //     foreach ($capachilds as $ext) {
+            //             $capachildstatus = trim(strtolower($ext->status));
+            //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled') {
+            //                 $hasPending = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPending) {
+            //     // $capachildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPending) {
+            //            Session::flash('swal', [
+            //                'title' => 'CAPA Child Pending!',
+            //                'message' => 'You cannot proceed — some Capa Child is still pending.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
-                $actionchilds = ActionItem::where('parent_id', $id)
-                ->where('parent_type', 'Market Complaint')
-                ->get();
-                    $hasPendingaction = false;
-                foreach ($actionchilds as $ext) {
-                        $actionchildstatus = trim(strtolower($ext->status));
-                        if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled') {
-                            $hasPendingaction = true;
-                            break;
-                        }
-                    }
-               if ($hasPendingaction) {
-                // $actionchildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPendingaction) {
-                       Session::flash('swal', [
-                           'title' => 'Action Item Child Pending!',
-                           'message' => 'You cannot proceed — some Action Item Child is still pending.',
-                           'type' => 'warning',
-                       ]);
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
+            //     $actionchilds = ActionItem::where('parent_id', $id)
+            //     ->where('parent_type', 'Market Complaint')
+            //     ->get();
+            //         $hasPendingaction = false;
+            //     foreach ($actionchilds as $ext) {
+            //             $actionchildstatus = trim(strtolower($ext->status));
+            //             if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled') {
+            //                 $hasPendingaction = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPendingaction) {
+            //     // $actionchildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPendingaction) {
+            //            Session::flash('swal', [
+            //                'title' => 'Action Item Child Pending!',
+            //                'message' => 'You cannot proceed — some Action Item Child is still pending.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
-                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                ->where('parent_type', 'Market Complaint')
-                ->get();
-                    $hasPendingRCA = false;
-                foreach ($rcachilds as $ext) {
-                        $rcachildstatus = trim(strtolower($ext->status));
-                        if ($rcachildstatus !== 'closed - done'  && $capachildstatus !== 'closed-cancelled') {
-                            $hasPendingRCA = true;
-                            break;
-                        }
-                    }
-               if ($hasPendingRCA) {
-                // $rcachildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPendingRCA) {
-                       Session::flash('swal', [
-                           'title' => 'RCA Child Pending!',
-                           'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                           'type' => 'warning',
-                       ]);
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
+            //     $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+            //     ->where('parent_type', 'Market Complaint')
+            //     ->get();
+            //         $hasPendingRCA = false;
+            //     foreach ($rcachilds as $ext) {
+            //             $rcachildstatus = trim(strtolower($ext->status));
+            //             if ($rcachildstatus !== 'closed - done'  && $capachildstatus !== 'closed-cancelled') {
+            //                 $hasPendingRCA = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPendingRCA) {
+            //     // $rcachildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPendingRCA) {
+            //            Session::flash('swal', [
+            //                'title' => 'RCA Child Pending!',
+            //                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
 
                         $marketstat->stage = "3";
                         $marketstat->status = "Investigation CAPA And Root Cause Analysis";
@@ -8530,72 +8502,47 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             $history->action_name = 'Update';
                         }
                         $history->save();
+                           $users = collect()
+                    ->merge(Helpers::getQAUserList($marketstat->division_id))
+                    ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                    ->unique('user_id');
+
+                    $emails = $users
+                    ->map(function ($u) {
+                        return Helpers::getUserEmail($u->user_id);
+                    })
+                    ->filter()      // null hatao
+                    ->unique()      // 🔥 duplicate email hatao
+                    ->values();
+
+                    foreach ($emails as $email) {
+
+                           try {
+
+                        $data = [
+                            'data'    => $marketstat,
+                            'site'    => "MC",
+                            'history' => "Complete Review",
+                            'process' => 'Market Complaint',
+                            'comment' => $request->comment,
+                            'user'    => Auth::user()->name
+                        ];
+
+                        SendMail::dispatch(
+                            $data,
+                            $email,
+                            $marketstat,
+                            'Market Complaint'
+                        );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail Error: ' . $e->getMessage());
+                    }
+                     }
 
 
-
-                         $list = Helpers::getQAUserList($marketstat->division_id);
-
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "Complete Review",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Review Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
-
-                        $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "Complete Review",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Review Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
+                        ////////////////
+                        
 
                         $marketstat->update();
                         toastr()->success('Document Sent');
@@ -8732,42 +8679,40 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         $history->save();
 
 
+                  $list = Helpers::getCftUserList($marketstat->division_id);
+                    foreach ($list as $u) {
 
-
-
-
-                        $list = Helpers::getCftUserList($marketstat->division_id);
-
-                        foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "Send To CFT",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send To CFT Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+  
+                                  try {
 
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
+                                    'history' => "Send To CFT",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                             }
                         }
 
+
+
+                       
                         $marketstat->update();
                         toastr()->success('Document Sent');
                         return back();
@@ -9441,89 +9386,51 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             }
                             $history->save();
 
-                        // $list = Helpers::getInitiatorUserList($marketstat->division_id); // Notify CFT Person
-                        //     foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //     $email = Helpers::getUserEmail($u->user_id);
-                        //     if ($email !== null) {
-                        //         Mail::send(
-                        //             'mail.view-mail',
-                        //             ['data' => $marketstat, 'site' => "MC", 'history' => "CFT Review Complete", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //             function ($message) use ($email, $marketstat) {
-                        //                 $message->to($email)
-                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete");
-                        //             }
-                        //         );
-                        //     }
-                        //     // }
-                        // }
+                       
+
+
+
+                         $usersmerge = collect()
+                        ->merge(Helpers::getQAUserList($marketstat->division_id))
+                        ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                        ->unique('user_id');
+
+                            foreach ($usersmerge as $u) {
+
+                              $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {
+
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
+                                    'history' => "CFT Review Complete",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
+                        }
+
+                   
 
                         ///////////////////////
 
-                            $list = Helpers::getQAUserList($marketstat->division_id);
-
-                            foreach ($list as $u) {
-                                $email = Helpers::getUserEmail($u->user_id);
-
-                                if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            [
-                                                'data' => $marketstat,
-                                                'site' => "view",
-                                                'history' => "CFT Review Complete",
-                                                'process' => 'Market Complaint',
-                                                'comment' => $request->comment,
-                                                'user' => Auth::user()->name
-                                            ],
-                                            function ($message) use ($email, $marketstat) {
-                                                $message->to($email)
-                                                    ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete Performed");
-                                            }
-                                        );
-                                    } catch (\Exception $e) {
-
-                                        Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-
-                                        session()->flash('error', 'Failed to send email to ' . $email);
-                                    }
-                                }
-                            }
-
-                            $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                            foreach ($list as $u) {
-                                $email = Helpers::getUserEmail($u->user_id);
-
-                                if ($email !== null) {
-                                    try {
-                                        Mail::send(
-                                            'mail.view-mail',
-                                            [
-                                                'data' => $marketstat,
-                                                'site' => "view",
-                                                'history' => "CFT Review Complete",
-                                                'process' => 'Market Complaint',
-                                                'comment' => $request->comment,
-                                                'user' => Auth::user()->name
-                                            ],
-                                            function ($message) use ($email, $marketstat) {
-                                                $message->to($email)
-                                                    ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Review Complete Performed");
-                                            }
-                                        );
-                                    } catch (\Exception $e) {
-                                        // Log the error for debugging
-                                        Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                                        // Optionally handle the exception (e.g., notify the user or admin)
-                                        session()->flash('error', 'Failed to send email to ' . $email);
-                                    }
-                                }
-                            }
-                            $marketstat->update();
+                            
+                        $marketstat->update();
                         }
                         toastr()->success('Document Sent');
                         return back();
@@ -9588,88 +9495,44 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
 
 
-                        // $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                        // foreach ($list as $u) {
-                        //     $email = Helpers::getUserEmail($u->user_id);
-
-                        //     if ($email !== null) {
-                        //         try {
-                        //             Mail::send(
-                        //                 'mail.view-mail',
-                        //                 [
-                        //                     'data' => $marketstat,
-                        //                     'site' => "view",
-                        //                     'history' => "QA/CQA Verification Complete",
-                        //                     'process' => 'Market Complaint',
-                        //                     'comment' => $request->comment,
-                        //                     'user' => Auth::user()->name
-                        //                 ],
-                        //                 function ($message) use ($email, $marketstat) {
-                        //                     $message->to($email)
-                        //                         ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA/CQA Verification Complete Performed");
-                        //                 }
-                        //             );
-                        //         } catch (\Exception $e) {
-                        //             // Log the error for debugging
-                        //             Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                        //             // Optionally handle the exception (e.g., notify the user or admin)
-                        //             session()->flash('error', 'Failed to send email to ' . $email);
-                        //         }
-                        //     }
-                        // }
+                        
 
 
-                        // Get all required users
-                        $qaHeadList = Helpers::getQAHeadUserList($marketstat->division_id);
-                        $qaList     = Helpers::getQAUserList($marketstat->division_id);
-                        $cqaList    = Helpers::getCQAUsersList($marketstat->division_id);
+                         $usersmerge = collect()
+                        ->merge(Helpers::getQAHeadUserList($marketstat->division_id))
+                        ->merge(Helpers::getQAUserList($marketstat->division_id))
+                        ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                        ->unique('user_id');
 
-                        // Merge & remove duplicate users
-                        $users = collect($qaHeadList)
-                                    ->merge($qaList)
-                                    ->merge($cqaList)
-                                    ->unique('user_id')
-                                    ->values();
+                            foreach ($usersmerge as $u) {
 
-                        // Send mail in single loop
-                        foreach ($users as $u) {
+                              $email = Helpers::getUserEmail($u->user_id);
 
-                            $email = Helpers::getUserEmail($u->user_id);
+                            if ($email !== null) {
 
-                            if (!empty($email)) {
                                 try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data'    => $marketstat,
-                                            'site'    => "Market Complaint",
-                                            'history' => "QA/CQA Verification Complete",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user'    => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                    ->subject(
-                                                        "Agio Notification: Market Complaint, Record #"
-                                                        . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT)
-                                                        . " - Activity: QA/CQA Verification Complete Performed"
-                                                    );
-                                        }
-                                    );
-                                } catch (\Throwable $e) {
 
-                                    // Log error (safe for production)
-                                    \Log::error('Market Complaint Mail Error for ' . $email . ': ' . $e->getMessage());
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
+                                    'history' => "QA/CQA Verification Complete",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
 
-                                    // Optional: flash only once if needed (recommended not inside loop)
-                                    // session()->flash('error', 'Some notification emails could not be sent.');
-                                }
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                             }
                         }
-
 
                         $marketstat->update();
                         toastr()->success('Document Sent');
@@ -9735,88 +9598,45 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         //}
                         $history->save();
 
-                        // $list = Helpers::getCftUserList($marketstat->division_id); // Notify CFT Person
-                        // foreach ($list as $u) {
-                        //     // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                        //     $email = Helpers::getUserEmail($u->user_id);
-                        //     if ($email !== null) {
-                        //         Mail::send(
-                        //             'mail.view-mail',
-                        //             ['data' => $marketstat, 'site' => "MC", 'history' => "Approval Complete", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                        //             function ($message) use ($email, $marketstat) {
-                        //                 $message->to($email)
-                        //                     ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete");
-                        //             }
-                        //         );
-                        //     }
-                        //     // }
-                        // }
 
-                        /////////////
+                         $usersmerge = collect()
+                        ->merge(Helpers::getQAUserList($marketstat->division_id))
+                        ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                        ->unique('user_id');
 
-                          $list = Helpers::getQAUserList($marketstat->division_id);
+                            foreach ($usersmerge as $u) {
 
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
+                              $email = Helpers::getUserEmail($u->user_id);
 
                             if ($email !== null) {
+
                                 try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "Approval Complete",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
 
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
+                                    'history' => "Approval Complete",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
 
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
+                                );
 
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                             }
                         }
 
-                        $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "Approval Complete",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approval Complete Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
+                        
+                       
+                       
 
 
                         $marketstat->update();
@@ -9883,102 +9703,43 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
 
 
-                        $list = Helpers::getQAUserList($marketstat->division_id);
+                         $usersmerge = collect()
+                        ->merge(Helpers::getQAHeadUserList($marketstat->division_id))
+                        ->merge(Helpers::getQAUserList($marketstat->division_id))
+                        ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                        ->unique('user_id');
 
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
+                            foreach ($usersmerge as $u) {
+
+                              $email = Helpers::getUserEmail($u->user_id);
 
                             if ($email !== null) {
+
                                 try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "Send Letter",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send Letter Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
 
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
+                                    'history' => "Send Letter",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
 
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
+                                );
 
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                             }
                         }
 
-                        $list = Helpers::getQAHeadUserList($marketstat->division_id);
-
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "Send Letter",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send Letter Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
-
-                        $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "Send Letter",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send Letter Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
-
+                        
 
                         $marketstat->update();
                         toastr()->success('Document Sent');
@@ -10062,89 +9823,44 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->stage = 'In QA Review';
                 $history->save();
 
-                // $list = Helpers::getQAUserList($marketstat->division_id); // Notify CFT Person
-                //         foreach ($list as $u) {
-                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //             // dd($email);
-                //             if ($email !== null) {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                //                     function ($message) use ($email, $marketstat) {
-                //                         $message->to($email)
-                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                     }
-                //                 );
-                //             }
-                //             // }
-                //         }
+                
 
+                 $usersmerge = collect()
+                        ->merge(Helpers::getQAUserList($marketstat->division_id))
+                        ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                        ->unique('user_id');
 
-                 $list = Helpers::getQAUserList($marketstat->division_id);
+                            foreach ($usersmerge as $u) {
 
-                foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
+                              $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $marketstat,
-                                    'site' => "view",
+                            if ($email !== null) {
+
+                                try {
+
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
                                     'history' => "More Information Required",
                                     'process' => 'Market Complaint',
                                     'comment' => $request->comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $marketstat) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
+                                    'user'    => Auth::user()->name
+                                ];
 
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
+                                );
 
-
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
 
-                $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
-
-                    if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $marketstat,
-                                    'site' => "view",
-                                    'history' => "More Information Required",
-                                    'process' => 'Market Complaint',
-                                    'comment' => $request->comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $marketstat) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
-                        }
-                    }
-                }
-
+               
                 $marketstat->update();
 
                 return back();
@@ -10172,89 +9888,44 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->stage = 'In QA Review';
                 $history->save();
 
-                // $list = Helpers::getCftUserList($marketstat->division_id); // Notify CFT Person
-                //         foreach ($list as $u) {
-                //             // if($u->q_m_s_divisions_id == $marketstat->division_id){
-                //             $email = Helpers::getUserEmail($u->user_id);
-                //             // dd($email);
-                //             if ($email !== null) {
-                //                 Mail::send(
-                //                     'mail.view-mail',
-                //                     ['data' => $marketstat, 'site' => "Market Complaint", 'history' => "More Information Required", 'process' => 'Market Complaint', 'comment' => $request->comments, 'user' => Auth::user()->name],
-                //                     function ($message) use ($email, $marketstat) {
-                //                         $message->to($email)
-                //                             ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required");
-                //                     }
-                //                 );
-                //             }
-                //             // }
-                //         }
+                
 
+                 $usersmerge = collect()
+                    ->merge(Helpers::getQAUserList($marketstat->division_id))
+                    ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                    ->unique('user_id');
 
-                 $list = Helpers::getQAUserList($marketstat->division_id);
+                  foreach ($usersmerge as $u) {
 
-                foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
+                              $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $marketstat,
-                                    'site' => "view",
+                            if ($email !== null) {
+
+                                try {
+
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
                                     'history' => "More Information Required",
                                     'process' => 'Market Complaint',
                                     'comment' => $request->comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $marketstat) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
+                                    'user'    => Auth::user()->name
+                                ];
 
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
+                                );
 
-
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
 
-                $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
-
-                    if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $marketstat,
-                                    'site' => "view",
-                                    'history' => "More Information Required",
-                                    'process' => 'Market Complaint',
-                                    'comment' => $request->comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $marketstat) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
-                        }
-                    }
-                }
-
+             
                 $marketstat->update();
 
                 return back();
@@ -10373,69 +10044,43 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->save();
 
 
-                $list = Helpers::getQAUserList($marketstat->division_id);
+                 $usersmerge = collect()
+                    ->merge(Helpers::getQAUserList($marketstat->division_id))
+                    ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                    ->unique('user_id');
 
-                foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
+                  foreach ($usersmerge as $u) {
 
-                    if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $marketstat,
-                                    'site' => "view",
+                              $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {
+
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
                                     'history' => "More Information Required",
                                     'process' => 'Market Complaint',
                                     'comment' => $request->comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $marketstat) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
+                                    'user'    => Auth::user()->name
+                                ];
 
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
+                                );
 
-
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
 
-                $list = Helpers::getCQAUsersList($marketstat->division_id);
 
-                foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
-
-                    if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $marketstat,
-                                    'site' => "view",
-                                    'history' => "More Information Required",
-                                    'process' => 'Market Complaint',
-                                    'comment' => $request->comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $marketstat) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
-                        }
-                    }
-                }
+             
 
 
                 $marketstat->update();
@@ -10526,69 +10171,42 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->stage = 'CFT Review';
                 $history->save();
 
-                 $list = Helpers::getQAUserList($marketstat->division_id);
+                 $usersmerge = collect()
+                    ->merge(Helpers::getQAUserList($marketstat->division_id))
+                    ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                    ->unique('user_id');
 
-                foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
+                  foreach ($usersmerge as $u) {
 
-                    if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $marketstat,
-                                    'site' => "view",
+                              $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {
+
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
                                     'history' => "More Information Required",
                                     'process' => 'Market Complaint',
                                     'comment' => $request->comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $marketstat) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
+                                    'user'    => Auth::user()->name
+                                ];
 
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
+                                );
 
-
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
                         }
-                    }
-                }
 
-                $list = Helpers::getCQAUsersList($marketstat->division_id);
 
-                foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
-
-                    if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $marketstat,
-                                    'site' => "view",
-                                    'history' => "More Information Required",
-                                    'process' => 'Market Complaint',
-                                    'comment' => $request->comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $marketstat) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
-                        }
-                    }
-                }
                 $marketstat->update();
                 $Cft = MarketComplaintCft::where('mc_id', $marketstat->id)->first();
                     if ($Cft) {
@@ -10669,37 +10287,44 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 $history->stage = 'Opened';
                 $history->save();
 
-                    $list = Helpers::getQAHeadUserList($marketstat->division_id);
 
-                    foreach ($list as $u) {
-                        $email = Helpers::getUserEmail($u->user_id);
+                 $usersmerge = collect()
+                    ->merge(Helpers::getQAUserList($marketstat->division_id))
+                    ->merge(Helpers::getQAHeadUserList($marketstat->division_id))
+                    ->unique('user_id');
 
-                        if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data' => $marketstat,
-                                        'site' => "view",
-                                        'history' => "More Information Required",
-                                        'process' => 'Market Complaint',
-                                        'comment' => $request->comment,
-                                        'user' => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $marketstat) {
-                                        $message->to($email)
-                                            ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                    }
+                  foreach ($usersmerge as $u) {
+
+                              $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {
+
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
+                                    'history' => "More Information Required",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
                                 );
+
                             } catch (\Exception $e) {
-
-                                Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-
-                                session()->flash('error', 'Failed to send email to ' . $email);
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                             }
                         }
-                    }
+
+
+                   
 
                 $marketstat->update();
 
@@ -10729,72 +10354,45 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                     $history->stage = 'Opened';
                     $history->save();
 
+
+
+                     $usersmerge = collect()
+                    ->merge(Helpers::getQAUserList($marketstat->division_id))
+                    ->merge(Helpers::getCQAUsersList($marketstat->division_id))
+                    ->unique('user_id');
+
+                  foreach ($usersmerge as $u) {
+
+                              $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {
+
+                                $data = [
+                                    'data'    => $marketstat,
+                                    'site'    => "MC",
+                                    'history' => "More Information Required",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $marketstat,
+                                    'Market Complaint'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
+                        }
+
                    
-                       $list = Helpers::getQAUserList($marketstat->division_id);
-
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "More Information Required",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
-
-                        $list = Helpers::getCQAUsersList($marketstat->division_id);
-
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $marketstat,
-                                            'site' => "view",
-                                            'history' => "More Information Required",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $marketstat) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($marketstat->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
-
-
+                    
 
 
                     $marketstat->update();
@@ -10837,69 +10435,43 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $history->stage = 'Closed - Cancelled';
             $history->save();
 
-                    $list = Helpers::getQAUserList($changeControl->division_id);
 
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
+             $usersmerge = collect()
+                    ->merge(Helpers::getQAUserList($changeControl->division_id))
+                    ->merge(Helpers::getCQAUsersList($changeControl->division_id))
+                    ->unique('user_id');
+
+                  foreach ($usersmerge as $u) {
+
+                              $email = Helpers::getUserEmail($u->user_id);
 
                             if ($email !== null) {
+
                                 try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl,
-                                            'site' => "view",
-                                            'history' => "Cancel",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
 
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                $data = [
+                                    'data'    => $changeControl,
+                                    'site'    => "MC",
+                                    'history' => "Cancel",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
 
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $changeControl,
+                                    'Market Complaint'
+                                );
 
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                             }
                         }
 
-                        $list = Helpers::getCQAUsersList($changeControl->division_id);
 
-                        foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-
-                            if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl,
-                                            'site' => "view",
-                                            'history' => "Cancel",
-                                            'process' => 'Market Complaint',
-                                            'comment' => $request->comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Market Complaint, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
-                                }
-                            }
-                        }
 
 
             
