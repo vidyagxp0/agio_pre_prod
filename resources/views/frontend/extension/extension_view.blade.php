@@ -164,104 +164,6 @@
                                 Approved
                             </button>
                         
-                            <!-- @if($extensionNew->count == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @endif -->
-                            <!-- @if (Helpers::getChildData($extensionNew->parent_id, 'LabIncident') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Deviation') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOC') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOT') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Management Review') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'CAPA') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Action Item') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Resampling') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Observation') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'RCA') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Risk Assesment') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Management Review') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'External Audit') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Internal Audit') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Audit Program') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'CC') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'New Documnet') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Effectiveness Check') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOS Micro') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'OOS Chemical') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Market Complaint') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @elseif(Helpers::getChildData($extensionNew->parent_id, 'Failure Investigation') == 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                                @elseif($extensionNew->count == 'number')
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
-                                    Send for CQA
-                                </button>
-                            @endif -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-modal">
                                 Reject
                             </button>
@@ -280,6 +182,69 @@
                             </button> </a>
                     </div>
                 </div>
+                <style>
+                    /* Linear Connected Progress Bar */
+                    .progress-bars {
+                        display: flex;
+                        border-radius: 30px;
+                        overflow: hidden;
+                        border: 1px solid #e0e0e0;
+                        background: #f5f5f5ff;
+                    }
+                    
+                    .progress-bars div {
+                        padding: 8px 12px;
+                        font-size: 14px;
+                        flex-grow: 1;
+                        text-align: center;
+                        position: relative;
+                        transition: all 0.3s ease;
+                        border-right: 1px solid #fff;
+                    }
+                    
+                    .progress-bars div:last-child {
+                        border-right: none;
+                    }
+                    
+                    /* Completed Stages - Solid Green */
+                    .progress-bars div.completed {
+                        background-color: #4CAF50;
+                        color: black;
+                    }
+                    
+                    /* CURRENT Stage - Animated Blue (Pending Action) */
+                    .progress-bars div.current {
+                        background-color: #de8d0a;
+                        color: black;
+                        font-weight: bold;
+                        animation: pulse-blue 1.5s infinite;
+                    }
+                    
+                    /* Pending Stages - Light Gray */
+                    .progress-bars div.pending {
+                        background-color: #941414ff;
+                        color: black;
+                    }
+                    
+                    /* Closed States */
+                    .progress-bars div.closed {
+                        background-color: #f44336;
+                        color: white;
+                    }
+                    .progress-bars div.active {
+                        background: green;
+                        font-weight: bold;
+                    }
+
+
+                    /* Blue Pulse Animation */
+                    @keyframes pulse-blue {
+                        0% { background-color: #de8d0a; }
+                        50% { background-color: #dfac54; }
+                        100% { background-color: #de8d0a; }
+                    }
+                    
+                </style>  
                 <div class="status">
                     <div class="head">Current Status</div>
                     @if ($extensionNew->stage == 0)
@@ -292,48 +257,25 @@
                         </div>
                     @else
                         <div class="progress-bars d-flex">
-                            @if ($extensionNew->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
+                            @php
+                                $currentStage = $extensionNew->stage;
+                            @endphp
+                           
+                            <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
+
+                            <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">In Review</div>
+
+                            @if(($extensionNew->count != 3) && 
+                                ($extensionNew->count_data != "number3"))
+                                <div class="{{ $extensionNew->stage > 3 ? 'active' : ($extensionNew->stage == 3 ? 'current' : '') }}">
+                                    In Approved
+                                </div>
                             @endif
-
-                            @if ($extensionNew->stage >= 2)
-                                <div class="active">In Review</div>
-                            @else
-                                <div class="">In Review</div>
-                            @endif
-
-                            {{-- @if(($extensionNew->count != 3) || ($extensionNew->count_data != "number3"))
-                                @if ($extensionNew->stage >= 3)
-                                    <div class="active">In Approved</div>
-                                @else
-                                    <div class="">In Approved</div>
-                                @endif
-                            @endif --}}
-                            @if(
-                                ($extensionNew->count != 3) 
-                                && 
-                                ($extensionNew->count_data != "number3")
-                            )
-                                @if ($extensionNew->stage >= 3)
-                                    <div class="active">In Approved</div>
-                                @else
-                                    <div>In Approved</div>
-                                @endif
-                            @endif
-
-
-                            <!-- @if ($extensionNew->count == 3)
-                                <div class="{{ $extensionNew->stage >= 5 ? 'active' : '' }}">In CQA Approval</div>
-                            @endif -->
 
                             @if(($extensionNew->count == 3) || ($extensionNew->count_data == "number3")) 
-                                @if($extensionNew->stage >= 5)
-                                    <div class="active">In CQA Approval</div>
-                                @else
-                                    <div class="">In CQA Approval</div>
-                                @endif
+                                <div class="{{ $extensionNew->stage > 5 ? 'active' : ($extensionNew->stage == 5 ? 'current' : '') }}">
+                                    In CQA Approval
+                                </div>
                             @endif
 
                             @if ($extensionNew->stage >= 6)
@@ -341,59 +283,6 @@
                             @else
                                 <div class="" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
                             @endif
-
-                            <!-- {{-- @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 ||  ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
-                                <div class="active">In Approved</div>
-                            @elseif($extensionNew->stage == 6 && $extensionNew->stage_hide == "stage-6")
-                                <div style="display: none" class="active">In Approved</div>
-                            @elseif($extensionNew->stage == 5 )
-                                <div class="" style="display: none;">In Approved</div>
-                            @else
-                                <div class="">In Approved</div>
-                            @endif
-                            <div style="display: none" class=""> In CQA Approval</div> --}} -->
-                            <!-- @if ($extensionNew->stage == 3 || $extensionNew->stage == 4 || ($extensionNew->stage == 6 && $extensionNew->stage_hide == null))
-                                <div class="active">In Approved</div>
-                            @elseif($extensionNew->stage == 6 && $extensionNew->stage_hide == "stage-6")
-                                <div style="display: none" class="active">In Approved</div>
-                            @elseif($extensionNew->stage == 5 || $extensionNew->count_data == "number" || $extensionNew->count == 3)
-                                <div class="" style="display: none;">In Approved</div>
-                            @else
-                                <div class="">In Approved</div>
-                            @endif -->
-                            <!-- {{-- @if ($extensionNew->parent_type == 'number'|| $extensionNew->count == 3) --}} -->
-                            <!-- <div class="" style="display: none;"> In CQA Approval</div> -->
-                            <!-- {{-- @endif --}} -->
-
-
-                            <!-- @if ($extensionNew->stage == 4 )
-                                <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Reject</div>
-                                <div style="display: none" class="">Closed - Done</div>
-                                <div style="display: none" class=""> In CQA Approval</div>
-
-                            @elseif(($extensionNew->stage == 1 && $extensionNew->count == 'number' && $extensionNew->parent_type == 'number') || ($extensionNew->stage == 2 && $extensionNew->count == 'number' && $extensionNew->parent_type == 'number'))
-                                <div class="" style="display: none"> Closed - Reject</div>
-                            @elseif($extensionNew->count == 3 && $extensionNew->parent_type != null)
-                                <div class="" style="display: none"> Closed - Reject</div>
-                            @elseif($extensionNew->stage >= 6 || $extensionNew->count_data == 'number' || $extensionNew->data_number == 3)
-                                <div class="" style="display: none; border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>
-                            @else
-                                <div class="" style="border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>
-                            @endif -->
-                            <!-- @if ( $extensionNew->stage_hide == "stage-6")
-                            <div class="active"> In CQA Approval</div>
-                            @endif -->
-                            <!-- @if ($extensionNew->stage == 5)
-                                <div class="bg-danger" style="display: none" style="border-radius: 0px 20px 20px 0px;">Closed - Reject</div>
-                                <div class="active"> In CQA Approval</div>
-                                <div class="" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
-                            @elseif(($extensionNew->stage_hide == 'stage-6' && $extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->stage_hide == "stage-6")
-                            <div class="" style="display: none;"> In CQA Approval</div>
-                            <div class="" style="display: none; border-radius: 0px 20px 20px 0px;">Closed - Done</div>
-                            @elseif($extensionNew->count_data == 'number' || ($extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->data_number == 3)
-                                <div class=""> In CQA Approval</div>
-                                <div class="" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
-                            @endif -->
                         </div>
                     @endif
                 </div>
@@ -404,10 +293,6 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
-
-                {{-- @if ($extensionNew->data_number == 3)
-                   <button class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button> --}}
-
                 @if($extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->data_number == 1 || $extensionNew->data_number == 2 || $extensionNew->count == 1 || $extensionNew->count == 2)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
                 @endif
@@ -418,7 +303,57 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
             </div>
+            <script>
+                function activateTabBasedOnStage(stage) {
+                    const tabContents = document.querySelectorAll('.cctabcontent');
+                    const tabLinks = document.querySelectorAll('.cctablinks');
+                    
+                    tabContents.forEach(content => content.style.display = 'none');
+                    tabLinks.forEach(link => link.classList.remove('active'));
+                    
+                    let tabToActivate = '';
+                    
+                    if (stage == 1) {
+                        tabToActivate = 'CCForm1'; 
+                    } else if (stage == 2) {
+                        tabToActivate = 'CCForm2'; 
+                    }  else if (stage == 3) {
+                        tabToActivate = 'CCForm3'; 
+                    } else if (stage == 5) {
+                        tabToActivate = 'CCForm5'; 
+                    } else if (stage == 6) {
+                        tabToActivate = 'CCForm4'; 
+                    }
 
+                    if (tabToActivate) {
+                        const tabContent = document.getElementById(tabToActivate);
+                        const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+                        
+                        if (tabContent) tabContent.style.display = 'block';
+                        if (tabLink) tabLink.classList.add('active');
+                    }
+                }
+
+                function openCity(evt, cityName) {
+                    const tabContents = document.querySelectorAll('.cctabcontent');
+                    tabContents.forEach(content => content.style.display = 'none');
+                    
+                    const tabLinks = document.querySelectorAll('.cctablinks');
+                    tabLinks.forEach(link => link.classList.remove('active'));
+                    
+                    document.getElementById(cityName).style.display = 'block';
+                    evt.currentTarget.classList.add('active');
+                    
+                    currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const currentStage = <?php echo json_encode($extensionNew->stage ?? 1); ?>;
+                    
+                    activateTabBasedOnStage(currentStage);
+                });
+            </script>
+            
 
             <form action="{{ route('extension_new.update', $extensionNew->id) }}" method="POST"
                 enctype="multipart/form-data">

@@ -167,7 +167,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Source Document Type  <span class="text-danger">*</span></label>
-                    <select name="source_document_type_gi" id="Change_Application" {{Helpers::isOOSChemical($data->stage)}} {{ $istab1 ? 'required' : 'disabled' }}>
+                    <select name="source_document_type_gi" id="Change_Application" {{Helpers::isOOSChemical($data->stage)}} {{ $istab1 ? 'required' : 'readonly' }}>
                         <option value="0">Enter Your Selection Here</option>
                         <option value="OOT" @if ($data->source_document_type_gi == 'OOT') selected @endif>OOT</option>
                         <option value="Lab Incident" @if ($data->source_document_type_gi == 'Lab Incident') selected @endif>Lab Incident</option>
@@ -177,7 +177,7 @@
                         <option value="Others" @if ($data->source_document_type_gi == 'Others') selected @endif>Others</option>
                     </select>
                 </div>
-                <input type="hidden" name="source_document_type_gi" value="{{ $data->source_document_type_gi }}">
+                {{-- <input type="hidden" name="source_document_type_gi" value="{{ $data->source_document_type_gi }}"> --}}
             </div>
 
             <div class="col-6 new-date-data-field" id="any-other-section" style="display: none;">
@@ -354,7 +354,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Sample Type <span class="text-danger">*</span></label>
-                    <select name="sample_type_gi" id="sample_other" {{Helpers::isOOSChemical($data->stage)}} {{ $istab1 ? '' : 'disabled' }}>
+                    <select name="sample_type_gi" id="sample_other" {{Helpers::isOOSChemical($data->stage)}} {{ $istab1 ? '' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Material' ?
                             'selected' : '' }}>Raw Material</option>
@@ -368,7 +368,7 @@
                             'selected' : '' }}>Others</option>
                     </select>
                 </div>
-                <input type="hidden" name="sample_type_gi" value="{{ $data->sample_type_gi }}">
+                {{-- <input type="hidden" name="sample_type_gi" value="{{ $data->sample_type_gi }}"> --}}
             </div>
 
             <div class="col-6 new-date-data-field" id="any-other1-section" style="display: none;">
@@ -658,7 +658,7 @@
 
              <!----------------grid-4 Products_details----------------------------------- -->
 
-             <div class="group-input">
+            <div class="group-input">
                 <label for="audit-agenda-grid">
                     Product Details
                     <button type="button" name="audit-agenda-grid" id="products_details" {{$istab1 ? '' : 'disabled' }}>+</button>
@@ -809,7 +809,7 @@
 
 
   <!-- ------------------------------grid-5 instrument_detail-------------------------script -->
-  <script>
+<script>
     $(document).ready(function() {
         $('#instrument_detail').click(function(e) {
             function generateTableRow(serialNumber) {

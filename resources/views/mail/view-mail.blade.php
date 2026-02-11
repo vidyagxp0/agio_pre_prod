@@ -213,6 +213,8 @@
                                 {{ Helpers::getDivisionName($data->site_location_code) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record_number) }}
                             @elseif($process == 'Observation')
                                 {{ Helpers::getDivisionName($data->division_code) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record) }}
+                            @elseif($process == 'OOS/OOT')
+                                {{Helpers::getDivisionName($data->division_id) }}/{{ $data->Form_type }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}
                             @else
                                 {{ Helpers::getDivisionName($data->division_id) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record) }}
                             @endif

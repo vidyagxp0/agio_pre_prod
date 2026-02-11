@@ -255,56 +255,89 @@
                     </div>
 
                 </div>
+                <style>
+                    /* Linear Connected Progress Bar */
+                    .progress-bars {
+                        display: flex;
+                        border-radius: 30px;
+                        overflow: hidden;
+                        border: 1px solid #e0e0e0;
+                        background: #f5f5f5;
+                    }
+                    
+                    .progress-bars div {
+                        padding: 8px 12px;
+                        font-size: 14px;
+                        flex-grow: 1;
+                        text-align: center;
+                        position: relative;
+                        transition: all 0.3s ease;
+                        border-right: 1px solid #fff;
+                    }
+                    
+                    .progress-bars div:last-child {
+                        border-right: none;
+                    }
+                    
+                    /* Completed Stages - Solid Green */
+                    .progress-bars div.completed {
+                        background-color: #4CAF50;
+                        color: black;
+                    }
+                    
+                    /* CURRENT Stage - Animated Blue (Pending Action) */
+                    .progress-bars div.current {
+                        background-color: #de8d0a;
+                        color: black;
+                        font-weight: bold;
+                        animation: pulse-blue 1.5s infinite;
+                    }
+                    
+                    /* Pending Stages - Light Gray */
+                    .progress-bars div.pending {
+                        background-color: #f5f5f5;
+                        color: black;
+                    }
+                    
+                    /* Closed States */
+                    .progress-bars div.closed {
+                        background-color: #f44336;
+                        color: white;
+                    }
+                    
+                    /* Blue Pulse Animation */
+                        @keyframes pulse-blue {
+                            0% { background-color: #de8d0a; }
+                            50% { background-color: #dfac54; }
+                            100% { background-color: #de8d0a; }
+                        }
+                </style>
                 <div class="status">
                     <div class="head">Current Status</div>
+                    @php
+                        $currentStage = $data->stage;
+                    @endphp
                     {{-- ------------------------------By Pankaj-------------------------------- --}}
                     @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
                     @else
-                        <div class="progress-bars">
-                            @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
-                            @endif
+                        <div class="progress-bars d-flex">
+                            <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
 
-                            {{-- @if ($data->stage >= 2)
-                                <div class="active">In Progress </div>
-                            @else
-                                <div class="">In Progress</div>
-                            @endif --}}
-                            @if ($data->stage >= 2)
-                                <div class="active">QA Head Review </div>
-                            @else
-                                <div class="">QA Head Review</div>
-                            @endif
-                            @if ($data->stage >= 3)
-                                <div class="active">Meeting And Summary </div>
-                            @else
-                                <div class="">Meeting And Summary</div>
-                            @endif
-                            @if ($data->stage >= 4)
-                                <div class="active">CFT Actions </div>
-                            @else
-                                <div class="">CFT Actions </div>
-                            @endif
-                            @if ($data->stage >= 5)
-                                <div class="active">CFT HOD Review </div>
-                            @else
-                                <div class="">CFT HOD Review</div>
-                            @endif
-                            @if ($data->stage >= 6)
-                                <div class="active">QA Verification </div>
-                            @else
-                                <div class="">QA Verification</div>
-                            @endif
-                            @if ($data->stage >= 7)
-                                <div class="active">QA Head Closure Approval </div>
-                            @else
-                                <div class="">QA Head Closure Approval</div>
-                            @endif
+                            <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">QA Head Review</div>
+
+                            <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}">Meeting And Summary</div>
+
+                            <div class="{{ $currentStage > 4 ? 'active' : ($currentStage == 4 ? 'current' : '') }}">CFT Actions</div>
+
+                            <div class="{{ $currentStage > 5 ? 'active' : ($currentStage == 5 ? 'current' : '') }}">CFT HOD Review</div>
+
+                            <div class="{{ $currentStage > 6 ? 'active' : ($currentStage == 6 ? 'current' : '') }}">QA Verification</div>
+
+                            <div class="{{ $currentStage > 7 ? 'active' : ($currentStage == 7 ? 'current' : '') }}">QA Head Closure Approval</div>
+
                             @if ($data->stage >= 8)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
@@ -341,6 +374,62 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity log</button>
             </div>
+            <script>
+                function activateTabBasedOnStage(stage) {
+                    const tabContents = document.querySelectorAll('.cctabcontent');
+                    const tabLinks = document.querySelectorAll('.cctablinks');
+                    
+                    tabContents.forEach(content => content.style.display = 'none');
+                    tabLinks.forEach(link => link.classList.remove('active'));
+                    
+                    let tabToActivate = '';
+                    
+                    if (stage == 1) {
+                        tabToActivate = 'CCForm1'; 
+                    } else if (stage == 2) {
+                        tabToActivate = 'CCForm2'; 
+                    }  else if (stage == 3) {
+                        tabToActivate = 'CCForm3'; 
+                    } else if (stage == 4) {
+                        tabToActivate = 'CCForm6'; 
+                    } else if (stage == 5) {
+                        tabToActivate = 'CCForm7'; 
+                    }else if (stage == 6) {
+                        tabToActivate = 'CCForm8'; 
+                    }else if (stage == 7) {
+                        tabToActivate = 'CCForm4'; 
+                    }else if (stage == 8) {
+                        tabToActivate = 'CCForm5'; 
+                    } 
+
+                    if (tabToActivate) {
+                        const tabContent = document.getElementById(tabToActivate);
+                        const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+                        
+                        if (tabContent) tabContent.style.display = 'block';
+                        if (tabLink) tabLink.classList.add('active');
+                    }
+                }
+
+                function openCity(evt, cityName) {
+                    const tabContents = document.querySelectorAll('.cctabcontent');
+                    tabContents.forEach(content => content.style.display = 'none');
+                    
+                    const tabLinks = document.querySelectorAll('.cctablinks');
+                    tabLinks.forEach(link => link.classList.remove('active'));
+                    
+                    document.getElementById(cityName).style.display = 'block';
+                    evt.currentTarget.classList.add('active');
+                    
+                    currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                    
+                    activateTabBasedOnStage(currentStage);
+                });
+            </script>
 
             <form action="{{ route('manageUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
                 @csrf

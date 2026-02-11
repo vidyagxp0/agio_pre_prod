@@ -43,7 +43,7 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/virtual-select/dist/virtual-select.min.css">
-<script src="https://cdn.jsdelivr.net/npm/virtual-select/dist/virtual-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/virtual-select/dist/virtual-select.min.js"></script>
 
 
 
@@ -194,50 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
     </script>
-    {{-- <script>
-        $(document).ready(function() {
-            let investdetails = {{ count($auditorview->data) }}; // Start from the current count of rows
 
-            $('#IncidentAddAuditor').click(function(e) {
-                e.preventDefault();
-
-                // Function to generate a new table row with incremented serial number
-                function generateTableRow(serialNumber) {
-                    var html =
-                        '<tr>' +
-                        '<td>' + serialNumber + '</td>' +
-                        '<td><input type="text" name="AuditorNew[' + investdetails + '][auditornew]" value=""></td>' +
-                        '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
-                        '<td>' +
-                        '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
-                        '<option value="">--Select--</option>' +
-                        '<option value="Lead Auditor">Lead Auditor</option>' +
-                        '<option value="Auditor">Auditor</option>' +
-                        '</select>' +
-                        '</td>' +
-                        '<td><input type="text" name="AuditorNew[' + investdetails + '][remarks]" value=""></td>' +
-                        '<td><button class="removeRowBtn">Remove</button>' +
-                        '</tr>';
-                    investdetails++; // Increment the row number here
-                    return html;
-                }
-
-                var tableBody = $('#onservation-incident-tableAuditors tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1);
-                tableBody.append(newRow);
-            });
-
-            // Remove row functionality
-            $(document).on('click', '.removeRowBtn', function() {
-                $(this).closest('tr').remove();
-                // Optionally, you can re-calculate the serial numbers after a row is removed
-                $('#onservation-incident-tableAuditors tbody tr').each(function(index) {
-                    $(this).find('td:first').text(index + 1); // Update serial number for each row
-                });
-            });
-        });
-    </script> --}}
     <script>
         $(document).ready(function() {
             let investdetails = {{ count($auditorview->data ?? []) }}; // Start from the current count of rows
@@ -395,7 +352,64 @@ document.addEventListener("DOMContentLoaded", function () {
             {{ Helpers::getDivisionName($data->division_id) }} / Internal Audit
         </div>
     </div>
-
+    
+    <style>
+        /* Linear Connected Progress Bar */
+        .progress-bars {
+            display: flex;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            background: #f5f5f5;
+        }
+        
+        .progress-bars div {
+            padding: 8px 12px;
+            font-size: 14px;
+            flex-grow: 1;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            border-right: 1px solid #fff;
+        }
+        
+        .progress-bars div:last-child {
+            border-right: none;
+        }
+        
+        /* Completed Stages - Solid Green */
+        .progress-bars div.completed {
+            background-color: #4CAF50;
+            color: black;
+        }
+        
+        /* CURRENT Stage - Animated Blue (Pending Action) */
+        .progress-bars div.current {
+            background-color: #de8d0a;
+            color: black;
+            font-weight: bold;
+            animation: pulse-blue 1.5s infinite;
+        }
+        
+        /* Pending Stages - Light Gray */
+        .progress-bars div.pending {
+            background-color: #f5f5f5;
+            color: black;
+        }
+        
+        /* Closed States */
+        .progress-bars div.closed {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        /* Blue Pulse Animation */
+            @keyframes pulse-blue {
+                0% { background-color: #de8d0a; }
+                50% { background-color: #dfac54; }
+                100% { background-color: #de8d0a; }
+            }
+    </style>
     {{-- ---------------------- --}}
     <div id="change-control-view">
         <div class="container-fluid">
@@ -526,52 +540,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
+                    @php
+                        $currentStage = $data->stage;
+                    @endphp
                     {{-- ------------------------------By Pankaj-------------------------------- --}}
                     @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
                     @else
-                        <div class="progress-bars">
-                            @if ($data->stage >= 1)
-                                <div class="active">Opened</div>
-                            @else
-                                <div class="">Opened</div>
-                            @endif
+                        <div class="progress-bars d-flex">
 
-                            @if ($data->stage >= 2)
-                                <div class="active">Acknowledgement </div>
-                            @else
-                                <div class="">Acknowledgement</div>
-                            @endif
+                            <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
 
-                            @if ($data->stage >= 3)
-                                <div class="active">Audit</div>
-                            @else
-                                <div class="">Audit </div>
-                            @endif
+                            <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">Acknowledgement</div>
 
-                            @if ($data->stage >= 4)
-                                <div class="active"> Response</div>
-                            @else
-                                <div class=""> Response</div>
-                            @endif
-                            @if ($data->stage >= 5)
-                                <div class="active">Response Verification</div>
-                            @else
-                                <div class="">Response Verification</div>
-                            @endif
+                            <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}">Audit</div>
+
+                            <div class="{{ $currentStage > 4 ? 'active' : ($currentStage == 4 ? 'current' : '') }}">Response</div>
+
+                            <div class="{{ $currentStage > 5 ? 'active' : ($currentStage == 5 ? 'current' : '') }}">Response Verification</div>
+                            
                             @if ($data->stage >= 6)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
                             @endif
                     @endif
-
-
-
-
-
                 </div>
                 {{-- @endif --}}
                 {{-- ---------------------------------------------------------------------------------------- --}}
@@ -597,82 +592,125 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm29')">Acknowledgment</button>
-                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm28')">Audit Preparation and Execution</button>
                         <button class="cctablinks" style="display:none;" id="button1"
                         onclick="openCity(event, 'CCForm7')">Checklist - Production (Tablet Dispensing & Tablet Granulation)</button>
-                    <button class="cctablinks" style="display:none;" id="button2"
-                        onclick="openCity(event, 'CCForm8')">Checklist - Production (Tablet Compression)</button>
-                    <button class="cctablinks" style="display:none;" id="button3"
-                        onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
-                    <button class="cctablinks" style="display:none;" id="button4"
-                        onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
-                    </button>
-                    <button class="cctablinks" style="display:none;" id="button5"
-                        onclick="openCity(event, 'CCForm11')">Checklist - Production (Capsule)
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button2"
+                            onclick="openCity(event, 'CCForm8')">Checklist - Production (Tablet Compression)</button>
+                        <button class="cctablinks" style="display:none;" id="button3"
+                            onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
+                        <button class="cctablinks" style="display:none;" id="button4"
+                            onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
+                        </button>
+                        <button class="cctablinks" style="display:none;" id="button5"
+                            onclick="openCity(event, 'CCForm11')">Checklist - Production (Capsule)
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button6"
-                        onclick="openCity(event, 'CCForm12')">Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)
-                    </button>
-                    <button class="cctablinks" style="display:none;" id="button7"
-                        onclick="openCity(event, 'CCForm13')">Checklist -Production(Liquid/Ointment Packing)
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button6"
+                            onclick="openCity(event, 'CCForm12')">Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)
+                        </button>
+                        <button class="cctablinks" style="display:none;" id="button7"
+                            onclick="openCity(event, 'CCForm13')">Checklist -Production(Liquid/Ointment Packing)
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button8"
-                        onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button8"
+                            onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button9"
-                        onclick="openCity(event, 'CCForm15')">Checklist - Engineering
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button9"
+                            onclick="openCity(event, 'CCForm15')">Checklist - Engineering
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button10"
-                        onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button10"
+                            onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button11"
-                        onclick="openCity(event, 'CCForm17')">Checklist - Stores
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button11"
+                            onclick="openCity(event, 'CCForm17')">Checklist - Stores
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button12"
-                        onclick="openCity(event, 'CCForm18')">Checklist - Human Resource and Administration
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button12"
+                            onclick="openCity(event, 'CCForm18')">Checklist - Human Resource and Administration
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button13"
-                        onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button13"
+                            onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button14"
-                        onclick="openCity(event, 'CCForm20')">Checklist -
-                        Production (Injection Packing)
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button14"
+                            onclick="openCity(event, 'CCForm20')">Checklist -
+                            Production (Injection Packing)
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button15"
-                        onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button15"
+                            onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button16"
-                        onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
-                    </button>
+                        <button class="cctablinks" style="display:none;" id="button16"
+                            onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
+                        </button>
 
-                    <button class="cctablinks" style="display:none;" id="button17"
-                        onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
-                    </button>
-                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button> --}}
-                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> --}}
+                        <button class="cctablinks" style="display:none;" id="button17"
+                            onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
+                        </button>
+
                         <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Response</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
-
-
-                        {{-- <button class="cctablinks" style="display:none;" id="button18"
-                            onclick="openCity(event, 'CCForm24')">Checklist -LL / P2P
-                        </button> --}}
                     </div>
+                    <script>
+                        function activateTabBasedOnStage(stage) {
+                            const tabContents = document.querySelectorAll('.cctabcontent');
+                            const tabLinks = document.querySelectorAll('.cctablinks');
+                            
+                            tabContents.forEach(content => content.style.display = 'none');
+                            tabLinks.forEach(link => link.classList.remove('active'));
+                            
+                            let tabToActivate = '';
+                            
+                            if (stage == 1) {
+                                tabToActivate = 'CCForm1'; 
+                            } else if (stage == 2) {
+                                tabToActivate = 'CCForm29'; 
+                            }  else if (stage == 3) {
+                                tabToActivate = 'CCForm28'; 
+                            } else if (stage == 4) {
+                                tabToActivate = 'CCForm5'; 
+                            } else if (stage == 5) {
+                                tabToActivate = 'CCForm26'; 
+                            }else if (stage == 6) {
+                                tabToActivate = 'CCForm6'; 
+                            } 
 
+                            if (tabToActivate) {
+                                const tabContent = document.getElementById(tabToActivate);
+                                const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+                                
+                                if (tabContent) tabContent.style.display = 'block';
+                                if (tabLink) tabLink.classList.add('active');
+                            }
+                        }
 
+                        function openCity(evt, cityName) {
+                            const tabContents = document.querySelectorAll('.cctabcontent');
+                            tabContents.forEach(content => content.style.display = 'none');
+                            
+                            const tabLinks = document.querySelectorAll('.cctablinks');
+                            tabLinks.forEach(link => link.classList.remove('active'));
+                            
+                            document.getElementById(cityName).style.display = 'block';
+                            evt.currentTarget.classList.add('active');
+                            
+                            currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+                        }
+
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                            
+                            activateTabBasedOnStage(currentStage);
+                        });
+                    </script>
 
                     <form action="{{ route('updateInternalAudit', $data->id) }}" method="post"
                         enctype="multipart/form-data">
