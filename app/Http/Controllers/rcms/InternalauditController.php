@@ -4947,12 +4947,14 @@ if ($areIniAttachmentsSame2 != true) {
                             $history->save();
                
 
-                    $list = Helpers::getLeadAuditeeUsersList($changeControl->division_id);
+                    $list = Helpers::getLeadAuditeeUsersList($changeControl->division_id)
+                            ->unique('user_id')
+                            ->values();
                         foreach ($list as $u) {
 
                             $email = Helpers::getUserEmail($u->user_id);
 
-                            if ($email !== null) {
+                             if (!empty($email)) {
 
                                 try {
 
@@ -5088,7 +5090,9 @@ if ($changeControl->stage == 2) {
         return back();
     }
 
-                    $list = Helpers::getLeadAuditorUsersList($changeControl->division_id);
+                    $list = Helpers::getLeadAuditorUsersList($changeControl->division_id)
+                            ->unique('user_id')
+                            ->values();
 
                     foreach ($list as $u) {
 
@@ -5254,10 +5258,12 @@ if ($changeControl->stage == 2) {
                                 $history->action_name = 'Update';
                             }
                             $history->save();
-                        $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);       
+                        $list = Helpers::getLeadAuditeeUserList($changeControl->division_id)      
+                            ->unique('user_id')
+                            ->values();
                         foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+                             if (!empty($email)) {
                                 try {
 
                                     $data = [
@@ -5466,10 +5472,11 @@ if ($changeControl->stage == 2) {
                             }
                             $history->save();
 
-                            $list = Helpers::getAuditManagerUserList($changeControl->division_id);
+                            $list = Helpers::getAuditManagerUserList($changeControl->division_id)->unique('user_id')
+                            ->values();
                             foreach ($list as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+                            if (!empty($email)) {
                                 try {
 
                                     $data = [
@@ -5592,7 +5599,7 @@ if ($changeControl->stage == 2) {
                             $allUsers = collect()
                                 ->merge(Helpers::getLeadAuditeeUserList($changeControl->division_id))
                                 ->merge(Helpers::getLeadAuditorUsersList($changeControl->division_id))
-                                ->merge(Helpers::getCQAUsersList($changeControl->division_id));
+                                ->merge(Helpers::getQAUserList($changeControl->division_id));
 
                             $emails = collect();
 
@@ -6120,11 +6127,15 @@ if ($changeControl->stage == 2) {
                             $history->action_name = 'Not Applicable';
                             $history->save();
                        
-
-                        $list = Helpers::getQAUserList($changeControl->division_id);
-                            foreach ($list as $u) {
+                         $usersmail = collect()
+                            ->merge(Helpers::getQAUserList($changeControl->division_id))
+                            ->merge(Helpers::getCQAUsersList($changeControl->division_id))
+                            ->unique('user_id')
+                            ->values();
+                          
+                            foreach ($usersmail as $u) {
                             $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
+                             if (!empty($email)) {
                                 try {
 
                                     $data = [
@@ -6153,38 +6164,7 @@ if ($changeControl->stage == 2) {
 
                             }
                         }
-                        $list = Helpers::getCQAUsersList($changeControl->division_id);
-                            foreach ($list as $u) {
-                            $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                                try {
-
-                                    $data = [
-                                        'data'    => $changeControl,
-                                        'site'    => "Internal Audit",
-                                        'history' => "More Info Required",
-                                        'process' => 'Internal Audit',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ];
-                                    SendMail::dispatch(
-                                        $data,
-                                        $email,
-                                        $changeControl,      
-                                        'Internal Audit'      
-                                    );
-
-                                } catch (\Exception $e) {
-
-                                    \Log::error('Queue Dispatch Error', [
-                                        'email' => $email,
-                                        'error' => $e->getMessage()
-                                    ]);
-
-                                }
-
-                            }
-                        }
+                        
 
 
                 $changeControl->update();
@@ -6248,38 +6228,43 @@ if ($changeControl->stage == 2) {
                             // }
                             $history->action_name = 'Not Applicable';
                             $history->save();
-                            $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
-                                    foreach ($list as $u) {
-                                    $email = Helpers::getUserEmail($u->user_id);
-                                    if ($email !== null) {
-                                        try {
+                           $usersmail = collect()
+                            ->merge(Helpers::getQAUserList($changeControl->division_id))
+                            ->merge(Helpers::getCQAUsersList($changeControl->division_id))
+                            ->unique('user_id')
+                            ->values();
+                          
+                            foreach ($usersmail as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                             if (!empty($email)) {
+                                try {
 
-                                            $data = [
-                                                'data'    => $changeControl,
-                                                'site'    => "Internal Audit",
-                                                'history' => "More Info Required",
-                                                'process' => 'Internal Audit',
-                                                'comment' => $request->comment,
-                                                'user'    => Auth::user()->name
-                                            ];
-                                            SendMail::dispatch(
-                                                $data,
-                                                $email,
-                                                $changeControl,      
-                                                'Internal Audit'      
-                                            );
+                                    $data = [
+                                        'data'    => $changeControl,
+                                        'site'    => "Internal Audit",
+                                        'history' => "More Info Required",
+                                        'process' => 'Internal Audit',
+                                        'comment' => $request->comment,
+                                        'user'    => Auth::user()->name
+                                    ];
+                                    SendMail::dispatch(
+                                        $data,
+                                        $email,
+                                        $changeControl,      
+                                        'Internal Audit'      
+                                    );
 
-                                        } catch (\Exception $e) {
+                                } catch (\Exception $e) {
 
-                                            \Log::error('Queue Dispatch Error', [
-                                                'email' => $email,
-                                                'error' => $e->getMessage()
-                                            ]);
+                                    \Log::error('Queue Dispatch Error', [
+                                        'email' => $email,
+                                        'error' => $e->getMessage()
+                                    ]);
 
-                                        }
-
-                                    }
                                 }
+
+                            }
+                        }
 
                        
 
@@ -6401,6 +6386,7 @@ if ($changeControl->stage == 2) {
                                 $history->save();
                     $allUsers = collect()
                         ->merge(Helpers::getLeadAuditeeUserList($changeControl->division_id))
+                        ->merge(Helpers::getLeadAuditorUsersList($changeControl->division_id))
                         ->merge(Helpers::getCQAUsersList($changeControl->division_id))
                         ->merge(Helpers::getQAUserList($changeControl->division_id));
 
@@ -6490,6 +6476,7 @@ if ($changeControl->stage == 2) {
                             $history->save();
                             $allUsers = collect()
                             ->merge(Helpers::getLeadAuditeeUserList($changeControl->division_id))
+                            ->merge(Helpers::getLeadAuditorUsersList($changeControl->division_id))
                             ->merge(Helpers::getCQAUsersList($changeControl->division_id))
                             ->merge(Helpers::getQAUserList($changeControl->division_id));
 
@@ -6577,9 +6564,10 @@ if ($changeControl->stage == 2) {
                             }
                             $history->save();
                             $allUsers = collect()
-                    ->merge(Helpers::getLeadAuditeeUserList($changeControl->division_id))
-                    ->merge(Helpers::getCQAUsersList($changeControl->division_id))
-                    ->merge(Helpers::getQAUserList($changeControl->division_id));
+                        ->merge(Helpers::getLeadAuditorUsersList($changeControl->division_id))
+                        ->merge(Helpers::getLeadAuditeeUserList($changeControl->division_id))
+                        ->merge(Helpers::getCQAUsersList($changeControl->division_id))
+                        ->merge(Helpers::getQAUserList($changeControl->division_id));
 
                 $uniqueEmails = collect();
 
