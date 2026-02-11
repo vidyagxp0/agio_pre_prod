@@ -478,10 +478,69 @@
 
             @include('frontend.OOS.comps.stage')
 
-
+                <style>
+                    /* Linear Connected Progress Bar */
+                    .progress-bars {
+                        display: flex;
+                        border-radius: 30px;
+                        overflow: hidden;
+                        border: 1px solid #e0e0e0;
+                        background: #f5f5f5;
+                    }
+                    
+                    .progress-bars div {
+                        padding: 8px 12px;
+                        font-size: 14px;
+                        flex-grow: 1;
+                        text-align: center;
+                        position: relative;
+                        transition: all 0.3s ease;
+                        border-right: 1px solid #fff;
+                    }
+                    
+                    .progress-bars div:last-child {
+                        border-right: none;
+                    }
+                    
+                    /* Completed Stages - Solid Green */
+                    .progress-bars div.completed {
+                        background-color: #4CAF50;
+                        color: black;
+                    }
+                    
+                    /* CURRENT Stage - Animated Blue (Pending Action) */
+                    .progress-bars div.current {
+                        background-color: #de8d0a;
+                        color: black;
+                        font-weight: bold;
+                        animation: pulse-blue 1.5s infinite;
+                    }
+                    
+                    /* Pending Stages - Light Gray */
+                    .progress-bars div.pending {
+                        background-color: #f5f5f5;
+                        color: black;
+                    }
+                    
+                    /* Closed States */
+                    .progress-bars div.closed {
+                        background-color: #f44336;
+                        color: white;
+                    }
+                    
+                    /* Blue Pulse Animation */
+                    @keyframes pulse-blue {
+                        0% { background-color: #de8d0a; }
+                        50% { background-color: #dfac54; }
+                        100% { background-color: #de8d0a; }
+                    }
+                </style>
+                @php
+                    $currentStage = $data->stage;
+                @endphp
             <!-- Tab links -->
             <div class="cctab">
-                <div id="OOS_Chemical_Buttons" style="display: none;">
+                <div class="OOS_Chemical_Buttons" id="OOS_Chemical_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
                     @if ($data->stage == 3)
@@ -535,11 +594,10 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
-                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div>
                  <!-- OOS Micro Buttons -->
-                 <div id="OOS_Micro_Buttons" style="display: none;">
+                 <div class="OOS_Chemical_Buttons" id="OOS_Micro_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
                     @if ($data->Stage == 3)
@@ -593,7 +651,7 @@
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button>
                 </div>
-                <div id="OOT_Buttons" style="display: none;">
+                <div class="OOS_Chemical_Buttons" id="OOT_Buttons" style="display: none;">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
                     @if ($data->stage == 3)
@@ -675,61 +733,161 @@
                         background-color: #0056b3; /* Darker background on hover */
                     }
 
-                    .cctablinks.active {
-                        background-color: #0056b3; /* Darker background for the active button */
-                    }
                 </style>
 
-                {{-- <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm27')">HOD Primary Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm28')">CQA/QA Head </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm29')">CQA/QA Head Primary</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm44')">CheckList - pH-Viscometer-MP</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm45')">CheckList - Dissolution</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm46')">CheckList - HPLC-GC</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm47')">CheckList - General checklist</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm48')">CheckList - KF-Potentiometer</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm49')">CheckList - RM-PM Sampling</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm30')">Phase IA HOD Primary</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Primary</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm35')"> Phase IB CQAH/QAH</button> --}}
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button> --}}
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button> --}}
-                <!-- checklist start -->
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist - Investigation of Bacterial Endotoxin Test (BET)</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Checklist - Investigation of Sterility</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Checklist - Investigation of Microbial limit test (MLT)</button> --}}
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Investigation of Chemical assay</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Residual solvent (RS)</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Dissolution </button>--}}
-                <!-- checklist closed -->
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase IIA Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Primary</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Primary</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH</button> --}}
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm41')">Phase II B QAH/CQAH</button> --}}
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button> --}}
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button> --}}
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button> --}}
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button> -->
-
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Extension</button> --}}
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Activity Log</button> --}}
-
             </div>
+
+        <script>
+            // function activateTabBasedOnStage(stage) {
+            //     const tabContents = document.querySelectorAll('.cctabcontent');
+            //     const tabLinks = document.querySelectorAll('.cctablinks');
+                
+            //     tabContents.forEach(content => content.style.display = 'none');
+            //     tabLinks.forEach(link => link.classList.remove('active'));
+                
+            //     let tabToActivate = '';
+                
+            //     if (stage == 1) {
+            //         tabToActivate = 'CCForm1'; 
+            //     } else if (stage == 2) {
+            //         tabToActivate = 'CCForm27'; 
+            //     }  else if (stage == 3) {
+            //         tabToActivate = 'CCForm28'; 
+            //     } else if (stage == 4) {
+            //         tabToActivate = 'CCForm29'; 
+            //     } else if (stage == 5) {
+            //         tabToActivate = 'CCForm2'; 
+            //     } else if (stage == 6) {
+            //         tabToActivate = 'CCForm30'; 
+            //     } else if (stage == 7) {
+            //         tabToActivate = 'CCForm31'; 
+            //     } else if (stage == 8) {
+            //         tabToActivate = 'CCForm32'; 
+            //     } else if (stage == 9){
+            //         tabToActivate = 'CCForm42';
+            //     } else if (stage == 10) {
+            //         tabToActivate = 'CCForm33';
+            //     } else if (stage == 11){
+            //         tabToActivate = 'CCForm34';
+            //     } else if (stage == 12){
+            //         tabToActivate = 'CCForm35';
+            //     } else if (stage == 13){
+            //         tabToActivate = 'CCForm5';
+            //     } else if (stage == 14){
+            //         tabToActivate = 'CCForm36';
+            //     } else if (stage == 15){
+            //         tabToActivate = 'CCForm37';
+            //     } else if (stage == 16){
+            //         tabToActivate = 'CCForm38';
+            //     } else if (stage == 17){
+            //         tabToActivate = 'CCForm43';
+            //     } else if (stage == 18){
+            //         tabToActivate = 'CCForm39';
+            //     } else if (stage == 19){
+            //         tabToActivate = 'CCForm40';
+            //     } else if (stage == 20){
+            //         tabToActivate = 'CCForm13';
+            //     } else if (stage == 21){
+            //         tabToActivate = 'CCForm17';
+            //     }                          
+            
+            //     if (tabToActivate) {
+            //         const tabContent = document.getElementById(tabToActivate);
+            //         // const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+            //         const tabLink = container.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+
+            //         if (tabContent) tabContent.style.display = 'block';
+            //         if (tabLink) tabLink.classList.add('active');
+            //     }
+            // }
+            function activateTabBasedOnStage(stage) {
+
+                const container = getVisibleTabContainer();
+
+                if (!container) return; // safety
+
+                const tabContents = document.querySelectorAll('.cctabcontent');
+                tabContents.forEach(content => content.style.display = 'none');
+
+                const tabLinks = container.querySelectorAll('.cctablinks');
+                tabLinks.forEach(link => link.classList.remove('active'));
+
+                let tabToActivate = '';
+
+                const stageMap = {
+                    1:'CCForm1',
+                    2:'CCForm27',
+                    3:'CCForm28',
+                    4:'CCForm29',
+                    5:'CCForm2',
+                    6:'CCForm30',
+                    7:'CCForm31',
+                    8:'CCForm32',
+                    9:'CCForm42',
+                    10:'CCForm33',
+                    11:'CCForm34',
+                    12:'CCForm35',
+                    13:'CCForm5',
+                    14:'CCForm36',
+                    15:'CCForm37',
+                    16:'CCForm38',
+                    17:'CCForm43',
+                    18:'CCForm39',
+                    19:'CCForm40',
+                    20:'CCForm13',
+                    21:'CCForm17'
+                };
+
+                tabToActivate = stageMap[Number(stage)];
+
+                if (!tabToActivate) return;
+
+                const tabContent = document.getElementById(tabToActivate);
+                // const tabLink = container.querySelector(`[onclick*="${tabToActivate}"]`);
+
+                const tabLink = container.querySelector(
+                    `[onclick="openCity(event, '${tabToActivate}')"]`
+                );
+
+                if (tabContent) tabContent.style.display = 'block';
+                if (tabLink) tabLink.classList.add('active');
+            }
+
+            function getVisibleTabContainer(){
+                return document.querySelector(
+                    '#OOS_Chemical_Buttons:not([style*="display: none"]), \
+                    #OOS_Micro_Buttons:not([style*="display: none"]), \
+                    #OOT_Buttons:not([style*="display: none"])'
+                );
+            }
+
+            function openCity(evt, cityName) {
+                const tabContents = document.querySelectorAll('.cctabcontent');
+                tabContents.forEach(content => content.style.display = 'none');
+                
+                const container = getVisibleTabContainer();
+                const tabLinks = container.querySelectorAll('.cctablinks');
+
+                // const tabLinks = document.querySelectorAll('.cctablinks');
+                tabLinks.forEach(link => link.classList.remove('active'));
+                
+                document.getElementById(cityName).style.display = 'block';
+                evt.currentTarget.classList.add('active');
+                
+                currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+
+                const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+
+                setTimeout(() => {
+                    activateTabBasedOnStage(currentStage);
+                }, 200); // ⭐ small delay
+            });
+
+
+        </script>
         <form action="{{ route('oos.oosupdate', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div id="step-form">

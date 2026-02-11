@@ -534,6 +534,66 @@
                             </div>
 
                         </div>
+                        <style>
+                            /* Linear Connected Progress Bar */
+                            .progress-bars {
+                                display: flex;
+                                border-radius: 30px;
+                                overflow: hidden;
+                                border: 1px solid #e0e0e0;
+                                background: #f5f5f5;
+                            }
+                            
+                            .progress-bars div {
+                                padding: 8px 12px;
+                                font-size: 14px;
+                                flex-grow: 1;
+                                text-align: center;
+                                position: relative;
+                                transition: all 0.3s ease;
+                                border-right: 1px solid #fff;
+                            }
+                            
+                            .progress-bars div:last-child {
+                                border-right: none;
+                            }
+                            
+                            /* Completed Stages - Solid Green */
+                            .progress-bars div.completed {
+                                background-color: #4CAF50;
+                                color: black;
+                            }
+                            
+                            /* CURRENT Stage - Animated Blue (Pending Action) */
+                            .progress-bars div.current {
+                                background-color: #de8d0a;
+                                color: black;
+                                font-weight: bold;
+                                animation: pulse-blue 1.5s infinite;
+                            }
+                            
+                            /* Pending Stages - Light Gray */
+                            .progress-bars div.pending {
+                                background-color: #f5f5f5;
+                                color: black;
+                            }
+                            
+                            /* Closed States */
+                            .progress-bars div.closed {
+                                background-color: #f44336;
+                                color: white;
+                            }
+                            
+                            /* Blue Pulse Animation */
+                            @keyframes pulse-blue {
+                                0% { background-color: #de8d0a; }
+                                50% { background-color: #dfac54; }
+                                100% { background-color: #de8d0a; }
+                            }
+                        </style>
+                        @php
+                            $currentStage = $ooc->stage;
+                        @endphp
                         <div class="status">
                             <div class="head">Current Status</div>
                             {{-- ------------------------------By Pankaj-------------------------------- --}}
@@ -547,72 +607,27 @@
                                 </div>
                             @else
                                 <div class="progress-bars d-flex">
-                                    @if ($ooc->stage >= 1)
-                                        <div class="active">Opened</div>
-                                    @else
-                                        <div class="">Opened</div>
-                                    @endif
+                                    <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
 
-                                    @if ($ooc->stage >= 2)
-                                        <div class="active" style="width: 8%">HOD Primary Review</div>
-                                    @else
-                                        <div class="">HOD Primary Review</div>
-                                    @endif
+                                    <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">HOD Primary Review</div>
 
-                                    @if ($ooc->stage >= 3)
-                                        <div class="active">QA Head Primary Review</div>
-                                    @else
-                                        <div class="">QA Head Primary Review</div>
-                                    @endif
+                                    <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}">QA Head Primary Review</div>
 
-                                    @if ($ooc->stage >= 4)
-                                        <div class="active">Under Phase-IA Investigation</div>
-                                    @else
-                                        <div class="">Under Phase-IA Investigation</div>
-                                    @endif
+                                    <div class="{{ $currentStage > 4 ? 'active' : ($currentStage == 4 ? 'current' : '') }}">Under Phase-IA Investigation</div>
 
-                                    @if ($ooc->stage >= 5)
-                                        <div class="active">Phase IA HOD Primary Review</div>
-                                    @else
-                                        <div class="">Phase IA HOD Primary Review</div>
-                                    @endif
+                                    <div class="{{ $currentStage > 5 ? 'active' : ($currentStage == 5 ? 'current' : '') }}">Phase IA HOD Primary Review</div>
 
-                                    @if ($ooc->stage >= 7)
-                                        <div class="active">Phase IA QA Review</div>
-                                    @else
-                                        <div class="">Phase IA QA Review</div>
-                                    @endif
+                                    <div class="{{ $currentStage > 7 ? 'active' : ($currentStage == 7 ? 'current' : '') }}">Phase IA QA Review</div>
 
-                                    @if ($ooc->stage >= 8)
-                                        <div class="active">P-IA QAH Review</div>
-                                    @else
-                                        <div class="">P-IA QAH Review</div>
-                                    @endif
+                                    <div class="{{ $currentStage > 8 ? 'active' : ($currentStage == 8 ? 'current' : '') }}">P-IA QAH Review</div>
 
-                                    @if ($ooc->stage >= 10)
-                                        <div class="active">Under Phase-IB Investigation</div>
-                                    @else
-                                        <div class="">Under Phase-IB Investigation</div>
-                                    @endif
+                                    <div class="{{ $currentStage > 10 ? 'active' : ($currentStage == 10 ? 'current' : '') }}">Under Phase-IB Investigation</div>
 
-                                    @if ($ooc->stage >= 11)
-                                        <div class="active">Phase IB HOD Primary Review</div>
-                                    @else
-                                        <div class="">Phase IB HOD Primary Review</div>
-                                    @endif
+                                    <div class="{{ $currentStage > 11 ? 'active' : ($currentStage == 11 ? 'current' : '') }}">Phase IB HOD Primary Review</div>
 
-                                    @if ($ooc->stage >= 12)
-                                        <div class="active">Phase IB QA Review</div>
-                                    @else
-                                        <div class="">Phase IB QA Review</div>
-                                    @endif
+                                    <div class="{{ $currentStage > 12 ? 'active' : ($currentStage == 12 ? 'current' : '') }}">Phase IB QA Review</div>
 
-                                    @if ($ooc->stage >= 13)
-                                        <div class="active">P-IB QAH Review</div>
-                                    @else
-                                        <div class="">P-IB QAH Review</div>
-                                    @endif
-
+                                    <div class="{{ $currentStage > 13 ? 'active' : ($currentStage == 13 ? 'current' : '') }}">P-IB QAH Review</div>  
 
                                     @if ($ooc->stage >= 14)
                                         <div class="bg-danger">Closed Done</div>
@@ -620,74 +635,9 @@
                                         <div class="">Closed Done</div>
                                     @endif
 
-
-                                    <!-- @if ($ooc->stage >= 15)
-    <div class="active">Under Phase-II A Investigation</div>
-@else
-    <div class="">Under Phase-II A Investigation</div>
-    @endif
-
-                                                                @if ($ooc->stage >= 16)
-    <div class="active">Phase II A HOD Primary Review</div>
-@else
-    <div class="">Phase II A HOD Primary Review</div>
-    @endif
-
-                                                                @if ($ooc->stage >= 17)
-    <div class="active">Phase II A QA Review</div>
-@else
-    <div class="">Phase II A QA Review</div>
-    @endif
-
-                                                                @if ($ooc->stage >= 18)
-    <div class="active">P-II A QAH/CQAH Review</div>
-@else
-    <div class="">P-II A QAH/CQAH Review</div>
-    @endif
-
-                                                                @if ($ooc->stage < 20)
-    @if ($ooc->stage >= 19)
-    <div class="bg-danger">Closed Done</div>
-@else
-    <div class="">Closed Done</div>
-    @endif
-    @endif
-
-                                                                @if ($ooc->stage >= 20)
-    <div class="active">Under Phase-II B Investigation</div>
-@else
-    <div class="">Under Phase-II B Investigation</div>
-    @endif
-
-                                                                @if ($ooc->stage >= 21)
-    <div class="active">Phase II B HOD Primary Review</div>
-@else
-    <div class="">Phase II B HOD Primary Review</div>
-    @endif
-
-                                                                @if ($ooc->stage >= 22)
-    <div class="active">Phase II B QA Review</div>
-@else
-    <div class="">Phase II B QA Review</div>
-    @endif
-
-                                                                @if ($ooc->stage >= 23)
-    <div class="active">P-II B QAH/CQAH Review</div>
-@else
-    <div class="">P-II B QAH/CQAH Review</div>
-    @endif
-
-                                                                @if ($ooc->stage >= 24)
-    <div class="bg-danger">Closed - Done</div>
-@else
-    <div class="">Closed - Done</div>
-    @endif -->
                                 </div>
                             @endif
                         </div>
-
-
-
 
 
                         {{-- @endif --}}
@@ -729,11 +679,7 @@
                                     <input type="comment" name="comment">
                                 </div>
                             </div>
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                        <button>Close</button>
-                                                                    </div> -->
+
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -774,11 +720,7 @@
                                     <input class="input_full_width" type="comment" name="comment">
                                 </div>
                             </div>
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                        <button>Close</button>
-                                                                    </div> -->
+
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -823,11 +765,6 @@
                                 </div>
                             </div>
 
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                        <button>Close</button>
-                                                                    </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1099,12 +1036,71 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Phase IB QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">P-IB QAH Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Activity Log</button>
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Stage I</button> -->
-                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CAPA</button> -->
-
-
             </div>
+            <script>
+                function activateTabBasedOnStage(stage) {
+                    const tabContents = document.querySelectorAll('.cctabcontent');
+                    const tabLinks = document.querySelectorAll('.cctablinks');
+                    
+                    tabContents.forEach(content => content.style.display = 'none');
+                    tabLinks.forEach(link => link.classList.remove('active'));
+                    
+                    let tabToActivate = '';
+                    
+                    if (stage == 1) {
+                        tabToActivate = 'CCForm1'; 
+                    } else if (stage == 2) {
+                        tabToActivate = 'CCForm2'; 
+                    }  else if (stage == 3) {
+                        tabToActivate = 'CCForm3'; 
+                    } else if (stage == 4) {
+                        tabToActivate = 'CCForm4'; 
+                    } else if (stage == 5) {
+                        tabToActivate = 'CCForm5'; 
+                    } else if (stage == 7) {
+                        tabToActivate = 'CCForm6'; 
+                    } else if (stage == 8) {
+                        tabToActivate = 'CCForm7'; 
+                    } else if (stage == 10) {
+                        tabToActivate = 'CCForm8'; 
+                    } else if (stage == 11) {
+                        tabToActivate = 'CCForm9'; 
+                    } else if (stage == 12) {
+                        tabToActivate = 'CCForm10'; 
+                    } else if (stage == 13) {
+                        tabToActivate = 'CCForm11'; 
+                    } else if (stage == 14) {
+                        tabToActivate = 'CCForm12'; 
+                    }
 
+                    if (tabToActivate) {
+                        const tabContent = document.getElementById(tabToActivate);
+                        const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+                        
+                        if (tabContent) tabContent.style.display = 'block';
+                        if (tabLink) tabLink.classList.add('active');
+                    }
+                }
+
+                function openCity(evt, cityName) {
+                    const tabContents = document.querySelectorAll('.cctabcontent');
+                    tabContents.forEach(content => content.style.display = 'none');
+                    
+                    const tabLinks = document.querySelectorAll('.cctablinks');
+                    tabLinks.forEach(link => link.classList.remove('active'));
+                    
+                    document.getElementById(cityName).style.display = 'block';
+                    evt.currentTarget.classList.add('active');
+                    
+                    currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const currentStage = <?php echo json_encode($ooc->stage ?? 1); ?>;
+                    
+                    activateTabBasedOnStage(currentStage);
+                });
+            </script>
             <form action="{{ route('OutOfCalibrationUpdate', $ooc->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
