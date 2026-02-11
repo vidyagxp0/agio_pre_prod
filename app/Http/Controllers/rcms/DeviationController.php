@@ -10638,7 +10638,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                 $cftDetails = DeviationCftsResponse::withoutTrashed()->where(['status' => 'In-progress', 'deviation_id' => $id])->distinct('cft_user_id')->count();
 
                 if ($deviation->stage == 1) {
-                    if ($deviation->stage == 1)
+                     if ($deviation->form_progress !== 'general-open')
                     {
                         // dd('emnter');
                         Session::flash('swal', [
@@ -12705,6 +12705,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     } else {
                         $history->action_name = 'Update';
                     }
+                  
                     $history->save();
                     // $list = Helpers::getQAHeadUserList($deviation->division_id);
                     //                         foreach ($list as $u) {
@@ -12742,9 +12743,9 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                                             ->filter()      
                                             ->unique()      
                                             ->values();
-                                            foreach ($emails as $u) {
+                                            foreach ($emails as $email) {
                                                 // if($u->q_m_s_divisions_id == $deviation->division_id){
-                                                    $email = Helpers::getUserEmail($u->user_id);
+                                                   
                                                         if ($email !== null) {
                                                         $data = [
                                                             'data'    => $deviation,
