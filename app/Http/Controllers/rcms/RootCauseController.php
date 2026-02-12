@@ -4987,17 +4987,20 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
                             try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
+                            $data = [
+                                'data' => $root,
+                                'site' => "RCA",
+                                'history' => "Approved",
+                                'process' => 'Root Cause Analysis',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
+                        }
                         }
                     // }
                 }
@@ -5007,18 +5010,21 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
-                            }
+                           try {
+                            $data = [
+                                'data' => $root,
+                                'site' => "RCA",
+                                'history' => "More Information Required",
+                                'process' => 'Root Cause Analysis',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
+                        }
                         }
                     // }
                 }
@@ -5064,8 +5070,6 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                 //     $history->action_name ="Not Applicable";
                 // }
                 $history->save();
-
-                
 
                 $list = Helpers::getInitiatorUserList($root->division_id);
                 foreach ($list as $u) {
@@ -5133,8 +5137,6 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                 //     $history->action_name ="Not Applicable";
                 // }
                 $history->save();
-
-              
 
                 $list = Helpers::getHodUserList($root->division_id);
                 foreach ($list as $u) {

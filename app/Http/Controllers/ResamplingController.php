@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Jobs\SendMail;
 
 class ResamplingController extends Controller
 {
@@ -1666,8 +1667,6 @@ foreach ($pre as $processName => $modelClass) {
                     'message' => 'Document Sent'
                 ]);
                 
-                
-
                 $changeControl->stage = '2';
                 $changeControl->status = 'Head QA/CQA Approval';
                 $changeControl->acknowledgement_by = Auth::user()->name;
@@ -1709,27 +1708,19 @@ foreach ($pre as $processName => $modelClass) {
                         
                             if ($email !== null) {
                                 try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl, 
-                                            'site' => "RP", 
-                                            'history' => "Submit", 
-                                            'process' => 'Resampling', 
-                                            'comment' => $request->comment, 
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
-                                        }
-                                    );
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "RP",
+                                        'history' => "Opened",
+                                        'process' => 'Resampling',
+                                        'comment' => $request->comments,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
                                 } catch (\Exception $e) {
-                                 
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                   
-                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                    \Log::error('Mail Error: ' . $e->getMessage());
                                 }
                             }
                         }
@@ -1739,29 +1730,23 @@ foreach ($pre as $processName => $modelClass) {
                             $email = Helpers::getUserEmail($u->user_id);
                         
                             if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl, 
-                                            'site' => "RP", 
-                                            'history' => "Submit", 
-                                            'process' => 'Resampling', 
-                                            'comment' => $request->comment, 
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
-                                        }
-                                    );
+                            
+                            try {
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "RP",
+                                        'history' => "Opened",
+                                        'process' => 'Resampling',
+                                        'comment' => $request->comments,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
                                 } catch (\Exception $e) {
-                                 
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-                        
-                                   
-                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                    \Log::error('Mail Error: ' . $e->getMessage());
                                 }
+
                             }
                         }
                 $changeControl->update();
@@ -1795,10 +1780,6 @@ foreach ($pre as $processName => $modelClass) {
             //      }
             //   }
 
-
-
-            
-            
                 toastr()->success('Document Sent');
 
                 return back();
@@ -1832,8 +1813,6 @@ foreach ($pre as $processName => $modelClass) {
                 $changeControl->work_completion_comment = $request->comment;
 
 
-                    
-
                         $history = new ResamplingAudittrail;
                         $history->resampling_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -1861,25 +1840,25 @@ foreach ($pre as $processName => $modelClass) {
                             $history->change_from = $lastopenState->status;
                         $history->save();
                
-                
-
-
                     $list = Helpers::getAssignToUserList($changeControl->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getUserEmail($u->user_id);
                                 if ($email !== null) {
                                 try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Approved", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approvel Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "RP",
+                                        'history' => "Approved",
+                                        'process' => 'Resampling',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
                                 }
                             }
                         // }
@@ -1920,7 +1899,7 @@ foreach ($pre as $processName => $modelClass) {
 
                         $history->resampling_id = $id;
                         $history->activity_type = 'Activity Log';
-                         $history->comment = $request->comment;
+                        $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1943,28 +1922,28 @@ foreach ($pre as $processName => $modelClass) {
                           $history->change_from = $lastopenState->status;
                         $history->save();
               
-               
-
-
-
+            
                     $list = Helpers::getQAUserList($changeControl->division_id);
                 
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getUserEmail($u->user_id);
                                 if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Acknowledge Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Complete Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
-                                }
+                               try {
+                                $data = [
+                                    'data' => $changeControl,
+                                    'site' => "RP",
+                                    'history' => "Acknowledge Complete",
+                                    'process' => 'Resampling',
+                                    'comment' => $request->comment,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                             }
                         // }
                     }
@@ -1975,16 +1954,19 @@ foreach ($pre as $processName => $modelClass) {
                             $email = Helpers::getUserEmail($u->user_id);
                                 if ($email !== null) {
                                 try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Acknowledge Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                            ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Complete Performed");
-                                        }
-                                    );
-                                } catch(\Exception $e) {
-                                    info('Error sending mail', [$e]);
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "RP",
+                                        'history' => "Opened",
+                                        'process' => 'Acknowledge Complete',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
                                 }
                             }
                         // }
@@ -2069,17 +2051,20 @@ foreach ($pre as $processName => $modelClass) {
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
-                        }
+                                $data = [
+                                    'data' => $changeControl,
+                                    'site' => "RP",
+                                    'history' => "Verification complete",
+                                    'process' => 'Resampling',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                     }
                 // }
             }
@@ -2089,16 +2074,19 @@ foreach ($pre as $processName => $modelClass) {
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "RP",
+                                'history' => "Verification Complete",
+                                'process' => 'Resampling',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 // }
@@ -2111,17 +2099,20 @@ foreach ($pre as $processName => $modelClass) {
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
-                        }
+                                $data = [
+                                    'data' => $changeControl,
+                                    'site' => "RP",
+                                    'history' => "Verification Complete",
+                                    'process' => 'Resampling',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                     }
                 // }
             }
@@ -2131,16 +2122,19 @@ foreach ($pre as $processName => $modelClass) {
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "RP",
+                                'history' => "Verification Complete",
+                                'process' => 'Resampling',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 // }
@@ -2151,16 +2145,19 @@ foreach ($pre as $processName => $modelClass) {
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Verification Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Verification Complete Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "RP",
+                                'history' => "Verification Complete",
+                                'process' => 'Resampling',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 // }
@@ -2173,17 +2170,20 @@ foreach ($pre as $processName => $modelClass) {
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Acknowledge Complete", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Complete Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
-                        }
+                                $data = [
+                                    'data' => $changeControl,
+                                    'site' => "RP",
+                                    'history' => "Verification Complete",
+                                    'process' => 'Resampling',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                     }
                 // }
             }
@@ -2259,17 +2259,20 @@ public function resamplingStageCancel(Request $request, $id)
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "Cancel", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
-                        }
+                                $data = [
+                                    'data' => $changeControl,
+                                    'site' => "RP",
+                                    'history' => "Cancle",
+                                    'process' => 'Resampling',
+                                    'comment' => $request->comment,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                     }
                 // }
             }
@@ -2302,9 +2305,6 @@ public function resamplingStageCancel(Request $request, $id)
             //       }
 
                 
-
-                  
-
             toastr()->success('Document Sent');
             return redirect('resampling_view/'.$id);
         }
@@ -2376,18 +2376,21 @@ public function resamplingmoreinfo(Request $request, $id)
                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "More Information Required", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
-                        }
+                       try {
+                                $data = [
+                                    'data' => $changeControl,
+                                    'site' => "RP",
+                                    'history' => "More Info Required",
+                                    'process' => 'Resampling',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                     }
                 // }
             }
@@ -2464,17 +2467,20 @@ public function resamplingmoreinfo(Request $request, $id)
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "More Information Required", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
-                        }
+                                $data = [
+                                    'data' => $changeControl,
+                                    'site' => "RP",
+                                    'history' => "More Information Required",
+                                    'process' => 'Resampling',
+                                    'comment' => $request->comments,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                     }
                 // }
             }
@@ -2483,29 +2489,28 @@ public function resamplingmoreinfo(Request $request, $id)
                 // if($u->q_m_s_divisions_id == $changeControl->division_id){
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "More Information Required", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
+                       try {
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "RP",
+                                'history' => "More Information Required",
+                                'process' => 'Resampling',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 // }
             }
-          
-              
             toastr()->success('Document Sent');
             return redirect('resampling_view/'.$id);
         }
            
-
-         
         if ($changeControl->stage == 4) {
             $changeControl->stage = "3";
             $changeControl->status = "Acknowledge";
@@ -2557,16 +2562,19 @@ public function resamplingmoreinfo(Request $request, $id)
                     $email = Helpers::getUserEmail($u->user_id);
                         if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site'=>"Resampling", 'history' => "More Information Required", 'process' => 'Resampling', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: resampling, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch(\Exception $e) {
-                            info('Error sending mail', [$e]);
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "RP",
+                                'history' => "More Info Required",
+                                'process' => 'Resampling',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Resampling');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 // }
@@ -2576,25 +2584,20 @@ public function resamplingmoreinfo(Request $request, $id)
             return redirect('resampling_view/'.$id);
         }
         
-
-
-
-         
-
     } else {
         toastr()->error('E-signature Not match');
         return back();
     }
 }
-public function resamplingAuditTrialShow($id)
-{
-    $audit = ResamplingAudittrail::where('resampling_id', $id)->orderByDESC('id')->paginate(5);
-    $today = Carbon::now()->format('d-m-y');
-    $document = Resampling::where('id', $id)->first();
-    $document->initiator = User::where('id', $document->initiator_id)->value('name');
-    $users = User::all();
-    return view('frontend.resampling.audit-trial', compact('audit', 'document', 'today','users'));
-}
+    public function resamplingAuditTrialShow($id)
+    {
+        $audit = ResamplingAudittrail::where('resampling_id', $id)->orderByDESC('id')->paginate(5);
+        $today = Carbon::now()->format('d-m-y');
+        $document = Resampling::where('id', $id)->first();
+        $document->initiator = User::where('id', $document->initiator_id)->value('name');
+        $users = User::all();
+        return view('frontend.resampling.audit-trial', compact('audit', 'document', 'today','users'));
+    }
 public function actionItemAuditTrialDetails($id)
 {
     $detail = ResamplingAudittrail::find($id);
@@ -2707,8 +2710,5 @@ public function auditTrailPdf($id)
         );
         return $pdf->stream('Action-Item-Audit_Trail' . $id . '.pdf');
     }
-
-
-
 
 }

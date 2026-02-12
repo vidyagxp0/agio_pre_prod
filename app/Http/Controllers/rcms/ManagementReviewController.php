@@ -37,6 +37,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Jobs\SendMail;
 
 class ManagementReviewController extends Controller
 {
@@ -8574,28 +8575,20 @@ class ManagementReviewController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "Submit",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->Submited_Comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                       try {
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "MR",
+                                'history' => "Submit",
+                                'process' => 'Managment Review',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -8749,28 +8742,20 @@ class ManagementReviewController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "QA Head Review Complete",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->qaHeadReviewComplete_Comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Review Complete Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                       try {
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "MR",
+                                'history' => "QA Head Review Complete",
+                                'process' => 'Management Review',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -8992,8 +8977,6 @@ class ManagementReviewController extends Controller
                 //      // }
                 //  }
 
-
-
                 $list = Helpers::getCftUserList($changeControl->division_id);
 
                 foreach ($list as $u) {
@@ -9001,31 +8984,22 @@ class ManagementReviewController extends Controller
 
                     if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "Meeting and Summary Complete",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->meeting_summary_comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Meeting and Summary Complete Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "MR",
+                                'history' => "Meeting And Summary Complete",
+                                'process' => 'Management Review',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
-
 
                 //toastr()->success('Document Sent');
                 return back();
@@ -9843,28 +9817,20 @@ class ManagementReviewController extends Controller
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if ($email !== null) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl,
-                                            'site' => "MR",
-                                            'history' => "CFT Action Complete",
-                                            'process' => 'Managment Review',
-                                            'comment' => $changeControl->ALLAICompleteby_comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Action Complete Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                               try {
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "MR",
+                                        'history' => "CFT Action Complete",
+                                        'process' => 'Management Review',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
 
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                    SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
                                 }
                             }
                         }
@@ -9877,31 +9843,22 @@ class ManagementReviewController extends Controller
 
                             if ($email !== null) {
                                 try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl,
-                                            'site' => "MR",
-                                            'history' => "CFT Action Complete",
-                                            'process' => 'Managment Review',
-                                            'comment' => $changeControl->ALLAICompleteby_comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT Action Complete Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "MR",
+                                        'history' => "CFT Action Complete",
+                                        'process' => 'Management Review',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
 
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                    SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
                                 }
                             }
                         }
-
 
 
                         $changeControl->update();
@@ -10762,27 +10719,19 @@ class ManagementReviewController extends Controller
 
                             if ($email !== null) {
                                 try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data' => $changeControl,
-                                            'site' => "MR",
-                                            'history' => "CFT HOD Review Complete",
-                                            'process' => 'Managment Review',
-                                            'comment' => $changeControl->hodFinaleReviewComplete_comment,
-                                            'user' => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changeControl) {
-                                            $message->to($email)
-                                                ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT HOD Review Complete Performed");
-                                        }
-                                    );
-                                } catch (\Exception $e) {
-                                    // Log the error for debugging
-                                    Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "MR",
+                                        'history' => "CFT HOD Review Complete",
+                                        'process' => 'Management Review',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
 
-                                    // Optionally handle the exception (e.g., notify the user or admin)
-                                    session()->flash('error', 'Failed to send email to ' . $email);
+                                    SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
                                 }
                             }
                         }
@@ -10793,9 +10742,6 @@ class ManagementReviewController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-
-
-
 
             // if ($changeControl->stage == 5) {
 
@@ -10923,27 +10869,19 @@ class ManagementReviewController extends Controller
 
                     if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "QA Verification Complete",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->QAVerificationComplete_Comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Verification Complete Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "MR",
+                                'history' => "QA Verification Complete",
+                                'process' => 'Management Review',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -11064,27 +11002,19 @@ class ManagementReviewController extends Controller
 
                     if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "Approved",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->Approved_comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "MR",
+                                'history' => "Approved",
+                                'process' => 'Management Review',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -11096,28 +11026,20 @@ class ManagementReviewController extends Controller
 
                     if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "Approved",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->Approved_comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "MR",
+                                        'history' => "Approved",
+                                        'process' => 'Management Review',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
-                        }
+                                    SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
                     }
                 }
 
@@ -11129,28 +11051,20 @@ class ManagementReviewController extends Controller
 
                     if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "Approved",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->Approved_comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approved Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "MR",
+                                        'history' => "Approved",
+                                        'process' => 'Management Review',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
-                        }
+                                    SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
                     }
                 }
 
@@ -11234,37 +11148,26 @@ class ManagementReviewController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "More Information Required",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->ReturnActivityOpenedstage_Comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                       try {
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "MR",
+                                'history' => "More Info Required",
+                                'process' => 'Management Review',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
                 toastr()->success('Document Sent');
                 return back();
             }
-
-
-
 
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "3";
@@ -11312,29 +11215,21 @@ class ManagementReviewController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "More Information Required",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->requireactivitydepartment_comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                       try {
+                                    $data = [
+                                        'data' => $changeControl,
+                                        'site' => "MR",
+                                        'history' => "More Info Required",
+                                        'process' => 'Management Review',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
-                        }
+                                    SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
                     }
                 }
                 $changeControl->update();
@@ -11476,27 +11371,19 @@ class ManagementReviewController extends Controller
 
                     if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "More Information Required",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->requireactivityHODdepartment_comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "MR",
+                                'history' => "More Info Required",
+                                'process' => 'Management Review',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -11508,27 +11395,19 @@ class ManagementReviewController extends Controller
 
                     if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "More Information Required",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->requireactivityHODdepartment_comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "MR",
+                                'history' => "More Info Required",
+                                'process' => 'Management Review',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -11743,27 +11622,19 @@ class ManagementReviewController extends Controller
 
                     if ($email !== null) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "More Information Required",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->requireactivityQAdepartment_comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "MR",
+                                'history' => "More Info Required",
+                                'process' => 'Management Review',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
 
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
+                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -11796,9 +11667,6 @@ class ManagementReviewController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->stage = 'Send to HOD';
-
-
-
             $history->save();
             $changeControl->update();
             $history = new managementHistory();

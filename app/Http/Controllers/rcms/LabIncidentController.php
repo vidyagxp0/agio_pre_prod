@@ -24,6 +24,7 @@ use App\Models\AuditReviewersDetails;
 use App\Models\RoleGroup;
 use App\Models\extension_new;
 use App\Models\User;
+use App\Jobs\SendMail;
 use App\Models\lab_incidents_grid;
 // use App\Models\Labincident_Second;
 use PDF;
@@ -5924,33 +5925,30 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
     $history->save();
 }
 
-// Audit trail for 'ccf_attachments'
-if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
-    $history = new LabIncidentAuditTrial();
-    $history->LabIncident_id = $id;
-    $history->activity_type = 'ccf attachments';
-    $history->previous = $lastDocument->ccf_attachments;
-    $history->current = $data->ccf_attachments;
-    $history->comment = $request->ccf_attachments_comment ?? "Not Applicable";
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-     if (is_null($lastDocument->ccf_attachments) || $lastDocument->ccf_attachments === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
+        // Audit trail for 'ccf_attachments'
+        if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'ccf attachments';
+            $history->previous = $lastDocument->ccf_attachments;
+            $history->current = $data->ccf_attachments;
+            $history->comment = $request->ccf_attachments_comment ?? "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            if (is_null($lastDocument->ccf_attachments) || $lastDocument->ccf_attachments === '') {
+                        $history->action_name = "New";
+                    } else {
+                        $history->action_name = "Update";
+                    }
 
-    $history->origin_state = $lastDocument->status;
-    $history->save();
-}
-
-
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
 
         $griddata = $data->id;
-
 
         if (!empty($request->investrecord)) {
             // Fetch existing auditor data
@@ -5970,7 +5968,6 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 'name_of_product' => 'Name of Product',
                 'batch_no' => 'B No./A.R. No.',
                 'remarks' => 'Remarks',
-
             ];
 
             // Track audit trail changes
@@ -6019,8 +6016,6 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 }
             }
         }
-
-
 
                 // For "Sutability" report
                 $identifier = 'Sutability';
@@ -6243,9 +6238,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                }
                if ($request->revision == "rca") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-
                 
-
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $data1 = LabIncident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
                 $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'LI' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
@@ -6516,8 +6509,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
             $history->save();
 
-           
-
+        
             // Get all required users
                 $qaList        = Helpers::getQAReviewerUserList($labstate->division_id);
                 $qaHeadList    = Helpers::QCHead($labstate->division_id);
@@ -6537,28 +6529,19 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                     if (!empty($email)) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $labstate,
-                                    'site'    => "LI",
-                                    'history' => "Approved",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comments,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $labstate) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($labstate->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: Approved"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do NOT stop execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            $data = [
+                                'data' => $labstate,
+                                'site' => "LI",
+                                'history' => "More Inforrmation Required",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $labstate, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -6591,7 +6574,6 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 && $changeControl->incident_date_incidence_gi && $changeControl->description_incidence_gi
                 && $changeControl->analyst_sign_date_gi && $changeControl->investigator_qc
                 && $changeControl->Incident_Category_others && $changeControl->immediate_action_ia && $changeControl->qc_review_to
-
                 ))
                 {
                     Session::flash('swal', [
@@ -6660,34 +6642,22 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                         if (!empty($email)) {
                             try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $changeControl,
-                                        'site'    => "LI",
-                                        'history' => "Submit",
-                                        'process' => 'Lab Incident',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Lab Incident, Record #"
-                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: Submit"
-                                                );
-                                    }
-                                );
-                            } catch (\Throwable $e) {
-                                // Log error but do not stop execution
-                                \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
-                            }
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "Opened",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
+                        }
                         }
                     }
-
-
-
 
                 $changeControl->update();
                 //toastr()->success('Document Sent');
@@ -6784,34 +6754,22 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                     if (!empty($email)) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "LI",
-                                    'history' => "QA Head/HOD Initial Review Complete",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: QA Head/HOD Initial Review Complete"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do not break execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "QC Head/HOD Initial Review Complete",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
-
-
-
 
                 $changeControl->update();
                 //toastr()->success('Document Sent');
@@ -6911,28 +6869,19 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                     if (!empty($email)) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "LI",
-                                    'history' => "QA Initial Review Complete",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: QA Initial Review Complete"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do not break execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "QA Initial Review Complete",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -6942,279 +6891,260 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 //toastr()->success('Document Sent');
                 return back();
             }
-                if ($changeControl->stage == 4) {
+            if ($changeControl->stage == 4) {
 
-                    //   $Resamplingchilds = Resampling::where('parent_id', $id)
-                    //         ->where('parent_type', 'Lab Incident')
-                    //         ->get();
-                    //             $hasPendingResampling = false;
-                    //         foreach ($Resamplingchilds as $ext) {
-                    //                 $Resamplingchildstatus = trim(strtolower($ext->status));
-                    //                 if ($Resamplingchildstatus !== 'closed - done' && $extensionchildStatus !== 'closed-cancelled') {
-                    //                     $hasPendingResampling = true;
-                    //                     break;
-                    //                 }
-                    //             }
-                    //     if ($hasPendingResampling) {
-                    //         // $Resamplingchildstatus = trim(strtolower($extensionchild->status));
-                    //         if ($hasPendingResampling) {
-                    //             Session::flash('swal', [
-                    //                 'title' => 'Resampling Child Pending!',
-                    //                 'message' => 'You cannot proceed until Resampling Child is Closed-Done.',
-                    //                 'type' => 'warning',
-                    //             ]);
+                //   $Resamplingchilds = Resampling::where('parent_id', $id)
+                //         ->where('parent_type', 'Lab Incident')
+                //         ->get();
+                //             $hasPendingResampling = false;
+                //         foreach ($Resamplingchilds as $ext) {
+                //                 $Resamplingchildstatus = trim(strtolower($ext->status));
+                //                 if ($Resamplingchildstatus !== 'closed - done' && $extensionchildStatus !== 'closed-cancelled') {
+                //                     $hasPendingResampling = true;
+                //                     break;
+                //                 }
+                //             }
+                //     if ($hasPendingResampling) {
+                //         // $Resamplingchildstatus = trim(strtolower($extensionchild->status));
+                //         if ($hasPendingResampling) {
+                //             Session::flash('swal', [
+                //                 'title' => 'Resampling Child Pending!',
+                //                 'message' => 'You cannot proceed until Resampling Child is Closed-Done.',
+                //                 'type' => 'warning',
+                //             ]);
 
-                    //         return redirect()->back();
-                    //         }
-                    //     } else {
-                    //         // Flash message for success (when the form is filled correctly)
-                    //         Session::flash('swal', [
-                    //             'title' => 'Success!',
-                    //             'message' => 'Document Sent',
-                    //             'type' => 'success',
-                    //         ]);
-                    //     }
+                //         return redirect()->back();
+                //         }
+                //     } else {
+                //         // Flash message for success (when the form is filled correctly)
+                //         Session::flash('swal', [
+                //             'title' => 'Success!',
+                //             'message' => 'Document Sent',
+                //             'type' => 'success',
+                //         ]);
+                //     }
 
-                    // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                    //         ->where('parent_type', 'Lab Incident')
-                    //         ->get();
-                    //             $hasPendingRCA = false;
-                    //         foreach ($rcachilds as $ext) {
-                    //                 $rcachildstatus = trim(strtolower($ext->status));
-                    //                if($rcachildstatus !== 'closed - done'  && $rcachildstatus !== 'closed-cancelled'){
-                    //                     $hasPendingRCA = true;
-                    //                     break;
-                    //                 }
-                    //             }
-                    //     if ($hasPendingRCA) {
-                    //         // $rcachildstatus = trim(strtolower($extensionchild->status));
-                    //         if ($hasPendingRCA) {
-                    //             Session::flash('swal', [
-                    //                 'title' => 'RCA Child Pending!',
-                    //                 'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                    //                 'type' => 'warning',
-                    //             ]);
+                // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                //         ->where('parent_type', 'Lab Incident')
+                //         ->get();
+                //             $hasPendingRCA = false;
+                //         foreach ($rcachilds as $ext) {
+                //                 $rcachildstatus = trim(strtolower($ext->status));
+                //                if($rcachildstatus !== 'closed - done'  && $rcachildstatus !== 'closed-cancelled'){
+                //                     $hasPendingRCA = true;
+                //                     break;
+                //                 }
+                //             }
+                //     if ($hasPendingRCA) {
+                //         // $rcachildstatus = trim(strtolower($extensionchild->status));
+                //         if ($hasPendingRCA) {
+                //             Session::flash('swal', [
+                //                 'title' => 'RCA Child Pending!',
+                //                 'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                //                 'type' => 'warning',
+                //             ]);
 
-                    //         return redirect()->back();
-                    //         }
-                    //     } else {
-                    //         // Flash message for success (when the form is filled correctly)
-                    //         Session::flash('swal', [
-                    //             'title' => 'Success!',
-                    //             'message' => 'Document Sent',
-                    //             'type' => 'success',
-                    //         ]);
-                    //     }
-                    // $actionchilds = ActionItem::where('parent_id', $id)
-                    //             ->where('parent_type', 'Lab Incident')
-                    //             ->get();
-                    //                 $hasPendingaction = false;
-                    //             foreach ($actionchilds as $ext) {
-                    //                     $actionchildstatus = trim(strtolower($ext->status));
-                    //                    if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled')  {
-                    //                         $hasPendingaction = true;
-                    //                         break;
-                    //                     }
-                    //                 }
-                    //         if ($hasPendingaction) {
-                    //             // $actionchildstatus = trim(strtolower($extensionchild->status));
-                    //             if ($hasPendingaction) {
-                    //                 Session::flash('swal', [
-                    //                     'title' => 'Action Item Child Pending!',
-                    //                     'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                    //                     'type' => 'warning',
-                    //                 ]);
+                //         return redirect()->back();
+                //         }
+                //     } else {
+                //         // Flash message for success (when the form is filled correctly)
+                //         Session::flash('swal', [
+                //             'title' => 'Success!',
+                //             'message' => 'Document Sent',
+                //             'type' => 'success',
+                //         ]);
+                //     }
+                // $actionchilds = ActionItem::where('parent_id', $id)
+                //             ->where('parent_type', 'Lab Incident')
+                //             ->get();
+                //                 $hasPendingaction = false;
+                //             foreach ($actionchilds as $ext) {
+                //                     $actionchildstatus = trim(strtolower($ext->status));
+                //                    if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled')  {
+                //                         $hasPendingaction = true;
+                //                         break;
+                //                     }
+                //                 }
+                //         if ($hasPendingaction) {
+                //             // $actionchildstatus = trim(strtolower($extensionchild->status));
+                //             if ($hasPendingaction) {
+                //                 Session::flash('swal', [
+                //                     'title' => 'Action Item Child Pending!',
+                //                     'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                //                     'type' => 'warning',
+                //                 ]);
 
-                    //             return redirect()->back();
-                    //             }
-                    //         } else {
-                    //             // Flash message for success (when the form is filled correctly)
-                    //             Session::flash('swal', [
-                    //                 'title' => 'Success!',
-                    //                 'message' => 'Document Sent',
-                    //                 'type' => 'success',
-                    //             ]);
-                    //         }
-                    // $capachilds = Capa::where('parent_id', $id)
-                    //                 ->where('parent_type', 'Lab Incident')
-                    //                 ->get();
-                    //                     $hasPending = false;
-                    //                 foreach ($capachilds as $ext) {
-                    //                         $capachildstatus = trim(strtolower($ext->status));
-                    //                         if($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
-                    //                             $hasPending = true;
-                    //                             break;
-                    //                         }
-                    //                     }
-                    //             if ($hasPending) {
-                    //                 // $capachildstatus = trim(strtolower($extensionchild->status));
-                    //                 if ($hasPending) {
-                    //                     Session::flash('swal', [
-                    //                         'title' => 'CAPA Child Pending!',
-                    //                         'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                    //                         'type' => 'warning',
-                    //                     ]);
+                //             return redirect()->back();
+                //             }
+                //         } else {
+                //             // Flash message for success (when the form is filled correctly)
+                //             Session::flash('swal', [
+                //                 'title' => 'Success!',
+                //                 'message' => 'Document Sent',
+                //                 'type' => 'success',
+                //             ]);
+                //         }
+                // $capachilds = Capa::where('parent_id', $id)
+                //                 ->where('parent_type', 'Lab Incident')
+                //                 ->get();
+                //                     $hasPending = false;
+                //                 foreach ($capachilds as $ext) {
+                //                         $capachildstatus = trim(strtolower($ext->status));
+                //                         if($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
+                //                             $hasPending = true;
+                //                             break;
+                //                         }
+                //                     }
+                //             if ($hasPending) {
+                //                 // $capachildstatus = trim(strtolower($extensionchild->status));
+                //                 if ($hasPending) {
+                //                     Session::flash('swal', [
+                //                         'title' => 'CAPA Child Pending!',
+                //                         'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                //                         'type' => 'warning',
+                //                     ]);
 
-                    //                 return redirect()->back();
-                    //                 }
-                    //             } else {
-                    //                 // Flash message for success (when the form is filled correctly)
-                    //                 Session::flash('swal', [
-                    //                     'title' => 'Success!',
-                    //                     'message' => 'Document Sent',
-                    //                     'type' => 'success',
-                    //                 ]);
-                    //             }
+                //                 return redirect()->back();
+                //                 }
+                //             } else {
+                //                 // Flash message for success (when the form is filled correctly)
+                //                 Session::flash('swal', [
+                //                     'title' => 'Success!',
+                //                     'message' => 'Document Sent',
+                //                     'type' => 'success',
+                //                 ]);
+                //             }
 
-                 $Extensionchilds = extension_new::where('parent_id', $id)
-                                    ->where('parent_type', 'Lab Incident')
-                                    ->get();
-                                        $hasPending = false;
-                                    foreach ($Extensionchilds as $ext) {
-                                            $extensionchildStatus = trim(strtolower($ext->status));
-                                           if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
-                                                $hasPending = true;
-                                                break;
-                                            }
+                $Extensionchilds = extension_new::where('parent_id', $id)
+                                ->where('parent_type', 'Lab Incident')
+                                ->get();
+                                    $hasPending = false;
+                                foreach ($Extensionchilds as $ext) {
+                                        $extensionchildStatus = trim(strtolower($ext->status));
+                                        if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed - reject' && $extensionchildStatus !== 'closed cancelled' ) {
+                                            $hasPending = true;
+                                            break;
                                         }
+                                    }
+                            if ($hasPending) {
+                                // $capachildstatus = trim(strtolower($extensionchild->status));
                                 if ($hasPending) {
-                                    // $capachildstatus = trim(strtolower($extensionchild->status));
-                                    if ($hasPending) {
-                                        Session::flash('swal', [
-                                            'title' => 'Extension Child Pending!',
-                                            'message' => 'You cannot proceed until Extension Child is Closed-Done.',
-                                            'type' => 'warning',
-                                        ]);
-
-                                    return redirect()->back();
-                                    }
-                                } else {
-                                    // Flash message for success (when the form is filled correctly)
                                     Session::flash('swal', [
-                                        'title' => 'Success!',
-                                        'message' => 'Document Sent',
-                                        'type' => 'success',
+                                        'title' => 'Extension Child Pending!',
+                                        'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                        'type' => 'warning',
                                     ]);
+
+                                return redirect()->back();
                                 }
-
-
-
-
-
-                    if (empty($changeControl->Investigation_Details && $changeControl->Action_Taken
-                     && $changeControl->Root_Cause && $changeControl->details_investigation_ia
-                     && $changeControl->proposed_correctivei_ia && $changeControl->repeat_analysis_plan_ia
-                     && $changeControl->result_of_repeat_analysis_ia && $changeControl->corrective_and_preventive_action_ia
-                     && $changeControl->capa_number_im && $changeControl->investigation_summary_ia
-                     && $changeControl->investigator_data && $changeControl->qc_review_data))
-                    {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'Investigation Details Tab is yet to be filled'
-                        ]);
-
-                        return redirect()->back();
-                    }
-                     else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => ' Sent for QC Head/HOD Secondary Review state'
-                        ]);
-                    }
-
-
-                  
-                    $changeControl->stage = "5";
-                    $changeControl->status = "QC Head/HOD Secondary Review";
-                    $changeControl->all_activities_completed_comment =$request->comment;
-                    $changeControl->all_activities_completed_by = Auth::user()->name;
-                    $changeControl->all_activities_completed_on = Carbon::now()->format('d-M-Y');
-                    $history = new LabIncidentAuditTrial();
-                    $history->LabIncident_id = $id;
-                    // $history->activity_type = 'Activity Log';
-                    // $history->previous = $lastDocument->all_activities_completed_by;
-                    // $history->current = $changeControl->all_activities_completed_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->change_to = "QA Head/HOD Secondary Review";
-                    $history->change_from = $lastDocument->status;
-                    $history->origin_state = $lastDocument->status;
-                    $history->stage='Pending Initiator Update Complete';
-                    $history->action='Pending Initiator Update Complete';
-
-                    $history->activity_type = 'Pending Initiator Update Complete By, Pending Initiator Update Complete On';
-                    if (is_null($lastDocument->all_activities_completed_by) || $lastDocument->all_activities_completed_by === '') {
-                        $history->previous = "";
-                    } else {
-                        $history->previous = $lastDocument->all_activities_completed_by . ' , ' . $lastDocument->all_activities_completed_on;
-                    }
-                    $history->current = $changeControl->all_activities_completed_by . ' , ' . $changeControl->all_activities_completed_on;
-                    if (is_null($lastDocument->all_activities_completed_by) || $lastDocument->all_activities_completed_by === '') {
-                        $history->action_name = 'New';
-                    } else {
-                        $history->action_name = 'Update';
-                    }
-
-                    $history->save();
-
-                   
-
-                    // Get HOD & QC Head users
-                    $hodList    = Helpers::getHodUserList($changeControl->division_id);
-                    $qcHeadList = Helpers::QCHead($changeControl->division_id);
-
-                    // Merge & remove duplicate users
-                    $users = collect($hodList)
-                                ->merge($qcHeadList)
-                                ->unique('user_id')
-                                ->values();
-
-                    // Send mail in single loop
-                    foreach ($users as $u) {
-
-                        $email = Helpers::getUserEmail($u->user_id);
-
-                        if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $changeControl,
-                                        'site'    => "LI",
-                                        'history' => "Pending Initiator Update Complete",
-                                        'process' => 'Lab Incident',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $changeControl) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: Lab Incident, Record #"
-                                                    . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: Pending Initiator Update Complete"
-                                                );
-                                    }
-                                );
-                            } catch (\Throwable $e) {
-                                // Log error but do not stop execution
-                                \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
                             }
-                        }
-                    }
 
+                if (empty($changeControl->Investigation_Details && $changeControl->Action_Taken
+                    && $changeControl->Root_Cause && $changeControl->details_investigation_ia
+                    && $changeControl->proposed_correctivei_ia && $changeControl->repeat_analysis_plan_ia
+                    && $changeControl->result_of_repeat_analysis_ia && $changeControl->corrective_and_preventive_action_ia
+                    && $changeControl->capa_number_im && $changeControl->investigation_summary_ia
+                    && $changeControl->investigator_data && $changeControl->qc_review_data))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Investigation Details Tab is yet to be filled'
+                    ]);
 
-
-
-                    $changeControl->update();
-                    //toastr()->success('Document Sent');
-                    return back();
-
-
+                    return redirect()->back();
                 }
+                    else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => ' Sent for QC Head/HOD Secondary Review state'
+                    ]);
+                }
+
+
+                $changeControl->stage = "5";
+                $changeControl->status = "QC Head/HOD Secondary Review";
+                $changeControl->all_activities_completed_comment =$request->comment;
+                $changeControl->all_activities_completed_by = Auth::user()->name;
+                $changeControl->all_activities_completed_on = Carbon::now()->format('d-M-Y');
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                // $history->activity_type = 'Activity Log';
+                // $history->previous = $lastDocument->all_activities_completed_by;
+                // $history->current = $changeControl->all_activities_completed_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->change_to = "QA Head/HOD Secondary Review";
+                $history->change_from = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Pending Initiator Update Complete';
+                $history->action='Pending Initiator Update Complete';
+
+                $history->activity_type = 'Pending Initiator Update Complete By, Pending Initiator Update Complete On';
+                if (is_null($lastDocument->all_activities_completed_by) || $lastDocument->all_activities_completed_by === '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->all_activities_completed_by . ' , ' . $lastDocument->all_activities_completed_on;
+                }
+                $history->current = $changeControl->all_activities_completed_by . ' , ' . $changeControl->all_activities_completed_on;
+                if (is_null($lastDocument->all_activities_completed_by) || $lastDocument->all_activities_completed_by === '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
+
+                $history->save();
+
+                // Get HOD & QC Head users
+                $hodList    = Helpers::getHodUserList($changeControl->division_id);
+                $qcHeadList = Helpers::QCHead($changeControl->division_id);
+
+                // Merge & remove duplicate users
+                $users = collect($hodList)
+                            ->merge($qcHeadList)
+                            ->unique('user_id')
+                            ->values();
+
+                // Send mail in single loop
+                foreach ($users as $u) {
+
+                    $email = Helpers::getUserEmail($u->user_id);
+
+                    if (!empty($email)) {
+                        try {
+                        $data = [
+                            'data' => $changeControl,
+                            'site' => "LI",
+                            'history' => "Pending Initiator Update Complete",
+                            'process' => 'Lab Incident',
+                            'comment' => $request->comments,
+                            'user'=> Auth::user()->name
+                        ];
+
+                        SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail Error: ' . $e->getMessage());
+                    }
+                    }
+                }
+
+                $changeControl->update();
+                //toastr()->success('Document Sent');
+                return back();
+
+
+            }
 
             if ($changeControl->stage == 5) {
                 if (empty($changeControl->QC_head_hod_secondry_Comments && $changeControl->Incident_Category || ($changeControl->Incident_Category == "Other" && empty($changeControl->other_incidence_data))))
@@ -7278,28 +7208,19 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                     if (!empty($email)) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "LI",
-                                    'history' => "QC Head/HOD Secondary Review Complete",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: QC Head/HOD Secondary Review Complete"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do not break execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "QC Head/HOD Secondary Review Complete",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -7370,34 +7291,23 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if (!empty($email)) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "LI",
-                                    'history' => "QA Secondry Review Complete",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: QA Secondry Review Complete"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do not break execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                       try {
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "QA Secondary Review Complete",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
-
-
                 $changeControl->update();
                 //toastr()->success('Document Sent');
                 return back();
@@ -7610,15 +7520,22 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $list = Helpers::getQAUserList($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "Final Root Cause Found", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Root Cause Found");
-                                }
-                            );
+                            if ($email !== null) 
+                              try {
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "Approved",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
+                        }
                         }
                     // }
                 }
@@ -7626,15 +7543,21 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $list = Helpers::QCHead($changeControl->division_id); // Notify CFT Person
                 foreach ($list as $u) {
                         $email = Helpers::getUserEmail($u->user_id);
-                            if ($email !== null) {
-                            Mail::send(
-                                'mail.view-mail',
-                                ['data' => $changeControl, 'site' => "LI", 'history' => "Final Root Cause Found", 'process' => 'Lab Incident', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                    ->subject("Agio Notification: Lab Incident, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Root Cause Found");
-                                }
-                            );
+                            if ($email !== null)
+                                try {
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "Approved",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     // }
                 }
@@ -7660,11 +7583,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 //toastr()->success('Document Sent');
                 return back();
             }
-
-
-
-
-        }
+   
          else {
             toastr()->error('E-signature Not match');
             return back();
@@ -7716,10 +7635,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $history->action_name = 'Not Applicable';
                 $history->save();
 
-               
-
-
-                 $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
+                $list = Helpers::getInitiatorUserList($changeControl->division_id); // Notify CFT Person
 
                 foreach ($list as $u) {
 
@@ -7727,28 +7643,19 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                     if (!empty($email)) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "LI",
-                                    'history' => "More Information Required",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Information Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do not break execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "More Inforrmation Required",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -7813,33 +7720,22 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                     if (!empty($email)) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "LI",
-                                    'history' => "More Information Required",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comments,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Information Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do NOT stop execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "More Inforrmation Required",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
-
-
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -7889,28 +7785,19 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                     if (!empty($email)) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "LI",
-                                    'history' => "More Information Required",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Information Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do not break execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "More Inforrmation Required",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -7964,29 +7851,20 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if (!empty($email)) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "LI",
-                                    'history' => "More Information Required",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Information Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do not break execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                       try {
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "More Inforrmation Required",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -8047,28 +7925,19 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                     if (!empty($email)) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "LI",
-                                    'history' => "More Information Required",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Information Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do not stop execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "More Inforrmation Required",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -8134,28 +8003,19 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                     if (!empty($email)) {
                         try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $changeControl,
-                                    'site'    => "LI",
-                                    'history' => "More Information Required",
-                                    'process' => 'Lab Incident',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Lab Incident, Record #"
-                                                . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Information Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            // Log error but do not break execution
-                            \Log::error('Lab Incident Mail Error: ' . $e->getMessage());
+                            $data = [
+                                'data' => $changeControl,
+                                'site' => "LI",
+                                'history' => "More Inforrmation Required",
+                                'process' => 'Lab Incident',
+                                'comment' => $request->comments,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changeControl, 'Lab Incident');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
                 }
@@ -8251,15 +8111,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
             $changeControl->cancell_comment =$request->comment;
 
-            
-
-
+        
              //child cancel if parent cancel
-
-
-
-
-
              $childActionItems = ActionItem::where('parent_id', $id)
                 ->where('parent_type', 'Lab Incident')
                 ->get();
@@ -8440,12 +8293,6 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
         }
 
-          
-
-
-      
-
-
         $childResamplingData = Resampling::where('parent_id', $id)
                 ->where('parent_type', 'Lab Incident')
                 ->get();
@@ -8494,12 +8341,6 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
             }
         }
-
-
-           
-                              
-
-                
 
             ////////////////////////
 
@@ -8803,3 +8644,4 @@ public function store_audit_review_lab(Request $request, $id)
 }
 
 }
+
