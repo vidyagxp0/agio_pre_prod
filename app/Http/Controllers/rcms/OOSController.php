@@ -305,7 +305,7 @@ class OOSController extends Controller
                                                 'site' => "OOS/OOT",
                                                 'history' => "Submit",
                                                 'process' => 'OOS/OOT',
-                                                'comment' => $request->comments,
+                                                'comment' => $request->comment,
                                                 'user'=> Auth::user()->name
                                             ];
 
@@ -417,7 +417,7 @@ class OOSController extends Controller
                                                 'site' => "OOS/OOT",
                                                 'history' => "HOD Primary Review Complete",
                                                 'process' => 'OOS/OOT',
-                                                'comment' => $request->comments,
+                                                'comment' => $request->comment,
                                                 'user'=> Auth::user()->name
                                             ];
 
@@ -569,7 +569,7 @@ class OOSController extends Controller
                                     'site' => "OOS/OOT",
                                     'history' => "Phase IA HOD Review Complete",
                                     'process' => 'OOS/OOT',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -699,7 +699,7 @@ class OOSController extends Controller
                 
                     // Get QA & CQA users
                     $qaList  = Helpers::getQAHeadUserList($changestage->division_id);
-                    $cqaList = Helpers::getCQAUsersList($changestage->division_id);
+                    $cqaList = Helpers::getCQAHeadUserList($changestage->division_id);
 
                     // Merge & remove duplicate users
                     $users = collect($qaList)
@@ -719,7 +719,7 @@ class OOSController extends Controller
                                     'site' => "OOS/OOT",
                                     'history' => "Phase IA QA/CQA Review Complete",
                                     'process' => 'OOS/OOT',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -957,7 +957,7 @@ class OOSController extends Controller
                                             'site' => "OOS/OOT",
                                             'history' => "Phase IB Investigation",
                                             'process' => 'OOS/OOT',
-                                            'comment' => $request->comments,
+                                            'comment' => $request->comment,
                                             'user'=> Auth::user()->name
                                         ];
 
@@ -1106,7 +1106,7 @@ class OOSController extends Controller
                                     'site' => "OOS/OOT",
                                     'history' => "Phase IB HOD Review Complete",
                                     'process' => 'OOS/OOT',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -1236,7 +1236,7 @@ class OOSController extends Controller
                     
                     // Get QA & CQA users
                     $qaList  = Helpers::getQAHeadUserList($changestage->division_id);
-                    $cqaList = Helpers::getCQAUsersList($changestage->division_id);
+                    $cqaList = Helpers::getCQAHeadUserList($changestage->division_id);
 
                     // Merge & remove duplicate users
                     $users = collect($qaList)
@@ -1255,9 +1255,9 @@ class OOSController extends Controller
                                 $data = [
                                     'data' => $changestage,
                                     'site' => "OOS/OOT",
-                                    'history' => "Phase IB QA Review Complete",
+                                    'history' => "Phase IB CQA/QA Review Complete",
                                     'process' => 'OOS/OOT',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -1425,7 +1425,7 @@ class OOSController extends Controller
                                     'site' => "OOS/OOT",
                                     'history' => "P I B Assignable Cause Not Found",
                                     'process' => 'OOS/OOT',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -1556,6 +1556,7 @@ class OOSController extends Controller
                     // Get QA & CQA users
                     $qaList  = Helpers::getQAUserList($changestage->division_id);
                     $cqaList = Helpers::getCQAUsersList($changestage->division_id);
+                    
 
                     // Merge & remove duplicate users
                     $users = collect($qaList)
@@ -1575,7 +1576,7 @@ class OOSController extends Controller
                                     'site' => "OOS/OOT",
                                     'history' => "Phase II A HOD Review Complete",
                                     'process' => 'OOS/OOT',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -1704,7 +1705,7 @@ class OOSController extends Controller
                     
                     // Get QA & CQA users
                     $qaList  = Helpers::getQAHeadUserList($changestage->division_id);
-                    $cqaList = Helpers::getCQAUsersList($changestage->division_id);
+                    $cqaList = Helpers::getCQAHeadUserList($changestage->division_id);
 
                     // Merge & remove duplicate users
                     $users = collect($qaList)
@@ -1724,7 +1725,7 @@ class OOSController extends Controller
                                     'site' => "OOS/OOT",
                                     'history' => "Phase II A CQA/QA Review Complete",
                                     'process' => 'OOS/OOT',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -1864,7 +1865,7 @@ class OOSController extends Controller
                                     'site' => "OOS/OOT",
                                     'history' => "P II A Assignable Cause Not Found",
                                     'process' => 'OOS/OOT',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -2074,20 +2075,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getHodUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                   
 
 
                      $list = Helpers::getHodUserList($changestage->division_id);
@@ -2097,30 +2085,24 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "Phase II B Investigation",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: Phase II B Investigation"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                    try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "Phase II B Investigation",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
                 $changestage->update();
@@ -2255,30 +2237,24 @@ class OOSController extends Controller
                         $email = Helpers::getUserEmail($u->user_id);
 
                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $changestage,
-                                        'site'    => "OOS/OOT",
-                                        'history' => "Phase II B HOD Review Complete",
-                                        'process' => 'OOS/OOT',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $changestage) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: OOS/OOT, Record #"
-                                                    . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: Phase II B HOD Review Complete"
-                                                );
-                                    }
-                                );
-                            } catch (\Throwable $e) {
-                                // Log error but do NOT stop execution
+                            
+                        try {
+
+                                $data = [
+                                    'data' => $changestage,
+                                    'site' => "OOS/OOT",
+                                    'history' => "Phase II B HOD Review Complete",
+                                    'process' => 'OOS/OOT',
+                                    'comment' => $request->comment,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                            } catch (\Exception $e) {
                                 \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                             }
+                           
                         }
                     }
 
@@ -2442,30 +2418,24 @@ class OOSController extends Controller
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if (!empty($email)) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data'    => $changestage,
-                                            'site'    => "OOS/OOT",
-                                            'history' => "Phase II B QA Review Complete",
-                                            'process' => 'OOS/OOT',
-                                            'comment' => $request->comment,
-                                            'user'    => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changestage) {
-                                            $message->to($email)
-                                                    ->subject(
-                                                        "Agio Notification: OOS/OOT, Record #"
-                                                        . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                        . " - Activity: Phase II B QA Review Complete"
-                                                    );
+
+                            try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "Phase II B QA Review Complete",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
+                                            \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                    );
-                                } catch (\Throwable $e) {
-                                    // Log error but do NOT stop execution
-                                    \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                                }
+                               
                             }
                         }
 
@@ -2587,9 +2557,17 @@ class OOSController extends Controller
                 $changestage->P_II_B_Assignable_Cause_Not_Found_By= Auth::user()->name;
                 $changestage->P_II_B_Assignable_Cause_Not_Found_On = Carbon::now()->format('d-M-Y');
                 $changestage->P_II_B_Assignable_Cause_Not_Found_Comment = $request->comment;
+
+                 if ($request->action_type == 'found') {
+                        $historyAction = 'P II B Assignable Cause Found';
+                    } else {
+                        $historyAction = 'P II B Assignable Cause Not Found';
+                    }
+                 $changestage->save();
                     $history = new OosAuditTrial();
                     $history->oos_id = $id;
-                    $history->activity_type = 'P II B Assignable Cause Found By    ,   P II B Assignable Cause Found On';
+                    $history->activity_type = $historyAction;
+                  //  $history->activity_type = 'P II B Assignable Cause Found By    ,   P II B Assignable Cause Found On';
                     if (is_null($lastDocument->P_II_B_Assignable_Cause_Not_Found_By) || $lastDocument->P_II_B_Assignable_Cause_Not_Found_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -2600,7 +2578,7 @@ class OOSController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->action = 'P II B Assignable Cause Found';
+                    $history->action = $historyAction;
                     $history->change_from = $lastDocument->status;
                     $history->change_to =   " Closed - Done";
                     $history->current = $changestage->P_II_B_Assignable_Cause_Not_Found_By . ' , ' . $changestage->P_II_B_Assignable_Cause_Not_Found_On;
@@ -2610,64 +2588,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-                    // $list = Helpers::getHodUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-
+                    
                     // Get all role users
                     $initiatorList = Helpers::getInitiatorUserList($changestage->division_id);
                     $hodList       = Helpers::getHodUserList($changestage->division_id);
@@ -2688,30 +2609,24 @@ class OOSController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if (!empty($email)) {
-                    try {
-                        Mail::send(
-                            'mail.view-mail',
-                            [
-                                'data'    => $changestage,
-                                'site'    => "OOS/OOT",
-                                'history' => "P II B Assignable Cause Found",
+
+                        try {
+
+                            $data = [
+                                'data' => $changestage,
+                                'site' => "OOS/OOT",
+                                'history' => $historyAction,
                                 'process' => 'OOS/OOT',
                                 'comment' => $request->comment,
-                                'user'    => Auth::user()->name
-                            ],
-                            function ($message) use ($email, $changestage) {
-                                $message->to($email)
-                                        ->subject(
-                                            "Agio Notification: OOS/OOT, Record #"
-                                            . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                            . " - Activity: P II B Assignable Cause Found"
-                                        );
-                            }
-                        );
-                    } catch (\Throwable $e) {
-                        // Log error but do NOT break execution
-                        \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                    }
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                        } catch (\Exception $e) {
+                            \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
+                        }
+                    
                     }
                     }
 
@@ -2845,30 +2760,24 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                    try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
 
@@ -2932,30 +2841,24 @@ class OOSController extends Controller
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if (!empty($email)) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data'    => $changestage,
-                                            'site'    => "OOS/OOT",
-                                            'history' => "More Information Required",
-                                            'process' => 'OOS/OOT',
-                                            'comment' => $request->comment,
-                                            'user'    => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changestage) {
-                                            $message->to($email)
-                                                    ->subject(
-                                                        "Agio Notification: OOS/OOT, Record #"
-                                                        . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                        . " - Activity: More Information Required"
-                                                    );
+
+                            try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
+                                            \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                    );
-                                } catch (\Throwable $e) {
-                                    // Log error but do NOT break execution
-                                    \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                                }
+                               
                             }
                         }
                 $changestage->update();
@@ -2996,35 +2899,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-
+                    
 
                      $list = Helpers::getQAHeadUserList($changestage->division_id);
 
@@ -3034,29 +2909,22 @@ class OOSController extends Controller
 
                             if (!empty($email)) {
                                 try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data'    => $changestage,
-                                            'site'    => "OOS/OOT",
+
+                                        $data = [
+                                            'data' => $changestage,
+                                            'site' => "OOS/OOT",
                                             'history' => "More Information Required",
                                             'process' => 'OOS/OOT',
                                             'comment' => $request->comment,
-                                            'user'    => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changestage) {
-                                            $message->to($email)
-                                                    ->subject(
-                                                        "Agio Notification: OOS/OOT, Record #"
-                                                        . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                        . " - Activity: More Information Required"
-                                                    );
-                                        }
-                                    );
-                                } catch (\Throwable $e) {
-                                    // Log error but do NOT break execution
-                                    \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                                }
+                                            'user'=> Auth::user()->name
+                                        ];
+
+                                        SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                    } catch (\Exception $e) {
+                                        \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
+                                    }
+                                
                             }
                         }
                 $changestage->update();
@@ -3096,20 +2964,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    
 
                     $list = Helpers::getInitiatorUserList($changestage->division_id);
 
@@ -3118,30 +2973,24 @@ class OOSController extends Controller
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if (!empty($email)) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data'    => $changestage,
-                                            'site'    => "OOS/OOT",
-                                            'history' => "More Information Required",
-                                            'process' => 'OOS/OOT',
-                                            'comment' => $request->comment,
-                                            'user'    => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changestage) {
-                                            $message->to($email)
-                                                    ->subject(
-                                                        "Agio Notification: OOS/OOT, Record #"
-                                                        . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                        . " - Activity: More Information Required"
-                                                    );
+
+                            try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
+                                            \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                    );
-                                } catch (\Throwable $e) {
-                                    // Log error but do NOT break execution
-                                    \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                                }
+                                
                             }
                         }
                 $changestage->update();
@@ -3183,20 +3032,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getHodUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                  
 
                     $list = Helpers::getHodUserList($changestage->division_id);
 
@@ -3205,30 +3041,24 @@ class OOSController extends Controller
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if (!empty($email)) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data'    => $changestage,
-                                            'site'    => "OOS/OOT",
-                                            'history' => "More Information Required",
-                                            'process' => 'OOS/OOT',
-                                            'comment' => $request->comment,
-                                            'user'    => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changestage) {
-                                            $message->to($email)
-                                                    ->subject(
-                                                        "Agio Notification: OOS/OOT, Record #"
-                                                        . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                        . " - Activity: More Information Required"
-                                                    );
-                                        }
-                                    );
-                                } catch (\Throwable $e) {
-                                    // Log error but do NOT break execution
+
+                                 try {
+
+                                    $data = [
+                                        'data' => $changestage,
+                                        'site' => "OOS/OOT",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOS/OOT',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                } catch (\Exception $e) {
                                     \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                 }
+                             
                             }
                         }
 
@@ -3306,30 +3136,24 @@ class OOSController extends Controller
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if (!empty($email)) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data'    => $changestage,
-                                            'site'    => "OOS/OOT",
-                                            'history' => "More Information Required",
-                                            'process' => 'OOS/OOT',
-                                            'comment' => $request->comment,
-                                            'user'    => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changestage) {
-                                            $message->to($email)
-                                                    ->subject(
-                                                        "Agio Notification: OOS/OOT, Record #"
-                                                        . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                        . " - Activity: More Information Required"
-                                                    );
-                                        }
-                                    );
-                                } catch (\Throwable $e) {
-                                    // Log error but do NOT break execution
+
+                            try {
+
+                                    $data = [
+                                        'data' => $changestage,
+                                        'site' => "OOS/OOT",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOS/OOT',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                } catch (\Exception $e) {
                                     \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                 }
+                               
                             }
                         }
 
@@ -3408,30 +3232,24 @@ class OOSController extends Controller
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if (!empty($email)) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data'    => $changestage,
-                                            'site'    => "OOS/OOT",
-                                            'history' => "More Information Required",
-                                            'process' => 'OOS/OOT',
-                                            'comment' => $request->comment,
-                                            'user'    => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changestage) {
-                                            $message->to($email)
-                                                    ->subject(
-                                                        "Agio Notification: OOS/OOT, Record #"
-                                                        . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                        . " - Activity: More Information Required"
-                                                    );
-                                        }
-                                    );
-                                } catch (\Throwable $e) {
-                                    // Log error but do NOT break execution
+
+                            try {
+
+                                    $data = [
+                                        'data' => $changestage,
+                                        'site' => "OOS/OOT",
+                                        'history' => "More Information Required",
+                                        'process' => 'OOS/OOT',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                } catch (\Exception $e) {
                                     \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                 }
+                              
                             }
                         }
 
@@ -3472,21 +3290,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-
+                   
                     $list = Helpers::getInitiatorUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
@@ -3495,29 +3299,22 @@ class OOSController extends Controller
 
                                     if (!empty($email)) {
                                         try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
 
@@ -3560,51 +3357,32 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-                    $list = Helpers::getInitiatorUserList($changestage->division_id);
+                    
+                    $list = Helpers::getHodUserList($changestage->division_id);
 
                     foreach ($list as $u) {
 
                         $email = Helpers::getUserEmail($u->user_id);
 
                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $changestage,
-                                        'site'    => "OOS/OOT",
+
+                        try {
+
+                                    $data = [
+                                        'data' => $changestage,
+                                        'site' => "OOS/OOT",
                                         'history' => "More Information Required",
                                         'process' => 'OOS/OOT',
                                         'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $changestage) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: OOS/OOT, Record #"
-                                                    . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: More Information Required"
-                                                );
-                                    }
-                                );
-                            } catch (\Throwable $e) {
-                                // Log error but do NOT break execution
-                                \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                            }
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
+                                }
+                          
                         }
                     }
 
@@ -3645,22 +3423,8 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getHodUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-
-                    $list = Helpers::getHodUserList($changestage->division_id);
+                    
+                    $list = Helpers::getQAUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
 
@@ -3668,29 +3432,22 @@ class OOSController extends Controller
 
                                     if (!empty($email)) {
                                         try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                        
                                     }
                                 }
 
@@ -3731,68 +3488,36 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                  
 
-                    $list = Helpers::getQAUserList($changestage->division_id);
+                    $list = Helpers::getQAHeadUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
 
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                    try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                 
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3832,22 +3557,9 @@ class OOSController extends Controller
                     $history->action_name = 'Not Applicable';
                     $history->save();
 
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                 
 
-                    $list = Helpers::getQAUserList($changestage->division_id);
+                    $list = Helpers::getProductionUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
 
@@ -3855,29 +3567,22 @@ class OOSController extends Controller
 
                                     if (!empty($email)) {
                                         try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
                 $changestage->update();
@@ -3918,22 +3623,9 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getProductionUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                   
 
-                    $list = Helpers::getProductionUserList($changestage->division_id);
+                    $list = Helpers::getProductionHeadUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
 
@@ -3941,29 +3633,22 @@ class OOSController extends Controller
 
                                     if (!empty($email)) {
                                         try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                      
                                     }
                                 }
 
@@ -4004,35 +3689,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-
+                   
                      $list = Helpers::getQAUserList($changestage->division_id);
 
                         foreach ($list as $u) {
@@ -4040,30 +3697,24 @@ class OOSController extends Controller
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if (!empty($email)) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data'    => $changestage,
-                                            'site'    => "OOS/OOT",
-                                            'history' => "More Information Required",
-                                            'process' => 'OOS/OOT',
-                                            'comment' => $request->comment,
-                                            'user'    => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $changestage) {
-                                            $message->to($email)
-                                                    ->subject(
-                                                        "Agio Notification: OOS/OOT, Record #"
-                                                        . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                        . " - Activity: More Information Required"
-                                                    );
+
+                             try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
+                                            \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                    );
-                                } catch (\Throwable $e) {
-                                    // Log error but do NOT break execution
-                                    \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                                }
+                              
                             }
                         }
                 $changestage->update();
@@ -4103,34 +3754,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-                    // $list = Helpers::getQAHeadUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                   
 
                      $list = Helpers::getQAHeadUserList($changestage->division_id);
 
@@ -4139,30 +3763,23 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+                                         try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                      
                                     }
                                 }
 
@@ -4204,21 +3821,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-
+                   
 
                      $list = Helpers::getInitiatorUserList($changestage->division_id);
 
@@ -4227,30 +3830,23 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+                                         try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
                 $changestage->update();
@@ -4290,20 +3886,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getHodUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    
 
                      $list = Helpers::getHodUserList($changestage->division_id);
 
@@ -4312,30 +3895,24 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                     try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
 
@@ -4377,35 +3954,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    // $list = Helpers::getCQAUsersList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
-
+                  
                      $list = Helpers::getQAUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
@@ -4413,30 +3962,23 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+                                         try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
 
@@ -4479,20 +4021,7 @@ class OOSController extends Controller
                     $history->action_name = 'Not Applicable';
                     $history->save();
 
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                    
 
                      $list = Helpers::getQAUserList($changestage->division_id);
 
@@ -4501,30 +4030,24 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "More Information Required",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: More Information Required"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                     try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "More Information Required",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
                 $changestage->update();
@@ -4637,30 +4160,25 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "Request For Cancellation",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: Request For Cancellation"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+
+                                    try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "Request For Cancellation",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
 
@@ -4750,46 +4268,27 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "Request For Cancellation",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: Request For Cancellation"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                    try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "Request For Cancellation",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
-                            // $list = Helpers::getQAHeadUserList($changestage->division_id);
-                            //     foreach ($list as $u) {
-                            //     $email = Helpers::getUserEmail($u->user_id);
-                            //         if ($email !== null) {
-                            //         Mail::send(
-                            //             'mail.view-mail',
-                            //             ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                            //             function ($message) use ($email, $changestage) {
-                            //                 $message->to($email)
-                            //                 ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                            //             }
-                            //         );
-                            //     }
-                            //     }
+                           
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -4846,36 +4345,36 @@ class OOSController extends Controller
                         ]);
                     }
 
-                    $actionchilds = ActionItem::where('parent_id', $id)
-                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
-                        ->get();
-                            $hasPendingaction = false;
-                        foreach ($actionchilds as $ext) {
-                                $actionchildstatus = trim(strtolower($ext->status));
-                                if ($actionchildstatus !== 'closed - done') {
-                                    $hasPendingaction = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingaction) {
-                        // $actionchildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingaction) {
-                            Session::flash('swal', [
-                                'title' => 'Action Item Child Pending!',
-                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // $actionchilds = ActionItem::where('parent_id', $id)
+                    //     ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                    //     ->get();
+                    //         $hasPendingaction = false;
+                    //     foreach ($actionchilds as $ext) {
+                    //             $actionchildstatus = trim(strtolower($ext->status));
+                    //             if ($actionchildstatus !== 'closed - done') {
+                    //                 $hasPendingaction = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingaction) {
+                    //     // $actionchildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingaction) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'Action Item Child Pending!',
+                    //             'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
                
                 
                 $changestage->stage = "5";
@@ -4907,20 +4406,7 @@ class OOSController extends Controller
                             }
                             $history->save();
                             
-                            // $list = Helpers::getQAUserList($changestage->division_id);
-                            // foreach ($list as $u) {
-                            //    $email = Helpers::getUserEmail($u->user_id);
-                            //        if ($email !== null) {
-                            //        Mail::send(
-                            //            'mail.view-mail',
-                            //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                            //            function ($message) use ($email, $changestage) {
-                            //                $message->to($email)
-                            //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                            //            }
-                            //        );
-                            //    }
-                            // }
+                            
 
 
 
@@ -4931,46 +4417,28 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
+
+
                                         try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "CQA/QA Head Primary Review Complete",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: CQA/QA Head Primary Review Complete"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "CQA/QA Head Primary Review Complete",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                                        }
+                                        } 
+
                                     }
                                 }
-                            // $list = Helpers::getCQAUsersList($changestage->division_id);
-                            // foreach ($list as $u) {
-                            //    $email = Helpers::getUserEmail($u->user_id);
-                            //        if ($email !== null) {
-                            //        Mail::send(
-                            //            'mail.view-mail',
-                            //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                            //            function ($message) use ($email, $changestage) {
-                            //                $message->to($email)
-                            //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                            //            }
-                            //        );
-                            //    }
-                            // }
+                            
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -4978,28 +4446,28 @@ class OOSController extends Controller
             if ($changestage->stage == 5) {
 
                 // Resampling Status Check
-                $resampling = Resampling::where('parent_id', $id)->first();
+                // $resampling = Resampling::where('parent_id', $id)->first();
 
-                if ($resampling) { // Check only if a child (resampling) exists
-                    $resamplingStatus = trim(strtolower($resampling->status));
+                // if ($resampling) { // Check only if a child (resampling) exists
+                //     $resamplingStatus = trim(strtolower($resampling->status));
 
-                    if ($resamplingStatus !== 'closed - done') {
-                        Session::flash('swal', [
-                            'title' => 'Resampling Pending!',
-                            'message' => 'You cannot proceed until Resampling is Closed-Done.',
-                            'type' => 'warning',
-                        ]);
+                //     if ($resamplingStatus !== 'closed - done') {
+                //         Session::flash('swal', [
+                //             'title' => 'Resampling Pending!',
+                //             'message' => 'You cannot proceed until Resampling is Closed-Done.',
+                //             'type' => 'warning',
+                //         ]);
 
-                        return redirect()->back();
-                    }
-                } else {
-                    // Flash message for success (when the form is filled correctly)
-                    Session::flash('swal', [
-                        'title' => 'Success!',
-                        'message' => 'Sent for Next Stage',
-                        'type' => 'success',
-                    ]);
-                }
+                //         return redirect()->back();
+                //     }
+                // } else {
+                //     // Flash message for success (when the form is filled correctly)
+                //     Session::flash('swal', [
+                //         'title' => 'Success!',
+                //         'message' => 'Sent for Next Stage',
+                //         'type' => 'success',
+                //     ]);
+                // }
 
                 if (empty($changestage->Comments_plidata && $changestage->analyst_interview_pli
                  && $changestage->Any_other_cause && $changestage->root_comment && $changestage->rational_for_assingnable
@@ -5058,97 +4526,97 @@ class OOSController extends Controller
                     }
 
                    
-                    $actionchilds = ActionItem::where('parent_id', $id)
-                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
-                        ->get();
-                        $hasPendingaction = false;
-                        foreach ($actionchilds as $ext) {
-                                $actionchildstatus = trim(strtolower($ext->status));
-                                if ($actionchildstatus !== 'closed - done') {
-                                    $hasPendingaction = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingaction) {
-                        // $actionchildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingaction) {
-                            Session::flash('swal', [
-                                'title' => 'Action Item Child Pending!',
-                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+            //         $actionchilds = ActionItem::where('parent_id', $id)
+            //             ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+            //             ->get();
+            //             $hasPendingaction = false;
+            //             foreach ($actionchilds as $ext) {
+            //                     $actionchildstatus = trim(strtolower($ext->status));
+            //                     if ($actionchildstatus !== 'closed - done') {
+            //                         $hasPendingaction = true;
+            //                         break;
+            //                     }
+            //                 }
+            //         if ($hasPendingaction) {
+            //             // $actionchildstatus = trim(strtolower($extensionchild->status));
+            //             if ($hasPendingaction) {
+            //                 Session::flash('swal', [
+            //                     'title' => 'Action Item Child Pending!',
+            //                     'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+            //                     'type' => 'warning',
+            //                 ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+            //             return redirect()->back();
+            //             }
+            //         } else {
+            //             // Flash message for success (when the form is filled correctly)
+            //             Session::flash('swal', [
+            //                 'title' => 'Success!',
+            //                 'message' => 'Document Sent',
+            //                 'type' => 'success',
+            //             ]);
+            //         }
 
-                $capachilds = Capa::where('parent_id', $id)
-                ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
-                ->get();
-                    $hasPending = false;
-                foreach ($capachilds as $ext) {
-                        $capachildstatus = trim(strtolower($ext->status));
-                        if ($capachildstatus !== 'closed - done') {
-                            $hasPending = true;
-                            break;
-                        }
-                    }
-               if ($hasPending) {
-                // $capachildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPending) {
-                       Session::flash('swal', [
-                           'title' => 'CAPA Child Pending!',
-                           'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                           'type' => 'warning',
-                       ]);
+            //     $capachilds = Capa::where('parent_id', $id)
+            //     ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+            //     ->get();
+            //         $hasPending = false;
+            //     foreach ($capachilds as $ext) {
+            //             $capachildstatus = trim(strtolower($ext->status));
+            //             if ($capachildstatus !== 'closed - done') {
+            //                 $hasPending = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPending) {
+            //     // $capachildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPending) {
+            //            Session::flash('swal', [
+            //                'title' => 'CAPA Child Pending!',
+            //                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
-                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
-                ->get();
-                    $hasPendingRCA = false;
-                foreach ($rcachilds as $ext) {
-                        $rcachildstatus = trim(strtolower($ext->status));
-                        if ($rcachildstatus !== 'closed - done') {
-                            $hasPendingRCA = true;
-                            break;
-                        }
-                    }
-               if ($hasPendingRCA) {
-                // $rcachildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPendingRCA) {
-                       Session::flash('swal', [
-                           'title' => 'RCA Child Pending!',
-                           'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                           'type' => 'warning',
-                       ]);
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
+            //     $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+            //     ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+            //     ->get();
+            //         $hasPendingRCA = false;
+            //     foreach ($rcachilds as $ext) {
+            //             $rcachildstatus = trim(strtolower($ext->status));
+            //             if ($rcachildstatus !== 'closed - done') {
+            //                 $hasPendingRCA = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPendingRCA) {
+            //     // $rcachildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPendingRCA) {
+            //            Session::flash('swal', [
+            //                'title' => 'RCA Child Pending!',
+            //                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
 
                
 
@@ -5180,20 +4648,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                   
 
 
                      $list = Helpers::getHodUserList($changestage->division_id);
@@ -5203,30 +4658,24 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $changestage,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "Phase IA Investigation",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $changestage) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: Phase IA Investigation"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+                                     
+                                    try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "Phase IA Investigation",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+
                                     }
                                 }
                 $changestage->update();
@@ -5346,20 +4795,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    // $list = Helpers::getInitiatorUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                  
 
 
                      $list = Helpers::getInitiatorUserList($changestage->division_id);
@@ -5369,30 +4805,23 @@ class OOSController extends Controller
                         $email = Helpers::getUserEmail($u->user_id);
 
                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $changestage,
-                                        'site'    => "OOS/OOT",
-                                        'history' => "Assignable Cause Not Found",
-                                        'process' => 'OOS/OOT',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $changestage) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: OOS/OOT, Record #"
-                                                    . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: Assignable Cause Not Found"
-                                                );
-                                    }
-                                );
-                            } catch (\Throwable $e) {
-                                // Log error but do NOT break execution
-                                \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                            }
+
+                                     try {
+
+                                            $data = [
+                                                'data' => $changestage,
+                                                'site' => "OOS/OOT",
+                                                'history' => "Assignable Cause Not Found",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
+                                            \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
+                                        }
                         }
                     }
                 $changestage->update();
@@ -5452,121 +4881,121 @@ class OOSController extends Controller
                         ]);
                     }
 
-                    $actionchilds = ActionItem::where('parent_id', $id)
-                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
-                        ->get();
-                            $hasPendingaction = false;
-                            foreach ($actionchilds as $ext) {
-                                $actionchildstatus = trim(strtolower($ext->status));
-                                if ($actionchildstatus !== 'closed - done') {
-                                    $hasPendingaction = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPendingaction) {
-                        // $actionchildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingaction) {
-                            Session::flash('swal', [
-                                'title' => 'Action Item Child Pending!',
-                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                //     $actionchilds = ActionItem::where('parent_id', $id)
+                //         ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                //         ->get();
+                //             $hasPendingaction = false;
+                //             foreach ($actionchilds as $ext) {
+                //                 $actionchildstatus = trim(strtolower($ext->status));
+                //                 if ($actionchildstatus !== 'closed - done') {
+                //                     $hasPendingaction = true;
+                //                     break;
+                //                 }
+                //             }
+                //     if ($hasPendingaction) {
+                //         // $actionchildstatus = trim(strtolower($extensionchild->status));
+                //         if ($hasPendingaction) {
+                //             Session::flash('swal', [
+                //                 'title' => 'Action Item Child Pending!',
+                //                 'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                //                 'type' => 'warning',
+                //             ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                //         return redirect()->back();
+                //         }
+                //     } else {
+                //         // Flash message for success (when the form is filled correctly)
+                //         Session::flash('swal', [
+                //             'title' => 'Success!',
+                //             'message' => 'Document Sent',
+                //             'type' => 'success',
+                //         ]);
+                //     }
 
-                $capachilds = Capa::where('parent_id', $id)
-                ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
-                ->get();
-                    $hasPending = false;
-                    foreach ($capachilds as $ext) {
-                        $capachildstatus = trim(strtolower($ext->status));
-                        if ($capachildstatus !== 'closed - done') {
-                            $hasPending = true;
-                            break;
-                        }
-                    }
-                if ($hasPending) {
-                // $capachildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPending) {
-                       Session::flash('swal', [
-                           'title' => 'CAPA Child Pending!',
-                           'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                           'type' => 'warning',
-                       ]);
+                // $capachilds = Capa::where('parent_id', $id)
+                // ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                // ->get();
+                //     $hasPending = false;
+                //     foreach ($capachilds as $ext) {
+                //         $capachildstatus = trim(strtolower($ext->status));
+                //         if ($capachildstatus !== 'closed - done') {
+                //             $hasPending = true;
+                //             break;
+                //         }
+                //     }
+                // if ($hasPending) {
+                // // $capachildstatus = trim(strtolower($extensionchild->status));
+                //    if ($hasPending) {
+                //        Session::flash('swal', [
+                //            'title' => 'CAPA Child Pending!',
+                //            'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                //            'type' => 'warning',
+                //        ]);
 
-                   return redirect()->back();
-                   }
-                } else {
-                    // Flash message for success (when the form is filled correctly)
-                    Session::flash('swal', [
-                        'title' => 'Success!',
-                        'message' => 'Document Sent',
-                        'type' => 'success',
-                    ]);
-                }
+                //    return redirect()->back();
+                //    }
+                // } else {
+                //     // Flash message for success (when the form is filled correctly)
+                //     Session::flash('swal', [
+                //         'title' => 'Success!',
+                //         'message' => 'Document Sent',
+                //         'type' => 'success',
+                //     ]);
+                // }
 
-                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
-                ->get();
-                    $hasPendingRCA = false;
-                    foreach ($rcachilds as $ext) {
-                        $rcachildstatus = trim(strtolower($ext->status));
-                        if ($rcachildstatus !== 'closed - done') {
-                            $hasPendingRCA = true;
-                            break;
-                        }
-                    }
-                    if ($hasPendingRCA) {
-                        // $rcachildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPendingRCA) {
-                            Session::flash('swal', [
-                                'title' => 'RCA Child Pending!',
-                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                // ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                // ->get();
+                //     $hasPendingRCA = false;
+                //     foreach ($rcachilds as $ext) {
+                //         $rcachildstatus = trim(strtolower($ext->status));
+                //         if ($rcachildstatus !== 'closed - done') {
+                //             $hasPendingRCA = true;
+                //             break;
+                //         }
+                //     }
+                //     if ($hasPendingRCA) {
+                //         // $rcachildstatus = trim(strtolower($extensionchild->status));
+                //         if ($hasPendingRCA) {
+                //             Session::flash('swal', [
+                //                 'title' => 'RCA Child Pending!',
+                //                 'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                //                 'type' => 'warning',
+                //             ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                //         return redirect()->back();
+                //         }
+                //     } else {
+                //         // Flash message for success (when the form is filled correctly)
+                //         Session::flash('swal', [
+                //             'title' => 'Success!',
+                //             'message' => 'Document Sent',
+                //             'type' => 'success',
+                //         ]);
+                //     }
 
-                    $resampling = Resampling::where('parent_id', $id)->first();
+                //     $resampling = Resampling::where('parent_id', $id)->first();
 
-                    if ($resampling) { // Check only if a child (resampling) exists
-                        $resamplingStatus = trim(strtolower($resampling->status));
+                //     if ($resampling) { // Check only if a child (resampling) exists
+                //         $resamplingStatus = trim(strtolower($resampling->status));
 
-                        if ($resamplingStatus !== 'closed - done') {
-                            Session::flash('swal', [
-                                'title' => 'Resampling Pending!',
-                                'message' => 'You cannot proceed until Resampling is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                //         if ($resamplingStatus !== 'closed - done') {
+                //             Session::flash('swal', [
+                //                 'title' => 'Resampling Pending!',
+                //                 'message' => 'You cannot proceed until Resampling is Closed-Done.',
+                //                 'type' => 'warning',
+                //             ]);
 
-                            return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Sent for Next Stage',
-                            'type' => 'success',
-                        ]);
-                    }
+                //             return redirect()->back();
+                //         }
+                //     } else {
+                //         // Flash message for success (when the form is filled correctly)
+                //         Session::flash('swal', [
+                //             'title' => 'Success!',
+                //             'message' => 'Sent for Next Stage',
+                //             'type' => 'success',
+                //         ]);
+                //     }
 
                 $changestage->stage = "14";
                 $changestage->status = "Phase II A HOD Primary Review";
@@ -5597,52 +5026,37 @@ class OOSController extends Controller
                     }
                     $history->save();
 
-                    // $list = Helpers::getQAUserList($changestage->division_id);
-                    // foreach ($list as $u) {
-                    //    $email = Helpers::getUserEmail($u->user_id);
-                    //        if ($email !== null) {
-                    //        Mail::send(
-                    //            'mail.view-mail',
-                    //            ['data' => $changestage, 'site' => "OOS/OOT", 'history' => "Review", 'process' => 'OOS/OOT', 'comment' => $request->comments, 'user'=> Auth::user()->name],
-                    //            function ($message) use ($email, $changestage) {
-                    //                $message->to($email)
-                    //                ->subject("Agio Notification: OOS/OOT, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review");
-                    //            }
-                    //        );
-                    //    }
-                    // }
+                  
 
-                     $list = Helpers::getQAUserList($changestage->division_id);
+                     $list = Helpers::getProductionHeadUserList($changestage->division_id);
 
                     foreach ($list as $u) {
 
                         $email = Helpers::getUserEmail($u->user_id);
 
                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $changestage,
-                                        'site'    => "OOS/OOT",
-                                        'history' => "Phase II A Investigation",
-                                        'process' => 'OOS/OOT',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $changestage) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: OOS/OOT, Record #"
-                                                    . str_pad($changestage->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: Phase II A Investigation"
-                                                );
-                                    }
-                                );
-                            } catch (\Throwable $e) {
-                                // Log error but do NOT break execution
+
+
+
+
+
+                        try {
+
+                                $data = [
+                                    'data' => $changestage,
+                                    'site' => "OOS/OOT",
+                                    'history' => "Phase II A Investigation",
+                                    'process' => 'OOS/OOT',
+                                    'comment' => $request->comment,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $changestage, 'OOS/OOT');
+
+                            } catch (\Exception $e) {
                                 \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                             }
+                           
                         }
                     }
                 $changestage->update();
@@ -5807,30 +5221,24 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                        try {
-                                            Mail::send(
-                                                'mail.view-mail',
-                                                [
-                                                    'data'    => $data,
-                                                    'site'    => "OOS/OOT",
-                                                    'history' => "Cancel",
-                                                    'process' => 'OOS/OOT',
-                                                    'comment' => $request->comment,
-                                                    'user'    => Auth::user()->name
-                                                ],
-                                                function ($message) use ($email, $data) {
-                                                    $message->to($email)
-                                                            ->subject(
-                                                                "Agio Notification: OOS/OOT, Record #"
-                                                                . str_pad($data->record, 4, '0', STR_PAD_LEFT)
-                                                                . " - Activity: Cancel"
-                                                            );
-                                                }
-                                            );
-                                        } catch (\Throwable $e) {
-                                            // Log error but do NOT break execution
+
+                                    try {
+
+                                            $data2 = [
+                                                'data' => $data,
+                                                'site' => "OOS/OOT",
+                                                'history' => "Cancel",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data2, $email, $data, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
+                                       
                                     }
                                 }
             $data->update();
@@ -5920,30 +5328,32 @@ class OOSController extends Controller
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if (!empty($email)) {
-                                try {
-                                    Mail::send(
-                                        'mail.view-mail',
-                                        [
-                                            'data'    => $data,
-                                            'site'    => "OOS/OOT",
-                                            'history' => "Assignable Cause Found",
-                                            'process' => 'OOS/OOT',
-                                            'comment' => $request->comment,
-                                            'user'    => Auth::user()->name
-                                        ],
-                                        function ($message) use ($email, $data) {
-                                            $message->to($email)
-                                                    ->subject(
-                                                        "Agio Notification: OOS/OOT, Record #"
-                                                        . str_pad($data->record, 4, '0', STR_PAD_LEFT)
-                                                        . " - Activity: Assignable Cause Found"
-                                                    );
-                                        }
-                                    );
-                                } catch (\Throwable $e) {
-                                    // Log error but do NOT break execution
-                                    \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
+
+
+
+                              try {
+
+                                $data1 = [
+                                    'data'    => $data,
+                                    'site'    => "OOS/OOT",
+                                    'history' => "Assignable Cause Found",
+                                    'process' => 'OOS/OOT',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data1,
+                                    $email,
+                                    $data,
+                                    'OOS/OOT'
+                                );
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
                                 }
+                                
+                              
                             }
                         }
            
@@ -6131,30 +5541,24 @@ class OOSController extends Controller
                         $email = Helpers::getUserEmail($u->user_id);
 
                         if (!empty($email)) {
-                            try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    [
-                                        'data'    => $data,
-                                        'site'    => "OOS/OOT",
-                                        'history' => "P-II A Assignable Cause Found",
-                                        'process' => 'OOS/OOT',
-                                        'comment' => $request->comment,
-                                        'user'    => Auth::user()->name
-                                    ],
-                                    function ($message) use ($email, $data) {
-                                        $message->to($email)
-                                                ->subject(
-                                                    "Agio Notification: OOS/OOT, Record #"
-                                                    . str_pad($data->record, 4, '0', STR_PAD_LEFT)
-                                                    . " - Activity: P-II A Assignable Cause Found"
-                                                );
-                                    }
-                                );
-                            } catch (\Throwable $e) {
-                                // Log error but do NOT break execution
-                                \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                            }
+
+                                        try {
+
+                                            $data2 = [
+                                                'data' => $data,
+                                                'site' => "OOS/OOT",
+                                                'history' => "P-II A Assignable Cause Found",
+                                                'process' => 'OOS/OOT',
+                                                'comment' => $request->comment,
+                                                'user'=> Auth::user()->name
+                                            ];
+
+                                            SendMail::dispatch($data2, $email, $data, 'OOS/OOT');
+
+                                        } catch (\Exception $e) {
+                                            \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
+                                        }
+
                         }
                     }
             

@@ -113,8 +113,26 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 20 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Found</button>
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Not Found</button>
+             
+             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Found</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Not Found</button> --}}
+             
+             <button type="button"
+        class="button_theme1"
+        data-bs-toggle="modal"
+        data-bs-target="#signature-modal"
+        onclick="setActionType('found')">
+    Phase II B Assignable Cause Found
+</button>
+
+<button type="button"
+        class="button_theme1"
+        data-bs-toggle="modal"
+        data-bs-target="#signature-modal"
+        onclick="setActionType('not_found')">
+    Phase II B Assignable Cause Not Found
+</button>
+
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 21 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 4) ))
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
@@ -133,6 +151,11 @@
         </div>
     </div>
 
+    <script>
+    function setActionType(type) {
+        document.getElementById('action_type').value = type;
+    }
+</script>
 <div class="modal fade" id="signature-modal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -145,6 +168,7 @@
             <form id="sendstage" action="{{ route('oos.send_stage', $data->id) }}" method="POST" class="signatureModalForm">
             @csrf
             <!-- Modal body -->
+            <input type="hidden" name="action_type" id="action_type">
             <div class="modal-body">
 
             <div class="mb-3 text-justify">
