@@ -695,6 +695,66 @@
         </div>
     </div>
 </div>
+                <style>
+                    /* Linear Connected Progress Bar */
+                    .progress-bars {
+                        display: flex;
+                        border-radius: 30px;
+                        overflow: hidden;
+                        border: 1px solid #e0e0e0;
+                        background: #f5f5f5;
+                    }
+                    
+                    .progress-bars div {
+                        padding: 8px 12px;
+                        font-size: 14px;
+                        flex-grow: 1;
+                        text-align: center;
+                        position: relative;
+                        transition: all 0.3s ease;
+                        border-right: 1px solid #fff;
+                    }
+                    
+                    .progress-bars div:last-child {
+                        border-right: none;
+                    }
+                    
+                    /* Completed Stages - Solid Green */
+                    .progress-bars div.completed {
+                        background-color: #4CAF50;
+                        color: black;
+                    }
+                    
+                    /* CURRENT Stage - Animated Blue (Pending Action) */
+                    .progress-bars div.current {
+                        background-color: #de8d0a;
+                        color: black;
+                        font-weight: bold;
+                        animation: pulse-blue 1.5s infinite;
+                    }
+                    
+                    /* Pending Stages - Light Gray */
+                    .progress-bars div.pending {
+                        background-color: #f5f5f5;
+                        color: black;
+                    }
+                    
+                    /* Closed States */
+                    .progress-bars div.closed {
+                        background-color: #f44336;
+                        color: white;
+                    }
+                    
+                    /* Blue Pulse Animation */
+                    @keyframes pulse-blue {
+                        0% { background-color: #de8d0a; }
+                        50% { background-color: #dfac54; }
+                        100% { background-color: #de8d0a; }
+                    }
+                </style>
+                @php
+                    $currentStage = $data->stage;
+                @endphp
 <!-- Current Status -->
 <div class="status" id="statusBlock">
                 <div class="head p-1">Current Status</div>
@@ -717,125 +777,142 @@
                 </div>
             @else
                 <div class="progress-bars d-flex">
-                    @if ($data->stage >= 1)
-                        <div class="d-flex justify-items-center align-items-center border border-1 border-dark rounded-start p-2 active">Opened</div>
-                    @else
-                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark rounded-start p-2">Opened</div>
-                    @endif
 
-                    @if ($data->stage >= 2)
+                    <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
+
+                    {{-- @if ($data->stage >= 2)
                         <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">HOD Primary Review</div>
                     @else
                     <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">HOD Primary Review</div>
-                    @endif
+                    @endif --}}
+                    <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">HOD Primary Review</div>
 
 
-                    {{-- @if ($data->stage < 4) --}}
-                    @if ($data->stage == 3)
+                    {{-- @if ($data->stage == 3)
                         <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div>
                     @else
-                    {{-- <div class="  d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Approval</div> --}}
-                    @endif
-                    {{-- @endif --}}
+                    @endif --}}
 
+                    <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}">CQA/QA Head Approval</div>
 
-                    @if ($data->stage >= 4)
+                    {{-- @if ($data->stage >= 4)
                     <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Primary Review</div>
                     @else
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Primary Review</div>
-                    @endif
+                    @endif --}}
+                    <div class="{{ $currentStage > 4 ? 'active' : ($currentStage == 4 ? 'current' : '') }}">CQA/QA Head Primary Review</div>
 
-                    @if ($data->stage >= 5 && (!isset($resampling) || $resampling->status !== 'closed - done'))
+                    {{-- @if ($data->stage >= 5 && (!isset($resampling) || $resampling->status !== 'closed - done'))
                         <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation</div>
                     @else
                         <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation</div>
-                    @endif
+                    @endif --}}
+                    @php
+                        $allowStage5 = !isset($resampling) || $resampling->status !== 'closed - done';
+                    @endphp
 
-                    @if ($data->stage >= 6)
+                    <div class="{{ ($currentStage > 5 && $allowStage5) 
+                                    ? 'active' 
+                                    : (($currentStage == 5 && $allowStage5) ? 'current' : '') }}
+                                d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">
+                        Under Phase IA Investigation
+                    </div>
+                    {{-- @if ($data->stage >= 6)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA HOD Primary Review</div>
                     @else
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA HOD Primary Review</div>
-                    @endif
+                    @endif --}}
+                    <div class="{{ $currentStage > 6 ? 'active' : ($currentStage == 6 ? 'current' : '') }}">Phase IA HOD Primary Review</div>
 
-                    @if ($data->stage >= 7)
+                    {{-- @if ($data->stage >= 7)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQA/QA Review</div>
                     @else
                     <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQA/QA Review</div>
-                    @endif
-                    @if ($data->stage >= 8)
+                    @endif --}}
+                    <div class="{{ $currentStage > 7 ? 'active' : ($currentStage == 7 ? 'current' : '') }}">Phase IA CQA/QA Review</div>
+                    {{-- @if ($data->stage >= 8)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQAH/QAH Review</div>
                     @else
                     <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IA CQAH/QAH Review</div>
-                    @endif
-                    @if ($data->stage >= 9)
+                    @endif --}}
+                    <div class="{{ $currentStage > 8 ? 'active' : ($currentStage == 8 ? 'current' : '') }}">Phase IA CQAH/QAH Review</div>
+                    {{-- @if ($data->stage >= 9)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IB Investigation</div>
                     @else
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IB Investigation</div>
-                    @endif
-                    @if ($data->stage >= 10)
+                    @endif --}}
+                    <div class="{{ $currentStage > 9 ? 'active' : ($currentStage == 9 ? 'current' : '') }}">Under Phase IB Investigation</div>
+                    {{-- @if ($data->stage >= 10)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB HOD Primary Review</div>
                     @else
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB HOD Primary Review</div>
-                    @endif
-                    @if ($data->stage >= 11)
+                    @endif --}}
+                    <div class="{{ $currentStage > 10 ? 'active' : ($currentStage == 10 ? 'current' : '') }}">Phase IB HOD Primary Review</div>
+                    {{-- @if ($data->stage >= 11)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase IB CQA/QA Review </div>
                     @else
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB CQA/QA Review </div>
-                    @endif
-                    @if ($data->stage >= 12)
+                    @endif --}}
+                    <div class="{{ $currentStage > 11 ? 'active' : ($currentStage == 11 ? 'current' : '') }}">Phase IB CQA/QA Review</div>
+
+                    {{-- @if ($data->stage >= 12)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase IB CQAH/QAH Review</div>
                     @else
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase IB CQAH/QAH Review</div>
-                    @endif
-                    @if ($data->stage >= 13)
+                    @endif --}}
+                    <div class="{{ $currentStage > 12 ? 'active' : ($currentStage == 12 ? 'current' : '') }}">Phase IB CQAH/QAH Review</div>
+
+                    {{-- @if ($data->stage >= 13)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II A Investigation </div>
                     @else
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II A Investigation</div>
-                    @endif
-
-                    {{-- @if ($data->stage >= 13)
-                    <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase III Investigation</div>
-                    @else
-                    <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase III Investigation</div>
                     @endif --}}
+                    <div class="{{ $currentStage > 13 ? 'active' : ($currentStage == 13 ? 'current' : '') }}">Under Phase II A Investigation</div>
 
-                    @if ($data->stage >= 14)
+                    {{-- @if ($data->stage >= 14)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II A HOD Primary Review</div>
                     @else
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II A HOD Primary Review</div>
-                    @endif
+                    @endif --}}
+                    <div class="{{ $currentStage > 14 ? 'active' : ($currentStage == 14 ? 'current' : '') }}">Phase II A HOD Primary Review</div>
 
-                    @if ($data->stage >= 15)
+                    {{-- @if ($data->stage >= 15)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase II A CQA/QA Review</div>
                     @else
                         <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Phase II A CQA/QA Review</div>
-                    @endif
+                    @endif --}}
+                    <div class="{{ $currentStage > 15 ? 'active' : ($currentStage == 15 ? 'current' : '') }}">Phase II A CQA/QA Review</div>
 
-                    @if ($data->stage >= 16)
+                    {{-- @if ($data->stage >= 16)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II A QAH/CQAH Review</div>
                     @else
                         <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II A QAH/CQAH Review</div>
-                    @endif
-                    @if ($data->stage >= 17)
+                    @endif --}}
+                    <div class="{{ $currentStage > 16 ? 'active' : ($currentStage == 16 ? 'current' : '') }}">Phase II A QAH/CQAH Review</div>
+                    {{-- @if ($data->stage >= 17)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II B Investigation</div>
                     @else
                         <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II B Investigation</div>
-                    @endif
-                    @if ($data->stage >= 18)
+                    @endif --}}
+                    <div class="{{ $currentStage > 17 ? 'active' : ($currentStage == 17 ? 'current' : '') }}">Under Phase II B Investigation</div>
+                    {{-- @if ($data->stage >= 18)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B HOD Primary Review</div>
                     @else
                         <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B HOD Primary Review</div>
-                    @endif
-                    @if ($data->stage >= 19)
+                    @endif --}}
+                    <div class="{{ $currentStage > 18 ? 'active' : ($currentStage == 18 ? 'current' : '') }}">Phase II B HOD Primary Review</div>
+                    {{-- @if ($data->stage >= 19)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B CQA/QA Review</div>
                     @else
                         <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B CQA/QA Review</div>
-                    @endif
-                    @if ($data->stage >= 20)
+                    @endif --}}
+                    <div class="{{ $currentStage > 19 ? 'active' : ($currentStage == 19 ? 'current' : '') }}">Phase II B CQA/QA Review</div>
+                    {{-- @if ($data->stage >= 20)
                     <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B QAH/CQAH Review</div>
                     @else
                         <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Phase II B QAH/CQAH Review</div>
-                    @endif
+                    @endif --}}
+                    <div class="{{ $currentStage > 20 ? 'active' : ($currentStage == 20 ? 'current' : '') }}">Phase II B QAH/CQAH Review</div>
                     @if ($data->stage >= 21)
                     <div class="bg-danger d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Closed - Done</div>
                     @else
@@ -845,3 +922,85 @@
             @endif
     </div>
 </div>
+<script>
+            function activateTabBasedOnStage(stage) {
+                const tabContents = document.querySelectorAll('.cctabcontent');
+                const tabLinks = document.querySelectorAll('.cctablinks');
+                
+                tabContents.forEach(content => content.style.display = 'none');
+                tabLinks.forEach(link => link.classList.remove('active'));
+                
+                let tabToActivate = '';
+                
+                if (stage == 1) {
+                    tabToActivate = 'CCForm1'; 
+                } else if (stage == 2) {
+                    tabToActivate = 'CCForm27'; 
+                }  else if (stage == 3) {
+                    tabToActivate = 'CCForm28'; 
+                } else if (stage == 4) {
+                    tabToActivate = 'CCForm29'; 
+                } else if (stage == 5) {
+                    tabToActivate = 'CCForm2'; 
+                } else if (stage == 6) {
+                    tabToActivate = 'CCForm30'; 
+                } else if (stage == 7) {
+                    tabToActivate = 'CCForm31'; 
+                } else if (stage == 8) {
+                    tabToActivate = 'CCForm32'; 
+                } else if (stage == 9){
+                    tabToActivate = 'CCForm42';
+                } else if (stage == 10) {
+                    tabToActivate = 'CCForm33';
+                } else if (stage == 11){
+                    tabToActivate = 'CCForm34';
+                } else if (stage == 12){
+                    tabToActivate = 'CCForm35';
+                } else if (stage == 13){
+                    tabToActivate = 'CCForm5';
+                } else if (stage == 14){
+                    tabToActivate = 'CCForm36';
+                } else if (stage == 15){
+                    tabToActivate = 'CCForm37';
+                } else if (stage == 16){
+                    tabToActivate = 'CCForm38';
+                } else if (stage == 17){
+                    tabToActivate = 'CCForm43';
+                } else if (stage == 18){
+                    tabToActivate = 'CCForm39';
+                } else if (stage == 19){
+                    tabToActivate = 'CCForm40';
+                } else if (stage == 20){
+                    tabToActivate = 'CCForm13';
+                } else if (stage == 21){
+                    tabToActivate = 'CCForm17';
+                }                          
+            
+                if (tabToActivate) {
+                    const tabContent = document.getElementById(tabToActivate);
+                    const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
+                    
+                    if (tabContent) tabContent.style.display = 'block';
+                    if (tabLink) tabLink.classList.add('active');
+                }
+            }
+
+            function openCity(evt, cityName) {
+                const tabContents = document.querySelectorAll('.cctabcontent');
+                tabContents.forEach(content => content.style.display = 'none');
+                
+                const tabLinks = document.querySelectorAll('.cctablinks');
+                tabLinks.forEach(link => link.classList.remove('active'));
+                
+                document.getElementById(cityName).style.display = 'block';
+                evt.currentTarget.classList.add('active');
+                
+                currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                
+                activateTabBasedOnStage(currentStage);
+            });
+        </script>
