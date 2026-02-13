@@ -1710,7 +1710,7 @@ foreach ($pre as $processName => $modelClass) {
                                 try {
                                     $data = [
                                         'data' => $changeControl,
-                                        'site' => "RP",
+                                        'site' => "Resampling",
                                         'history' => "Opened",
                                         'process' => 'Resampling',
                                         'comment' => $request->comments,
@@ -1734,7 +1734,7 @@ foreach ($pre as $processName => $modelClass) {
                             try {
                                     $data = [
                                         'data' => $changeControl,
-                                        'site' => "RP",
+                                        'site' => "Resampling",
                                         'history' => "Opened",
                                         'process' => 'Resampling',
                                         'comment' => $request->comments,
@@ -1848,7 +1848,7 @@ foreach ($pre as $processName => $modelClass) {
                                 try {
                                     $data = [
                                         'data' => $changeControl,
-                                        'site' => "RP",
+                                        'site' => "Resampling",
                                         'history' => "Approved",
                                         'process' => 'Resampling',
                                         'comment' => $request->comment,
@@ -1932,7 +1932,7 @@ foreach ($pre as $processName => $modelClass) {
                                try {
                                 $data = [
                                     'data' => $changeControl,
-                                    'site' => "RP",
+                                    'site' => "Resampling",
                                     'history' => "Acknowledge Complete",
                                     'process' => 'Resampling',
                                     'comment' => $request->comment,
@@ -1956,7 +1956,7 @@ foreach ($pre as $processName => $modelClass) {
                                 try {
                                     $data = [
                                         'data' => $changeControl,
-                                        'site' => "RP",
+                                        'site' => "Resampling",
                                         'history' => "Opened",
                                         'process' => 'Acknowledge Complete',
                                         'comment' => $request->comment,
@@ -2053,7 +2053,7 @@ foreach ($pre as $processName => $modelClass) {
                         try {
                                 $data = [
                                     'data' => $changeControl,
-                                    'site' => "RP",
+                                    'site' => "Resampling",
                                     'history' => "Verification complete",
                                     'process' => 'Resampling',
                                     'comment' => $request->comments,
@@ -2076,7 +2076,7 @@ foreach ($pre as $processName => $modelClass) {
                         try {
                             $data = [
                                 'data' => $changeControl,
-                                'site' => "RP",
+                                'site' => "Resampling",
                                 'history' => "Verification Complete",
                                 'process' => 'Resampling',
                                 'comment' => $request->comments,
@@ -2101,7 +2101,7 @@ foreach ($pre as $processName => $modelClass) {
                         try {
                                 $data = [
                                     'data' => $changeControl,
-                                    'site' => "RP",
+                                    'site' => "Resampling",
                                     'history' => "Verification Complete",
                                     'process' => 'Resampling',
                                     'comment' => $request->comments,
@@ -2124,7 +2124,7 @@ foreach ($pre as $processName => $modelClass) {
                         try {
                             $data = [
                                 'data' => $changeControl,
-                                'site' => "RP",
+                                'site' => "Resampling",
                                 'history' => "Verification Complete",
                                 'process' => 'Resampling',
                                 'comment' => $request->comments,
@@ -2147,7 +2147,7 @@ foreach ($pre as $processName => $modelClass) {
                         try {
                             $data = [
                                 'data' => $changeControl,
-                                'site' => "RP",
+                                'site' => "Resampling",
                                 'history' => "Verification Complete",
                                 'process' => 'Resampling',
                                 'comment' => $request->comments,
@@ -2172,7 +2172,7 @@ foreach ($pre as $processName => $modelClass) {
                         try {
                                 $data = [
                                     'data' => $changeControl,
-                                    'site' => "RP",
+                                    'site' => "Resampling",
                                     'history' => "Verification Complete",
                                     'process' => 'Resampling',
                                     'comment' => $request->comments,
@@ -2261,7 +2261,7 @@ public function resamplingStageCancel(Request $request, $id)
                         try {
                                 $data = [
                                     'data' => $changeControl,
-                                    'site' => "RP",
+                                    'site' => "Resampling",
                                     'history' => "Cancle",
                                     'process' => 'Resampling',
                                     'comment' => $request->comment,
@@ -2379,7 +2379,7 @@ public function resamplingmoreinfo(Request $request, $id)
                        try {
                                 $data = [
                                     'data' => $changeControl,
-                                    'site' => "RP",
+                                    'site' => "Resampling",
                                     'history' => "More Info Required",
                                     'process' => 'Resampling',
                                     'comment' => $request->comments,
@@ -2469,7 +2469,7 @@ public function resamplingmoreinfo(Request $request, $id)
                         try {
                                 $data = [
                                     'data' => $changeControl,
-                                    'site' => "RP",
+                                    'site' => "Resampling",
                                     'history' => "More Information Required",
                                     'process' => 'Resampling',
                                     'comment' => $request->comments,
@@ -2492,7 +2492,7 @@ public function resamplingmoreinfo(Request $request, $id)
                        try {
                             $data = [
                                 'data' => $changeControl,
-                                'site' => "RP",
+                                'site' => "Resampling",
                                 'history' => "More Information Required",
                                 'process' => 'Resampling',
                                 'comment' => $request->comment,
@@ -2564,7 +2564,7 @@ public function resamplingmoreinfo(Request $request, $id)
                         try {
                             $data = [
                                 'data' => $changeControl,
-                                'site' => "RP",
+                                'site' => "Resampling",
                                 'history' => "More Info Required",
                                 'process' => 'Resampling',
                                 'comment' => $request->comment,
