@@ -10638,7 +10638,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                 $cftDetails = DeviationCftsResponse::withoutTrashed()->where(['status' => 'In-progress', 'deviation_id' => $id])->distinct('cft_user_id')->count();
 
                 if ($deviation->stage == 1) {
-                     if ($deviation->form_progress !== 'general-open')
+                    if (trim($deviation->form_progress) !== 'general-open')
+
                     {
                         // dd('emnter');
                         Session::flash('swal', [

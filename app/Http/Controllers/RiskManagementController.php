@@ -10836,8 +10836,8 @@ class RiskManagementController extends Controller
                 $riskAssement->stage = "4";
                 $riskAssement->status = "In QA/CQA Review";
 
-                $riskAssement->in_approve_by = "Not Applicable";
-                $riskAssement->in_approve_on = "Not Applicable";
+                $riskAssement->in_approve_by = Auth::user()->name;
+                $riskAssement->in_approve_on = Carbon::now()->format('d-M-Y');
                 $riskAssement->QA_Initial_Review_Comments  = $request->comment;
 
                 $history = new RiskAuditTrail();
@@ -10847,6 +10847,7 @@ class RiskManagementController extends Controller
                 // }else{
                 //     $history->previous = $lastDocument->in_approve_by. ' ,' . $lastDocument->in_approve_on;
                 // }
+                
                  $history->activity_type = 'Not Applicable';
                 $history->previous = "";
                 $history->current = $riskAssement->in_approve_by;
@@ -10943,8 +10944,8 @@ class RiskManagementController extends Controller
 
 
                
-                $riskAssement->QA_Initial_Review_Complete_By = "Not Applicable";
-                $riskAssement->QA_Initial_Review_Complete_On   ="Not Applicable";
+                $riskAssement->QA_Initial_Review_Complete_By = Auth::user()->name;
+                $riskAssement->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $riskAssement->QA_Initial_Review_Comments = $request->comment;
 
                   DB::table('risk_assesment_cft_responces')
@@ -11173,8 +11174,8 @@ class RiskManagementController extends Controller
                
                 $riskAssement->stage = "1";
                 $riskAssement->status = "Opened";
-                $riskAssement->risk_analysis_completed_by = 'Not Applicable';
-                $riskAssement->risk_analysis_completed_on = 'Not Applicable';
+                $riskAssement->risk_analysis_completed_by = Auth::user()->name;
+                $riskAssement->risk_analysis_completed_on = Carbon::now()->format('d-M-Y');
                  
                 // $riskAssement->risk_analysis_completed_by = Auth::user()->name;
                 // $riskAssement->risk_analysis_completed_on = Carbon::now()->format('d-M-Y');
