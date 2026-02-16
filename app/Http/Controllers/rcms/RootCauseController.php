@@ -3703,10 +3703,10 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
 
                                     $data = [
                                         'data' => $root,
-                                        'site' => "RA",
+                                        'site' => "RCA",
                                         'history' => "Acknowledge",
                                         'process' => 'Root Cause Analysis',
-                                        'comment' => $request->comments,
+                                        'comment' => $request->comment,
                                         'user'=> Auth::user()->name
                                     ];
 
@@ -3811,17 +3811,33 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         ['data' => $root, 'site'=>"RCA", 'history' => "HOD Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //         function ($message) use ($email, $root) {
+                            //             $message->to($email)
+                            //             ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
+                            //         }
+                            //     );
+                            // } catch(\Exception $e) {
+                            //     info('Error sending mail', [$e]);
+                            // }
+
                             try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "HOD Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
+                                $data = [
+                                    'data' => $root,
+                                    'site' => "RCA",
+                                    'history' => "HOD Review Complete",
+                                    'process' => 'Root Cause Analysis',
+                                    'comment' => $request->comment,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
                             }
                         }
                     // }
@@ -3831,17 +3847,33 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         ['data' => $root, 'site'=>"RCA", 'history' => "HOD Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //         function ($message) use ($email, $root) {
+                            //             $message->to($email)
+                            //             ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
+                            //         }
+                            //     );
+                            // } catch(\Exception $e) {
+                            //     info('Error sending mail', [$e]);
+                            // }
+
                             try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "HOD Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
+                                $data = [
+                                    'data' => $root,
+                                    'site' => "RCA",
+                                    'history' => "HOD Review Complete",
+                                    'process' => 'Root Cause Analysis',
+                                    'comment' => $request->comment,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
                             }
                         }
                     // }
@@ -3919,7 +3951,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                             'site' => "RCA",
                             'history' => "QA/CQA Review Complete",
                             'process' => 'Root Cause Analysis',
-                            'comment' => $request->comments,
+                            'comment' => $request->comment,
                             'user'=> Auth::user()->name
                         ];
 
@@ -4092,7 +4124,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                             'site' => "RCA",
                             'history' => "Submit",
                             'process' => 'Root Cause Analysis',
-                            'comment' => $request->comments,
+                            'comment' => $request->comment,
                             'user'=> Auth::user()->name
                         ];
 
@@ -4206,7 +4238,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                             'site' => "RCA",
                             'history' => "HOD Final Review Complete",
                             'process' => 'Root Cause Analysis',
-                            'comment' => $request->comments,
+                            'comment' => $request->comment,
                             'user'=> Auth::user()->name
                         ];
 
@@ -4225,17 +4257,34 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         ['data' => $root, 'site'=>"RCA", 'history' => "HOD Final Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //         function ($message) use ($email, $root) {
+                            //             $message->to($email)
+                            //             ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
+                            //         }
+                            //     );
+                            // } catch(\Exception $e) {
+                            //     info('Error sending mail', [$e]);
+                            // }
+
                             try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "HOD Final Review Complete", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
+
+                                $data = [
+                                    'data' => $root,
+                                    'site' => "RCA",
+                                    'history' => "HOD Final Review Complete",
+                                    'process' => 'Root Cause Analysis',
+                                    'comment' => $request->comment,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
                             }
                         }
                     // }
@@ -4342,7 +4391,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                                 'site' => "RCA",
                                 'history' => "final QA/CQA Review Complete",
                                 'process' => 'Root Cause Analysis',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -4367,7 +4416,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                                 'site' => "RCA",
                                 'history' => "final QA/CQA Review Complete",
                                 'process' => 'Root Cause Analysis',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -4553,7 +4602,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                                 'site' => "RCA",
                                 'history' => "QAH/CQAH Closure",
                                 'process' => 'Root Cause Analysis',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -4750,7 +4799,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                                 'site' => "RCA",
                                 'history' => "Closed-Cancelled",
                                 'process' => 'Root Cause Analysis',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -4774,7 +4823,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                                 'site' => "RCA",
                                 'history' => "Clossed-Cancelled",
                                 'process' => 'Root Cause Analysis',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -4861,7 +4910,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                                     'site' => "RCA",
                                     'history' => "More Information Required",
                                     'process' => 'Root Cause Analysis',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -4923,17 +4972,33 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
+                            // try {
+                            //     Mail::send(
+                            //         'mail.view-mail',
+                            //         ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
+                            //         function ($message) use ($email, $root) {
+                            //             $message->to($email)
+                            //             ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
+                            //         }
+                            //     );
+                            // } catch(\Exception $e) {
+                            //     info('Error sending mail', [$e]);
+                            // }
+
                             try {
-                                Mail::send(
-                                    'mail.view-mail',
-                                    ['data' => $root, 'site'=>"RCA", 'history' => "More Information Required", 'process' => 'Root Cause Analysis', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                                    function ($message) use ($email, $root) {
-                                        $message->to($email)
-                                        ->subject("Agio Notification: Root Cause Analysis, Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed");
-                                    }
-                                );
-                            } catch(\Exception $e) {
-                                info('Error sending mail', [$e]);
+                                $data = [
+                                    'data' => $root,
+                                    'site' => "RCA",
+                                    'history' => "More Information Required",
+                                    'process' => 'Root Cause Analysis',
+                                    'comment' => $request->comment,
+                                    'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
                             }
                         }
                     // }
@@ -4990,9 +5055,9 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                             $data = [
                                 'data' => $root,
                                 'site' => "RCA",
-                                'history' => "Approved",
+                                'history' => "More Information Required",
                                 'process' => 'Root Cause Analysis',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -5016,7 +5081,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                                 'site' => "RCA",
                                 'history' => "More Information Required",
                                 'process' => 'Root Cause Analysis',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -5077,21 +5142,20 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
                              try {
+                                $data = [
+                                    'data' => $root,
+                                    'site' => "RCA",
+                                    'history' => "More Information Required",
+                                    'process' => 'Root Cause Analysis',
+                                    'comment' => $request->comment,
+                                    'user'=> Auth::user()->name
+                                ];
 
-                        $data = [
-                            'data' => $root,
-                            'site' => "RCA",
-                            'history' => "More Information Required",
-                            'process' => 'Root Cause Analysis',
-                            'comment' => $request->comments,
-                            'user'=> Auth::user()->name
-                        ];
+                                SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
 
-                        SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
-
-                    } catch (\Exception $e) {
-                        \Log::error('Mail Error: ' . $e->getMessage());
-                    }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
                         }
                     // }
                 }
@@ -5149,7 +5213,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                                 'site' => "RCA",
                                 'history' => "More Information Required",
                                 'process' => 'Root Cause Analysis',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -5214,7 +5278,7 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                                 'site' => "RCA",
                                 'history' => "More Information Required",
                                 'process' => 'Root Cause Analysis',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -5233,20 +5297,20 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                         $email = Helpers::getUserEmail($u->user_id);
                             if ($email !== null) {
                            try {
-                            $data = [
-                                'data' => $root,
-                                'site' => "RCA",
-                                'history' => "final QA/CQA Review Complete",
-                                'process' => 'Root Cause Analysis',
-                                'comment' => $request->comments,
-                                'user'=> Auth::user()->name
-                            ];
+                                $data = [
+                                    'data' => $root,
+                                    'site' => "RCA",
+                                    'history' => "More Information Required",
+                                    'process' => 'Root Cause Analysis',
+                                    'comment' => $request->comment,
+                                    'user'=> Auth::user()->name
+                                ];
 
-                            SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
+                                SendMail::dispatch($data, $email, $root, 'Root Cause Analysis');
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
-                        }
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }   
                         }
                     // }
                 }

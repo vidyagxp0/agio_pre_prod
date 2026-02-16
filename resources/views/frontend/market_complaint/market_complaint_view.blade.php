@@ -690,11 +690,13 @@
                     tabToActivate = 'CCForm5'; 
                 } else if (stage == 5) {
                     tabToActivate = 'CCForm6'; 
-                }else if (stage == 6) {
+                } else if (stage == 6) {
                     tabToActivate = 'CCForm7'; 
                 } else if (stage == 7) {
                     tabToActivate = 'CCForm8'; 
-                }else if (stage == 8) {
+                } else if (stage == 8) {
+                    tabToActivate = 'CCForm9'; 
+                } else if (stage == 0) {
                     tabToActivate = 'CCForm9'; 
                 }
 

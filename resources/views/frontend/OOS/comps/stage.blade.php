@@ -998,7 +998,9 @@
                     tabToActivate = 'CCForm13';
                 } else if (stage == 21){
                     tabToActivate = 'CCForm17';
-                }                          
+                } else if (stage == 0){
+                    tabToActivate = 'CCForm17';
+                }                                 
             
                 if (tabToActivate) {
                     const tabContent = document.getElementById(tabToActivate);

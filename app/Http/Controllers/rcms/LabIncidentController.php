@@ -6532,9 +6532,9 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                             $data = [
                                 'data' => $labstate,
                                 'site' => "LI",
-                                'history' => "More Inforrmation Required",
+                                'history' => "Approved",
                                 'process' => 'Lab Incident',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -6645,9 +6645,9 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                             $data = [
                                 'data' => $changeControl,
                                 'site' => "LI",
-                                'history' => "Opened",
+                                'history' => "Submit",
                                 'process' => 'Lab Incident',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -6759,7 +6759,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                                 'site' => "LI",
                                 'history' => "QC Head/HOD Initial Review Complete",
                                 'process' => 'Lab Incident',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -6874,7 +6874,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                                 'site' => "LI",
                                 'history' => "QA Initial Review Complete",
                                 'process' => 'Lab Incident',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -6885,7 +6885,6 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                         }
                     }
                 }
-
 
                 $changeControl->update();
                 //toastr()->success('Document Sent');
@@ -7127,7 +7126,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                             'site' => "LI",
                             'history' => "Pending Initiator Update Complete",
                             'process' => 'Lab Incident',
-                            'comment' => $request->comments,
+                            'comment' => $request->comment,
                             'user'=> Auth::user()->name
                         ];
 
@@ -7213,7 +7212,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                                 'site' => "LI",
                                 'history' => "QC Head/HOD Secondary Review Complete",
                                 'process' => 'Lab Incident',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -7282,8 +7281,6 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
 
                 $history->save();
 
-               
-
                  $list = Helpers::getQAHeadUserList($changeControl->division_id); 
 
                 foreach ($list as $u) {
@@ -7297,7 +7294,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                                 'site' => "LI",
                                 'history' => "QA Secondary Review Complete",
                                 'process' => 'Lab Incident',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -7364,11 +7361,14 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                     }
 
                 $history->save();
+
+
                
                 $changeControl->update();
                 //toastr()->success('Document Sent');
                 return back();
             }
+
             if ($changeControl->stage == 8) {
                 $changeControl->stage = "9";
                 $changeControl->status = "QA Final Review";
@@ -7648,7 +7648,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                                 'site' => "LI",
                                 'history' => "More Inforrmation Required",
                                 'process' => 'Lab Incident',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -7725,7 +7725,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                                 'site' => "LI",
                                 'history' => "More Inforrmation Required",
                                 'process' => 'Lab Incident',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -7857,7 +7857,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                                 'site' => "LI",
                                 'history' => "More Inforrmation Required",
                                 'process' => 'Lab Incident',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -8008,7 +8008,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                                 'site' => "LI",
                                 'history' => "More Inforrmation Required",
                                 'process' => 'Lab Incident',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 

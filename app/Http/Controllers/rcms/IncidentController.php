@@ -349,19 +349,19 @@ class IncidentController extends Controller
                                     //                         }
                                     //    }
 
-//      if (!empty ($request->Initial_attachment)) {
+        //      if (!empty ($request->Initial_attachment)) {
 
-//                 $files = [];
+        //                 $files = [];
 
-//                 if ($incident->Initial_attachment) {
-//                     $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
-//                     if (is_array($existingFiles)) {
-//                         $files = $existingFiles;
-//                     }
-//                 }
+        //                 if ($incident->Initial_attachment) {
+        //                     $existingFiles = json_decode($incident->Initial_attachment, true); // Convert to associative array
+        //                     if (is_array($existingFiles)) {
+        //                         $files = $existingFiles;
+        //                     }
+        //                 }
 
 
-//   }
+        //   }
 
   if (!empty ($request->Initial_attachment)) {
     $files = [];
@@ -372,7 +372,6 @@ class IncidentController extends Controller
             $files[] = $name;
         }
     }
-
 
     $incident->Initial_attachment = json_encode($files);
 }
