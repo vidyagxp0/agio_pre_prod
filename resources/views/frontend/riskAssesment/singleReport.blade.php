@@ -2753,7 +2753,7 @@
                 <tr>
                     <th class="w-20">
                         Cancel Comment</th>
-                    <td colspan="3">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
+                    <td colspan="3">@if($data->cancelled_comment){{ $data->cancelled_comment }}@else Not Applicable @endif</td>
                 </tr>
             </table>
         </div>
