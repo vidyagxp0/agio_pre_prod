@@ -8820,36 +8820,37 @@ class ManagementReviewController extends Controller
 
                 //Action child
 
-                $actionchilds = ActionItem::where('parent_id', $id)
-                    ->where('parent_type', 'Management Review')
-                    ->get();
-                $hasPendingaction = false;
-                foreach ($actionchilds as $ext) {
-                    $actionchildstatus = trim(strtolower($ext->status));
-                    if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                        $hasPendingaction = true;
-                        break;
-                    }
-                }
-                if ($hasPendingaction) {
-                    // $actionchildstatus = trim(strtolower($extensionchild->status));
-                    if ($hasPendingaction) {
-                        Session::flash('swal', [
-                            'title' => 'Action Item Child Pending!',
-                            'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                            'type' => 'warning',
-                        ]);
+                // $actionchilds = ActionItem::where('parent_id', $id)
+                //     ->where('parent_type', 'Management Review')
+                //     ->get();
+                // $hasPendingaction = false;
+                // foreach ($actionchilds as $ext) {
+                //     $actionchildstatus = trim(strtolower($ext->status));
+                //     if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                //         $hasPendingaction = true;
+                //         break;
+                //     }
+                // }
+                // if ($hasPendingaction) {
+                //     // $actionchildstatus = trim(strtolower($extensionchild->status));
+                //     if ($hasPendingaction) {
+                //         Session::flash('swal', [
+                //             'title' => 'Action Item Child Pending!',
+                //             'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                //             'type' => 'warning',
+                //         ]);
 
-                        return redirect()->back();
-                    }
-                } else {
-                    // Flash message for success (when the form is filled correctly)
-                    Session::flash('swal', [
-                        'title' => 'Success!',
-                        'message' => 'Document Sent',
-                        'type' => 'success',
-                    ]);
-                }
+                //         return redirect()->back();
+                //     }
+                // } else {
+                //     // Flash message for success (when the form is filled correctly)
+                //     Session::flash('swal', [
+                //         'title' => 'Success!',
+                //         'message' => 'Document Sent',
+                //         'type' => 'success',
+                //     ]);
+                // }
+                
                 //  if ($management->form_progress !== 'cft')
                 //     {
                 //         Session::flash('swal', [
