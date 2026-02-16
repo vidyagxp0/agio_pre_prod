@@ -1453,7 +1453,7 @@ class EffectivenessCheckController extends Controller
                                 'site' => "EC",
                                 'history' => "Submit",
                                 'process' => 'Effectiveness-Check',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -1619,7 +1619,7 @@ class EffectivenessCheckController extends Controller
                                         'site' => "EC",
                                         'history' => "Acknowledge Complete",
                                         'process' => 'Effectiveness-Check',
-                                        'comment' => $request->comments,
+                                        'comment' => $request->comment,
                                         'user'=> Auth::user()->name
                                     ];
 
@@ -1809,7 +1809,7 @@ class EffectivenessCheckController extends Controller
                                                     'site' => "EC",
                                                     'history' => "Complete",
                                                     'process' => 'Effectiveness-Check',
-                                                    'comment' => $request->comments,
+                                                    'comment' => $request->comment,
                                                     'user'=> Auth::user()->name
                                                 ];
 
@@ -2076,7 +2076,7 @@ class EffectivenessCheckController extends Controller
                                     'site' => "EC",
                                     'history' => "HOD Review Complete",
                                     'process' => 'Effectiveness-Check',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -2241,7 +2241,7 @@ class EffectivenessCheckController extends Controller
                                     'site' => "EC",
                                     'history' => "Effective",
                                     'process' => 'Effectiveness-Check',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -2588,7 +2588,7 @@ class EffectivenessCheckController extends Controller
                                             'site' => "EC",
                                             'history' => "Closed Done",
                                             'process' => 'Change Control',
-                                            'comment' => $request->comments,
+                                            'comment' => $request->comment,
                                             'user'=> Auth::user()->name
                                         ],
                                         function ($message) use ($email, $effective) {
@@ -2789,7 +2789,7 @@ class EffectivenessCheckController extends Controller
                                     'site' => "EC",
                                     'history' => "Not Effective",
                                     'process' => 'Effectiveness-Check',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -3068,34 +3068,34 @@ class EffectivenessCheckController extends Controller
                
               $assignedUserId = $request->assign_to ?? $effective->assign_to;
 
-if (!empty($assignedUserId)) {
+                if (!empty($assignedUserId)) {
 
-    $email = Helpers::getUserEmail($assignedUserId);
+                    $email = Helpers::getUserEmail($assignedUserId);
 
-    if (!empty($email)) {
-        try {
+                    if (!empty($email)) {
+                        try {
 
-            $data = [
-                'data'    => $effective,
-                'site'    => "Effectiveness-Check",
-                'history' => "Submit",
-                'process' => 'Effectiveness-Check',
-                'comment' => $request->comment,
-                'user'    => Auth::user()->name
-            ];
+                            $data = [
+                                'data'    => $effective,
+                                'site'    => "Effectiveness-Check",
+                                'history' => "More Info Required",
+                                'process' => 'Effectiveness-Check',
+                                'comment' => $request->comment,
+                                'user'    => Auth::user()->name
+                            ];
 
-            SendMail::dispatch(
-                $data,
-                $email,
-                $effective,
-                'Effectiveness-Check'
-            );
+                            SendMail::dispatch(
+                                $data,
+                                $email,
+                                $effective,
+                                'Effectiveness-Check'
+                            );
 
-        } catch (\Exception $e) {
-            \Log::error('Assigned User Mail Error: ' . $e->getMessage());
-        }
-    }
-}
+                        } catch (\Exception $e) {
+                            \Log::error('Assigned User Mail Error: ' . $e->getMessage());
+                        }
+                    }
+                }
 
                 
 
@@ -3189,7 +3189,7 @@ if (!empty($assignedUserId)) {
                                     'site' => "EC",
                                     'history' => "More Information Required",
                                     'process' => 'Effectiveness-Check',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -3379,7 +3379,7 @@ if (!empty($assignedUserId)) {
                                 'site' => "EC",
                                 'history' => "More Information Required",
                                 'process' => 'Effectiveness-Check',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -3484,7 +3484,7 @@ if (!empty($assignedUserId)) {
                                     'site' => "EC",
                                     'history' => "More Information Required",
                                     'process' => 'Effectiveness-Check',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 

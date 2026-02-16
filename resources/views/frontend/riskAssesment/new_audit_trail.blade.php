@@ -237,7 +237,7 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where(['doc_id' => $document->id, 'type' => 'Market Complaint'])
+                                        ->where(['doc_id' => $document->id, 'type' => 'risk-assesment'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
@@ -314,7 +314,7 @@
                                                 value="{{ $auditCollect ? \Carbon\Carbon::parse($auditCollect->reviewer_comment_on)->format('d-M-Y') : '' }}">
                                         </div>
 
-                                        <input type="hidden" id="type" name="type" value="Deviation">
+                                        <input type="hidden" id="type" name="type" value="risk-assesment">
                                     </div>
                                     <div class="modal-footer">
                                         {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
