@@ -603,6 +603,9 @@
                             } else if (stage == 0) {
                                 tabToActivate = 'CCForm7'; 
                             }
+                            else if (stage == 0) {
+                                tabToActivate = 'CCForm7';
+                            }
 
                             if (tabToActivate) {
                                 const tabContent = document.getElementById(tabToActivate);
@@ -8292,7 +8295,7 @@
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Comments">Cancel Comment:</label>
-                                            <div class="static">{{ $data->comments ?? 'Not Applicable' }}</div>
+                                            <div class="static">{{ $data->cancelled_comment ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                 </div>

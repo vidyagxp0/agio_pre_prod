@@ -9416,9 +9416,9 @@ class RiskManagementController extends Controller
                             $data = [
                                 'data' => $riskAssement,
                                 'site' => "RA",
-                                'history' => "Complete",
+                                'history' => "Submit",
                                 'process' => 'Risk Assessment',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -9544,9 +9544,9 @@ class RiskManagementController extends Controller
                             $data = [
                                 'data' => $riskAssement,
                                 'site' => "RA",
-                                'history' => "Complete",
+                                'history' => "HOD Review Complete",
                                 'process' => 'Risk Assessment',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -10367,9 +10367,9 @@ class RiskManagementController extends Controller
                                 $data = [
                                     'data' => $riskAssement,
                                     'site' => "RA",
-                                    'history' => "Complete",
+                                    'history' => "CFT Review Complete",
                                     'process' => 'Risk Assessment',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -10514,7 +10514,7 @@ class RiskManagementController extends Controller
                     $history->previous = "";
                     $history->current = $riskAssement->QA_Initial_Review_Complete_By. ',' . $riskAssement->QA_Initial_Review_Complete_On;
                     $history->comment = $request->comment;
-                    $history->action = 'In QA/CQA Review Complete';
+                    $history->action = 'QA/CQA Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -10549,9 +10549,9 @@ class RiskManagementController extends Controller
                                 $data = [
                                     'data' => $riskAssement,
                                     'site' => "RA",
-                                    'history' => "Complete",
+                                    'history' => "QA/CQA Review Complete",
                                     'process' => 'Risk Assessment',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -10641,9 +10641,9 @@ class RiskManagementController extends Controller
                                 $data = [
                                     'data' => $riskAssement,
                                     'site' => "RA",
-                                    'history' => "In Approval",
+                                    'history' => "Approved",
                                     'process' => 'Risk Assessment',
-                                    'comment' => $request->comments,
+                                    'comment' => $request->comment,
                                     'user'=> Auth::user()->name
                                 ];
 
@@ -10782,8 +10782,8 @@ class RiskManagementController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "In Approval";
-                $history->change_from = "Closed - Done";
-                $history->action_name = "More Information Required";
+                  $history->change_from = $lastDocument->status;
+                $history->action_name = "Not Applicable";
                 $history->stage = 'Cancelled';
                 if(is_null($lastDocument->in_approve_by) || $lastDocument->in_approve_on == '')
                     {
@@ -10851,14 +10851,14 @@ class RiskManagementController extends Controller
                 $history->previous = "";
                 $history->current = $riskAssement->in_approve_by;
                 $history->comment = $request->comment;
-                $history->action  = "Not Applicable";
+                $history->action  = "More Info Required";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "In QA/CQA Review";
                 $history->change_from = "In Approval";
-                $history->action_name = "More Information Required";
+                $history->action_name = "Not Applicable";
                 $history->stage = 'Cancelled';
                 if(is_null($lastDocument->in_approve_by) || $lastDocument->in_approve_on == ''){
                     $history->previous = "";
@@ -10912,31 +10912,24 @@ class RiskManagementController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $riskAssement,
-                                    'site'    => "RA",
-                                    'history' => "More Info Required",
-                                    'process' => 'Risk Assessment',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $riskAssement) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Risk Assessment, Record #"
-                                                . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: More Info Required"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            \Log::error(
-                                'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
-                            );
+
+                     try {
+
+                            $data = [
+                                'data' => $riskAssement,
+                                'site' => "RA",
+                                'history' => "More Information Required",
+                                'process' => 'Risk Assesment',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $riskAssement, 'Risk Assesment');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
+                       
                     }
                 }
 
@@ -10973,14 +10966,14 @@ class RiskManagementController extends Controller
                 $history->previous = "";
                 $history->current = $riskAssement->QA_Initial_Review_Complete_By;
                 $history->comment = $request->comment;
-                $history->action  = "Not Applicable";
+                $history->action  = "More Info Required";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "HOD Review";
-                $history->change_from = "In QA/CQA Review";
-                $history->action_name = "More Information Required";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = "Not Applicable";
                 $history->stage = 'Cancelled';
                 // if(is_null($lastDocument->QA_Initial_Review_Complete_By) || $lastDocument->QA_Initial_Review_Complete_On	 == ''){
                 //     $history->previous = "";
@@ -11023,7 +11016,7 @@ class RiskManagementController extends Controller
                                 'site' => "RA",
                                 'history' => "More Information Required",
                                 'process' => 'Risk Assesment',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -11097,10 +11090,10 @@ class RiskManagementController extends Controller
                 $riskAssement->stage = "2";
                 $riskAssement->status = "HOD Review";
 
-                $riskAssement->CFT_Review_Complete_By = "Not Applicable";
-                $riskAssement->CFT_Review_Complete_On = "Not Applicable";
+                $riskAssement->CFT_Review_Complete_By = Auth::user()->name;
+                $riskAssement->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
                 $riskAssement->CFT_Review_Comments = $request->comment;
-
+                   
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 // if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == ''){
@@ -11112,14 +11105,14 @@ class RiskManagementController extends Controller
                 $history->previous = "";
                 $history->current = $riskAssement->CFT_Review_Complete_By;
                 $history->comment = $request->comment;
-                $history->action  = "Not Applicable";
+                $history->action  = "More Info Required";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to =   "HOD Review";
-                $history->change_from = "CFT review";
-                $history->action_name = "More Information Required";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = "Not Applicable";
                 $history->stage = 'Cancelled';
                 // if(is_null($lastDocument->CFT_Review_Complete_By) || $lastDocument->CFT_Review_Complete_On == ''){
                 //     $history->previous = "";
@@ -11158,7 +11151,7 @@ class RiskManagementController extends Controller
                                 'site' => "RA",
                                 'history' => "More Information Required",
                                 'process' => 'Risk Assesment',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -11174,144 +11167,81 @@ class RiskManagementController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-          if ((int) $riskAssement->stage === 2) {
 
-                    // 🔹 Save previous state for Risk audit
-                    $lastRiskState = clone $riskAssement;
+           
+             if ($riskAssement->stage == 2) {
+               
+                $riskAssement->stage = "1";
+                $riskAssement->status = "Opened";
+                $riskAssement->risk_analysis_completed_by = 'Not Applicable';
+                $riskAssement->risk_analysis_completed_on = 'Not Applicable';
+                 
+                // $riskAssement->risk_analysis_completed_by = Auth::user()->name;
+                // $riskAssement->risk_analysis_completed_on = Carbon::now()->format('d-M-Y');
+                $riskAssement->more_actions_needed_1 = $request->comment;
+                   
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                // if(is_null($lastDocument->risk_analysis_completed_by) || $lastDocument->CFT_Review_Complete_On == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->risk_analysis_completed_by. ' ,' . $lastDocument->CFT_Review_Complete_On;
+                // }
+                $history->activity_type = 'Not Applicable';
+                $history->previous = "";
+                $history->current = $riskAssement->risk_analysis_completed_by;
+                $history->comment = $request->comment;
+                $history->action  = "More Info Required";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = "Not Applicable";
+                // $history->stage = 'Cancelled';
+                // if(is_null($lastDocument->risk_analysis_completed_by) || $lastDocument->CFT_Review_Complete_On == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->risk_analysis_completed_by. ' ,' . $lastDocument->CFT_Review_Complete_On;
+                // }
 
-                    // 🔹 Update Risk Assessment
-                    $riskAssement->stage = 1;
-                    $riskAssement->status = "Opened";
-                    $riskAssement->risk_analysis_completed_by = 'Not Applicable';
-                    $riskAssement->risk_analysis_completed_on = 'Not Applicable';
-                    $riskAssement->cancelled_by = Auth::user()->name;
-                    $riskAssement->save();
+                $history->save();
 
-                    /* =========================
-                    🔹 Cancel Child CAPAs
-                    ==========================*/
-                    $childCapas = Capa::where('parent_id', $id)
-                        ->where('parent_type', 'RCA')
-                        ->get();
+                   
 
-                    foreach ($childCapas as $capa) {
+                $list = Helpers::getInitiatorUserList($riskAssement->division_id); // Notify Initiator User
 
-                        $lastCapaState = clone $capa;
+                foreach ($list as $u) {
 
-                        $capa->stage = 0;
-                        $capa->status = "Closed-Cancelled";
-                        $capa->cancelled_by = Auth::user()->name;
-                        $capa->cancelled_on = Carbon::now()->format('d-M-Y');
-                        $capa->cancel_comment = $request->comment ?? '';
-                        $capa->save();
+                    $email = Helpers::getUserEmail($u->user_id);
 
-                        CapaAuditTrial::create([
-                            'capa_id'     => $capa->id,
-                            'activity_type' => 'Cancel By, Cancel On',
-                            'action'      => 'Cancel',
-                            'comment'     => $request->comment ?? '',
-                            'user_id'     => Auth::id(),
-                            'user_name'   => Auth::user()->name,
-                            'user_role'   => RoleGroup::where('id', Auth::user()->role)->value('name'),
-                            'origin_state'=> $lastCapaState->status,
-                            'change_from' => $lastCapaState->status,
-                            'change_to'   => 'Closed-Cancelled',
-                            'stage'       => 'Cancelled',
-                            'previous'    => $lastCapaState->cancelled_by
-                                                ? $lastCapaState->cancelled_by.' , '.$lastCapaState->cancelled_on
-                                                : '',
-                            'current'     => $capa->cancelled_by.' , '.$capa->cancelled_on,
-                            'action_name' => $lastCapaState->cancelled_by ? 'Update' : 'New',
-                        ]);
-                    }
+                    if ($email) {
+                        try {
 
-                    /* =========================
-                    🔹 Cancel Child Action Items
-                    ==========================*/
-                    $childActionItems = ActionItem::where('parent_id', $id)
-                        ->where('parent_type', 'RCA')
-                        ->get();
+                            $data = [
+                                'data' => $riskAssement,
+                                'site' => "RA",
+                                'history' => "More Information Required",
+                                'process' => 'Risk Assesment',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
 
-                    foreach ($childActionItems as $actionItem) {
+                            SendMail::dispatch($data, $email, $riskAssement, 'Risk Assesment');
 
-                        $lastActionState = clone $actionItem;
-
-                        $actionItem->stage = 0;
-                        $actionItem->status = "Closed-Cancelled";
-                        $actionItem->cancelled_by = Auth::user()->name;
-                        $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
-                        $actionItem->cancelled_comment = $request->comment ?? '';
-                        $actionItem->save();
-
-                        ActionItemHistory::create([
-                            'cc_id'        => $actionItem->id,
-                            'action'       => 'Cancel',
-                            'activity_type'=> 'Cancel By, Cancel On',
-                            'comment'      => $request->comment ?? '',
-                            'user_id'      => Auth::id(),
-                            'user_name'    => Auth::user()->name,
-                            'user_role'    => RoleGroup::where('id', Auth::user()->role)->value('name'),
-                            'origin_state' => $lastActionState->status,
-                            'change_from'  => $lastActionState->status,
-                            'change_to'    => 'Closed-Cancelled',
-                            'stage'        => 'Cancelled',
-                            'previous'     => $lastActionState->cancelled_by
-                                                ? $lastActionState->cancelled_by.' , '.$lastActionState->cancelled_on
-                                                : '',
-                            'current'      => $actionItem->cancelled_by.' , '.$actionItem->cancelled_on,
-                            'action_name'  => $lastActionState->cancelled_by ? 'Update' : 'New',
-                        ]);
-                    }
-
-                    /* =========================
-                    🔹 Risk Audit Trail
-                    ==========================*/
-                    RiskAuditTrail::create([
-                        'risk_id'      => $id,
-                        'activity_type'=> 'Not Applicable',
-                        'previous'     => 'Not Applicable',
-                        'current'      => 'Not Applicable',
-                        'comment'      => $request->comment ?? '',
-                        'action'       => 'Not Applicable',
-                        'user_id'      => Auth::id(),
-                        'user_name'    => Auth::user()->name,
-                        'user_role'    => RoleGroup::where('id', Auth::user()->role)->value('name'),
-                        'origin_state' => $lastRiskState->status,
-                        'change_from'  => 'HOD Review',
-                        'change_to'    => 'Opened',
-                        'action_name'  => 'More Information Required',
-                        'stage'        => 'Opened',
-                    ]);
-
-                    /* =========================
-                    🔹 Send Mail to Initiator
-                    ==========================*/
-                    $initiators = Helpers::getInitiatorUserList($riskAssement->division_id);
-
-                    foreach ($initiators as $u) {
-
-                        $email = Helpers::getUserEmail($u->user_id);
-
-                        if ($email) {
-                            SendMail::dispatchSync(
-                                [
-                                    'data'    => $riskAssement,
-                                    'site'    => 'RA',
-                                    'history' => 'More Information Required',
-                                    'process' => 'Risk Assessment',
-                                    'comment' => $request->comment ?? '',
-                                    'user'    => Auth::user()->name,
-                                ],
-                                $email,
-                                $riskAssement,
-                                'Risk Assessment'
-                            );
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
                     }
-
-                    toastr()->success('Document Sent');
-                    return back();
                 }
+
+                $riskAssement->update();
+                toastr()->success('Document Sent');
+                return back();
+                
+            }
+        
 
 
             if ($riskAssement->stage == 1) {
@@ -11320,17 +11250,46 @@ class RiskManagementController extends Controller
                 $riskAssement->cancelled_by = Auth::user()->name;
                 $riskAssement->cancelled_on = Carbon::now()->format('d-M-Y');
                 $riskAssement->cancel_comment = $request->comment;
+
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
+                // if(is_null($lastDocument->cancelled_by) || $lastDocument->CFT_Review_Complete_On == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->cancelled_by. ' ,' . $lastDocument->CFT_Review_Complete_On;
+                // }
                 $history->activity_type = 'Not Applicable';
+                $history->previous = "";
                 $history->current = $riskAssement->cancelled_by;
                 $history->comment = $request->comment;
+                $history->action  = "Cancel";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = 'Cancelled';
+                $history->change_to =   "Closed - Cancelled";
+                $history->change_from = $lastDocument->status;
+                $history->action_name = "Not Applicable";
+                // $history->stage = 'Cancelled';
+                // if(is_null($lastDocument->cancelled_by) || $lastDocument->CFT_Review_Complete_On == ''){
+                //     $history->previous = "";
+                // }else{
+                //     $history->previous = $lastDocument->cancelled_by. ' ,' . $lastDocument->CFT_Review_Complete_On;
+                // }
+
                 $history->save();
+
+                // $history = new RiskAuditTrail();
+                // $history->risk_id = $id;
+                // $history->activity_type = 'Not Applicable';
+                // $history->current = $riskAssement->cancelled_by;
+                // $history->comment = $request->comment;
+                // $history->user_id = Auth::user()->id;
+                // $history->user_name = Auth::user()->name;
+                // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                // $history->origin_state = $lastDocument->status;
+                // $history->stage = 'Cancelled';
+                // $history->save();
 
                     // $list = Helpers::getHodUserList($riskAssement->division_id);
                     //     foreach ($list as $u) {
@@ -11356,31 +11315,7 @@ class RiskManagementController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email) {
-                        // try {
-                        //     Mail::send(
-                        //         'mail.view-mail',
-                        //         [
-                        //             'data'    => $riskAssement,
-                        //             'site'    => "RA",
-                        //             'history' => "More Info Required",
-                        //             'process' => 'Risk Assessment',
-                        //             'comment' => $request->comment,
-                        //             'user'    => Auth::user()->name
-                        //         ],
-                        //         function ($message) use ($email, $riskAssement) {
-                        //             $message->to($email)
-                        //                     ->subject(
-                        //                         "Agio Notification: Risk Assessment, Record #"
-                        //                         . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                        //                         . " - Activity: More Info Required"
-                        //                     );
-                        //         }
-                        //     );
-                        // } catch (\Throwable $e) {
-                        //     \Log::error(
-                        //         'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
-                        //     );
-                        // }
+                       
 
                          try {
 
@@ -11389,7 +11324,7 @@ class RiskManagementController extends Controller
                                 'site' => "RA",
                                 'history' => "More Information Required",
                                 'process' => 'Risk Assessment',
-                                'comment' => $request->comments,
+                                'comment' => $request->comment,
                                 'user'=> Auth::user()->name
                             ];
 
@@ -11683,15 +11618,15 @@ class RiskManagementController extends Controller
                 $history->activity_type = 'Activity Log';
                 $history->action = 'Cancel';
                 $history->previous = "";
-                $history->current = $riskAssement->closed_done_by;
+                $history->current = $riskAssement->cancelled_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->change_to = "Closed - Cancelled";
-                $history->change_from = "Supervisor Review";
-                $history->stage='Closed - Cancelled';
+                $history->change_from = $lastDocument->status;
+                // $history->stage='Closed - Cancelled';
                 $history->save();
 
                 $list = Helpers::getHodUserList($riskAssement->division_id); // Notify Initiator User
@@ -11701,31 +11636,24 @@ class RiskManagementController extends Controller
                     $email = Helpers::getUserEmail($u->user_id);
 
                     if ($email) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data'    => $riskAssement,
-                                    'site'    => "RA",
-                                    'history' => "Cancel",
-                                    'process' => 'Risk Assessment',
-                                    'comment' => $request->comment,
-                                    'user'    => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $riskAssement) {
-                                    $message->to($email)
-                                            ->subject(
-                                                "Agio Notification: Risk Assessment, Record #"
-                                                . str_pad($riskAssement->record, 4, '0', STR_PAD_LEFT)
-                                                . " - Activity: Cancel"
-                                            );
-                                }
-                            );
-                        } catch (\Throwable $e) {
-                            \Log::error(
-                                'Risk Assessment Mail Error for ' . $email . ': ' . $e->getMessage()
-                            );
+
+                     try {
+
+                            $data = [
+                                'data' => $riskAssement,
+                                'site' => "RA",
+                                'history' => "Cancel",
+                                'process' => 'Risk Assesment',
+                                'comment' => $request->comment,
+                                'user'=> Auth::user()->name
+                            ];
+
+                            SendMail::dispatch($data, $email, $riskAssement, 'Risk Assesment');
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail Error: ' . $e->getMessage());
                         }
+                        
                     }
                 }
                 $riskAssement->update();
