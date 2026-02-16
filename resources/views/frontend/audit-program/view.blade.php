@@ -789,6 +789,8 @@
                                 tabToActivate = 'CCForm6'; 
                             } else if (stage == 4) {
                                 tabToActivate = 'CCForm3'; 
+                            } else if (stage == 0) {
+                                tabToActivate = 'CCForm3'; 
                             } 
                             if (tabToActivate) {
                                 const tabContent = document.getElementById(tabToActivate);

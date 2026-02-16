@@ -271,7 +271,10 @@
                         tabToActivate = 'CCForm4'; 
                     } else if (stage == 5) {
                         tabToActivate = 'CCForm5'; 
+                    } else if (stage == 0) {
+                        tabToActivate = 'CCForm5'; 
                     } 
+
                     if (tabToActivate) {
                         const tabContent = document.getElementById(tabToActivate);
                         const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);

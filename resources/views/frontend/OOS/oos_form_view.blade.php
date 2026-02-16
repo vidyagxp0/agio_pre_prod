@@ -692,7 +692,7 @@
                     {{-- @if ($data->stage == 13 || $data->stage == 14 || $data->stage == 15 || $data->stage == 16 || $data->stage == 25)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     @endif --}}
-                     @if ($data->phase_ii_a_assi_cause == "Yes")
+                    @if ($data->phase_ii_a_assi_cause == "Yes")
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Review</button>
@@ -835,7 +835,8 @@
                     18:'CCForm39',
                     19:'CCForm40',
                     20:'CCForm13',
-                    21:'CCForm17'
+                    21:'CCForm17',
+                    0 :'CCForm17'
                 };
 
                 tabToActivate = stageMap[Number(stage)];

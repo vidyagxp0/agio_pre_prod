@@ -558,6 +558,8 @@ dd($data->initiator_id , Auth::user()->id);
                             tabToActivate = 'CCForm12'; 
                         } else if (stage == 8){
                             tabToActivate = 'CCForm7';
+                        } else if (stage == 0){
+                            tabToActivate = 'CCForm7';
                         }
 
                         if (tabToActivate) {

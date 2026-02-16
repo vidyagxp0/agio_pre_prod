@@ -541,6 +541,8 @@
                                 tabToActivate = 'CCForm8'; 
                             } else if (stage == 5) {
                                 tabToActivate = 'CCForm6'; 
+                            } else if (stage == 5) {
+                                tabToActivate = 'CCForm6'; 
                             }
 
                             if (tabToActivate) {

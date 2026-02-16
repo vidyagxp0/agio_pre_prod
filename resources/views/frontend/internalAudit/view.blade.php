@@ -679,7 +679,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                 tabToActivate = 'CCForm5'; 
                             } else if (stage == 5) {
                                 tabToActivate = 'CCForm26'; 
-                            }else if (stage == 6) {
+                            } else if (stage == 6) {
+                                tabToActivate = 'CCForm6'; 
+                            } else if (stage == 0) {
                                 tabToActivate = 'CCForm6'; 
                             } 
 
