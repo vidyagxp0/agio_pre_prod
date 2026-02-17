@@ -8598,57 +8598,7 @@ class ManagementReviewController extends Controller
                 //toastr()->success('Document Sent');
                 return back();
             }
-            // if ($changeControl->stage == 2) {
-            //     $changeControl->stage = "3";
-            //     $changeControl->status = 'QA Head Review';
-            //     $changeControl->completed_by = Auth::user()->name;
-            //     $changeControl->completed_on = Carbon::now()->format('d-M-Y');
-            //     $changeControl->Completed_Comment  = $request->comment;
-            //     $history = new ManagementAuditTrial();
-            //     $history->ManagementReview_id = $id;
-            //     $history->activity_type = 'Completed By     , Completed On';
-            //     $history->action ='Completed';
-            //     // $history->previous = $lastDocument->completed_by;
-            //     if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
-            //         $history->previous = "Null";
-            //     } else {
-            //         $history->previous = $lastDocument->completed_by . ' , ' . $lastDocument->completed_on;
-            //     }
-            //     $history->current = $changeControl->completed_by . ' , ' . $changeControl->completed_on;
-            //     $history->comment = $request->comment;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $lastDocument->status;
-            //     $history->stage='Completed';
-            //     $history->change_to= "QA Head Review";
-            //     $history->change_from= $lastDocument->status;
-            //     if (is_null($lastDocument->completed_by) || $lastDocument->completed_by === '') {
-            //         $history->action_name = 'New';
-            //     } else {
-            //         $history->action_name = 'Update';
-            //     }
-            //      $history->save();
-            //     $changeControl->update();
-            //     // $list = Helpers::getInitiatorUserList();
-            //     // foreach ($list as $u) {
-            //     //     if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //     //      $email = Helpers::getInitiatorEmail($u->user_id);
-            //     //      if ($email !== null) {
-            //     //          Mail::send(
-            //     //             'mail.view-mail',
-            //     //             ['data' => $changeControl],
-            //     //             function ($message) use ($email) {
-            //     //                 $message->to($email)
-            //     //                     ->subject("Document is Send By ".Auth::user()->name);
-            //     //             }
-            //     //         );
-            //     //       }
-            //     //     }
-            //     // }
-            //     toastr()->success('Document Sent');
-            //     return back();
-            // }
+          
             if ($changeControl->stage == 2) {
                 if (!$changeControl->assign_to || !$changeControl->Operations) {
 
@@ -8736,62 +8686,41 @@ class ManagementReviewController extends Controller
 
                 /////////////////////////
 
-                $list = Helpers::getCftUserList($changeControl->division_id);
+               $users = collect()
+                    ->merge(Helpers::getCftUserList($changeControl->division_id))
+                    ->merge(Helpers::getQAUserList($changeControl->division_id))
+                    ->unique('user_id'); // duplicate users remove
 
-                foreach ($list as $u) {
+                foreach ($users as $u) {
+
                     $email = Helpers::getUserEmail($u->user_id);
 
-                    if ($email !== null) {
-                       try {
-                            $data = [
-                                'data' => $changeControl,
-                                'site' => "MR",
-                                'history' => "QA Head Review Complete",
-                                'process' => 'Management Review',
-                                'comment' => $request->comment,
-                                'user'=> Auth::user()->name
-                            ];
+                    if (!$email) {
+                        continue;
+                    }
 
-                            SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+                    try {
 
-                        } catch (\Exception $e) {
-                            \Log::error('Mail Error: ' . $e->getMessage());
-                        }
+                        $data = [
+                            'data'    => $changeControl,
+                            'site'    => "MR",
+                            'history' => "QA Head Review Complete",
+                            'process' => 'Management Review',
+                            'comment' => $request->comment ?? $changeControl->qaHeadReviewComplete_Comment,
+                            'user'    => Auth::user()->name
+                        ];
+
+                        // Queue mail (Recommended)
+                        SendMail::dispatch($data, $email, $changeControl, 'Management Review');
+
+                    } catch (\Exception $e) {
+
+                        \Log::error('Mail Error to '.$email.' : '.$e->getMessage());
+
+                        session()->flash('error', 'Failed to send email to ' . $email);
                     }
                 }
 
-
-                $list = Helpers::getQAUserList($changeControl->division_id);
-
-                foreach ($list as $u) {
-                    $email = Helpers::getUserEmail($u->user_id);
-
-                    if ($email !== null) {
-                        try {
-                            Mail::send(
-                                'mail.view-mail',
-                                [
-                                    'data' => $changeControl,
-                                    'site' => "MR",
-                                    'history' => "QA Head Review Complete",
-                                    'process' => 'Managment Review',
-                                    'comment' => $changeControl->qaHeadReviewComplete_Comment,
-                                    'user' => Auth::user()->name
-                                ],
-                                function ($message) use ($email, $changeControl) {
-                                    $message->to($email)
-                                        ->subject("Agio Notification: Managment Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Head Review Complete Performed");
-                                }
-                            );
-                        } catch (\Exception $e) {
-                            // Log the error for debugging
-                            Log::error('Error sending mail to ' . $email . ': ' . $e->getMessage());
-
-                            // Optionally handle the exception (e.g., notify the user or admin)
-                            session()->flash('error', 'Failed to send email to ' . $email);
-                        }
-                    }
-                }
 
 
 

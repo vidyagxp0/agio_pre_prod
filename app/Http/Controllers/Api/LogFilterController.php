@@ -14,7 +14,7 @@ use App\Models\GlobalCapa;
 use App\Models\Sanction;
 use App\Models\Document;
 use App\Models\OOS;
-
+use App\Models\Observation;
 use App\Models\Incident;
 use App\Models\CallibrationDetails;
 use App\Models\EHSEvent;
@@ -1076,6 +1076,93 @@ class LogFilterController extends Controller
         
     }
 
+
+
+    public function ObservationFilter(Request $request)
+    {
+        $res = [
+            'status' => 'ok',
+            'message' => 'success',
+            'body' => []
+        ];
+
+        try {
+
+            
+            $query = Observation::query();
+            
+            if ($request->observation_department)
+            {
+                $query->where('departments', $request->observation_department);
+            }
+
+            if($request->div_idobservation)
+            {
+                $query->where('division_code',$request->div_idobservation);
+            }
+            // if($request->categoryofcomplaints)
+            // {
+            //     $query->where('categorization_of_complaint_gi',$request->categoryofcomplaints);
+            // }
+
+            if ($request->period_lab) {
+                $currentDate = Carbon::now();
+                switch ($request->period_lab) {
+                    case 'Yearly':
+                        $startDate = $currentDate->startOfYear();
+                        break;
+                    case 'Quarterly':
+                        $startDate = $currentDate->firstOfQuarter();
+                        break;
+                    case 'Monthly':
+                        $startDate = $currentDate->startOfMonth();
+                        break;
+                    default:
+                        $startDate = null;
+                        break;
+                }
+                if ($startDate) {
+                    $query->whereDate('intiation_date', '>=', $startDate);
+                }
+            }
+
+           
+
+
+            if ($request->dateobsertionFrom) {
+                $from = Carbon::createFromFormat('Y-m-d', $request->dateobsertionFrom)
+                            ->format('d-m-Y');
+
+                $query->where('intiation_date', '>=', $from);
+            }
+
+            if ($request->dateobservationTo) {
+                $to = Carbon::createFromFormat('Y-m-d', $request->dateobservationTo)
+                            ->format('d-m-Y');
+
+                $query->where('intiation_date', '<=', $to);
+            }
+
+            $observations = $query->get();
+
+            $htmlData = view('frontend.forms.Logs.filterData.observation_data', compact('observations'))->render();
+            
+           
+            $res['body'] = $htmlData;
+
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+
+        }
+
+        
+
+        return response()->json($res);
+        
+    }
+
        public function ManagementReviewFilter(Request $request)
     {
         $res = [
@@ -1437,7 +1524,7 @@ public function OOT_Filter(Request $request)
         $query = OOS::query();
 
         if ($request->department_oot) {
-            $query->where('Initiator_group_code', $request->department_oot);
+            $query->where('Form_type', $request->department_oot);
         }
 
         if ($request->division_id_oot) {
@@ -1469,15 +1556,7 @@ public function OOT_Filter(Request $request)
             }
         }
 
-        // if ($request->date_oot_from) {
-        //     $dateFrom = Carbon::parse($request->date_oot_from)->startOfDay();
-        //     $query->whereDate('intiation_date', '>=', $dateFrom);
-        // }
-
-        // if ($request->date_OOT_to) {
-        //     $dateTo = Carbon::parse($request->date_OOT_to)->endOfDay();
-        //     $query->whereDate('intiation_date', '<=', $dateTo);
-        // }
+       
             if ($request->date_oot_from) {
                 $from = Carbon::createFromFormat('Y-m-d', $request->date_oot_from)
                             ->format('d-m-Y');

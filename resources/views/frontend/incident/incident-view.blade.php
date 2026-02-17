@@ -772,9 +772,11 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                         Cancel
                                     </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                   @if(Helpers::getChildData($data->id, 'Incident') < 3)
+                                   <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
+                                    @endif
 
                                 @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Incident', 48) || Helpers::check_roles($data->division_id, 'Incident', 18)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
@@ -783,9 +785,11 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         QA Initial Review Complete
                                     </button>
-                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
+                                   <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
+                                    @endif
 
                                 @elseif($data->stage == 4 && ( Helpers::check_roles($data->division_id, 'Incident', 42) || Helpers::check_roles($data->division_id, 'Incident', 43) || Helpers::check_roles($data->division_id, 'Incident', 39) || Helpers::check_roles($data->division_id, 'Incident', 9) || Helpers::check_roles($data->division_id, 'Incident', 18)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
@@ -1378,69 +1382,69 @@
                                                 @enderror
                                             </div>
                                             <div class="col-lg-6 new-date-data-field">
-    <div class="group-input input-date">
-        <label for="short_description_required">Repeat Incident?<span class="text-danger">*</span></label>
-        <select name="short_description_required"
-                id="short_description_required"
-                onchange="checkRecurring(this)"
-                {{-- value="{{ $data->short_description_required }}"  --}}
-                {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
-            <option value="">-- Select --</option>
-            <option value="Yes" @if($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes')selected @endif>Yes</option>
-            <option value="No" @if($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
-        </select>
-    </div>
-    @error('short_description_required')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-</div>
+                                        <div class="group-input input-date">
+                                            <label for="short_description_required">Repeat Incident?<span class="text-danger">*</span></label>
+                                            <select name="short_description_required"
+                                                    id="short_description_required"
+                                                    onchange="checkRecurring(this)"
+                                                    {{-- value="{{ $data->short_description_required }}"  --}}
+                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
+                                                <option value="">-- Select --</option>
+                                                <option value="Yes" @if($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes')selected @endif>Yes</option>
+                                                <option value="No" @if($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
+                                            </select>
+                                        </div>
+                                        @error('short_description_required')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-<div class="col-lg-6" id="nature_of_repeat_block"
-    @if ($data->short_description_required != 'Yes') style="display: none" @endif>
-    <div class="group-input">
-        <label for="nature_of_repeat">Repeat Nature
-            <span id="asteriskInviRecurring"
-                  style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
-                  class="text-danger">*</span>
-        </label>
-        <textarea class="nature_of_repeat"
-                  name="nature_of_repeat"
-                  id="nature_of_repeat"
-                  {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>{{ $data->nature_of_repeat }}</textarea>
-    </div>
-    @error('nature_of_repeat')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-</div>
+                                    <div class="col-lg-6" id="nature_of_repeat_block"
+                                        @if ($data->short_description_required != 'Yes') style="display: none" @endif>
+                                        <div class="group-input">
+                                            <label for="nature_of_repeat">Repeat Nature
+                                                <span id="asteriskInviRecurring"
+                                                    style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span>
+                                            </label>
+                                            <textarea class="nature_of_repeat"
+                                                    name="nature_of_repeat"
+                                                    id="nature_of_repeat"
+                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>{{ $data->nature_of_repeat }}</textarea>
+                                        </div>
+                                        @error('nature_of_repeat')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var selectField = document.getElementById('short_description_required');
-        var natureOfRepeatBlock = document.getElementById('nature_of_repeat_block');
-        var asteriskIcon = document.getElementById('asteriskInviRecurring');
-        var natureOfRepeatField = document.getElementById('nature_of_repeat');
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var selectField = document.getElementById('short_description_required');
+                                            var natureOfRepeatBlock = document.getElementById('nature_of_repeat_block');
+                                            var asteriskIcon = document.getElementById('asteriskInviRecurring');
+                                            var natureOfRepeatField = document.getElementById('nature_of_repeat');
 
-        // Initialize 'Repeat Nature' field visibility based on current selection
-        toggleNatureOfRepeatField(selectField.value === 'Yes');
+                                            // Initialize 'Repeat Nature' field visibility based on current selection
+                                            toggleNatureOfRepeatField(selectField.value === 'Yes');
 
-        // Listen for dropdown changes
-        selectField.addEventListener('change', function() {
-            toggleNatureOfRepeatField(this.value === 'Yes');
-        });
+                                            // Listen for dropdown changes
+                                            selectField.addEventListener('change', function() {
+                                                toggleNatureOfRepeatField(this.value === 'Yes');
+                                            });
 
-        // Toggle visibility and required attribute for 'Repeat Nature'
-        function toggleNatureOfRepeatField(isYes) {
-            natureOfRepeatBlock.style.display = isYes ? 'block' : 'none';
-            asteriskIcon.style.display = isYes ? 'inline' : 'none';
-            natureOfRepeatField.required = isYes;
-        }
-    });
+                                            // Toggle visibility and required attribute for 'Repeat Nature'
+                                            function toggleNatureOfRepeatField(isYes) {
+                                                natureOfRepeatBlock.style.display = isYes ? 'block' : 'none';
+                                                asteriskIcon.style.display = isYes ? 'inline' : 'none';
+                                                natureOfRepeatField.required = isYes;
+                                            }
+                                        });
 
-    function checkRecurring(selectElement) {
-        var repeatNatureField = document.getElementById('nature_of_repeat');
-        repeatNatureField.required = selectElement.value === 'Yes';
-    }
-</script>
+                                        function checkRecurring(selectElement) {
+                                            var repeatNatureField = document.getElementById('nature_of_repeat');
+                                            repeatNatureField.required = selectElement.value === 'Yes';
+                                        }
+                                    </script>
 
 
                                         <div class="col-6 new-date-data-field">
