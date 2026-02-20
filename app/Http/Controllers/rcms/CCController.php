@@ -2786,6 +2786,8 @@ class CCController extends Controller
         $Cft->RA_data_person = $request->RA_data_person;
 
         $Cft->effect_check = $request->effect_check;
+        $Cft->effect_comment = $request->effect_comment;
+        
 
         $Cft->QA_CQA_person = $request->QA_CQA_person;
         $Cft->qa_final_comments = $request->qa_final_comments;
@@ -4137,6 +4139,7 @@ if (!empty($request->Human_Resource_attachment)) {
         }
 
         $closure->qa_closure_comments = $request->qa_closure_comments;
+
         $closure->Effectiveness_checker = $request->Effectiveness_checker;
         $closure->effective_check = $request->effective_check;
         $closure->effective_check_date = $request->effective_check_date;
@@ -5897,7 +5900,25 @@ if (!$areRegAffairAttachSame && !empty($request->RegulatoryAffair_attachment)) {
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-
+    if ($lastCft->effect_comment != $request->effect_comment && $request->effect_comment != null) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'Effectivess Comments')
+                ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Effectivess Comments';
+            $history->previous = $lastCft->effect_comment;
+            $history->current = $request->effect_comment;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
 
         if ($lastCft->effect_check != $request->effect_check && $request->effect_check != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
@@ -9562,7 +9583,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         $incompleteFields[] = 'Production Table Assessment';
                     }
                     
-                    if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
+                    if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_AssessmentA)) {
                         $incompleteFields[] = 'Production Injection Assessment';
                     }
                     

@@ -578,7 +578,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
-                        <td class="w-30">
+                        <td class="w-30"colspan="3">
                             @if ($data->Facility_Equipment)
                                 {{ Ucfirst($data->Facility_Equipment) }}
                             @else
@@ -760,7 +760,7 @@
                     <tr>
 
                         <th class="w-20">HOD Person</th>
-                        <td class="w-30">
+                        <td class="w-30" colspan="3">
                             @if ($data->Hod_person_to)
                                 {{ strip_tags($data->Hod_person_to) }}
                             @else

@@ -9241,6 +9241,39 @@
                                         @endif
                                     </div>
                                 </div>
+
+                                <div class="col-lg-12 mt-2" id="effect_comment_div" style="display: none;">
+                                <div class="group-input">
+                                    <label for="effect_comment">
+                                        Comment
+                                    </label>
+                                     <textarea name="effect_comment" id="effect_comment"  {{$lockdatafileds12 ? 'readonly' : '' }}>{{ $cc_cfts->effect_comment ?? '' }}</textarea>
+                                   
+                                </div>
+                            </div>
+                            <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+
+                                const effectCheck = document.getElementById("effect_check");
+                                const commentDiv = document.getElementById("effect_comment_div");
+
+                                function toggleCommentField() {
+                                    if (effectCheck.value === "No") {
+                                        commentDiv.style.display = "block";
+                                    } else {
+                                        commentDiv.style.display = "none";
+                                    }
+                                }
+
+                                // On page load
+                                toggleCommentField();
+
+                                // On change
+                                effectCheck.addEventListener("change", toggleCommentField);
+
+                            });
+                            </script>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="attach_list">List Of Attachments</label>
