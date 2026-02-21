@@ -5455,8 +5455,6 @@ class OOCController extends Controller
                 //         }
                 //     }
 
-
-
                 // $list = Helpers::getQAHeadUserList($oocchange->division_id);
 
                 //     foreach ($list as $u) {
@@ -5563,6 +5561,32 @@ class OOCController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                    // ✅ Action Item Child Validation
+                    $OOCChildAction = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'OOC')
+                        ->get();
+
+                    $hasPendingActionChild = false;
+
+                    foreach ($OOCChildAction as $child) {
+                        $status = trim(strtolower($child->status));
+                        // Check if Action Item child is still open
+                        if (!in_array($status, ['closed - done', 'reject', 'cancel'])) {
+                            $hasPendingActionChild = true;
+                            break;
+                        }
+                    }
+
+                    if ($hasPendingActionChild) {
+                        Session::flash('swal', [
+                            'title' => 'Action Item Child Pending!',
+                            'message' => 'You cannot proceed until all Action Item child records are Closed-Done, Rejected, or Cancelled.',
+                            'type' => 'warning',
+                        ]);
+                        return redirect()->back();
+                    }
+
                 $oocchange->stage = "11";
                 $oocchange->correction_ooc_completed_by = Auth::user()->name;
                 $oocchange->correction_ooc_completed_on = Carbon::now()->format('d-M-Y');
