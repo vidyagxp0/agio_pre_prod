@@ -1,5 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
+@php
+        $users = DB::table('users')->get();
+@endphp
 
 <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
         type='text/css' />
@@ -121,9 +124,6 @@
             display: none !important;
         }
 
-        header {
-            display: none;
-        }
         .input_width {
             width: 100%;
             border-radius: 5px;
@@ -135,6 +135,71 @@
             display: none;
         }
 
+    </style>
+    <style>
+        textarea.note-codable {
+            display: none !important;
+        }
+
+        /* header {
+            display: none;
+        } */
+        header .header_rcms_bottom ,.container-fluid.header-bottom,.search-bar{
+            display: none;
+        }
+      
+        .remove-file {
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .remove-file :hover {
+            color: white;
+        }
+
+        .progress-bars div {
+            flex: 1 1 auto;
+            border: 1px solid grey;
+            padding: 5px;
+            text-align: center;
+            position: relative;
+            /* border-right: none; */
+            background: white;
+        }
+
+        .state-block {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bars div.active {
+            background: green;
+            font-weight: bold;
+        }
+
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
+            border-radius: 20px 0px 0px 20px;
+        }
+        #change-control-fields .inner-block .main-head{
+                padding: 15px;
+                color: black;
+                background: white;
+                margin-bottom: 0;
+                font-weight: bold;
+                font-size: 1.2rem;
+        }
+
+        /* #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(4) {
+                                                                                                                                                                                                                                                                                                                                                                                                                            border-radius: 0px 20px 20px 0px;
+
+                                                                                                                                                                                                                                                                                                                                                                                                                        } */
+        .new-moreinfo {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 13px;
+        }
+        
     </style>
 
 
@@ -152,44 +217,43 @@
 
     @php
         $users = DB::table('users')->get();
-
     @endphp
-@php
-    $lastExtension = DB::table('extension_news') // table name plural by default
-                        ->where('parent_id', $data->id)
-                        ->where('parent_type', 'Lab Incident')
-                        ->orderByDesc('id')
-                        ->first();
+    @php
+        $lastExtension = DB::table('extension_news') // table name plural by default
+                            ->where('parent_id', $data->id)
+                            ->where('parent_type', 'Lab Incident')
+                            ->orderByDesc('id')
+                            ->first();
+                            
+
                         
+    @endphp
 
-                      
-@endphp
+    @php
+        $findExtensionOpen = DB::table('extension_news')
+            ->where('parent_id', $data->id)
+            ->where('parent_type', 'Lab Incident')
+            ->get();
+            
 
-     @php
-                            $findExtensionOpen = DB::table('extension_news')
-                                ->where('parent_id', $data->id)
-                                ->where('parent_type', 'Lab Incident')
-                                ->get();
-                               
+        
+        $allApproved = $findExtensionOpen->every(function ($ext) {
+                return in_array($ext->status, ['Closed - Done', 'closed-reject']);
+        });
 
-                            
-                            $allApproved = $findExtensionOpen->every(function ($ext) {
-                                 return in_array($ext->status, ['Closed - Done', 'closed-reject']);
-                            });
-          
-                            $ext2 = $findExtensionOpen->first(function ($ext) {
-                                return $ext->count == 2;
-                            });
+        $ext2 = $findExtensionOpen->first(function ($ext) {
+            return $ext->count == 2;
+        });
 
-                           
-                  
-                            
-                            $ext2Closed = true;
-                            if ($ext2) {
-                                // Adjust this condition based on your column name for status
-                              $ext2Closed = in_array($ext2->status, ['Closed - Done', 'closed-reject']);
-                            }
-                        @endphp
+        
+
+        
+        $ext2Closed = true;
+        if ($ext2) {
+            // Adjust this condition based on your column name for status
+            $ext2Closed = in_array($ext2->status, ['Closed - Done', 'closed-reject']);
+        }
+    @endphp
 
     <div class="form-field-head">
 
@@ -210,9 +274,9 @@
 
                     <div class="d-flex" style="gap:20px;">
                         @php
-                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    @endphp
+                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        @endphp
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
@@ -1205,7 +1269,7 @@
                                 <!-- <textarea name="investigator_qc">{{ $data->investigator_qc }}</textarea> -->
 
                                 <select id="select-state" placeholder="Select..." name="investigator_qc" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : ($data->stage == 1 ? "required":"") }}>
-                                    <option value="">Select a value</option>
+                                    <option value="">Select a person</option>
                                     @foreach ($users as $key=> $value)
                                         <option  @if ($data->investigator_qc == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                     @endforeach
@@ -1460,7 +1524,7 @@
                                         @endif
                                     </label>
                                     <select id="select-state" placeholder="Select..." name="qc_review_to" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : ($data->stage == 1 ? "required":"") }}>
-                                        <option value="">Select a value</option>
+                                        <option value="">Select a person</option>
                                         @foreach ($users as $key=> $value)
                                             <option  @if ($data->qc_review_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
@@ -2143,7 +2207,7 @@
                             QC Review @if($data->stage==4)<span class="text-danger">*</span> @endif
                         </label>
                         <select id="select-state" placeholder="Select..." name="qc_review_data" {{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : ($data->stage == 4 ? "required":"") }}>
-                            <option value="">Select a value</option>
+                            <option value="">Select a person</option>
                             @foreach ($users as $key=> $value)
                                 <option  @if ($data->qc_review_data == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                             @endforeach
