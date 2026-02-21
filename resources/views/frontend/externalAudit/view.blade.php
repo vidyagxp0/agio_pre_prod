@@ -568,7 +568,9 @@
                         }
 
                         document.addEventListener('DOMContentLoaded', function() {
-                            const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                            // const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                            const currentStage = @json($data->stage ?? 1);
+                            
                             
                             activateTabBasedOnStage(currentStage);
                         });
@@ -624,10 +626,10 @@
                                                             {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                             <option value="">-- Select --</option>
                                                             @foreach ($users as $key => $value)
-    <option value="{{ $value->id }}"
+                                                                <option value="{{ $value->id }}"
                                                                     @if ($data->assign_to == $value->id) selected @endif>
                                                                     {{ $value->name }}</option>
-    @endforeach
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div> -->
@@ -806,7 +808,6 @@
                                                     type="text">
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
-
                                         </div>
 
                                         <div class="col-lg-6">
@@ -818,7 +819,7 @@
                                                     @endif
                                                 </label>
                                                 <select name="initiated_through" id="initiated_through" 
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} required>
+                                                    {{ $data->stage != 1 ? 'disabled' : '' }} required>
                                                     <option value="">-- select --</option>
                                                     <option value="recall" {{ $data->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
                                                     <option value="return" {{ $data->initiated_through == 'return' ? 'selected' : '' }}>Return</option>
@@ -827,6 +828,9 @@
                                                     <option value="improvement" {{ $data->initiated_through == 'improvement' ? 'selected' : '' }}>Improvement</option>
                                                     <option value="others" {{ $data->initiated_through == 'others' ? 'selected' : '' }}>Others</option>
                                                 </select>
+                                                @if($data->stage != 1)
+                                                    <input type="hidden" name="initiated_through" value="{{ $data->initiated_through }}">
+                                                @endif
                                             </div>
                                         </div>
 
@@ -918,15 +922,18 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="external_agencies">External Agencies
-                                                @if ($data->stage == 1)
-                                                    <span
-                                                    class="text-danger">*</span>
+                                                <label for="external_agencies">
+                                                    External Agencies
+                                                    @if ($data->stage == 1)
+                                                        <span class="text-danger">*</span>
                                                     @endif
                                                 </label>
-                                                <select name="external_agencies" id="external_agencies"
-                                                    onchange="toggleField(this.value, 'others_field', 'others_textarea', 'others_asterisk')"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
+
+                                                <select name="external_agencies"
+                                                        id="external_agencies"
+                                                        onchange="toggleField(this.value, 'others_field', 'others_textarea', 'others_asterisk')"
+                                                        {{ $data->stage != 1 ? 'disabled' : '' }}>
+                                                    
                                                     <option value="">-- Select --</option>
                                                     <option value="Jordan FDA" {{ $data->external_agencies == 'Jordan FDA' ? 'selected' : '' }}>Jordan FDA</option>
                                                     <option value="USFDA" {{ $data->external_agencies == 'USFDA' ? 'selected' : '' }}>USFDA</option>
@@ -940,7 +947,13 @@
                                                     <option value="others" {{ $data->external_agencies == 'others' ? 'selected' : '' }}>Others</option>
                                                 </select>
                                             </div>
+
+                                            {{-- Hidden input only when select is disabled --}}
+                                            @if($data->stage != 1)
+                                                <input type="hidden" name="external_agencies" value="{{ $data->external_agencies }}">
+                                            @endif
                                         </div>
+
 
                                         <!-- Others field for External Agencies -->
                                         <div class="col-lg-6" id="others_field" style="display: {{ $data->external_agencies == 'others' ? 'block' : 'none' }};">
@@ -949,7 +962,7 @@
                                                     <span id="others_asterisk" class="text-danger {{ $data->external_agencies == 'others' ? '' : 'd-none' }}">*</span>
                                                 </label>
                                                 <textarea name="others" id="others_textarea"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->others }}</textarea>
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  {{ $data->stage == 1 ? '' : 'readonly' }} >{{ $data->others }}</textarea>
                                             </div>
                                         </div>
 
@@ -1127,11 +1140,11 @@
                                                     @endif
                                                 </label>
                                                 {{-- <div class="calenderauditee">
-                                    <input type="text"
-                                        id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"  />
-                                    <input class="hide-input" type="date"   name="start_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} id="start_date_checkdate" value="{{ $data->start_date }}"
-                                        oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
-                                </div> --}}
+                                                    <input type="text"
+                                                        id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"  />
+                                                    <input class="hide-input" type="date"   name="start_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} id="start_date_checkdate" value="{{ $data->start_date }}"
+                                                        oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                                </div> --}}
                                                 <div class="calenderauditee">
                                                     <input type="text" id="start_date_gi" name="start_date_gi"
                                                         readonly placeholder="DD-MM-YYYY"
@@ -1221,12 +1234,6 @@
                                                 });
                                             });
                                         </script>
-
-
-
-
-
-
 
 
 

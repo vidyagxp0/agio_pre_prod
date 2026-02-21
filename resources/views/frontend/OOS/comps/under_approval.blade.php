@@ -1,3 +1,6 @@
+@php
+    $istab20 = $data->stage == 20 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18));
+@endphp
 <div id="CCForm13" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
@@ -55,7 +58,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">OOS Category</label>
-                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
+                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $istab20 ? '' : 'disabled' }}>
                         <option value="" >Enter Your Selection Here</option>
                         <option value="analyst_error" {{ $data->oos_category_bd == 'analyst_error' ? 'selected' : ''
                             }}>Analyst Error</option>
@@ -70,6 +73,9 @@
                         <option value="other_error" {{ $data->oos_category_bd == 'other_error' ? 'selected' : ''
                             }}>Other Error</option>
                     </select>
+                    @if ($data->stage != 20)
+                        <input type="hidden" value="{{$data->oos_category_bd}}" name="oos_category_bd">
+                    @endif
                 </div>
             </div>
 
@@ -77,14 +83,14 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Records">Other's</label>
-                    <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'readonly' }}>
+                    <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}" {{Helpers::isOOSChemical($data->stage)}} {{ $istab20 ? '' : 'readonly' }}>
                 </div>
             </div>
             <!-- Material/Batch Release Selection -->
             <div class="col-12">
                 <div class="group-input">
                     <label for="Reference Records">Material/Batch Release</label>
-                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
+                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $istab20 ? '' : 'disabled' }}>
                         <option value="" {{ $data->material_batch_release_bd == '' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
                         <option value="To Be Released" {{ $data->material_batch_release_bd == 'To Be Released' ? 'selected' : ''
@@ -94,6 +100,9 @@
                         <option value="other" {{ $data->material_batch_release_bd == 'other' ? 'selected' : ''
                             }}>Other Action (Specify)</option>
                     </select>
+                    @if ($data->stage != 20)
+                        <input type="hidden" value="{{$data->material_batch_release_bd}}" name="material_batch_release_bd">
+                    @endif
                 </div>
             </div>
             <div class="col-md-12 mb-4">
@@ -230,7 +239,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="disposition_attachment_bd[]"
-                                oninput="addMultipleFiles(this, 'disposition_attachment_bd')" {{ $data->stage == 20 ? '' : 'readonly' }} multiple {{Helpers::isOOSChemical($data->stage)}}>
+                                oninput="addMultipleFiles(this, 'disposition_attachment_bd')" {{ $istab20 ? '' : 'disabled' }} multiple {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
                     </div>
 

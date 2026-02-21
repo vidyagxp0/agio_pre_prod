@@ -365,8 +365,7 @@
                         <button class="button_theme1"> <a class="text-white" href="{{ url('riskAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Risk Assessment', 3)))
-                            <!-----------------Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3)----------->
+                        @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Risk Assessment', 3) || Helpers::check_roles($data->division_id, 'root_cause_analysisView', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -374,7 +373,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Risk Assessment', 4))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Risk Assessment', 4) || Helpers::check_roles($data->division_id, 'root_cause_analysisView', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -419,7 +418,7 @@
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                             Child
                         </button>
-                        @elseif($data->stage == 5 && ( Helpers::check_roles($data->division_id, 'Risk Assessment', 9) ||  Helpers::check_roles($data->division_id, 'Risk Assessment', 39) ||  Helpers::check_roles($data->division_id, 'Risk Assessment', 43) ||  Helpers::check_roles($data->division_id, 'Risk Assessment', 42) || Helpers::check_roles($data->division_id, 'Risk Assessment', 65) ))
+                        @elseif($data->stage == 5 && ( Helpers::check_roles($data->division_id, 'Risk Assessment', 9) ||  Helpers::check_roles($data->division_id, 'Risk Assessment', 39) ||  Helpers::check_roles($data->division_id, 'Risk Assessment', 43) ||  Helpers::check_roles($data->division_id, 'Risk Assessment', 42) || Helpers::check_roles($data->division_id, 'Risk Assessment', 65) || Helpers::check_roles($data->division_id, 'root_cause_analysisView', 18)))
 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Information Required
@@ -428,27 +427,7 @@
                             In Approval
                         </button>
                         @endif
-                        {{-- @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Risk Assessment', 7) || Helpers::check_roles($data->division_id, 'Risk Assessment', 66))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Request More Info
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA/CQA Review Complete
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                Child
-                            </button>
 
-                        @elseif($data->stage == 5 && (in_array(42, $userRoleIds) || in_array(65 , $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                In Approval
-                            </button>
-
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Request More Info
-                            </button>
-
-                        @endif --}}
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
                     </div>
@@ -1049,7 +1028,7 @@
                                                 @if ($data->stage == 1)  
                                                   <span class="text-danger">*</span>  
                                                  @endif</label>
-                                                <textarea name="document_used_risk" id="comments" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }}{{ $data->stage == 1 && $initiator ? '' : 'readonly' }} >{{ $data->document_used_risk }}</textarea>
+                                                <textarea name="document_used_risk" id="comments" {{ ($data->stage == 1 && $initiator) ? '' : 'readonly' }} >{{ $data->document_used_risk }}</textarea>
                                             </div>
                                         </div>
 
