@@ -181,11 +181,11 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('ManagementReviewAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Management Review', 7))
+                        @if ($data->stage == 1 &&  (Helpers::check_roles($data->division_id, 'Management Review', 7) || Helpers::check_roles($data->division_id, 'Management Review', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Management Review', 42) || Helpers::check_roles($data->division_id, 'Management Review', 43) || Helpers::check_roles($data->division_id, 'Management Review', 39) || Helpers::check_roles($data->division_id, 'Management Review', 9)))
+                        @elseif($data->stage == 2 && ( Helpers::check_roles($data->division_id, 'Management Review', 42) || Helpers::check_roles($data->division_id, 'Management Review', 43) || Helpers::check_roles($data->division_id, 'Management Review', 39) || Helpers::check_roles($data->division_id, 'Management Review', 9) || Helpers::check_roles($data->division_id, 'Management Review', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -197,7 +197,7 @@
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Child
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </button> -->
-                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Management Review', 7))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Management Review', 7)|| Helpers::check_roles($data->division_id, 'Management Review', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Meeting and Summary Complete
                             </button>
@@ -232,14 +232,14 @@
                             </button>
                         
                             @endif 
-                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Management Review', 7))
+                        @elseif($data->stage == 6 && (Helpers::check_roles($data->division_id, 'Management Review', 7) || Helpers::check_roles($data->division_id, 'Management Review', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Verification Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
-                        @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Management Review', 42) || Helpers::check_roles($data->division_id, 'Management Review', 43) || Helpers::check_roles($data->division_id, 'Management Review', 39) || Helpers::check_roles($data->division_id, 'Management Review', 9)))
+                        @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Management Review', 42) || Helpers::check_roles($data->division_id, 'Management Review', 43) || Helpers::check_roles($data->division_id, 'Management Review', 39) || Helpers::check_roles($data->division_id, 'Management Review', 9) || Helpers::check_roles($data->division_id, 'Management Review', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button>
@@ -549,7 +549,7 @@
                                 </div>
                                  @php
                                    
-                                 $QArolefirst = Helpers::check_roles($data->division_id, 'Management Review', 7);
+                                 $QArolefirst = (Helpers::check_roles($data->division_id, 'Management Review', 7) || Helpers::check_roles($data->division_id, 'Management Review', 18));
                                  @endphp
 
 
@@ -925,7 +925,7 @@
                                     <div class="group-input">
                                         <label for="description">Description <span class="text-danger">*</span></label>
                                         <textarea name="description" id="description"
-                                            {{ $data->stage != 1 ? 'readonly' : '' }}
+                                            {{ $data->stage != 1 ? 'readonly' : '' }} {{ $data->stage == 1 && $QArolefirst ? '' : 'readonly' }}
                                             required>{{ old('description', $data->description) }}</textarea>
 
                                         @error('description')
@@ -1055,7 +1055,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="inv_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}"
+                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }} {{ $data->stage == 1 && $QArolefirst ? '' : 'disabled' }}"
                                                     oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
                                             </div>
                                         </div>
@@ -1154,6 +1154,10 @@
                                 </label>
                                 <textarea name="Operations" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->Operations }}</textarea>
                             </div> --}}
+
+                            @php 
+                            $QAHeadrole = ( Helpers::check_roles($data->division_id, 'Management Review', 42) || Helpers::check_roles($data->division_id, 'Management Review', 43) || Helpers::check_roles($data->division_id, 'Management Review', 39) || Helpers::check_roles($data->division_id, 'Management Review', 9) || Helpers::check_roles($data->division_id, 'Management Review', 18));
+                            @endphp
                             <div class="col-md-12">
                                 @if ($data->stage == 2)
                                     <div class="group-input">
@@ -1161,7 +1165,7 @@
                                                 class="text-danger {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
-                                        <textarea class="tiny" name="Operations" id="summernote-4" required>{{ $data->Operations }}</textarea>
+                                        <textarea class="tiny" name="Operations" id="summernote-4" required {{ $data->stage == 2 && $QAHeadrole ? '' : 'readonly' }}>{{ $data->Operations }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -1186,7 +1190,7 @@
                             </label>
 
                             <!-- Disabled select for stages not equal to 1 -->
-                            <select id="assign_to" name="assign_to[]" @if ($data->stage != 2) disabled @endif  multiple>
+                            <select id="assign_to" name="assign_to[]"  {{ ($data->stage == 2 && $QAHeadrole) ? '' : 'disabled' }} @if ($data->stage != 2) disabled @endif  multiple>
                                 {{-- <option value="">Select a value</option> --}}
                                 @foreach ($users as $user)
                                     <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
@@ -1276,7 +1280,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="file_attchment_if_any[]"
-                                            {{ $data->stage != 2 ? 'readonly' : '' }}
+                                            {{ $data->stage != 2 ? 'readonly' : '' }} {{ $data->stage == 2 && $QAHeadrole ? '' : 'disabled' }}
                                                 oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                         </div>
                                     </div>
@@ -1508,6 +1512,9 @@
                             <span style="font-weight: bold; color: red;">Note: </span>
                             <span> Please fill up both Meeting and summary Tab and CFT Tab value to save the form</span>
                         </h3>
+                        @php
+                         $QAthirdStagerole= (Helpers::check_roles($data->division_id, 'Management Review', 7)|| Helpers::check_roles($data->division_id, 'Management Review', 18));
+                        @endphp
                         <div class="inner-block-content">
                             <div class="row">
                                 @if ($data->stage == 3)
@@ -1519,13 +1526,13 @@
                                         <div class="calenderauditee">
                                             <!-- Disabled state for stage 0 or 8 -->
                                             <input type="text" id="external_supplier_performance" readonly placeholder="DD-MMM-YYYY"
-                                                value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
+                                                value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}"/>
                                             <input type="date" id="external_supplier_performance_checkdate"
                                                 name="external_supplier_performance"
                                                     {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
 
                                                 value="{{ $data->external_supplier_performance }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'external_supplier_performance'); checkStartDate(this)" required />
+                                                oninput="handleDateInput(this, 'external_supplier_performance'); checkStartDate(this)" {{ $data->stage == 3 && $QAthirdStagerole ? '' : 'readonly' }} required />
 
                                         </div>
                                     </div>
@@ -1540,7 +1547,7 @@
                                             <!-- Disabled state for stage 0 or 8 -->
                                             <input type="text" id="external_supplier_performance" readonly
                                                 placeholder="DD-MMM-YYYY"
-                                                value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}" />
+                                                value="{{ Helpers::getdateFormat($data->external_supplier_performance) }}"/>
                                             <input readonly type="date" id="external_supplier_performance_checkdate"
                                                 name="external_supplier_performance"
                                                     {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}}
@@ -1561,12 +1568,12 @@
 
                                             <input type="text" id="customer_satisfaction_level" readonly
                                                 placeholder="DD-MMM-YYYY"
-                                                value="{{ Helpers::getdateFormat($data->customer_satisfaction_level) }}" />
+                                                value="{{ Helpers::getdateFormat($data->customer_satisfaction_level) }}"/>
                                             <input type="date" id="customer_satisfaction_level_checkdate"
                                                 name="customer_satisfaction_level"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $data->customer_satisfaction_level }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'customer_satisfaction_level')" required/>
+                                                oninput="handleDateInput(this, 'customer_satisfaction_level')"  {{ $data->stage == 3 && $QAthirdStagerole ? '' : 'readonly' }}  required/>
                                         </div>
                                     </div>
                                 </div>
@@ -1603,7 +1610,7 @@
                                         <label for="Short_Description">Meeting Start Time @if ($data->stage == 3)
                                          <span class="text-danger">*</span> @endif</label>
                                         <input name="budget_estimates" id="docname" type="time"
-                                        {{ $data->stage != 3 ? 'readonly' : '' }}
+                                        {{ $data->stage != 3 ? 'readonly' : '' }} {{ $data->stage == 3 && $QAthirdStagerole ? '' : 'readonly' }}
                                             value="{{ $data->budget_estimates }}" required>
                                     </div>
                                 </div>
@@ -1613,7 +1620,7 @@
                                         <label for="completion_of_previous_tasks">Meeting End Time @if ($data->stage == 3)
                                         <span class="text-danger">*</span>  @endif</label>
                                         <input name="completion_of_previous_tasks" id="docname" type="time"
-                                        {{ $data->stage != 3 ? 'readonly' : '' }}
+                                        {{ $data->stage != 3 ? 'readonly' : '' }} {{ $data->stage == 3 && $QAthirdStagerole ? '' : 'readonly' }}
                                             value="{{ $data->completion_of_previous_tasks }}" required>
                                     </div>
                                 </div>
@@ -1722,7 +1729,7 @@
                                                                 </select>
                                                             </td>
 
-                                                            <td><input type="text" name="designee[]" {{ $data->stage != 3 ? 'readonly' : '' }}
+                                                            <td><input type="text" name="designee[]" {{ $data->stage != 3 ? 'readonly' : '' }} {{ $data->stage == 3 && $QAthirdStagerole ? '' : 'readonly' }}
                                                                     value="{{ unserialize($management_review_participants->designee)[$key] ?? '' }}">
                                                             </td>
 
@@ -1740,12 +1747,12 @@
                                                                 </select>
                                                             </td>
 
-                                                            <td><input type="text" name="remarks[]" {{ $data->stage != 3 ? 'readonly' : '' }}
+                                                            <td><input type="text" name="remarks[]" {{ $data->stage != 3 ? 'readonly' : '' }} {{ $data->stage == 3 && $QAthirdStagerole ? '' : 'readonly' }}
                                                                     value="{{ unserialize($management_review_participants->remarks)[$key] ?? '' }}">
                                                             </td>
 
                                                             <td>
-                                                                <button type="button" {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                                <button type="button" {{ $data->stage != 3 ? 'disabled' : '' }} {{ $data->stage == 3 && $QAthirdStagerole ? '' : 'disabled' }}
                                                                     class="removeBtnaid">remove</button>
                                                             </td>
                                                         </tr>
@@ -1864,7 +1871,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="meeting_and_summary_attachment[]"
-                                            {{ $data->stage != 3 ? 'disabled' : '' }}
+                                            {{ $data->stage != 3 ? 'disabled' : '' }} {{ $data->stage == 3 && $QAthirdStagerole ? '' : 'disabled' }}
                                                 oninput="addMultipleFiles(this, 'meeting_and_summary_attachment')" multiple>
                                         </div>
                                     </div>
@@ -12449,6 +12456,7 @@
 
                 <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
+                   
 
                         {{-- <div class="group-input">
     <label for="additional_suport_required">
@@ -12468,7 +12476,7 @@
                                             class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea class="tiny" name="additional_suport_required" id="summernote-4" required>{{ $data->additional_suport_required }}</textarea>
+                                    <textarea class="tiny" name="additional_suport_required" id="summernote-4"  {{ $data->stage == 6 && $QAthirdStagerole ? '' : 'readonly' }}  required>{{ $data->additional_suport_required }}</textarea>
                                 </div>
                             @else
                                 <div class="group-input">
@@ -12550,7 +12558,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="qa_verification_file[]"
-                                        {{ $data->stage != 6 ? 'disabled' : '' }}
+                                        {{ $data->stage != 6 ? 'disabled' : '' }} {{ $data->stage == 6 && $QAthirdStagerole ? '' : 'disabled' }} 
                                             oninput="addMultipleFiles(this, 'qa_verification_file')" multiple>
                                     </div>
                                 </div>
@@ -12640,38 +12648,17 @@
 
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
-
-                        {{-- <div class="new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="next_managment_review_date">Next Management Review Date</label>
-                                <div class="calenderauditee">
-                                    <input type="text" id="next_managment_review_date" readonly
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                        placeholder="DD-MMM-YYYY"
-                                        value="{{ Helpers::getdateFormat($data->next_managment_review_date) }}" />
-                                    <input type="date" name="next_managment_review_date"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                        value="{{ $data->next_managment_review_date }} " class="hide-input"
-                                        oninput="handleDateInput(this, 'next_managment_review_date')" />
-                                </div>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="group-input">
-                                <label for="summary_recommendation">Summary & Recommendation</label>
-                                <textarea name="summary_recommendation" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->summary_recommendation }}</textarea>
-                            </div> --}}
-                        {{-- <div class="group-input">
-    <label for="conclusion">QA Head Comment <span class="text-danger">*</span></label>
-    <textarea name="conclusion_new" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required>{{ $data->conclusion_new }}</textarea>
-</div> --}}
+                        @php 
+                        $QA_headrole =  (Helpers::check_roles($data->division_id, 'Management Review', 42) || Helpers::check_roles($data->division_id, 'Management Review', 43) || Helpers::check_roles($data->division_id, 'Management Review', 39) || Helpers::check_roles($data->division_id, 'Management Review', 9) || Helpers::check_roles($data->division_id, 'Management Review', 18));
+                        @endphp
+                              
                         <div class="col-md-12">
                             @if ($data->stage == 7)
                                 <div class="group-input">
                                     <label for="HOD Remarks">QA Head Comment <span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                             does not require completion</small></div>
-                                    <textarea class="tiny" name="conclusion_new" id="summernote-4" required>{{ $data->conclusion_new }}</textarea>
+                                    <textarea class="tiny" name="conclusion_new" id="summernote-4" {{ $data->stage == 7 && $QA_headrole ? '' : 'readonly' }}  required>{{ $data->conclusion_new }}</textarea>
                                 </div>
                             @else
                                 <div class="group-input">
@@ -12746,7 +12733,7 @@
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="closure_attachments[]"
-                                        {{ $data->stage != 7 ? 'disabled' : '' }}
+                                        {{ $data->stage != 7 ? 'disabled' : '' }} {{ $data->stage == 7 && $QA_headrole ? '' : 'readonly' }}  
                                             oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
                                     </div>
                                 </div>
