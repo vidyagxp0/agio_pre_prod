@@ -454,7 +454,7 @@ dd($data->initiator_id , Auth::user()->id);
                                 Final QA/CQA Review Complete
                             </button>
                         @elseif(
-                            ($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)|| Helpers::check_roles($data->division_id,'Root Cause Analysis',43) || Helpers::check_roles($data->division_id,'Root Cause Analysis',39) || Helpers::check_roles($data->division_id,'Root Cause Analysis',9)  || Helpers::check_roles($data->division_id,'Root Cause Analysis',65) || Helpers::check_roles($data->division_id, 'Observation', 18))))
+                            ($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)|| Helpers::check_roles($data->division_id,'Root Cause Analysis',43) || Helpers::check_roles($data->division_id,'Root Cause Analysis',39) || Helpers::check_roles($data->division_id,'Root Cause Analysis',9)  || Helpers::check_roles($data->division_id,'Root Cause Analysis',65) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18))))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information
                                 Required
@@ -651,6 +651,12 @@ dd($data->initiator_id , Auth::user()->id);
                                         </div>
                                     </div>
 
+                                    @php
+                                   
+                                        $initiator = (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3) || Helpers::check_roles($data->division_id, 'root_cause_analysisView', 18));
+
+                                    @endphp
+
 
                                     <div class="col-12">
                                         <div class="group-input">
@@ -661,7 +667,7 @@ dd($data->initiator_id , Auth::user()->id);
 
                                             <input name="short_description" id="docname" type="text"
                                                 maxlength="255" required
-                                                {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
+                                                {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}
                                                 value="{{ $data->short_description }}">
                                         </div>
                                         <p id="docnameError" style="color:red">**Short Description is required</p>
@@ -672,7 +678,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <label for="select-state">Name of Responsible Department Head <span
                                                     class="text-danger">*</span></label>
                                             <select id="select-state" placeholder="Select..." name="assign_to"
-                                                {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}
+                                                {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }} {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}
                                                 required>
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key => $value)
@@ -695,7 +701,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <label for="select-state">QA Reviewer <span
                                                     class="text-danger">*</span></label>
                                             <select id="select-state" placeholder="Select..." name="qa_reviewer"
-                                            {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}
+                                            {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}  {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}
                                                 required>
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key => $value)
@@ -718,7 +724,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <label for="Audit Schedule Start Date">Due Date <span class="text-danger">*</span></label>
                                              <div class="calenderauditee">
                                                 <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }} required/>
+                                                {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }}  {{ $data->stage == 1 && $initiator ? '' : 'readonly' }} required/>
                                                 <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
                                             </div>
@@ -738,7 +744,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                 <small class="text-primary">Please select related information</small>
                                             </div>
                                             <select name="initiated_through"
-                                            id="initiated_through" {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}
+                                            id="initiated_through" {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}  {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}
                                                 onchange="toggleOtherField()" 
                                                 {{$data->stage==1 ? 'required':''}} >
                                                 <option value="">-- select --</option>
@@ -761,7 +767,7 @@ dd($data->initiator_id , Auth::user()->id);
                                     <div class="col-lg-6">
                                         <div class="group-input" id="initiated_through_req" style="display: none;">
                                             <label for="If Other">Others <span class="text-danger">*</span></label>
-                                            <textarea id="initiated_if_other"  {{$data->stage != 1 ? "readonly" : "" }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
+                                            <textarea id="initiated_if_other"  {{$data->stage != 1 ? "readonly" : "" }}  {{ $data->stage == 1 && $initiator ? '' : 'readonly' }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
                                         </div>
                                     </div>
 
@@ -816,7 +822,7 @@ dd($data->initiator_id , Auth::user()->id);
                                         <div class="group-input">
                                             <label for="Responsible Department">Responsible Department <span class="text-danger">*</span></label>
                                             <select name="department" id="department"
-                                              {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}
+                                              {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}  {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}
                                                  {{$data->stage==1 ? 'required':''}}>
                                                 <option value="">-- Select --</option>
                                                 <option value="Corporate Quality Assurance" {{old('department', $data->department) == 'Corporate Quality Assurance' ? 'selected' : '' }}>Corporate Quality Assurance</option>
@@ -865,13 +871,13 @@ dd($data->initiator_id , Auth::user()->id);
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="description">Description <span class="text-danger">*</span></label>
-                                            <textarea name="description"{{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} required>{{ $data->description }}</textarea>
+                                            <textarea name="description"{{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 1 && $initiator ? '' : 'readonly' }} required>{{ $data->description }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="comments">Comments <span class="text-danger" >*</span></label>
-                                            <textarea name="comments" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} required>{{ $data->comments }}</textarea>
+                                            <textarea name="comments" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 1 && $initiator ? '' : 'readonly' }} required>{{ $data->comments }}</textarea>
                                         </div>
                                         @error('comments')
                                             <span class="text-danger">{{$message}}</span>
@@ -908,7 +914,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                     <div>Add</div>
 
                                                     <input type="file" id="myfile"
-                                                        name="root_cause_initial_attachment[]" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }}
+                                                        name="root_cause_initial_attachment[]" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }}  {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}
                                                         oninput="addMultipleFiles(this, 'root_cause_initial_attachment')"
                                                         multiple>
                                                 </div>
@@ -933,12 +939,14 @@ dd($data->initiator_id , Auth::user()->id);
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-12">
-
+                                      @php
+                                       $Hodrole =  (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4)|| Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18));
+                                      @endphp
                                         @if ($data->stage == 2)
                                                 <div class="group-input">
                                                     <label for="comments">HOD Review Comment<span
                                                         class="text-danger">*</span> </label>
-                                                    <textarea name="hod_comments"  {{$data->stage ==2 ? 'required' : ''}}  {{$data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->hod_comments }}</textarea>
+                                                    <textarea name="hod_comments"  {{$data->stage ==2 ? 'required' : ''}}  {{$data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 2 && $Hodrole ? '' : 'readonly' }}>{{ $data->hod_comments }}</textarea>
                                                 </div>
                                                 @error('hod_comments')
                                                     <span class="text-danger">{{$message}}</span>
@@ -948,7 +956,7 @@ dd($data->initiator_id , Auth::user()->id);
 
                                                 <div class="group-input">
                                                     <label for="comments">HOD Review Comment </label>
-                                                    <textarea name="hod_comments" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->hod_comments }}</textarea>
+                                                    <textarea name="hod_comments" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} {{ $data->stage == 2 && $Hodrole ? '' : 'readonly' }}>{{ $data->hod_comments }}</textarea>
                                                 </div>
                                         </div>
                                         @endif
@@ -984,7 +992,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="hod_attachments[]" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
+                                                    name="hod_attachments[]" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} {{ $data->stage == 2 && $Hodrole ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
                                             </div>
                                         </div>
@@ -1008,12 +1016,16 @@ dd($data->initiator_id , Auth::user()->id);
 
                             <div class="row">
                                 <div class="col-lg-12">
+                                    @php
+
+                                    $QArole   = (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18));
+                                    @endphp
                                          @if ($data->stage == 3)
 
                                             <div class="group-input">
                                                 <label for="comments" >Initial QA/CQA Review Comments <span
                                                     class="text-danger">*</span></label>
-                                                <textarea name="cft_comments_new" {{$data->stage == 3 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->cft_comments_new }}</textarea>
+                                                <textarea name="cft_comments_new" {{$data->stage == 3 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 3 && $QArole ? '' : 'readonly' }}>{{ $data->cft_comments_new }}</textarea>
                                             </div>
 
                                           @else
@@ -1055,7 +1067,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="cft_attchament_new[]" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
+                                                    name="cft_attchament_new[]" {{ $data->stage == 3 && $QArole ? '' : 'readonly' }}  {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
                                                     oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
                                             </div>
                                         </div>
@@ -1083,7 +1095,9 @@ dd($data->initiator_id , Auth::user()->id);
                                     <div class="sub-head">Investigation </div>
                                 </div>
 
-
+                                    @php 
+                                     $stagethirdrole =  (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3) ||  Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18))
+                                    @endphp
                                 
                                 <div class="col-lg-12">
 
@@ -1205,7 +1219,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             Failure Mode and Effect Analysis
                                             <button type="button" name="agenda"
                                                 onclick="addRootCauseAnalysisRiskAssessment1('risk-assessment-risk-management')"
-                                                {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>+</button>
+                                                {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>+</button>
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" style="width: 200%"
@@ -1246,13 +1260,13 @@ dd($data->initiator_id , Auth::user()->id);
                                                             <tr>
                                                                 <td>{{ $key + 1 }}</td>
                                                                 <td><textarea name="risk_factor[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $riskFactor }}</textarea>
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ $riskFactor }}</textarea>
                                                                 </td>
                                                                 <td><textarea name="risk_element[]"
-                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ unserialize($data->risk_element)[$key] ?? null }}</textarea>
+                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ unserialize($data->risk_element)[$key] ?? null }}</textarea>
                                                             </td>
                                                                 <td><textarea name="problem_cause[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ unserialize($data->problem_cause)[$key] ?? null }}</textarea>
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ unserialize($data->problem_cause)[$key] ?? null }}</textarea>
                                                                 </td>
 
                                                                 <td>
@@ -1330,7 +1344,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                                 <td><input name="risk_control_measure[]"
                                                                         type="text"
                                                                         value="{{ unserialize($data->risk_control_measure)[$key] ?? null }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>
                                                                 </td>
                                                                 <td>
                                                                     <select onchange="calculateResidualResult(this)"
@@ -1410,7 +1424,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                                         class="risk-acceptance"
                                                                         value="{{ unserialize($data->risk_acceptance)[$key] ?? '' }}"
                                                                         readonly
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>
                                                                 </td>
                                                                 <td>
                                                                     <select name="risk_acceptance2[]"
@@ -1425,7 +1439,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                                     </select>
                                                                 </td>
                                                                 <td><textarea name="mitigation_proposal[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ unserialize($data->mitigation_proposal)[$key] ?? null }}</textarea>
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ unserialize($data->mitigation_proposal)[$key] ?? null }}</textarea>
                                                                 </td>
                                                                 <td> <button class=" btn-dark removeRowBtn"
                                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button>
@@ -1467,13 +1481,13 @@ dd($data->initiator_id , Auth::user()->id);
                                                             @foreach (unserialize($data->measurement) as $key => $measure)
                                                                 <div><textarea
                                                                         value=""
-                                                                        name="measurement[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $measure }}</textarea>
+                                                                        name="measurement[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ $measure }}</textarea>
                                                                 </div>
                                                                 <div><textarea
-                                                                        name="materials[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->materials)[$key] ? unserialize($data->materials)[$key] : '' }}</textarea>
+                                                                        name="materials[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ unserialize($data->materials)[$key] ? unserialize($data->materials)[$key] : '' }}</textarea>
                                                                 </div>
                                                                 <div><textarea
-                                                                        name="methods[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->methods)[$key] ?? null }}</textarea>
+                                                                        name="methods[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ unserialize($data->methods)[$key] ?? null }}</textarea>
                                                                 </div>
                                                             @endforeach
                                                         @endif
@@ -1485,13 +1499,13 @@ dd($data->initiator_id , Auth::user()->id);
                                                         @if (!empty($data->environment))
                                                             @foreach (unserialize($data->environment) as $key => $measure)
                                                                 <div><textarea 
-                                                                        name="environment[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $measure }}</textarea>
+                                                                        name="environment[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ $measure }}</textarea>
                                                                 </div>
                                                                 <div><textarea 
-                                                                        name="manpower[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->manpower)[$key] ? unserialize($data->manpower)[$key] : '' }}</textarea>
+                                                                        name="manpower[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ unserialize($data->manpower)[$key] ? unserialize($data->manpower)[$key] : '' }}</textarea>
                                                                 </div>
                                                                 <div><textarea
-                                                                        name="machine[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->machine)[$key] ? unserialize($data->machine)[$key] : '' }}</textarea>
+                                                                        name="machine[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ unserialize($data->machine)[$key] ? unserialize($data->machine)[$key] : '' }}</textarea>
                                                                 </div>
                                                             @endforeach
                                                         @endif
@@ -1509,7 +1523,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                     Problem Statement
                                                 </div>
                                                 <div class="field">
-                                                    <textarea name="problem_statement" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->problem_statement }}</textarea>
+                                                    <textarea name="problem_statement" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ $data->problem_statement }}</textarea>
 
                                                 </div>
                                             </div>
@@ -1549,7 +1563,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                                     <input disabled type="text"
                                                                         name="serial_number[]"
                                                                         value="{{ $key + 1 }}"
-                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>
                                                                 </td>
                                                                 <td>
                                                                     <select name="inference_type[]"
@@ -1577,7 +1591,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                                 </td>
                                                                 <td>
                                                                     <textarea name="inference_remarks[]"
-                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $inference_remarks[$key] ?? '' }}</textarea>
+                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ $inference_remarks[$key] ?? '' }}</textarea>
                                                                 </td>
                                                                 <td>
                                                                     <button type="button" class="removeRowBtn"
@@ -1605,7 +1619,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                 <tr style="background: #f4bb22">
                                                     <th style="width:150px;">Problem Statement :</th>
                                                     <td>
-                                                        <textarea name="why_problem_statement">{{ old('why_problem_statement', $data->why_problem_statement ?? '') }}</textarea>
+                                                        <textarea name="why_problem_statement"  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ old('why_problem_statement', $data->why_problem_statement ?? '') }}</textarea>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -1623,13 +1637,13 @@ dd($data->initiator_id , Auth::user()->id);
                                                             <tr>
                                                                 <th style="width:150px; color: #393cd4;">Why {{ $index + 1 }}</th>
                                                                 <td>
-                                                                    <textarea name="why_questions[]" placeholder="Enter Why {{ $index + 1 }} Question">{{ $why['question'] }}</textarea>
+                                                                    <textarea name="why_questions[]"  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }} placeholder="Enter Why {{ $index + 1 }} Question">{{ $why['question'] }}</textarea>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <th style="width:150px; color: #393cd4;">Answer {{ $index + 1 }}</th>
                                                                 <td>
-                                                                    <textarea name="why_answers[]" placeholder="Enter Answer for Why {{ $index + 1 }}">{{ $why['answer'] }}</textarea>
+                                                                    <textarea name="why_answers[]"  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }} placeholder="Enter Answer for Why {{ $index + 1 }}">{{ $why['answer'] }}</textarea>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1645,7 +1659,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                     <tr style="background: #0080006b;">
                                                         <th style="width:150px;">Root Cause :</th>
                                                         <td>
-                                                            <textarea name="why_root_cause">{{ old('why_root_cause', $data->why_root_cause ?? '') }}</textarea>
+                                                            <textarea name="why_root_cause"  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ old('why_root_cause', $data->why_root_cause ?? '') }}</textarea>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -1728,61 +1742,61 @@ dd($data->initiator_id , Auth::user()->id);
                                                     <tr>
                                                         <th style="background: #0039bd85">What</th>
                                                         <td>
-                                                            <textarea name="what_will_be" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->what_will_be }}</textarea>
+                                                            <textarea name="what_will_be" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ $data->what_will_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="what_will_not_be" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->what_will_not_be }}</textarea>
+                                                            <textarea name="what_will_not_be" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ $data->what_will_not_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="what_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->what_rationable }}</textarea>
+                                                            <textarea name="what_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->what_rationable }}</textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th style="background: #0039bd85">Where</th>
                                                         <td>
-                                                            <textarea name="where_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->where_will_be }}</textarea>
+                                                            <textarea name="where_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->where_will_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="where_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->where_will_not_be }}</textarea>
+                                                            <textarea name="where_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->where_will_not_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="where_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->where_rationable }}</textarea>
+                                                            <textarea name="where_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->where_rationable }}</textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th style="background: #0039bd85">When</th>
                                                         <td>
-                                                            <textarea name="when_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->when_will_be }}</textarea>
+                                                            <textarea name="when_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->when_will_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="when_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->when_will_not_be }}</textarea>
+                                                            <textarea name="when_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ $data->when_will_not_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="when_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->when_rationable }}</textarea>
+                                                            <textarea name="when_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->when_rationable }}</textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th style="background: #0039bd85">Why</th>
                                                         <td>
-                                                            <textarea name="coverage_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->coverage_will_be }}</textarea>
+                                                            <textarea name="coverage_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->coverage_will_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="coverage_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->coverage_will_not_be }}</textarea>
+                                                            <textarea name="coverage_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->coverage_will_not_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="coverage_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->coverage_rationable }}</textarea>
+                                                            <textarea name="coverage_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->coverage_rationable }}</textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th style="background: #0039bd85">Who</th>
                                                         <td>
-                                                            <textarea name="who_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->who_will_be }}</textarea>
+                                                            <textarea name="who_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->who_will_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="who_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->who_will_not_be }}</textarea>
+                                                            <textarea name="who_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->who_will_not_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="who_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->who_rationable }}</textarea>
+                                                            <textarea name="who_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}> {{ $data->who_rationable }}</textarea>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -1795,7 +1809,7 @@ dd($data->initiator_id , Auth::user()->id);
                                     <div class="group-input">
                                         <label for="root_cause_Others">Others @if ($data->stage == 4)@endif</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea class="summernote"  name="root_cause_Others" id="summernote" {{$data->stage == 4 ? 'required' : ''}}>{{ $data->root_cause_Others}} </textarea>
+                                        <textarea class="summernote"  name="root_cause_Others" id="summernote" {{$data->stage == 4 ? 'required' : ''}}  {{ $data->stage == 4 && $stagethirdrole ? '' : 'readonly' }}>{{ $data->root_cause_Others}} </textarea>
                                     </div>
                                 </div>
 
@@ -1838,6 +1852,7 @@ dd($data->initiator_id , Auth::user()->id);
                                                     name="investigation_attachment[]"
                                                     {{ $isReadonly ? 'readonly' : '' }}
                                                     {{ $isRequired ? 'required' : '' }}
+                                                     {{ $data->stage == 4 && $stagethirdrole ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'investigation_attachment')"
                                                     multiple>
 
@@ -1937,12 +1952,13 @@ dd($data->initiator_id , Auth::user()->id);
                             <!-- <div class="sub-head">
                                                                                                                                                                                                                                                                                                              </div>  -->
                             <div class="row">
+                               
                                 <div class="col-lg-12">
                                     @if ($data->stage == 5)
                                        <div class="group-input">
                                            <label for="comments" >HOD Final Review Comments <span
                                                class="text-danger">*</span></label>
-                                           <textarea name="hod_final_comments" {{$data->stage == 5 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->hod_final_comments }}</textarea>
+                                           <textarea name="hod_final_comments" {{$data->stage == 5 ? 'required' : ''}}  {{ $data->stage == 5 && $Hodrole ? '' : 'readonly' }} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->hod_final_comments }}</textarea>
                                        </div>
                                      @else
                                        <div class="group-input">
@@ -1983,7 +1999,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="hod_final_attachments[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
+                                                    name="hod_final_attachments[]" {{ $data->stage == 5 && $Hodrole ? '' : 'disabled' }} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} 
                                                     oninput="addMultipleFiles(this, 'hod_final_attachments')" multiple>
                                             </div>
                                         </div>
@@ -2004,9 +2020,11 @@ dd($data->initiator_id , Auth::user()->id);
                     </div>
                     <div id="CCForm11" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <!-- <div class="sub-head">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        CFT Feedback
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>  -->
+                             @php
+                               
+                            $stagefixCQA  = ( Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)|| Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18))
+
+                             @endphp
                             <div class="row">
                                 <div class="col-lg-12">
                                     @if ($data->stage == 6)
@@ -2014,7 +2032,7 @@ dd($data->initiator_id , Auth::user()->id);
                                        <div class="group-input">
                                            <label for="comments" >QA/CQA Final Review Comments <span
                                                class="text-danger">*</span></label>
-                                           <textarea name="qa_final_comments"  {{$data->stage == 6 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->qa_final_comments }}</textarea>
+                                           <textarea name="qa_final_comments" {{ $data->stage == 6 && $stagefixCQA ? '' : 'readonly' }}  {{$data->stage == 6 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->qa_final_comments }}</textarea>
                                        </div>
 
                                      @else
@@ -2056,7 +2074,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="qa_final_attachments[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
+                                                    name="qa_final_attachments[]" {{ $data->stage == 6 && $stagefixCQA ? '' : 'readonly' }}  {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
                                                     oninput="addMultipleFiles(this, 'qa_final_attachments')" multiple>
                                             </div>
                                         </div>
@@ -2077,8 +2095,9 @@ dd($data->initiator_id , Auth::user()->id);
                     </div>
                     <div id="CCForm12" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <!-- <div class="sub-head">
-                              </div>  -->
+                          @php
+                            $QA_head = (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)|| Helpers::check_roles($data->division_id,'Root Cause Analysis',43) || Helpers::check_roles($data->division_id,'Root Cause Analysis',39) || Helpers::check_roles($data->division_id,'Root Cause Analysis',9)  || Helpers::check_roles($data->division_id,'Root Cause Analysis',65) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18));
+                          @endphp
                             <div class="row">
                                 <div class="col-lg-12">
                                     @if ($data->stage == 7)
@@ -2086,7 +2105,7 @@ dd($data->initiator_id , Auth::user()->id);
                                        <div class="group-input">
                                            <label for="comments" >QAH/CQAH/Designee Final Approval Comments <span
                                                class="text-danger">*</span></label>
-                                           <textarea name="qah_final_comments" {{$data->stage == 7 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->qah_final_comments }}</textarea>
+                                           <textarea name="qah_final_comments"  {{ $data->stage == 7 && $QA_head ? '' : 'readonly' }}  {{$data->stage == 7 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->qah_final_comments }}</textarea>
                                        </div>
 
                                      @else
@@ -2129,7 +2148,7 @@ dd($data->initiator_id , Auth::user()->id);
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="qah_final_attachments[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6|| $data->stage == 8 ? "readonly" : "" }}
+                                                    name="qah_final_attachments[]" {{ $data->stage == 7 && $QA_head ? '' : 'disabled' }} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6|| $data->stage == 8 ? "readonly" : "" }}
                                                     oninput="addMultipleFiles(this, 'qah_final_attachments')" multiple>
                                             </div>
                                         </div>

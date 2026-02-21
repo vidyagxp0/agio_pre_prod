@@ -12200,9 +12200,9 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
                             $childModels = [
                                 \App\Models\extension_new::class,
-                                \App\Models\RootCauseAnalysis::class,
-                                \App\Models\Capa::class,
-                                \App\Models\ActionItem::class
+                                // \App\Models\RootCauseAnalysis::class,
+                                // \App\Models\Capa::class,
+                                // \App\Models\ActionItem::class
                             ];
 
                             $hasPending1 = false;

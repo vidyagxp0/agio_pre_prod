@@ -75,6 +75,8 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::post('/externalAudit',[LogFilterController::class,'externalAuditFilter'])->name('api.externalAudit.filter');
  Route::post('/managementReview',[LogFilterController::class,'ManagementReviewFilter'])->name('api.managementReview.filter');
  Route::post('/resampling',[LogFilterController::class,'ResamplingFilter'])->name('api.resampling.filter');
+ Route::post('/observation',[LogFilterController::class,'ObservationFilter'])->name('api.observation.filter');
+ 
  Route::post('/rootcauseanalysis',[LogFilterController::class,'RootcauseanalysisFilter'])->name('api.rootcauseanalysis.filter');
 
  Route::post('/ooc',[LogFilterController::class,'ooc_filter'])->name('api.ooc.filter');
@@ -84,6 +86,7 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::post('/incident',[LogFilterController::class,'IncidentFilter'])->name('api.incident.filter');
  Route::post('/oot',[LogFilterController::class,'OOT_Filter'])->name('api.oot.filter');
  Route::get('/chngecontrol-management/{id}',[CCController::class,'audit_trail_filter'])->name('api.Change_Control.filter');
+
 
 
 

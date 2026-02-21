@@ -547,6 +547,11 @@
                                         id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
                                     </div>
                                 </div>
+                                 @php
+                                   
+                                 $QArolefirst = Helpers::check_roles($data->division_id, 'Management Review', 7);
+                                 @endphp
+
 
 
                                 <div class="col-12">
@@ -554,7 +559,7 @@
                                         <label for="Short_Description">Short Description<span class="text-danger">*</span></label>
                                         <span id="rchars">255</span> characters remaining
 
-                                        <input name="short_description" id="docname" type="text" maxlength="255" required
+                                        <input name="short_description" id="docname" type="text" maxlength="255" required {{ $data->stage == 1 && $QArolefirst ? '' : 'readonly' }}
                                             value="{{ $data->short_description }}"
                                             @if ($data->stage != 1) readonly @endif />
 
@@ -576,7 +581,7 @@
                                         </label>
                                         <select name="summary_recommendation" id="summary_recommendation"
                                             onchange="toggleReviewPeriod()"
-                                            @if ($data->stage != 1) disabled @endif required>
+                                            @if ($data->stage != 1) disabled @endif  {{ $data->stage == 1 && $QArolefirst ? '' : 'disabled' }} required>
                                             <option value="">Select Type</option>
                                             <option @if ($data->summary_recommendation == 'Monthly') selected @endif value="Monthly">
                                                 Monthly
@@ -603,7 +608,7 @@
                                             @endif
                                         </label>
                                         <select name="review_period_monthly" id="review_period_monthly_select" required
-                                            @if ($data->stage != 1) disabled @endif>
+                                            @if ($data->stage != 1) disabled @endif {{ $data->stage == 1 && $QArolefirst ? '' : 'disabled' }}>
                                             <option value="">Select Month</option>
                                             <option @if ($data->review_period_monthly == 'January') selected @endif value="January">January</option>
                                             <option @if ($data->review_period_monthly == 'February') selected @endif value="February">February</option>

@@ -850,9 +850,9 @@ class MytaskController extends Controller
             $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)
             ->value('name');
         }
-        $task = $this->paginate($arrayTask);
+        $tasks = $this->paginate($arrayTask);
 
-        return view('frontend.tasks', compact('task', 'allTasks', 'processes'));
+        return view('frontend.tasks', compact('tasks', 'allTasks', 'processes'));
     }
     public function reviewdetails($id)
     {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Deviation;
 use App\Models\Capa;
 use App\Models\CC;
+use App\Models\Observation;
 use App\Models\errata;
 use App\Models\FailureInvestigation;
 use App\Models\lab_incidents_grid;
@@ -63,6 +64,14 @@ class LogController extends Controller
                            
                             return view('frontend.forms.Logs.errata_log',compact('erratalog'));
                             break;
+
+             case 'observation':
+                        $observations = Observation::get();
+                        // dd($observations);
+                            
+                           
+                            return view('frontend.forms.Logs.observationlogs',compact('observations'));
+                            break;                
         
             case 'failure-investigation':
                         $failure = FailureInvestigation::get();
@@ -159,7 +168,7 @@ class LogController extends Controller
                     return view('frontend.forms.Logs.OOC_log' , compact('oocs','users'));
               
                                               
-            case 'oot':
+            case 'oos':
             
                 // $oots =  OOS::get();
 

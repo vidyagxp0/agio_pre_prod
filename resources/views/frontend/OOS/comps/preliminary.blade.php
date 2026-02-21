@@ -30,7 +30,7 @@
                     }
                 @endphp
 
-                    <select multiple id="checklists" class="abc" name="checklists[]">
+                    <select multiple id="checklists" class="abc" name="checklists[]" {{ $istab5 ? '' : 'disabled' }}>
                         <option value="Bacterial-Endotoxin-Test" @if (in_array('Bacterial-Endotoxin-Test', $selectedChecklist)) selected @endif>Checklist - Bacterial Endotoxin Test</option>
                         <option value="Sterility" @if (in_array('Sterility', $selectedChecklist)) selected @endif>Checklist - Sterility</option>
                         <option value="Water-Test" @if (in_array('Water-Test', $selectedChecklist)) selected @endif>Checklist - Microbial limit test/Bioburden and Water Test</option>
@@ -38,6 +38,12 @@
                         <option value="Environmental-Monitoring" @if (in_array('Environmental-Monitoring', $selectedChecklist)) selected @endif>Checklist - Environmental Monitoring</option>
                         <option value="Media-Suitability-Test" @if (in_array('Media-Suitability-Test', $selectedChecklist)) selected @endif>Checklist - Media Suitability Test</option>
                     </select>
+                    @if($data->stage != 5)
+                        @foreach($selectedChecklist as $value)
+                            <input type="hidden" name="checklists[]" value="{{ $value }}">
+                        @endforeach
+                    @endif
+
                 </div>
             </div>
             @else
@@ -54,15 +60,20 @@
                     }
                 @endphp
 
-                    <select multiple id="checklists" class="abc" name="checklists[]">
+                    <select multiple id="checklists" class="abc" name="checklists[]" {{ $istab5 ? '' : 'disabled' }}>
                         <option value="pH-Viscometer-MP" @if (in_array('pH-Viscometer-MP', $selectedChecklist)) selected @endif>CheckList - pH-Viscometer-MP</option>
                         <option value="Dissolution" @if (in_array('Dissolution', $selectedChecklist)) selected @endif>CheckList - Dissolution</option>
                         <option value="HPLC-GC" @if (in_array('HPLC-GC', $selectedChecklist)) selected @endif>CheckList - HPLC-GC</option>
                         <option value="General-checklist" @if (in_array('General-checklist', $selectedChecklist)) selected @endif>CheckList - General checklist</option>
                         <option value="KF-Potentiometer" @if (in_array('KF-Potentiometer', $selectedChecklist)) selected @endif>CheckList - KF-Potentiometer</option>
                         <option value="RM-PM Sampling" @if (in_array('RM-PM Sampling', $selectedChecklist)) selected @endif>CheckList - RM-PM Sampling</option>
-                        
                     </select>
+                    @if($data->stage != 5)
+                        @foreach($selectedChecklist as $value)
+                            <input type="hidden" name="checklists[]" value="{{ $value }}">
+                        @endforeach
+                    @endif
+
                 </div>
             </div>
 
@@ -173,7 +184,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">OOS/OOT Cause Identified<span class="text-danger">*</span></label>
-                    <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'readonly' }}>
+                    <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes"{{ $data->phase_i_investigation_pli ==
                             'Yes' ? 'selected' : '' }}>Yes</option>
@@ -181,7 +192,9 @@
                             'No' ? 'selected' : '' }}>No</option>
                     </select>
                 </div>
-                {{-- <input type="hidden" name="phase_i_investigation_pli" value="{{ $data->phase_i_investigation_pli }}"> --}}
+                    @if ($data->stage != 5)
+                        <input type="hidden" value="{{$data->phase_i_investigation_pli}}" name="phase_i_investigation_pli">
+                    @endif            
             </div>
 
             <script>
@@ -210,7 +223,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Team"> OOS/OOT Category<span class="text-danger">*</span></label>
-                    <select name="oos_category_root_cause_ident_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'readonly' }}>
+                    <select name="oos_category_root_cause_ident_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->oos_category_root_cause_ident_plic ==
                             'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
@@ -224,7 +237,9 @@
                             'NA' ? 'selected' : '' }}>NA</option>
                     </select>
                 </div>
-                {{-- <input type="hidden" name="oos_category_root_cause_ident_plic" value="{{ $data->oos_category_root_cause_ident_plic }}"> --}}
+                    @if ($data->stage != 5)
+                        <input type="hidden" value="{{$data->oos_category_root_cause_ident_plic}}" name="oos_category_root_cause_ident_plic">
+                    @endif            
             </div>
 
             <div class="col-md-12 mb-4">
@@ -241,7 +256,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">CAPA Required <span class="text-danger">*</span></label>
-                    <select name="capa_required_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'readonly' }}>
+                    <select name="capa_required_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="" {{ $data->capa_required_plic == '0' ? 'selected' : ''
                             }}>--Select---</option>
                         <option value="yes" {{ $data->capa_required_plic == 'yes' ? 'selected' : ''
@@ -250,7 +265,9 @@
                         </option>
                     </select>
                 </div>
-                {{-- <input type="hidden" name="capa_required_plic" value="{{ $data->capa_required_plic }}"> --}}
+                    @if ($data->stage != 5)
+                        <input type="hidden" value="{{$data->capa_required_plic}}" name="capa_required_plic">
+                    @endif
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
@@ -277,7 +294,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Phase IB Inv. Required? <span class="text-danger">*</span></label>
-                    <select name="phase_ib_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'readonly' }}>
+                    <select name="phase_ib_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data && $data->phase_ib_inv_required_plir == 'yes' ?
                             'selected' : '' }}>Yes</option>
@@ -285,12 +302,14 @@
                             'selected' : '' }}>No</option>
                     </select>
                 </div>
-                {{-- <input type="hidden" name="phase_ib_inv_required_plir" value="{{ $data->phase_ib_inv_required_plir }}"> --}}
+                @if ($data->stage != 5)
+                    <input type="hidden" value="{{$data->phase_ib_inv_required_plir}}" name="phase_ib_inv_required_plir">
+                @endif
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Phase II Inv. Required? <span class="text-danger">*</span></label>
-                    <select name="phase_ii_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'readonly' }}>
+                    <select name="phase_ii_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data && $data->phase_ii_inv_required_plir == 'yes' ?
                             'selected' : '' }}>Yes</option>
@@ -298,13 +317,15 @@
                             'selected' : '' }}>No</option>
                     </select>
                 </div>
-                {{-- <input type="hidden" name="phase_ii_inv_required_plir" value="{{ $data->phase_ii_inv_required_plir }}"> --}}
+                @if ($data->stage != 5)
+                    <input type="hidden" value="{{$data->phase_ii_inv_required_plir}}" name="phase_ii_inv_required_plir">
+                @endif
             </div>
 
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Retest/Re-measurement Required <span class="text-danger">*</span></label>
-                    <select name="root_cause_identified_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'readonly' }}>
+                    <select name="root_cause_identified_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data && $data->root_cause_identified_pia == 'yes' ?
                             'selected' : '' }}>Yes</option>
@@ -312,12 +333,14 @@
                             'selected' : '' }}>No</option>
                     </select>
                 </div>
-                {{-- <input type="hidden" name="root_cause_identified_pia" value="{{ $data->root_cause_identified_pia }}"> --}}
+                @if ($data->stage != 5)
+                    <input type="hidden" value="{{$data->root_cause_identified_pia}}" name="root_cause_identified_pia">
+                @endif
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Resampling Required <span class="text-danger">*</span></label>
-                    <select name="is_repeat_assingable_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'readonly' }}>
+                    <select name="is_repeat_assingable_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="YES" {{ $data && $data->is_repeat_assingable_pia == 'YES' ?
                             'selected' : '' }}>Yes</option>
@@ -326,11 +349,14 @@
                     </select>
                 </div>
                 {{-- <input type="hidden" name="is_repeat_assingable_pia" value="{{ $data->is_repeat_assingable_pia }}"> --}}
+                @if ($data->stage != 5)
+                    <input type="hidden" value="{{$data->is_repeat_assingable_pia}}" name="is_repeat_assingable_pia">
+                @endif
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Repeat Testing Required <span class="text-danger">*</span></label>
-                    <select name="repeat_testing_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'readonly' }}>
+                    <select name="repeat_testing_pia" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="YES" {{ $data && $data->repeat_testing_pia == 'YES' ?
                             'selected' : '' }}>Yes</option>
@@ -339,6 +365,9 @@
                     </select>
                 </div>
                 {{-- <input type="hidden" name="repeat_testing_pia" value="{{ $data->repeat_testing_pia }}"> --}}
+                @if ($data->stage != 5)
+                    <input type="hidden" value="{{$data->repeat_testing_pia}}" name="repeat_testing_pia">
+                @endif
             </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">

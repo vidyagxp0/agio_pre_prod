@@ -122,13 +122,16 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group Code">Is Repeat?<span class="text-danger">*</span></label>
-                    <select name="is_repeat_gi" id="assignableSelect" {{ $istab1 ? 'required' : 'readonly' }}>
+                    <select name="is_repeat_gi" id="assignableSelect" {{ $istab1 ? 'required' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes</option>
                         <option value="no" {{ $data->is_repeat_gi == 'no' ? 'selected' : '' }}>No</option>
                     </select>
                 </div>
                 <!-- <input type="hidden" name="is_repeat_gi" value="{{ $data->is_repeat_gi }}"> -->
+                @if ($istab1 && !Helpers::check_roles($data->division_id, 'OOS/OOT', 18) || $data->stage != 1)
+                    <input type="hidden" value="{{$data->is_repeat_gi}}" name="is_repeat_gi">
+                @endif
             </div>
 
             <div class="col-lg-6" id="rootCauseGroup" style="display: none;">
@@ -167,7 +170,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Source Document Type  <span class="text-danger">*</span></label>
-                    <select name="source_document_type_gi" id="Change_Application" {{Helpers::isOOSChemical($data->stage)}} {{ $istab1 ? 'required' : 'readonly' }}>
+                    <select name="source_document_type_gi" id="Change_Application" {{Helpers::isOOSChemical($data->stage)}} {{ $istab1 ? 'required' : 'disabled' }}>
                         <option value="0">Enter Your Selection Here</option>
                         <option value="OOT" @if ($data->source_document_type_gi == 'OOT') selected @endif>OOT</option>
                         <option value="Lab Incident" @if ($data->source_document_type_gi == 'Lab Incident') selected @endif>Lab Incident</option>
@@ -177,7 +180,9 @@
                         <option value="Others" @if ($data->source_document_type_gi == 'Others') selected @endif>Others</option>
                     </select>
                 </div>
-                {{-- <input type="hidden" name="source_document_type_gi" value="{{ $data->source_document_type_gi }}"> --}}
+                    @if ($istab1 && !Helpers::check_roles($data->division_id, 'OOS/OOT', 18) || $data->stage != 1)
+                        <input type="hidden" value="{{$data->source_document_type_gi}}" name="source_document_type_gi">
+                    @endif
             </div>
 
             <div class="col-6 new-date-data-field" id="any-other-section" style="display: none;">
@@ -354,7 +359,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Sample Type <span class="text-danger">*</span></label>
-                    <select name="sample_type_gi" id="sample_other" {{Helpers::isOOSChemical($data->stage)}} {{ $istab1 ? '' : 'readonly' }}>
+                    <select name="sample_type_gi" id="sample_other" {{Helpers::isOOSChemical($data->stage)}} {{ $istab1 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Raw Material"{{ $data->sample_type_gi == 'Raw Material' ?
                             'selected' : '' }}>Raw Material</option>
@@ -368,7 +373,9 @@
                             'selected' : '' }}>Others</option>
                     </select>
                 </div>
-                {{-- <input type="hidden" name="sample_type_gi" value="{{ $data->sample_type_gi }}"> --}}
+                    @if ($data->stage != 1)
+                        <input type="hidden" value="{{$data->sample_type_gi}}" name="sample_type_gi">
+                    @endif
             </div>
 
             <div class="col-6 new-date-data-field" id="any-other1-section" style="display: none;">

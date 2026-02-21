@@ -1559,7 +1559,7 @@ foreach ($pre as $processName => $modelClass) {
 
             if ($changeControl->stage == 1) {
                 // dd($changeControl->related_records,$changeControl->description,$changeControl->assign_to,$changeControl->hod_preson);
-            if (empty($changeControl->related_records) || empty($changeControl->description) || empty($changeControl->assign_to) || empty($changeControl->hod_preson)) 
+            if (empty($changeControl->description) || empty($changeControl->assign_to) || empty($changeControl->hod_preson)) 
                 {
                     Session::flash('swal', [
                         'type' => 'warning',

@@ -623,7 +623,7 @@
                                 <div class="col-6">
                                         <div class="group-input">
                                             <label for="related_records">
-                                                Action Item Related Records <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                Action Item Related Records 
                                             </label>
 
 

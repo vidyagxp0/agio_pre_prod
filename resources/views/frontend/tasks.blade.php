@@ -350,7 +350,7 @@
                                             </th>
                                         </thead>
                                         <tbody id="searchTable">
-                                            @foreach($task as $temp)
+                                            @foreach($tasks as $temp)
                                             <tr>
                                                 <td class="pr-id" style="text-decoration:underline">
                                                     <a href="{{ route('documents.edit', $temp->id) }}"  style="background-color: #0056b3; 
@@ -415,7 +415,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    {!! $task->links() !!}
+                                    {!! $tasks->links() !!}
                                 </div>
                             </div>
                         </div>

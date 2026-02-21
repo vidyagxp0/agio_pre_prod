@@ -581,6 +581,11 @@
                                     </div>
                                 </div> --}}
 
+                                @php 
+                            $initiatorRole = (Helpers::check_roles($showdata->division_id, 'ERRATA', 3) || ($showdata->initiator_id == Auth::user()->id) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18));
+                                @endphp
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Document Type <span class="text-danger">*</span>
@@ -588,7 +593,7 @@
                                         <select name="document_type" id="doc-type"
                                             onchange="handleDocumentSelection(this)"
                                             {{ Helpers::isRevised($showdata->stage) }} {{ $showdata->stage != 1 ? 'readonly' : '' }}
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}  {{ $showdata->stage == 1 && $initiatorRole ? '' : 'disabled' }}>
 
                                             <option value="">Enter your Selection</option>
 
@@ -605,6 +610,9 @@
                                                 Others
                                             </option>
                                         </select>
+                                        @if($showdata->stage != 1)
+                                         <input type="hidden" name="document_type" value="{{old('document_type', $showdata->document_type)}}">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -679,7 +687,7 @@
                                         
                                         <textarea id="docname" name="short_description" 
                                             {{ $showdata->stage != 1 ? 'readonly' : '' }}
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'readonly' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->short_description }}</textarea>
                                     </div>
                                 </div>
@@ -778,7 +786,7 @@
                                         <label class="mt-4" for="Observation on Page No.">Parent Record Number<span class="text-danger">*</span></label>
                                         <input type="text" name="reference" maxlength="255" {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                             value="{{ $showdata->reference }}"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'readonly' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }} required>
                                     </div>
 
@@ -789,7 +797,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Observation on Page No.">Error Observed on Page  No. <span class="text-danger">*</span></label>
                                         <textarea class="summernote" name="Observation_on_Page_No" id="summernote-16" {{ $showdata->stage != 1 ? 'readonly' : '' }}
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'readonly' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }} required>{{ $showdata->Observation_on_Page_No }}</textarea>
                                     </div>
 
@@ -799,7 +807,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Brief Description">Brief Description of error <span class="text-danger">*</span></label>
                                         <textarea class="summernote" name="brief_description" id="summernote-16" {{ $showdata->stage != 1 ? 'readonly' : '' }}
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'readonly' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }} required>{{ $showdata->brief_description }}</textarea>
                                     </div>
                                 </div>
@@ -809,7 +817,7 @@
                                         <label class="mt-4" for="Document title">Document title <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" name="document_title" maxlength="255" {{ $showdata->stage != 1 ? 'readonly' : '' }}
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'readonly' }}
                                             value="{{ $showdata->document_title }}">
                                     </div>
                                 </div>
@@ -823,7 +831,7 @@
                                             Type Of Error<span class="text-danger">*</span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="type_of_error"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage != 1 ? 'readonly' : '' }}>
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage != 1 ? 'readonly' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'disabled' }}>
                                             <option value="">-- Select a value --</option>
                                             <option value="Typographical Error (TE)"
                                                 {{ $showdata->type_of_error == 'Typographical Error (TE)' ? 'selected' : '' }}>
@@ -840,13 +848,16 @@
                                             <option value="Other"
                                                 {{ $showdata->type_of_error == 'Other' ? 'selected' : '' }}>Other</option>
                                         </select>
+                                        @if($showdata->stage != 1)
+                                        <input type="hidden" name="type_of_error" value="{{old('type_of_error', $showdata->type_of_error)}}">
+                                        @endif
                                     </div>
                                 </div>
 
 
                                 <div id="typeOfErrorBlock" class="group-input col-6" style="display:none;">
                                     <label for="otherFieldsUser">Other <span class="text-danger">*</span></label>
-                                    <input type="text" name="otherFieldsUser" class="form-control" {{ $showdata->stage != 1 ? 'readonly' : '' }}
+                                    <input type="text" name="otherFieldsUser" class="form-control" {{ $showdata->stage != 1 ? 'readonly' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'readonly' }}
                                         value="{{ old('otherFieldsUser', $showdata->otherFieldsUser ?? '') }}" />
                                 </div>
 
@@ -879,7 +890,7 @@
                                         <label class="mt-4" for="Correction Of Error">Correction Of Error
                                             required <span class="text-danger">*</span></label>
                                         <textarea class="summernote" name="Correction_Of_Error" id="summernote-16" {{ $showdata->stage != 1 ? 'readonly' : '' }}
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} required>{{ $showdata->Correction_Of_Error }}</textarea>
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'readonly' }} required>{{ $showdata->Correction_Of_Error }}</textarea>
                                     </div>
                                 </div>
 
@@ -889,13 +900,16 @@
                                             Department Head <span class="text-danger">*</span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="department_head_to"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} required>
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'disabled' }} required>
                                             <option value="">Select a Value</option>
                                             @foreach ($users as $value)
                                                 <option @if ($showdata->department_head_to == $value->id) selected @endif
                                                     value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
+                                        @if($showdata->stage != 1)
+                                         <input type="hidden" name="department_head_to" value="{{old('department_head_to', $showdata->department_head_to)}}">
+                                        @endif
                                         @error('department_head_to')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
@@ -923,7 +937,7 @@
                                         <label for="search">
                                             QA reviewer <span class="text-danger">*</span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="qa_reviewer" {{ $showdata->stage != 1 ? 'readonly' : '' }}
+                                        <select id="select-state" placeholder="Select..." name="qa_reviewer" {{ $showdata->stage != 1 ? 'readonly' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'disabled' }}
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} required>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $key => $value)
@@ -931,6 +945,9 @@
                                                     value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
+                                        @if($showdata->stage != 1)
+                                         <input type="hidden" name="qa_reviewer" value="{{old('qa_reviewer', $showdata->qa_reviewer)}}">
+                                        @endif
                                         @error('qa_reviewer')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
@@ -971,7 +988,7 @@
                                                                 <td><input disabled type="text" name="serial_number[]"
                                                                         value="{{ $key + 1 }}">
                                                                 </td>
-                                                                <td><input type="text" name="ListOfImpactingDocument[]" required {{ $showdata->stage != 1 ? 'readonly' : '' }}
+                                                                <td><input type="text" name="ListOfImpactingDocument[]" required {{ $showdata->stage != 1 ? 'readonly' : '' }} {{ $showdata->stage == 1 && $initiatorRole ? '' : 'readonly' }}
                                                                         {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                         value="{{ unserialize($griddata->ListOfImpactingDocument)[$key] ? unserialize($griddata->ListOfImpactingDocument)[$key] : '' }}">
                                                                 </td>
@@ -1003,7 +1020,10 @@
                     <!-- -----------Tab-2------------ -->
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-
+                          @php 
+                            $HodRole = (Helpers::check_roles($showdata->division_id, 'ERRATA', 4) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18));
+                          @endphp
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1015,7 +1035,7 @@
                                         @endif
                                         {{-- <label class="mt-4" for="HOD Initial Comment">HOD Initial Comment</label> --}}
                                         <textarea class="summernote" name="HOD_Remarks" id="summernote-16" required
-                                            {{ $showdata->stage == 1 || $showdata->stage == 3 ||$showdata->stage == 1 ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 || $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
+                                            {{ $showdata->stage == 1 || $showdata->stage == 3 ||$showdata->stage == 1 ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 || $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }} {{ $showdata->stage == 2 && $HodRole ? '' : 'readonly' }}
                                             >{{ $showdata->HOD_Remarks }}</textarea>
                                     </div>
                                 </div>
@@ -1052,7 +1072,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="HOD_Attachments[]"
-                                                {{ $showdata->stage == 1 || $showdata->stage == 3 ||$showdata->stage == 1 ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 || $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                {{ $showdata->stage == 1 || $showdata->stage == 3 ||$showdata->stage == 1 ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 || $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage == 2 && $HodRole ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'HOD_Attachments')" multiple>
                                             </div>
                                         </div>
@@ -2373,6 +2393,11 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                @php 
+                                $QaRole= (Helpers::check_roles($showdata->division_id, 'ERRATA', 7) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 66) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18));
+                                @endphp
                                 <div class="col-12">
                                     <div class="group-input">
                                         @if ($showdata->stage == 3)
@@ -2383,7 +2408,7 @@
                                         @endif
                                         {{-- <label class="mt-4" for="QA Initial Comment">QA/CQA Initial Comment</label> --}}
                                         <textarea class="summernote" name="QA_Feedbacks" id="summernote-16" required
-                                            {{$showdata->stage == 1 || $showdata->stage == 2  ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
+                                            {{$showdata->stage == 1 || $showdata->stage == 2  ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }} {{ $showdata->stage == 3 && $QaRole ? '' : 'readonly' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->QA_Feedbacks }}</textarea>
                                     </div>
                                 </div>
@@ -2453,7 +2478,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QA_Attachments[]"
-                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}  {{ $showdata->stage == 3 && $QaRole ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'QA_Attachments')" multiple>
                                             </div>
                                         </div>
@@ -2553,6 +2578,14 @@
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                @php 
+                                $QaHeadRole  = (Helpers::check_roles($showdata->division_id, 'ERRATA', 65) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 42) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 43) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 39) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 9) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18));
+                                @endphp
                                 <div class="col-12">
                                     <div class="group-input">
                                         @if ($showdata->stage == 4)
@@ -2563,7 +2596,7 @@
                                         @endif
                                         {{-- <label class="mt-4" for="Approval Comment">Approval Comment</label> --}}
                                         <textarea class="summernote" name="Approval_Comment" id="summernote-16" required
-                                            {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 5 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'readonly' : '' }}>{{ $showdata->Approval_Comment }}</textarea>
+                                            {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 5 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'readonly' : '' }}  {{ $showdata->stage == 4 && $QaHeadRole ? '' : 'readonly' }}>{{ $showdata->Approval_Comment }}</textarea>
                                     </div>
                                 </div>
 
@@ -2634,7 +2667,7 @@
                                                 <div>Add</div>
                                                 <input type="file" id="Approval_Attachments"
                                                     name="Approval_Attachments[]"
-                                                    {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 5 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 5 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage == 4 && $QaHeadRole ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'Approval_Attachments')" multiple>
                                             </div>
                                         </div>
@@ -2879,10 +2912,10 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="Date_and_time_of_correction" readonly
                                                 placeholder="DD-MMM-YYYY"
-                                               {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'disabled' : '' }}
+                                               {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'disabled' : '' }} {{ $showdata->stage == 5 && $initiatorRole ? '' : 'readonly' }}
                                                 value="{{ Helpers::getdateFormat($showdata->Date_and_time_of_correction) }}" />
                                             <input type="date" name="Date_and_time_of_correction" class="hide-input"
-                                               {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'disabled' : '' }}
+                                               {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'disabled' : '' }} {{ $showdata->stage == 5 && $initiatorRole ? '' : 'readonly' }}
                                                 oninput="handleDateInput(this, 'Date_and_time_of_correction')"  required/>
                                         </div>
                                     </div>
@@ -2898,7 +2931,7 @@
                                                 All Impacting Documents Corrected</label>
                                         @endif
 
-                                        <select id="select-state" placeholder="Select..."  {{$showdata->stage == 5 ? 'required' : ''}}
+                                        <select id="select-state" placeholder="Select..."  {{$showdata->stage == 5 ? 'required' : ''}} {{ $showdata->stage == 5 && $initiatorRole ? '' : 'disabled' }}
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             name="All_Impacting_Documents_Corrected"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
@@ -2906,6 +2939,9 @@
                                             <option value="Yes" @if ($showdata->All_Impacting_Documents_Corrected == 'Yes') selected @endif>Yes </option>
                                             <option value="No" @if ($showdata->All_Impacting_Documents_Corrected == 'No') selected @endif>No </option>
                                         </select>
+                                         @if($showdata->stage != 5)
+                                         <input type="hidden" name="All_Impacting_Documents_Corrected" value="{{old('All_Impacting_Documents_Corrected', $showdata->All_Impacting_Documents_Corrected)}}">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -2919,7 +2955,7 @@
 
                                         @endif
                                         <textarea class="summernote" name="Remarks" id="summernote-16"
-                                        {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
+                                        {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}  {{ $showdata->stage == 5 && $initiatorRole ? '' : 'readonly' }}
                                          required>{{ $showdata->Remarks }}</textarea>
                                     </div>
                                 </div>
@@ -2991,7 +3027,7 @@
                                                 <div>Add</div>
                                                 <input type="file" id="Initiator_Attachments"
                                                     name="Initiator_Attachments[]"
-                                                    {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage == 5 && $initiatorRole ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'Initiator_Attachments')" multiple>
                                             </div>
                                         </div>
@@ -3095,6 +3131,7 @@
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                               
                                 <div class="col-12">
                                     <div class="group-input">
                                         @if ($showdata->stage == 6)
@@ -3105,7 +3142,7 @@
                                         @endif
                                         {{-- <label class="mt-4" for="HOD Comment">HOD Comment</label> --}}
                                         <textarea class="summernote" name="HOD_Comment1" id="summernote-16" required
-                                        {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}>{{ $showdata->HOD_Comment1 }}</textarea>
+                                        {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }} {{ $showdata->stage == 6 && $HodRole ? '' : 'readonly' }}>{{ $showdata->HOD_Comment1 }}</textarea>
                                     </div>
                                 </div>
 
@@ -3175,7 +3212,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="HOD_Attachments1" name="HOD_Attachments1[]"
-                                                {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage == 6 && $HodRole ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'HOD_Attachments1')" multiple>
                                             </div>
                                         </div>
@@ -3352,7 +3389,14 @@
                     <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-
+                            @php
+                               $QAHeadrole =  ( Helpers::check_roles($showdata->division_id, 'ERRATA', 65) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 42) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 43) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 39) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 9) ||
+                                    Helpers::check_roles($showdata->division_id, 'ERRATA', 18))
+                                @endphp
                                 <div class="col-12">
                                     <div class="group-input">
                                         @if ($showdata->stage == 7)
@@ -3363,7 +3407,7 @@
                                         @endif
                                         {{-- <label class="mt-4" for="Closure Comments">Closure Comments</label> --}}
                                         <textarea class="summernote" name="Closure_Comments" id="summernote-16" required
-                                        {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 6 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}>{{ $showdata->Closure_Comments }}</textarea>
+                                        {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 6 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }} {{ $showdata->stage == 7 && $QAHeadrole ? '' : 'readonly' }}>{{ $showdata->Closure_Comments }}</textarea>
                                     </div>
                                 </div>
 
@@ -3434,7 +3478,7 @@
                                                 <div>Add</div>
                                                 <input type="file" id="Closure_Attachments"
                                                     name="Closure_Attachments[]"
-                                                    {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 6 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
+                                                    {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 6 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage == 7 && $QAHeadrole ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
                                             </div>
                                         </div>

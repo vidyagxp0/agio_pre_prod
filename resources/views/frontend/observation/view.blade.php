@@ -561,11 +561,16 @@
                                             </div>
                                         </div> --}}
 
+                                        @php 
+                                $lead_auditorRole =   (Helpers::check_roles($data->division_code, 'Observation', 12) ||
+                                    Helpers::check_roles($data->division_code, 'Observation', 18));
+                                        @endphp
+
                                         <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="assign_to">Auditee Department Head<span class="text-danger">*</span></label>
                                             <select name="assign_to" id="assign_to"
-                                                {{ in_array($data->stage, [0,2,3,4]) ? "disabled" : "" }} required>
+                                                {{ in_array($data->stage, [0,2,3,4]) ? "disabled" : "" }}  {{ $data->stage == 1 && $lead_auditorRole ? '' : 'disabled' }} required>
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $value)
                                                     <option 
@@ -655,7 +660,7 @@
                                                         placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}" />
                                                     <input type="date" name="due_date"
-                                                    {{ in_array($data->stage,[0,2,3,4]) ? "readonly" : "" }}
+                                                    {{ in_array($data->stage,[0,2,3,4]) ? "readonly" : "" }}  {{ $data->stage == 1 && $lead_auditorRole ? '' : 'readonly' }}
                                                      {{ $data->stage !=1? 'readonly' : '' }}
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                          value="{{ $data->due_date}}"
@@ -692,7 +697,7 @@
                                                 characters remaining
 
                                                 <input name="short_description" id="docname" type="text" maxlength="255" required value="{{ $data->short_description }}"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}  {{ $data->stage == 1 && $lead_auditorRole ? '' : 'readonly' }}>
                                             </div>
                                             {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
                                         </div>
@@ -829,39 +834,7 @@
                                     </div>
                                 </div> --}}
 
-                                <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="related_observations">Attached files</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div disabled class="file-attachment-list" id="attach_files_gi">
-                                                @if ($data->attach_files_gi)
-                                                    @foreach (json_decode($data->attach_files_gi) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}"
-                                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    value="{{ $data->attach_files_gi }}" type="file"
-                                                    id="myfile" name="attach_files_gi[]"
-                                                    oninput="addMultipleFiles(this, 'attach_files_gi')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
+                              
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -882,7 +855,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="attach_files_gi[]" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }} oninput="addMultipleFiles(this, 'attach_files_gi')" multiple>
+                                                <input type="file" id="myfile" name="attach_files_gi[]" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}  {{ $data->stage == 1 && $lead_auditorRole ? '' : 'disabled' }} oninput="addMultipleFiles(this, 'attach_files_gi')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -926,12 +899,12 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" name="recomendation_capa_date_due"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        {{ in_array($data->stage,[0,2,3,4]) ? "readonly" : "" }}
+                                                        {{ in_array($data->stage,[0,2,3,4]) ? "readonly" : "" }}  {{ $data->stage == 1 && $lead_auditorRole ? '' : 'readonly' }}
                                                         id="recomendation_capa_date_due" 
                                                         placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" required/>
                                                     <input type="date" class="hide-input"
-                                                     {{ in_array($data->stage,[0,2,3,4]) ? "readonly" : "" }}
+                                                     {{ in_array($data->stage,[0,2,3,4]) ? "readonly" : "" }}  {{ $data->stage == 1 && $lead_auditorRole ? '' : 'readonly' }}
                                                         value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}"
                                                         oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
 
@@ -971,7 +944,7 @@
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td>
-                                                                        <textarea name="observation[{{ $loop->index }}][non_compliance]" rows="3" cols="40" required>{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}</textarea>
+                                                                        <textarea name="observation[{{ $loop->index }}][non_compliance]" rows="3" cols="40"  {{ $data->stage == 1 && $lead_auditorRole ? '' : 'readonly' }} required>{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}</textarea>
                                                                     </td>
 
                                                                     <td>
@@ -1101,6 +1074,11 @@
                             <div id="CCForm2" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
+                                        @php 
+                                     $stagesecondRole =  (Helpers::check_roles($data->division_code, 'Observation', 11) ||
+                                              Helpers::check_roles($data->division_code, 'Observation', 18));
+                                        @endphp
+                                       
                                         <div class="col-12">
                                             <div class="sub-head">Response and CAPA Plan Details</div>
                                         </div>
@@ -1117,7 +1095,7 @@
                                                 <div class="sub-head">Response Details @if ($data->stage == 2)
                                                 <span class="text-danger">*</span>
                                                 @endif
-                                                    <button type="button" name="details" id="Details-add8" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                    <button type="button" name="details" id="Details-add8" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'disabled' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
@@ -1138,11 +1116,11 @@
                                                                     <td><input disabled type="text" name="response[{{ $loop->index }}][serial]"  value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td>
-                                                                        <textarea  name="response[{{ $loop->index }}][response_detail]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}> {{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}</textarea>
+                                                                        <textarea  name="response[{{ $loop->index }}][response_detail]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'readonly' }}> {{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}</textarea>
                                                                     </td>
 
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} >Remove</button></td>
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'disabled' }} >Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -1202,7 +1180,7 @@
                                                 <div class="sub-head">Corrective Actions @if ($data->stage == 2)
                                                        <span class="text-danger">*</span>
                                                       @endif
-                                                    <button type="button" name="details" id="Details-add4" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                    <button type="button" name="details" id="Details-add4" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'disabled' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
@@ -1224,11 +1202,11 @@
                                                                             name="corrective[{{ $loop->index }}][serial]"
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
-                                                                    <td><textarea  name="corrective[{{ $loop->index }}][corrective_action]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>{{ isset($datas['corrective_action']) ? $datas['corrective_action'] : '' }}</textarea>
+                                                                    <td><textarea  name="corrective[{{ $loop->index }}][corrective_action]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'readonly' }}>{{ isset($datas['corrective_action']) ? $datas['corrective_action'] : '' }}</textarea>
 
                                                                     </td>
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>Remove</button></td>
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'disabled' }}>Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -1282,7 +1260,7 @@
                                                 <div class="sub-head">Preventive Action @if ($data->stage == 2)
                                                     <span class="text-danger">*</span>
                                                     @endif
-                                                    <button type="button" name="details" id="Details-add5" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                    <button type="button" name="details" id="Details-add5" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'disabled' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
@@ -1304,10 +1282,10 @@
                                                                             name="preventive[{{ $loop->index }}][serial]"
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
-                                                                    <td><textarea name="preventive[{{ $loop->index }}][preventive_action]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} >{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}</textarea>
+                                                                    <td><textarea name="preventive[{{ $loop->index }}][preventive_action]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'readonly' }} >{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}</textarea>
                                                                     </td>
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>Remove</button></td>
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'disabled' }}>Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -1394,7 +1372,7 @@
                                                     <span class="text-danger">*</span>
                                                     @endif
                                                     <button type="button" name="action-plan-grid"
-                                                        id="observation_table" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                        id="observation_table" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'disabled' }}>+</button>
                                                 </div>
                                                 </label>
                                                 <table class="table table-bordered" id="observation">
@@ -1417,7 +1395,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <textarea name="action[]" 
-                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ unserialize($griddata->action)[$key] ?? '' }}</textarea>
+                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'readonly' }}>{{ unserialize($griddata->action)[$key] ?? '' }}</textarea>
                                                                 </td>
 
                                                                 {{-- <td><input type="text" name="responsible[]" value="{{unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : "" }}"></td> --}}
@@ -1470,7 +1448,7 @@
                                                                 {{-- <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>  --}}
                                                                 <td>
                                                                     <textarea name="item_status[]"
-                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ unserialize($griddata->item_status)[$key] ?? '' }}</textarea>
+                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'readonly' }}>{{ unserialize($griddata->item_status)[$key] ?? '' }}</textarea>
                                                                 </td>
 
 
@@ -1482,7 +1460,7 @@
                                                                 <input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $value }}">
                                                             </td> --}}
                                                                 <td><button type="text"
-                                                                    class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                    class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} {{ $data->stage == 2 && $stagesecondRole ? '' : 'disabled' }} >Remove</button></td>
 
                                                             </tr>
                                                         @endforeach
@@ -1497,7 +1475,7 @@
                                                       <span class="text-danger">*</span>
                                                     @endif
                                                 </label>
-                                                <textarea name="comments"  {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>{{ $data->comments }}</textarea>
+                                                <textarea name="comments"  {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'readonly' }}>{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
 
@@ -1520,7 +1498,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="myfile" name="response_capa_attach[]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }} oninput="addMultipleFiles(this, 'response_capa_attach')" multiple>
+                                                        <input type="file" id="myfile" name="response_capa_attach[]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'disabled' }} oninput="addMultipleFiles(this, 'response_capa_attach')" multiple>
                                                     </div>
                                         </div>
                                     </div>
@@ -1562,7 +1540,7 @@
                                                     <input type="date"
                                                         value="{{ $data->actual_start_date }}"
                                                         id="actual_start_date_checkdate"
-                                                        {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}  {{ $data->stage == 2 && $stagesecondRole ? '' : 'readonly' }}
                                                         name="actual_start_date" class="hide-input"
                                                         oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                                 </div>
@@ -1580,7 +1558,7 @@
                                                         <input type="date"
                                                             value="{{ $data->actual_end_date }}"
                                                             id="actual_end_date_checkdate"
-                                                            {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} {{ $data->stage == 2 && $stagesecondRole ? '' : 'readonly' }}
                                                             name="actual_end_date" class="hide-input"
                                                             oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                                     </div>
@@ -1672,7 +1650,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="myfile" name="impact_analysis[]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }} oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
+                                                        <input type="file" id="myfile" name="impact_analysis[]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }} {{ $data->stage == 2 && $stagesecondRole ? '' : 'disabled' }} oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
                                                     </div>
                                         </div>
                                     </div>
@@ -1943,6 +1921,10 @@
                         </div>
                         <div id="CCForm3" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
+                                    @php
+                                      
+                                    $stagethirdrole = (Helpers::check_roles($data->division_code, 'Observation', 13) || Helpers::check_roles($data->division_code, 'Observation', 7) || Helpers::check_roles($data->division_code, 'Observation', 66) || Helpers::check_roles($data->division_id, 'Observation', 18));
+                                    @endphp
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="sub-head">Response Verification</div>
@@ -1950,7 +1932,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="impact">Response Verification Comment  @if($data->stage == 3)<span class="text-danger">*</span>@endif</label>
-                                                <textarea name="impact" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->impact }}</textarea>
+                                                <textarea name="impact" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 ? 'disabled' : '' }} {{ $data->stage == 3 && $stagethirdrole ? '' : 'readonly' }}>{{ $data->impact }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1979,7 +1961,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                         {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 ? 'disabled' : '' }}
+                                                         {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 ? 'disabled' : '' }} {{ $data->stage == 3 && $stagethirdrole ? '' : 'disabled' }}
                                                             value="{{ $data->attach_files2 }}" type="file"
                                                             id="myfile" name="attach_files2[]"
                                                             oninput="addMultipleFiles(this, 'attach_files2')" multiple>
