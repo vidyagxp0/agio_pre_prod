@@ -91,6 +91,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->repeat_nature_gi = $request->repeat_nature_gi;
         $marketComplaint->description_gi = $request->description_gi;
         $marketComplaint->assign_to = $request->assign_to;
+        $marketComplaint->parent_type = $request->parent_type;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
         $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
@@ -2463,6 +2464,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->repeat_nature_gi = $request->repeat_nature_gi;
         $marketComplaint->description_gi = $request->description_gi;
         $marketComplaint->assign_to = $request->assign_to;
+        $marketComplaint->parent_type = $request->parent_type;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
 
@@ -10546,12 +10548,13 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
     public function MarketComplaintCapa_ActionChild(Request $request, $id)
     {
         // dd($request->revision);
-
+ 
         $cc = MarketComplaint::find($id);
         $cft = [];
 
         $parent_type = "Market Complaint";
         $parent_name = "Market Complaint";
+        
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         // $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = $cc->record;
@@ -10566,6 +10569,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
+        $parent_division_id  = MarketComplaint::where('id', $id)->value('division_id');
         $parent_short_description = MarketComplaint::where('id', $id)->value('description_gi');
 
         if ($request->revision == "capa-child") {
@@ -10586,7 +10590,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number =$record;
 
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft', 'relatedRecords','reference_record'));
+            return view('frontend.forms.capa', compact('record_number', 'parent_division_id','due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft', 'relatedRecords','reference_record'));
         } elseif ($request->revision == "Action-Item") {
             // return "test";
             $p_record = MarketComplaint::find($id);
@@ -10870,6 +10874,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
     public function MarketComplaintRegu_Effec_Child(Request $request, $id)
     {
         // dd($request->revision);
+       
 
         $cc = MarketComplaint::find($id);
         $cft = [];
@@ -10954,6 +10959,131 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
 
         return view('frontend.market_complaint.singleReport', compact('data', 'prductgigrid'));
+    }
+
+    public function familyReport(Request $request)
+    {
+        $ids = $request->id;
+
+        // ensure array
+        if (!is_array($ids)) {
+            $ids = explode(',', $ids);
+        }
+
+        if (empty($ids)) {
+            return back()->with('error', 'No records selected');
+        }
+
+        // GET ALL RECORDS
+        $records = MarketComplaint::whereIn('id', $ids)->get();
+
+        foreach ($records as $data) {
+
+            // BASIC INFO
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $data1 = MarketComplaintCft::where('mc_id', $data->id)->first();
+
+            // GRIDS
+            $data->prductgigrid = MarketComplaintGrids::where([
+                'mc_id' => $data->id,
+                'identifer' => 'ProductDetails'
+            ])->first();
+
+            $data->gitracebilty = MarketComplaintGrids::where([
+                'mc_id' => $data->id,
+                'identifer' => 'Traceability'
+            ])->first();
+
+            $data->marketrproducts = MarketComplaintGrids::where([
+                'mc_id' => $data->id,
+                'identifer' => 'product_materialDetails'
+            ])->first();
+
+            $data->giinvesting = MarketComplaintGrids::where([
+                'mc_id' => $data->id,
+                'identifer' => 'Investing_team'
+            ])->first();
+
+            $data->brain = MarketComplaintGrids::where([
+                'mc_id' => $data->id,
+                'identifer' => 'brain_stroming_details'
+            ])->first();
+
+            $data->hodteammembers = MarketComplaintGrids::where([
+                'mc_id' => $data->id,
+                'identifer' => 'Team_Members'
+            ])->first();
+
+            // dd($data->extensions);
+            $data->extensions= extension_new::where('parent_id', $data->id)
+            ->where('parent_type', 'Market Complaint')
+            ->orderBy('created_at', 'asc')
+            ->get();
+            
+            
+            $data->RootCauseAnalysis = RootCauseAnalysis::where('parent_id', $data->id)
+            ->where('parent_type', 'Market Complaint')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+            $data->Capa = Capa::where('parent_id', $data->id)
+            ->where('parent_type', 'Market Complaint')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+            $data->ActionItem = ActionItem::where('parent_id', $data->id)
+            ->where('parent_type', 'Market Complaint')
+            ->orderBy('created_at', 'asc')
+            ->get();
+            
+            $data->hodreportapproval = MarketComplaintGrids::where([
+                'mc_id' => $data->id,
+                'identifer' => 'Report_Approval'
+            ])->first();
+
+            // Proposal JSON decode
+            $proposal = MarketComplaintGrids::where('mc_id', $data->id)
+                ->where('identifer', 'Proposal_to_accomplish_investigation')
+                ->first();
+
+            $data->proposalData = $proposal ? json_decode($proposal->data, true) : [];
+            $data->proposal_to_accomplish_investigation = $proposal;
+        }
+        
+        // $extensions= extension_new::where('parent_id', $data->id)
+        // ->where('parent_type', 'MarketComplaint')
+        // ->orderBy('created_at', 'asc')
+        // ->get();
+
+        // LOAD PDF
+        $pdf = PDF::loadView('frontend.market_complaint.familyReport',compact('records','data1'))->setOptions([
+            'defaultFont' => 'sans-serif',
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'isPhpEnabled' => true,
+        ]);
+
+        $pdf->setPaper('A4');
+        $pdf->render();
+
+        // PAGE NUMBERING
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $text = "$pageNumber of $pageCount";
+            $font = $fontMetrics->getFont('sans-serif');
+            $size = 9;
+            $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+            $canvas->text(
+                ($canvas->get_width() - $width - 60),
+                ($canvas->get_height() - 30),
+                $text,
+                $font,
+                $size
+            );
+        });
+
+        return $pdf->stream('MarketComplaint_Family.pdf');
     }
 
 
