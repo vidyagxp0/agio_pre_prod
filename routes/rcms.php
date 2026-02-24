@@ -100,6 +100,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('effective-audit-trial-show/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialShow'])->name('show_effective_AuditTrial');
             Route::get('effective-audit-trial-details/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialDetails'])->name('show_audittrial_effective');
             Route::get('effectiveSingleReport/{id}', [EffectivenessCheckController::class, 'singleReport'])->name('effectiveSingleReport');
+            Route::get('effectiveFamilyReport/{id}', [EffectivenessCheckController::class, 'effectiveFamilyReport'])->name('effectiveFamilyReport');
+    
             Route::get('effectiveAuditReport/{id}', [EffectivenessCheckController::class, 'auditReport'])->name('effectiveAuditReport');
             Route::post('send-not-effective/{id}', [EffectivenessCheckController::class, 'sendToNotEffective'])->name('send-not-effective');
             Route::post('closed-cancelled/{id}', [EffectivenessCheckController::class, 'closedCancelled'])->name('closed-cancelled');
@@ -146,7 +148,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('effectiveness-reject/{id}', [EffectivenessCheckController::class, 'reject']);
             Route::post('moreinfo_effectiveness/{id}',[EffectivenessCheckController::class,'cancel'])->name('moreinfo_effectiveness');
             Route::post('effectiveness_child/{id}', [EffectivenessCheckController::class, 'effectiveness_child'])->name('effectiveness_child');
-            Route::post('effectiveness_child/{id}', [EffectivenessCheckController::class, 'child_extension'])->name('effectiveness_child');
+            Route::post('effectiveness_child_data/{id}', [EffectivenessCheckController::class, 'child_extension'])->name('effectiveness_child_data');
 
 
             Route::view('helpdesk-personnel', 'frontend.rcms.helpdesk-personnel');

@@ -129,7 +129,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>
-                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-child-model" >
                                 Child
                             </button></a>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
