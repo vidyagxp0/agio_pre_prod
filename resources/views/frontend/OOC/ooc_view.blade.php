@@ -265,7 +265,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                         Cancel
                                     </button>
-                                @elseif($ooc->stage == 2 && Helpers::check_roles($ooc->division_id, 'OOC', 4) || Helpers::check_roles($ooc->division_id, 'OOC', 18))
+                                @elseif($ooc->stage == 2 && (Helpers::check_roles($ooc->division_id, 'OOC', 4) || Helpers::check_roles($ooc->division_id, 'OOC', 18)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         HOD Primary Review Complete
                                     </button>
@@ -304,7 +304,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button>
-                                @elseif($ooc->stage == 5 && Helpers::check_roles($ooc->division_id, 'OOC', 4))
+                                @elseif($ooc->stage == 5 && (Helpers::check_roles($ooc->division_id, 'OOC', 4)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Phase IA HOD Review Complete
                                     </button>
@@ -326,7 +326,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                         Request More Info
                                     </button> --}}
-                                @elseif($ooc->stage == 7 && Helpers::check_roles($ooc->division_id, 'OOC', 7) || Helpers::check_roles($ooc->division_id, 'OOC', 18))
+                                @elseif($ooc->stage == 7 && (Helpers::check_roles($ooc->division_id, 'OOC', 7) || Helpers::check_roles($ooc->division_id, 'OOC', 18)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Phase IA QA Review Complete
                                     </button>
@@ -367,7 +367,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button>
-                                @elseif($ooc->stage == 11 && Helpers::check_roles($ooc->division_id, 'OOC', 4))
+                                @elseif($ooc->stage == 11 && (Helpers::check_roles($ooc->division_id, 'OOC', 4)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Phase IB HOD Review Complete
                                     </button>
@@ -377,7 +377,7 @@
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                         Child
                                     </button>
-                                @elseif($ooc->stage == 12 && Helpers::check_roles($ooc->division_id, 'OOC', 7))
+                                @elseif($ooc->stage == 12 && (Helpers::check_roles($ooc->division_id, 'OOC', 7)))
                                     <button class="button_theme1" data-bs-toggle="modal"
                                         data-bs-target="#signature-modal">
                                         Phase IB QA Review Complete
@@ -2264,7 +2264,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{$istab3 ? 'required' : 'disabled'}}
+                                                <input {{$istab3 ? '' : 'disabled'}}
                                                     type="file" id="initial_attachment_capa_ooc"
                                                     name="initial_attachment_capa_ooc[]"
                                                     oninput="addMultipleFiles(this, 'initial_attachment_capa_ooc')"
@@ -2854,7 +2854,7 @@
                                         </label>
                                         <textarea name="qaremarksnewfield" placeholder="Enter review"
                                             class="form-control {{ $errors->has('qaremarksnewfield') ? 'is-invalid' : '' }}"
-                                            {{$istab7 ? 'required' : 'readonly'}}>{{ $ooc->qaremarksnewfield }}</textarea>
+                                            {{$istab7 ? '' : 'readonly'}}>{{ $ooc->qaremarksnewfield }}</textarea>
                                         @if ($errors->has('qaremarksnewfield'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('qaremarksnewfield') }}
