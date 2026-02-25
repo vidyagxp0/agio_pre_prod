@@ -9,7 +9,20 @@ use App\Models\RiskAssesmentGrid;
 use App\Models\ActionItemHistory;
 use App\Models\CapaAuditTrial;
 use App\Models\RoleGroup;
+use App\Models\CcCft;
+use App\Models\Evaluation;
+use App\Models\ChangeClosure;
+
+
+use App\Models\extension_new;
 use App\Models\ActionItem;
+use App\Models\CapaGrid;
+use App\Models\Docdetail;
+use App\Models\Qareview;
+use App\Models\QaApprovalComments;
+
+
+
 use App\Models\Capa;
 use App\Jobs\SendMail;
 use App\Models\User;
@@ -32,8 +45,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-
-
 
 class RiskManagementController extends Controller
 {
@@ -11433,6 +11444,168 @@ class RiskManagementController extends Controller
             return $pdf->stream('Risk-assesment' . $id . '.pdf');
         }
     }
+
+// public static function effectiveFamilyReport($id)
+// {
+//     $data = RiskManagement::find($id);
+//     $data2 = CapaGrid::find($id);
+    
+
+//     // $data2 = new \stdClass();
+//     if (!empty($data)) {
+//         // Get Extension children
+//     $data2->Material_Details = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
+//     $data2->Instruments_Details = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
+//     $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)->where('type', "effect_analysis")->latest()->first();
+//     $data1 =  RiskManagmentCft::where('risk_id', $id)->first();
+
+//             $capa_teamIdsArray = explode(',', $data2->capa_team);
+//             $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
+//             $capa_teamNamesString = implode(', ', $capa_teamNames);
+
+
+//     $actionItem= ActionItem::where('parent_id', $id)
+//     ->where('parent_type', 'risk-assesment')
+//     ->orderBy('created_at', 'asc')
+//     ->get();
+//     $extensions= extension_new::where('parent_id', $id)
+//     ->where('parent_type', 'risk-assesment')
+//     ->orderBy('created_at', 'asc')
+//     ->get();
+        
+//         // Get CAPA children
+//         $capas = Capa::where('parent_id', $id)
+//                     ->where('parent_type', 'risk-assesment')
+//                     ->orderBy('created_at', 'asc')
+//                     ->get();
+                    
+
+//         $pdf = App::make('dompdf.wrapper');
+//         $time = Carbon::now();
+        
+//         $pdf = PDF::loadview('frontend.riskAssesment.family_report', compact('data','data1','data2','actionItem','capa_teamNamesString','riskEffectAnalysis','extensions', 'capas'))
+//             ->setOptions([
+//                 'defaultFont' => 'sans-serif',
+//                 'isHtml5ParserEnabled' => true,
+//                 'isRemoteEnabled' => true,
+//                 'isPhpEnabled' => true,
+//             ]);
+        
+//         $pdf->setPaper('A4');
+//         $pdf->render();
+        
+//         $canvas = $pdf->getDomPDF()->getCanvas();
+//         $height = $canvas->get_height();
+//         $width = $canvas->get_width();
+
+//         $canvas->page_script('$pdf->set_opacity(1,"Multiply");');
+//         $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) use ($width, $height) {
+//             $text = $pageNumber . " of " . $pageCount;
+//             $font = $fontMetrics->getFont("sans-serif");
+//             $size = 10; 
+//             $color = [0, 0, 0];
+//             $canvas->text($width - 130, $height - 745, $text, $font, $size, $color);
+//         });
+
+//         return $pdf->stream('EffectivenessCheck_Family_' . $id . '.pdf');
+//     }
+// }
+
+public static function effectiveFamilyReport($id)
+{
+    $data = RiskManagement::find($id);
+    $docdetail = Docdetail::where('cc_id', $data->id)->first();
+    $cc_cfts =  CcCft::where('cc_id', $id)->first();
+    $cftData =  CcCft::where('cc_id', $id)->first();
+
+    $review = Qareview::where('cc_id', $data->id)->first();
+   $evaluation = Evaluation::where('cc_id', $data->id)->first();
+   $QaApprovalComments = QaApprovalComments::where('cc_id', $id)->first();
+   $closure = ChangeClosure::where('cc_id', $data->id)->first();
+
+
+
+
+
+    if (!$data) {
+        abort(404);
+    }
+    
+    // 🔹 Get CAPA children
+    $capas = Capa::where('parent_id', $id)
+        ->where('parent_type', 'risk-assesment')
+        ->orderBy('created_at', 'asc')
+        ->get();
+
+    // 🔹 Attach grids to each CAPA (SAME AS singleReport)
+    foreach ($capas as $capa) {
+
+        $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)
+            ->where('type', "Product_Details")
+            ->first();
+
+        $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)
+            ->where('type', "Instruments_Details")
+            ->first();
+
+        $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)
+            ->where('type', "Material_Details")
+            ->first();
+
+        // originator
+        $capa->originator = User::where('id', $capa->initiator_id)->value('name');
+
+        // team
+        $capa_teamNamesString = '';
+
+        if (!empty($capa->capa_team)) {
+            $ids = explode(',', $capa->capa_team);
+            $names = User::whereIn('id', $ids)->pluck('name')->toArray();
+            $capa->capa_teamNamesString = implode(', ', $names);
+        }
+    }
+
+    // 🔹 Other existing data (same as yours)
+    $actionItem = ActionItem::where('parent_id', $id)
+        ->where('parent_type', 'risk-assesment')
+        ->orderBy('created_at', 'asc')
+        ->get();
+
+    $change = CC::where('parent_id', $id)
+        ->where('parent_type', 'risk-assesment')
+        ->orderBy('created_at', 'asc')
+        ->get();   
+
+    $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id', $id)
+        ->where('type', "effect_analysis")
+        ->latest()
+        ->first();
+
+    $data1 = RiskManagmentCft::where('risk_id', $id)->first();
+
+    return PDF::loadview(
+        'frontend.riskAssesment.family_report',
+        compact(
+            'data',
+            'data1',
+            'cc_cfts',
+            'cftData',
+            'capas',
+            'evaluation',
+            'review',
+            'change',
+            'closure',
+            'actionItem',
+            'docdetail',
+            'QaApprovalComments',
+            'riskEffectAnalysis',
+            'capa_teamNamesString'
+        )
+    )->setPaper('A4')
+     ->stream('EffectivenessCheck_Family_' . $id . '.pdf');
+}
+
+
 
     public static function auditReport($id)
     {

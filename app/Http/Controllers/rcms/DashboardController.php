@@ -1016,6 +1016,7 @@ class DashboardController extends Controller
         } elseif ($type == "risk-assesment") {
             $data = RiskManagement::find($id);
             $single = "riskSingleReport/" . $data->id;
+            $family = "riskManagementfamily/" .$data->id;
             $audit = "riskAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
