@@ -197,6 +197,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('child_audit_program/{id}', [AuditProgramController::class, 'child_audit_program'])->name('auditProgramChild');
             Route::post('AuditProgramCancel/{id}', [AuditProgramController::class, 'AuditProgramCancel'])->name('AuditProgramCancel');
             Route::get('auditProgramSingleReport/{id}', [AuditProgramController::class, 'singleReport'])->name('auditProgramSingleReport');
+            Route::get('auditProgramFamilyReport/{id}', [AuditProgramController::class, 'familyReport'])->name('auditProgramFamilyReport');
             Route::get('auditProgramAuditReport/{id}', [AuditProgramController::class, 'auditReport'])->name('auditProgramAuditReport');
 
 

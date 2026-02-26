@@ -1053,7 +1053,7 @@ class DashboardController extends Controller
         } elseif ($type == "Audit-Program") {
             $data = AuditProgram::find($id);
             $single = "auditProgramSingleReport/" . $data->id;
-            $family="#";
+            $family = "auditProgramFamilyReport/" . $data->id;
             $audit = "auditProgramAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
