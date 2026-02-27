@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendMail;
+use App\Mail\AssignNotificationMail;
 
 class ManagementReviewController extends Controller
 {
@@ -1684,6 +1685,19 @@ class ManagementReviewController extends Controller
     public function manageUpdate(Request $request, $id)
     {
 
+        $userIds = [];
+        $assignToString = null;
+
+        if (!empty($request->assign_to)) {
+
+            foreach ($request->assign_to as $value) {
+                $ids = explode(',', $value);
+                $userIds = array_merge($userIds, $ids);
+            }
+
+            $assignToString = implode(',', $userIds);
+        }
+
         $form_progress = null;
         // if (!$request->short_description) {
         //     toastr()->error("Short description is required");
@@ -1734,17 +1748,8 @@ class ManagementReviewController extends Controller
         // $management->Initiator_id= $request->Initiator_id;
         $management->short_description = $request->short_description;
         // $management->assign_to = $request->assign_to;
-        // $management->assign_to = implode(',', $request->assign_to);
-        // $management->assign_to = explode(',', $management->assign_to ?? '');
-        if (is_array($request->assign_to)) {
-            $management->assign_to = implode(',', $request->assign_to);
-        } else {
-            $management->assign_to = null; // Or handle it according to your logic
-        }
-
-
-
-
+         $management->assign_to         = $assignToString;
+    
         $management->form_progress = isset($form_progress) ? $form_progress : null;
 
         $management->due_date = $request->due_date;
@@ -2878,11 +2883,6 @@ class ManagementReviewController extends Controller
         // Save the updated attachments list
         // $management->inv_attachment = json_encode(array_values($attachments));
 
-
-
-
-
-
         //  if (!empty($request->inv_attachment)) {
         //     $files = [];
         //     if ($request->hasfile('inv_attachment')) {
@@ -3070,7 +3070,21 @@ class ManagementReviewController extends Controller
             $management->qa_verification_file = json_encode($allFiles);
         }
 
-        $management->update();
+        $management->save();
+
+        if (!empty($userIds)) {
+
+        foreach ($userIds as $userId) {
+
+            $user = User::find(trim($userId));
+
+            if ($user && $user->email) {
+                Mail::to($user->email)
+                    ->send(new AssignNotificationMail($user, $management));
+            }
+        }
+    }
+
 
         if ($lastDocument->short_description != $management->short_description || !empty($request->short_desc_comment)) {
             $lastDocumentAuditTrail = ManagementAuditTrial::where('ManagementReview_id', $management->id)
