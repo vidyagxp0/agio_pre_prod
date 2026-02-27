@@ -53,7 +53,7 @@
                                            <td>{{ $phase_two_inv_question }}</td>
                                            <td>
                                                <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select {{Helpers::isOOSChemical($data->stage)}} name="phase_two_inv1[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                {{-- <select {{Helpers::isOOSChemical($data->stage)}} name="phase_two_inv1[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                     <option value="">Select an Option</option>
 
                                                     @php
@@ -63,6 +63,32 @@
                                                     <option value="Yes" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                     <option value="No" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'No' ? 'selected' : '' }}>No</option>
                                                     <option value="N/A" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                </select> --}}
+
+                                                @php
+                                                    $dataItem = $phase_two_invss->data[$loop->index] ?? null;
+                                                    $response = isset($dataItem) ? Helpers::getArrayKey($dataItem,'response') : null;
+                                                @endphp
+
+                                                <select {{Helpers::isOOSChemical($data->stage)}}
+                                                name="phase_two_inv1[{{ $loop->index }}][response]"
+                                                style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+
+                                                <option value="Yes"
+                                                {{ $response == 'Yes' ? 'selected' : '' }}>
+                                                Yes
+                                                </option>
+
+                                                <option value="No"
+                                                {{ $response == 'No' ? 'selected' : '' }}>
+                                                No
+                                                </option>
+
+                                                <option value="N/A"
+                                                {{ !$response || $response == 'N/A' ? 'selected' : '' }}>
+                                                N/A
+                                                </option>
+
                                                 </select>
                                                </div>
                                            </td>
@@ -200,9 +226,11 @@
                             'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
                         <option value="Product/Material Related Error"{{ $data->hypo_exp_required_piii ==
                             'Product/Material Related Error' ? 'selected' : '' }}>Product/Material Related Error</option>
+                        <option value="Human Error"{{ $data->hypo_exp_required_piii ==
+                            'Human Error' ? 'selected' : '' }}>Human Error</option>    
                         <option value="Other Error"{{ $data->hypo_exp_required_piii ==
                             'Other Error' ? 'selected' : '' }}>Other Error</option>
-                            <option value="NA"{{ $data->hypo_exp_required_piii ==
+                        <option value="NA"{{ $data->hypo_exp_required_piii ==
                             'NA' ? 'selected' : '' }}>NA</option>
                     </select>
                     @if ($data->stage != 13)

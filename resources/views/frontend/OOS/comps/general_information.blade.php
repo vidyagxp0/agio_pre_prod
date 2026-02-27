@@ -231,8 +231,11 @@
             </div>
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
-                    <label for="oos Occurred On"> OOS/OOT Occurred On <span class="text-danger">*</span></label>
-                    <div></div>
+                    @if($data->Form_type == 'OOT')
+                    <label for="oos Occurred On"> OOT Occurred On <span class="text-danger">*</span></label>
+                    @else
+                    <label id="">OOS Occurred On <span class="text-danger">*</span></label>
+                    @endif
                     <div class="calenderauditee">
                         <input type="text" id="deviation_occured_on_gi" readonly value="{{ Helpers::getdateFormat($data->deviation_occured_on_gi ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY"/>
                         <input type="date" name="deviation_occured_on_gi" value="{{ $data->deviation_occured_on_gi }}" class="hide-input" oninput="handleDateInput(this, 'deviation_occured_on_gi')" {{ $istab1 ? 'required' : 'readonly' }} />
@@ -241,8 +244,11 @@
             </div>
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
-                    <label for="Deviation Occurred On"> OOS/OOT Observed On <span class="text-danger">*</span></label>
-                    <div></div>
+                    @if($data->Form_type == 'OOT')
+                    <label for="Deviation Occurred On">OOT Observed On <span class="text-danger">*</span></label>
+                    @else
+                    <label id="">OOS Observed On <span class="text-danger">*</span></label>
+                    @endif
                     <div class="calenderauditee">
                         <input type="text" id="oos_observed_on" readonly value="{{ Helpers::getdateFormat($data['oos_observed_on'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
                         <input type="date" name="oos_observed_on" value="{{ $data->oos_observed_on }}" class="hide-input" oninput="handleDateInput(this, 'oos_observed_on')" {{ $istab1 ? 'required' : 'readonly' }} />
@@ -271,7 +277,11 @@
 
             <div class="col-lg-6 new-date-data-field">
                 <div class="group-input input-date">
-                    <label for="Deviation Occurred On"> OOS/OOT Reported On <span class="text-danger">*</span> </label>
+                    @if($data->Form_type == 'OOT')
+                    <label for="Deviation Occurred On"> OOT Reported On <span class="text-danger">*</span> </label>
+                    @else
+                    <label for="Deviation Occurred On"> OOS Reported On <span class="text-danger">*</span> </label>
+                    @endif
                     <div class="calenderauditee">
                         <input type="text" id="oos_reported_date" readonly  value="{{ Helpers::getdateFormat($data['oos_reported_date'] ?? '') }}" {{Helpers::isOOSChemical($data->stage)}} placeholder="DD-MM-YYYY" />
                         <input type="date" name="oos_reported_date" value="{{ $data->oos_reported_date }}" class="hide-input" oninput="handleDateInput(this, 'oos_reported_date')" {{ $istab1 ? 'required' : 'readonly' }}/>
@@ -355,7 +365,11 @@
                     </div>
                 </div>
             </div>
-            <div class="sub-head pt-3">OOS/OOT Information</div>
+            @if($data->Form_type == 'OOT')
+            <div class="sub-head pt-3">OOT Information</div>
+            @else
+            <div class="sub-head pt-3">OOS Information</div>
+            @endif
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Tnitiaror Grouo">Sample Type <span class="text-danger">*</span></label>
@@ -580,11 +594,19 @@
             <!----------------grid-3----------------------------------- -->
 
             <div class="group-input">
+                @if($data->Form_type == 'OOT')
                 <label for="audit-agenda-grid">
-                    OOS/OOT Details
+                    OOT Details
                     <button type="button" name="audit-agenda-grid" id="oos_details" {{ $istab1 ? '' : 'disabled' }}>+</button>
                     <span class="text-danger">*</span>
                 </label>
+                @else
+                <label for="audit-agenda-grid">
+                    OOS Details
+                    <button type="button" name="audit-agenda-grid" id="oos_details" {{ $istab1 ? '' : 'disabled' }}>+</button>
+                    <span class="text-danger">*</span>
+                </label>
+                @endif
                 <div class="table-responsive">
                     <table class="table table-bordered" id="oos_details_details" style="width: 100%;">
                         <thead>
