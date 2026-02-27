@@ -634,24 +634,25 @@
 
                                         <div class="calenderauditee">
                                             <input type="text" id="complaint_dat" name="complaint_reported_on_gi"
-                                                placeholder="Select Due Date" value="" readonly/>
+                                                placeholder="Complaint Reported On" value="" readonly/>
                                         </div>
-                                        <script>
-                                            $(document).ready(function() {
-                                                $("#complaint_dat").datepicker({
-                                                    dateFormat: "dd-M-yy",
-                                                    onClose: function(dateText, inst) {
-                                                        if (!dateText) {
-                                                            $(this).val(''); // Ensure input stays empty if no date is selected
-                                                        }
+                                       <script>
+                                        $(document).ready(function() {
+                                            $("#complaint_dat").datepicker({
+                                                dateFormat: "dd-M-yy",
+                                                minDate: 1, // 0 = today, 1 = tomorrow (prevents previous dates)
+                                                onClose: function(dateText, inst) {
+                                                    if (!dateText) {
+                                                        $(this).val('');
                                                     }
-                                                });
-
-                                                // Prevent manual typing by setting the field to readonly
-                                                $("#complaint_dat").on('keydown', function(e) {
-                                                    e.preventDefault();
-                                                });
+                                                }
                                             });
+
+                                            // Prevent manual typing
+                                            $("#complaint_dat").on('keydown', function(e) {
+                                                e.preventDefault();
+                                            });
+                                        });
                                         </script>
                                     </div>
                                 </div>
@@ -697,8 +698,6 @@
                                     </textarea>
                                     </div>
                                 </div>
-
-
 
                                 <div class="col-12">
                                     <div class="group-input">

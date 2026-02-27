@@ -133,7 +133,7 @@
             <tr>
                 <td class="w-70" style="text-align: center; vertical-align: middle;">
                     <div style="font-size: 18px; font-weight: 800; display: inline-block;">
-                    Management Review Audit Trial report
+                    Management Review Audit Trail Report
                     </div>
                 </td>
                 <td class="w-30">

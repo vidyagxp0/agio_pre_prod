@@ -306,7 +306,6 @@
                             </button>
                         @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Lab Incident', 48))
 
-
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Initial Review Complete
                             </button>
@@ -319,10 +318,8 @@
                                 Child
                             </button>
                             @endif
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Lab Incident', 3))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Lab Incident', 3) || Helpers::check_roles($data->division_id, 'Lab Incident', 18))
 
-
-                  
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Information Required
                         </button>
@@ -412,7 +409,6 @@
                                 Child
                             </button>
                             @endif
-
 
                             <!-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                     Exit
@@ -636,6 +632,17 @@
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+
+                                @php
+                                $istab1 = ($data->stage == 1 && (($data->initiator_id == Auth::user()->id)||Helpers::check_roles($data->division_id, 'Lab Incident', 3)));
+                                $istab2 = ($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Lab Incident', 45)  || Helpers::check_roles($data->division_id, 'Lab Incident', 4)));
+                                $istab3 = ($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Lab Incident', 48)  || Helpers::check_roles($data->division_id, 'Lab Incident', 18)));
+                                $istab4 = ($data->stage == 4 &&  (Helpers::check_roles($data->division_id, 'Lab Incident', 3)  || Helpers::check_roles($data->division_id, 'lab incicent' , 18)));
+                                $istab5 = ($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Lab Incident', 45)  || Helpers::check_roles($data->division_id, 'Lab Incident', 4) || Helpers::check_roles($data->division_id, 'lab incicent' , 18)));
+                                $istab6 = ($data->stage == 6 && (Helpers::check_roles($data->division_id, 'Lab Incident', 48)  || Helpers::check_roles($data->divisiion_id, 'Lab Incidnet', 18)));
+                                $istab7 = ($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Lab Incident', 42)  || Helpers::check_roles($data->division_id, 'Lab Incident', 18)));
+                                @endphp
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
@@ -746,7 +753,7 @@
                                     });
                                     </script>
 
-                                    <style>
+                                <style>
                                     .hide-input {
                                         display: none;
                                     }
@@ -1442,13 +1449,12 @@
                                     <div class="group-input">
                                         <label for="Immediate_action">Immediate Action
                                         @if($data->stage == 1)    
-                                                    <span
-                                                            class="text-danger">*
-                                                    </span>
-
-                                         @endif     
+                                            <span
+                                                 class="text-danger">*
+                                            </span>
+                                        @endif     
                                        </label>
-                                        <textarea name="immediate_action_ia" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }}>{{$data->immediate_action_ia}}</textarea>
+                                        <textarea name="immediate_action_ia" {{ $istab1  ? "" : "readonly"  }}>{{$data->immediate_action_ia}}</textarea>
                                     </div>
                                 </div>
 
@@ -1550,8 +1556,6 @@
                                     </div>
                                 </div> --}}
 
-
-
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}>Save</button>
@@ -1622,44 +1626,44 @@
 
 
 
-    <div class="col-lg-12">
-        <div class="group-input">
-            <label for="Type Of Incidence"><b>Type of Incidence</b></label>
-            <select name="type_incidence_ia" {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "readonly" : "" }} id="type_incidence">
-                <option value="">-- Select --</option>
-                <option value="Analyst Error" {{ $data->type_incidence_ia == 'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
-                <option value="Instrument Error" {{ $data->type_incidence_ia == 'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
-                <option value="Atypical Error" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option>
-                <option value="Other" {{ $data->type_incidence_ia == 'Other' ? 'selected' : '' }}>Other</option>
-            </select>
-        </div>
-    </div>
+                <div class="col-lg-12">
+                    <div class="group-input">
+                        <label for="Type Of Incidence"><b>Type of Incidence</b></label>
+                        <select name="type_incidence_ia" {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "readonly" : "" }} id="type_incidence">
+                            <option value="">-- Select --</option>
+                            <option value="Analyst Error" {{ $data->type_incidence_ia == 'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
+                            <option value="Instrument Error" {{ $data->type_incidence_ia == 'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
+                            <option value="Atypical Error" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option>
+                            <option value="Other" {{ $data->type_incidence_ia == 'Other' ? 'selected' : '' }}>Other</option>
+                        </select>
+                    </div>
+                </div>
 
-    <div class="col-lg-12" id="other_incidence_div" style="display: none;">
-        <div class="group-input">
-            <label for="Other Incidence"><b>Other Incidence</b></label>
-            <input type="text" name="other_incidence" id="other_incidence" value="{{ $data->other_incidence ?? '' }}" {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "readonly" : "" }} />
-        </div>
-    </div>
+                <div class="col-lg-12" id="other_incidence_div" style="display: none;">
+                    <div class="group-input">
+                        <label for="Other Incidence"><b>Other Incidence</b></label>
+                        <input type="text" name="other_incidence" id="other_incidence" value="{{ $data->other_incidence ?? '' }}" {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "readonly" : "" }} />
+                    </div>
+                </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const typeIncidenceSelect = document.getElementById('type_incidence');
-            const otherIncidenceDiv = document.getElementById('other_incidence_div');
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const typeIncidenceSelect = document.getElementById('type_incidence');
+                            const otherIncidenceDiv = document.getElementById('other_incidence_div');
 
-            function toggleOtherIncidence() {
-                if (typeIncidenceSelect.value === 'Other') {
-                    otherIncidenceDiv.style.display = 'block';
-                } else {
-                    otherIncidenceDiv.style.display = 'none';
-                }
-            }
+                            function toggleOtherIncidence() {
+                                if (typeIncidenceSelect.value === 'Other') {
+                                    otherIncidenceDiv.style.display = 'block';
+                                } else {
+                                    otherIncidenceDiv.style.display = 'none';
+                                }
+                            }
 
-            typeIncidenceSelect.addEventListener('change', toggleOtherIncidence);
+                            typeIncidenceSelect.addEventListener('change', toggleOtherIncidence);
 
-            toggleOtherIncidence();
-        });
-    </script>
+                            toggleOtherIncidence();
+                        });
+                    </script>
 
 
 
@@ -1766,14 +1770,6 @@
 
                      {{-- extension --}}
 
-
-
-
-
-
-
-
-
                     <!-- QA Review content -->
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1781,7 +1777,7 @@
                             <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Review Comments">QC Head Review Comments @if($data->stage == 2)<span class="text-danger">*</span>@endif</label>
-                                        <textarea name="QA_Review_Comments" {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "readonly" : "" }}>{{ $data->QA_Review_Comments }}</textarea>
+                                        <textarea name="QA_Review_Comments" {{ $istab2 ? "required" : "readonly" }}>{{ $data->QA_Review_Comments }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -1804,7 +1800,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $data->stage == 0 || $data->stage == 1 || $data->stage >= 3 ? "disabled" : "" }} type="file" id="myfile" name="QA_Head_Attachment[]"
+                                                <input {{ !$istab2 ?  "disabled" : "" }} type="file" id="myfile" name="QA_Head_Attachment[]"
                                                     oninput="addMultipleFiles(this, 'QA_Head_Attachment')" multiple>
                                             </div>
                                         </div>
@@ -1879,7 +1875,7 @@
                 <div class="group-input">
                     <label for="Incident Category">QA Initial Review Comments @if($data->stage==3)<span class="text-danger">*</span>
                     @endif</label>
-                    <textarea name="QA_initial_Comments" {{ $data->stage <= 2 || $data->stage >= 4 ? "readonly" : "" }}>{{ $data->QA_initial_Comments }}</textarea>
+                    <textarea name="QA_initial_Comments" {{  $istab3 ?  "required" : "readonly"}}>{{ $data->QA_initial_Comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
@@ -1901,7 +1897,7 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="QA_Initial_Attachment[]" {{ $data->stage <= 2 || $data->stage >= 4 ? "disabled" : "" }} oninput="addMultipleFiles(this, 'QA_Initial_Attachment')" multiple>
+                            <input {{$istab3 ? "" : "disabled"}} type="file" id="myfile" name="QA_Initial_Attachment[]"  oninput="addMultipleFiles(this, 'QA_Initial_Attachment')" multiple>
                         </div>
                     </div>
                 </div>
@@ -1974,17 +1970,15 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Action Taken">Action Taken  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                                        <textarea name="Action_Taken" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{ $data->Action_Taken }}</textarea>
+                                        <textarea name="Action_Taken" class="tiny" {{$istab4 ? "required" : "readonly"}}>{{ $data->Action_Taken }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Root Cause">Probable Root Cause  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                                        <textarea name="Root_Cause" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{ $data->Root_Cause }}</textarea>
+                                        <textarea name="Root_Cause" class="tiny" {{$istab4 ? "required" : "readonly"}}>{{ $data->Root_Cause }}</textarea>
                                     </div>
                                 </div>
-
-
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -2006,7 +2000,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : "" }} type="file" id="myfile" name="Inv_Attachment[]"
+                                                <input {{ $istab4 ? ''  : 'disabled' }} type="file" id="myfile" name="Inv_Attachment[]"
                                                     oninput="addMultipleFiles(this, 'Inv_Attachment')" multiple>
                                             </div>
                                         </div>
@@ -2049,20 +2043,20 @@
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="proposed corrective action ">Proposed Corrective Action/Corrective Action Taken  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                            <textarea name="proposed_correctivei_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->proposed_correctivei_ia}}</textarea>
+                            <textarea name="proposed_correctivei_ia" class="tiny" {{ $istab4 ? "required" : "readonly"  }}>{{$data->proposed_correctivei_ia}}</textarea>
                         </div>
                      </div>
 
 
-                     <div class="col-12">
+                    <div class="col-12">
                         <div class="group-input">
-                            <label for="Repeat Analysis Plan ">Repeat Analysis Plan  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                        <textarea name="repeat_analysis_plan_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->repeat_analysis_plan_ia}}</textarea>
-                      </div>
-                         </div>
+                                <label for="Repeat Analysis Plan ">Repeat Analysis Plan  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
+                            <textarea name="repeat_analysis_plan_ia" class="tiny" {{$istab4 ? "required" : "readonly"}}>{{$data->repeat_analysis_plan_ia}}</textarea>
+                        </div>
+                    </div>
 
 
-                          {{-- selection field --}}
+                {{-- selection field --}}
 
 
 
@@ -2070,60 +2064,60 @@
                 <div class="col-12">
                     <div class="group-input">
                         <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                    <textarea name="result_of_repeat_analysis_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->result_of_repeat_analysis_ia}}</textarea>
+                        <textarea name="result_of_repeat_analysis_ia" class="tiny" {{ $istab4 ? "required" : "readonly" }}>{{$data->result_of_repeat_analysis_ia}}</textarea>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                        <div class="group-input">
+                            <label for="detail investigation">Root Cause   @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
+                        <textarea name="details_investigation_ia" class="tiny" {{ $istab4 ? "required" : "readonly" }}>{{$data->details_investigation_ia}}</textarea>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="group-input">
+                        <label for="Corrective and Preventive Action">Corrective and Preventive Action  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
+                        <textarea name="corrective_and_preventive_action_ia" class="tiny" {{ $istab4 ? "required" : "readonly" }}>{{$data->corrective_and_preventive_action_ia}}</textarea>
+                    </div>
+                </div>
+
+
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="CAPA Number">CAPA Number  
+                        @if($data->stage == 4)
+                            <span class="text-danger">*</span> 
+                        @endif 
+                    </label>
+                    <textarea name="capa_number_im" {{ $istab4 ? "required" : "readonly" }}>{{ $data->capa_number_im }}</textarea>
                 </div>
             </div>
 
-                        <div class="col-12">
-                                <div class="group-input">
-                                    <label for="detail investigation ">Root Cause   @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                                <textarea name="details_investigation_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->details_investigation_ia}}</textarea>
-                            </div>
-                        </div>
+
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Corrective and Preventive Action">Corrective and Preventive Action  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                <textarea name="corrective_and_preventive_action_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->corrective_and_preventive_action_ia}}</textarea>
+                    <label for="Investigation Summary">Investigation Summary @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
+                    <textarea name="investigation_summary_ia" class="tiny" {{ $istab4 ? "required" : "readonly" }}>{{$data->investigation_summary_ia}}</textarea>
+                </div>
             </div>
-        </div>
 
 
-        <div class="col-12">
+        {{-- type of incidence --}}
+
+        {{-- <div class="col-lg-12">
             <div class="group-input">
-                <label for="CAPA Number">CAPA Number  
-                    @if($data->stage == 4)
-                        <span class="text-danger">*</span> 
-                    @endif 
-                </label>
-                <textarea name="capa_number_im" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required" : "") }}>{{ $data->capa_number_im }}</textarea>
+                <label for="Type Of Incidence"><b>Type Of Incidence</b></label>
+                <select name="type_incidence_ia" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }} id="initiator_group">
+                    <option value="NA" {{ $data->type_incidence_ia == '0' ? 'selected' : '' }}>-- Select --</option>
+                    <option value="Analyst Error" {{ $data->type_incidence_ia == 'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
+                    <option value="Instrument Error" {{ $data->type_incidence_ia == 'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
+                    <option value="Atypical Error" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option>
+                    {{-- <option value="" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option> --}}
+
+                {{-- </select>
             </div>
-        </div>
-
-
-         <div class="col-12">
-            <div class="group-input">
-                <label for="Investigation Summary">Investigation Summary @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-            <textarea name="investigation_summary_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->investigation_summary_ia}}</textarea>
-        </div>
-    </div>
-
-
-
-    {{-- type of incidence --}}
-
-    {{-- <div class="col-lg-12">
-        <div class="group-input">
-            <label for="Type Of Incidence"><b>Type Of Incidence</b></label>
-            <select name="type_incidence_ia" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }} id="initiator_group">
-                <option value="NA" {{ $data->type_incidence_ia == '0' ? 'selected' : '' }}>-- Select --</option>
-                <option value="Analyst Error" {{ $data->type_incidence_ia == 'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
-                <option value="Instrument Error" {{ $data->type_incidence_ia == 'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
-                <option value="Atypical Error" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option>
-                {{-- <option value="" {{ $data->type_incidence_ia == 'Atypical Error' ? 'selected' : '' }}>Atypical Error</option> --}}
-
-            {{-- </select>
-        </div>
-    </div>  --}}
+        </div>  --}}
 
 
 
@@ -2197,7 +2191,7 @@
                         <label for="search">
                             QC Investigator @if($data->stage==4)<span class="text-danger">*</span> @endif
                         </label>
-                            <textarea name="investigator_data" class="tiny" id="" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{ $data->investigator_data }}</textarea>
+                            <textarea name="investigator_data" class="tiny" id="" {{ $istab4 ? "required" : "readonly" }}>{{ $data->investigator_data }}</textarea>
                     </div>
                 </div>
 
@@ -2239,7 +2233,7 @@
                             </div>
                             <div class="add-btn">
                                 <div>Add</div>
-                                <input {{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : "" }} type="file" id="attachments_ia" name="attachments_ia[]"
+                                <input {{ $istab4 ? '' : 'disabled' }} type="file" id="attachments_ia" name="attachments_ia[]"
                                     oninput="addMultipleFiles(this, 'attachments_ia')" multiple>
                             </div>
                         </div>
@@ -2463,7 +2457,7 @@
                     <label for="Incident Category">QC Head/HOD Secondary Review Comments  @if($data->stage==5)<span class="text-danger">*</span>
 
                         @endif</label>
-                    <textarea name="QC_head_hod_secondry_Comments" {{ $data->stage <= 4 || $data->stage >= 6 ? "readonly" : ($data->stage == 5 ? "required":"") }}>{{ $data->QC_head_hod_secondry_Comments }}</textarea>
+                    <textarea name="QC_head_hod_secondry_Comments" {{ $istab5 ? "required" : "readonly" }}>{{ $data->QC_head_hod_secondry_Comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
@@ -2490,7 +2484,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="QC_headhod_secondery_Attachment[]"
-                                   oninput="addMultipleFiles(this, 'QC_headhod_secondery_Attachment')" {{ $data->stage <= 4 || $data->stage >= 6 ? "disabled" : "" }} multiple>
+                                   oninput="addMultipleFiles(this, 'QC_headhod_secondery_Attachment')" {{ $istab5 ? "" : "disabled" }} multiple>
                         </div>
                     </div>
                 </div>
@@ -2542,10 +2536,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="group-input">
-                    <label for="Incident Category">QA Secondary Review Comments @if($data->stage==6)<span class="text-danger">*</span>
-
-                        @endif</label></label>
-                    <textarea name="QA_secondry_Comments" {{ $data->stage <= 5 || $data->stage >= 7 ? "readonly" : ($data->stage == 6 ? "required":"") }}>{{ $data->QA_secondry_Comments }}</textarea>
+                    <label for="Incident Category">QA Secondary Review Comments @if($data->stage==6)<span class="text-danger">*</span>@endif</label>
+                    <textarea name="QA_secondry_Comments" {{ $istab6 ? "required" : "disabled" }}>{{ $data->QA_secondry_Comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
@@ -2572,7 +2564,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="QA_secondery_Attachment[]"
-                                   oninput="addMultipleFiles(this, 'QA_secondery_Attachment')" {{ $data->stage <= 5 || $data->stage >= 7 ? "disabled" : "" }} multiple>
+                                   oninput="addMultipleFiles(this, 'QA_secondery_Attachment')" {{ $istab6 ? '' : 'disabled' }} multiple>
                         </div>
                     </div>
                 </div>
@@ -2669,15 +2661,14 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="closure_incident">Closure of Incident<span class="text-danger">*</span></label>
-                                    <input type="text" name="closure_incident_c" {{ $data->stage <= 6 || $data->stage >= 8 ? "readonly" : ($data->stage == 7 ? "required":"") }}  value="{{$labnew->closure_incident_c}}">
+                                    <input type="text" name="closure_incident_c" {{ $istab7 ? "required" : "readonly" }}  value="{{$labnew->closure_incident_c}}">
                                 </div>
-
                             </div>
 
                             <!-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="head remark"><b>QC Head Remark</b></label>
-                                   <textarea name="qc_hear_remark_c" {{ $data->stage <= 6 || $data->stage >= 8 ? "readonly" : "" }}>{{$labnew->qc_hear_remark_c}}</textarea>
+                                   <textarea name="qc_hear_remark_c" {{ $istab7 ? "required" : "readonly" }}>{{$labnew->qc_hear_remark_c}}</textarea>
                                 </div>
                             </div>
 
@@ -2703,7 +2694,7 @@
                             <div class="group-input">
                                 <label for=" qa head remark"><b>QA Head Comment</b> <span class="text-danger">*</span>
                                 </label>
-                               <textarea name="qa_hear_remark_c" class="tiny" {{ $data->stage <= 6 || $data->stage >= 8 ? "readonly" : ($data->stage == 7 ? "required":"")}}>{{$labnew->qa_hear_remark_c}}</textarea>
+                               <textarea name="qa_hear_remark_c" class="tiny" {{ $istab7 ? "required" : "readonly"}}>{{$labnew->qa_hear_remark_c}}</textarea>
                             </div>
                         </div>
 
@@ -2728,7 +2719,7 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input {{ $data->stage <= 6 || $data->stage >= 8 ? "disabled" : "" }} type="file" id="closure_attachment_c" name="closure_attachment_c[]"
+                                        <input {{ $istab7 ? '' : 'disabled' }} type="file" id="closure_attachment_c" name="closure_attachment_c[]"
                                             oninput="addMultipleFiles(this, 'closure_attachment_c')" multiple>
                                     </div>
                                 </div>
@@ -2773,7 +2764,6 @@
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                         </div>
-
 
                         </div>
                     </div>
@@ -2833,9 +2823,6 @@
                                     </div>
                                 </div>
 
-
-
-
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Verification Complete">More Info Required By</label>
@@ -2879,9 +2866,6 @@
                                     </div>
                                 </div>
 
-
-
-
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Verification Complete">More Info Required By</label>
@@ -2902,9 +2886,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head"  style="font-size: 16px">
-                                Pending Initiator Update 
-                                </div>
+                                <div class="col-12 sub-head"  style="font-size: 16px"> Pending Initiator Update </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Assignable Cause Identification Completed">Pending Initiator Update Complete By</label>
@@ -2927,16 +2909,13 @@
                                 </div>
 
 
-
-
-
-                                
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Verification Complete">More Info Required By</label>
                                         <div class="static">{{ $data->more_info_req_3_by }}</div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Incident Review Completed On">More Info Required On</label>
@@ -2974,15 +2953,13 @@
                                 </div>
 
 
-
-
-                                
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Verification Complete">More Info Required By</label>
                                         <div class="static">{{ $data->more_info_req_4_by }}</div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Incident Review Completed On">More Info Required On</label>
@@ -3020,10 +2997,6 @@
                                     </div>
                                 </div>
 
-
-
-
-                                
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Verification Complete">More Info Required By</label>
@@ -3112,8 +3085,6 @@
                                 </div>
 
 
-
-                                
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="All Activities Completed By">All Activities Completed By</label>
@@ -3205,7 +3176,6 @@
                                     Submit
                                 </button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
-
                      </div>
                 </form>
             </div>

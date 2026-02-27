@@ -963,9 +963,6 @@
                                 </div>
                             </div>
 
-
-
-
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Due Date">Complaint Reported On
@@ -991,51 +988,36 @@
                                             placeholder="Select Due Date"
                                             value="{{ Helpers::getdateFormat($formattedDate) }}" />
                                     </div>
-                                    {{-- <script>
-                                        $(document).ready(function() {
-                                            $("#complaint_dat").datepicker({
-                                                dateFormat: "dd-M-yy",
-                                                onClose: function(dateText, inst) {
-                                                    if (!dateText) {
-                                                        $(this).val('');
-                                                    }
-                                                }
-                                            });
-
-                                            $("#complaint_dat").on('keydown', function(e) {
-                                                e.preventDefault();
-                                            });
-                                        });
-                                    </script> --}}
+                                   
                                     <script>
-                                        $(document).ready(function () {
+                                    $(document).ready(function () {
 
-                                            // init datepicker
-                                            $("#complaint_dat").datepicker({
-                                                dateFormat: "dd-M-yy",
-                                                onClose: function (dateText) {
-                                                    if (!dateText) {
-                                                        $(this).val('');
-                                                    }
+                                        // init datepicker
+                                        $("#complaint_dat").datepicker({
+                                            dateFormat: "dd-M-yy",
+                                            minDate: 0, // ❌ prevents past dates (allows today + future)
+                                            onClose: function (dateText) {
+                                                if (!dateText) {
+                                                    $(this).val('');
                                                 }
-                                            });
-
-                                            // 🔐 STAGE + ROLE CHECK
-                                            @if(!($data->stage == 1 && $istab1))
-                                                // disable datepicker
-                                                $("#complaint_dat").datepicker("readonly");
-
-                                                // hard readonly
-                                                $("#complaint_dat")
-                                                    .prop("readonly", true)
-                                                    .addClass("bg-light");
-                                            @endif
-
+                                            }
                                         });
+
+                                        // 🔐 STAGE + ROLE CHECK
+                                        @if(!($data->stage == 1 && $istab1))
+                                            // disable datepicker properly
+                                            $("#complaint_dat").datepicker("disable");
+
+                                            // hard readonly
+                                            $("#complaint_dat")
+                                                .prop("readonly", true)
+                                                .addClass("bg-light");
+                                        @endif
+
+                                    });
                                     </script>
                                 </div>
                             </div>
-
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
