@@ -11517,13 +11517,10 @@ public static function effectiveFamilyReport($id)
     $docdetail = Docdetail::where('cc_id', $data->id)->first();
     $cc_cfts =  CcCft::where('cc_id', $id)->first();
     $cftData =  CcCft::where('cc_id', $id)->first();
-
     $review = Qareview::where('cc_id', $data->id)->first();
-   $evaluation = Evaluation::where('cc_id', $data->id)->first();
-   $QaApprovalComments = QaApprovalComments::where('cc_id', $id)->first();
-   $closure = ChangeClosure::where('cc_id', $data->id)->first();
-
-
+    $evaluation = Evaluation::where('cc_id', $data->id)->first();
+    $QaApprovalComments = QaApprovalComments::where('cc_id', $id)->first();
+    $closure = ChangeClosure::where('cc_id', $data->id)->first();
 
 
 

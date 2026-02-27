@@ -12,6 +12,8 @@ use App\Models\ActionItemHistory;
 use App\Models\ExtensionNewAuditTrail;
 use App\Models\CapaAuditTrial;
 use App\Models\ResamplingAudittrail;
+use App\Models\CapaGrid;
+
 use App\Models\Resampling;
 use Illuminate\Http\Request;
 use App\Models\Capa;
@@ -6165,7 +6167,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                 $record = str_pad($record, 4, '0', STR_PAD_LEFT);
                 $record_number =$record;
 
-                return view('frontend.resampling.resapling_create', compact('relatedRecords','record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                return view('frontend.resampling.resapling_create', compact('relatedRecords','parent_division_id','record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
             }
 
@@ -6234,7 +6236,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
             // $record = ((RecordNumber::first()->value('counter')) + 1);
                 $record = str_pad($record, 4, '0', STR_PAD_LEFT);
                 $record_number =$record;
-                  return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords', 'reference_record'));
+                  return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id','parent_division_id', 'parent_type', 'old_records', 'cft','relatedRecords', 'reference_record'));
                }
                if ($request->revision == "rca") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -6254,7 +6256,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
                 $record = str_pad($record, 4, '0', STR_PAD_LEFT);
                 $record_number =$record;
 
-                return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'parent_division_id'));
 
             }
 
@@ -6363,7 +6365,7 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
 
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft'));
+            return view('frontend.forms.capa', compact('record_number', 'due_date','parent_division_id', 'parent_id', 'parent_type', 'old_records', 'cft'));
         }
         if ($request->revision == "effectiveness-check") {
          $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -8499,6 +8501,86 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.labIncident.singleReport', compact('data','labtab','labgrid','labtab_grid'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+            return $pdf->stream('Lab-Incident' . $id . '.pdf');
+        }
+    }
+
+    public static function labincidentFamilyReport($id)
+    {
+        $data = LabIncident::find($id);
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            // $labtab= Labincident_Second::where('lab_incident_id',$id)->get();
+            $labgrid =lab_incidents_grid::where(['labincident_id' => $id,'identifier' => 'Incident Report'])->first();
+            $labtab_grid =lab_incidents_grid::where(['labincident_id' => $id,'identifier'=> 'Sutability'])->first();
+            $data->division = QMSDivision::where('id', $data->division_id)->value('name');
+            $labtab = Labincident_Second::where('id', $id)->firstOrCreate();
+
+
+            $extensions= extension_new::where('parent_id', $id)
+                ->where('parent_type', 'Lab Incident')
+                ->orderBy('created_at', 'asc')
+                ->get();
+            $actionItem = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'Lab Incident')
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            $rootCouseAnalysis = RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', 'Lab Incident')
+                ->orderBy('created_at', 'asc')
+                ->get();
+            $resampling = Resampling::where('parent_id', $id)
+                ->where('parent_type', 'Lab Incident')
+                ->orderBy('created_at', 'asc')
+                ->get();
+                
+
+            $capa_Data = Capa::where('parent_id', $id)->where('parent_type', 'Lab Incident')->get();
+
+            foreach ($capa_Data as $capa) {
+
+                $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Product_Details")->first();
+
+                $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Instruments_Details")->first();
+
+                $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Material_Details")->first();
+
+                $capa->originator = User::where('id', $capa->initiator_id)->value('name');
+
+                if (!empty($capa->capa_team)) {
+                    $capa_teamIdsArray = explode(',', $capa->capa_team);
+                    $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
+                    $capa_teamNamesString = implode(', ', $capa_teamNames);
+                } else {
+                    $capa_teamNamesString = null;
+                }
+            };
+
+
+            // dd($data->division);
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.labIncident.labfamily_report', compact('data','resampling','actionItem','rootCouseAnalysis','labtab','labgrid','capa_Data','labtab_grid', 'extensions', 'capa_teamNamesString'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

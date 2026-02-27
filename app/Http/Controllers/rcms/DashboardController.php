@@ -998,6 +998,7 @@ class DashboardController extends Controller
         } elseif ($type == "Lab-Incident") {
             $data = LabIncident::find($id);
             $single = "LabIncidentSingleReport/" . $data->id;
+            $family = "labfamilyreport/" . $data->id;
             $audit = "LabIncidentAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;

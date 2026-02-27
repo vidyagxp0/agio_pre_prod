@@ -65,6 +65,8 @@ class RootCauseController extends Controller
         $root->originator_id = $request->originator_id;
         $root->date_opened = $request->date_opened;
         $root->division_id = $request->division_id;
+        $root->division_code = $request->division_code;
+        // dd($root->division_id);
         $root->priority_level = $request->priority_level;
         $root->severity_level = $request->severity_level;
         $root->short_description = ($request->short_description);

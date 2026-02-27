@@ -610,7 +610,6 @@ dd($data->initiator_id , Auth::user()->id);
                                         <div class="group-input">
                                             <label for="Division Code"><b>Site/Location Code</b></label>
                                             <input readonly type="text" name="division_code"
-                                                {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 value="{{ Helpers::getDivisionName($data->division_id) }}">
                                         </div>
                                     </div>
