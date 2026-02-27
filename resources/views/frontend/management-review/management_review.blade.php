@@ -429,6 +429,7 @@
                 document.addEventListener('DOMContentLoaded', function() {
                     const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
                     
+                    
                     activateTabBasedOnStage(currentStage);
                 });
             </script>
@@ -1182,6 +1183,7 @@
                             @php
                             $assignedUsers = !empty($data->assign_to) ? explode(',', $data->assign_to) : [];
                         @endphp
+
                       <div class="col-lg-12">
                         <div class="group-input">
                             <label for="assign_to">Invite Person Notify
@@ -1190,17 +1192,17 @@
                             </label>
 
                             <!-- Disabled select for stages not equal to 1 -->
-                            <select id="assign_to" name="assign_to[]"  {{ ($data->stage == 2 && $QAHeadrole) ? '' : 'disabled' }} @if ($data->stage != 2) disabled @endif  multiple>
-                                {{-- <option value="">Select a value</option> --}}
+                            <select id="assign_to" name="assign_to[]" 
+                                {{ ($data->stage == 2 && $QAHeadrole) ? '' : 'disabled' }} multiple>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
+                                    <option value="{{ $user->id }}"
+                                        {{ in_array($user->id, $assignedUsers) ? 'selected' : '' }}>
                                         {{ $user->name }}
                                     </option>
                                 @endforeach
                             </select>
 
                             @if ($data->stage != 2)
-                                <!-- Hidden fields to retain selected values when select is disabled -->
                                 @foreach ($assignedUsers as $assignedUser)
                                     <input type="hidden" name="assign_to[]" value="{{ $assignedUser }}">
                                 @endforeach
