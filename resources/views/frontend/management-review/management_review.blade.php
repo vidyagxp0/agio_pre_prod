@@ -427,7 +427,7 @@
                 }
 
                 document.addEventListener('DOMContentLoaded', function() {
-                    // const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
+                    const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
                     
                     
                     activateTabBasedOnStage(currentStage);

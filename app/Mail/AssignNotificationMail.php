@@ -20,11 +20,15 @@ class AssignNotificationMail extends Mailable
      */
     public $user;
     public $management;
+    public $process;
+    public $data;
 
-    public function __construct($user, $management)
+    public function __construct($user, $management, $process, $data)
     {
         $this->user = $user;
         $this->management = $management;
+        $this->process = $process;
+        $this->data = $data;
     }
 
     /**

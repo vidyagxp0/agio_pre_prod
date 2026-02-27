@@ -205,18 +205,118 @@
     <div id="main-container">
         <div class="notification-container">
             <div class="inner-block">
-               
+                <div style="display: flex; justify-content: space-between;" class="logo-container">
+
+                    <div style="width: 60%;">
+                        <p>{{ $process }} No.:-
+                            @if($process == 'Extension')
+                                {{ Helpers::getDivisionName($data->site_location_code) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record_number) }}
+                            @elseif($process == 'Observation')
+                                {{ Helpers::getDivisionName($data->division_code) }}/{{ $site }}/{{ date('Y') }}/{{ Helpers::record($data->record) }}
+                            @elseif($process == 'OOS/OOT')
+                                {{Helpers::getDivisionName($data->division_id) }}/{{ $data->Form_type }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}
+                            @else
+                                {{ Helpers::getDivisionName($data->division_id) }}/{{ date('Y') }}/{{ Helpers::record($data->record) }}
+                            @endif
+                        </p>
+
+
+                        <p>
+                            Originator Name :-
+                             <!-- {{ Helpers::getInitiatorName($data->initiator_id) }} -->
+                            @if ($data->initiator_id)
+                                {{ Helpers::getInitiatorName($data->initiator_id) }}
+                            @else
+                                {{ Helpers::getInitiatorName($data->initiator) }}
+                            @endif
+                        </p>
+
+                        <p>Date Opened:- 
+                            @if($data->intiation_date)
+                               {{ Helpers::getDateFormat($data->intiation_date) }}
+                            @else
+                               {{ $data->created_at->format('d-M-Y H:i:s') }}
+                            @endif
+                        </p>
+
+
+                    </div>
+                    <div style="margin-left: 250px" class="logo">
+                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="...">
+                        <!-- <img src="https://www.agio-pharma.com/wp-content/uploads/2019/10/logo-agio.png" alt="..."> -->
+                    </div>
+                </div>
                 <div class="mail-content" style="margin-top: 20px">
-                    <p>Title: {{$management->title}} </p>
-                    <p>Hello {{$user->name}} </p>
+                    <div class="table-wrapper">
+                        <table class="fl-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%">Record ID</th>
+                                    <th style="width: 10%">Division</th>
+                                    @if ($process == 'OOS/OOT')
+                                    <th style="width: 20%">Form Type</th>
+                                    @endif
+                                    <th style="width: 50%">Short Description</th>
+                                    <th style="width: 10%">Due Date</th>
+                                    <th style="width: 20%">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @if ($process == 'Extension')
+                                            {{ Helpers::record($data->record_number) }}
+                                        @elseif($process == 'OOS/OOT')
+                                            {{ Helpers::record($data->dashboard_unique_id) }}
+                                        @else
+                                            {{ Helpers::record($data->dashboard_unique_id) }}    
+                                        @endif
+                                    </td>
 
-                    {{-- <h3>Hello {{ $user->name }},</h3>
+                                    <td>
+                                        @if ($process == 'Extension')
+                                            {{ Helpers::getDivisionName($data->site_location_code) }}
+                                        @elseif ($process == 'Observation')
+                                            {{ Helpers::getDivisionName($data->division_code) }}
+                                        @else
+                                            {{ Helpers::getDivisionName($data->division_id) }}
+                                        @endif
+                                    </td>
+                                    @if ($process == 'OOS/OOT')
+                                    <td>
+                                        {{ $data->Form_type }}
+                                    </td>
+                                    @endif
+                                    
+                                    <td>
+                                    @if ($process == 'Lab Incident')
+                                    {{ $data->short_desc }}
+                                    @elseif($process == 'OOC')
+                                    {{ $data->description_ooc }}
+                                    @elseif($process == 'OOS/OOT')
+                                    {{ $data->description_gi }}
+                                    @elseif($process == 'Market Complaint')
+                                    {{ $data->description_gi }}
+                                    @else
+                                    {{ $data->short_description }}
+                                    @endif
+                                    </td>
 
-<p>test.</p>
-
-<p><strong>Title:</strong> {{ $management->title }}</p>
-
-<p>Please check.</p> --}}
+                                    <td>
+                                        @if ($process == 'Extension')
+                                        {{ Helpers::getDateFormat($data->due_date) }}    
+                                        @elseif($process == 'OOS/OOT')
+                                        {{ Helpers::getDateFormat($data->due_date) }}    
+                                        @elseif($process == 'Market Complaint')
+                                        {{ Helpers::getDateFormat($data->due_date_gi) }} 
+                                        @else
+                                        {{ $data->due_date ?  Helpers::getDateFormat($data->due_date) : 'Not Applicable' }}                                        @endif
+                                    </td>
+                                    <td>{{ $data->status }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <div style="margin-top: 20px">
                         This notification has been automatically generated by the VidyaGxP System.

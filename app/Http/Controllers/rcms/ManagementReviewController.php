@@ -3072,18 +3072,28 @@ class ManagementReviewController extends Controller
 
         $management->save();
 
-        if (!empty($userIds)) {
+        $data = ManagementReview::find($id);
 
-        foreach ($userIds as $userId) {
+        if ($data->stage == 2 && !empty($userIds)) {
 
-            $user = User::find(trim($userId));
+            foreach ($userIds as $userId) {
 
-            if ($user && $user->email) {
-                Mail::to($user->email)
-                    ->send(new AssignNotificationMail($user, $management));
+                $user = User::find(trim($userId));
+                $process = 'Management Review';
+
+                if ($user && $user->email) {
+
+                    Mail::to($user->email)
+                    ->send(new AssignNotificationMail(
+                        $user,
+                        $management,
+                        $process,
+                        $data
+                    ));
+
+                }
             }
         }
-    }
 
 
         if ($lastDocument->short_description != $management->short_description || !empty($request->short_desc_comment)) {
