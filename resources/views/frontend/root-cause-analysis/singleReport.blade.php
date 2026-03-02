@@ -1534,7 +1534,8 @@
 
             </table>
         </div>                
-    </div><br>
+    
+        </div><br>
 
 
 
@@ -1589,156 +1590,104 @@
             </div>
 
         </div>
-
-
         
- <div class="block">
-    <div class="block-head">
-        QA/CQA Final Review
-    </div>
-    <table>
-        <tr>
-            <th class="w-20">QA/CQA Final Review Comments</th>
-            <td class="w-80">
-                @if ($data->qa_final_comments)
-                    {{ strip_tags($data->qa_final_comments) }}
-                @else
-                    Not Applicable
-                @endif
-            </td>
-        </tr>
-    </table>
-    
-    <div class="border-table">
-        <div class="block-head">
-            QA/CQA Final Review Attachment
+        <div class="block">
+            <div class="block-head">
+                QA/CQA Final Review
+            </div>
+            <table>
+                <tr>
+                    <th class="w-20">QA/CQA Final Review Comments</th>
+                    <td class="w-80">
+                        @if ($data->qa_final_comments)
+                            {{ strip_tags($data->qa_final_comments) }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
+            </table>
+            
+            <div class="border-table">
+                <div class="block-head">
+                    QA/CQA Final Review Attachment
+
+                </div>
+                <table>
+
+                    <tr class="table_bg">
+                        <th class="w-20">Sr.No.</th>
+                        <th class="w-60">Attachment</th>
+                    </tr>
+                    @if ($data->qa_final_attachments)
+                        @foreach (json_decode($data->qa_final_attachments) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                    @endif
+
+                </table>
+            </div>
 
         </div>
-        <table>
 
-            <tr class="table_bg">
-                <th class="w-20">Sr.No.</th>
-                <th class="w-60">Attachment</th>
-            </tr>
-            @if ($data->qa_final_attachments)
-                @foreach (json_decode($data->qa_final_attachments) as $key => $file)
-                    <tr>
-                        <td class="w-20">{{ $key + 1 }}</td>
-                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                target="_blank"><b>{{ $file }}</b></a> </td>
-                    </tr>
-                @endforeach
-            @else
+        <div class="block">
+            <div class="block-head">
+                QAH/CQAH/Designee Final Approval
+            </div>
+            <table>
                 <tr>
-                    <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
+                    <th class="w-20">QAH/CQAH/Designee Final Approval Comments</th>
+                    <td class="w-80">
+                        @if ($data->qah_final_comments)
+                            {{ strip_tags($data->qah_final_comments) }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
                 </tr>
-            @endif
+            </table>
 
-        </table>
-    </div>
+            <div class="border-table">
+                <div class="block-head">
+                    QAH/CQAH/Designee Final Approval Attachments
 
-</div>
+                </div>
+                <table>
 
+                    <tr class="table_bg">
+                        <th class="w-20">Sr.No.</th>
+                        <th class="w-60">Attachment</th>
+                    </tr>
+                    @if ($data->qah_final_attachments)
+                        @foreach (json_decode($data->qah_final_attachments) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                    @endif
 
-      
- <div class="block">
-    <div class="block-head">
-        QAH/CQAH/Designee Final Approval
-    </div>
-    <table>
-        <tr>
-            <th class="w-20">QAH/CQAH/Designee Final Approval Comments</th>
-            <td class="w-80">
-                @if ($data->qah_final_comments)
-                    {{ strip_tags($data->qah_final_comments) }}
-                @else
-                    Not Applicable
-                @endif
-            </td>
-        </tr>
-    </table>
-
-    <div class="border-table">
-        <div class="block-head">
-            QAH/CQAH/Designee Final Approval Attachments
+                </table>
+            </div>
 
         </div>
-        <table>
-
-            <tr class="table_bg">
-                <th class="w-20">Sr.No.</th>
-                <th class="w-60">Attachment</th>
-            </tr>
-            @if ($data->qah_final_attachments)
-                @foreach (json_decode($data->qah_final_attachments) as $key => $file)
-                    <tr>
-                        <td class="w-20">{{ $key + 1 }}</td>
-                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                target="_blank"><b>{{ $file }}</b></a> </td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td class="w-20">1</td>
-                    <td class="w-20">Not Applicable</td>
-                </tr>
-            @endif
-
-        </table>
-    </div>
-
-</div>
                
 
-
-
-                {{-- <div class="inner-block">
-                    <label
-                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-                        Root Cause Methodology </label>
-                    <span style="font-size: 0.8rem; margin-left: 60px;">
-                        @if ($data->root_cause_methodology)
-                            {{ $data->root_cause_methodology }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </span>
-                </div>
-                <div class="inner-block">
-                    <label
-                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-                        Root Cause Description</label>
-                    <span style="font-size: 0.8rem; margin-left: 60px;">
-                        @if ($data->root_cause_description)
-                            {{ $data->root_cause_description }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </span>
-                </div>
-                <div class="inner-block">
-                    <label
-                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-                        Investigation Summary</label>
-                    <span style="font-size: 0.8rem; margin-left: 60px;">
-                        @if ($data->investigation_summary)
-                            {{ $data->investigation_summary }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </span>
-                </div> --}}
-                <!-- <tr>
-                            <th class="w-20">Attachments</th>
-                            <td class="w-80">
-@if ($data->attachments)
-<a href="{{ asset('upload/document/', $data->attachments) }}">{{ $data->attachments }}
-@else
-Not Applicable
-@endif
-</td>
-</tr> -->
                 {{-- <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-80">@if ($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
