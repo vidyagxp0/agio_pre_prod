@@ -11663,15 +11663,9 @@ class ManagementReviewController extends Controller
         $data4->review_id = $management->id;
         $data4->type = "action_item_details";
         $action_item_details = $data4;
-        //  $data5 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"capa_detail_details")->first();
-        // $data5->review_id = $management->id;
-        // $data5->type = "capa_detail_details";
-        // $capa_detail_details=$data5;
+
         $users = User::all();
-        //   $data5 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"capa_detail")->first();
-        // $data5->review_id = $management->id;
-        // $data5->type = "capa_detail";
-        // $capa_detail=$data5;
+
         $managementReview = ManagementReview::find($id);
         $managementReview->internalAudit = InternalAudit::all();
         $managementReview->externalAudit = Auditee::all();
@@ -11684,6 +11678,74 @@ class ManagementReviewController extends Controller
         $managementReview->actionItem = ActionItem::all();
         $managementReview->effectiveNess = EffectivenessCheck::all();
         $pdf = PDF::loadview('frontend.management-review.report', compact('managementReview', 'agenda', 'management_review_participants', 'performance_evaluation', 'action_item_details', 'data1', 'data2', 'data3', 'data4', 'users', 'data5'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $text = " $pageNumber of $pageCount";
+            $font = $fontMetrics->getFont('sans-serif', 'normal');
+            $size = 9;
+            $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+            $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+        });
+        return $pdf->stream('Management-Review' . $id . '.pdf');
+    }
+
+    public function managementFamilyReport($id)
+    {
+        $management = ManagementReview::find($id);
+        $data1 =  managementCft::where('ManagementReview_id', $id)->first();
+        $data5 =  hodmanagementCft::where('ManagementReview_id', $id)->first();
+        // $data1 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"agenda")->first();
+        $data1->review_id = $management->id;
+        $data1->type = "agenda";
+        $agenda = $data1;
+        $data2 =  ManagementReviewDocDetails::where('review_id', $id)->where('type', "management_review_participants")->first();
+        $data2->review_id = $management->id;
+        $data2->type = "management_review_participants";
+        $management_review_participants = $data2;
+        $data3 =  ManagementReviewDocDetails::where('review_id', $id)->where('type', "performance_evaluation")->first();
+        $data3->review_id = $management->id;
+        $data3->type = "performance_evaluation";
+        $performance_evaluation = $data3;
+        $data4 =  ManagementReviewDocDetails::where('review_id', $id)->where('type', "action_item_details")->first();
+        $data4->review_id = $management->id;
+        $data4->type = "action_item_details";
+        $action_item_details = $data4;
+
+        $users = User::all();
+
+        $managementReview = ManagementReview::find($id);
+        $managementReview->internalAudit = InternalAudit::all();
+        $managementReview->externalAudit = Auditee::all();
+        $managementReview->capa = Capa::all();
+        $managementReview->auditProgram = AuditProgram::all();
+        $managementReview->LabIncident = LabIncident::all();
+        $managementReview->riskAnalysis = RiskManagement::all();
+        $managementReview->rootCause = RootCauseAnalysis::all();
+        $managementReview->changeControl = CC::all();
+        $managementReview->actionItem = ActionItem::all();
+        $managementReview->effectiveNess = EffectivenessCheck::all();
+
+        $parentId = $id;
+
+        $ActionItem = ActionItem::where('parent_id', $parentId)
+                ->where('parent_type', 'Management Review')
+                ->get();
+
+
+        $pdf = PDF::loadview('frontend.management-review.management_family_report', compact('managementReview', 'agenda', 'management_review_participants', 'performance_evaluation', 'action_item_details', 'data1', 'data2', 'data3', 'data4', 'users', 'data5', 'ActionItem'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
