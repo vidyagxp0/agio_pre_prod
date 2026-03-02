@@ -993,6 +993,7 @@ class DashboardController extends Controller
             $data = Capa::find($id);
             $single = "capaSingleReport/" . $data->id;
             $audit = "capaAuditReport/" . $data->id;
+            $family = "capaFamilyReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Lab-Incident") {
@@ -1005,12 +1006,14 @@ class DashboardController extends Controller
             $data = Deviation::find($id);
             $single = "deviationSingleReport/" . $data->id;
             $audit = "DeviationAuditTrialPdf/" . $data->id;
+            $family = "deviationfamilyReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Internal-Audit") {
             $data = InternalAudit::find($id);
             $single = "internalSingleReport/" . $data->id;
             $audit = "internalauditReport/" . $data->id;
+            $family = "internalFamilyReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "risk-assesment") {
@@ -1024,6 +1027,7 @@ class DashboardController extends Controller
             $recordno = ((RecordNumber::first()->value('counter')) + 1);
             $single = "OOCSingleReport/" . $data->id;
             $audit = "ooc_Audit_Report/" . $data->id;
+            $family = "ooc_family_Report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }elseif ($type == "Lab-Incident") {
@@ -1036,6 +1040,7 @@ class DashboardController extends Controller
             $data = Auditee::find($id);
             $single = "ExternalAuditSingleReport/" . $data->id;
             $audit = "ExternalAuditTrialReport/" . $data->id;
+            $family = "external_family_report/" . $data->id;
             $summaryResponse = "SummaryResponseReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
@@ -1081,12 +1086,14 @@ class DashboardController extends Controller
             $data = ManagementReview::find($id);
             $single = "managementReview/" . $data->id;
             $audit = "managementReviewReport/" . $data->id;
+            $family = "managementReFamily_report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }elseif ($type == "OOS_OOT") {
             $data = OOS::find($id);
             $single = "oos/single_report/" . $data->id;
             $audit = "oos/audit_report/" . $data->id;
+            $family = "oos/family_report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }elseif ($type == "OOS Microbiology") {
@@ -1100,6 +1107,7 @@ class DashboardController extends Controller
             $data = RootCauseAnalysis::find($id);
             $single = "rootSingleReport/" . $data->id;
             $audit = "rootAuditReport/" . $data->id;
+            $family = "rootFamilyReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
@@ -1125,6 +1133,7 @@ class DashboardController extends Controller
             $data = CC::find($id);
             $audit = "audit/" . $data->id;
             $single = "change_control_single_pdf/" . $data->id;
+            $family = "cc_family_report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
@@ -1182,6 +1191,7 @@ class DashboardController extends Controller
                         <div class="drop-list">
                             <a target="__blank" href="' . $audit . '" class="inner-item">Audit Trail</a>
                             <a target="__blank" href="' . $single . '" class="inner-item">' . $type . ' Single Report</a>
+                            <a target="__blank" href="' . $family . '" class="inner-item">' . $type . ' Family Report</a>
                            
                             ' . ($type == 'External-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $type . ' Audit Response Report</a>' : '') . '
 
