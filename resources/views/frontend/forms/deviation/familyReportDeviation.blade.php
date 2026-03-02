@@ -5894,7 +5894,7 @@
     @if ($extension->isNotEmpty())
         @foreach ($extension as $data)
             <center>
-                <h3>Extenstion  Report</h3>
+                <h3>Extenstion Child  Report</h3>
             </center>
     
         <div class="content-table">
@@ -6289,9 +6289,6 @@
             <h3>CAPA Child Report</h3>
         </center>
      <div class="inner-block">
-        
-       
-
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
@@ -6336,8 +6333,6 @@
                         <td class="w-30">{{ $data->initiator_group_code }}</td>
 
                      </tr>
-
-
                     </table>
                     <table>
 
@@ -6348,13 +6343,12 @@
                         @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                     </div> --}}
                      <tr>
-                            <th class="w-20">Short Description</th>
+                        <th class="w-20">Short Description</th>
 
-                            <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
+                         <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                      </tr>
 
                      <tr>
-
                         <!-- <th class="w-20">Due Date</th>
                         <td class="w-30"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td> -->
                        <th class="w-20">Initiated Through</th>
@@ -6376,11 +6370,11 @@
 
                         <tr>
 
-                    <!-- <th class="w-20">Due Date</th>
-                    <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td> -->
-                   <th class="w-20">Repeat</th>
-                    <td class="w-80">@if($data->repeat ){{ $data->repeat }}@else Not Applicable @endif</td>
-                </tr>
+                        <!-- <th class="w-20">Due Date</th>
+                        <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td> -->
+                        <th class="w-20">Repeat</th>
+                            <td class="w-80">@if($data->repeat ){{ $data->repeat }}@else Not Applicable @endif</td>
+                        </tr>
                 <tr>
                     <th class="w-20">Repeat Nature</th>
                     <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
