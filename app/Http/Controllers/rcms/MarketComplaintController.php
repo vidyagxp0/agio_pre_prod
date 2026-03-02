@@ -14,6 +14,8 @@ use App\Models\MarketComplaintcftResponce;
 use App\Models\AuditReviewersDetails;
 use App\Models\extension_new;
 use App\Models\ActionItem;
+use App\Models\Extension;
+use App\Models\CapaGrid;
 use App\Models\Capa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -10961,102 +10963,107 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         return view('frontend.market_complaint.singleReport', compact('data', 'prductgigrid'));
     }
 
-    public function familyReport(Request $request)
+    public function familyReport(Request $request, $id)
     {
-        $ids = $request->id;
+        $data = MarketComplaint::find($id);
 
-        // ensure array
-        if (!is_array($ids)) {
-            $ids = explode(',', $ids);
+        if (!$data) {
+            abort(404, 'Record not found');
         }
 
-        if (empty($ids)) {
-            return back()->with('error', 'No records selected');
-        }
+        $data1 = MarketComplaintCft::where('mc_id', $id)->first();
 
-        // GET ALL RECORDS
-        $records = MarketComplaint::whereIn('id', $ids)->get();
+        // Product grid decode
+        $prductgigrid = MarketComplaintGrids::where([
+            'mc_id' => $id,
+            'identifer' => 'ProductDetails'
+        ])->get()->map(function ($item) {
+            $item->decoded = is_string($item->data)
+                ? json_decode($item->data, true)
+                : (is_array($item->data) ? $item->data : []);
+            return $item;
+        });
+        $gitracebilty = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Traceability'])->first();
+       
+        // Related modules
+        $New = ActionItem::where('parent_id', $id)->where('parent_type', 'Market Complaint')->get();
+        $Extension = extension_new::where('parent_id', $id)->where('parent_type', 'Market Complaint')->get();
+        $rca = RootCauseAnalysis::where('parent_id', $id)->where('parent_type', 'Market Complaint')->get();
 
-        foreach ($records as $data) {
-
-            // BASIC INFO
-            $data->originator = User::where('id', $data->initiator_id)->value('name');
-            $data1 = MarketComplaintCft::where('mc_id', $data->id)->first();
-
-            // GRIDS
-            $data->prductgigrid = MarketComplaintGrids::where([
-                'mc_id' => $data->id,
-                'identifer' => 'ProductDetails'
-            ])->first();
-
-            $data->gitracebilty = MarketComplaintGrids::where([
-                'mc_id' => $data->id,
-                'identifer' => 'Traceability'
-            ])->first();
-
-            $data->marketrproducts = MarketComplaintGrids::where([
-                'mc_id' => $data->id,
-                'identifer' => 'product_materialDetails'
-            ])->first();
-
-            $data->giinvesting = MarketComplaintGrids::where([
-                'mc_id' => $data->id,
-                'identifer' => 'Investing_team'
-            ])->first();
-
-            $data->brain = MarketComplaintGrids::where([
-                'mc_id' => $data->id,
-                'identifer' => 'brain_stroming_details'
-            ])->first();
-
-            $data->hodteammembers = MarketComplaintGrids::where([
-                'mc_id' => $data->id,
-                'identifer' => 'Team_Members'
-            ])->first();
-
-            // dd($data->extensions);
-            $data->extensions= extension_new::where('parent_id', $data->id)
-            ->where('parent_type', 'Market Complaint')
-            ->orderBy('created_at', 'asc')
-            ->get();
-            
-            
-            $data->RootCauseAnalysis = RootCauseAnalysis::where('parent_id', $data->id)
-            ->where('parent_type', 'Market Complaint')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-            $data->Capa = Capa::where('parent_id', $data->id)
+        $capas = Capa::where('parent_id', $id)
             ->where('parent_type', 'Market Complaint')
             ->orderBy('created_at', 'asc')
             ->get();
 
-            $data->ActionItem = ActionItem::where('parent_id', $data->id)
-            ->where('parent_type', 'Market Complaint')
-            ->orderBy('created_at', 'asc')
-            ->get();
-            
-            $data->hodreportapproval = MarketComplaintGrids::where([
-                'mc_id' => $data->id,
-                'identifer' => 'Report_Approval'
-            ])->first();
+        // CAPA enrichment
+        foreach ($capas as $capa) {
 
-            // Proposal JSON decode
-            $proposal = MarketComplaintGrids::where('mc_id', $data->id)
-                ->where('identifer', 'Proposal_to_accomplish_investigation')
+            $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)
+                ->where('type', "Product_Details")
                 ->first();
 
-            $data->proposalData = $proposal ? json_decode($proposal->data, true) : [];
-            $data->proposal_to_accomplish_investigation = $proposal;
-        }
-        
-        // $extensions= extension_new::where('parent_id', $data->id)
-        // ->where('parent_type', 'MarketComplaint')
-        // ->orderBy('created_at', 'asc')
-        // ->get();
+            $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)
+                ->where('type', "Instruments_Details")
+                ->first();
 
-        // LOAD PDF
-        $pdf = PDF::loadView('frontend.market_complaint.familyReport',compact('records','data1'))->setOptions([
+            $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)
+                ->where('type', "Material_Details")
+                ->first();
+
+            $capa->originator = User::where('id', $capa->initiator_id)->value('name');
+
+
+            $capa_teamIdsArray = explode(',', $data->capa_team);
+            $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
+            $capa_teamNamesString = implode(', ', $capa_teamNames);
+
+            $investigation_teamIdsArray = explode(',', $data->investigation_team);
+            $investigation_teamNames = User::whereIn('id', $investigation_teamIdsArray)->pluck('name')->toArray();
+            $investigation_teamNamesString = implode(', ', $investigation_teamNames);
+            $selectedMethodologies = explode(',', $data->root_cause_methodology);
+
+        }
+
+        // Other grids
+        $marketrproducts = MarketComplaintGrids::where([
+            'mc_id' => $id,
+            'identifer' => 'product_materialDetails'
+        ])->first();
+
+        $giinvesting = MarketComplaintGrids::where([
+            'mc_id' => $id,
+            'identifer' => 'Investing_team'
+        ])->first();
+
+        $brain = MarketComplaintGrids::where([
+            'mc_id' => $id,
+            'identifer' => 'brain_stroming_details'
+        ])->first();
+
+        $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)
+            ->where('identifer', 'Proposal_to_accomplish_investigation')
+            ->first();
+        $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
+
+        // Originator
+        $data->originator = User::where('id', $data->initiator_id)->value('name');
+
+        $pdf = PDF::loadview(
+            'frontend.market_complaint.familyReport',
+            compact(
+                'capas',
+                'data',
+                'proposal_to_accomplish_investigation',
+                'data1',
+                'prductgigrid',
+                'marketrproducts',
+                'giinvesting',
+                'brain',
+                'New',
+                'Extension',
+                'rca','capa_teamNamesString','investigation_teamNamesString','selectedMethodologies','gitracebilty','proposalData'
+            )
+        )->setOptions([
             'defaultFont' => 'sans-serif',
             'isHtml5ParserEnabled' => true,
             'isRemoteEnabled' => true,
@@ -11065,27 +11072,19 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
         $pdf->setPaper('A4');
         $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
 
-        // PAGE NUMBERING
-        $canvas = $pdf->getDomPDF()->getCanvas();
-        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
-            $text = "$pageNumber of $pageCount";
-            $font = $fontMetrics->getFont('sans-serif');
-            $size = 9;
-            $width = $fontMetrics->getTextWidth($text, $font, $size);
-
-            $canvas->text(
-                ($canvas->get_width() - $width - 60),
-                ($canvas->get_height() - 30),
-                $text,
-                $font,
-                $size
-            );
-        });
-
-        return $pdf->stream('MarketComplaint_Family.pdf');
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+        return $pdf->stream('MarketComplainta' . $id . '.pdf');
     }
-
 
     public function General_Complaint_report(Request $request, $id)
     {
