@@ -5853,6 +5853,63 @@ class CapaController extends Controller
         }
     }
 
+    public static function familyReport($id)
+    {
+        $data = Capa::find($id);
+        // $data1 =  IncidentCft::where('incident_id', $id)->first();
+        if (!empty ($data)) {
+
+            $data->Product_Details = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
+            $data->Instruments_Details = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
+            $data->Material_Details = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $parentId = $id;
+
+
+            $capa_teamIdsArray = explode(',', $data->capa_team);
+            $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
+            $capa_teamNamesString = implode(', ', $capa_teamNames);
+
+            $Extension = extension_new::where('parent_id', $parentId)
+                        ->where('parent_type', 'CAPA')
+                        ->get();      // COLLECTION
+
+            $countExtensions = $Extension->count();     // ✔ No error
+            $extension = $Extension->first();           // ✔ No error
+
+            $ActionItem = ActionItem::where('parent_id', $parentId)
+                ->where('parent_type', 'CAPA')
+                ->get();
+            $EffectivenessCheck =  EffectivenessCheck::where('parent_id', $id)->get();
+
+
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.capa.capa_familiy_report', compact('data', 'capa_teamNamesString','Extension', 'ActionItem', 'EffectivenessCheck'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+            return $pdf->stream('CAPA' . $id . '.pdf');
+        }
+    }
+
     public static function auditReport($id)
     {
         $doc = Capa::find($id);
