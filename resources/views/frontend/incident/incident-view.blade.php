@@ -755,14 +755,14 @@
                                 {{--@php
                                 dd($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                                 @endphp--}}
-                                @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || (Helpers::check_roles($data->division_id, 'Incident', 4) || Helpers::check_roles($data->division_id, 'Incident', 18))))
+                                @if ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || (Helpers::check_roles($data->division_id, 'Incident', 3) || Helpers::check_roles($data->division_id, 'Incident', 18))))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         Submit
                                     </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                         Cancel
                                     </button>
-                                @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Incident', 4)))
+                                @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Incident', 4)|| Helpers::check_roles($data->division_id, 'Incident', 18)))
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                         More Info Required
                                     </button>
@@ -1191,16 +1191,24 @@
                                                     </div>
                                                 </div>
                                             </div> --}}
+
+                                           @php 
+                                            
+                                           $initiatorRole = ((Helpers::check_roles($data->division_id, 'Incident', 3) || Helpers::check_roles($data->division_id, 'Incident', 18)));
+                                           @endphp
+
+
+
                                             <div class="col-lg-12 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="Audit Schedule Start Date">Due Date <span class="text-danger">{{$data->stage == 1 ? '*' : '' }}</span</label>
                                                     {{--<div><small class="text-primary">If revising Due Date, kindly mention revision
                                                         reason in "Due Date Extension Justification" data field.</small></div>--}}
                                                      <div class="calenderauditee">
-                                                        <input type="text" id="due_dateq" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                        <input type="text" id="due_dateq" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}
                                                     />
                                                         <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->due_date }}" class="hide-input"
-                                                        oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" {{ $data->stage == 1 ? '' : 'readonly' }}/>
+                                                        oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1373,7 +1381,7 @@
                                                     <label for="Short Description">Short Description<span class="text-danger">
                                                             *</span></label><span id="rchars">255</span>characters remaining
                                                             <input id="docname" type="text" name="short_description" maxlength="255"
-                                                            required value="{{ $data->short_description }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                            required value="{{ $data->short_description }}" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>
                                                     {{-- <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="docname"
                                                         type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 8? 'disabled' : '' }}>{{ $data->short_description }}</textarea> --}}
                                                 </div>
@@ -1388,11 +1396,14 @@
                                                     id="short_description_required"
                                                     onchange="checkRecurring(this)"
                                                     {{-- value="{{ $data->short_description_required }}"  --}}
-                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'disabled' }}>
                                                 <option value="">-- Select --</option>
                                                 <option value="Yes" @if($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes')selected @endif>Yes</option>
                                                 <option value="No" @if($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
                                             </select>
+                                            @if ($data->stage != 1)
+                                                <input type="hidden" name="short_description_required" value="{{ $data->short_description_required }}">
+                                            @endif
                                         </div>
                                         @error('short_description_required')
                                             <div class="text-danger">{{ $message }}</div>
@@ -1410,7 +1421,7 @@
                                             <textarea class="nature_of_repeat"
                                                     name="nature_of_repeat"
                                                     id="nature_of_repeat"
-                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>{{ $data->nature_of_repeat }}</textarea>
+                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>{{ $data->nature_of_repeat }}</textarea>
                                         </div>
                                         @error('nature_of_repeat')
                                             <div class="text-danger">{{ $message }}</div>
@@ -1452,10 +1463,10 @@
                                                 <label for="severity-level">Incident Observed On (Date)<span
                                                         class="text-danger">*</span></label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="incident_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date) }}" {{ $data->stage == 1 ? '' : 'readonly' }}/>
+                                                    <input type="text" id="incident_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date) }}" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}/>
                                                     <input type="date" name="incident_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->incident_date }}"
                                                     class="hide-input"
-                                                    oninput="handleDateInput(this, 'incident_date')" {{ $data->stage == 1 ? '' : 'readonly' }}/>
+                                                    oninput="handleDateInput(this, 'incident_date')" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}/>
                                                 </div>
                                                 @error('Deviation_date')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -1471,7 +1482,7 @@
                                                     <input type="time"
                                                         name="incident_time"
                                                         id="incident_time"
-                                                        value="{{ old('incident_time') ? old('incident_time') : $data->incident_time }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                        value="{{ old('incident_time') ? old('incident_time') : $data->incident_time }}" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>
                                                     @error('incident_time')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
@@ -1493,7 +1504,7 @@
                                                     class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
                                                     <label for="incident_time">Delay Justification<span
                                                             class="text-danger">*</span></label>
-                                                    <textarea id="Delay_Justification" name="Delay_Justification" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Delay_Justification }}</textarea>
+                                                    <textarea id="Delay_Justification" name="Delay_Justification" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>{{ $data->Delay_Justification }}</textarea>
                                                 </div>
                                                 @error('Delay_Justification')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -1510,7 +1521,7 @@
                                                     <label for="If Other">Incident Observed By<span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" name="Facility" placeholder="Select Person Name"
-                                                        value="{{ $data->Facility }}" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                        value="{{ $data->Facility }}" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>
                                                     @error('Facility')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
@@ -1522,10 +1533,10 @@
                                                     <label for="severity-level">Incident Reported On<span
                                                             class="text-danger">*</span></label>
                                                     <div class="calenderauditee">
-                                                        <input type="text" id="incident_reported_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->incident_reported_date) }}" {{ $data->stage == 1 ? '' : 'readonly' }}/>
+                                                        <input type="text" id="incident_reported_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->incident_reported_date) }}" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}/>
                                                         <input type="date" name="incident_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->incident_reported_date }}"
                                                         class="hide-input"
-                                                        oninput="handleDateInput(this, 'incident_reported_date')" {{ $data->stage == 1 ? '' : 'readonly' }}/>
+                                                        oninput="handleDateInput(this, 'incident_reported_date')" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}/>
                                                     </div>
                                                     @error('incident_reported_date')
                                                         <div class="text-danger">{{ $message }}</div>
@@ -1696,26 +1707,32 @@
                                                     <label for="search">Department Head<span class="text-danger"></span>
                                                     </label>
 
-                                                    <select id="select-state" placeholder="Select..." name="department_head" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                                    <select id="select-state" placeholder="Select..." name="department_head" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'disabled' }}> 
                                                         <option value="">--Select--</option>
                                                         @foreach ($users as $key => $value)
                                                             <option @if ($data->department_head == $value->id) selected @endif
                                                                 value="{{ $value->id }}">{{ $value->name }}</option>
                                                         @endforeach
                                                     </select>
+                                                    @if ($data->stage != 1)
+                                                        <input type="hidden" name="department_head" value="{{ $data->department_head }}">
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="search">QA Reviewer<span class="text-danger"></span> </label>
 
-                                                    <select id="select-state" placeholder="Select..." name="qa_reviewer" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+                                                    <select id="select-state" placeholder="Select..." name="qa_reviewer" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'disabled' }}>
                                                         <option value="">--Select--</option>
                                                         @foreach ($users as $key => $value)
                                                             <option @if ($data->qa_reviewer == $value->id) selected @endif
                                                                 value="{{ $value->id }}">{{ $value->name }}</option>
                                                         @endforeach
                                                     </select>
+                                                    @if ($data->stage != 1)
+                                                        <input type="hidden" name="qa_reviewer" value="{{ $data->qa_reviewer }}">
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -1725,11 +1742,14 @@
             <span class="text-danger">*</span>
         </label>
         <select name="Facility_Equipment" id="Facility_Equipment"
-            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'disabled' }}>
             <option value="">-- Select --</option>
             <option value="yes" {{ $data->Facility_Equipment == 'yes' ? 'selected' : '' }}>Yes</option>
             <option value="no" {{ $data->Facility_Equipment == 'no' ? 'selected' : '' }}>No</option>
         </select>
+        @if ($data->stage != 1)
+            <input type="hidden" name="Facility_Equipment" value="{{ $data->Facility_Equipment }}">
+        @endif
         @error('Facility_Equipment')
             <div class="text-danger">{{ $message }}</div>
         @enderror
@@ -1765,14 +1785,14 @@
                             <td><input disabled type="text" name="serial[]" value="{{ $key + 1 }}"></td>
                             <td><input type="text" class="facility-name" name="facility_name[]"
                                     value="{{ unserialize($grid_data->facility_name)[$key] ?? '' }}"
-                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                                    {{ $data->stage == 1 ? '' : 'disabled' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}></td>
                             <td><input type="text" class="id-number" name="IDnumber[]"
                                     value="{{ unserialize($grid_data->IDnumber)[$key] ?? '' }}"
-                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                                    {{ $data->stage == 1 ? '' : 'disabled' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}></td>
                             <td><input type="text" class="remarks" name="Remarks[]"
                                     value="{{ unserialize($grid_data->Remarks)[$key] ?? '' }}"
-                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
-                            <td><button class="removeRowBtn" type="button">Remove</button></td>
+                                    {{ $data->stage == 1 ? '' : 'disabled' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}></td>
+                            <td><button class="removeRowBtn" type="button" {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>Remove</button></td>
                         </tr>
                     @endforeach
                 @endif
@@ -1828,11 +1848,14 @@ document.addEventListener('DOMContentLoaded', function() {
         <select name="Document_Details_Required"
             id="Document_Details_Required"
             value="{{ $data->Document_Details_Required }}"
-            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'disabled' }}>
             <option value="">-- Select --</option>
             <option value="yes" {{ $data->Document_Details_Required == 'yes' ? 'selected' : '' }}>Yes</option>
             <option value="no" {{ $data->Document_Details_Required == 'no' ? 'selected' : '' }}>No</option>
         </select>
+        @if ($data->stage != 1)
+            <input type="hidden" name="Document_Details_Required" value="{{ $data->Document_Details_Required }}">
+        @endif
     </div>
     @error('Document_Details_Required')
         <div class="text-danger">{{ $message }}</div>
@@ -1869,13 +1892,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             <td><input disabled type="text" name="serial[]" value="{{ $key + 1 }}"></td>
                             <td><input class="numberDetail" type="text" name="Number[]"
                                     value="{{ unserialize($grid_data1->Number)[$key] ?? '' }}"
-                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                                    {{ $data->stage == 1 ? '' : 'disabled' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}></td>
                             <td><input class="ReferenceDocumentName" type="text" name="ReferenceDocumentName[]"
                                     value="{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ?? '' }}"
-                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                                    {{ $data->stage == 1 ? '' : 'disabled' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}></td>
                             <td><input class="Document_Remarks" type="text" name="Document_Remarks[]"
                                     value="{{ unserialize($grid_data1->Document_Remarks)[$key] ?? '' }}"
-                                    {{ $data->stage == 1 ? '' : 'disabled' }}></td>
+                                    {{ $data->stage == 1 ? '' : 'disabled' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}></td>
                             <td><button class="removeRowBtn">Remove</button></td>
                         </tr>
                     @endforeach
@@ -1926,11 +1949,14 @@ document.addEventListener('DOMContentLoaded', function() {
             name="Product_Details_Required"
             id="Product_Details_Required"
             value="{{ $data->Product_Details_Required }}"
-            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>
+            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'disabled' }}>
             <option value="">-- Select --</option>
             <option value="yes" {{ $data->Product_Details_Required == 'yes' ? 'selected' : '' }}>Yes</option>
             <option value="no" {{ $data->Product_Details_Required == 'no' ? 'selected' : '' }}>No</option>
         </select>
+          @if ($data->stage != 1)
+            <input type="hidden" name="Product_Details_Required" value="{{ $data->Product_Details_Required }}">
+        @endif
     </div>
     @error('Product_Details_Required')
         <div class="text-danger">{{ $message }}</div>
@@ -1967,19 +1993,19 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <td>
                                     <input class="productName" type="text" name="product_name[]"
                                         value="{{ unserialize($grid_data2->product_name)[$key] ?? '' }}"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                        {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>
                                 </td>
                                 <td>
                                     <input class="productStage" type="text" name="product_stage[]"
                                         value="{{ unserialize($grid_data2->product_stage)[$key] ?? '' }}"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                        {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>
                                 </td>
                                 <td>
                                     <input class="productBatchNo" type="text" name="batch_no[]"
                                         value="{{ unserialize($grid_data2->batch_no)[$key] ?? '' }}"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                        {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>
                                 </td>
-                                <td><button class="removeRowBtn">Remove</button></td>
+                                <td><button class="removeRowBtn" {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>Remove</button></td>
                             </tr>
                         @endforeach
                     @endif
@@ -2053,7 +2079,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     </div>
                                                     <textarea name="Description_incident"
                                                               class="froala"
-                                                            {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Description_incident }}</textarea>
+                                                            {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>{{ $data->Description_incident }}</textarea>
                                                 </div>
                                                 @error('Description_incident')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -2113,7 +2139,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     </div>
                                                     <textarea name="investigation"
                                                             class="froala"
-                                                            {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->investigation }}</textarea>
+                                                            {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>{{ $data->investigation }}</textarea>
                                                 </div>
                                                 @error('investigation')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -2157,7 +2183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="immediate_correction"
-                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->immediate_correction }}</textarea>
+                                                    {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>{{ $data->immediate_correction }}</textarea>
                                                 </div>
                                                 @error('immediate_correction')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -2211,7 +2237,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input type="file" id="audit_file" name="Audit_file[]" oninput="addMultipleFiles(this, 'Audit_file')" multiple {{ $data->stage == 1 ? '' : 'disabled' }}>
+                                                            <input type="file" id="audit_file" name="Audit_file[]" oninput="addMultipleFiles(this, 'Audit_file')" multiple {{ $data->stage == 1 ? '' : 'disabled' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2274,12 +2300,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div id="CCForm8" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
+                                            @php 
+                                            $hodrole= (Helpers::check_roles($data->division_id, 'Incident', 4)|| Helpers::check_roles($data->division_id, 'Incident', 18));
+                                            @endphp
                                             <div class="col-md-12">
                                                     <div class="group-input">
                                                         <label for="HOD Remarks">Review Of Incident And Verification Of Effectiveness Of Correction <span class="text-danger">{{$data->stage==2 ? '*' : ''}}</span></label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="review_of_verific" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->review_of_verific }}</textarea>
+                                                        <textarea class="tiny" name="review_of_verific" {{ $data->stage == 2 ? '' : 'readonly' }} {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->review_of_verific }}</textarea>
                                                     </div>
 
                                                 @error('review_of_verific')
@@ -2291,7 +2320,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     <label for="HOD Remarks">Recommendations  <span class="text-danger">{{$data->stage==2 ? '*' : ''}}</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="Recommendations" id="summernote-4" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->Recommendations }}</textarea>
+                                                    <textarea class="tiny" name="Recommendations" id="summernote-4" {{ $data->stage == 2 ? '' : 'readonly' }}  {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->Recommendations }}</textarea>
                                                 </div>
 
                                             @error('Recommendations')
@@ -2303,7 +2332,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 <label for="HOD Remarks">Impact Assessment  <span class="text-danger">{{$data->stage==2 ? '*' : ''}}</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea class="tiny" name="Impact_Assessmenta" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->Impact_Assessmenta }}</textarea>
+                                                <textarea class="tiny" name="Impact_Assessmenta" {{ $data->stage == 2 ? '' : 'readonly' }}  {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->Impact_Assessmenta }}</textarea>
                                             </div>
 
                                         @error('Impact_Assessment')
@@ -2324,7 +2353,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->HOD_Remarks }}</textarea>
+                                                <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required {{ $data->stage == 2 ? '' : 'readonly' }}  {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->HOD_Remarks }}</textarea>
                                             </div>
                                         @else
                                             <div class="group-input">
@@ -2390,7 +2419,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             </div>
                                                             <div class="add-btn">
                                                                 <div>Add</div>
-                                                                <input type="file" id="hod_attachments" name="hod_attachments[]" oninput="addMultipleFiles(this, 'hod_attachments')" multiple {{ $data->stage == 2 ? '' : 'disabled' }}>
+                                                                <input type="file" id="hod_attachments" name="hod_attachments[]" oninput="addMultipleFiles(this, 'hod_attachments')" multiple {{ $data->stage == 2 ? '' : 'disabled' }}  {{ $data->stage == 2 && $hodrole ? '' : 'disabled' }}>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2733,18 +2762,31 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div id="CCForm2" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="form-section">
-                                            <!-- Incident Fields Section -->
+                                           @php
+                                           
+                                         $QArole =  (Helpers::check_roles($data->division_id, 'Incident', 48) || Helpers::check_roles($data->division_id, 'Incident', 18));
+                                           @endphp
+                                         <style>
+                                            .readonly-checkbox {
+                                                pointer-events: none;
+                                            }
+                                            </style>
                                             <div>
-                                                <!-- Product Quality Impact -->
-                                                <div class="main-group">
-                                                    <div>
-                                                        <label>Product Quality Impact: <span class="text-danger">{{ $data->stage == 3 ? '*' : ''}}</span></label>
+                                              
+                                              <div class="main-group">
+                                                 <div>
+                                                <label>Product Quality Impact: <span class="text-danger">{{ $data->stage == 3 ? '*' : ''}}</span></label>
                                                     </div><div class="checkbox-group">
-                                                    <input type="checkbox" name="product_quality_imapct" value="Yes" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="product_quality_imapct" value="No" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="product_quality_imapct" value="NA" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="product_quality_imapct" value="Yes" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'Yes' ? 'checked' : '' }}  {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }} > Yes
+                                                    <input type="checkbox" name="product_quality_imapct" value="No" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'No' ? 'checked' : '' }}  {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> No
+                                                    <input type="checkbox" name="product_quality_imapct" value="NA" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'NA' ? 'checked' : '' }}  {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> N/A
                                                 </div>
+                                                 @if ($data->stage != 3)
+                                                    <input type="hidden" name="product_quality_imapct" value="{{ $data->product_quality_imapct }}">
+                                                @endif
+                                                
                                                 </div>
+
                                                 <br>
 
                                                 <!-- Process Performance Impact -->
@@ -2752,10 +2794,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     <div>
                                                      <label>Process Performance Impact: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>                                                <div class="checkbox-group">
-                                                    <input type="checkbox" name="process_performance_impact" value="Yes" onclick="selectOne(this)" {{ $data->process_performance_impact == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="process_performance_impact" value="No" onclick="selectOne(this)"{{ $data->process_performance_impact == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="process_performance_impact" value="NA" onclick="selectOne(this)" {{ $data->process_performance_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> NA
+                                                    <input type="checkbox" name="process_performance_impact" value="Yes" onclick="selectOne(this)" {{ $data->process_performance_impact == 'Yes' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Yes
+                                                    <input type="checkbox" name="process_performance_impact" value="No" onclick="selectOne(this)"{{ $data->process_performance_impact == 'No' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> No
+                                                    <input type="checkbox" name="process_performance_impact" value="NA" onclick="selectOne(this)" {{ $data->process_performance_impact == 'NA' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> NA
                                                 </div>
+                                                 @if ($data->stage != 3)
+                                                    <input type="hidden" name="process_performance_impact" value="{{ $data->process_performance_impact }}">
+                                                @endif
                                                 </div>
                                                 <br>
 
@@ -2765,10 +2810,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         <label>Yield Impact:<span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="yield_impact" value="Yes" onclick="selectOne(this)" {{ $data->yield_impact == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="yield_impact" value="No" onclick="selectOne(this)" {{ $data->yield_impact == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="yield_impact" value="NA" onclick="selectOne(this)" {{ $data->yield_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="yield_impact" value="Yes" onclick="selectOne(this)" {{ $data->yield_impact == 'Yes' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Yes
+                                                    <input type="checkbox" name="yield_impact" value="No" onclick="selectOne(this)" {{ $data->yield_impact == 'No' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> No
+                                                    <input type="checkbox" name="yield_impact" value="NA" onclick="selectOne(this)" {{ $data->yield_impact == 'NA' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> N/A
                                                 </div>
+                                                 @if ($data->stage != 3)
+                                                    <input type="hidden" name="yield_impact" value="{{ $data->yield_impact }}">
+                                                @endif
                                                 </div>
                                                 <br>
 
@@ -2777,10 +2825,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     <div>
                                                         <label>GMP Impact: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>                                                <div class="checkbox-group">
-                                                    <input type="checkbox" name="gmp_impact" value="Yes" onclick="selectOne(this)" {{ $data->gmp_impact == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="gmp_impact" value="No" onclick="selectOne(this)" {{ $data->gmp_impact == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="gmp_impact" value="NA" onclick="selectOne(this)" {{ $data->gmp_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> NA
+                                                    <input type="checkbox" name="gmp_impact" value="Yes" onclick="selectOne(this)" {{ $data->gmp_impact == 'Yes' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Yes
+                                                    <input type="checkbox" name="gmp_impact" value="No" onclick="selectOne(this)" {{ $data->gmp_impact == 'No' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> No
+                                                    <input type="checkbox" name="gmp_impact" value="NA" onclick="selectOne(this)" {{ $data->gmp_impact == 'NA' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> NA
                                                   </div>
+                                                  @if ($data->stage != 3)
+                                                    <input type="hidden" name="gmp_impact" value="{{ $data->gmp_impact }}">
+                                                @endif
                                                 </div>
                                                 <br>
 
@@ -2790,10 +2841,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         <label>Additional Testing Required: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="additionl_testing_required" value="Yes" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="additionl_testing_required" value="No" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="additionl_testing_required" value="NA" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> NA
+                                                    <input type="checkbox" name="additionl_testing_required" value="Yes" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'Yes' ? 'checked' : '' }}  {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Yes
+                                                    <input type="checkbox" name="additionl_testing_required" value="No" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'No' ? 'checked' : '' }}  {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> No
+                                                    <input type="checkbox" name="additionl_testing_required" value="NA" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'NA' ? 'checked' : '' }}  {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> NA
                                                 </div>
+                                                 @if ($data->stage != 3)
+                                                    <input type="hidden" name="additionl_testing_required" value="{{ $data->additionl_testing_required }}">
+                                                @endif
                                                 </div>
                                                 <br>
 
@@ -2804,7 +2858,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Comments"> If Yes, Then Mention:<span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
-                                                    <textarea name="any_similar_incident_in_past" {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->any_similar_incident_in_past}}</textarea>
+                                                    <textarea name="any_similar_incident_in_past" {{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $QArole ? '' : 'readonly' }}>{{ $data->any_similar_incident_in_past}}</textarea>
                                                 </div>
                                             </div>
 
@@ -2821,10 +2875,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         <label>Any Similar Incident in Past:<span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="capa_require" value="Yes" onclick="selectOne(this)" {{ $data->capa_require == 'Yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="capa_require" value="No" onclick="selectOne(this)" {{ $data->capa_require == 'No' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="capa_require" value="NA" onclick="selectOne(this)" {{ $data->capa_require == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> NA
+                                                    <input type="checkbox" name="capa_require" value="Yes" onclick="selectOne(this)" {{ $data->capa_require == 'Yes' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Yes
+                                                    <input type="checkbox" name="capa_require" value="No" onclick="selectOne(this)" {{ $data->capa_require == 'No' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> No
+                                                    <input type="checkbox" name="capa_require" value="NA" onclick="selectOne(this)" {{ $data->capa_require == 'NA' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> NA
                                                 </div>
+                                                 @if ($data->stage != 3)
+                                                    <input type="hidden" name="capa_require" value="{{ $data->capa_require }}">
+                                                @endif
                                                 </div>
                                                 <br>
 
@@ -2834,13 +2891,19 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         <label>Classification by QA: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Critical' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Critical
-                                                    <input type="checkbox" name="classification_by_qa" value="Non-critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Non-critical' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Non-Critical
+                                                    <input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Critical' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Critical
+                                                    <input type="checkbox" name="classification_by_qa" value="Non-critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Non-critical' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Non-Critical
                                                 </div>
+                                                 @if ($data->stage != 3)
+                                                    <input type="hidden" name="classification_by_qa" value="{{ $data->classification_by_qa }}">
+                                                @endif
                                                 </div>
 
                                             </div>
                                         </div>
+
+                                    
+                                      
 
                                         <div class="col-md-12">
                                             @if ($data->stage == 3)
@@ -2849,7 +2912,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea  name="QAInitialRemark" required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->QAInitialRemark }}</textarea>
+                                                    <textarea  name="QAInitialRemark" required {{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $QArole ? '' : 'readonly' }}>{{ $data->QAInitialRemark }}</textarea>
                                                 </div>
                                             @else
                                                 <div class="group-input">
@@ -2916,7 +2979,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         <!-- Updated the ID of the input -->
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input type="file" id="file-input" name="Initial_attachment[]" multiple {{ $data->stage == 3 ? '' : 'disabled' }}>
+                                                            <input type="file" id="file-input" name="Initial_attachment[]" multiple {{ $data->stage == 3 ? '' : 'disabled' }}  {{ $data->stage == 3 && $QArole ? '' : 'disabled' }}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3312,7 +3375,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="col-12 sub-head">
                                 QA Head/Designee Approval
                             </div>
+                            @php 
+                             
+                             $QAHeadRole =    ( Helpers::check_roles($data->division_id, 'Incident', 42) || Helpers::check_roles($data->division_id, 'Incident', 43) || Helpers::check_roles($data->division_id, 'Incident', 39) || Helpers::check_roles($data->division_id, 'Incident', 9) || Helpers::check_roles($data->division_id, 'Incident', 18));      
 
+                            @endphp
 
                             <div class="row">
                                 <div class="col-md-12 mb-3">
@@ -3322,7 +3389,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="qa_head_deginee_comment" id="summernote-4" required {{ $data->stage == 4 ? '' : 'readonly' }}>{{ $data->qa_head_deginee_comment }}</textarea>
+                                        <textarea class="tiny" name="qa_head_deginee_comment" id="summernote-4" required {{ $data->stage == 4 ? '' : 'readonly' }}  {{ $data->stage == 4 && $QAHeadRole ? '' : 'readonly' }}>{{ $data->qa_head_deginee_comment }}</textarea>
                                     </div>
                                     @else
                                     <div class="group-input">
@@ -3355,7 +3422,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_head_deginee_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'QA_Desinee_attachments')" multiple {{ $data->stage == 4 ? '' : 'disabled' }}>
+                                                    oninput="addMultipleFiles(this, 'QA_Desinee_attachments')" multiple {{ $data->stage == 4 ? '' : 'disabled' }}  {{ $data->stage == 4 && $QAHeadRole ? '' : 'readonly' }}>
                                             </div>
                                         </div>
 
@@ -3430,10 +3497,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 <label>CAPA Implementation:<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                             <div class="checkbox-group">
-                                            <input type="checkbox" name="capa_implementation" value="Yes" onclick="selectOne(this)" {{ $data->capa_implementation == 'Yes' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="capa_implementation" value="No" onclick="selectOne(this)" {{ $data->capa_implementation == 'No' ? 'checked' : '' }}> No
-                                            <input type="checkbox" name="capa_implementation" value="NA" onclick="selectOne(this)" {{ $data->capa_implementation == 'NA' ? 'checked' : '' }}> N/A
+                                            <input type="checkbox" name="capa_implementation" value="Yes" onclick="selectOne(this)" {{ $data->capa_implementation == 'Yes' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> Yes
+                                            <input type="checkbox" name="capa_implementation" value="No" onclick="selectOne(this)" {{ $data->capa_implementation == 'No' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> No
+                                            <input type="checkbox" name="capa_implementation" value="NA" onclick="selectOne(this)" {{ $data->capa_implementation == 'NA' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> N/A
                                         </div>
+                                         @if ($data->stage != 5)
+                                         <input type="hidden" name="capa_implementation" value="{{ $data->capa_implementation }}">
+                                         @endif
                                         </div>
                                         <br>
 
@@ -3443,10 +3513,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                              <label>All check points compiled with (Documentary evidence shall be attached or referred to):<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                            <div class="checkbox-group">
-                                            <input type="checkbox" name="check_points" value="Yes" onclick="selectOne(this)" {{ $data->check_points == 'Yes' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="check_points" value="No" onclick="selectOne(this)" {{ $data->check_points == 'No' ? 'checked' : '' }}> No
-                                            <input type="checkbox" name="check_points" value="NA" onclick="selectOne(this)" {{ $data->check_points == 'NA' ? 'checked' : '' }}> N/A
+                                            <input type="checkbox" name="check_points" value="Yes" onclick="selectOne(this)" {{ $data->check_points == 'Yes' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> Yes
+                                            <input type="checkbox" name="check_points" value="No" onclick="selectOne(this)" {{ $data->check_points == 'No' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> No
+                                            <input type="checkbox" name="check_points" value="NA" onclick="selectOne(this)" {{ $data->check_points == 'NA' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> N/A
                                         </div>
+                                         @if ($data->stage != 5)
+                                         <input type="hidden" name="check_points" value="{{ $data->check_points }}">
+                                         @endif
                                         </div>
                                         <br>
                                         <div class="main-group">
@@ -3454,10 +3527,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                              <label>Based upon the assessment of the corrective actions planned, whether unplanned deviation is required:<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                            <div class="checkbox-group">
-                                            <input type="checkbox" name="corrective_actions" value="Yes" onclick="selectOne(this)" {{ $data->corrective_actions == 'Yes' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="corrective_actions" value="No" onclick="selectOne(this)" {{ $data->corrective_actions == 'No' ? 'checked' : '' }}> No
-                                            <input type="checkbox" name="corrective_actions" value="NA" onclick="selectOne(this)" {{ $data->corrective_actions == 'NA' ? 'checked' : '' }}> N/A
+                                            <input type="checkbox" name="corrective_actions" value="Yes" onclick="selectOne(this)" {{ $data->corrective_actions == 'Yes' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> Yes
+                                            <input type="checkbox" name="corrective_actions" value="No" onclick="selectOne(this)" {{ $data->corrective_actions == 'No' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> No
+                                            <input type="checkbox" name="corrective_actions" value="NA" onclick="selectOne(this)" {{ $data->corrective_actions == 'NA' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> N/A
                                         </div>
+                                         @if ($data->stage != 5)
+                                         <input type="hidden" name="corrective_actions" value="{{ $data->corrective_actions }}">
+                                         @endif
                                         </div>
                                         <br>
 
@@ -3467,10 +3543,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 <label>Batch release satisfactory:<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                             <div class="checkbox-group">
-                                            <input type="checkbox" name="batch_release" value="Yes" onclick="selectOne(this)" {{ $data->batch_release == 'Yes' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="batch_release" value="No" onclick="selectOne(this)" {{ $data->batch_release == 'No' ? 'checked' : '' }}> No
-                                            <input type="checkbox" name="batch_release" value="NA" onclick="selectOne(this)" {{ $data->batch_release == 'NA' ? 'checked' : '' }}> N/A
+                                            <input type="checkbox" name="batch_release" value="Yes" onclick="selectOne(this)" {{ $data->batch_release == 'Yes' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> Yes
+                                            <input type="checkbox" name="batch_release" value="No" onclick="selectOne(this)" {{ $data->batch_release == 'No' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> No
+                                            <input type="checkbox" name="batch_release" value="NA" onclick="selectOne(this)" {{ $data->batch_release == 'NA' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> N/A
                                         </div>
+                                         @if ($data->stage != 5)
+                                         <input type="hidden" name="batch_release" value="{{ $data->batch_release }}">
+                                         @endif
                                         </div>
                                         <br>
                                         {{-- <div class="col-md-12 mb-3">
@@ -3487,10 +3566,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 <label>Affected documents closed: <span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                             <div class="checkbox-group">
-                                            <input type="checkbox" name="affected_documents" value="Yes" onclick="selectOne(this)" {{ $data->affected_documents == 'Yes' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="affected_documents" value="No" onclick="selectOne(this)" {{ $data->affected_documents == 'No' ? 'checked' : '' }}> No
-                                            <input type="checkbox" name="affected_documents" value="NA" onclick="selectOne(this)" {{ $data->affected_documents == 'NA' ? 'checked' : '' }}> N/A
+                                            <input type="checkbox" name="affected_documents" value="Yes" onclick="selectOne(this)" {{ $data->affected_documents == 'Yes' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> Yes
+                                            <input type="checkbox" name="affected_documents" value="No" onclick="selectOne(this)" {{ $data->affected_documents == 'No' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> No
+                                            <input type="checkbox" name="affected_documents" value="NA" onclick="selectOne(this)" {{ $data->affected_documents == 'NA' ? 'checked' : '' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'class=readonly-checkbox' }}> N/A
                                           </div>
+                                           @if ($data->stage != 5)
+                                            <input type="hidden" name="affected_documents" value="{{ $data->affected_documents }}">
+                                            @endif
                                         </div>
 
 
@@ -3508,7 +3590,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea  name="QA_Feedbacks" required {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->QA_Feedbacks }}</textarea>
+                                            <textarea  name="QA_Feedbacks" required {{ $data->stage == 5 ? '' : 'readonly' }}  {{ $data->stage == 5 && $initiatorRole ? '' : 'readonly' }}>{{ $data->QA_Feedbacks }}</textarea>
                                         </div>
                                     @else
                                         <div class="group-input">
@@ -3551,7 +3633,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QA_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'Initator_attachments')" multiple {{ $data->stage == 5 ? '' : 'disabled' }}>
+                                                    oninput="addMultipleFiles(this, 'Initator_attachments')" multiple {{ $data->stage == 5 ? '' : 'disabled' }} {{ $data->stage == 5 && $initiatorRole ? '' : 'readonly' }}>
                                             </div>
                                         </div>
                                     </div>
@@ -3624,7 +3706,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                             require completion</small></div>
                                                     <textarea class="tiny" name="qa_head_Remarks"
-                                                        id="summernote-14" required {{ $data->stage == 6 ? '' : 'readonly' }}>{{ $data->qa_head_Remarks }}</textarea>
+                                                        id="summernote-14" required {{ $data->stage == 6 ? '' : 'readonly' }} {{ $data->stage == 6 && $hodrole ? '' : 'readonly' }}>{{ $data->qa_head_Remarks }}</textarea>
                                                 </div>
                                             @else
                                                 <div class="group-input">
@@ -3658,7 +3740,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="qa_head_attachments" name="qa_head_attachments[]" oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 6 ? '' : 'disabled' }}>
+                                                        <input type="file" id="qa_head_attachments" name="qa_head_attachments[]" oninput="addMultipleFiles(this, 'qa_attachment')" multiple {{ $data->stage == 6 ? '' : 'disabled' }} {{ $data->stage == 6 && $hodrole ? '' : 'disabled' }}>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3763,7 +3845,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion</small></div>
                                             <textarea class="tiny" name="qa_final_review"
-                                                id="summernote-14" required>{{ $data->qa_final_review }}</textarea>
+                                                id="summernote-14" required {{ $data->stage == 7 && $QArole ? '' : 'readonly' }}>{{ $data->qa_final_review }}</textarea>
                                         </div>
                                     @else
                                         <div class="group-input">
@@ -3830,7 +3912,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="qa_final_ra_attachments" name="qa_final_ra_attachments[]" oninput="addMultipleFiles(this, 'QA_Final_attachments')" multiple {{ $data->stage == 7 ? '' : 'disabled' }}>
+                                                <input type="file" id="qa_final_ra_attachments" name="qa_final_ra_attachments[]" oninput="addMultipleFiles(this, 'QA_Final_attachments')" multiple {{ $data->stage == 7 && $QArole ? '' : 'disabled' }} {{ $data->stage == 7 ? '' : 'disabled' }}>
                                             </div>
                                         </div>
                                     </div>
@@ -3957,7 +4039,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                                 completion</small></div>
                                         <textarea   class="tiny"
-                                            name="Closure_Comments"  id="summernote-15" {{ $data->stage == 8 ? '' : 'readonly' }}>{{ $data->Closure_Comments }}</textarea>
+                                            name="Closure_Comments"  id="summernote-15" {{ $data->stage == 8 ? '' : 'readonly' }} {{ $data->stage == 8 && $QAHeadRole ? '' : 'readonly' }}>{{ $data->Closure_Comments }}</textarea>
                                     </div>
                                     @error('Closure_Comments')
                                         <div class="text-danger">{{ $message }}</div>
@@ -3974,7 +4056,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                                 completion</small></div>
                                         <textarea  class="tiny"
-                                            name="Disposition_Batch" id="summernote-16" {{ $data->stage == 8 ? '' : 'readonly' }}>{{ $data->Disposition_Batch }}</textarea>
+                                            name="Disposition_Batch" id="summernote-16" {{ $data->stage == 8 ? '' : 'readonly' }} {{ $data->stage == 8 && $QAHeadRole ? '' : 'readonly' }}>{{ $data->Disposition_Batch }}</textarea>
                                     </div>
                                     @error('Disposition_Batch')
                                         <div class="text-danger">{{ $message }}</div>
@@ -4031,7 +4113,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="closure_attachment" name="closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple {{ $data->stage == 8 ? '' : 'disabled' }}>
+                                                <input type="file" id="closure_attachment" name="closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple {{ $data->stage == 8 ? '' : 'disabled' }} {{ $data->stage == 8 && $QAHeadRole ? '' : 'disabled' }}>
                                             </div>
                                         </div>
                                     </div>

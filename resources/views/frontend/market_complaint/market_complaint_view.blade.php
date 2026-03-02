@@ -426,10 +426,17 @@
                             {{-- <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Send Letter
                             </button></a> --}}
-                            <a href="{{ route('marketcomplaint.market_complaint_new') }}"><button class="button_theme1"
+                            {{-- <a href="{{ route('marketcomplaint.market_complaint_new') }}"><button class="button_theme1"
                                     data-bs-toggle="modal" data-bs-target="">
                                     Reopen
-                                </button></a>
+                                </button></a> --}}
+
+                                <button type="button"
+                                class="btn btn-dark"
+                                data-bs-toggle="modal"
+                                data-bs-target="#reopenModal">
+                            Reopen
+                        </button>
 
 
                         @endif
@@ -10080,6 +10087,39 @@
                             </div>
                         </div>
 
+
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Initiator Group">Reopened By : </label>
+                                @if ($data->reopen_by)
+                                <div class="static">{{ $data->reopen_by }}</div>
+                                @else
+                                    Not Applicable
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="OOC Logged On">Reopened On : </label>
+                                @if ($data->reopen_on)
+                                <div class="static">{{ $data->reopen_on }}</div>
+                                @else
+                                    Not Applicable
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="group-input">
+                                <label for="Comment">Reopened Comment : </label>
+                                @if ($data->commentreopen)
+                                <div class="static">{{ $data->commentreopen }}</div>
+                                @else
+                                    Not Applicable
+                                @endif
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="button-block">
@@ -10653,6 +10693,88 @@ document.getElementById('initiator_group').addEventListener('change', function()
             </div>
         </div>
     </div>
+
+
+    
+  <!-- Reopen Modal -->
+<div class="modal fade" id="reopenModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <h5 class="modal-title fw-semibold">E-Signature</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Form Start -->
+            <form action="{{ route('marketcomplaint.reopen.store', $data->id) }}" method="POST">
+                @csrf
+
+                <!-- Body -->
+                <div class="modal-body">
+
+                    <p class="text-muted small">
+                        Please select a meaning and an outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a handwritten signature.
+                    </p>
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Username <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               name="username"
+                               required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Password <span class="text-danger">*</span>
+                        </label>
+                        <input type="password"
+                               class="form-control"
+                               name="password"
+                               required>
+                    </div>
+
+                    <!-- Comment -->
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Comment <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               name="comment"
+                               required>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+
+            </form>
+            <!-- Form End -->
+
+        </div>
+    </div>
+</div>
 
 
     {{-- ==========================single regulatory ======================= --}}

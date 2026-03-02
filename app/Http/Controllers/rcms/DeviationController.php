@@ -9270,6 +9270,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $data->capa_completed_on = $request->capa_completed_on;
             $data->save();
 
+            
+
             toastr()->success('Record is Update Successfully');
             return back();
         }
@@ -12236,6 +12238,70 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                                 return redirect()->back();
                             }
 
+
+                              $actionchilds = ActionItem::where('parent_id', $id)
+                            ->where('parent_type', 'Deviation')
+                            ->get();
+                                $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                    $actionchildstatus = trim(strtolower($ext->status));
+                                 if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                        $hasPendingaction = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPendingaction) {
+                            // $actionchildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPendingaction) {
+                                Session::flash('swal', [
+                                    'title' => 'Action Item Child Pending!',
+                                    'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
+
+
+                                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                                ->where('parent_type', 'Deviation')
+                                ->get();
+                                    $hasPendingRCA = false;
+                                foreach ($rcachilds as $ext) {
+                                        $rcachildstatus = trim(strtolower($ext->status));
+                                        if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 'Closed-Cancelled') {
+                                            $hasPendingRCA = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingRCA) {
+                                // $rcachildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingRCA) {
+                                    Session::flash('swal', [
+                                        'title' => 'RCA Child Pending!',
+                                        'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
+
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
+
                             if ($deviation->Investigation_required == 'Yes') {
                                 if (
                                     (empty($deviation->Discription_Event) && empty($changeControl->objective)
@@ -13215,7 +13281,12 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             return back();
         }
     }
+    
+    
 
+
+    
+    
     public function store_audit_review(Request $request, $id)
     {
             $history = new AuditReviewersDetails;
@@ -13362,17 +13433,17 @@ public function audit_trail_filter(Request $request, $id)
 
         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
-        $canvas->page_text(
-            $width / 3,
-            $height / 2,
-            $doc->status,
-            null,
-            60,
-            [0, 0, 0],
-            2,
-            6,
-            -20
-        );
+        // $canvas->page_text(
+        //     $width / 3,
+        //     $height / 2,
+        //     $doc->status,
+        //     null,
+        //     60,
+        //     [0, 0, 0],
+        //     2,
+        //     6,
+        //     -20
+        // );
         return $pdf->stream('SOP' . $id . '.pdf');
     }
 
@@ -13452,4 +13523,109 @@ public function audit_trail_filter(Request $request, $id)
             return $pdf->stream('Deviation' . $id . '.pdf');
         }
     }
+
+   public function reopenStore(Request $request, $id)
+   { 
+     if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
+            $oldDeviation = Deviation::findOrFail($id);
+            $deviation = Deviation::find($id);
+
+            $deviation->reopen_by = Auth::user()->name;
+            $deviation->reopen_on = Carbon::now()->format('d-M-Y');
+            $deviation->commentreopen = $request->comment;
+            $deviation->save();  
+
+    // 🔥 NEW RECORD CREATE
+    // $newDeviation = new Deviation();
+
+    // $newDeviation->form_type = "Deviation";
+    // $newDeviation->initiator_id = Auth::user()->id;
+    // $newDeviation->division_id = $oldDeviation->division_id;
+    // $newDeviation->assign_to = $oldDeviation->assign_to;
+
+    // $newDeviation->stage = 1;
+    // $newDeviation->status = "Opened";
+
+    // $newDeviation->save();
+
+    // 🔥 Audit Trail Entry (OLD RECORD ME)
+    $history = new DeviationAuditTrail();
+    $history->deviation_id = $oldDeviation->id;
+    $history->activity_type = 'Reopened';
+    $history->previous = $oldDeviation->status;
+    $history->current = "Reopened as New Deviation Record";
+    $history->action = 'Reopened';
+    $history->comment = $request->comment;
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $oldDeviation->status;
+    $history->change_from = $oldDeviation->status;
+    $history->change_to = "Reopened";
+    $history->stage = 'Closed';
+    $history->action_name = 'New';
+    $history->save();
+
+    $users = collect()
+            ->merge(Helpers::getQAHeadUserList($deviation->division_id))
+            ->merge(Helpers::getCQAHeadUsersList($deviation->division_id))
+            ->merge(Helpers::getQAUserList($deviation->division_id))
+            ->merge(Helpers::getInitiatorUserList($deviation->division_id))
+            ->merge(Helpers::getCftUserList($deviation->division_id))
+            ->unique('user_id');
+
+            $emails = $users
+            ->map(function ($u) {
+                return Helpers::getUserEmail($u->user_id);
+            })
+            ->filter()      
+            ->unique()      
+            ->values();
+            foreach ($emails as $email) {
+                // if($u->q_m_s_divisions_id == $deviation->division_id){
+                    
+                        if ($email !== null) {
+                        $data = [
+                            'data'    => $deviation,
+                            'site'    => "DEV",
+                            'history' => "Reopened",
+                            'process' => 'Deviation',
+                            'comment' => $request->comments,
+                            'user'    => Auth::user()->name
+                        ];
+
+                        try {
+
+                            SendMail::dispatch(
+                                $data,
+                                $email,
+                                $deviation,
+                                'Deviation'
+                            );
+
+                        } catch (\Exception $e) {
+
+                            \Log::error('Queue Dispatch Error', [
+                                'email' => $email,
+                                'error' => $e->getMessage()
+                            ]);
+                        }
+                    }
+                // }
+            }
+    
+
+
+     
+
+    return redirect()->to('rcms/deviation');
+     
+     
+     }else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+   }
+
+
 }
