@@ -999,6 +999,7 @@ class DashboardController extends Controller
         } elseif ($type == "Lab-Incident") {
             $data = LabIncident::find($id);
             $single = "LabIncidentSingleReport/" . $data->id;
+            $family = "labfamilyreport/" . $data->id;
             $audit = "LabIncidentAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
@@ -1019,6 +1020,7 @@ class DashboardController extends Controller
         } elseif ($type == "risk-assesment") {
             $data = RiskManagement::find($id);
             $single = "riskSingleReport/" . $data->id;
+            $family = "riskManagementfamily/" .$data->id;
             $audit = "riskAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
@@ -1079,6 +1081,7 @@ class DashboardController extends Controller
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;
+            $family = "effectiveFamilyReport/" .$data->id;
             $audit = "effectiveAuditReport/" .$data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
@@ -1141,6 +1144,7 @@ class DashboardController extends Controller
         elseif ($type == "Incident") {
             $data = Incident::find($id);
             $single = "incident-single-report/" . $data->id;
+            $family = "incident-family-report/" . $data->id;
             $audit = "incident-audit-pdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
@@ -1190,6 +1194,8 @@ class DashboardController extends Controller
                         </div>
                         <div class="drop-list">
                             <a target="__blank" href="' . $audit . '" class="inner-item">Audit Trail</a>
+                            <a target="__blank" href="' . $family . '" class="inner-item">Family Report</a>
+
                             <a target="__blank" href="' . $single . '" class="inner-item">' . $type . ' Single Report</a>
                             <a target="__blank" href="' . $family . '" class="inner-item">' . $type . ' Family Report</a>
                            
