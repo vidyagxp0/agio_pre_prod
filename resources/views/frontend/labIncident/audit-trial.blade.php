@@ -335,8 +335,8 @@
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Helpers::getdateFormat($document->due_date) }}</div>
 
                         </div>
-        </div>
-        </table>
+                            </div>
+                     </table>
 
         </header>
 

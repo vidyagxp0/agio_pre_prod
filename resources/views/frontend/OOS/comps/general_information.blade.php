@@ -88,7 +88,7 @@
 
                 </div>
             </div>
-            
+
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Short Description">Short Description
@@ -100,7 +100,7 @@
             </div>
             <p id="docnameError" style="color:red">**Short Description is required</p>
 
-            
+
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator"><b>Initiator Department</b></label>
@@ -130,7 +130,7 @@
                 </div>
                 <!-- <input type="hidden" name="is_repeat_gi" value="{{ $data->is_repeat_gi }}"> -->
                 @if ($istab1 && !Helpers::check_roles($data->division_id, 'OOS/OOT', 18) || $data->stage != 1)
-                    <input type="hidden" value="{{$data->is_repeat_gi}}" name="is_repeat_gi">
+                    <input type="hidden" value="{{$data->is_repeat_gi}}" name="is_repeat_gi1">
                 @endif
             </div>
 
@@ -181,7 +181,7 @@
                     </select>
                 </div>
                     @if ($istab1 && !Helpers::check_roles($data->division_id, 'OOS/OOT', 18) || $data->stage != 1)
-                        <input type="hidden" value="{{$data->source_document_type_gi}}" name="source_document_type_gi">
+                        <input type="hidden" value="{{$data->source_document_type_gi}}" name="source_document_type_gi1">
                     @endif
             </div>
 
@@ -631,10 +631,10 @@
                                         <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_test_name]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_test_name') }}" {{ $istab1 ? 'required' : 'readonly' }}></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_results_obtained]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_results_obtained') }}" {{ $istab1 ? 'required' : 'readonly' }}></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_specification_limit]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_specification_limit') }}" {{ $istab1 ? 'required' : 'readonly' }}></td>
-                      
+
 
                                         <td>
-                  
+
 
                                         @if(!empty($oos_detail['oos_file_attachment']))
                                             <a href="{{ asset('upload/'.$oos_detail['oos_file_attachment']) }}"
