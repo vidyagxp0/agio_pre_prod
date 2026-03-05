@@ -1135,6 +1135,7 @@ class DashboardController extends Controller
         elseif ($type == "Incident") {
             $data = Incident::find($id);
             $single = "incident-single-report/" . $data->id;
+            $family = "incident-family-report/" . $data->id;
             $audit = "incident-audit-pdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
