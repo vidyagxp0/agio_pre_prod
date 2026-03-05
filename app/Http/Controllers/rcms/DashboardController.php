@@ -1194,8 +1194,6 @@ class DashboardController extends Controller
                         </div>
                         <div class="drop-list">
                             <a target="__blank" href="' . $audit . '" class="inner-item">Audit Trail</a>
-                            <a target="__blank" href="' . $family . '" class="inner-item">Family Report</a>
-
                             <a target="__blank" href="' . $single . '" class="inner-item">' . $type . ' Single Report</a>
                             <a target="__blank" href="' . $family . '" class="inner-item">' . $type . ' Family Report</a>
                            
