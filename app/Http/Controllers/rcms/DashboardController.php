@@ -1084,8 +1084,9 @@ class DashboardController extends Controller
         elseif ($type == "Observation") {
             $data = Observation::find($id);
             $single = "ObservationSingleReport/" .$data->id;
-            $family="#";
+            $family = "ObservationfamilyReport/" .$data->id;
             $audit = "ObservationAuditTrialShow/" .$data->id;
+
             $division = QMSDivision::find($data->division_id);
             $division_name = $division ? $division->name : '';
         } elseif ($type == "Effectiveness-Check") {
@@ -1212,7 +1213,6 @@ class DashboardController extends Controller
                         <div class="drop-list">
                             <a target="__blank" href="' . $audit . '" class="inner-item">Audit Trail</a>
                             <a target="__blank" href="' . $single . '" class="inner-item">' . $type . ' Single Report</a>
-                            <a target="__blank" href="' . $family . '" class="inner-item">' . $type . ' Family Report</a>
                            
                             ' . ($type == 'External-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $type . ' Audit Response Report</a>' : '') . '
 
