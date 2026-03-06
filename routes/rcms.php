@@ -215,7 +215,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('ObservationAuditTrialDetails/{id}', [ObservationController::class, 'ObservationAuditTrialDetails'])->name('showaudittrialobservation');
             Route::get('ObservationSingleReport/{id}', [ObservationController::class, 'ObservationSingleReport']);
             Route::get('ObservationAuditTrialShow/{id}', [ObservationController::class, 'ObservationAuditTrailPdf'])->name('Observationaudit.pdf');
-
+            Route::get('ObservationfamilyReport/{id}', [ObservationController::class, 'ObservationfamilyReport']);
+            
 
             //----------------------------------------------By PRIYA SHRIVASTAVA------------------
             Route::post('formDivision', [FormDivisionController::class, 'formDivision'])->name('formDivision');
