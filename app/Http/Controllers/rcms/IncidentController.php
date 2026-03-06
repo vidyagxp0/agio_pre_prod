@@ -8891,6 +8891,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 abort(404);
             }
             
+          $capa_teamNamesString = '';
+            
             // 🔹 Get CAPA children
             $capas = Capa::where('parent_id', $id)
                 ->where('parent_type', 'Incident')
@@ -8916,7 +8918,6 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $capa->originator = User::where('id', $capa->initiator_id)->value('name');
 
                 // team
-                $capa_teamNamesString = '';
 
                 if (!empty($capa->capa_team)) {
                     $ids = explode(',', $capa->capa_team);
