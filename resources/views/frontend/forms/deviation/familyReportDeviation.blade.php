@@ -5894,7 +5894,7 @@
     @if ($extension->isNotEmpty())
         @foreach ($extension as $data)
             <center>
-                <h3>Extenstion Child  Report</h3>
+                <h3>Extenstion Report</h3>
             </center>
     
         <div class="content-table">
@@ -6286,7 +6286,7 @@
     @if (count($capa_Data) > 0)
         @foreach ($capa_Data as $data)
         <center>
-            <h3>CAPA Child Report</h3>
+            <h3>CAPA Report</h3>
         </center>
      <div class="inner-block">
         <div class="content-table">
@@ -8193,13 +8193,7 @@
 
             </table>
         </div>                
-    </div><br>
-
-
-
-
-
-                
+    </div>  
 
         <div class="block">
             <div class="block-head">
@@ -8884,9 +8878,9 @@
 
         </div>--}}
     </div>
-     @endforeach
+    @endforeach
                 
-            @endif
+    @endif
     </div>
 
     {{-- action Item Child --}}
@@ -8896,7 +8890,7 @@
 
         @foreach ($lastAi as $data)
 
-        <center><h3>Action Item Child</h3></center>
+        <center><h3>Action Item Report</h3></center>
             
         <div class="content-table">
             <div class="block">
@@ -9306,9 +9300,6 @@
                         <th class="w-10">Submit Comment</th>
                         <td class="w-30">@if($data->submitted_comment){{ $data->submitted_comment }}@else Not Applicable @endif</td>
                     </tr>
-
-
-                    
 
                     <!-- </table>
                     <div class="block-head">
