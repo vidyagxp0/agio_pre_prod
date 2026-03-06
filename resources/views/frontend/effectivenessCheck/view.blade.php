@@ -113,7 +113,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge Complete
                             </button>
-                             <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                             <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1l">
                                 Child
                             </button></a>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
@@ -129,7 +129,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>
-                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-child-model" >
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1l" >
                                 Child
                             </button></a>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
@@ -139,7 +139,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Review Complete
                             </button>
-                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1l">
                                 Child
                             </button></a>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
@@ -159,7 +159,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-modal">
                                 Not Effective
                             </button>
-                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1l">
                                 Child
                             </button></a>
                         @elseif($data->stage == 6 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 42) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 39) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18)))
@@ -169,7 +169,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
-                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1l">
                                 Child
                             </button></a>
                         @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 42) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 39) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18)))
@@ -179,7 +179,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
-                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <a href="#child-modal1"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1l">
                                 Child
                             </button></a>
                         @elseif($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 42) ||  Helpers::check_roles($data->division_id, 'Effectiveness Check', 39) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 18)))
@@ -1673,6 +1673,40 @@
                 </div>
     </div>
         </div>
+
+            <div class="modal fade" id="child-modal1l">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Child</h4>
+                        </div>
+                        <form action="{{ route('effectiveness_child_data', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                            @if(Helpers::getChildData($data->id, 'EffectivenessCheck') < 3)
+                                <div class="group-input">
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major"
+                                            value="extension">
+                                        Extension
+                                    </label>
+                                </div>
+                            @endif    
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                                <button type="submit">Continue</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
     <div class="modal fade" id="not-effective-child-model">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
