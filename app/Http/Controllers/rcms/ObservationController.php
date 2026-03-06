@@ -29,6 +29,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use PDF;
 use Illuminate\Support\Facades\Session;
+use App\Models\CapaGrid;
 
 
 class ObservationController extends Controller
@@ -3704,6 +3705,70 @@ if (is_array($request->action) && !empty($request->action)) {
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.observation.obs_single_report', compact('data','griddata', 'grid_Data', 'grid_Data2', 'grid_Data3', 'grid_Data4'))
                 ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+            return $pdf->stream('Observation' . $id . '.pdf');
+        }
+    }
+
+    public function ObservationfamilyReport($id){
+        $data = Observation::find($id);
+
+        // dd($data);
+        $observation_id = $id;
+        $griddata = ObservationGrid::where('observation_id',$data->id)->first();
+        $grid_Data = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
+        $grid_Data2 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
+        $grid_Data3 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
+        $grid_Data4 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
+        if (!empty($data)) {
+         $parentId = $id;
+
+            // $data->data = ObservationGrid::where('e_id', $id)->where('identifier', "details")->first();
+            // dd($data->all());
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $capa_Data = Capa::where('parent_id', $parentId)->where('parent_type', 'Observation')->get();
+
+            foreach ($capa_Data as $capa) {
+
+                $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Product_Details")->first();
+
+                $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Instruments_Details")->first();
+
+                $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Material_Details")->first();
+
+                $capa->originator = User::where('id', $capa->initiator_id)->value('name');
+
+                if (!empty($capa->capa_team)) {
+                    $capa_teamIdsArray = explode(',', $capa->capa_team);
+                    $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
+                    $capa_teamNamesString = implode(', ', $capa_teamNames);
+                } else {
+                    $capa_teamNamesString = null;
+                }
+            }
+            $detail_data = ActionItem::where('parent_id', $parentId)->where('parent_type', 'Observation')->get();
+            $detail_data = RootCauseAnalysis::where('parent_id', $parentId)->where('parent_type', 'Observation')->get();
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.observation.family_report', compact('data','griddata', 'grid_Data', 'grid_Data2', 'grid_Data3', 'grid_Data4','capa_Data','capa_teamNamesString','detail_data'))
+                ->setOptions([     
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
                     'isRemoteEnabled' => true,
