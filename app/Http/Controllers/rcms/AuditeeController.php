@@ -57,7 +57,6 @@ class AuditeeController extends Controller
         //  return $request->audit_start_date;
         //  die;
 
-
         if (!$request->short_description) {
             toastr()->error("Short description is required");
             return redirect()->back()->withInput();
@@ -68,7 +67,6 @@ class AuditeeController extends Controller
         // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $lastairecord = Auditee::orderBy('record', 'desc')->first();
         $record = $lastairecord ? $lastairecord->record + 1 : 1;
-
 
 
         $internalAudit = new Auditee();
@@ -739,12 +737,6 @@ class AuditeeController extends Controller
 
             $history->save();
         }
-
-
-
-
-
-
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
@@ -3644,7 +3636,6 @@ class AuditeeController extends Controller
         }
 
 
-
         if ($lastDocument->myfile != $internalAudit->myfile || !empty($request->myfile_comment)) {
 
             $history = new AuditTrialExternal();
@@ -3688,15 +3679,8 @@ class AuditeeController extends Controller
                 $history->action_name = "Update";
             }
 
-
-
             $history->save();
         }
-
-
-
-
-
 
 
         if ($lastDocument->start_date_gi != $internalAudit->start_date_gi || !empty($request->start_date_gi_comment)) {
@@ -3718,8 +3702,6 @@ class AuditeeController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-
-
 
             $history->save();
         }
@@ -3743,34 +3725,17 @@ class AuditeeController extends Controller
                 $history->action_name = "Update";
             }
 
-
-
             $history->save();
         }
 
-
-
-
-
-
-
-
-
-
-//         $SummaryUpdate = $internalAudit->id;
-// if (!empty($request->SummaryResponse)) {
-// $summaryShow = SummaryGrid::where(['summary_id' => $SummaryUpdate, 'identifier' => 'Summary Response'])->firstOrNew();
-// $summaryShow->summary_id = $SummaryUpdate;
-// $summaryShow->identifier = 'Summary Response';
-// $summaryShow->data = $request->SummaryResponse;
-// $summaryShow->save();
-// }
-
-
-
-
-
-
+        //         $SummaryUpdate = $internalAudit->id;
+        // if (!empty($request->SummaryResponse)) {
+        // $summaryShow = SummaryGrid::where(['summary_id' => $SummaryUpdate, 'identifier' => 'Summary Response'])->firstOrNew();
+        // $summaryShow->summary_id = $SummaryUpdate;
+        // $summaryShow->identifier = 'Summary Response';
+        // $summaryShow->data = $request->SummaryResponse;
+        // $summaryShow->save();
+        // }
 
 
 $SummaryUpdate = $internalAudit->id;
@@ -3787,8 +3752,6 @@ if (!empty($request->SummaryResponse)) {
     $summaryShow->identifier = 'Summary Response';
     $summaryShow->data = $request->SummaryResponse;
     $summaryShow->save();
-
-
 
       // Define the mapping of field keys to more descriptive names
       $fieldNames = [
@@ -3852,20 +3815,6 @@ if (!empty($request->SummaryResponse)) {
         // }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // $AuditUpdate = $internalAudit->id;
@@ -3954,10 +3903,6 @@ if (!empty($request->AuditorNew)) {
         // }
     }
 }
-
-
-
-
 
 
 
@@ -6770,14 +6715,6 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $history->save();
         }
 
-
-
-
-
-
-
-
-
         toastr()->success("Record is Update Successfully");
         return back();
     }
@@ -6799,70 +6736,70 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             if ($changeControl->stage == 1) {
                    //Action Item child validation
 
-                    //  $actionchilds = ActionItem::where('parent_id', $id)
-                    //             ->where('parent_type', 'External Audit')
-                    //             ->get();
-                    //                 $hasPendingaction = false;
-                    //             foreach ($actionchilds as $ext) {
-                    //                     $actionchildstatus = trim(strtolower($ext->status));
-                    //                    if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                    //                         $hasPendingaction = true;
-                    //                         break;
-                    //                     }
-                    //                 }
-                    //         if ($hasPendingaction) {
-                    //             // $actionchildstatus = trim(strtolower($extensionchild->status));
-                    //             if ($hasPendingaction) {
-                    //                 Session::flash('swal', [
-                    //                     'title' => 'Action Item Child Pending!',
-                    //                     'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                    //                     'type' => 'warning',
-                    //                 ]);
+                     $actionchilds = ActionItem::where('parent_id', $id)
+                                ->where('parent_type', 'External Audit')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($actionchilds as $ext) {
+                                        $actionchildstatus = trim(strtolower($ext->status));
+                                       if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Action Item Child Pending!',
+                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
 
-                    //             return redirect()->back();
-                    //             }
-                    //         } else {
-                    //             // Flash message for success (when the form is filled correctly)
-                    //             Session::flash('swal', [
-                    //                 'title' => 'Success!',
-                    //                 'message' => 'Document Sent',
-                    //                 'type' => 'success',
-                    //             ]);
-                    //         }
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
 
 
                     //Observation child validation
 
-                    //  $observationchilds = Observation::where('parent_id', $id)
-                    //             ->where('parent_type', 'External Audit')
-                    //             ->get();
-                    //                 $hasPendingaction = false;
-                    //             foreach ($observationchilds as $ext) {
-                    //                     $observationchildstatus = trim(strtolower($ext->status));
-                    //                    if ($observationchildstatus !== 'closed - done'  && $observationchildstatus !== 'closed-cancelled') {
-                    //                         $hasPendingaction = true;
-                    //                         break;
-                    //                     }
-                    //                 }
-                    //         if ($hasPendingaction) {
-                    //             // $observationchildstatus = trim(strtolower($extensionchild->status));
-                    //             if ($hasPendingaction) {
-                    //                 Session::flash('swal', [
-                    //                     'title' => 'Observation Child Pending!',
-                    //                     'message' => 'You cannot proceed until Observation Child is Closed-Done.',
-                    //                     'type' => 'warning',
-                    //                 ]);
+                     $observationchilds = Observation::where('parent_id', $id)
+                                ->where('parent_type', 'External Audit')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($observationchilds as $ext) {
+                                        $observationchildstatus = trim(strtolower($ext->status));
+                                       if ($observationchildstatus !== 'closed - done'  && $observationchildstatus !== 'closed-cancelled') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $observationchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Observation Child Pending!',
+                                        'message' => 'You cannot proceed until Observation Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
 
-                    //             return redirect()->back();
-                    //             }
-                    //         } else {
-                    //             // Flash message for success (when the form is filled correctly)
-                    //             Session::flash('swal', [
-                    //                 'title' => 'Success!',
-                    //                 'message' => 'Document Sent',
-                    //                 'type' => 'success',
-                    //             ]);
-                    //         }
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
 
                 if (empty($changeControl->due_date)|| empty($changeControl->audit_type)|| empty($changeControl->initial_comments)||empty($changeControl->external_agencies)||empty($changeControl->start_date_gi) ||empty($changeControl->end_date_gi))
                     {
@@ -6880,11 +6817,11 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                             'message' => 'Sent for Summary and Response state'
                         ]);
                     }
-                $changeControl->stage = "2";
-                $changeControl->status = "Summary and Response";
-                $changeControl->audit_details_summary_by = Auth::user()->name;
-                $changeControl->audit_details_summary_on = Carbon::now()->format('d-M-Y');
-                $changeControl->audit_details_summary_on_comment = $request->comment;
+                        $changeControl->stage = "2";
+                        $changeControl->status = "Summary and Response";
+                        $changeControl->audit_details_summary_by = Auth::user()->name;
+                        $changeControl->audit_details_summary_on = Carbon::now()->format('d-M-Y');
+                        $changeControl->audit_details_summary_on_comment = $request->comment;
 
 
                         $history = new AuditTrialExternal();
@@ -7106,23 +7043,6 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                 //     ]);
                 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
                      $userId = Auth::user()->name;
                     $userAssignments = DB::table('external_audit_c_f_t_s')->where(['external_audit_id' => $id])->first();
@@ -7194,15 +7114,6 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                         return redirect()->back();
                     } else {
 
-
-
-
-
-
-
-
-
-
                 $IsCFTRequired = ExternalAuditCFTResponse::where(['is_required' => 1, 'external_audit_id' => $id])->latest()->first();
                 $cftUsers = DB::table('external_audit_c_f_t_s')->where(['external_audit_id' => $id])->first();
                 // Define the column names
@@ -7216,73 +7127,73 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                 foreach ($columns as $index => $column) {
                     $value = $cftUsers->$column;
                    if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
-$updateCFT->Quality_Control_by = Auth::user()->name;
-$updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+                    $updateCFT->Quality_Control_by = Auth::user()->name;
+                    $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
 
-$history = new AuditTrialExternal();
-$history->ExternalAudit_id = $id;
-$history->activity_type = 'Quality Control Review Completed By, Quality Control Review Completed On';
+                    $history = new AuditTrialExternal();
+                    $history->ExternalAudit_id = $id;
+                    $history->activity_type = 'Quality Control Review Completed By, Quality Control Review Completed On';
 
-if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-    $history->previous = "";
-} else {
+                    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                        $history->previous = "";
+                    } else {
 
-    $history->previous = $lastDocument->Quality_Control_by . ' ,' .Helpers::getdateFormat ($lastDocument->Quality_Control_on);
-}
+                        $history->previous = $lastDocument->Quality_Control_by . ' ,' .Helpers::getdateFormat ($lastDocument->Quality_Control_on);
+                    }
 
-$history->action = 'CFT Review Complete';
+                    $history->action = 'CFT Review Complete';
 
-$history->current = $updateCFT->Quality_Control_by . ',' .Helpers::getdateFormat ($updateCFT->Quality_Control_on);
-$history->comment = $request->comment;
-$history->user_id = Auth::user()->name;
-$history->user_name = Auth::user()->name;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastDocument->status;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastDocument->status;
-$history->stage = 'CFT Review';
+                    $history->current = $updateCFT->Quality_Control_by . ',' .Helpers::getdateFormat ($updateCFT->Quality_Control_on);
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->name;
+                    $history->user_name = Auth::user()->name;
+                    $history->change_to = "Not Applicable";
+                    $history->change_from = $lastDocument->status;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'CFT Review';
 
-if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-    $history->action_name = 'New';
-} else {
-    $history->action_name = 'Update';
-}
+                    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
 
-$history->save();
-}
+                    $history->save();
+                    }
 
                  if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
-$updateCFT->QualityAssurance_by = Auth::user()->name;
-$updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
+                $updateCFT->QualityAssurance_by = Auth::user()->name;
+                $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
 
-$history = new AuditTrialExternal();
-$history->ExternalAudit_id = $id;
-$history->activity_type = 'Quality Assurance Review Completed By, Quality Assurance Review Completed On';
+                $history = new AuditTrialExternal();
+                $history->ExternalAudit_id = $id;
+                $history->activity_type = 'Quality Assurance Review Completed By, Quality Assurance Review Completed On';
 
-if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-    $history->previous = "";
-} else {
-    $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
-}
+                if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+                    $history->previous = "";
+                } else {
+                    $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
+                }
 
-$history->action = 'CFT Review Complete';
-$history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
-$history->comment = $request->comment;
-$history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
-$history->user_name = Auth::user()->name;
-$history->change_to = "Not Applicable";
-$history->change_from = $lastDocument->status;
-$history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-$history->origin_state = $lastDocument->status;
-$history->stage = 'CFT Review';
+                $history->action = 'CFT Review Complete';
+                $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
+                $history->user_name = Auth::user()->name;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $lastDocument->status;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'CFT Review';
 
-if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-    $history->action_name = 'New';
-} else {
-    $history->action_name = 'Update';
-}
+                if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+                    $history->action_name = 'New';
+                } else {
+                    $history->action_name = 'Update';
+                }
 
-$history->save();
+                $history->save();
 }
 
                     if($index == 2 && $cftUsers->$column == Auth::user()->name){
@@ -7493,7 +7404,7 @@ $history->save();
                         $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-$history->activity_type = 'Others 4 Review Completed By,Others 4 Review Completed';
+                        $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Completed';
                 if(is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == ''){
                     $history->previous = "";
                 }else{
@@ -7569,8 +7480,8 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         $updateCFT->Production_Table_On = Carbon::now()->format('Y-m-d');
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
-                       $history->activity_type = 'Production Tablet/Capsule Powder Review Completed By
-, Production Tablet/Capsule Powder Review Completed On';
+                        $history->activity_type = 'Production Tablet/Capsule Powder Review Completed By
+                    , Production Tablet/Capsule Powder Review Completed On';
                 if(is_null($lastDocument->Production_Table_By) || $lastDocument->Production_Table_On == ''){
                     $history->previous = "";
                 }else{
@@ -7686,7 +7597,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Research Development Review Completed By
-, Research Development Review Completed On';
+                        ,Research Development Review Completed On';
                 if(is_null($lastDocument->ResearchDevelopment_by) || $lastDocument->ResearchDevelopment_on == ''){
                     $history->previous = "";
                 }else{
@@ -7912,9 +7823,6 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                 }
                     $history->save();
 
-
-
-
                     $usersmailqaCqa = collect()
                             ->merge(Helpers::getQAHeadUserList($changeControl->division_id))
                             ->merge(Helpers::getCQAUsersList($changeControl->division_id))
@@ -7953,8 +7861,6 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                             }
                         // }
                     }
-
-
 
                     $changeControl->update();
                 }
@@ -8107,10 +8013,6 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                         }
                         $history->save();
 
-
-
-
-
                     $usersmailqaCqa = collect()
                             ->merge(Helpers::getQAUserList($changeControl->division_id))
                             ->merge(Helpers::getCftUserList($changeControl->division_id))
@@ -8149,8 +8051,6 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
                             }
                         // }
                     }
-
-                    
 
                 $changeControl->update();
                 toastr()->success('Document Sent');

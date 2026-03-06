@@ -1614,6 +1614,8 @@
 
                 </div>
                 <table>
+                </div>
+                <table>
 
                     <tr class="table_bg">
                         <th class="w-20">Sr.No.</th>
@@ -1633,7 +1635,27 @@
                             <td class="w-20">Not Applicable</td>
                         </tr>
                     @endif
+                    <tr class="table_bg">
+                        <th class="w-20">Sr.No.</th>
+                        <th class="w-60">Attachment</th>
+                    </tr>
+                    @if ($data->qa_final_attachments)
+                        @foreach (json_decode($data->qa_final_attachments) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                    @endif
 
+                </table>
+            </div>
                 </table>
             </div>
 

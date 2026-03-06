@@ -203,6 +203,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('child_audit_program/{id}', [AuditProgramController::class, 'child_audit_program'])->name('auditProgramChild');
             Route::post('AuditProgramCancel/{id}', [AuditProgramController::class, 'AuditProgramCancel'])->name('AuditProgramCancel');
             Route::get('auditProgramSingleReport/{id}', [AuditProgramController::class, 'singleReport'])->name('auditProgramSingleReport');
+            Route::get('auditProgramFamilyReport/{id}', [AuditProgramController::class, 'familyReport'])->name('auditProgramFamilyReport');
             Route::get('auditProgramAuditReport/{id}', [AuditProgramController::class, 'auditReport'])->name('auditProgramAuditReport');
 
 
@@ -460,6 +461,7 @@ Route::group(['prefix' => 'rcms'], function () {
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
+            Route::get('pdf-family-report/{id}', [MarketComplaintController::class, 'familyReport']);
             Route::get('GeneralInformationComplaint_report/{id}', [MarketComplaintController::class, 'General_Complaint_report']);
 
             Route::get('alltabmarketComplain/{id}', [MarketComplaintController::class, 'All_tabs_report']);

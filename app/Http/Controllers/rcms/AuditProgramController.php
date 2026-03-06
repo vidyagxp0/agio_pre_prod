@@ -8,7 +8,10 @@ use App\Models\AuditProgram;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use App\Models\InternalAudit;
+use App\Models\InternalAuditGrid;
 use App\Models\User;
+use App\Models\InternalAuditorGrid;
+use App\Models\InternalAuditObservationGrid;
 use App\Models\AuditProgramGrid;
 use Carbon\Carbon;
 use PDF;
@@ -2914,7 +2917,8 @@ class AuditProgramController extends Controller
             return view('frontend.forms.auditee', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));
         }
     }
-        public static function singleReport($id)
+
+    public static function singleReport($id)
     {
         $data = AuditProgram::find($id);
         if (!empty($data)) {
@@ -2962,12 +2966,85 @@ class AuditProgramController extends Controller
             return $pdf->stream('Audit-Program' . $id . '.pdf');
         }
     }
+
+    
+    public static function familyReport($id)
+    {
+        $data = AuditProgram::find($id);
+        if (!empty($data)) {
+            
+            
+
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $AuditProgramGrid = AuditProgramGrid::where('audit_program_id', $id)->first();
+            $audit_program_id = $data->id;
+            $grid_Data4 = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->first();
+            $grid_Data2 = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection_circular' ])->first();
+            $grid_Data3 = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program' ])->first();
+            $grid_Data3 = InternalAuditObservationGrid::where(['io_id' =>$id, 'identifier' => 'observations'])->first();
+            $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $id, 'identifier' => 'Initial'])->first();
+            $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $id, 'identifier' => 'Initial'])->first();
+            $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
+           
+
+            $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->first();
+            $json = $auditAgendaData ? json_decode($auditAgendaData->data, true) : [];
+
+            if (!empty($json)) {
+            
+            $json['area_of_audit'] = isset($json['area_of_audit']) ? unserialize($json['area_of_audit']) : null;
+            $json['start_date'] = isset($json['start_date']) ? unserialize($json['start_date']) : null;
+            $json['start_time'] = isset($json['start_time']) ? unserialize($json['start_time']) : null;
+            $json['end_date'] = isset($json['end_date']) ? unserialize($json['end_date']) : null;
+            $json['end_time'] = isset($json['end_time']) ? unserialize($json['end_time']) : null;
+            $json['auditor'] = isset($json['auditor']) ? unserialize($json['auditor']) : null;
+            $json['auditee'] = isset($json['auditee']) ? unserialize($json['auditee']) : null;
+            $json['remark'] = isset($json['remark']) ? unserialize($json['remark']) : null;
+        }
+            $parent_id = $id;
+
+
+            $New= InternalAudit::where('parent_id', $parent_id)
+                ->where('parent_type', 'Audit_Program')
+                ->orderBy('created_at', 'asc')
+                ->get();
+                
+
+        $startdate = [];
+
+            $pdf = PDF::loadview('frontend.audit-program.familyReport', compact('grid_Data5','grid_Data3','json','auditorview','data','AuditProgramGrid','grid_Data4','grid_Data2','grid_Data5','grid_Data3','New'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $text = " $pageNumber of $pageCount";
+            $font = $fontMetrics->getFont('sans-serif', 'normal');
+            $size = 9;
+            $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+            $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+            return $pdf->stream('Audit-Program' . $id . '.pdf');
+        }
+    }
+
     public static function auditReport($id)
     {
         $doc = AuditProgram::find($id);
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-             $audit = AuditProgramAuditTrial::where('AuditProgram_id', $id)->orderByDesc('id')->get();
+            $audit = AuditProgramAuditTrial::where('AuditProgram_id', $id)->orderByDesc('id')->get();
             $data = AuditProgramAuditTrial::where('AuditProgram_id', $id)->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
