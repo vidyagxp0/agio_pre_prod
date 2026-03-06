@@ -11523,24 +11523,26 @@ public static function effectiveFamilyReport($id)
     $closure = ChangeClosure::where('cc_id', $data->id)->first();
 
 
-
+    
     if (!$data) {
         abort(404);
-    }
-    
-    // 🔹 Get CAPA children
-    $capas = Capa::where('parent_id', $id)
+        }
+        
+        
+        // 🔹 Get CAPA children
+        $capas = Capa::where('parent_id', $id)
         ->where('parent_type', 'risk-assesment')
         ->orderBy('created_at', 'asc')
         ->get();
-
-    // 🔹 Attach grids to each CAPA (SAME AS singleReport)
-    foreach ($capas as $capa) {
-
-        $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)
+        
+        $capa_teamNamesString = "";
+        // 🔹 Attach grids to each CAPA (SAME AS singleReport)
+        foreach ($capas as $capa) {
+            
+            $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)
             ->where('type', "Product_Details")
             ->first();
-
+            
         $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)
             ->where('type', "Instruments_Details")
             ->first();
@@ -11553,7 +11555,6 @@ public static function effectiveFamilyReport($id)
         $capa->originator = User::where('id', $capa->initiator_id)->value('name');
 
         // team
-        $capa_teamNamesString = '';
 
         if (!empty($capa->capa_team)) {
             $ids = explode(',', $capa->capa_team);
