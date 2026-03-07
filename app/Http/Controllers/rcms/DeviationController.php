@@ -49,7 +49,7 @@ class DeviationController extends Controller
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
         // $lastAi = Deviation::orderBy('record', 'desc')->first();
         // $record_number = $lastAi ? $lastAi->record + 1 : 1;
-       
+
         // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
@@ -105,7 +105,7 @@ class DeviationController extends Controller
          $lastDeviation = Deviation::orderBy('record_number', 'desc')->first();
         $record_number = $lastDeviation ? $lastDeviation->record_number + 1 : 1;
 
-       
+
          $lastDeviation = Deviation::orderBy('record', 'desc')->first();
         $record = $lastDeviation ? $lastDeviation->record + 1 : 1;
 
@@ -113,7 +113,7 @@ class DeviationController extends Controller
         $deviation->form_type = "Deviation";
 
        // $deviation->record = ((RecordNumber::first()->value('counter')) + 1);
-          $deviation->record = $record; 
+          $deviation->record = $record;
        $deviation->initiator_id = Auth::user()->id;
 
         $deviation->form_progress = isset($form_progress) ? $form_progress : null;
@@ -7981,7 +7981,7 @@ $newDataGridFishbone->save();
 
         /*************** Other 3 ***************/
       //  if (!is_null($lastCft->Other3_review) != is_null($request->Other3_review) &&  !is_null($request->Other3_review)) {
-          
+
         if ($lastCft->Other3_review != $request->Other3_review && $request->Other3_review != null) {
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
@@ -9371,7 +9371,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $lastAuditrecord = extension_new::orderBy('record', 'desc')->first();
             $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
              $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
-       
+
             $Extensionchild = Deviation::find($id);
 
            $Extensionchild->Extensionchild = $record_number;
@@ -9388,7 +9388,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                                 ->where('parent_type', 'Deviation')
                                 ->orderByDesc('id')
                                 ->first();
-                    
+
                             if (!$lastExtension) {
                                 $extensionCount = 1;
                             } else {
@@ -9399,12 +9399,12 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                                 }
                             }
 
-                        }  
+                        }
 
 
         //    dd($extension_record);
             $Extensionchild->save();
-          
+
             return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name','countData', 'record_number','record', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords','parent_division_id','parent_intiation_date'));
         }
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
@@ -9413,18 +9413,18 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $parent_name = "CAPA";
             $Capachild = Deviation::find($id);
             $relatedRecords = Helpers::getAllRelatedRecords();
-           
+
 
             $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
             $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
 
-            
+
             $Capachild->Capachild = $record_number;
             // $record = $record_number;
             $old_records = $old_record;
-         
+
             $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'DEV' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
-       
+
             $Capachild->save();
 
             return view('frontend.forms.capa', compact('parent_id','relatedRecords','record_number','record', 'parent_record','parent_type', 'record',  'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name','reference_record', 'parent_division_id', 'parent_record', 'old_records', 'cft','parent_due_date',));
@@ -9434,19 +9434,19 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
          $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $lastAi = ActionItem::orderBy('record', 'desc')->first();
         $record_number = $lastAi ? $lastAi->record + 1 : 1;
-     
+
         $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-      
-      
+
+
 
             $record_number_full = Helpers::getDivisionName($actionchild->division_id)
                 . '/' . 'DEV' . '/' . date('Y') . '/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
 
              $parent_record = $record_number_full;
-         
+
               $actionchild->actionchild = $record_number_full;
             $actionchild->save();
 
@@ -9492,8 +9492,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                 // Merge the records into the collection
                 $relatedRecords = $relatedRecords->merge($records);
                 }
-           
-          
+
+
             return view('frontend.action-item.action-item', compact('record','due_date','old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'parent_id', 'parent_type','parent_due_date','record_number_full','relatedRecords'));
         }
 
@@ -9529,8 +9529,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $record = $lastAirecord ? $lastAirecord->record + 1 : 1;
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
 
-       
-     
+
+
             return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record','parent_due_date','parent_due_date',));
         }
     }
@@ -9825,7 +9825,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-                   
+
                     $list = Helpers::getCQAUsersList($deviation->division_id);
                      $QAList = Helpers::getQAUserList($deviation->division_id);
               $CQAlist = Helpers::getCQAUsersList($deviation->division_id);
@@ -9838,7 +9838,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if ($email !== null) {
-  
+
                                   try {
 
                                 $data = [
@@ -10700,7 +10700,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if ($email !== null) {
-  
+
                                   try {
 
                                 $data = [
@@ -10770,7 +10770,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -10826,7 +10826,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             $email = Helpers::getUserEmail($u->user_id);
 
                             if ($email !== null) {
-  
+
                                   try {
 
                                 $data = [
@@ -10852,8 +10852,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         }
 
 
-                    
-                 
+
+
 
 
                     $deviation->update();
@@ -10898,7 +10898,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             //            ]);
 
             //        return redirect()->back();
-                
+
             //    } else {
             //        // Flash message for success (when the form is filled correctly)
             //        Session::flash('swal', [
@@ -10928,7 +10928,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         'CorporateQualityAssurance_person'
                     ];
 
-    
+
                     $userIds = [];
                     foreach ($columns as $field) {
                         if (!empty($getCftData->$field)) {
@@ -11086,7 +11086,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -11103,27 +11103,27 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     if ($userAssignments->Production_Table_Person == $userId && empty($userAssignments->Production_Table_Assessment)) {
                         $incompleteFields[] = 'Production Table Assessment';
                     }
-                    
+
                     if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
                         $incompleteFields[] = 'Production Injection Assessment';
                     }
-                    
+
                     if ($userAssignments->ResearchDevelopment_person == $userId && empty($userAssignments->ResearchDevelopment_assessment)) {
                         $incompleteFields[] = 'Research Development Assessment';
                     }
-                    
+
                     if ($userAssignments->Store_person == $userId && empty($userAssignments->Store_assessment)) {
                         $incompleteFields[] = 'Store assessment';
                     }
-                    
+
                     if ($userAssignments->Quality_Control_Person == $userId && empty($userAssignments->Quality_Control_assessment)) {
                         $incompleteFields[] = 'Quality Control assessment';
                     }
-                    
+
                     if ($userAssignments->QualityAssurance_person == $userId && empty($userAssignments->QualityAssurance_assessment)) {
                         $incompleteFields[] = 'Quality Assurance assessment';
                     }
-                    
+
                     if ($userAssignments->CorporateQualityAssurance_person == $userId && empty($userAssignments->CorporateQualityAssurance_assessment)) {
                         $incompleteFields[] = 'Corporate Quality Assurance Assessment';
                     }
@@ -11131,32 +11131,32 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     if ($userAssignments->RegulatoryAffair_person == $userId && empty($userAssignments->RegulatoryAffair_assessment)) {
                         $incompleteFields[] = 'RegulatoryAffair assessment';
                     }
-                    
+
                     if ($userAssignments->ProductionLiquid_person == $userId && empty($userAssignments->ProductionLiquid_assessment)) {
                         $incompleteFields[] = 'ProductionLiquid assessment';
                     }
-                    
+
                     if ($userAssignments->Microbiology_person == $userId && empty($userAssignments->Microbiology_assessment)) {
                         $incompleteFields[] = 'Microbiology assessment';
                     }
-                    
+
                     if ($userAssignments->Engineering_person == $userId && empty($userAssignments->Engineering_assessment)) {
                         $incompleteFields[] ='Engineering assessment';
                     }
-                    
+
                     if ($userAssignments->Environment_Health_Safety_person == $userId && empty($userAssignments->Health_Safety_assessment)) {
                         $incompleteFields[] = 'Health Safety assessment';
                     }
-                    
+
                     if ($userAssignments->Human_Resource_person == $userId && empty($userAssignments->Human_Resource_assessment)) {
                         $incompleteFields[] = 'Human Resourcec Assessment';
                     }
-                    
+
                     if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {
                         $incompleteFields[] = 'ContractGiver Assessment';
                     }
-                    
-                    
+
+
                     if (!empty($incompleteFields)) {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -11165,7 +11165,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         ]);
                         return redirect()->back();
                     } else {
-                        
+
 
 
                     $IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
@@ -11891,7 +11891,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
                     foreach ($emails as $email) {
 
-                           
+
 
                     try {
 
@@ -11937,7 +11937,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         //     // }
                         // }
 
-                       
+
                         $deviation->update();
                     }
                  }
@@ -11974,8 +11974,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     foreach ($extensionchild as $ext) {
                         $extensionchildStatus = trim(strtolower($ext->status));
                         // Allow 'closed - done', 'reject', and 'cancel' as processed statuses
-                        if (!in_array($extensionchildStatus, ['closed - done', 'closed - r
-                        eject'])) {
+                        if (!in_array($extensionchildStatus, ['closed - done', 'closed - reject'])) {
                             $hasPending4 = true;
                             break;
                         }
@@ -12069,7 +12068,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     }
                      }
 
-                                       
+
                         // $list = Helpers::getQAUserList($deviation->division_id);
                         // foreach ($list as $u) {
                         //     // if($u->q_m_s_divisions_id == $deviation->division_id){
@@ -12181,7 +12180,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     return back();
                 }
 
-             
+
                     if ($deviation->stage == 7) {
 
                             $extension = Extension::where('parent_id', $deviation->id)->first();
@@ -12207,9 +12206,9 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             ];
 
                             $hasPending1 = false;
-                            $totalChildren = 0; 
+                            $totalChildren = 0;
 
-                            $allowedStatuses = ['closed - done', 'closed - reject', 'cancel'];
+                            $allowedStatuses = ['closed - done', 'closed - rejected', 'closed - cancelled'];
 
                             foreach ($childModels as $model) {
                                 $extensionChildren = $model::where('parent_id', $deviation->id)
@@ -12320,7 +12319,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             }
 
 
-                    
+
 
                     $deviation->stage = "8";
                     $deviation->status = "HOD Final Review";
@@ -12353,7 +12352,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                  
+
                      $list = Helpers::getHodUserList($deviation->division_id);
                     foreach ($list as $u) {
                         // if($u->q_m_s_divisions_id == $deviation->division_id){
@@ -12453,8 +12452,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     ->map(function ($u) {
                         return Helpers::getUserEmail($u->user_id);
                     })
-                    ->filter()      
-                    ->unique()      
+                    ->filter()
+                    ->unique()
                     ->values();
 
                     foreach ($emails as $email) {
@@ -12486,8 +12485,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             }
                      }
 
-                    
-                   
+
+
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -12576,8 +12575,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     ->map(function ($u) {
                         return Helpers::getUserEmail($u->user_id);
                     })
-                    ->filter()      
-                    ->unique()      
+                    ->filter()
+                    ->unique()
                     ->values();
 
                     foreach ($emails as $email) {
@@ -12707,7 +12706,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     } else {
                         $history->action_name = 'Update';
                     }
-                  
+
                     $history->save();
                     // $list = Helpers::getQAHeadUserList($deviation->division_id);
                     //                         foreach ($list as $u) {
@@ -12729,7 +12728,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     //                                 }
                     //                             // }
                     //                         }
-                                            
+
                                              $users = collect()
                                             ->merge(Helpers::getQAHeadUserList($deviation->division_id))
                                             ->merge(Helpers::getCQAHeadUsersList($deviation->division_id))
@@ -12742,12 +12741,12 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                                             ->map(function ($u) {
                                                 return Helpers::getUserEmail($u->user_id);
                                             })
-                                            ->filter()      
-                                            ->unique()      
+                                            ->filter()
+                                            ->unique()
                                             ->values();
                                             foreach ($emails as $email) {
                                                 // if($u->q_m_s_divisions_id == $deviation->division_id){
-                                                   
+
                                                         if ($email !== null) {
                                                         $data = [
                                                             'data'    => $deviation,
@@ -13454,7 +13453,7 @@ public function audit_trail_filter(Request $request, $id)
         }
     }
 
-    public function familyReport($id) 
+    public function familyReport($id)
     {
         $data = Deviation::find($id);
         $data1 =  DeviationCft::where('deviation_id', $id)->first();
@@ -13485,7 +13484,7 @@ public function audit_trail_filter(Request $request, $id)
             $grid_data_matrix_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'matrix_qrms'])->first();
 
             $fishboneData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'fishbone'])->first();
-            
+
             $capa_Data = Capa::where('parent_id', $id)->where('parent_type', 'Deviation')->get();
 
             foreach ($capa_Data as $capa) {
@@ -13506,7 +13505,7 @@ public function audit_trail_filter(Request $request, $id)
                     $capa_teamNamesString = null;
                 }
             }
-            
+
             $extension = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'Deviation')
                     ->orderByDesc('id')
