@@ -90,7 +90,7 @@
                                             Assigned To <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to">
-                                            <option value="">Select a value</option>
+                                            <option value="">Select a Person</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -537,7 +537,7 @@
                                             Section Head Name <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="section_sign_date_gi">
-                                            <option value="">Select a value</option>
+                                            <option value="">Select a Person</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -599,7 +599,7 @@
                                         QC Head/HOD Person <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="investigator_qc">
-                                            <option value="">Select a value</option>
+                                            <option value="">Select a Person</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -652,22 +652,22 @@
                                 </div>
 
 
-                <div class="col-md-6">
-                    <div class="group-input">
-                        <label for="search">
-                        QA Reviewer <span class="text-danger"></span>
-                        </label>
-                        <select id="select-state" placeholder="Select..." name="qc_review_to">
-                            <option value="">Select a value</option>
-                            @foreach ($users as $data)
-                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('qc_review_to')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                    QA Reviewer <span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="qc_review_to">
+                                        <option value="">Select a Person</option>
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('qc_review_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -919,7 +919,7 @@
                             QC Review <span class="text-danger"></span>
                         </label>
                         <select id="select-state" placeholder="Select..." name="qc_review_data" disabled>
-                            <option value="">Select a value</option>
+                            <option value="">Select a Person</option>
                             @foreach ($users as $data)
                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                             @endforeach
@@ -935,7 +935,7 @@
                             QC Approved By <span class="text-danger"></span>
                         </label>
                         <select id="select-state" placeholder="Select..." name="investigator_approve_im">
-                            <option value="">Select a value</option>
+                            <option value="">Select a Person</option>
                             @foreach ($users as $data)
                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                             @endforeach

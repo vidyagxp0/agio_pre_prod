@@ -8429,36 +8429,36 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             //            'type' => 'success',
             //        ]);
             //    }
-            //     $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-            //     ->where('parent_type', 'Market Complaint')
-            //     ->get();
-            //         $hasPendingRCA = false;
-            //     foreach ($rcachilds as $ext) {
-            //             $rcachildstatus = trim(strtolower($ext->status));
-            //             if ($rcachildstatus !== 'closed - done'  && $capachildstatus !== 'closed-cancelled') {
-            //                 $hasPendingRCA = true;
-            //                 break;
-            //             }
-            //         }
-            //    if ($hasPendingRCA) {
-            //     // $rcachildstatus = trim(strtolower($extensionchild->status));
-            //        if ($hasPendingRCA) {
-            //            Session::flash('swal', [
-            //                'title' => 'RCA Child Pending!',
-            //                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-            //                'type' => 'warning',
-            //            ]);
+                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', 'Market Complaint')
+                ->get();
+                    $hasPendingRCA = false;
+                foreach ($rcachilds as $ext) {
+                        $rcachildstatus = trim(strtolower($ext->status));
+                        if ($rcachildstatus !== 'closed - done'  && $capachildstatus !== 'closed-cancelled') {
+                            $hasPendingRCA = true;
+                            break;
+                        }
+                    }
+               if ($hasPendingRCA) {
+                // $rcachildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPendingRCA) {
+                       Session::flash('swal', [
+                           'title' => 'RCA Child Pending!',
+                           'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
 
-            //        return redirect()->back();
-            //        }
-            //    } else {
-            //        // Flash message for success (when the form is filled correctly)
-            //        Session::flash('swal', [
-            //            'title' => 'Success!',
-            //            'message' => 'Document Sent',
-            //            'type' => 'success',
-            //        ]);
-            //    }
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
 
                         $marketstat->stage = "3";
                         $marketstat->status = "Investigation CAPA And Root Cause Analysis";
