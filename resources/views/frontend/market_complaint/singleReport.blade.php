@@ -4270,6 +4270,33 @@
                         </td>
                     </tr>
 
+                      <tr>
+                        <th class="w-20">Reopened By</th>
+                        <td class="w-30">
+                            @if ($data->reopen_by)
+                                {{ $data->reopen_by }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Reopened On</th>
+                        <td class="w-30">
+                            @if ($data->reopen_on)
+                                {{ $data->reopen_on }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Reopened Comment</th>
+                        <td class="w-30">
+                            @if ($data->commentreopen)
+                                {{ $data->commentreopen }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
 
                     {{-- <tr>
                         <th class="w-20">Closure Done By</th>

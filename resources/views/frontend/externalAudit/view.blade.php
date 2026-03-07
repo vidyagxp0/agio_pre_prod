@@ -387,9 +387,15 @@
                                 (Helpers::check_roles($data->division_id, 'External Audit', 65) ||
                                     Helpers::check_roles($data->division_id, 'External Audit', 43) || Helpers::check_roles($data->division_id, 'External Audit', 42) || Helpers::check_roles($data->division_id, 'External Audit', 39) ||  Helpers::check_roles($data->division_id, 'External Audit', 9) ||
                                     Helpers::check_roles($data->division_id, 'External Audit', 18)))
-                            <button class="button_theme1"> <a class="text-white" href="{{ url('auditee') }}">
+                            {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('auditee') }}">
                                     Reopen
-                                </a> </button>
+                                </a> </button> --}}
+                        <button type="button"
+                                class="btn btn-dark"
+                                data-bs-toggle="modal"
+                                data-bs-target="#reopenModal">
+                            Reopen
+                        </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -541,7 +547,7 @@
                                 tabToActivate = 'CCForm8'; 
                             } else if (stage == 5) {
                                 tabToActivate = 'CCForm6'; 
-                            } else if (stage == 5) {
+                            } else if (stage == 0) {
                                 tabToActivate = 'CCForm6'; 
                             }
 
@@ -642,7 +648,11 @@
                                                             name="due_date"{{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                     </div>
                                                 </div> -->
-
+                           @php 
+                            $initiator  = (Helpers::check_roles($data->division_id, 'External Audit', 7) ||
+                                    Helpers::check_roles($data->division_id, 'External Audit', 66) ||
+                                    Helpers::check_roles($data->division_id, 'External Audit', 18));
+                           @endphp
 
 
 
@@ -653,14 +663,14 @@
                                                         class="text-danger">*</span></label>
                                                 <p class="text-primary">Last date this record should be closed by</p>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="due_date_display" readonly
+                                                    <input type="text" id="due_date_display" readonly {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}
                                                         placeholder="DD-MM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}" />
                                                     <input type="date" id="due_date" name="due_date"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" value="{{ $data->due_date }}"
                                                         oninput="handleDateInput(this, 'due_date_display')"
-                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}/>
+                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}/>
                                                         
                                                 </div>
                                             </div>
@@ -804,7 +814,7 @@
 
                                                 <input name="short_description" id="docname" type="text"
                                                     value="{{ $data->short_description }}" maxlength="255" required
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}
                                                     type="text">
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
@@ -819,7 +829,7 @@
                                                     @endif
                                                 </label>
                                                 <select name="initiated_through" id="initiated_through" 
-                                                    {{ $data->stage != 1 ? 'disabled' : '' }} required>
+                                                    {{ $data->stage != 1 ? 'disabled' : '' }}  {{ $data->stage == 1 && $initiator ? '' : 'disabled' }} required>
                                                     <option value="">-- select --</option>
                                                     <option value="recall" {{ $data->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
                                                     <option value="return" {{ $data->initiated_through == 'return' ? 'selected' : '' }}>Return</option>
@@ -842,7 +852,7 @@
                                                     class="text-danger {{ $data->initiated_through == 'others' ? '' : 'd-none' }}">*</span>
                                                 </label>
                                                 <textarea name="initiated_if_other" id="initiated_if_other"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->initiated_if_other }}</textarea>
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }} >{{ $data->initiated_if_other }}</textarea>
                                             </div>
                                         </div>
 
@@ -894,7 +904,7 @@
                                                 </label>
                                                 <select name="audit_type" id="audit_type" 
                                                     onchange="toggleField(this.value, 'if_other_field', 'if_other_textarea', 'if_other_asterisk')"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} required>
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'disabled' }} required>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="R&D" {{ $data->audit_type == 'R&D' ? 'selected' : '' }}>R&D</option>
                                                     <option value="GLP" {{ $data->audit_type == 'GLP' ? 'selected' : '' }}>GLP</option>
@@ -916,7 +926,7 @@
                                                     <span id="if_other_asterisk" class="text-danger {{ $data->audit_type == 'others' ? '' : 'd-none' }}">*</span>
                                                 </label>
                                                 <textarea name="if_other" id="if_other_textarea"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}>{{ $data->if_other }}</textarea>
                                             </div>
                                         </div>
 
@@ -932,7 +942,7 @@
                                                 <select name="external_agencies"
                                                         id="external_agencies"
                                                         onchange="toggleField(this.value, 'others_field', 'others_textarea', 'others_asterisk')"
-                                                        {{ $data->stage != 1 ? 'disabled' : '' }}>
+                                                        {{ $data->stage != 1 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}>
                                                     
                                                     <option value="">-- Select --</option>
                                                     <option value="Jordan FDA" {{ $data->external_agencies == 'Jordan FDA' ? 'selected' : '' }}>Jordan FDA</option>
@@ -962,7 +972,7 @@
                                                     <span id="others_asterisk" class="text-danger {{ $data->external_agencies == 'others' ? '' : 'd-none' }}">*</span>
                                                 </label>
                                                 <textarea name="others" id="others_textarea"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  {{ $data->stage == 1 ? '' : 'readonly' }} >{{ $data->others }}</textarea>
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}>{{ $data->others }}</textarea>
                                             </div>
                                         </div>
 
@@ -993,7 +1003,7 @@
                                                     class="text-danger">*</span>
                                                     @endif
                                                 </label>
-                                                <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}  required>{{ $data->initial_comments }}</textarea>
+                                                <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}  required>{{ $data->initial_comments }}</textarea>
                                             </div>
                                         </div>
 
@@ -1032,12 +1042,12 @@
                                                                 <tr>
                                                                     <td disabled>{{ $serialNumber++ }}</td>
                                                                     <td><input type="text"
-                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}{{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}{{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}
                                                                             name="AuditorNew[{{ $loop->index }}][auditornew]"
                                                                             value="{{ $audditor['auditornew'] }}" required></td>
                                                                     <td><input type="text"
                                                                             name="AuditorNew[{{ $loop->index }}][regulatoryagency]"
-                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}
                                                                             value="{{ $audditor['regulatoryagency'] }}" required>
                                                                     </td>
                                                                     <td>
@@ -1056,10 +1066,10 @@
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="AuditorNew[{{ $loop->index }}][remarks]"
-                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}
                                                                             value="{{ $audditor['remarks'] }}" required></td>
                                                                     <td><button class="removeRowBtn"
-                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>
+                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}>Remove</button>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -1148,14 +1158,14 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" id="start_date_gi" name="start_date_gi"
                                                         readonly placeholder="DD-MM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->start_date_gi) }}" />
+                                                        value="{{ Helpers::getdateFormat($data->start_date_gi) }}" {{ $data->stage == 1 && $initiator ? '' : 'readonly' }} />
                                                     <input type="date" id="start_date_gi_name"
                                                         name="start_date_gi_name"
                                                         max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         value="{{ $data->start_date_gi ? \Carbon\Carbon::parse($data->start_date_gi)->format('Y-m-d') : '' }}"
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'start_date_gi');updateEndDateMin();"
-                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}{{ $data->stage == 1 ? '' : 'readonly' }} />
+                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}{{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -1178,10 +1188,10 @@
                                                         placeholder="DD-MM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->end_date_gi) }}" />
                                                     <input type="date" id="end_date_gi_name" name="end_date_gi_name"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}
                                                         value="{{ $data->end_date_gi ? \Carbon\Carbon::parse($data->end_date_gi)->format('Y-m-d') : '' }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'end_date_gi');"
-                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}/>
+                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiator ? '' : 'readonly' }}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -1269,7 +1279,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile" name="inv_attachment[]"
-                                                            {{ $data->stage == 0 ||$data->stage == 2 ||$data->stage == 3 || $data->stage == 5 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 ||$data->stage == 2 ||$data->stage == 3 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}
                                                             oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
                                                     </div>
                                                 </div>
@@ -1976,7 +1986,6 @@
                                         </div>
 
 
-
                                         <!-- New Grid Added -->
 
                                         <div class="col-12">
@@ -1988,7 +1997,7 @@
                                                     class="text-danger">*</span>
                                                     @endif
                                                     <button type="button"
-                                                        {{$data->stage == 1||$data->stage == 3||$data->stage == 4 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                        {{$data->stage == 1||$data->stage == 3||$data->stage == 4 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 2 && $initiator ? '' : 'disabled' }}
                                                         name="audit-incident-grid" id="IncidentAdd">+</button>
                                                   
                                                 </label>
@@ -2017,7 +2026,7 @@
                                                             <td disabled>{{ $serialNumber++ }}</td>
                                                             <td>
                                                                 <textarea 
-                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }} {{ $data->stage == 2 && $initiator ? '' : 'readonly' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][observation]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['observation'] ?? '' }}</textarea>
                                                             </td>
@@ -2035,32 +2044,32 @@
                                                             </td>
                                                             <td>
                                                                 <textarea 
-                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }} {{ $data->stage == 2 && $initiator ? '' : 'readonly' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][response]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['response'] ?? '' }}</textarea>
                                                             </td>
                                                             <td>
                                                                 <textarea 
-                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }} {{ $data->stage == 2 && $initiator ? '' : 'readonly' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][reference_id]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['reference_id'] ?? '' }}</textarea>
                                                             </td>
                                                             <td>
                                                                 <textarea 
-                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }} {{ $data->stage == 2 && $initiator ? '' : 'readonly' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][status]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['status'] ?? '' }}</textarea>
                                                             </td>
                                                            
                                                             <td>
                                                                 <textarea 
-                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }} {{ $data->stage == 2 && $initiator ? '' : 'readonly' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][remarks]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['remarks'] ?? '' }}</textarea>
                                                             </td>
                                                             <td>
                                                                 <button class="removeRowBtn"
-                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}>Remove</button>
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }} {{ $data->stage == 2 && $initiator ? '' : 'disabled' }}>Remove</button>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -8359,6 +8368,12 @@
                         <div id="CCForm8" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
+                                    @php 
+                                $QA_head_role=  (Helpers::check_roles($data->division_id, 'External Audit', 65) ||
+                                    Helpers::check_roles($data->division_id, 'External Audit', 43) || Helpers::check_roles($data->division_id, 'External Audit', 42) || Helpers::check_roles($data->division_id, 'External Audit', 39) || Helpers::check_roles($data->division_id, 'External Audit', 9) ||
+                                    Helpers::check_roles($data->division_id, 'External Audit', 18));
+                                    @endphp
+                                    
                                     <div class="sub-head">
                                         QA/CQA Head Approval
                                     </div>
@@ -8369,7 +8384,7 @@
                                                     <span class="text-danger">*</span>
                                                 @endif
                                             </label>
-                                            <textarea name="qa_cqa_comment" {{ $data->stage == 0 || $data->stage == 1 ||$data->stage == 2 || $data->stage == 3 || $data->stage == 5 ? 'readonly' : '' }}>{{ $data->qa_cqa_comment }}</textarea>
+                                            <textarea name="qa_cqa_comment" {{ $data->stage == 0 || $data->stage == 1 ||$data->stage == 2 || $data->stage == 3 || $data->stage == 5 ? 'readonly' : '' }} {{ $data->stage == 4 && $QA_head_role ? '' : 'readonly' }}>{{ $data->qa_cqa_comment }}</textarea>
                                         </div>
                                     </div>
 
@@ -8405,7 +8420,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input type="file" id="myfile" name="qa_cqa_attach[]"
-                                                        {{ $data->stage == 0 || $data->stage == 1 ||$data->stage == 2 || $data->stage == 3 || $data->stage == 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage == 1 ||$data->stage == 2 || $data->stage == 3 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 4 && $QA_head_role ? '' : 'disabled' }}
                                                         oninput="addMultipleFiles(this, 'qa_cqa_attach')" multiple>
                                                 </div>
                                             </div>
@@ -8795,6 +8810,88 @@
         });
 
     </script>
+
+    
+  <!-- Reopen Modal -->
+<div class="modal fade" id="reopenModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <h5 class="modal-title fw-semibold">E-Signature</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Form Start -->
+            <form action="{{ route('reopenExternal.store', $data->id) }}" method="POST">
+                @csrf
+
+                <!-- Body -->
+                <div class="modal-body">
+
+                    <p class="text-muted small">
+                        Please select a meaning and an outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a handwritten signature.
+                    </p>
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Username <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               name="username"
+                               required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Password <span class="text-danger">*</span>
+                        </label>
+                        <input type="password"
+                               class="form-control"
+                               name="password"
+                               required>
+                    </div>
+
+                    <!-- Comment -->
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Comment <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               name="comment"
+                               required>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+
+            </form>
+            <!-- Form End -->
+
+        </div>
+    </div>
+</div>
+
     <div class="modal fade" id="rejection-modal1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

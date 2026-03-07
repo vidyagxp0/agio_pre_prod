@@ -861,9 +861,15 @@
                             @endif
 
                         @elseif($data->stage == 12)
-                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/deviation') }}">
+                            {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/deviation') }}">
                                     Reopen
-                                </a> </button>
+                                </a> </button> --}}
+                        <button type="button"
+                                class="btn btn-dark"
+                                data-bs-toggle="modal"
+                                data-bs-target="#reopenModal">
+                            Reopen
+                        </button>
                         @endif
 
 
@@ -1114,7 +1120,7 @@
                         
                         if (stage == 1) {
                             tabToActivate = 'CCForm1'; 
-                        } else if (stage == 2) {
+                        } else if (stage == 2 ||stage == 11) {
                             tabToActivate = 'CCForm8'; 
                         }  else if (stage == 3) {
                             tabToActivate = 'CCForm2'; 
@@ -1132,7 +1138,7 @@
                             tabToActivate = 'CCForm4'; 
                         } else if (stage == 10) {
                             tabToActivate = 'CCForm5'; 
-                        } else if (stage == 12) {
+                        } else if (stage == 12 || stage == 0) {
                             tabToActivate = 'CCForm6'; 
                         }                    
 
@@ -13855,6 +13861,27 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
 
+
+                            <div class="sub-head">Reopened</div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Approved By">Reopened By :-</label>
+                                    <div class="">{{ $data->reopen_by ?? 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="group-input">
+                                    <label for="Approved On">Reopened On :-</label>
+                                    <div class="">{{ $data->reopen_on ?? 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input" style="width:1620px; height:100px; padding:5px;">
+                                    <label for="Approved Comments">Reopened Comment :-</label>
+                                    <div class="">{{ $data->commentreopen ?? 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+
                             <div class="sub-head">Cancel</div>
                             <div class="col-lg-3">
                                 <div class="group-input">
@@ -15160,6 +15187,85 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 
+  <!-- Reopen Modal -->
+<div class="modal fade" id="reopenModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+
+            <!-- Header -->
+            <div class="modal-header">
+                <h5 class="modal-title fw-semibold">E-Signature</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Form Start -->
+            <form action="{{ route('deviation.reopen.store', $data->id) }}" method="POST">
+                @csrf
+
+                <!-- Body -->
+                <div class="modal-body">
+
+                    <p class="text-muted small">
+                        Please select a meaning and an outcome for this task and enter your username
+                        and password for this task. You are performing an electronic signature,
+                        which is legally binding equivalent of a handwritten signature.
+                    </p>
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Username <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               name="username"
+                               required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Password <span class="text-danger">*</span>
+                        </label>
+                        <input type="password"
+                               class="form-control"
+                               name="password"
+                               required>
+                    </div>
+
+                    <!-- Comment -->
+
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Comment <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               name="comment"
+                               required>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+
+            </form>
+            <!-- Form End -->
+
+        </div>
+    </div>
+</div>
 
     <div class="modal fade" id="deviationIsCFTRequired">
         <div class="modal-dialog modal-dialog-centered">

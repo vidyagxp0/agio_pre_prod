@@ -318,7 +318,9 @@ Route::get('ExternalAuditTrialShow/{id}', [AuditeeController::class, 'AuditTrial
 Route::get('ExternalAuditTrialDetails/{id}', [AuditeeController::class, 'AuditTrialExternalDetails'])->name('ExternalAuditTrialDetailsShow');
 Route::post('child_external/{id}', [AuditeeController::class, 'child_external'])->name('childexternalaudit');
 Route::post('UpdateStateAuditee/{id}', [AuditeeController::class, 'UpdateStateChange'])->name('UpdateStateAuditee');
-
+Route::post('reopen/store/{id}', 
+                    [AuditeeController::class, 'reopenStore'])
+                    ->name('reopenExternal.store');
 //----------------------Lab Incident view-----------------
 Route::get('lab-incident', [LabIncidentController::class, 'labincident']);
 //Route::post('RejectStateChange/{id}', [RootCauseController::class, 'RejectStateChange'])->name('RejectStateChange');
