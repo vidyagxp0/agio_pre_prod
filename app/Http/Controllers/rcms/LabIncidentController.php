@@ -6892,97 +6892,97 @@ if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Commen
             }
             if ($changeControl->stage == 4) {
 
-                //   $Resamplingchilds = Resampling::where('parent_id', $id)
-                //         ->where('parent_type', 'Lab Incident')
-                //         ->get();
-                //             $hasPendingResampling = false;
-                //         foreach ($Resamplingchilds as $ext) {
-                //                 $Resamplingchildstatus = trim(strtolower($ext->status));
-                //                 if ($Resamplingchildstatus !== 'closed - done' && $extensionchildStatus !== 'closed-cancelled') {
-                //                     $hasPendingResampling = true;
-                //                     break;
-                //                 }
-                //             }
-                //     if ($hasPendingResampling) {
-                //         // $Resamplingchildstatus = trim(strtolower($extensionchild->status));
-                //         if ($hasPendingResampling) {
-                //             Session::flash('swal', [
-                //                 'title' => 'Resampling Child Pending!',
-                //                 'message' => 'You cannot proceed until Resampling Child is Closed-Done.',
-                //                 'type' => 'warning',
-                //             ]);
+                  $Resamplingchilds = Resampling::where('parent_id', $id)
+                        ->where('parent_type', 'Lab Incident')
+                        ->get();
+                            $hasPendingResampling = false;
+                        foreach ($Resamplingchilds as $ext) {
+                                $Resamplingchildstatus = trim(strtolower($ext->status));
+                                if ($Resamplingchildstatus !== 'closed - done' && $Resamplingchildstatus !== 'closed-cancelled') {
+                                    $hasPendingResampling = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingResampling) {
+                        // $Resamplingchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingResampling) {
+                            Session::flash('swal', [
+                                'title' => 'Resampling Child Pending!',
+                                'message' => 'You cannot proceed until Resampling Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
 
-                //         return redirect()->back();
-                //         }
-                //     } else {
-                //         // Flash message for success (when the form is filled correctly)
-                //         Session::flash('swal', [
-                //             'title' => 'Success!',
-                //             'message' => 'Document Sent',
-                //             'type' => 'success',
-                //         ]);
-                //     }
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
 
-                // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                //         ->where('parent_type', 'Lab Incident')
-                //         ->get();
-                //             $hasPendingRCA = false;
-                //         foreach ($rcachilds as $ext) {
-                //                 $rcachildstatus = trim(strtolower($ext->status));
-                //                if($rcachildstatus !== 'closed - done'  && $rcachildstatus !== 'closed-cancelled'){
-                //                     $hasPendingRCA = true;
-                //                     break;
-                //                 }
-                //             }
-                //     if ($hasPendingRCA) {
-                //         // $rcachildstatus = trim(strtolower($extensionchild->status));
-                //         if ($hasPendingRCA) {
-                //             Session::flash('swal', [
-                //                 'title' => 'RCA Child Pending!',
-                //                 'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                //                 'type' => 'warning',
-                //             ]);
+                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                        ->where('parent_type', 'Lab Incident')
+                        ->get();
+                            $hasPendingRCA = false;
+                        foreach ($rcachilds as $ext) {
+                                $rcachildstatus = trim(strtolower($ext->status));
+                               if($rcachildstatus !== 'closed - done'  && $rcachildstatus !== 'closed-cancelled'){
+                                    $hasPendingRCA = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
 
-                //         return redirect()->back();
-                //         }
-                //     } else {
-                //         // Flash message for success (when the form is filled correctly)
-                //         Session::flash('swal', [
-                //             'title' => 'Success!',
-                //             'message' => 'Document Sent',
-                //             'type' => 'success',
-                //         ]);
-                //     }
-                // $actionchilds = ActionItem::where('parent_id', $id)
-                //             ->where('parent_type', 'Lab Incident')
-                //             ->get();
-                //                 $hasPendingaction = false;
-                //             foreach ($actionchilds as $ext) {
-                //                     $actionchildstatus = trim(strtolower($ext->status));
-                //                    if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled')  {
-                //                         $hasPendingaction = true;
-                //                         break;
-                //                     }
-                //                 }
-                //         if ($hasPendingaction) {
-                //             // $actionchildstatus = trim(strtolower($extensionchild->status));
-                //             if ($hasPendingaction) {
-                //                 Session::flash('swal', [
-                //                     'title' => 'Action Item Child Pending!',
-                //                     'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                //                     'type' => 'warning',
-                //                 ]);
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+                $actionchilds = ActionItem::where('parent_id', $id)
+                            ->where('parent_type', 'Lab Incident')
+                            ->get();
+                                $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                    $actionchildstatus = trim(strtolower($ext->status));
+                                   if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled')  {
+                                        $hasPendingaction = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPendingaction) {
+                            // $actionchildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPendingaction) {
+                                Session::flash('swal', [
+                                    'title' => 'Action Item Child Pending!',
+                                    'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
 
-                //             return redirect()->back();
-                //             }
-                //         } else {
-                //             // Flash message for success (when the form is filled correctly)
-                //             Session::flash('swal', [
-                //                 'title' => 'Success!',
-                //                 'message' => 'Document Sent',
-                //                 'type' => 'success',
-                //             ]);
-                //         }
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
                 // $capachilds = Capa::where('parent_id', $id)
                 //                 ->where('parent_type', 'Lab Incident')
                 //                 ->get();

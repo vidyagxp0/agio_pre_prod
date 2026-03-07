@@ -367,6 +367,12 @@
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+
+                                @php
+                                $istab1 = ($extensionNew->stage == 1 && (($extensionNew->initiator == Auth::user()->id) || Helpers::check_roles($extensionNew->site_location_code, 'Extension', 3) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18)));
+                                $istab2 = ($extensionNew->stage == 2 && (Helpers::check_roles($extensionNew->site_location_code, 'Extension', 4) || Helpers::check_roles($extensionNew->division_id, 'Extension', 18)))
+                                @endphp
+
                                 @if (!empty($parent_id))
                                     <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                     <input type="hidden" name="parent_type" value="{{ $parent_type }}">
@@ -418,7 +424,7 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         Characters remaining
                                         <input id="docname" type="text" name="short_description"
-                                            {{ $extensionNew->stage == 1 ? '' : 'readonly' }}
+                                            {{ $istab1 ? '' : 'readonly' }}
                                             value="{{ $extensionNew->short_description }}" maxlength="255" required>
                                     </div>
                                     {{-- @error('short_description')
@@ -439,14 +445,14 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                         name="reviewers" placeholder="Select Reviewers" >
                                                                                                                                                                                                                                                                                                                                                                                                                                                         <option value="">-- Select --</option>
                                                                                                                                                                                                                                                                                                                                                                                                                                                         @if (!empty($reviewers))
-    @foreach ($reviewers as $lan)
-    @if (Helpers::checkUserRolesreviewer($lan))
-    <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->reviewers) selected @endif>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $lan->name }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </option>
-    @endif
-    @endforeach
-    @endif
+                                        @foreach ($reviewers as $lan)
+                                        @if (Helpers::checkUserRolesreviewer($lan))
+                                        <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->reviewers) selected @endif>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $lan->name }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </option>
+                                        @endif
+                                        @endforeach
+                                        @endif
                                                                                                                                                                                                                                                                                                                                                                                                                                                     </select>
                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>
                                                                                                                                                                                                                                                                                                                                                                                                                                             </div> -->
@@ -457,12 +463,15 @@
                                             Extension Number<span class="text-danger"></span>
                                         </label>
                                             @if (empty($extensionNew->parent_type) || $extensionNew->parent_type == 'number3' || $extensionNew->parent_type == 'number1' || $extensionNew->parent_type == 'number2')
-                                                <select name="count_data" id="" {{$extensionNew->stage == 1 ? '' : 'readonly'}}>
+                                                <select name="count_data" id="" {{$istab1 ? '' : 'disabled'}}>
                                                     <option value="">--Select Extension Number--</option>
                                                     <option value="number1" @if ( $extensionNew->count_data == 'number1' || $extensionNew->data_number == '1') selected @endif>1</option>
                                                     <option value="number2" @if ($extensionNew->count_data == 'number2' || $extensionNew->data_number == '2') selected @endif>2</option>
                                                     <option value="number3" @if ($extensionNew->count_data == 'number3' || $extensionNew->data_number == '3') selected @endif>3</option>
                                                 </select>
+                                                @if ($extensionNew->stage != 1)
+                                                <input type="hidden" name="count_data" value="{{$extensionNew->count_data}}"> 
+                                                @endif
                                             @else
                                                 <!-- <select name="count" id="" disabled>
                                                 <option value="" >--Select Extension Number--</option>
@@ -479,7 +488,7 @@
                                         <label for="Assigned To">HOD Review <span class="text-danger">*</span></label>
                                         <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                             name="reviewers" placeholder="Select Reviewers"
-                                            {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }} Required>
+                                            {{$istab1 ? '' : 'disabled'}} Required>
                                             <option value="">-- Select --</option>
                                             @if (!empty(Helpers::getHODDropdown()))
                                                 @foreach (Helpers::getHODDropdown() as $listHod)
@@ -490,6 +499,9 @@
                                                 @endforeach
                                             @endif
                                         </select>
+                                        @if ($extensionNew->stage != 1)
+                                          <input type="hidden" name="reviewers" value="{{$extensionNew->reviewers}}"> 
+                                        @endif
                                     </div>
                                 </div>
 
@@ -497,18 +509,21 @@
                                     <div class="group-input">
                                         <label for="Assigned To">QA approval </label>
                                         <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
-                                            name="approvers" placeholder="Select Approvers" >
+                                            name="approvers" {{$istab1 ? '' : 'disabled'}} placeholder="Select Approvers" >
                                             <option value="">-- Select --</option>
                                             @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
                                             @if (Helpers::checkUserRolesApprovers($lan))
                                             <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->approvers) selected @endif>
-                                                                            {{ $lan->name }}
-                                                                        </option>
+                                                {{ $lan->name }}
+                                            </option>
                                             @endif
                                             @endforeach
                                             @endif
-                                    </select>
+                                        </select>
+                                         @if ($extensionNew->stage != 1)
+                                          <input type="hidden" name="approvers" value="{{$extensionNew->approvers}}"> 
+                                        @endif
                                 </div>
                             </div> -->
                                 {{-- <div class="col-12">
@@ -604,11 +619,10 @@
                                     <div class="group-input">
                                         <label for="Assigned To">QA/CQA Approval <span
                                         class="text-danger">*</span></label>
-                                        <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
+                                        <select id="choices-multiple-remove-but" {{$istab1 ? '' : 'disabled'}} class="choices-multiple-reviewer"
                                             name="approvers" placeholder="Select Approvers"
                                             {{ $extensionNew->stage == 0 || $extensionNew->stage == 5 || $extensionNew->stage == 6 ? 'disabled' : '' }} required>
                                             <option value="">-- Select --</option>
-
                                             @if (!empty($users))
                                                 @foreach ($users as $lan)
                                                     <option value="{{ $lan->id }}"
@@ -619,6 +633,10 @@
                                                 @endforeach
                                             @endif
                                         </select>
+
+                                        @if ($extensionNew->stage != 1)
+                                            <input type="hidden" name="approvers" value="{{$extensionNew->approvers}}"> 
+                                        @endif
                                     </div>
                                 </div>
 
@@ -685,17 +703,17 @@
                                     </div>
                                     {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
-                                @enderror --}}
+                                     @enderror --}}
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Justification / Reason  <span class="text-danger">*</span></label>
                                         <textarea id="docname" type="text" name="justification_reason" value=""
-                                            {{ $extensionNew->stage == 1 ? '' : 'readonly' }} required>{{ $extensionNew->justification_reason }}</textarea>
+                                            {{ $istab1 ?'' : 'readonly' }} required>{{ $extensionNew->justification_reason }}</textarea>
                                     </div>
                                     {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
-                                @enderror --}}
+                                     @enderror --}}
                                 </div>
                                 <!-- <div class="col-12">
                                         <div class="group-input">
@@ -707,23 +725,23 @@
                                                     @if ($extensionNew->file_attachment_extension)
                                                 @foreach (json_decode($extensionNew->file_attachment_extension) as $file)
                                                 <h6 class="file-container text-dark"
-                                            style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $file }}</b>
-                                            <a href="{{ asset('upload/' . $file) }}"
-                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a class="remove-file"
-                                                data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark"
-                                                    style="color:red; font-size:20px;"></i></a>
-                                        </h6>
+                                                    style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a class="remove-file"
+                                                        data-file-name="{{ $file }}"><i
+                                                            class="fa-solid fa-circle-xmark"
+                                                            style="color:red; font-size:20px;"></i></a>
+                                                </h6>
                                                 @endforeach
                                                 @endif
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input type="file" id="Extension_Attachments"
-                                                        name="file_attachment_extension[]" {{ $extensionNew->stage == 1 ? '' : 'disabled' }}
+                                                        name="file_attachment_extension[]" {{ $istab1 ? '' : 'disabled' }}
                                                         oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
                                                 </div>
                                             </div>
@@ -777,15 +795,12 @@
 
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
                             </div>
 
                         </div>
                     </div>
                 </div>
-
-                        
 
                 <!-- reviewer content -->
                 <div id="CCForm2" class="inner-block cctabcontent">
@@ -795,7 +810,7 @@
                                 <div class="group-input">
                                     <label for="Assigned To">HOD Remarks @if($extensionNew->stage == 2)<span class="text-danger">*</span>@endif</label>
                                     <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30"
-                                        {{ $extensionNew->stage == 2 ? '' : 'readonly' }} required>{{ $extensionNew->reviewer_remarks }}</textarea>
+                                        {{ $istab2 ? '' : 'readonly' }} required>{{ $extensionNew->reviewer_remarks }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12">
@@ -838,7 +853,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="HOD_Attachments"
+                                            <input type="file" id="HOD_Attachments" {{$istab2 ? '' : 'disabled'}}
                                                 name="file_attachment_reviewer[]"
                                                 oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
                                         </div>

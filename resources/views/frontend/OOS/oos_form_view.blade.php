@@ -8170,6 +8170,7 @@
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->repeat_testing_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->repeat_testing_ib == 'No' ? 'selected' : '' }}>No</option>
+                                    <option value="NA" {{ $data->repeat_testing_ib == 'NA' ? 'selected' : '' }}>NA</option>
                                 </select>
                                 @if ($data->stage != 9)
                                     <input type="hidden" value="{{$data->repeat_testing_ib}}" name="repeat_testing_ib">
@@ -8185,8 +8186,8 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Phase II Investigation Required <span class="text-danger">*</span></label>
-                                    <select name="phase_ii_inv_req_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $istab9 ? '' : 'disabled' }}>
-                                    <option value="" >--Select---</option>
+                                <select id="phase_ii_inv_req_ib" name="phase_ii_inv_req_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $istab9 ? '' : 'disabled' }}>
+                                    <option value="">--Select---</option>
                                     <option value="Yes" {{ $data->phase_ii_inv_req_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->phase_ii_inv_req_ib == 'No' ? 'selected' : '' }}>No</option>
                                 </select>
@@ -8198,9 +8199,8 @@
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Assigned To">Production Person <span class="text-danger">*</span></label>
-                                <select id="choices-multiple-remove" class="choices-multiple-reviewe"
-                                    name="production_person_ib" placeholder="Select Reviewers" {{Helpers::isOOSChemical($data->stage)}} {{ $istab9 ? '' : 'disabled' }}>
+                                <label for="Assigned To">Production Person <span id="production_required_star" class="text-danger">*</span></label>
+                                <select id="production_person_ib" name="production_person_ib" placeholder="Select Production Person" {{Helpers::isOOSChemical($data->stage)}} {{ $istab9 ? '' : 'disabled' }} {{ $data->phase_ii_inv_req_ib == 'Yes' ? 'required' : '' }}>    
                                     <option value="">-- Select --</option>
                                     @if (!empty(Helpers::getProductionDropdown()))
                                         @foreach (Helpers::getProductionDropdown() as $listPersone)
@@ -8216,6 +8216,31 @@
                             @endif
                             </div>
                         </div>
+                        <script>
+                            function toggleProductionRequired() {
+
+                                var phase = document.getElementById("phase_ii_inv_req_ib").value;
+                                var production = document.getElementById("production_person_ib");
+                                var star = document.getElementById("production_required_star");
+
+                                if (phase == "No") {
+
+                                    production.removeAttribute("required");
+                                    star.style.display = "none";
+
+                                } else if (phase == "Yes") {
+
+                                    production.setAttribute("required","required");
+                                    star.style.display = "inline";
+                                }
+
+                            }
+
+                            document.getElementById("phase_ii_inv_req_ib")
+                            .addEventListener("change", toggleProductionRequired);
+
+                            toggleProductionRequired();
+                        </script>
                         <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat Analysis Method/Resampling <span class="text-danger">*</span></label>

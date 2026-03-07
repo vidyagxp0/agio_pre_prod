@@ -22,6 +22,7 @@ use App\Models\DeviationCft;
 use App\Models\AuditReviewersDetails;
 use App\Models\UserRole;
 use App\Models\Capa;
+use App\Models\CapaGrid;
 use App\Models\Customer;
 use Carbon\Carbon;
 use App\Models\RecordNumber;
@@ -9435,7 +9436,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
         $record_number = $lastAi ? $lastAi->record + 1 : 1;
      
         $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-          $currentDate = Carbon::now();
+        $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
       
@@ -13430,6 +13431,102 @@ public function audit_trail_filter(Request $request, $id)
 
 
             $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','grid_data2','riskEffectAnalysis','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1','fishboneData'))
+                ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+             $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+            return $pdf->stream('Deviation' . $id . '.pdf');
+        }
+    }
+
+    public function familyReport($id) 
+    {
+        $data = Deviation::find($id);
+        $data1 =  DeviationCft::where('deviation_id', $id)->first();
+        if (!empty ($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $grid_data = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Deviation")->first();
+            $grid_data1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Document")->first();
+            $grid_data2 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Product")->first();
+
+            // $data8 = DeviationGrid::where('deviation_grid_id', $id)->where('type', 'effect_analysis')->first();
+
+            $investigationTeam = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
+            $investigation_data = json_decode($investigationTeam->data, true);
+
+            $rootCause = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'RootCause'])->first();
+            $root_cause_data = json_decode($rootCause->data, true);
+
+            $whyData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
+            $why_data = json_decode($whyData->data, true);
+            //  $riskEffectAnalysis_1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->first();
+            $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
+
+            $capaExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Capa"])->first();
+            $qrmExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "QRM"])->first();
+            $investigationExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Investigation"])->first();
+
+            $grid_data_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+            $grid_data_matrix_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+
+            $fishboneData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'fishbone'])->first();
+            
+            $capa_Data = Capa::where('parent_id', $id)->where('parent_type', 'Deviation')->get();
+
+            foreach ($capa_Data as $capa) {
+
+                $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Product_Details")->first();
+
+                $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Instruments_Details")->first();
+
+                $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Material_Details")->first();
+
+                $capa->originator = User::where('id', $capa->initiator_id)->value('name');
+
+                if (!empty($capa->capa_team)) {
+                    $capa_teamIdsArray = explode(',', $capa->capa_team);
+                    $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
+                    $capa_teamNamesString = implode(', ', $capa_teamNames);
+                } else {
+                    $capa_teamNamesString = null;
+                }
+            }
+            
+            $extension = extension_new::where('parent_id', $id)
+                    ->where('parent_type', 'Deviation')
+                    ->orderByDesc('id')
+                    ->get();
+
+            $rcaData = RootCauseAnalysis::where('parent_id', $id)
+                    ->where('parent_type', 'Deviation')
+                    ->orderByDesc('id')
+                    ->get();
+
+            $lastAi = ActionItem::where('parent_id', $id)
+            ->where('parent_type', 'Deviation')
+            ->orderByDesc('id')
+            ->get();
+
+            //dd($fishboneData);
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+
+            $pdf = PDF::loadview('frontend.forms.deviation.familyReportDeviation', compact('data','grid_data2','riskEffectAnalysis','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1','fishboneData','extension','capa_Data','capa_teamNamesString','rcaData', 'lastAi'))
                 ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,

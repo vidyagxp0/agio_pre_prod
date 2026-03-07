@@ -315,6 +315,8 @@
                             'selected' : '' }}>Yes</option>
                         <option value="no" {{ $data && $data->phase_ii_inv_required_plir == 'no' ?
                             'selected' : '' }}>No</option>
+                        <option value="na" {{ $data && $data->phase_ii_inv_required_plir == 'na' ?
+                            'selected' : '' }}>NA</option>
                     </select>
                 </div>
                 @if ($data->stage != 5)
@@ -362,6 +364,8 @@
                             'selected' : '' }}>Yes</option>
                         <option value="NO" {{ $data && $data->repeat_testing_pia == 'NO' ?
                             'selected' : '' }}>No</option>
+                        <option value="NA" {{ $data && $data->repeat_testing_pia == 'NA' ?
+                            'selected' : '' }}>NA</option>    
                     </select>
                 </div>
                 {{-- <input type="hidden" name="repeat_testing_pia" value="{{ $data->repeat_testing_pia }}"> --}}

@@ -628,6 +628,33 @@ $users = DB::table('users')
                                 recordText = divisionName + '/OOT/' + year + '/' + recordNumber;
                             }
 
+                            // LABEL CHANGE LOGIC
+                            var typeText = "OOS";
+
+                            if(formType === 'OOT'){
+                                typeText = "OOT";
+                            }
+
+                            document.getElementById('label_occured').innerHTML =
+                                typeText + " Occurred On <span class='text-danger'>*</span>";
+
+                            document.getElementById('label_observed').innerHTML =
+                                typeText + " Observed On <span class='text-danger'>*</span>";
+
+                            document.getElementById('oos_details').innerHTML =
+                                typeText + " Details ";
+
+                            document.getElementById('label_reported').innerHTML =
+                                typeText + " Reported On ";
+
+                            var headText = "OOS Information";
+
+                            if(formType === 'OOT'){
+                                headText = "OOT Information";
+                            }
+
+                            document.getElementById('info_head').innerHTML = headText;
+
                             // Update the Record Number display
                             document.getElementById('record_display').value = recordText;
                         }
@@ -893,7 +920,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-md-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="due-date">OOS/OOT Occurred On</label>
+                                <label id="label_occured">OOS Occurred On <span class="text-danger">*</span></label>
                                 <div class="calenderauditee">
                                     <input type="text"  id="deviation_occured_on_gi" readonly placeholder="DD-MM-YYYY" />
                                     <input type="date" name="deviation_occured_on_gi"   value=""
@@ -904,7 +931,7 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="OOS Observed On">OOS/OOT Observed On</label>
+                                <label id="label_observed">OOS Observed On <span class="text-danger">*</span></label>
                                 <div class="calenderauditee">
                                     <input type="text" id="oos_observed_on" readonly placeholder="DD-MMM-YYYY" />
                                     {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
@@ -937,7 +964,8 @@ $users = DB::table('users')
 
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">OOS/OOT Reported On</label>
+                                <!-- <label for="Audit Schedule End Date">OOS/OOT Reported On</label> -->
+                                <label id="label_reported">OOS Reported On</label>
                                 <div class="calenderauditee">
                                     <input type="text" id="oos_reported_date" readonly placeholder="DD-MMM-YYYY" />
                                     <input type="date" name="oos_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -1001,7 +1029,7 @@ $users = DB::table('users')
                                 </div>
                             </div>
                         </div>
-                        <div class="sub-head pt-3">OOS/OOT Information</div>
+                        <div class="sub-head pt-3" id="info_head">OOS Information</div>                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
@@ -1218,62 +1246,9 @@ $users = DB::table('users')
                             </div>
                         </div>
                     <!----------------grid-3----------------------------------- -->
-
-                        {{-- <div class="group-input">
-                            <label for="audit-agenda-grid">
-                                OOS/OOT Details
-                                <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="oos_details_details" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 4%">Row#</th>
-                                            <th style="width: 8%">AR Number.</th>
-                                            <th style="width: 8%">Test Name of OOS/OOT</th>
-                                            <th style="width: 8%">Results Obtained</th>
-                                            <th style="width: 8%">Specification Limit</th>
-                                            <th style="width: 16%">File Attachment</th>
-                                            <th style="width: 8%">Submit By</th>
-                                            <th style="width: 16%">Submit On</th>
-                                            <th style="width: 15%">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input disabled type="text" name="oos_detail[0][serial]" value="1"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_arnumber]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_test_name]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_results_obtained]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
-                                            <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
-                                            <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
-                                            <td>
-                                            <div class="col-lg-6 new-date-data-field">
-                                                <div class="group-input input-date">
-                                                    <div class="calenderauditee">
-                                                        <input type="text" id="oos_submit_on" readonly
-                                                        placeholder="DD-MM-YYYY" />
-                                                        <input type="date" name="oos_detail[0][oos_submit_on]"
-                                                        class="hide-input" oninput="handleDateInput(this, 'oos_submit_on')">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            </td>
-                                            <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> --}}
                         <div class="group-input">
-                            <label for="audit-agenda-grid">
-                                OOS/OOT Details
+                            <label for="audit-agenda-grid" id="oos_details">
+                                OOS Details
                                 <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
                             </label>
                             <div class="table-responsive">
