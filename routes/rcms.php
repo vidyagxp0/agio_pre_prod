@@ -215,12 +215,14 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('ObservationAuditTrialDetails/{id}', [ObservationController::class, 'ObservationAuditTrialDetails'])->name('showaudittrialobservation');
             Route::get('ObservationSingleReport/{id}', [ObservationController::class, 'ObservationSingleReport']);
             Route::get('ObservationAuditTrialShow/{id}', [ObservationController::class, 'ObservationAuditTrailPdf'])->name('Observationaudit.pdf');
-
+            Route::get('ObservationfamilyReport/{id}', [ObservationController::class, 'ObservationfamilyReport']);
+            
 
             //----------------------------------------------By PRIYA SHRIVASTAVA------------------
             Route::post('formDivision', [FormDivisionController::class, 'formDivision'])->name('formDivision');
             Route::get('ExternalAuditSingleReport/{id}', [AuditeeController::class, 'singleReport'])->name('ExternalAuditSingleReport');
             Route::get('SummaryResponseReport/{id}', [AuditeeController::class, 'SummaryResponseReport'])->name('SummaryResponseReport');
+            
             Route::get('ExternalAuditTrialReport/{id}', [AuditeeController::class, 'auditReport'])->name('ExternalAuditTrialReport');
             Route::get('capaSingleReport/{id}', [CapaController::class, 'singleReport'])->name('capaSingleReport');
             Route::get('capaAuditReport/{id}', [CapaController::class, 'auditReport'])->name('capaAuditReport');
@@ -261,7 +263,9 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('deviation/cftnotreqired/{id}', [DeviationController::class, 'cftnotreqired'])->name('cftnotreqired');
             Route::post('deviation/Qa/{id}', [DeviationController::class, 'deviation_qa_more_info'])->name('deviation_qa_more_info');
             Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
-
+      Route::post('deviation/reopen/store/{id}', 
+    [DeviationController::class, 'reopenStore'])
+    ->name('deviation.reopen.store');
             Route::post('dev-launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('dev-launch-extension-deviation');
             Route::post('dev-launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('dev-launch-extension-capa');
             Route::post('dev-launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('dev-launch-extension-qrm');
@@ -432,6 +436,9 @@ Route::group(['prefix' => 'rcms'], function () {
 
                 Route::get('auditDetailsMarket/{id}', [MarketComplaintController::class, 'auditDetailsMarket'])->name('marketauditDetails');
 
+                  Route::post('marketcomplaint/reopen/store/{id}', 
+                    [MarketComplaintController::class, 'reopenStore'])
+                    ->name('reopen.store');
                 Route::get('MarketComplaintAuditReport/{id}', [MarketComplaintController::class, 'MarketAuditTrial'])->name('MarketComplaintAuditReport');
                 Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
                 Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');

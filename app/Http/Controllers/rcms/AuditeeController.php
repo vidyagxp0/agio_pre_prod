@@ -6865,7 +6865,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                                     $data = [
                                         'data'    => $changeControl,
-                                        'site'    => "External Audit",
+                                        'site'    => "EA",
                                         'history' => "Audit Details Summary",
                                         'process' => 'External Audit',
                                         'comment' => $history->comments,
@@ -6990,7 +6990,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                                     $data = [
                                         'data'    => $changeControl,
-                                        'site'    => "External Audit",
+                                        'site'    => "EA",
                                         'history' => "Summary and Response Complete",
                                         'process' => 'External Audit',
                                         'comment' => $history->comments,
@@ -7834,7 +7834,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                                     $data = [
                                         'data'    => $changeControl,
-                                        'site'    => "External Audit",
+                                        'site'    => "EA",
                                         'history' => "CFT Review Complete",
                                         'process' => 'External Audit',
                                         'comment' => $history->comments,
@@ -8024,7 +8024,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                                     $data = [
                                         'data'    => $changeControl,
-                                        'site'    => "External Audit",
+                                        'site'    => "EA",
                                         'history' => "Approval Complete",
                                         'process' => 'External Audit',
                                         'comment' => $history->comments,
@@ -8147,7 +8147,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                                             $data = [
                                                 'data'    => $changeControl,
-                                                'site'    => "External Audit",
+                                                'site'    => "EA",
                                                 'history' => "More Information Required",
                                                 'process' => 'External Audit',
                                                 'comment' => $history->comments,
@@ -8250,7 +8250,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                                             $data = [
                                                 'data'    => $changeControl,
-                                                'site'    => "External Audit",
+                                                'site'    => "EA",
                                                 'history' => "More Information Required",
                                                 'process' => 'External Audit',
                                                 'comment' => $history->comments,
@@ -8349,7 +8349,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                                             $data = [
                                                 'data'    => $changeControl,
-                                                'site'    => "External Audit",
+                                                'site'    => "EA",
                                                 'history' => "Send to Opened",
                                                 'process' => 'External Audit',
                                                 'comment' => $history->comments,
@@ -8502,7 +8502,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                                     $data = [
                                         'data'    => $changeControl,
-                                        'site'    => "External Audit",
+                                        'site'    => "EA",
                                         'history' => "CFT Review Not Required",
                                         'process' => 'External Audit',
                                         'comment' => $history->comments,
@@ -8682,7 +8682,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                                     $data = [
                                         'data'    => $changeControl,
-                                        'site'    => "External Audit",
+                                        'site'    => "EA",
                                         'history' => "Cancel",
                                         'process' => 'External Audit',
                                         'comment' => $history->comments,
@@ -8755,7 +8755,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
                                     $data = [
                                         'data'    => $changeControl,
-                                        'site'    => "External Audit",
+                                        'site'    => "EA",
                                         'history' => "Cancel",
                                         'process' => 'External Audit',
                                         'comment' => $history->comments,
@@ -9073,5 +9073,110 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             return view('frontend.extension.extension_new', compact('parent_type','record','record_number','parent_id','parent_due_date','extension_record','parent_division_id', 'relatedRecords','countData',));
 
         }
+    }
+
+
+
+    public function reopenStore(Request $request, $id)
+    { 
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
+                $oldAudittee = Auditee::findOrFail($id);
+                $Auditee = Auditee::find($id);
+
+                $Auditee->reopen_by = Auth::user()->name;
+                $Auditee->reopen_on = Carbon::now()->format('d-M-Y');
+                $Auditee->commentreopen = $request->comment;
+                $Auditee->save();  
+
+        // 🔥 NEW RECORD CREATE
+        // $newDeviation = new Deviation();
+
+        // $newDeviation->form_type = "Deviation";
+        // $newDeviation->initiator_id = Auth::user()->id;
+        // $newDeviation->division_id = $oldAudittee->division_id;
+        // $newDeviation->assign_to = $oldAudittee->assign_to;
+
+        // $newDeviation->stage = 1;
+        // $newDeviation->status = "Opened";
+
+        // $newDeviation->save();
+           
+        // 🔥 Audit Trail Entry (OLD RECORD ME)
+        $history = new AuditTrialExternal();
+        $history->ExternalAudit_id = $oldAudittee->id;
+        $history->activity_type = 'Reopened';
+        $history->previous = $oldAudittee->status;
+        $history->current = "Reopened as New External Audit Record";
+        $history->action = 'Reopened';
+        $history->comment = $request->comment;
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $oldAudittee->status;
+        $history->change_from = $oldAudittee->status;
+        $history->change_to = "Reopened";
+        $history->stage = 'Closed';
+        $history->action_name = 'New';
+        $history->save();
+
+        $users = collect()
+                ->merge(Helpers::getQAHeadUserList($Auditee->division_id))
+                ->merge(Helpers::getCQAHeadUsersList($Auditee->division_id))
+                ->merge(Helpers::getQAUserList($Auditee->division_id))
+                ->merge(Helpers::getInitiatorUserList($Auditee->division_id))
+                ->merge(Helpers::getCftUserList($Auditee->division_id))
+                ->unique('user_id');
+
+                $emails = $users
+                ->map(function ($u) {
+                    return Helpers::getUserEmail($u->user_id);
+                })
+                ->filter()      
+                ->unique()      
+                ->values();
+                foreach ($emails as $email) {
+                    // if($u->q_m_s_divisions_id == $Auditee->division_id){
+                        
+                            if ($email !== null) {
+                            $data = [
+                                'data'    => $Auditee,
+                                'site'    => "EA",
+                                'history' => "Reopened",
+                                'process' => 'External Audit',
+                                'comment' => $request->comments,
+                                'user'    => Auth::user()->name
+                            ];
+
+                            try {
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $Auditee,
+                                    'External Audit'
+                                );
+
+                            } catch (\Exception $e) {
+
+                                \Log::error('Queue Dispatch Error', [
+                                    'email' => $email,
+                                    'error' => $e->getMessage()
+                                ]);
+                            }
+                        }
+                    // }
+                }
+        
+
+
+        
+
+        return redirect()->to('auditee');
+        
+        
+        }else {
+                toastr()->error('E-signature Not match');
+                return back();
+            }
     }
 }

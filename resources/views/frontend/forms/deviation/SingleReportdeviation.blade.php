@@ -5869,6 +5869,21 @@
                         <td class="w-80">{{ $data->Close_comment ?? 'Not Applicable' }}</td>
                     </tr>
                 </table>
+
+                 <table>
+                    <tr>
+                        <th class="w-20">Reopened By</th>
+                        <td class="w-30">{{ $data->reopen_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Reopened On</th>
+                        <td class="w-30">{{ $data->reopen_on ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Reopened Comment</th>
+                        <td class="w-80">{{ $data->commentreopen ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
                 <table>
                     <tr>
                         <th class="w-20">Cancel By</th>
