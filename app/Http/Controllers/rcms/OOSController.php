@@ -5801,7 +5801,7 @@ class OOSController extends Controller
                         if (!$lastExtension) {
                             $extensionCount = 1;
                         } else {
-                            if (in_array($lastExtension->status, ['Closed - Done', 'closed-reject'])) {
+                            if (in_array($lastExtension->status, ['Closed - Done','Closed Cancelled', 'closed-reject'])) {
                                 $extensionCount = $lastExtension->count + 1;
                             } else {
                                 return redirect()->back()->with('error', $lastExtension->count . 'st extension not complete.');
