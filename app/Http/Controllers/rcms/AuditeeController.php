@@ -16,11 +16,14 @@ use App\Models\RoleGroup;
 use App\Models\ChildRecord;
 use App\Models\InternalAuditGrid;
 use App\Models\AuditTrialExternal;
+use App\Models\extension_new;
 use App\Models\ExternalAuditCFT;
 use App\Models\ExternalAuditCFTResponse;
 use Carbon\Carbon;
 use App\Models\User;
 use PDF;
+use App\Models\ObservationGrid;
+use App\Models\ObseravtionSingleGrid;
 use App\Models\ActionItemHistory;
 use App\Models\ActionItem;
 use App\Models\Observation;
@@ -8866,14 +8869,83 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
 
        $data1 =  ExternalAuditCFT::where('external_audit_id', $id)->first();
-     //  $cc_cfts =  ExternalAuditCFT::where('external_audit_id', $id)->first();
+        //  $cc_cfts =  ExternalAuditCFT::where('external_audit_id', $id)->first();
 
-    //  $AuditorShow = SummaryGrid::where(['summary_id' => $AuditUpdate, 'identifier' => 'Auditors'])->firstOrNew();
+        //  $AuditorShow = SummaryGrid::where(['summary_id' => $AuditUpdate, 'identifier' => 'Auditors'])->firstOrNew();
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data','grid_Data','grid_Data_2','data1'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+            return $pdf->stream('External-Audit' . $id . '.pdf');
+        }
+    }
+
+    public static function familyReport($id)
+    {
+        $data = Auditee::find($id);
+       $grid_Data = SummaryGrid::where(['summary_id' => $id, 'identifier' => 'Auditors'])->first();
+
+       $grid_Data_2 = SummaryGrid::where(['summary_id' => $id, 'identifier' => 'Summary Response'])->first();
+
+
+       $data1 =  ExternalAuditCFT::where('external_audit_id', $id)->first();
+
+       $parentId = $id;
+
+        $griddata_obs = null;
+        $grid_Data_obs = null;
+        $grid_Data2_obs = null;
+        $grid_Data3_obs = null;
+        $grid_Data4_obs = null;
+
+        $Obs_Data = Observation::where('parent_id', $parentId)->where('parent_type', 'External Audit')->get();
+
+        foreach ($Obs_Data as $observation) {
+
+            $griddata_obs = ObservationGrid::where('observation_id', $observation->id)->first();
+
+            $grid_Data_obs = ObseravtionSingleGrid::firstOrCreate(['obs_id' => $observation->id,'identifier' => 'observation']);
+
+            $grid_Data2_obs = ObseravtionSingleGrid::firstOrCreate(['obs_id' => $observation->id,'identifier' => 'response']);
+
+            $grid_Data3_obs = ObseravtionSingleGrid::firstOrCreate(['obs_id' => $observation->id,'identifier' => 'corrective']);
+
+            $grid_Data4_obs = ObseravtionSingleGrid::firstOrCreate(['obs_id' => $observation->id,'identifier' => 'preventive']);
+        } 
+
+        $ActionItem = ActionItem::where('parent_id', $parentId)
+                ->where('parent_type', 'External Audit')
+                ->get();
+
+        $Extension = extension_new::where('parent_id', $parentId)
+                    ->where('parent_type', 'External Audit')
+                    ->get();      // COLLECTION      
+
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.externalAudit.external_familyReport', compact('data','grid_Data','grid_Data_2','data1','Obs_Data','griddata_obs','grid_Data_obs','grid_Data2_obs','grid_Data3_obs','grid_Data4_obs','ActionItem','Extension'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

@@ -22,6 +22,7 @@ use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Capa;
+use App\Models\CapaGrid;
 use App\Models\OpenStage;
 use App\Models\extension_new;
 use App\Models\ActionItem;
@@ -7670,6 +7671,109 @@ class OOCController extends Controller
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.OOC.ooc_singleReport', compact('data','oocgrid','oocevolution','ooc','assignedTo'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+            return $pdf->stream('OOC' . $id . '.pdf');
+        }
+    }
+
+    public function familyReport(Request $request, $id){
+        $ooc = OutOfCalibration::where('id', $id)->first();
+        $ooc->record = str_pad($ooc->record, 4, '0', STR_PAD_LEFT);
+        $ooc->assign_to_name = User::where('id', $ooc->assign_id)->value('name');
+        $ooc->initiator_name = User::where('id', $ooc->initiator_id)->value('name');
+        $data = OutOfCalibration::find($id);
+        $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
+        $oocevolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
+        $assignedTo = OutOfCalibration::with('assignedUser')->get();
+
+        if (!empty($data)) {
+
+            $parentId = $id;
+
+            $Extension = extension_new::where('parent_id', $parentId)
+                        ->where('parent_type', 'OOC')
+                        ->get();      // COLLECTION
+
+            $countExtensions = $Extension->count();     // ✔ No error
+            $extension = $Extension->first();           // ✔ No error
+
+            $capa_teamNamesString = null;
+
+            $capa_Data = Capa::where('parent_id', $parentId)
+                ->where('parent_type', 'OOC')
+                ->get();
+
+            foreach ($capa_Data as $capa) {
+
+                $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Product_Details")->first();
+
+                $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Instruments_Details")->first();
+
+                $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Material_Details")->first();
+
+                $capa->originator = User::where('id', $capa->initiator_id)->value('name');
+
+                if (!empty($capa->capa_team)) {
+                    $capa_teamIdsArray = explode(',', $capa->capa_team);
+
+                    $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)
+                        ->pluck('name')
+                        ->toArray();
+
+                    $capa_teamNamesString = implode(', ', $capa_teamNames);
+                } else {
+                    $capa_teamNamesString = null;
+                }
+            } 
+
+            $ActionItem = ActionItem::where('parent_id', $parentId)
+                ->where('parent_type', 'OOC')
+                ->get();
+
+            $investigation_teamNamesString = '';
+            $selectedMethodologies = [];    
+
+            $RootCause = RootCauseAnalysis::where('parent_id', $parentId)
+                ->where('parent_type', 'OOC')
+                ->get();
+
+            foreach ($RootCause as $rca) {
+
+                $rca->originator_name = User::where('id', $rca->initiator_id)->value('name');
+
+                $teamIds = explode(',', $rca->investigation_team ?? '');
+
+                $teamNames = User::whereIn('id', $teamIds)
+                                ->pluck('name')
+                                ->toArray();
+
+                $investigation_teamNamesString = implode(', ', $teamNames);
+
+                $selectedMethodologies = explode(',', $rca->root_cause_methodology ?? '');
+            }     
+
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.OOC.ooc_family_report', compact('data','oocgrid','oocevolution','ooc','assignedTo','Extension','capa_Data','capa_teamNamesString','ActionItem','RootCause','selectedMethodologies','investigation_teamNamesString'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

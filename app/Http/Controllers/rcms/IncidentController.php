@@ -16,6 +16,7 @@ IncidentLaunchExtension,
 };
 use App\Models\RootCauseAnalysis;
 use App\Models\EffectivenessCheck;
+use App\Models\CapaGrid;
 use App\Models\CC;
 use App\Models\ActionItem;
 use App\Models\Extension;
@@ -8835,7 +8836,6 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             $grid_data1 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Document")->first();
              $grid_data2 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Product")->first();
 
-
             // $json_decode = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'TeamInvestigation'])->first();
 
             $json_decode = IncidentGridData::where(['incident_id' => $id, 'identifier' => 'RootCause'])->first();
@@ -8874,6 +8874,94 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $width = $fontMetrics->getTextWidth($text, $font, $size);
 
                 $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+            return $pdf->stream('Incident' . $id . '.pdf');
+        }
+    }
+
+    public static function incidentFamilyReport($id)
+    {
+        $data = Incident::find($id);
+        if (!empty($data)) {
+        $grid_data = IncidentGrid::where('incident_grid_id', $id)->where('type', "Incident")->first();
+        $grid_data1 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Document")->first();
+        $grid_data2 = IncidentGrid::where('incident_grid_id', $id)->where('type', "Product")->first();
+
+          if (!$data) {
+                abort(404);
+            }
+            
+          $capa_teamNamesString = '';
+            
+            // 🔹 Get CAPA children
+            $capas = Capa::where('parent_id', $id)
+                ->where('parent_type', 'Incident')
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            // 🔹 Attach grids to each CAPA (SAME AS singleReport)
+            foreach ($capas as $capa) {
+
+                $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)
+                    ->where('type', "Product_Details")
+                    ->first();
+
+                $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)
+                    ->where('type', "Instruments_Details")
+                    ->first();
+
+                $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)
+                    ->where('type', "Material_Details")
+                    ->first();
+
+                // originator
+                $capa->originator = User::where('id', $capa->initiator_id)->value('name');
+
+                // team
+
+                if (!empty($capa->capa_team)) {
+                    $ids = explode(',', $capa->capa_team);
+                    $names = User::whereIn('id', $ids)->pluck('name')->toArray();
+                    $capa->capa_teamNamesString = implode(', ', $names);
+                }
+            }
+
+
+        $extensions= extension_new::where('parent_id', $id)
+                ->where('parent_type', 'Incident')
+                ->orderBy('created_at', 'asc')
+                ->get();
+        $rootCauseAnalysis= RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', 'Incident')
+                ->orderBy('created_at', 'asc')
+                ->get();        
+
+         $actionitem = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'Incident')
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.incident.incident-familyreport', compact('data','actionitem','rootCauseAnalysis','capas','grid_data','grid_data1','grid_data2' ,'extensions'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 759), $text, $font, $size);
             });
             return $pdf->stream('Incident' . $id . '.pdf');
         }

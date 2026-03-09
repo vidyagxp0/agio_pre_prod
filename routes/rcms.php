@@ -100,6 +100,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('effective-audit-trial-show/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialShow'])->name('show_effective_AuditTrial');
             Route::get('effective-audit-trial-details/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialDetails'])->name('show_audittrial_effective');
             Route::get('effectiveSingleReport/{id}', [EffectivenessCheckController::class, 'singleReport'])->name('effectiveSingleReport');
+            Route::get('effectiveFamilyReport/{id}', [EffectivenessCheckController::class, 'effectiveFamilyReport'])->name('effectiveFamilyReport');
+    
             Route::get('effectiveAuditReport/{id}', [EffectivenessCheckController::class, 'auditReport'])->name('effectiveAuditReport');
             Route::post('send-not-effective/{id}', [EffectivenessCheckController::class, 'sendToNotEffective'])->name('send-not-effective');
             Route::post('closed-cancelled/{id}', [EffectivenessCheckController::class, 'closedCancelled'])->name('closed-cancelled');
@@ -140,13 +142,14 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('change_control_family_pdf', [CCController::class, 'parent_child']);
 
             Route::get('change_control_single_pdf/{id}', [CCController::class, 'single_pdf']);
+            Route::get('cc_family_report/{id}', [CCController::class, 'family_report'])->name('cc_family_report');
             Route::get('eCheck/{id}', [CCController::class, 'eCheck']);
             Route::resource('effectiveness', EffectivenessCheckController::class);
             Route::post('send-effectiveness/{id}', [EffectivenessCheckController::class, 'stageChange']);
             Route::post('effectiveness-reject/{id}', [EffectivenessCheckController::class, 'reject']);
             Route::post('moreinfo_effectiveness/{id}',[EffectivenessCheckController::class,'cancel'])->name('moreinfo_effectiveness');
             Route::post('effectiveness_child/{id}', [EffectivenessCheckController::class, 'effectiveness_child'])->name('effectiveness_child');
-            Route::post('effectiveness_child/{id}', [EffectivenessCheckController::class, 'child_extension'])->name('effectiveness_child');
+            Route::post('effectiveness_child_data/{id}', [EffectivenessCheckController::class, 'child_extension'])->name('effectiveness_child_data');
 
 
             Route::view('helpdesk-personnel', 'frontend.rcms.helpdesk-personnel');
@@ -182,7 +185,10 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('LabIncidentSingleReport/{id}', [LabIncidentController::class, 'singleReport'])->name('LabIncidentSingleReport');
             Route::get('LabIncidentAuditReport/{id}', [LabIncidentController::class, 'auditReport'])->name('LabIncidentAuditReport');
             Route::post('labExtChild/{id}', [LabIncidentController::class, 'lab_incident_extension_child'])->name('lab_incident_extension_child');
+            Route::get('/labfamilyreport/{id}',[LabIncidentController::class,'labincidentFamilyReport'])->name('labfamilyreport');
             Route::get('/incident/{id}',[IncidentController::class,'audit_trail_filter_incident'])->name('incident_filter');
+            
+
             //------------------------------------
 
 
@@ -197,6 +203,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('child_audit_program/{id}', [AuditProgramController::class, 'child_audit_program'])->name('auditProgramChild');
             Route::post('AuditProgramCancel/{id}', [AuditProgramController::class, 'AuditProgramCancel'])->name('AuditProgramCancel');
             Route::get('auditProgramSingleReport/{id}', [AuditProgramController::class, 'singleReport'])->name('auditProgramSingleReport');
+            Route::get('auditProgramFamilyReport/{id}', [AuditProgramController::class, 'familyReport'])->name('auditProgramFamilyReport');
             Route::get('auditProgramAuditReport/{id}', [AuditProgramController::class, 'auditReport'])->name('auditProgramAuditReport');
 
 
@@ -221,19 +228,25 @@ Route::group(['prefix' => 'rcms'], function () {
             //----------------------------------------------By PRIYA SHRIVASTAVA------------------
             Route::post('formDivision', [FormDivisionController::class, 'formDivision'])->name('formDivision');
             Route::get('ExternalAuditSingleReport/{id}', [AuditeeController::class, 'singleReport'])->name('ExternalAuditSingleReport');
+            Route::get('external_family_report/{id}', [AuditeeController::class, 'familyReport'])->name('ExternalAuditFamilyReport');
             Route::get('SummaryResponseReport/{id}', [AuditeeController::class, 'SummaryResponseReport'])->name('SummaryResponseReport');
             
             Route::get('ExternalAuditTrialReport/{id}', [AuditeeController::class, 'auditReport'])->name('ExternalAuditTrialReport');
             Route::get('capaSingleReport/{id}', [CapaController::class, 'singleReport'])->name('capaSingleReport');
+            Route::get('capaFamilyReport/{id}', [CapaController::class, 'familyReport'])->name('capaFamilyReport');
             Route::get('capaAuditReport/{id}', [CapaController::class, 'auditReport'])->name('capaAuditReport');
             Route::get('riskSingleReport/{id}', [RiskManagementController::class, 'singleReport'])->name('riskSingleReport');
             Route::get('riskAuditReport/{id}', [RiskManagementController::class, 'auditReport'])->name('riskAuditReport');
             Route::get('rootSingleReport/{id}', [RootCauseController::class, 'singleReport'])->name('rootSingleReport');
+            Route::get('riskManagementfamily/{id}', [RiskManagementController::class, 'effectiveFamilyReport'])->name('riskManagementfamily');
+            Route::get('rootFamilyReport/{id}', [RootCauseController::class, 'familyReport'])->name('rootFamilyReport');
             Route::get('rootAuditReport/{id}', [RootCauseController::class, 'auditReport'])->name('rootAuditReport');
             Route::get('managementReview/{id}', [ManagementReviewController::class, 'managementReport'])->name('managementReport');
+            Route::get('managementReFamily_report/{id}', [ManagementReviewController::class, 'managementFamilyReport'])->name('managementFamilyReport');
             Route::get('managementReviewReport/{id}', [ManagementReviewController::class, 'managementReviewReport'])->name('managementReviewReport');
             Route::post('child_management_Review/{id}', [ManagementReviewController::class, 'child_management_Review'])->name('childmanagementReview');
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
+            Route::get('internalFamilyReport/{id}', [InternalauditController::class, 'familyReport'])->name('internalFamilyReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
             Route::post('management/cftnotrequired/{id}', [ManagementReviewController::class, 'managementIsCFTRequired'])->name('managementIsCFTRequired');
             // Route::get('oos_micro/audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
@@ -265,7 +278,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
       Route::post('deviation/reopen/store/{id}', 
     [DeviationController::class, 'reopenStore'])
-    ->name('deviation.reopen.store');
+    ->name('deviation.reopen.store');            Route::get('deviationfamilyReport/{id}', [DeviationController::class, 'familyReport'])->name('deviationfamilyReport');
+
             Route::post('dev-launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('dev-launch-extension-deviation');
             Route::post('dev-launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('dev-launch-extension-capa');
             Route::post('dev-launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('dev-launch-extension-qrm');
@@ -363,6 +377,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
 
             Route::get('OOCSingleReport/{id}',[OOCController::class, 'singleReports']);
+            Route::get('ooc_family_Report/{id}',[OOCController::class, 'familyReport']);
             /**
              * OOT
              */
@@ -394,6 +409,7 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
                 Route::get('audit_report/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
                 Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
+                Route::get('family_report/{id}', [OOSController::class, 'familyReport'])->name('family_report');
             });
 
 
@@ -452,6 +468,7 @@ Route::group(['prefix' => 'rcms'], function () {
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
+            Route::get('pdf-family-report/{id}', [MarketComplaintController::class, 'familyReport']);
             Route::get('GeneralInformationComplaint_report/{id}', [MarketComplaintController::class, 'General_Complaint_report']);
 
             Route::get('alltabmarketComplain/{id}', [MarketComplaintController::class, 'All_tabs_report']);
@@ -476,6 +493,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('incident-audit-trail/{id}', [IncidentController::class, 'incidentAuditTrail'])->name('incident-audit-trail');
             Route::get('incident-audit-pdf/{id}', [IncidentController::class, 'incidentAuditTrailPdf'])->name('incident-audit-pdf');
             Route::get('incident-single-report/{id}', [IncidentController::class, 'singleReport'])->name('incident-single-report');
+            Route::get('incident-family-report/{id}', [IncidentController::class, 'incidentFamilyReport'])->name('incident-family-report');
+
 
             Route::post('launch-extension-incident/{id}', [IncidentController::class, 'launchExtensionIncident'])->name('launch-extension-incident');
             Route::post('launch-extension-capa/{id}', [IncidentController::class, 'launchExtensionCapa'])->name('launch-extension-capa');

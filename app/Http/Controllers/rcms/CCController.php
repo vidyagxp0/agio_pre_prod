@@ -11,6 +11,7 @@ use App\Models\CapaAuditTrial;
 use App\Models\RootCauseAnalysis;
 use App\Models\ActionItem;
 use App\Models\Capa;
+use App\Models\CapaGrid;
 use App\Models\EffectivenessCheck;
 use App\Models\AdditionalInformation;
 use App\Models\{CC,ChangeControlCftResponse};
@@ -15434,6 +15435,148 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             return $pdf->stream('change_control' . $id . '.pdf');
         }
     }
+
+
+    public function family_report($id)
+    {
+
+
+        $data = CC::find($id);
+        $cftData =  CcCft::where('cc_id', $id)->first();
+        $cc_cfts =  CcCft::where('cc_id', $id)->first();
+
+        $QaApprovalComments = QaApprovalComments::where('cc_id', $id)->first();
+
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $preRiskAssessment = RiskAssessment::where('cc_id', $data->id)->get(); // Adjust this condition based on your actual requirement
+
+            $docdetail = Docdetail::where('cc_id', $data->id)->first();
+            $review = Qareview::where('cc_id', $data->id)->first();
+            $evaluation = Evaluation::where('cc_id', $data->id)->first();
+            $info = AdditionalInformation::where('cc_id', $data->id)->first();
+            $comments = GroupComments::where('cc_id', $data->id)->first();
+            $assessment = RiskAssessment::where('cc_id', $data->id)->first();
+            $approcomments = QaApprovalComments::where('cc_id', $data->id)->first();
+            $closure = ChangeClosure::where('cc_id', $data->id)->first();
+            $json_decode = Docdetail::where(['cc_id' => $data->id, 'identifier' =>'AffectedDocDetail'])->first();
+            $affectedDoc = json_decode($json_decode->data, true);
+            $commnetData = DB::table('change_control_comments')->where('cc_id', $data->id)->first();
+
+            $cft_teamIdsArray = explode(',', $data->reviewer_person_value);
+            $cft_teamNames = User::whereIn('id', $cft_teamIdsArray)->pluck('name')->toArray();
+            $cft_teamNamesString = implode(', ', $cft_teamNames);
+            $parentId = $id;
+
+            $Extension = extension_new::where('parent_id', $parentId)->where('parent_type', 'CC')->get(); 
+                       
+            $investigation_teamNamesString = '';
+            $selectedMethodologies = [];
+
+            $RootCause = RootCauseAnalysis::where('parent_id', $parentId)->where('parent_type', 'CC')->get();
+
+            foreach ($RootCause as $rca) {
+
+                $rca->originator_name = User::where('id', $rca->initiator_id)->value('name');
+
+                $teamIds = explode(',', $rca->investigation_team ?? '');
+
+                $teamNames = User::whereIn('id', $teamIds)
+                                ->pluck('name')
+                                ->toArray();
+
+                $investigation_teamNamesString = implode(', ', $teamNames);
+
+                $selectedMethodologies = explode(',', $rca->root_cause_methodology ?? '');
+            }      
+
+            $ActionItem = ActionItem::where('parent_id', $parentId)->where('parent_type', 'CC')->get();
+
+            $capa_teamNamesString = null;
+
+            $capa_Data = Capa::where('parent_id', $parentId)
+                ->where('parent_type', 'CC')
+                ->get();
+
+            foreach ($capa_Data as $capa) {
+
+                $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Product_Details")->first();
+
+                $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Instruments_Details")->first();
+
+                $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Material_Details")->first();
+
+                $capa->originator = User::where('id', $capa->initiator_id)->value('name');
+
+                if (!empty($capa->capa_team)) {
+                    $capa_teamIdsArray = explode(',', $capa->capa_team);
+
+                    $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)
+                        ->pluck('name')
+                        ->toArray();
+
+                    $capa_teamNamesString = implode(', ', $capa_teamNames);
+                } else {
+                    $capa_teamNamesString = null;
+                }
+            } 
+
+            // pdf related work
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.change-control.cc_family_report', compact(
+                'data',
+                'docdetail',
+                'cftData',
+                'cc_cfts',
+                'review',
+                'evaluation',
+                'info',
+                'comments',
+                'assessment',
+                'approcomments',
+                'closure',
+                'affectedDoc',
+                'commnetData',
+                'QaApprovalComments',
+                'cft_teamNamesString',
+                'preRiskAssessment',
+                'Extension',
+                'RootCause',
+                'selectedMethodologies',
+                'investigation_teamNamesString',
+                'ActionItem',
+                'capa_Data',
+                'capa_teamNamesString'
+            ))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+
+
+
+            return $pdf->stream('change_control' . $id . '.pdf');
+        }
+    }
+
+
 
 
     public function parent_child()
