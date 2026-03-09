@@ -2480,25 +2480,25 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 QualityAssurance">
-    <div class="group-input input-date">
-        <label for="Quality Assurance Completed On">Quality Assurance  Review Completed On</label>
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date -->
-            <input type="text" id="QualityAssurance_on" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
+                                                <div class="group-input input-date">
+                                                    <label for="Quality Assurance Completed On">Quality Assurance  Review Completed On</label>
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date -->
+                                                        <input type="text" id="QualityAssurance_on" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input readonly type="date" name="QualityAssurance_on"
-                    value=""
-                   class="hide-input"
-                   oninput="handleDateInput(this, 'QualityAssurance_on')" />
-        </div>
-        @error('QualityAssurance_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input readonly type="date" name="QualityAssurance_on"
+                                                                value=""
+                                                            class="hide-input"
+                                                            oninput="handleDateInput(this, 'QualityAssurance_on')" />
+                                                    </div>
+                                                    @error('QualityAssurance_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
 
                                             <script>
@@ -2535,7 +2535,7 @@
                                                     });
                                                 });
                                             </script>
-                                        @else
+                                            @else
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Quality Assurance">Quality Assurance  Review Required ?</label>
@@ -2655,26 +2655,25 @@
 
 
                                             <div class="col-lg-6 QualityAssurance">
-    <div class="group-input input-date">
-        <label for="Quality Assurance Completed On">Quality Assurance  Review Completed On</label>
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date -->
-            <input type="text" id="QualityAssurance_on" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
+                                                <div class="group-input input-date">
+                                                    <label for="Quality Assurance Completed On">Quality Assurance  Review Completed On</label>
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date -->
+                                                        <input type="text" id="QualityAssurance_on" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->QualityAssurance_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input readonly type="date" name="QualityAssurance_on"
-                    value=""
-                   class="hide-input"
-                   oninput="handleDateInput(this, 'QualityAssurance_on')" />
-        </div>
-        @error('QualityAssurance_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
-
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input readonly type="date" name="QualityAssurance_on"
+                                                                value=""
+                                                            class="hide-input"
+                                                            oninput="handleDateInput(this, 'QualityAssurance_on')" />
+                                                    </div>
+                                                    @error('QualityAssurance_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -2816,22 +2815,22 @@
                                             </div>
 
                                             <div class="col-6 mb-3 productionTable new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Review Completed On</label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="Production_Table_On" readonly
-                                                    placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data1->Production_Table_On) }}" />
-                                                <input readonly type="date" name="Production_Table_On"
-                                                    min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" value=""
-                                                    class="hide-input"
-                                                    oninput="handleDateInput(this, 'Production_Table_On')" />
+                                                <div class="group-input input-date">
+                                                    <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Review Completed On</label>
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="Production_Table_On" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Production_Table_On) }}" />
+                                                        <input readonly type="date" name="Production_Table_On"
+                                                            min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" value=""
+                                                            class="hide-input"
+                                                            oninput="handleDateInput(this, 'Production_Table_On')" />
+                                                    </div>
+                                                    @error('Production_Table_On')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                            @error('Production_Table_On')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -2867,7 +2866,9 @@
                                                     });
                                                 });
                                             </script>
-                                        @else
+
+                                            @else
+                                            
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Production Tablet">Production Tablet/Capsule/Powder Review Required</label>
@@ -2990,22 +2991,23 @@
                                                 </div>
                                             </div>
                                             <div class="col-6 mb-3 productionTable new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Review Completed On</label>
-                                            <div class="calenderauditee">
-                                                <input type="text" id="Production_Table_On" readonly
-                                                    placeholder="DD-MMM-YYYY"
-                                                    value="{{ Helpers::getdateFormat($data1->Production_Table_On) }}" />
-                                                <input readonly type="date" name="Production_Table_On"
-                                                    min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" value=""
-                                                    class="hide-input"
-                                                    oninput="handleDateInput(this, 'Production_Table_On')" />
+                                                <div class="group-input input-date">
+                                                    <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Review Completed On</label>
+                                                    <div class="calenderauditee">
+                                                        <input type="text" id="Production_Table_On" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Production_Table_On) }}" />
+                                                        <input readonly type="date" name="Production_Table_On"
+                                                            min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" value=""
+                                                            class="hide-input"
+                                                            oninput="handleDateInput(this, 'Production_Table_On')" />
+                                                    </div>
+                                                    @error('Production_Table_On')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                            @error('Production_Table_On')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+
                                         @endif
 
 
@@ -3467,29 +3469,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 productionInjection">
-    <div class="group-input">
-        <label for="Production_Injection_On">Production Injection Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Production_Injection_On">Production Injection Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Production_Injection_On_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Production_Injection_On_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Production_Injection_On" name="Production_Injection_On"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Production_Injection_On_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Production_Injection_On" name="Production_Injection_On"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Production_Injection_On_display')" />
+                                                    </div>
 
-        @error('Production_Injection_On')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Production_Injection_On')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -3650,29 +3652,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 productionInjection">
-    <div class="group-input">
-        <label for="Production_Injection_On">Production Injection Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Production_Injection_On">Production Injection Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Production_Injection_On_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Production_Injection_On_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Production_Injection_On) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Production_Injection_On" name="Production_Injection_On"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Production_Injection_On_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Production_Injection_On" name="Production_Injection_On"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Production_Injection_On_display')" />
+                                                    </div>
 
-        @error('Production_Injection_On')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Production_Injection_On')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -3812,29 +3814,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 store">
-    <div class="group-input">
-        <label for="Store_on">Store Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Store_on">Store Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Store_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Store_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Store_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Store_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Store_on" name="Store_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Store_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Store_on" name="Store_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Store_on_display')" />
+                                                    </div>
 
-        @error('Store_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Store_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -3984,29 +3986,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 store">
-    <div class="group-input">
-        <label for="Store_on">Store Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Store_on">Store Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Store_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Store_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Store_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Store_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Store_on" name="Store_on"
-                  
-                   value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Store_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Store_on" name="Store_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Store_on_display')" />
+                                                    </div>
 
-        @error('Store_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Store_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -4149,29 +4151,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 qualityControl">
-    <div class="group-input">
-        <label for="Quality_Control_on">Quality Control Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Quality_Control_on">Quality Control Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Quality_Control_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Quality_Control_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Quality_Control_on" name="Quality_Control_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Quality_Control_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Quality_Control_on" name="Quality_Control_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Quality_Control_on_display')" />
+                                                    </div>
 
-        @error('Quality_Control_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Quality_Control_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -4321,29 +4323,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 qualityControl">
-    <div class="group-input">
-        <label for="Quality_Control_on">Quality Control Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Quality_Control_on">Quality Control Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Quality_Control_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Quality_Control_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Quality_Control_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Quality_Control_on" name="Quality_Control_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Quality_Control_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Quality_Control_on" name="Quality_Control_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Quality_Control_on_display')" />
+                                                    </div>
 
-        @error('Quality_Control_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Quality_Control_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -4417,33 +4419,33 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-3 researchDevelopment">
-                                        <div class="group-input">
-                                            <label for="Research Development assessment">Impact Assessment (By Research &
-                                                Development) <span id="asteriskPT1"
-                                                    style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif class="summernote ResearchDevelopment_assessment"
-                                                @if (
-                                                    $data->stage == 3 ||
-                                                        (isset($data1->ResearchDevelopment_person) && Auth::user()->name != $data1->ResearchDevelopment_person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-md-12 mb-3 researchDevelopment">
-                                        <div class="group-input">
-                                            <label for="Research Development feedback">Research & Development Feedback <span
-                                                    id="asteriskPT2"
-                                                    style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                            <textarea class="summernote ResearchDevelopment_feedback" @if (
-                                                $data->stage == 3 ||
-                                                    (isset($data1->ResearchDevelopment_person) && Auth::user()->name != $data1->ResearchDevelopment_person)) readonly @endif
-                                                name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
-                                        </div>
-                                    </div> -->
+                                                <div class="group-input">
+                                                    <label for="Research Development assessment">Impact Assessment (By Research &
+                                                        Development) <span id="asteriskPT1"
+                                                            style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                            class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif class="summernote ResearchDevelopment_assessment"
+                                                        @if (
+                                                            $data->stage == 3 ||
+                                                                (isset($data1->ResearchDevelopment_person) && Auth::user()->name != $data1->ResearchDevelopment_person)) readonly @endif name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-md-12 mb-3 researchDevelopment">
+                                                <div class="group-input">
+                                                    <label for="Research Development feedback">Research & Development Feedback <span
+                                                            id="asteriskPT2"
+                                                            style="display: {{ $data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
+                                                            class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea class="summernote ResearchDevelopment_feedback" @if (
+                                                        $data->stage == 3 ||
+                                                            (isset($data1->ResearchDevelopment_person) && Auth::user()->name != $data1->ResearchDevelopment_person)) readonly @endif
+                                                        name="ResearchDevelopment_feedback" id="summernote-18" @if ($data1->ResearchDevelopment_Review == 'yes' && $data->stage == 4) required @endif>{{ $data1->ResearchDevelopment_feedback }}</textarea>
+                                                </div>
+                                            </div> -->
 
                                             <div class="col-12 researchDevelopment">
                                                 <div class="group-input">
@@ -4488,29 +4490,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 researchDevelopment">
-    <div class="group-input">
-        <label for="ResearchDevelopment_on">Research & Development Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="ResearchDevelopment_on">Research & Development Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="ResearchDevelopment_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->ResearchDevelopment_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="ResearchDevelopment_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->ResearchDevelopment_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'ResearchDevelopment_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'ResearchDevelopment_on_display')" />
+                                                    </div>
 
-        @error('ResearchDevelopment_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('ResearchDevelopment_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -4546,7 +4548,9 @@
                                                     });
                                                 });
                                             </script>
-                                        @else
+                                            
+                                            @else
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Research Development">Research & Development Review Required ?</label>
@@ -4660,29 +4664,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 researchDevelopment">
-    <div class="group-input">
-        <label for="ResearchDevelopment_on">Research & Development Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="ResearchDevelopment_on">Research & Development Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="ResearchDevelopment_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->ResearchDevelopment_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="ResearchDevelopment_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->ResearchDevelopment_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'ResearchDevelopment_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'ResearchDevelopment_on_display')" />
+                                                    </div>
 
-        @error('ResearchDevelopment_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('ResearchDevelopment_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -4720,7 +4724,7 @@
                                                 <div class="group-input">
                                                     <label for="Engineering"> Engineering Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="Engineering_review" id="Engineering_review" required>
+                                                    <select name="Engineering_review" id="Engineering_review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Engineering_review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -4731,6 +4735,7 @@
 
                                                 </div>
                                             </div>
+                                             
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
@@ -4823,29 +4828,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Engineering">
-    <div class="group-input">
-        <label for="Engineering_on">Engineering Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Engineering_on">Engineering Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Engineering_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Engineering_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Engineering_on" name="Engineering_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Engineering_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Engineering_on" name="Engineering_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Engineering_on_display')" />
+                                                    </div>
 
-        @error('Engineering_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Engineering_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -4881,7 +4886,7 @@
                                                     });
                                                 });
                                             </script>
-                                        @else
+                                            @else
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Engineering">Engineering Review Required ?</label>
@@ -4995,29 +5000,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Engineering">
-    <div class="group-input">
-        <label for="Engineering_on">Engineering Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Engineering_on">Engineering Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Engineering_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Engineering_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Engineering_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Engineering_on" name="Engineering_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Engineering_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Engineering_on" name="Engineering_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Engineering_on_display')" />
+                                                    </div>
 
-        @error('Engineering_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Engineering_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -5056,7 +5061,7 @@
                                                 <div class="group-input">
                                                     <label for="Human Resource"> Human Resource Review  Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="Human_Resource_review" id="Human_Resource_review" required>
+                                                    <select name="Human_Resource_review" id="Human_Resource_review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Human_Resource_review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -5159,29 +5164,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Human_Resource">
-    <div class="group-input">
-        <label for="Human_Resource_on">Human Resource Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Human_Resource_on">Human Resource Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Human_Resource_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Human_Resource_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Human_Resource_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Human_Resource_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Human_Resource_on" name="Human_Resource_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Human_Resource_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Human_Resource_on" name="Human_Resource_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Human_Resource_on_display')" />
+                                                    </div>
 
-        @error('Human_Resource_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Human_Resource_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -5331,29 +5336,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Human_Resource">
-    <div class="group-input">
-        <label for="Human_Resource_on">Human Resource Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Human_Resource_on">Human Resource Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Human_Resource_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Human_Resource_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Human_Resource_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Human_Resource_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Human_Resource_on" name="Human_Resource_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Human_Resource_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Human_Resource_on" name="Human_Resource_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Human_Resource_on_display')" />
+                                                    </div>
 
-        @error('Human_Resource_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Human_Resource_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -5390,7 +5395,7 @@
                                                 <div class="group-input">
                                                     <label for="Microbiology"> Microbiology Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="Microbiology_Review" id="Microbiology_Review" required>
+                                                    <select name="Microbiology_Review" id="Microbiology_Review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Microbiology_Review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -5493,29 +5498,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Microbiology">
-    <div class="group-input">
-        <label for="Microbiology_on">Microbiology Review Completed  On</label>
+                                                <div class="group-input">
+                                                    <label for="Microbiology_on">Microbiology Review Completed  On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Microbiology_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Microbiology_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Microbiology_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Microbiology_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Microbiology_on" name="Microbiology_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Microbiology_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Microbiology_on" name="Microbiology_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Microbiology_on_display')" />
+                                                    </div>
 
-        @error('Microbiology_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Microbiology_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -5665,29 +5670,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Microbiology">
-    <div class="group-input">
-        <label for="Microbiology_on">Microbiology Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Microbiology_on">Microbiology Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Microbiology_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Microbiology_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Microbiology_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Microbiology_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Microbiology_on" name="Microbiology_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Microbiology_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Microbiology_on" name="Microbiology_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Microbiology_on_display')" />
+                                                    </div>
 
-        @error('Microbiology_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Microbiology_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -5725,7 +5730,7 @@
                                                 <div class="group-input">
                                                     <label for="RegulatoryAffair"> Regulatory Affair Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review" required>
+                                                    <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->RegulatoryAffair_Review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -6000,29 +6005,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 RegulatoryAffair">
-    <div class="group-input">
-        <label for="RegulatoryAffair_on">Regulatory Affair Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="RegulatoryAffair_on">Regulatory Affair Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="RegulatoryAffair_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->RegulatoryAffair_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="RegulatoryAffair_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->RegulatoryAffair_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="RegulatoryAffair_on" name="RegulatoryAffair_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->RegulatoryAffair_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'RegulatoryAffair_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="RegulatoryAffair_on" name="RegulatoryAffair_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->RegulatoryAffair_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'RegulatoryAffair_on_display')" />
+                                                    </div>
 
-        @error('RegulatoryAffair_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('RegulatoryAffair_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -6061,7 +6066,7 @@
                                                 <div class="group-input">
                                                     <label for="Corporate Quality Assurance"> Corporate Quality Assurance Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="CorporateQualityAssurance_Review" id="CorporateQualityAssurance_Review" required>
+                                                    <select name="CorporateQualityAssurance_Review" id="CorporateQualityAssurance_Review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->CorporateQualityAssurance_Review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -6396,7 +6401,7 @@
                                                 <div class="group-input">
                                                     <label for="Safety"> Safety Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="Environment_Health_review" id="Environment_Health_review" required>
+                                                    <select name="Environment_Health_review" id="Environment_Health_review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Environment_Health_review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -6499,29 +6504,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 safety">
-    <div class="group-input">
-        <label for="Environment_Health_Safety_on">Safety Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Environment_Health_Safety_on">Safety Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Environment_Health_Safety_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Environment_Health_Safety_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Environment_Health_Safety_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Environment_Health_Safety_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Environment_Health_Safety_on" name="Environment_Health_Safety_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Environment_Health_Safety_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Environment_Health_Safety_on" name="Environment_Health_Safety_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Environment_Health_Safety_on_display')" />
+                                                    </div>
 
-        @error('Environment_Health_Safety_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Environment_Health_Safety_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -6671,29 +6676,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 safety">
-    <div class="group-input">
-        <label for="Environment_Health_Safety_on">Safety Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Environment_Health_Safety_on">Safety Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Environment_Health_Safety_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Environment_Health_Safety_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Environment_Health_Safety_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Environment_Health_Safety_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Environment_Health_Safety_on" name="Environment_Health_Safety_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Environment_Health_Safety_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Environment_Health_Safety_on" name="Environment_Health_Safety_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Environment_Health_Safety_on_display')" />
+                                                    </div>
 
-        @error('Environment_Health_Safety_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Environment_Health_Safety_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -6732,7 +6737,7 @@
                                                 <div class="group-input">
                                                     <label for="Information_Technology"> Information Technology Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="Information_Technology_review" id="Information_Technology_review" required>
+                                                    <select name="Information_Technology_review" id="Information_Technology_review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->Information_Technology_review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
@@ -6835,29 +6840,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Information_Technology">
-    <div class="group-input">
-        <label for="Information_Technology_on">Information Technology Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Information_Technology_on">Information Technology Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Information_Technology_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Information_Technology_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Information_Technology_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Information_Technology_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Information_Technology_on" name="Information_Technology_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Information_Technology_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Information_Technology_on" name="Information_Technology_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Information_Technology_on_display')" />
+                                                    </div>
 
-        @error('Information_Technology_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Information_Technology_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -7007,29 +7012,29 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 Information_Technology">
-    <div class="group-input">
-        <label for="Information_Technology_on">Information Technology Review Completed On</label>
+                                                <div class="group-input">
+                                                    <label for="Information_Technology_on">Information Technology Review Completed On</label>
 
-        <div class="calenderauditee">
-            <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
-            <input type="text" id="Information_Technology_on_display" readonly
-                   placeholder="DD-MMM-YYYY"
-                   value="{{ Helpers::getdateFormat($data1->Information_Technology_on) }}" />
+                                                    <div class="calenderauditee">
+                                                        <!-- Read-only text input to display formatted date (e.g., DD-MMM-YYYY) -->
+                                                        <input type="text" id="Information_Technology_on_display" readonly
+                                                            placeholder="DD-MMM-YYYY"
+                                                            value="{{ Helpers::getdateFormat($data1->Information_Technology_on) }}" />
 
-            <!-- Hidden date input for date selection -->
-            <input type="date" id="Information_Technology_on" name="Information_Technology_on"
-                   
-                   value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
-                   class="hide-input"
-                   {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                   oninput="handleDateInput(this, 'Information_Technology_on_display')" />
-        </div>
+                                                        <!-- Hidden date input for date selection -->
+                                                        <input type="date" id="Information_Technology_on" name="Information_Technology_on"
+                                                            
+                                                            value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
+                                                            class="hide-input"
+                                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                            oninput="handleDateInput(this, 'Information_Technology_on_display')" />
+                                                    </div>
 
-        @error('Information_Technology_on')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                    @error('Information_Technology_on')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         @endif
 
@@ -7067,7 +7072,7 @@
                                                 <div class="group-input">
                                                     <label for="Contract Giver"> Contract Giver Review Required ? <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="ContractGiver_Review" id="ContractGiver_Review" required>
+                                                    <select name="ContractGiver_Review" id="ContractGiver_Review" required {{$lockdatafileds3 ? 'disabled' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data1->ContractGiver_Review == 'yes') selected @endif value='yes'>
                                                             Yes</option>
