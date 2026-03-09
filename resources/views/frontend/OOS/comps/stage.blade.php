@@ -79,7 +79,7 @@
 
              @elseif($data->stage == 24 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
 
-             @elseif($data->stage == 13 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 3) || Helpers::check_roles($data->division_id, 'OOS/OOT', 22) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
+             @elseif($data->stage == 13 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 22) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18)))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal-AssignableCause"> Phase II A Investigation </button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
@@ -113,10 +113,10 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 20 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) ))
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">Request More Info</button>
-             
+
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Found</button>
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II B Assignable Cause Not Found</button> --}}
-             
+
              <button type="button"
         class="button_theme1"
         data-bs-toggle="modal"
@@ -728,7 +728,7 @@
                         border: 1px solid #e0e0e0;
                         background: #f5f5f5;
                     }
-                    
+
                     .progress-bars div {
                         padding: 8px 12px;
                         font-size: 14px;
@@ -738,17 +738,17 @@
                         transition: all 0.3s ease;
                         border-right: 1px solid #fff;
                     }
-                    
+
                     .progress-bars div:last-child {
                         border-right: none;
                     }
-                    
+
                     /* Completed Stages - Solid Green */
                     .progress-bars div.completed {
                         background-color: #4CAF50;
                         color: black;
                     }
-                    
+
                     /* CURRENT Stage - Animated Blue (Pending Action) */
                     .progress-bars div.current {
                         background-color: #de8d0a;
@@ -756,19 +756,19 @@
                         font-weight: bold;
                         animation: pulse-blue 1.5s infinite;
                     }
-                    
+
                     /* Pending Stages - Light Gray */
                     .progress-bars div.pending {
                         background-color: #f5f5f5;
                         color: black;
                     }
-                    
+
                     /* Closed States */
                     .progress-bars div.closed {
                         background-color: #f44336;
                         color: white;
                     }
-                    
+
                     /* Blue Pulse Animation */
                     @keyframes pulse-blue {
                         0% { background-color: #de8d0a; }
@@ -835,8 +835,8 @@
                         $allowStage5 = !isset($resampling) || $resampling->status !== 'closed - done';
                     @endphp
 
-                    <div class="{{ ($currentStage > 5 && $allowStage5) 
-                                    ? 'active' 
+                    <div class="{{ ($currentStage > 5 && $allowStage5)
+                                    ? 'active'
                                     : (($currentStage == 5 && $allowStage5) ? 'current' : '') }}
                                 d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">
                         Under Phase IA Investigation
@@ -950,28 +950,28 @@
             function activateTabBasedOnStage(stage) {
                 const tabContents = document.querySelectorAll('.cctabcontent');
                 const tabLinks = document.querySelectorAll('.cctablinks');
-                
+
                 tabContents.forEach(content => content.style.display = 'none');
                 tabLinks.forEach(link => link.classList.remove('active'));
-                
+
                 let tabToActivate = '';
-                
+
                 if (stage == 1) {
-                    tabToActivate = 'CCForm1'; 
+                    tabToActivate = 'CCForm1';
                 } else if (stage == 2) {
-                    tabToActivate = 'CCForm27'; 
+                    tabToActivate = 'CCForm27';
                 }  else if (stage == 3) {
-                    tabToActivate = 'CCForm28'; 
+                    tabToActivate = 'CCForm28';
                 } else if (stage == 4) {
-                    tabToActivate = 'CCForm29'; 
+                    tabToActivate = 'CCForm29';
                 } else if (stage == 5) {
-                    tabToActivate = 'CCForm2'; 
+                    tabToActivate = 'CCForm2';
                 } else if (stage == 6) {
-                    tabToActivate = 'CCForm30'; 
+                    tabToActivate = 'CCForm30';
                 } else if (stage == 7) {
-                    tabToActivate = 'CCForm31'; 
+                    tabToActivate = 'CCForm31';
                 } else if (stage == 8) {
-                    tabToActivate = 'CCForm32'; 
+                    tabToActivate = 'CCForm32';
                 } else if (stage == 9){
                     tabToActivate = 'CCForm42';
                 } else if (stage == 10) {
@@ -1000,12 +1000,12 @@
                     tabToActivate = 'CCForm17';
                 } else if (stage == 0){
                     tabToActivate = 'CCForm17';
-                }                                 
-            
+                }
+
                 if (tabToActivate) {
                     const tabContent = document.getElementById(tabToActivate);
                     const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
-                    
+
                     if (tabContent) tabContent.style.display = 'block';
                     if (tabLink) tabLink.classList.add('active');
                 }
@@ -1014,19 +1014,19 @@
             function openCity(evt, cityName) {
                 const tabContents = document.querySelectorAll('.cctabcontent');
                 tabContents.forEach(content => content.style.display = 'none');
-                
+
                 const tabLinks = document.querySelectorAll('.cctablinks');
                 tabLinks.forEach(link => link.classList.remove('active'));
-                
+
                 document.getElementById(cityName).style.display = 'block';
                 evt.currentTarget.classList.add('active');
-                
+
                 currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
             }
 
             document.addEventListener('DOMContentLoaded', function() {
                 const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
-                
+
                 activateTabBasedOnStage(currentStage);
             });
         </script>

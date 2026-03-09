@@ -10552,6 +10552,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         // dd($request->revision);
  
         $cc = MarketComplaint::find($id);
+       
         $cft = [];
 
         $parent_type = "Market Complaint";
@@ -10560,6 +10561,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         // $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = $cc->record;
+        $parent_division_id = MarketComplaint::where('id', $id)->value('division_id');
+//  dd($parent_division_id);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         // $record_number = $cc->record;
         // $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
@@ -10592,7 +10595,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number =$record;
 
-            return view('frontend.forms.capa', compact('record_number', 'parent_division_id','due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft', 'relatedRecords','reference_record'));
+            return view('frontend.forms.capa', compact('record_number','parent_division_id', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft', 'relatedRecords','reference_record'));
         } elseif ($request->revision == "Action-Item") {
             // return "test";
             $p_record = MarketComplaint::find($id);
@@ -11522,4 +11525,79 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             return back();
         }
     }
+
+      public function reopenStore(Request $request, $id)
+   { 
+     if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
+            $oldMarketComplain = MarketComplaint::findOrFail($id);
+            $market = MarketComplaint::find($id);
+
+            $market->reopen_by = Auth::user()->name;
+            $market->reopen_on = Carbon::now()->format('d-M-Y');
+            $market->commentreopen = $request->comment;
+            $market->save();  
+
+  
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $oldMarketComplain->id;
+            $history->activity_type = 'Reopened Activity Perform';
+            $history->previous = $oldMarketComplain->status;
+            $history->current = "Reopened as New Deviation Record";
+            $history->action = 'Reopened';
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $oldMarketComplain->status;
+            $history->change_from = $oldMarketComplain->status;
+            $history->change_to = "Reopened";
+            $history->stage = 'Closed';
+            $history->action_name = 'New';
+            $history->save();
+
+
+             $usersmerge = collect()
+                    ->merge(Helpers::getQAUserList($market->division_id))
+                    ->merge(Helpers::getCQAUsersList($market->division_id))
+                    ->merge(Helpers::getCQAHeadUserList($market->division_id))
+                    ->unique('user_id');
+
+                  foreach ($usersmerge as $u) {
+
+                              $email = Helpers::getUserEmail($u->user_id);
+
+                            if ($email !== null) {
+
+                                try {
+
+                                $data = [
+                                    'data'    => $market,
+                                    'site'    => "MC",
+                                    'history' => "Reopned",
+                                    'process' => 'Market Complaint',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $data,
+                                    $email,
+                                    $market,
+                                    'Market Complaint'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                            }
+                        }
+
+             return redirect()->to('rcms/marketcomplaint/market_complaint_new');
+     
+     
+     }else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+   }
 }

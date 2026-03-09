@@ -45,7 +45,7 @@ class OOSController extends Controller
        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $lastAi = OOS::orderBy('record', 'desc')->first();
         $record_number = $lastAi ? $lastAi->record + 1 : 1;
-       
+
 
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
@@ -291,7 +291,7 @@ class OOSController extends Controller
                                 $history->action = 'Submit';
                                 $history->save();
 
-            
+
                                 $list = Helpers::getHodUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
@@ -350,7 +350,9 @@ class OOSController extends Controller
                         $hasPending1 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending1 = true;
                                 break;
                             }
@@ -365,7 +367,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -402,7 +404,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                            
+
 
                                 $list = Helpers::getQAHeadUserList($changestage->division_id);
 
@@ -435,7 +437,7 @@ class OOSController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
             if ($changestage->stage == 6) {
                 if (!$changestage->hod_remark2) {
                     // Flash message for warning (field not filled)
@@ -462,7 +464,9 @@ class OOSController extends Controller
                         $hasPending4 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending4 = true;
                                 break;
                             }
@@ -477,7 +481,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -613,7 +617,9 @@ class OOSController extends Controller
                         $hasPending5 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending5 = true;
                                 break;
                             }
@@ -628,7 +634,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -697,7 +703,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                
+
                     // Get QA & CQA users
                     $qaList  = Helpers::getQAHeadUserList($changestage->division_id);
                     $cqaList = Helpers::getCQAHeadUserList($changestage->division_id);
@@ -775,7 +781,9 @@ class OOSController extends Controller
                         $hasPending6 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending6 = true;
                                 break;
                             }
@@ -790,7 +798,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -944,7 +952,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                         $list = Helpers::getHodUserList($changestage->division_id);
 
                             foreach ($list as $u) {
@@ -1000,7 +1008,9 @@ class OOSController extends Controller
                         $hasPending7 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending7 = true;
                                 break;
                             }
@@ -1015,7 +1025,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -1084,7 +1094,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                     // Get QA & CQA users
                     $qaList  = Helpers::getQAUserList($changestage->division_id);
                     $cqaList = Helpers::getCQAUsersList($changestage->division_id);
@@ -1150,7 +1160,9 @@ class OOSController extends Controller
                         $hasPending8 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending8 = true;
                                 break;
                             }
@@ -1165,7 +1177,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -1234,7 +1246,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                     // Get QA & CQA users
                     $qaList  = Helpers::getQAHeadUserList($changestage->division_id);
                     $cqaList = Helpers::getCQAHeadUserList($changestage->division_id);
@@ -1328,7 +1340,9 @@ class OOSController extends Controller
                         $hasPending9 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending9 = true;
                                 break;
                             }
@@ -1343,7 +1357,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -1412,7 +1426,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                     $list = Helpers::getProductionUserList($changestage->division_id);
 
                     foreach ($list as $u) {
@@ -1469,7 +1483,9 @@ class OOSController extends Controller
                         $hasPending11 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending11 = true;
                                 break;
                             }
@@ -1484,7 +1500,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -1553,11 +1569,11 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                     // Get QA & CQA users
                     $qaList  = Helpers::getQAUserList($changestage->division_id);
                     $cqaList = Helpers::getCQAUsersList($changestage->division_id);
-                    
+
 
                     // Merge & remove duplicate users
                     $users = collect($qaList)
@@ -1619,7 +1635,9 @@ class OOSController extends Controller
                         $hasPending12 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending12 = true;
                                 break;
                             }
@@ -1634,7 +1652,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -1703,7 +1721,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                     // Get QA & CQA users
                     $qaList  = Helpers::getQAHeadUserList($changestage->division_id);
                     $cqaList = Helpers::getCQAHeadUserList($changestage->division_id);
@@ -1738,7 +1756,7 @@ class OOSController extends Controller
                         }
                     }
 
-                    
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1769,7 +1787,9 @@ class OOSController extends Controller
                         $hasPending12 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending12 = true;
                                 break;
                             }
@@ -1784,7 +1804,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -1852,7 +1872,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                      $list = Helpers::getInitiatorUserList($changestage->division_id);
 
                     foreach ($list as $u) {
@@ -1907,7 +1927,9 @@ class OOSController extends Controller
                         $hasPending13 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending13 = true;
                                 break;
                             }
@@ -1922,7 +1944,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -2076,7 +2098,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                   
+
 
 
                      $list = Helpers::getHodUserList($changestage->division_id);
@@ -2103,7 +2125,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
                 $changestage->update();
@@ -2136,7 +2158,9 @@ class OOSController extends Controller
                         $hasPending14 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending14 = true;
                                 break;
                             }
@@ -2151,7 +2175,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -2221,7 +2245,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                     // Get QA & CQA users
                     $qaList  = Helpers::getQAUserList($changestage->division_id);
                     $cqaList = Helpers::getCQAUsersList($changestage->division_id);
@@ -2238,7 +2262,7 @@ class OOSController extends Controller
                         $email = Helpers::getUserEmail($u->user_id);
 
                         if (!empty($email)) {
-                            
+
                         try {
 
                                 $data = [
@@ -2255,7 +2279,7 @@ class OOSController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                             }
-                           
+
                         }
                     }
 
@@ -2318,7 +2342,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -2436,7 +2460,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                               
+
                             }
                         }
 
@@ -2495,7 +2519,9 @@ class OOSController extends Controller
                         $hasPending15 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending15 = true;
                                 break;
                             }
@@ -2510,7 +2536,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -2589,7 +2615,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                    
+
                     // Get all role users
                     $initiatorList = Helpers::getInitiatorUserList($changestage->division_id);
                     $hodList       = Helpers::getHodUserList($changestage->division_id);
@@ -2627,7 +2653,7 @@ class OOSController extends Controller
                         } catch (\Exception $e) {
                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                         }
-                    
+
                     }
                     }
 
@@ -2778,7 +2804,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
 
@@ -2859,7 +2885,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                               
+
                             }
                         }
                 $changestage->update();
@@ -2900,7 +2926,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    
+
 
                      $list = Helpers::getQAHeadUserList($changestage->division_id);
 
@@ -2925,7 +2951,7 @@ class OOSController extends Controller
                                     } catch (\Exception $e) {
                                         \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                     }
-                                
+
                             }
                         }
                 $changestage->update();
@@ -2965,7 +2991,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    
+
 
                     $list = Helpers::getInitiatorUserList($changestage->division_id);
 
@@ -2991,7 +3017,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                
+
                             }
                         }
                 $changestage->update();
@@ -3033,7 +3059,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                  
+
 
                     $list = Helpers::getHodUserList($changestage->division_id);
 
@@ -3059,7 +3085,7 @@ class OOSController extends Controller
                                 } catch (\Exception $e) {
                                     \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                 }
-                             
+
                             }
                         }
 
@@ -3154,7 +3180,7 @@ class OOSController extends Controller
                                 } catch (\Exception $e) {
                                     \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                 }
-                               
+
                             }
                         }
 
@@ -3250,7 +3276,7 @@ class OOSController extends Controller
                                 } catch (\Exception $e) {
                                     \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                 }
-                              
+
                             }
                         }
 
@@ -3291,7 +3317,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                   
+
                     $list = Helpers::getInitiatorUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
@@ -3315,7 +3341,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
 
@@ -3358,7 +3384,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    
+
                     $list = Helpers::getHodUserList($changestage->division_id);
 
                     foreach ($list as $u) {
@@ -3383,7 +3409,7 @@ class OOSController extends Controller
                                 } catch (\Exception $e) {
                                     \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                 }
-                          
+
                         }
                     }
 
@@ -3424,7 +3450,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    
+
                     $list = Helpers::getQAUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
@@ -3448,7 +3474,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                        
+
                                     }
                                 }
 
@@ -3489,7 +3515,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                  
+
 
                     $list = Helpers::getQAHeadUserList($changestage->division_id);
 
@@ -3515,10 +3541,10 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
-                 
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -3558,7 +3584,7 @@ class OOSController extends Controller
                     $history->action_name = 'Not Applicable';
                     $history->save();
 
-                 
+
 
                     $list = Helpers::getProductionUserList($changestage->division_id);
 
@@ -3583,7 +3609,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
                 $changestage->update();
@@ -3624,7 +3650,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                   
+
 
                     $list = Helpers::getProductionHeadUserList($changestage->division_id);
 
@@ -3649,7 +3675,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                      
+
                                     }
                                 }
 
@@ -3690,7 +3716,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                   
+
                      $list = Helpers::getQAUserList($changestage->division_id);
 
                         foreach ($list as $u) {
@@ -3715,7 +3741,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                              
+
                             }
                         }
                 $changestage->update();
@@ -3755,7 +3781,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                   
+
 
                      $list = Helpers::getQAHeadUserList($changestage->division_id);
 
@@ -3780,7 +3806,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                      
+
                                     }
                                 }
 
@@ -3822,7 +3848,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                   
+
 
                      $list = Helpers::getInitiatorUserList($changestage->division_id);
 
@@ -3847,7 +3873,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
                 $changestage->update();
@@ -3887,7 +3913,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                    
+
 
                      $list = Helpers::getHodUserList($changestage->division_id);
 
@@ -3913,7 +3939,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
 
@@ -3955,7 +3981,7 @@ class OOSController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
-                  
+
                      $list = Helpers::getQAUserList($changestage->division_id);
 
                                 foreach ($list as $u) {
@@ -3979,7 +4005,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
 
@@ -4022,7 +4048,7 @@ class OOSController extends Controller
                     $history->action_name = 'Not Applicable';
                     $history->save();
 
-                    
+
 
                      $list = Helpers::getQAUserList($changestage->division_id);
 
@@ -4048,7 +4074,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
                 $changestage->update();
@@ -4179,7 +4205,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
 
@@ -4286,10 +4312,10 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
-                           
+
 
                 $changestage->update();
                 toastr()->success('Document Sent');
@@ -4321,7 +4347,9 @@ class OOSController extends Controller
                         $hasPending2 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending2 = true;
                                 break;
                             }
@@ -4336,7 +4364,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -4376,8 +4404,8 @@ class OOSController extends Controller
                     //         'type' => 'success',
                     //     ]);
                     // }
-               
-                
+
+
                 $changestage->stage = "5";
                 $changestage->status = "Under Phase-IA Investigation";
                 $changestage->CQA_Head_Primary_Review_Complete_By= Auth::user()->name;
@@ -4406,8 +4434,8 @@ class OOSController extends Controller
                                 $history->action_name = 'Update';
                             }
                             $history->save();
-                            
-                            
+
+
 
 
 
@@ -4435,11 +4463,11 @@ class OOSController extends Controller
 
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
-                                        } 
+                                        }
 
                                     }
                                 }
-                            
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -4501,7 +4529,9 @@ class OOSController extends Controller
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -4516,7 +4546,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -4526,7 +4556,7 @@ class OOSController extends Controller
                         ]);
                     }
 
-                   
+
             //         $actionchilds = ActionItem::where('parent_id', $id)
             //             ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
             //             ->get();
@@ -4619,7 +4649,7 @@ class OOSController extends Controller
             //        ]);
             //    }
 
-               
+
 
                 $changestage->stage = "6";
                 $changestage->status = "Phase IA HOD Primary Review";
@@ -4649,7 +4679,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                   
+
 
 
                      $list = Helpers::getHodUserList($changestage->division_id);
@@ -4659,7 +4689,7 @@ class OOSController extends Controller
                                     $email = Helpers::getUserEmail($u->user_id);
 
                                     if (!empty($email)) {
-                                     
+
                                     try {
 
                                             $data = [
@@ -4710,7 +4740,9 @@ class OOSController extends Controller
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -4725,7 +4757,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -4735,7 +4767,7 @@ class OOSController extends Controller
                         ]);
                     }
 
-                   
+
                     // $actionchilds = ActionItem::where('parent_id', $id)
                     //     ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
                     //     ->get();
@@ -4796,7 +4828,7 @@ class OOSController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                  
+
 
 
                      $list = Helpers::getInitiatorUserList($changestage->division_id);
@@ -4832,7 +4864,7 @@ class OOSController extends Controller
 
             if ($changestage->stage == 13) {
 
-                if (empty($changestage->phase_iib_inv_required_plir 
+                if (empty($changestage->phase_iib_inv_required_plir
                 )) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
@@ -4857,7 +4889,9 @@ class OOSController extends Controller
                         $hasPending10 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done'
+    || $extensionchildStatus !== 'closed - cancelled'
+    || $extensionchildStatus !== 'closed - rejected') {
                                 $hasPending10 = true;
                                 break;
                             }
@@ -4872,7 +4906,7 @@ class OOSController extends Controller
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -5027,7 +5061,7 @@ class OOSController extends Controller
                     }
                     $history->save();
 
-                  
+
 
                      $list = Helpers::getProductionHeadUserList($changestage->division_id);
 
@@ -5057,7 +5091,7 @@ class OOSController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                             }
-                           
+
                         }
                     }
                 $changestage->update();
@@ -5074,7 +5108,7 @@ class OOSController extends Controller
         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = OOS::find($id);
             $lastDocument = OOS::find($id);
-            
+
             $data->stage = "0";
             $data->status = "Closed-Cancelled";
             $data->cancelled_by = Auth::user()->name;
@@ -5239,7 +5273,7 @@ class OOSController extends Controller
                                         } catch (\Exception $e) {
                                             \Log::error('OOS/OOT Mail Error: ' . $e->getMessage());
                                         }
-                                       
+
                                     }
                                 }
             $data->update();
@@ -5267,7 +5301,7 @@ class OOSController extends Controller
 
                     return redirect()->back();
                 }
-                
+
                 elseif (!$changestage->conclusion_comments_oosc ||!$changestage->justifi_for_averaging_results_oosc ||!$changestage->justify_if_capa_not_required_oosc ||!$changestage->action_on_affected_batch   ) {
                     // Flash message for warning (field not filled)
                      Session::flash('swal', [
@@ -5315,7 +5349,7 @@ class OOSController extends Controller
                 $history->action_name = 'Update';
             }
             $history->save();
-           
+
                   $usersmerge = collect()
                     ->merge(Helpers::getQAUserList($data->division_id))
                     ->merge(Helpers::getCQAUsersList($data->division_id))
@@ -5353,11 +5387,11 @@ class OOSController extends Controller
                                 } catch (\Exception $e) {
                                     \Log::error('Mail Error: ' . $e->getMessage());
                                 }
-                                
-                              
+
+
                             }
                         }
-           
+
             $data->update();
             toastr()->success('Document Sent');
             return back();
@@ -5429,7 +5463,7 @@ class OOSController extends Controller
                 $history->action_name = 'Update';
             }
             $history->save();
-            
+
 
              $list = Helpers::getInitiatorUserList($data->division_id);
 
@@ -5464,7 +5498,7 @@ class OOSController extends Controller
                                         }
                                     }
                                 }
-            
+
             $data->update();
             toastr()->success('Document Sent');
             return back();
@@ -5534,7 +5568,7 @@ class OOSController extends Controller
                 $history->action_name = 'Update';
             }
             $history->save();
-            
+
              $list = Helpers::getInitiatorUserList($data->division_id);
 
                     foreach ($list as $u) {
@@ -5562,7 +5596,7 @@ class OOSController extends Controller
 
                         }
                     }
-            
+
             $data->update();
             toastr()->success('Document Sent');
             return back();
@@ -5621,7 +5655,7 @@ class OOSController extends Controller
             $record_number =$record;
 
 
-           
+
             return view('frontend.forms.capa', compact('reference_record','parent_id','relatedRecords','old_records','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
         } elseif ($request->child_type == "Action_Item")
          {
@@ -5638,8 +5672,8 @@ class OOSController extends Controller
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $lastAi = ActionItem::orderBy('record', 'desc')->first();
         $record_number = $lastAi ? $lastAi->record + 1 : 1;
-     
-      
+
+
         // dd($data->due_date);
             $pre = [
                     'DEV' => \App\Models\Deviation::class,
@@ -5684,7 +5718,7 @@ class OOSController extends Controller
                 $relatedRecords = $relatedRecords->merge($records);
                 }
 
-        
+
             return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data','relatedRecords'));
         }
         elseif ($request->child_type == "Resampling")
@@ -5712,7 +5746,7 @@ class OOSController extends Controller
            $data=OOS::find($id);
            $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
            $actionchild->save();
-           
+
            $count = extension_new::where('parent_id', $id)
                     ->where('parent_type', $parent_type)
                     ->count();
@@ -5725,7 +5759,7 @@ class OOSController extends Controller
                                 ->where('parent_type', $parent_type)
                                 ->orderByDesc('id')
                                 ->first();
-                
+
                         if (!$lastExtension) {
                             $extensionCount = 1;
                         } else {
@@ -5736,7 +5770,7 @@ class OOSController extends Controller
                             }
                         }
 
-                    }   
+                    }
 
                  $old_record = extension_new::select('id', 'division_id', 'record')->get();
                 $lastAi = extension_new::orderBy('record', 'desc')->first();
