@@ -14,6 +14,7 @@ use App\Models\CapaAuditTrial;
 use App\Models\ActionItemHistory;
 use App\Models\ExtensionNewAuditTrail;
 use App\Models\Capa;
+use App\Models\CapaGrid;
 use App\Models\extension_new;
 use App\Models\ActionItem;
 use App\Models\OpenStage;
@@ -65,6 +66,8 @@ class RootCauseController extends Controller
         $root->originator_id = $request->originator_id;
         $root->date_opened = $request->date_opened;
         $root->division_id = $request->division_id;
+        $root->division_code = $request->division_code;
+        // dd($root->division_id);
         $root->priority_level = $request->priority_level;
         $root->severity_level = $request->severity_level;
         $root->short_description = ($request->short_description);
@@ -5365,6 +5368,90 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.root-cause-analysis.singleReport', compact('data','investigation_teamNamesString','selectedMethodologies'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+            // $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            // $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Root-cause' . $id . '.pdf');
+        }
+    }
+
+    public static function familyReport($id)
+    {
+        $data = RootCauseAnalysis::find($id);
+        if (!empty($data)) {
+            $data->originator_id = User::where('id', $data->initiator_id)->value('name');
+            $investigation_teamIdsArray = explode(',', $data->investigation_team);
+            $investigation_teamNames = User::whereIn('id', $investigation_teamIdsArray)->pluck('name')->toArray();
+            $investigation_teamNamesString = implode(', ', $investigation_teamNames);
+            $selectedMethodologies = explode(',', $data->root_cause_methodology);
+
+            $parentId = $id;
+
+
+            $Extension = extension_new::where('parent_id', $parentId)
+                        ->where('parent_type', 'RCA')
+                        ->get();      // COLLECTION
+
+            $countExtensions = $Extension->count();     // ✔ No error
+            $extension = $Extension->first();           // ✔ No error
+
+            $capa_Data = Capa::where('parent_id', $parentId)->get();
+
+            foreach ($capa_Data as $capa) {
+
+                $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)
+                    ->where('type', "Product_Details")
+                    ->first();
+
+                $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)
+                    ->where('type', "Instruments_Details")
+                    ->first();
+
+                $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)
+                    ->where('type', "Material_Details")
+                    ->first();
+
+                $capa->originator = User::where('id', $capa->initiator_id)->value('name');
+
+                if (!empty($capa->capa_team)) {
+                    $capa_teamIdsArray = explode(',', $capa->capa_team);
+                    $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)
+                        ->pluck('name')
+                        ->toArray();
+
+                    $capa->capa_teamNamesString = implode(', ', $capa_teamNames);
+                } else {
+                    $capa->capa_teamNamesString = null;
+                }
+            }
+
+            $ActionItem = ActionItem::where('parent_id', $parentId)
+                ->where('parent_type', 'RCA')
+                ->get();
+
+
+
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.root-cause-analysis.root_family_report', compact('data','investigation_teamNamesString','selectedMethodologies','Extension','capa_Data','ActionItem'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
