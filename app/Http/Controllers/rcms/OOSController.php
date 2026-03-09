@@ -350,9 +350,11 @@ class OOSController extends Controller
                         $hasPending1 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending1 = true;
                                 break;
                             }
@@ -464,9 +466,11 @@ class OOSController extends Controller
                         $hasPending4 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending4 = true;
                                 break;
                             }
@@ -617,9 +621,11 @@ class OOSController extends Controller
                         $hasPending5 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending5 = true;
                                 break;
                             }
@@ -781,9 +787,11 @@ class OOSController extends Controller
                         $hasPending6 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending6 = true;
                                 break;
                             }
@@ -1008,9 +1016,11 @@ class OOSController extends Controller
                         $hasPending7 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending7 = true;
                                 break;
                             }
@@ -1160,9 +1170,11 @@ class OOSController extends Controller
                         $hasPending8 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending8 = true;
                                 break;
                             }
@@ -1340,9 +1352,11 @@ class OOSController extends Controller
                         $hasPending9 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending9 = true;
                                 break;
                             }
@@ -1483,9 +1497,11 @@ class OOSController extends Controller
                         $hasPending11 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending11 = true;
                                 break;
                             }
@@ -1635,9 +1651,11 @@ class OOSController extends Controller
                         $hasPending12 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending12 = true;
                                 break;
                             }
@@ -1787,9 +1805,11 @@ class OOSController extends Controller
                         $hasPending12 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending12 = true;
                                 break;
                             }
@@ -1927,9 +1947,11 @@ class OOSController extends Controller
                         $hasPending13 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending13 = true;
                                 break;
                             }
@@ -2158,9 +2180,11 @@ class OOSController extends Controller
                         $hasPending14 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending14 = true;
                                 break;
                             }
@@ -2327,7 +2351,11 @@ class OOSController extends Controller
                         $hasPending15 = false;
                         foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done' && $extensionchildStatus !== 'closed-cancelled') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending15 = true;
                                 break;
                             }
@@ -2519,9 +2547,11 @@ class OOSController extends Controller
                         $hasPending15 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending15 = true;
                                 break;
                             }
@@ -4347,9 +4377,11 @@ class OOSController extends Controller
                         $hasPending2 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending2 = true;
                                 break;
                             }
@@ -4529,9 +4561,11 @@ class OOSController extends Controller
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -4740,9 +4774,11 @@ class OOSController extends Controller
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -4889,9 +4925,11 @@ class OOSController extends Controller
                         $hasPending10 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done'
-    || $extensionchildStatus !== 'closed - cancelled'
-    || $extensionchildStatus !== 'closed - rejected') {
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending10 = true;
                                 break;
                             }
@@ -6150,16 +6188,16 @@ class OOSController extends Controller
                 } else {
                     $capa_teamNamesString = null;
                 }
-            }   
+            }
 
             $investigation_teamNamesString = '';
             $selectedMethodologies = [];
-            
+
             $RootCause = RootCauseAnalysis::where('parent_id', $parentId)->get();
 
             foreach ($RootCause as $rca) {
 
-                $rca->originator_name = User::where('id', $rca->initiator_id)->value('name');   
+                $rca->originator_name = User::where('id', $rca->initiator_id)->value('name');
 
                 $teamIds = explode(',', $rca->investigation_team ?? '');
 
@@ -6170,7 +6208,7 @@ class OOSController extends Controller
                 $investigation_teamNamesString = implode(', ', $teamNames);
 
                 $selectedMethodologies = explode(',', $rca->root_cause_methodology ?? '');
-            } 
+            }
 
             $Resampling = Resampling::where('parent_id', $parentId)->get();
 
