@@ -181,7 +181,7 @@ if($submenu=="Role Permission"){
                                 <p>Role Permission</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ route('GroupPermission.index') }}"
                                 class="nav-link @php
 if($submenu=="Group Permission"){
@@ -190,8 +190,8 @@ if($submenu=="Group Permission"){
                                 <i class="fa fa-users nav-icon"></i>
                                 <p>Group Permission</p>
                             </a>
-                        </li>
-                        
+                        </li> --}}
+
 
                     </ul>
                 </li>
@@ -208,7 +208,7 @@ if($submenu=="Group Permission"){
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-                    
+
                     <ul class="nav nav-treeview">
 
 
@@ -236,8 +236,8 @@ if($submenu=="Group Permission"){
 
                 </li>
 
-                <li class="nav-item {{ $mainmenu == 'System Configuration' ? 'menu-open' : '' }} ">
-                  
+                {{-- <li class="nav-item {{ $mainmenu == 'System Configuration' ? 'menu-open' : '' }} ">
+
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="System Configuration"){
@@ -294,9 +294,9 @@ if($submenu=="Document Language"){
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li class="nav-item {{ $mainmenu == 'Division & Process' ? 'menu-open' : '' }} ">
+                {{-- <li class="nav-item {{ $mainmenu == 'Division & Process' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="Division & Process"){
@@ -334,11 +334,11 @@ if($submenu=="Process"){
                         </li>
 
                     </ul>
-                </li>
+                </li> --}}
 
-                
 
-                <li class="nav-item {{ $mainmenu == 'Control Management' ? 'menu-open' : '' }} ">
+
+                {{-- <li class="nav-item {{ $mainmenu == 'Control Management' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="Control Management"){
@@ -377,7 +377,7 @@ if($submenu=="Download Control"){
                         </li>
 
                     </ul>
-                </li>
+                </li> --}}
 
   {{-- <li class="nav-item {{ $mainmenu == 'Product & Material' ? 'menu-open' : '' }} ">
                     <a href="#"
@@ -420,7 +420,7 @@ if($submenu=="Material"){
                     </ul>
                 </li> --}}
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ URL('admin/risk-level') }}"
                         class="nav-link @php
 if($mainmenu=="risk-level"){
@@ -432,7 +432,7 @@ if($mainmenu=="risk-level"){
 
                         </p>
                     </a>
-                </li>
+                </li> --}}
 
 
                 </li>
