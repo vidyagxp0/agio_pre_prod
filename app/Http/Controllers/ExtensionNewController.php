@@ -274,6 +274,7 @@ class ExtensionNewController extends Controller
         $extensionNew->save();
 
 
+
         $history = new ExtensionNewAuditTrail();
         $history->extension_id = $extensionNew->id;
         $history->activity_type = 'Record Number';
@@ -2043,17 +2044,20 @@ class ExtensionNewController extends Controller
                     } else {
                         $history->action_name = 'Update';
                     }
-                     if ($extensionNew->status == "Closed - Done") 
-                        {
-                            
-                          $proposedDatechange = $extensionNew->proposed_due_date;
+
+
+                      // ✅ Parent due date update
+                        if ($extensionNew->status == "Closed - Done") {
+
+                            $proposedDatechange = $extensionNew->proposed_due_date;
+                            $proposedDatechange1 = Carbon::parse($extensionNew->proposed_due_date)->format('d-M-Y');
 
                             switch ($extensionNew->parent_type) {
 
-                                case 'EffectivenessCheck':
-                                    EffectivenessCheck::where('id', $extensionNew->parent_id)
-                                        ->update(['due_date' => $proposedDatechange]);
-                                    break;
+                                // case 'EffectivenessCheck':
+                                //     EffectivenessCheck::where('id', $extensionNew->parent_id)
+                                //         ->update(['due_date' => $proposedDatechange]);
+                                //     break;
 
                                 case 'Deviation':
                                     Deviation::where('id', $extensionNew->parent_id)
@@ -2062,53 +2066,62 @@ class ExtensionNewController extends Controller
 
                                 case 'CC':
                                     CC::where('id', $extensionNew->parent_id)
-                                        ->update(['due_date' => $proposedDatechange]);
+                                        ->update(['due_date' => $proposedDatechange1]);
                                     break;
 
                                 case 'CAPA':
                                     Capa::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'External Audit':
                                     Auditee::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
-                                case ' ':
+
+                                case 'Incident':
                                     Incident::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'Internal Audit':
                                     InternalAudit::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'Lab Incident':
                                     LabIncident::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'Market Complaint':
                                     MarketComplaint::where('id', $extensionNew->parent_id)
                                         ->update(['due_date_gi' => $proposedDatechange]);
                                     break;
+
                                 case 'OOC':
                                     OutOfCalibration::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
-                                 case 'OOS Chemical':
+
+                                case 'OOS Chemical':
+                                case 'OOS Micro':
+                                case 'OOT':
                                     OOS::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'RCA':
                                     RootCauseAnalysis::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
-                                
-                                
-                                
                             }
                         }
                     $history->save();
 
-                    $usersmail = collect()
+                
+
+               $usersmail = collect()
                     ->merge(Helpers::getInitiatorUserList($extensionNew->division_id))
                     ->merge(Helpers::getQAApproverUserList($extensionNew->division_id))
                     ->merge(Helpers::getHodUserList($extensionNew->division_id))
@@ -2235,17 +2248,19 @@ class ExtensionNewController extends Controller
                     } else {
                         $history->action_name = 'Update';
                     }
-                    if ($extensionNew->status == "Closed - Done") 
-                        {
-                            
-                          $proposedDatechange = $extensionNew->proposed_due_date;
+
+                      // ✅ Parent due date update
+                        if ($extensionNew->status == "Closed - Done") {
+
+                            $proposedDatechange = $extensionNew->proposed_due_date;
+                            $proposedDatechange1 = Carbon::parse($extensionNew->proposed_due_date)->format('d-M-Y');
 
                             switch ($extensionNew->parent_type) {
 
-                                case 'EffectivenessCheck':
-                                    EffectivenessCheck::where('id', $extensionNew->parent_id)
-                                        ->update(['due_date' => $proposedDatechange]);
-                                    break;
+                                // case 'EffectivenessCheck':
+                                //     EffectivenessCheck::where('id', $extensionNew->parent_id)
+                                //         ->update(['due_date' => $proposedDatechange]);
+                                //     break;
 
                                 case 'Deviation':
                                     Deviation::where('id', $extensionNew->parent_id)
@@ -2254,51 +2269,58 @@ class ExtensionNewController extends Controller
 
                                 case 'CC':
                                     CC::where('id', $extensionNew->parent_id)
-                                        ->update(['due_date' => $proposedDatechange]);
+                                        ->update(['due_date' => $proposedDatechange1]);
                                     break;
 
                                 case 'CAPA':
                                     Capa::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'External Audit':
                                     Auditee::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'Incident':
                                     Incident::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'Internal Audit':
                                     InternalAudit::where('id', $extensionNew->parent_id)
-                                        ->update(['due_l..date' => $proposedDatechange]);
+                                        ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'Lab Incident':
                                     LabIncident::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'Market Complaint':
                                     MarketComplaint::where('id', $extensionNew->parent_id)
                                         ->update(['due_date_gi' => $proposedDatechange]);
                                     break;
+
                                 case 'OOC':
                                     OutOfCalibration::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
-                                 case 'OOS Chemical':
+
+                                case 'OOS Chemical':
+                                case 'OOS Micro':
+                                case 'OOT':
                                     OOS::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
+
                                 case 'RCA':
                                     RootCauseAnalysis::where('id', $extensionNew->parent_id)
                                         ->update(['due_date' => $proposedDatechange]);
                                     break;
-                                
-                                
-                                
                             }
                         }
-                        $history->save();
+                    $history->save();
 
                 
 
