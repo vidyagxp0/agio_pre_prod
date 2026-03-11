@@ -10757,7 +10757,10 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         $hasPending1 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending1 = true;
                                 break;
                             }
@@ -11073,7 +11076,10 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -11976,7 +11982,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     foreach ($extensionchild as $ext) {
                         $extensionchildStatus = trim(strtolower($ext->status));
                         // Allow 'closed - done', 'reject', and 'cancel' as processed statuses
-                        if (!in_array($extensionchildStatus, ['closed - done', 'closed - reject'])) {
+                        if (!in_array($extensionchildStatus, ['closed - done', 'closed - reject', 'closed cancelled'])) {
                             $hasPending4 = true;
                             break;
                         }
@@ -12095,8 +12101,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     toastr()->success('Document Sent');
                     return back();
                 }
-                if ($deviation->stage == 6) {
-
+            if ($deviation->stage == 6) {
 
             // return "PAUSE";
             if (!$deviation->qa_head_designe_comment) {
@@ -12210,7 +12215,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             $hasPending1 = false;
                             $totalChildren = 0;
 
-                            $allowedStatuses = ['closed - done', 'closed - rejected', 'closed - cancelled'];
+                            $allowedStatuses = ['closed - done', 'closed - rejected', 'closed cancelled'];
 
                             foreach ($childModels as $model) {
                                 $extensionChildren = $model::where('parent_id', $deviation->id)
@@ -12239,68 +12244,67 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             }
 
 
-                              $actionchilds = ActionItem::where('parent_id', $id)
-                            ->where('parent_type', 'Deviation')
-                            ->get();
-                                $hasPendingaction = false;
-                            foreach ($actionchilds as $ext) {
-                                    $actionchildstatus = trim(strtolower($ext->status));
-                                 if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                                        $hasPendingaction = true;
-                                        break;
-                                    }
-                                }
-                        if ($hasPendingaction) {
-                            // $actionchildstatus = trim(strtolower($extensionchild->status));
-                            if ($hasPendingaction) {
-                                Session::flash('swal', [
-                                    'title' => 'Action Item Child Pending!',
-                                    'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                    'type' => 'warning',
-                                ]);
+                                //     $actionchilds = ActionItem::where('parent_id', $id)
+                                //     ->where('parent_type', 'Deviation')
+                                //     ->get();
+                                //         $hasPendingaction = false;
+                                //     foreach ($actionchilds as $ext) {
+                                //             $actionchildstatus = trim(strtolower($ext->status));
+                                //          if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed cancelled') {
+                                //                 $hasPendingaction = true;
+                                //                 break;
+                                //             }
+                                //         }
+                                // if ($hasPendingaction) {
+                                //     // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                //     if ($hasPendingaction) {
+                                //         Session::flash('swal', [
+                                //             'title' => 'Action Item Child Pending!',
+                                //             'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                //             'type' => 'warning',
+                                //         ]);
 
-                            return redirect()->back();
-                            }
-                        } else {
-                            // Flash message for success (when the form is filled correctly)
-                            Session::flash('swal', [
-                                'title' => 'Success!',
-                                'message' => 'Document Sent',
-                                'type' => 'success',
-                            ]);
-                        }
+                                //     return redirect()->back();
+                                //     }
+                                // } else {
+                                //     // Flash message for success (when the form is filled correctly)
+                                //     Session::flash('swal', [
+                                //         'title' => 'Success!',
+                                //         'message' => 'Document Sent',
+                                //         'type' => 'success',
+                                //     ]);
+                                // }
 
+                                // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                                // ->where('parent_type', 'Deviation')
+                                // ->get();
+                                //     $hasPendingRCA = false;
+                                // foreach ($rcachilds as $ext) {
+                                //         $rcachildstatus = trim(strtolower($ext->status));
+                                //         if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 'Closed-Cancelled') {
+                                //             $hasPendingRCA = true;
+                                //             break;
+                                //         }
+                                //     }
+                                // if ($hasPendingRCA) {
+                                //     // $rcachildstatus = trim(strtolower($extensionchild->status));
+                                //     if ($hasPendingRCA) {
+                                //         Session::flash('swal', [
+                                //             'title' => 'RCA Child Pending!',
+                                //             'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                //             'type' => 'warning',
+                                //         ]);
 
-                                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                                ->where('parent_type', 'Deviation')
-                                ->get();
-                                    $hasPendingRCA = false;
-                                foreach ($rcachilds as $ext) {
-                                        $rcachildstatus = trim(strtolower($ext->status));
-                                        if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 'Closed-Cancelled') {
-                                            $hasPendingRCA = true;
-                                            break;
-                                        }
-                                    }
-                            if ($hasPendingRCA) {
-                                // $rcachildstatus = trim(strtolower($extensionchild->status));
-                                if ($hasPendingRCA) {
-                                    Session::flash('swal', [
-                                        'title' => 'RCA Child Pending!',
-                                        'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                                        'type' => 'warning',
-                                    ]);
-
-                                return redirect()->back();
-                                }
-                            } else {
-                                // Flash message for success (when the form is filled correctly)
-                                Session::flash('swal', [
-                                    'title' => 'Success!',
-                                    'message' => 'Document Sent',
-                                    'type' => 'success',
-                                ]);
-                            }
+                                //     return redirect()->back();
+                                //     }
+                                // } else {
+                                //     // Flash message for success (when the form is filled correctly)
+                                //     Session::flash('swal', [
+                                //         'title' => 'Success!',
+                                //         'message' => 'Document Sent',
+                                //         'type' => 'success',
+                                //     ]);
+                                // }
 
                             if ($deviation->Investigation_required == 'Yes') {
                                 if (
@@ -12383,9 +12387,6 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                                     'message' => 'Sent for HOD Final Review state'
                                 ]);
                             }
-
-
-
 
                     $deviation->stage = "8";
                     $deviation->status = "HOD Final Review";
@@ -12559,25 +12560,6 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                 }
                  if ($deviation->stage == 9) {
 
-                    // if ($deviation->form_progress !== 'qah')
-                    // {
-
-                    //     Session::flash('swal', [
-                    //         'title' => 'Mandatory Fields!',
-                    //         'message' => 'QAH/Designee Approval Tab is yet to be filled!',
-                    //         'type' => 'warning',
-                    //     ]);
-
-                    //     return redirect()->back();
-                    // } else {
-                    //     Session::flash('swal', [
-                    //         'type' => 'success',
-                    //         'title' => 'Success',
-                    //         'message' => 'Deviation sent to QA Final Approval.'
-                    //     ]);
-                    // }
-
-
                     if (!$deviation->QA_Feedbacks) {
 
                         Session::flash('swal', [
@@ -12594,11 +12576,45 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             'message' => 'Sent for Head QA/CQA / Designee Closure Approval'
                         ]);
                     }
-                    $extension = Extension::where('parent_id', $deviation->id)->first();
 
-                    $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
+                    // exetnsion child validation
+                    $extensionchild = extension_new::where('parent_id', $id)
+                    ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro','OOT'])
+                    ->get();
+                    // dd($extensionchild);
+                        $hasPending1 = false;
+                    foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if (
+                                $extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
+                                $hasPending1 = true;
+                                break;
+                            }
+                        }
 
+                    if ($hasPending1) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
 
+                        return redirect()->back();
+
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    // $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
 
                     $deviation->stage = "10";
                     $deviation->status = "Head QA/CQA / Designee Closure Approval";
@@ -12722,7 +12738,6 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
                 if ($deviation->stage == 10) {
 
-
                     // return "PAUSE";
 
                     if (!$deviation->Closure_Comments) {
@@ -12741,6 +12756,105 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                             'message' => 'Sent for Close-Done'
                         ]);
                     }
+
+                        $actionchilds = ActionItem::where('parent_id', $id)
+                                    ->where('parent_type', 'Deviation')
+                                    ->get();
+                                        $hasPendingaction = false;
+                                    foreach ($actionchilds as $ext) {
+                                            $actionchildstatus = trim(strtolower($ext->status));
+                                         if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                                $hasPendingaction = true;
+                                                break;
+                                            }
+                                        }
+                                if ($hasPendingaction) {
+                                    // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                    if ($hasPendingaction) {
+                                        Session::flash('swal', [
+                                            'title' => 'Action Item Child Pending!',
+                                            'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                            'type' => 'warning',
+                                        ]);
+
+                                    return redirect()->back();
+                                    }
+                                } else {
+                                    // Flash message for success (when the form is filled correctly)
+                                    Session::flash('swal', [
+                                        'title' => 'Success!',
+                                        'message' => 'Document Sent',
+                                        'type' => 'success',
+                                    ]);
+                                }
+
+                                 $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                                ->where('parent_type', 'Deviation')
+                                ->get();
+                                    $hasPendingRCA = false;
+                                foreach ($rcachilds as $ext) {
+                                        $rcachildstatus = trim(strtolower($ext->status));
+                                        if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 'closed-cancelled') {
+                                            $hasPendingRCA = true;
+                                            break;
+                                        }
+                                    }
+
+                                if ($hasPendingRCA) {
+                                    // $rcachildstatus = trim(strtolower($extensionchild->status));
+                                    if ($hasPendingRCA) {
+                                        Session::flash('swal', [
+                                            'title' => 'RCA Child Pending!',
+                                            'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                            'type' => 'warning',
+                                        ]);
+
+                                    return redirect()->back();
+                                    }
+                                } else {
+                                    // Flash message for success (when the form is filled correctly)
+                                    Session::flash('swal', [
+                                        'title' => 'Success!',
+                                        'message' => 'Document Sent',
+                                        'type' => 'success',
+                                    ]);
+                                }
+
+                        // CAPA Child
+
+                        $capachilds = Capa::where('parent_id', $id)
+                            ->where('parent_type', 'Deviation')
+                            ->get();
+                                $hasPending = false;
+                            foreach ($capachilds as $ext) {
+                                    $capachildstatus = trim(strtolower($ext->status));
+                                    if ($capachildstatus !== 'closed - done' &&
+                                        $capachildstatus !== 'closed-cancelled' )
+                                    {
+                                        $hasPending = true;
+                                        break;
+                                    }
+                                    }
+                                    // dd($capachildstatus);
+                        if ($hasPending) {
+                            // $capachildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPending) {
+                                Session::flash('swal', [
+                                    'title' => 'CAPA Child Pending!',
+                                    'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
 
                     $deviation->stage = "12";
                     $deviation->status = "Closed-Done";
@@ -12930,7 +13044,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                 toastr()->error('E-signature Not match');
                 return back();
             }
-        } catch (\Throwable $th) {
+        } catch (\Throwable $th) {  
             return response()->json([
                 'success' => false,
                 'message' => $th->getMessage()
@@ -12946,9 +13060,6 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
            if ($deviation->stage == 3) {
-
-
-
 
                     $deviation->stage = "5";
                     $deviation->status = "QA/CQA Final Assessment";
@@ -13055,9 +13166,6 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $lastDocument = Deviation::find($id);
 
                if ($deviation->stage == 2) {
-
-
-
 
                     $deviation->stage = "1";
                     $deviation->status = "Opened";
@@ -13283,10 +13391,6 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
     }
 
 
-
-
-
-
     public function store_audit_review(Request $request, $id)
     {
             $history = new AuditReviewersDetails;
@@ -13330,10 +13434,6 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
         $users = User::all();
         return view('frontend.forms.deviation.deviation_audit', compact('audit', 'document', 'today','users'));
     }
-
-
-
-
 
 public function audit_trail_filter(Request $request, $id)
 {
@@ -13407,9 +13507,6 @@ public function audit_trail_filter(Request $request, $id)
 
     return response()->json(['html' => $responseHtml]);
 }
-
-
-
 
     public function deviationAuditTrailPdf($id)
     {
@@ -13710,18 +13807,12 @@ public function audit_trail_filter(Request $request, $id)
                 // }
             }
 
-
-
-
-
     return redirect()->to('rcms/deviation');
-
 
      }else {
             toastr()->error('E-signature Not match');
             return back();
         }
    }
-
 
 }

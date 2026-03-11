@@ -4463,8 +4463,6 @@ class CapaController extends Controller
                     ]);
                 }
 
-
-                 
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CAPA')
@@ -4622,6 +4620,38 @@ class CapaController extends Controller
                             'type' => 'success',
                         ]);
                     }
+
+                     $actionchilds = ActionItem::where('parent_id', $id)
+                                    ->where('parent_type', 'CAPA')
+                                    ->get();
+                                        $hasPendingaction = false;
+                                    foreach ($actionchilds as $ext) {
+                                            $actionchildstatus = trim(strtolower($ext->status));
+                                         if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled') {
+                                                $hasPendingaction = true;
+                                                break;
+                                            }
+                                        }
+                                if ($hasPendingaction) {
+                                    // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                    if ($hasPendingaction) {
+                                        Session::flash('swal', [
+                                            'title' => 'Action Item Child Pending!',
+                                            'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                            'type' => 'warning',
+                                        ]);
+
+                                    return redirect()->back();
+                                    }
+                                } else {
+                                    // Flash message for success (when the form is filled correctly)
+                                    Session::flash('swal', [
+                                        'title' => 'Success!',
+                                        'message' => 'Document Sent',
+                                        'type' => 'success',
+                                    ]);
+                                }
+
                 $capa->stage = "9";
                 $capa->status = "Closed - Done";
                 $capa->qah_approval_completed_by = Auth::user()->name;

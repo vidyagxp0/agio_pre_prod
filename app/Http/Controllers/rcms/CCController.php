@@ -5637,16 +5637,6 @@ if (!$areRegAffairAttachSame && !empty($request->RegulatoryAffair_attachment)) {
             }
 
 
-
-
-      
-       
-
-
-
-
-
-
         /************ QA Initial End ************/
 
         /************ CFT Review ************/
@@ -6012,12 +6002,6 @@ if (!$areRegAffairAttachSame && !empty($request->RegulatoryAffair_attachment)) {
                     $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
                     $history->save();
                 }
-
-
-
-       
-     
-        
 
         if ($lastCft->ra_tab_comments != $Cft->ra_tab_comments && $Cft->ra_tab_comments != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
@@ -11518,9 +11502,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
-               
-
-                
                      $list = Helpers::getHodUserList($changeControl->division_id);
                         foreach ($list as $u) {
 
@@ -11792,11 +11773,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 //     }
                 // }
 
-
-
-
-                  
-
                  $usersmerge = collect()
                 ->merge(Helpers::getQAUserList($changeControl->division_id))
                 ->merge(Helpers::getCQAUsersList($changeControl->division_id))
@@ -11809,7 +11785,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                     if ($email !== null) {
 
-                        
                           try {
 
                                 $data = [
@@ -11833,9 +11808,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             }
                     }
                 }
-
-                
-                    
 
                 $changeControl->update();
                 // Helpers::hodMail($changeControl);
@@ -11909,10 +11881,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
 
-              
-
-
-               
                 $usersmerge = collect()
                 ->merge(Helpers::getQAUserList($changeControl->division_id))
                 ->merge(Helpers::getCQAUsersList($changeControl->division_id))
@@ -11947,11 +11915,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             }
                     }
                 }
-
-
-                     
-                      
-
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -12152,71 +12115,71 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                  //Action Item Child
 
-                    $actionchilds = ActionItem::where('parent_id', $id)
-                            ->where('parent_type', 'CC')
-                            ->get();
-                                $hasPendingaction = false;
-                            foreach ($actionchilds as $ext) {
-                                    $actionchildstatus = trim(strtolower($ext->status));
-                                 if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                                        $hasPendingaction = true;
-                                        break;
-                                    }
-                                }
-                        if ($hasPendingaction) {
-                            // $actionchildstatus = trim(strtolower($extensionchild->status));
-                            if ($hasPendingaction) {
-                                Session::flash('swal', [
-                                    'title' => 'Action Item Child Pending!',
-                                    'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                                    'type' => 'warning',
-                                ]);
+                    // $actionchilds = ActionItem::where('parent_id', $id)
+                    //         ->where('parent_type', 'CC')
+                    //         ->get();
+                    //             $hasPendingaction = false;
+                    //         foreach ($actionchilds as $ext) {
+                    //                 $actionchildstatus = trim(strtolower($ext->status));
+                    //              if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                    //                     $hasPendingaction = true;
+                    //                     break;
+                    //                 }
+                    //             }
+                    //     if ($hasPendingaction) {
+                    //         // $actionchildstatus = trim(strtolower($extensionchild->status));
+                    //         if ($hasPendingaction) {
+                    //             Session::flash('swal', [
+                    //                 'title' => 'Action Item Child Pending!',
+                    //                 'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                    //                 'type' => 'warning',
+                    //             ]);
 
-                            return redirect()->back();
-                            }
-                        } else {
-                            // Flash message for success (when the form is filled correctly)
-                            Session::flash('swal', [
-                                'title' => 'Success!',
-                                'message' => 'Document Sent',
-                                'type' => 'success',
-                            ]);
-                        }
+                    //         return redirect()->back();
+                    //         }
+                    //     } else {
+                    //         // Flash message for success (when the form is filled correctly)
+                    //         Session::flash('swal', [
+                    //             'title' => 'Success!',
+                    //             'message' => 'Document Sent',
+                    //             'type' => 'success',
+                    //         ]);
+                    //     }
 
 
              //CAPA Child
 
-             $capachilds = Capa::where('parent_id', $id)
-                ->where('parent_type', 'CC')
-                ->get();
-                    $hasPending = false;
-                foreach ($capachilds as $ext) {
-                        $capachildstatus = trim(strtolower($ext->status));
-                        if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' )
-                         {
-                            $hasPending = true;
-                            break;
-                        }
-                    }
-               if ($hasPending) {
-                // $capachildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPending) {
-                       Session::flash('swal', [
-                           'title' => 'CAPA Child Pending!',
-                           'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                           'type' => 'warning',
-                       ]);
+            //  $capachilds = Capa::where('parent_id', $id)
+            //     ->where('parent_type', 'CC')
+            //     ->get();
+            //         $hasPending = false;
+            //     foreach ($capachilds as $ext) {
+            //             $capachildstatus = trim(strtolower($ext->status));
+            //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' )
+            //              {
+            //                 $hasPending = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPending) {
+            //     // $capachildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPending) {
+            //            Session::flash('swal', [
+            //                'title' => 'CAPA Child Pending!',
+            //                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
                 if (is_null($updateCFT->intial_update_comments))
                 {
                     Session::flash('swal', [
@@ -12759,7 +12722,114 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             ]);
         }
 
-        // exetnsion child validation
+
+                     // CAPA Child
+
+                    $capachilds = Capa::where('parent_id', $id)
+                            ->where('parent_type', 'CC')
+                            ->get();
+                                $hasPending = false;
+                            foreach ($capachilds as $ext) {
+                                    $capachildstatus = trim(strtolower($ext->status));
+                                    if ($capachildstatus !== 'closed - done' &&
+                                        $capachildstatus !== 'closed-cancelled' )
+                                    {
+                                        $hasPending = true;
+                                        break;
+                                    }
+                                    }
+                                    // dd($capachildstatus);
+                        if ($hasPending) {
+                            // $capachildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPending) {
+                                Session::flash('swal', [
+                                    'title' => 'CAPA Child Pending!',
+                                    'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
+
+
+                        // RCA Child
+
+                         $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                            ->where('parent_type', 'CC')
+                            ->get();
+                                $hasPending = false;
+                            foreach ($rcachilds as $ext) {
+                                    $rcachildstatus = trim(strtolower($ext->status));
+                                    if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 'closed-cancelled' )
+                                    {
+                                        $hasPending = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPending) {
+                            // $rcachildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPending) {
+                                Session::flash('swal', [
+                                    'title' => 'RCA Child Pending!',
+                                    'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
+
+                        // Action Item Child
+                             $actionchilds = ActionItem::where('parent_id', $id)
+                            ->where('parent_type', 'CC')
+                            ->get();
+                                $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                    $actionchildstatus = trim(strtolower($ext->status));
+                                 if ($actionchildstatus !== 'closed - done' &&
+                                     $actionchildstatus !== 'closed-cancelled') {
+                                        $hasPendingaction = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPendingaction) {
+                            // $actionchildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPendingaction) {
+                                Session::flash('swal', [
+                                    'title' => 'Action Item Child Pending!',
+                                    'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
+
+
+
+                    // exetnsion child validation
                         $extensionchild = extension_new::where('parent_id', $id)
                         ->where('parent_type', 'CC')
                         ->get();

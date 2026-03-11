@@ -10417,7 +10417,7 @@ class RiskManagementController extends Controller
                         ]);
                     }
 
-            //          $capachilds = Capa::where('parent_id', $id)
+            //        $capachilds = Capa::where('parent_id', $id)
             //     ->where('parent_type', 'Risk Assesment')
             //     ->get();
             //         $hasPending = false;
@@ -10598,6 +10598,104 @@ class RiskManagementController extends Controller
                         ]);
                     }
 
+                   $ccchilds = CC::where('parent_id', $id)
+                        ->where('parent_type', 'risk-assesment')
+                        ->get();
+                            $hasPending = false;
+                        foreach ($ccchilds as $ext) {
+                                $ccchildstatus = trim(strtolower($ext->status));
+                                
+                                if ($ccchildstatus !== 'closed - done' && $ccchildstatus !== 'closed - rejected'  && $ccchildstatus !== 'closed-cancelled') {
+                                    $hasPending = true;
+                                    break;
+                                }
+                            }
+                            
+                    if ($hasPending) {
+                        // $ccchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPending) {
+                            Session::flash('swal', [
+                                'title' => 'Change Control Child Pending!',
+                                'message' => 'You cannot proceed until Change Control Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    // CAPA Child
+
+                    $capachilds = Capa::where('parent_id', $id)
+                            ->where('parent_type', 'risk-assesment')
+                            ->get();
+                                $hasPending = false;
+                            foreach ($capachilds as $ext) {
+                                    $capachildstatus = trim(strtolower($ext->status));
+                                if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
+                                        $hasPending = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPending) {
+                            // $capachildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPending) {
+                                Session::flash('swal', [
+                                    'title' => 'CAPA Child Pending!',
+                                    'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
+
+                        // Action Item
+
+                         $actionchilds = ActionItem::where('parent_id', $id)
+                            ->where('parent_type', 'risk-assesment')
+                            ->get();
+                                $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                    $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                        $hasPendingaction = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPendingaction) {
+                            // $actionchildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPendingaction) {
+                                Session::flash('swal', [
+                                    'title' => 'Action Item Child Pending!',
+                                    'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
                     $riskAssement->stage = "6";
                     $riskAssement->status = "Closed-Done";
                     $riskAssement->in_approve_by = Auth::user()->name;
@@ -11255,7 +11353,6 @@ class RiskManagementController extends Controller
             }
         
 
-
             if ($riskAssement->stage == 1) {
                 $riskAssement->stage = "0";
                 $riskAssement->status = "Closed - Cancelled";
@@ -11348,8 +11445,6 @@ class RiskManagementController extends Controller
                     }
                 }
 
-
-
                 $riskAssement->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -11360,8 +11455,6 @@ class RiskManagementController extends Controller
             return back();
         }
     }
-
-
 
     public function riskAuditTrial($id)
     {
