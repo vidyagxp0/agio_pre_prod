@@ -1029,7 +1029,7 @@ $users = DB::table('users')
                                 </div>
                             </div>
                         </div>
-                        <div class="sub-head pt-3" id="info_head">OOS Information</div>                        
+                        <div class="sub-head pt-3" id="info_head">OOS Information</div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
@@ -2227,9 +2227,9 @@ $users = DB::table('users')
                                         {{ in_array('Re-filtration and Injection from final dilution', old('proposal_for_hypothesis_IB', $selectedHypotheses ?? [])) ? 'selected' : '' }}>
                                         Re-filtration and Injection from final dilution
                                     </option>
-                                    <option value="Re-dilution from the tock solution and injection"
-                                        {{ in_array('Re-dilution from the tock solution and injection', old('proposal_for_hypothesis_IB', $selectedHypotheses ?? [])) ? 'selected' : '' }}>
-                                        Re-dilution from the tock solution and injection
+                                    <option value="Re-dilution from the stock solution and injection"
+                                        {{ in_array('Re-dilution from the stock solution and injection', old('proposal_for_hypothesis_IB', $selectedHypotheses ?? [])) ? 'selected' : '' }}>
+                                        Re-dilution from the stock solution and injection
                                     </option>
                                     <option value="Re-sonication / re-shaking due to probable incomplete solubility and analyze"
                                         {{ in_array('Re-sonication / re-shaking due to probable incomplete solubility and analyze', old('proposal_for_hypothesis_IB', $selectedHypotheses ?? [])) ? 'selected' : '' }}>
@@ -2403,8 +2403,9 @@ $users = DB::table('users')
                                 <label for="Assigned To">Production Person</label>
                                 <select id="choices-multiple-remove" class="choices-multiple-reviewe"
                                     name="production_person_ib" placeholder="Select Production Person">
-                                    <option value="">-- Select --</option>
+                                    <option value="">-- Select Production Person --</option>
 
+                                    <option value="NA">NA</option>
                                     @if (!empty(Helpers::getProductionDropdown()))
                                         @foreach (Helpers::getProductionDropdown() as $lan)
                                             <option value="{{ $lan['id'] }}">

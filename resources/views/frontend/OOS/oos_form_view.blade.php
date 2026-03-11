@@ -430,7 +430,7 @@
                         border: 1px solid #e0e0e0;
                         background: #f5f5f5;
                     }
-                    
+
                     .progress-bars div {
                         padding: 8px 12px;
                         font-size: 14px;
@@ -440,17 +440,17 @@
                         transition: all 0.3s ease;
                         border-right: 1px solid #fff;
                     }
-                    
+
                     .progress-bars div:last-child {
                         border-right: none;
                     }
-                    
+
                     /* Completed Stages - Solid Green */
                     .progress-bars div.completed {
                         background-color: #4CAF50;
                         color: black;
                     }
-                    
+
                     /* CURRENT Stage - Animated Blue (Pending Action) */
                     .progress-bars div.current {
                         background-color: #de8d0a;
@@ -458,19 +458,19 @@
                         font-weight: bold;
                         animation: pulse-blue 1.5s infinite;
                     }
-                    
+
                     /* Pending Stages - Light Gray */
                     .progress-bars div.pending {
                         background-color: #f5f5f5;
                         color: black;
                     }
-                    
+
                     /* Closed States */
                     .progress-bars div.closed {
                         background-color: #f44336;
                         color: white;
                     }
-                    
+
                     /* Blue Pulse Animation */
                     @keyframes pulse-blue {
                         0% { background-color: #de8d0a; }
@@ -506,7 +506,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm31')">Phase IA CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm32')">Phase IA CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
-        
+
                     @if($data->phase_ib_assi_cause == "Yes")
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     @endif
@@ -721,16 +721,16 @@
             function openCity(evt, cityName) {
                 const tabContents = document.querySelectorAll('.cctabcontent');
                 tabContents.forEach(content => content.style.display = 'none');
-                
+
                 const container = getVisibleTabContainer();
                 const tabLinks = container.querySelectorAll('.cctablinks');
 
                 // const tabLinks = document.querySelectorAll('.cctablinks');
                 tabLinks.forEach(link => link.classList.remove('active'));
-                
+
                 document.getElementById(cityName).style.display = 'block';
                 evt.currentTarget.classList.add('active');
-                
+
                 currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
             }
 
@@ -8028,7 +8028,7 @@
                                     {{-- <option value="">--Select---</option> --}}
                                     <option value="Re-injection of the original vial" @if (in_array('Re-injection of the original vial', $selectedChecklist)) selected @endif>Re-injection of the original vial</option>
                                     <option value="Re-filtration and Injection from final dilution" @if (in_array('Re-filtration and Injection from final dilution', $selectedChecklist)) selected @endif>Re-filtration and Injection from final dilution</option>
-                                    <option value="Re-dilution from the tock solution and injection" @if (in_array('Re-dilution from the tock solution and injection', $selectedChecklist)) selected @endif>Re-dilution from the tock solution and injection</option>
+                                    <option value="Re-dilution from the stock solution and injection" @if (in_array('Re-dilution from the stock solution and injection', $selectedChecklist)) selected @endif>Re-dilution from the stock solution and injection</option>
                                     <option value="Re-sonication / re-shaking due to probable incomplete solubility and analyze" @if (in_array('Re-sonication / re-shaking due to probable incomplete solubility and analyze', $selectedChecklist)) selected @endif>Re-sonication / re-shaking due to probable incomplete solubility and analyze</option>
                                     <option value="Other" @if (in_array('Other', $selectedChecklist)) selected @endif>Other</option>
                                 </select>
@@ -8200,8 +8200,9 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Assigned To">Production Person <span id="production_required_star" class="text-danger">*</span></label>
-                                <select id="production_person_ib" name="production_person_ib" placeholder="Select Production Person" {{Helpers::isOOSChemical($data->stage)}} {{ $istab9 ? '' : 'disabled' }} {{ $data->phase_ii_inv_req_ib == 'Yes' ? 'required' : '' }}>    
-                                    <option value="">-- Select --</option>
+                                <select id="production_person_ib" name="production_person_ib" placeholder="Select Production Person" {{Helpers::isOOSChemical($data->stage)}} {{ $istab9 ? '' : 'disabled' }} {{ $data->phase_ii_inv_req_ib == 'Yes' ? 'required' : '' }}>
+                                    <option value="">-- Select Production Person --</option>
+                                    <option value="NA" @if($data->production_person_ib == 'NA') selected @endif>NA</option>
                                     @if (!empty(Helpers::getProductionDropdown()))
                                         @foreach (Helpers::getProductionDropdown() as $listPersone)
                                             <option value="{{ $listPersone['id'] }}"
@@ -8211,9 +8212,9 @@
                                         @endforeach
                                     @endif
                                 </select>
-                            @if ($data->stage != 9)
-                                <input type="hidden" value="{{$data->production_person_ib}}" name="production_person_ib">
-                            @endif
+                                @if ($data->stage != 9)
+                                    <input type="hidden" value="{{$data->production_person_ib}}" name="production_person_ib">
+                                @endif
                             </div>
                         </div>
                         <script>
@@ -8877,7 +8878,7 @@
             @include('frontend.OOS.comps.phase_two_investigation')
             @php
               $istab14 = $data->stage == 14 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 61) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18));
-            @endphp  
+            @endphp
             <div id="CCForm36" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">

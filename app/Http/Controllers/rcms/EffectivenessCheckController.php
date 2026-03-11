@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\EffectivenessCheckAuditTrail;
 use App\Models\RoleGroup;
 use App\Models\extension_new;
+use App\Models\CapaGrid;
 use Carbon\Carbon;
 use App\Jobs\SendMail;
 use PDF;
@@ -75,7 +76,7 @@ class EffectivenessCheckController extends Controller
 
         $lasteffectivness = EffectivenessCheck::orderBy('record_number', 'desc')->first();
         $record_number = $lasteffectivness ? ((int)$lasteffectivness->record_number + 1) : 1;
-      
+       
 
         $openState = new EffectivenessCheck();
         // $openState->form_type = "effectiveness-check";
@@ -87,6 +88,7 @@ class EffectivenessCheckController extends Controller
         $openState->record_number = $record_number;
         $openState->parent_record = $request->parent_record;
         $openState->parent_type = $request->parent_type;
+    
         $openState->parent_id = $request->parent_id;
         $openState->record = $record;
         //   dd($openState);
@@ -855,7 +857,7 @@ class EffectivenessCheckController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastopenState->status;
-            // $history->action_name = "Update";
+            // $history->action_name = "Upda
                    if (is_null($lastopenState->assign_to) || $lastopenState->assign_to === '') {
                 $history->action_name = "New";
             } else {
@@ -3642,9 +3644,9 @@ public function effectiveness_child(Request $request, $id)
     $formattedDate = $currentDate->addDays(30);
     $due_date = $formattedDate->format('d-M-Y');
     $relatedRecords = Helpers::getAllRelatedRecords();
-
-
-
+    
+    
+    
     // if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
     if ($request->child_type == "capa-child") {
         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -3664,13 +3666,67 @@ public function effectiveness_child(Request $request, $id)
             $record_number = $record;
             $parent_record =  $record;
           
-
         return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
     }
 
 
     // return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
 }
+
+
+public static function effectiveFamilyReport($id)
+{
+    $data = EffectivenessCheck::find($id);
+    $data1= CapaGrid::find($id);
+    if (!empty($data)) {
+        // Get Extension children
+    $data1->Material_Details = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
+    $data1->Instruments_Details = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
+
+
+       $extensions= extension_new::where('parent_id', $id)
+    ->where('parent_type', 'EffectivenessCheck')
+    ->orderBy('created_at', 'asc')
+    ->get();
+        
+        // Get CAPA children
+        $capas = Capa::where('parent_id', $id)
+                    ->where('parent_type', 'EffectivenessCheck')
+                    ->orderBy('created_at', 'asc')
+                    ->get();
+
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+        
+        $pdf = PDF::loadview('frontend.effectivenessCheck.familyreport', compact('data','data1', 'extensions', 'capas'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+        
+        $pdf->setPaper('A4');
+        $pdf->render();
+        
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->page_script('$pdf->set_opacity(1,"Multiply");');
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) use ($width, $height) {
+            $text = $pageNumber . " of " . $pageCount;
+            $font = $fontMetrics->getFont("sans-serif");
+            $size = 10; 
+            $color = [0, 0, 0];
+            $canvas->text($width - 130, $height - 745, $text, $font, $size, $color);
+        });
+
+        return $pdf->stream('EffectivenessCheck_Family_' . $id . '.pdf');
+    }
+}
+
+
  public function child_extension(Request $request, $id)
     {
         $cft = [];
@@ -3698,6 +3754,8 @@ public function effectiveness_child(Request $request, $id)
         if ($request->child_type == "extension") {
             $parent_name = "EffectivenessCheck";
             $parent_due_date = "";
+            $parent_id = $id;
+            $parent_type = "EffectivenessCheck";
             $parent_name = $request->$parent_name;
             if ($request->due_date) {
                 $parent_due_date = $request->due_date;
@@ -3723,8 +3781,10 @@ public function effectiveness_child(Request $request, $id)
              if ($request->child_type == "extension"){
             $lastExtension = extension_new::where('parent_id', $id)
                                 ->where('parent_type', 'EffectivenessCheck')
-                                ->orderByDesc('id')
+                               ->orderByDesc('id')
                                 ->first();
+            
+            
                     
                             if (!$lastExtension) {
                                 $extensionCount = 1;

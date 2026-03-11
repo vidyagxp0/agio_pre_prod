@@ -15,6 +15,9 @@ use App\Models\AuditReviewersDetails;
 use App\Models\InternalAuditGrid;
 use App\Models\InternalAuditStageHistory;
 use App\Models\InternalAuditObservationGrid;
+use App\Models\ObservationGrid;
+use App\Models\ObseravtionSingleGrid;
+use App\Models\CapaGrid;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\extension_new;
@@ -6976,6 +6979,165 @@ if ($changeControl->stage == 2) {
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','grid_data','auditorview','grid_Data3','grid_Data5','json'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+                $text = "$pageNumber of $pageCount";
+                $font = $fontMetrics->getFont('sans-serif');
+                $size = 9;
+                $width = $fontMetrics->getTextWidth($text, $font, $size);
+
+                $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
+            });
+            return $pdf->stream('Internal-Audit' . $id . '.pdf');
+        }
+    }
+
+    public static function familyReport($id)
+    {
+        $data = InternalAudit::find($id);
+        $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
+        $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
+        $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
+        $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
+        $checklist5 = IA_liquid_ointment::where('ia_id', $id)->first();
+        $checklist6 = IA_dispencing_manufacturing::where('ia_id', $id)->first();
+        $checklist7 = IA_ointment_paking::where('ia_id', $id)->first();
+        $checklist9 = IA_checklist_engineering::where('ia_id', $id)->first();
+        $checklist10 = IA_quality_control::where('ia_id', $id)->first();
+        $checklist11 = IA_checklist_stores::where('ia_id', $id)->first();
+        $checklist12 = IA_checklist_hr::where('ia_id', $id)->first();
+        $checklist13 = IA_checklist_dispensing::where('ia_id', $id)->first();
+        $checklist14 = IA_checklist_production_injection::where('ia_id', $id)->first();
+        $checklist15 = IA_checklist_manufacturing_filling::where('ia_id', $id)->first();
+        $checklist16 = IA_checklist_analytical_research::where('ia_id', $id)->first();
+        $checklist17 = IA_checklist__formulation_research::where('ia_id', $id)->first();
+
+
+
+        $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
+        $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
+        $grid_Data3 = InternalAuditObservationGrid::where(['io_id' =>$id, 'identifier' => 'observations'])->first();
+        $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $id, 'identifier' => 'Initial'])->first();
+
+        $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->first();
+        $json = $auditAgendaData ? json_decode($auditAgendaData->data, true) : [];
+
+
+
+        if (!empty($json)) {
+            // Check if keys exist before unserializing
+            $json['area_of_audit'] = isset($json['area_of_audit']) ? unserialize($json['area_of_audit']) : null;
+            $json['start_date'] = isset($json['start_date']) ? unserialize($json['start_date']) : null;
+            $json['start_time'] = isset($json['start_time']) ? unserialize($json['start_time']) : null;
+            $json['end_date'] = isset($json['end_date']) ? unserialize($json['end_date']) : null;
+            $json['end_time'] = isset($json['end_time']) ? unserialize($json['end_time']) : null;
+            $json['auditor'] = isset($json['auditor']) ? unserialize($json['auditor']) : null;
+            $json['auditee'] = isset($json['auditee']) ? unserialize($json['auditee']) : null;
+            $json['remark'] = isset($json['remark']) ? unserialize($json['remark']) : null;
+        }
+
+        $parentId = $id;
+
+        $Extension = extension_new::where('parent_id', $parentId)
+                    ->where('parent_type', 'Internal Audit')
+                    ->get();      // COLLECTION
+
+        $countExtensions = $Extension->count();     // ✔ No error
+        $extension = $Extension->first();           // ✔ No error
+
+        $griddata_obs = null;
+        $grid_Data_obs = null;
+        $grid_Data2_obs = null;
+        $grid_Data3_obs = null;
+        $grid_Data4_obs = null;
+
+        $Obs_Data = Observation::where('parent_id', $parentId)
+                ->where('parent_type', 'Internal Audit')
+                ->get();
+
+        foreach ($Obs_Data as $observation) {
+
+            $griddata_obs = ObservationGrid::where('observation_id', $observation->id)->first();
+
+            $grid_Data_obs = ObseravtionSingleGrid::firstOrCreate(['obs_id' => $observation->id,'identifier' => 'observation']);
+
+            $grid_Data2_obs = ObseravtionSingleGrid::firstOrCreate(['obs_id' => $observation->id,'identifier' => 'response']);
+
+            $grid_Data3_obs = ObseravtionSingleGrid::firstOrCreate(['obs_id' => $observation->id,'identifier' => 'corrective']);
+
+            $grid_Data4_obs = ObseravtionSingleGrid::firstOrCreate(['obs_id' => $observation->id,'identifier' => 'preventive']);
+        }     
+        
+        $ActionItem = ActionItem::where('parent_id', $parentId)
+                ->where('parent_type', 'Internal Audit')
+                ->get();
+
+        $investigation_teamNamesString = '';
+        $selectedMethodologies = [];        
+
+        $RootCause = RootCauseAnalysis::where('parent_id', $parentId)
+                ->where('parent_type', 'Internal Audit')
+                ->get();
+
+            foreach ($RootCause as $rca) {
+
+                $rca->originator_name = User::where('id', $rca->initiator_id)->value('name');
+
+                $teamIds = explode(',', $rca->investigation_team ?? '');
+
+                $teamNames = User::whereIn('id', $teamIds)
+                                ->pluck('name')
+                                ->toArray();
+
+                $investigation_teamNamesString = implode(', ', $teamNames);
+
+                $selectedMethodologies = explode(',', $rca->root_cause_methodology ?? '');
+            }        
+
+
+            $capa_teamNamesString = null;
+            
+            $capa_Data = Capa::where('parent_id', $parentId)->where('parent_type', 'Internal Audit')->get();
+
+            foreach ($capa_Data as $capa) {
+
+                $capa->Product_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Product_Details")->first();
+
+                $capa->Instruments_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Instruments_Details")->first();
+
+                $capa->Material_Details = CapaGrid::where('capa_id', $capa->id)->where('type', "Material_Details")->first();
+
+                $capa->originator = User::where('id', $capa->initiator_id)->value('name');
+
+                if (!empty($capa->capa_team)) {
+                    $capa_teamIdsArray = explode(',', $capa->capa_team);
+
+                    $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)
+                        ->pluck('name')
+                        ->toArray();
+
+                    $capa_teamNamesString = implode(', ', $capa_teamNames);
+                } else {
+                    $capa_teamNamesString = null;
+                }
+            }
+
+
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.internalAudit.internal_family_report', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','grid_data','auditorview','grid_Data3','grid_Data5','json','Extension','Obs_Data','griddata_obs','grid_Data_obs','grid_Data2_obs','grid_Data3_obs','grid_Data4_obs','ActionItem','RootCause','selectedMethodologies','investigation_teamNamesString','capa_Data','capa_teamNamesString'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
