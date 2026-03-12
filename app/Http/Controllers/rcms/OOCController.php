@@ -2179,6 +2179,7 @@ class OOCController extends Controller
         $ooc->is_repeat_stage_instrument_ooc = $request->is_repeat_stage_instrument_ooc;
         $ooc->is_repeat_proposed_stage_ooc = $request->is_repeat_proposed_stage_ooc;
         $ooc->is_repeat_compiled_stageii_ooc = $request->is_repeat_compiled_stageii_ooc;
+        dd($ooc->is_repeat_compiled_stageii_ooc);
         $ooc->compiled_by = $request->compiled_by;
         $ooc->details_of_instrument_out_of_order = $request->details_of_instrument_out_of_order;
 
@@ -4310,7 +4311,10 @@ class OOCController extends Controller
                         $hasPending1 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !==  'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                                ) {
                                 $hasPending1 = true;
                                 break;
                             }
@@ -4431,7 +4435,10 @@ class OOCController extends Controller
                         $hasPending2 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && 
+                                $extensionchildStatus !== 'closed cancelled' &&   
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending2 = true;
                                 break;
                             }
@@ -4631,7 +4638,10 @@ class OOCController extends Controller
                         $hasPending3 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending3 = true;
                                 break;
                             }
@@ -4757,7 +4767,10 @@ class OOCController extends Controller
                         $hasPending4 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending4 = true;
                                 break;
                             }
@@ -4814,8 +4827,6 @@ class OOCController extends Controller
                 $history->stage='Phase IA HOD Primary Review Complete';
                 $history->save();
 
-
-
                  $list = Helpers::getQAUserList($oocchange->division_id);
 
                     foreach ($list as $u) {
@@ -4871,11 +4882,6 @@ class OOCController extends Controller
                     ]);
                 }
 
-
-
-
-
-
                 // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'OOC')
@@ -4883,7 +4889,10 @@ class OOCController extends Controller
                         $hasPending5 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending5 = true;
                                 break;
                             }
@@ -4997,8 +5006,6 @@ class OOCController extends Controller
                     ]);
                 }
 
-                
-
                  // exetnsion child validation
                       $extensionchild = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'OOC')
@@ -5006,7 +5013,10 @@ class OOCController extends Controller
                         $hasPending7 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected') 
+                            {
                                 $hasPending7 = true;
                                 break;
                             }
@@ -5243,7 +5253,10 @@ class OOCController extends Controller
                         $hasPending8 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending8 = true;
                                 break;
                             }
@@ -5900,7 +5913,10 @@ class OOCController extends Controller
                         $hasPending6 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending6 = true;
                                 break;
                             }
