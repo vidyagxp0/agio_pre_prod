@@ -258,7 +258,9 @@
                                 updateSelectAllButtonText();
 
                                 // Force scroll position to remain the same
-                                selectElement.scrollTop = currentScrollTop;
+                                setTimeout(function(){
+                                    selectElement.scrollTop = currentScrollTop;
+                                },0);
                             });
                         }
 
