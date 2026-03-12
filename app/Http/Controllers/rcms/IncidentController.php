@@ -52,7 +52,7 @@ class IncidentController extends Controller
         //$data = ((RecordNumber::first()->value('counter')) + 1);
 
         $old_record = Incident::select('id', 'division_id', 'record')->get();
-        
+
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $pre = Incident::all();
@@ -66,7 +66,7 @@ class IncidentController extends Controller
     {
         // dd($request->all());
         $form_progress = null;
-         
+
         if ($request->form_name == 'general')
         {
             $validator = Validator::make($request->all(), [
@@ -98,7 +98,7 @@ class IncidentController extends Controller
         $record = $lastairecord ? $lastairecord->record + 1 : 1;
         $lastairecord_number = Incident::orderBy('record_number', 'desc')->first();
         $record_number = $lastairecord_number ? $lastairecord_number->record_number + 1 : 1;
-    
+
         $incident = new Incident();
         $incident->form_type = "Incident";
 
@@ -579,7 +579,7 @@ class IncidentController extends Controller
 
 
 
-           
+
 
             //// Define an associative array to map the field keys to display names
             //$fieldNames = [
@@ -637,7 +637,7 @@ class IncidentController extends Controller
 
 
 
-           
+
 
 
             //// Define an associative array to map the field keys to display names
@@ -1755,7 +1755,7 @@ class IncidentController extends Controller
         if (!empty($request->Description_incident)){
             // HTML tags remove karein
             $cleanDescription = strip_tags($request->Description_incident);
-            
+
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Description of Incident';
@@ -1775,7 +1775,7 @@ class IncidentController extends Controller
         if (!empty($request->investigation)){
             // HTML tags remove karein
             $cleanInvestigation = strip_tags($request->investigation);
-            
+
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
             $history->activity_type = 'Investigation';
@@ -1791,7 +1791,7 @@ class IncidentController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        
+
         if (!empty ($request->immediate_correction)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
@@ -3767,7 +3767,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                 $history->save();
             }
-            
+
             if($lastIncident->Initiator_Group != $incident->Initiator_Group || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Initiation Department')
@@ -4421,7 +4421,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                  $history->action_name = $lastDataAuditTrail ? "Update" : "New";
                  $history->save();
              }
-             
+
             if($lastIncident->immediate_correction != $incident->immediate_correction || !empty($request->comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
                                 ->where('activity_type', 'Immediate Corrective Action')
@@ -5729,8 +5729,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $incident,      
-                                        'Incident'      
+                                        $incident,
+                                        'Incident'
                                     );
 
                                 } catch (\Exception $e) {
@@ -5747,7 +5747,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
 
 
-                 
+
                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -5824,8 +5824,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $incident,      
-                                        'Incident'      
+                                        $incident,
+                                        'Incident'
                                     );
 
                                 } catch (\Exception $e) {
@@ -5839,7 +5839,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                             }
                         }
-              
+
 
 
           //new Monika
@@ -5920,8 +5920,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $incident,      
-                                        'Incident'      
+                                        $incident,
+                                        'Incident'
                                     );
 
                                 } catch (\Exception $e) {
@@ -5936,7 +5936,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             }
                         }
 
-                
+
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
@@ -5971,7 +5971,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $incident->stage;
                 $history->status = "More Info Required";
-                
+
                  $list = Helpers::getQAHeadUserList($incident->division_id);
                         foreach ($list as $u) {
 
@@ -5992,8 +5992,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $incident,      
-                                        'Incident'      
+                                        $incident,
+                                        'Incident'
                                     );
 
                                 } catch (\Exception $e) {
@@ -6057,8 +6057,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $incident,      
-                                        'Incident'      
+                                        $incident,
+                                        'Incident'
                                     );
 
                                 } catch (\Exception $e) {
@@ -6072,7 +6072,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                             }
                         }
-              
+
                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -6132,8 +6132,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $incident,      
-                                        'Incident'      
+                                        $incident,
+                                        'Incident'
                                     );
 
                                 } catch (\Exception $e) {
@@ -6148,7 +6148,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             }
                         }
 
-              
+
                 $history->save();
                 $incident->update();
                 $history = new IncidentHistory();
@@ -6166,7 +6166,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             if ($incident->stage == 8) {
                 $incident->stage = "7";
                 $incident->status = "QA Final Review";
-                
+
                 //$incident->form_progress = 'capa';
                 $incident->approved_more_info_req_by = Auth::user()->name;
                 $incident->approved_more_info_req_on = Carbon::now()->format('d-M-Y');
@@ -6210,8 +6210,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $incident,      
-                                        'Incident'      
+                                        $incident,
+                                        'Incident'
                                     );
 
                                 } catch (\Exception $e) {
@@ -6226,7 +6226,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             }
                         }
 
-                
+
 
                 $history->save();
                 $incident->update();
@@ -6348,8 +6348,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $incident,      
-                                        'Incident'      
+                                        $incident,
+                                        'Incident'
                                     );
 
                                 } catch (\Exception $e) {
@@ -6789,8 +6789,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -6851,7 +6851,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -6868,7 +6868,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     //         $hasPendingRCA = false;
                     //     foreach ($rcachilds as $ext) {
                     //             $rcachildstatus = trim(strtolower($ext->status));
-                    //             if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 
+                    //             if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==
                     //                 'closed-cancelled' ) {
                     //                 $hasPendingRCA = true;
                     //                 break;
@@ -6927,7 +6927,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     //     ]);
                     // }
 
-                    // //CAPA child validations 
+                    // //CAPA child validations
                     // $capachilds = Capa::where('parent_id', $id)
                     //     ->where('parent_type', 'Incident')
                     //     ->get();
@@ -7015,8 +7015,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -7030,7 +7030,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                         }
                     }
-                     
+
 
 
                     $incident->update();
@@ -7082,7 +7082,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -7157,7 +7157,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     //     ]);
                     // }
 
-                    //CAPA child validations 
+                    //CAPA child validations
                     // $capachilds = Capa::where('parent_id', $id)
                     //     ->where('parent_type', 'Incident')
                     //     ->get();
@@ -7246,8 +7246,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -7261,7 +7261,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                         }
                     }
-                 
+
 
                     $incident->update();
                     toastr()->success('Document Sent');
@@ -7309,7 +7309,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -7385,8 +7385,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -7431,7 +7431,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -7507,7 +7507,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     //     ]);
                     // }
 
-                    // //CAPA child validations 
+                    // //CAPA child validations
                     // $capachilds = Capa::where('parent_id', $id)
                     //     ->where('parent_type', 'Incident')
                     //     ->get();
@@ -7731,8 +7731,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $incident,      
-                                        'Incident'      
+                                        $incident,
+                                        'Incident'
                                     );
 
                                 } catch (\Exception $e) {
@@ -7794,7 +7794,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -7837,7 +7837,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
                     $history->save();
 
-                    
+
                     $list = Helpers::getQAReviewerUserList($incident->division_id)->unique('user_id')
                             ->values();
                         foreach ($list as $u) {
@@ -7859,8 +7859,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                     SendMail::dispatch(
                                         $data,
                                         $email,
-                                        $incident,      
-                                        'Incident'      
+                                        $incident,
+                                        'Incident'
                                     );
 
                                 } catch (\Exception $e) {
@@ -7874,8 +7874,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                             }
                         }
-                  
-                   
+
+
 
                     $incident->update();
                     toastr()->success('Document Sent');
@@ -7938,7 +7938,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -8016,8 +8016,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -8081,7 +8081,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             ]);
 
                         return redirect()->back();
-                        
+
                     } else {
                         // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
@@ -8154,7 +8154,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     $history->save();
 
                     $usersmerge = collect()
-                    
+
                     ->merge(Helpers::getQAReviewerUserList($incident->division_id))
                     ->merge(Helpers::getInitiatorUserList($incident->division_id))
                     ->merge(Helpers::getQAHeadUserList($incident->division_id))
@@ -8180,8 +8180,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -8195,11 +8195,11 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                         }
                     }
-                    
 
-                   
 
-                    
+
+
+
 
                     $incident->update();
                     toastr()->success('Document Sent');
@@ -8318,8 +8318,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -8343,7 +8343,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->stage_id = $incident->stage;
                 $history->status = $incident->status;
                 $history->save();
-              
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -8391,8 +8391,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -8418,7 +8418,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->status = $incident->status;
 
                 $history->save();
-               
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -8465,8 +8465,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -8538,8 +8538,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -8610,8 +8610,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -8681,8 +8681,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -8750,8 +8750,8 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 SendMail::dispatch(
                                     $data,
                                     $email,
-                                    $incident,      
-                                    'Incident'      
+                                    $incident,
+                                    'Incident'
                                 );
 
                             } catch (\Exception $e) {
@@ -8890,9 +8890,9 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
           if (!$data) {
                 abort(404);
             }
-            
+
           $capa_teamNamesString = '';
-            
+
             // 🔹 Get CAPA children
             $capas = Capa::where('parent_id', $id)
                 ->where('parent_type', 'Incident')
@@ -8934,7 +8934,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $rootCauseAnalysis= RootCauseAnalysis::where('parent_id', $id)
                 ->where('parent_type', 'Incident')
                 ->orderBy('created_at', 'asc')
-                ->get();        
+                ->get();
 
          $actionitem = ActionItem::where('parent_id', $id)
                 ->where('parent_type', 'Incident')
@@ -8987,7 +8987,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
         $parent_short_description = Incident::where('id', $id)->value('short_description');
         $hod = User::where('role', 4)->get();
         if ($request->child_type == "extension") {
-            $parent_due_date = "";
+            $parent_due_date = Incident::where('id', $id)->value('due_date');
             $parent_type = "Incident";
             $parent_name = $request->parent_name;
             $data1 = Incident::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
@@ -9011,7 +9011,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 ->where('parent_type', 'Incident')
                                 ->orderByDesc('id')
                                 ->first();
-                    
+
                             if (!$lastExtension) {
                                 $extensionCount = 1;
                             } else {
@@ -9022,7 +9022,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                                 }
                             }
 
-                        } 
+                        }
 
             $relatedRecords = Helpers::getAllRelatedRecords();
             $Extensionchild->save();
