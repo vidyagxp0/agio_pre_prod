@@ -7974,6 +7974,106 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                         'message' => 'Sent for Closed - Done state'
                     ]);
                 }
+
+                $observationchilds = Observation::where('parent_id', $id)
+                                ->where('parent_type', 'External Audit')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($observationchilds as $ext) {
+                                        $observationchildstatus = trim(strtolower($ext->status));
+                                    
+                                       if ($observationchildstatus !== 'closed - done'  && $observationchildstatus !== 'closed - cancelled') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $observationchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Observation Child Pending!',
+                                        'message' => 'You cannot proceed until Observation Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
+
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
+
+                             $actionchilds = ActionItem::where('parent_id', $id)
+                                ->where('parent_type', 'External Audit')
+                                ->get();
+                                    $hasPendingaction = false;
+                                foreach ($actionchilds as $ext) {
+                                        $actionchildstatus = trim(strtolower($ext->status));
+                                       if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                            $hasPendingaction = true;
+                                            break;
+                                        }
+                                    }
+                            if ($hasPendingaction) {
+                                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                                if ($hasPendingaction) {
+                                    Session::flash('swal', [
+                                        'title' => 'Action Item Child Pending!',
+                                        'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                        'type' => 'warning',
+                                    ]);
+
+                                return redirect()->back();
+                                }
+                            } else {
+                                // Flash message for success (when the form is filled correctly)
+                                Session::flash('swal', [
+                                    'title' => 'Success!',
+                                    'message' => 'Document Sent',
+                                    'type' => 'success',
+                                ]);
+                            }
+
+                            
+                $extensionchild = extension_new::where('parent_id', $id)
+                   ->where('parent_type', 'External Audit')
+                    ->get();
+                        $hasPending6 = false;
+                        foreach ($extensionchild as $ext) {
+                            $extensionchildStatus = trim(strtolower($ext->status));
+                            if ($extensionchildStatus !== 'closed - done' && 
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
+                                $hasPending6 = true;
+                                break;
+                            }
+                        }
+
+                    if ($hasPending6) {
+                        // $extensionchildStatus = trim(strtolower($extensionchild->status));
+                            Session::flash('swal', [
+                                'title' => 'Extension Child Pending!',
+                                'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
+
                 $changeControl->stage = "5";
                 $changeControl->status = "Closed - Done";
                 $changeControl->approval_complete_by = Auth::user()->name;
@@ -8744,7 +8844,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                 $history->origin_state = $lastDocument->status;
                 $history->stage = "Cancelled";
                 $history->save();
-                 $usersmailqaCqa = collect()
+                $usersmailqaCqa = collect()
                             ->merge(Helpers::getQAHeadUserList($changeControl->division_id))
                             ->merge(Helpers::getCQAUsersList($changeControl->division_id))
                             ->merge(Helpers::getCQAHeadUsersList($changeControl->division_id))

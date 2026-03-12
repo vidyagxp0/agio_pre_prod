@@ -5327,8 +5327,13 @@ if ($changeControl->stage == 2) {
                     ->get();
                         $hasPending6 = false;
                         foreach ($extensionchild as $ext) {
+                            
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            
+                            if ($extensionchildStatus !== 'closed - done' && 
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending6 = true;
                                 break;
                             }
@@ -5540,7 +5545,10 @@ if ($changeControl->stage == 2) {
                         $hasPending6 = false;
                         foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done') {
+                            if ($extensionchildStatus !== 'closed - done' && 
+                                $extensionchildStatus !== 'closed cancelled' &&
+                                $extensionchildStatus !== 'closed - rejected'
+                            ) {
                                 $hasPending6 = true;
                                 break;
                             }
@@ -5564,6 +5572,146 @@ if ($changeControl->stage == 2) {
                             'type' => 'success',
                         ]);
                     }
+
+                     $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                        ->where('parent_type', 'Internal Audit')
+                        ->get();
+                            $hasPendingRCA = false;
+                            foreach ($rcachilds as $ext) {
+                                $rcachildstatus = trim(strtolower($ext->status));
+                                
+                                if ($rcachildstatus !== 'closed - done' &&
+                                    $rcachildstatus !== 'closed-cancelled' &&
+                                    $rcachildstatus !== 'closed - rejected'
+                                ) {
+                                    $hasPendingRCA = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    $capachilds = Capa::where('parent_id', $id)
+                        ->where('parent_type', 'Internal Audit')
+                        ->get();
+                            $hasPending = false;
+                            foreach ($capachilds as $ext) {
+                                $capachildstatus = trim(strtolower($ext->status));
+                                
+                                if ($capachildstatus !== 'closed - done' && 
+                                    $capachildstatus !== 'closed-cancelled' &&
+                                    $capachildstatus !== 'closed - rejected'
+                                ) {
+                                    $hasPending = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPending) {
+                        // $capachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPending) {
+                            Session::flash('swal', [
+                                'title' => 'CAPA Child Pending!',
+                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+
+                     $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'Internal Audit')
+                        ->get();
+                            $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                
+                                if ($actionchildstatus !== 'closed - done' && 
+                                    $actionchildstatus !== 'closed-cancelled' &&
+                                    $actionchildstatus !== 'closed - rejected' 
+                                ) {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                     $observationchild = Observation::where('parent_id', $id)
+                        ->where('parent_type', 'Internal Audit')
+                        ->get();
+                        // dd($extensionchild);
+                            $hasPending2 = false;
+                            foreach ($observationchild as $ext) {
+                                $observationchildStatus = trim(strtolower($ext->status));
+                               
+                                if ($observationchildStatus !== 'closed - done' &&
+                                    $observationchildStatus !== 'closed - cancelled' && 
+                                    $observationchildStatus !== 'closed - rejected'
+                                ) {
+                                    $hasPending2 = true;
+                                    break;
+                                }
+                            }
+
+                        if ($hasPending2) {
+                                Session::flash('swal', [
+                                    'title' => 'Observations Child Pending!',
+                                    'message' => 'You cannot proceed until Observations Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            
+                        } else {
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Sent for Next Stage',
+                                'type' => 'success',
+                            ]);
+                        }
 
                 $changeControl->stage = "6";
                 $changeControl->status = "Closed - Done";
@@ -5613,7 +5761,6 @@ if ($changeControl->stage == 2) {
                                 }
                             }
 
-                          
                             $uniqueEmails = $emails->unique();
 
                             foreach ($uniqueEmails as $email) {
@@ -5650,8 +5797,6 @@ if ($changeControl->stage == 2) {
                 toastr()->success('Document Sent');
                 return back();
             }
-
-
 
         } else {
             toastr()->error('E-signature Not match');

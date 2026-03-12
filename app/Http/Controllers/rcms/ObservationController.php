@@ -2809,6 +2809,102 @@ if (is_array($request->action) && !empty($request->action)) {
                         'message' => 'Sent for Closed - Done state'
                     ]);
                 }
+
+
+                $capachilds = Capa::where('parent_id', $id)
+                ->where('parent_type', 'Observation')
+                ->get();
+                    $hasPending = false;
+                foreach ($capachilds as $ext) {
+                        $capachildstatus = trim(strtolower($ext->status));
+                        if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
+                            $hasPending = true;
+                            break;
+                        }
+                    }
+               if ($hasPending) {
+                // $capachildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPending) {
+                       Session::flash('swal', [
+                           'title' => 'CAPA Child Pending!',
+                           'message' => 'You cannot proceed — CAPA Item Child is still pending',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
+
+                $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                ->where('parent_type', 'Observation')
+                ->get();
+                    $hasPendingRCA = false;
+                foreach ($rcachilds as $ext) {
+                        $rcachildstatus = trim(strtolower($ext->status));
+                        if ($rcachildstatus !== 'closed - done'  && $rcachildstatus !== 'closed-cancelled') {
+                            $hasPendingRCA = true;
+                            break;
+                        }
+                    }
+               if ($hasPendingRCA) {
+                // $rcachildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPendingRCA) {
+                       Session::flash('swal', [
+                           'title' => 'RCA Child Pending!',
+                           'message' => 'You cannot proceed — RCA Item Child is still pending',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
+
+
+               $actionchilds = ActionItem::where('parent_id', $id)
+                ->where('parent_type', 'Observation')
+                ->get();
+                    $hasPendingaction = false;
+                foreach ($actionchilds as $ext) {
+                        $actionchildstatus = trim(strtolower($ext->status));
+                        if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                            $hasPendingaction = true;
+                            break;
+                        }
+                    }
+               if ($hasPendingaction) {
+                // $actionchildstatus = trim(strtolower($extensionchild->status));
+                   if ($hasPendingaction) {
+                       Session::flash('swal', [
+                           'title' => 'Action Item Child Pending!',
+                           'message' => 'You cannot proceed — Action Item Child is still pending.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Document Sent',
+                       'type' => 'success',
+                   ]);
+               }
+
                 $changestage->stage = "4";
                 $changestage->status = "Closed - Done";
                 $changestage->Final_Approval_By = Auth::user()->name;

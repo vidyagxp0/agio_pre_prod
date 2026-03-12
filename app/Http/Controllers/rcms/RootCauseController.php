@@ -4380,9 +4380,6 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                 }
                 $history->save();
 
-              
-
-
                 $list = Helpers::getQAHeadUserList($root->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -4485,6 +4482,69 @@ if (is_array($request->inference_type) && !empty($request->inference_type)) {
                             'type' => 'success',
                         ]);
                     }
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'RCA')
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled') {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed — some Action Item Child is still pending.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                     $capachilds = Capa::where('parent_id', $id)
+                            ->where('parent_type', 'RCA')
+                            ->get();
+                                $hasPending = false;
+                            foreach ($capachilds as $ext) {
+                                    $capachildstatus = trim(strtolower($ext->status));
+                                    if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled') {
+                                        $hasPending = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPending) {
+                            // $capachildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPending) {
+                                Session::flash('swal', [
+                                    'title' => 'CAPA Child Pending!',
+                                    'message' => 'You cannot proceed — some Capa Child is still pending.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
+
                 $root->stage = "8";
                 $root->status = "Closed - Done";
                 $root->evaluation_complete_by = Auth::user()->name;

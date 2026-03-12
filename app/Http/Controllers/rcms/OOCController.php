@@ -26,7 +26,6 @@ use App\Models\CapaGrid;
 use App\Models\OpenStage;
 use App\Models\extension_new;
 use App\Models\ActionItem;
-use App\Models\RootCauseAnalysis;
 
 
 
@@ -2179,7 +2178,6 @@ class OOCController extends Controller
         $ooc->is_repeat_stage_instrument_ooc = $request->is_repeat_stage_instrument_ooc;
         $ooc->is_repeat_proposed_stage_ooc = $request->is_repeat_proposed_stage_ooc;
         $ooc->is_repeat_compiled_stageii_ooc = $request->is_repeat_compiled_stageii_ooc;
-        dd($ooc->is_repeat_compiled_stageii_ooc);
         $ooc->compiled_by = $request->compiled_by;
         $ooc->details_of_instrument_out_of_order = $request->details_of_instrument_out_of_order;
 

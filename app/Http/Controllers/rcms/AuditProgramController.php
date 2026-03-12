@@ -2382,8 +2382,7 @@ class AuditProgramController extends Controller
             $hasPendingChild = false;
             foreach ($Internal_Auditchild as $ext) {
                 $status = trim(strtolower($ext->status));
-               
-                if (!in_array($status, ['closed - done', 'reject', 'cancel'])) {
+                if (!in_array($status, ['closed - done', 'reject', 'closed-cancelled'])) {
                     $hasPendingChild = true;
                     break;
                 }

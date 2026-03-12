@@ -2591,8 +2591,6 @@ class OOSController extends Controller
                                 }
                             }
 
-
-                            
                     if ($hasPendingaction) {
                         // $actionchildstatus = trim(strtolower($extensionchild->status));
                         if ($hasPendingaction) {
@@ -2654,7 +2652,11 @@ class OOSController extends Controller
                     if ($resampling) { // Check only if a child (resampling) exists
                         $resamplingStatus = trim(strtolower($resampling->status));
 
-                        if ($resamplingStatus !== 'closed - done') {
+                        if ($resamplingStatus !== 'closed - done' &&
+                            $resamplingStatus !== 'closed cancelled' &&
+                            $resamplingStatus !== 'closed - rejected'
+
+                        ) {
                             Session::flash('swal', [
                                 'title' => 'Resampling Pending!',
                                 'message' => 'You cannot proceed until Resampling is Closed-Done.',
@@ -2668,6 +2670,40 @@ class OOSController extends Controller
                         Session::flash('swal', [
                             'title' => 'Success!',
                             'message' => 'Sent for Next Stage',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    $capachilds = Capa::where('parent_id', $id)
+                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                        ->get();
+                            $hasPending = false;
+                        foreach ($capachilds as $ext) {
+                                $capachildstatus = trim(strtolower($ext->status));
+                                if ($capachildstatus !== 'closed - done' && 
+                                    $capachildstatus !== 'closed cancelled' &&
+                                    $capachildstatus !== 'closed - rejected'
+                                ) {
+                                    $hasPending = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPending) {
+                        // $capachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPending) {
+                            Session::flash('swal', [
+                                'title' => 'CAPA Child Pending!',
+                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
                             'type' => 'success',
                         ]);
                     }
