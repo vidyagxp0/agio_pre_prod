@@ -2811,36 +2811,36 @@ if (is_array($request->action) && !empty($request->action)) {
                 }
 
 
-                $capachilds = Capa::where('parent_id', $id)
-                ->where('parent_type', 'Observation')
-                ->get();
-                    $hasPending = false;
-                foreach ($capachilds as $ext) {
-                        $capachildstatus = trim(strtolower($ext->status));
-                        if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
-                            $hasPending = true;
-                            break;
-                        }
-                    }
-               if ($hasPending) {
-                // $capachildstatus = trim(strtolower($extensionchild->status));
-                   if ($hasPending) {
-                       Session::flash('swal', [
-                           'title' => 'CAPA Child Pending!',
-                           'message' => 'You cannot proceed — CAPA Item Child is still pending',
-                           'type' => 'warning',
-                       ]);
+            //     $capachilds = Capa::where('parent_id', $id)
+            //     ->where('parent_type', 'Observation')
+            //     ->get();
+            //         $hasPending = false;
+            //     foreach ($capachilds as $ext) {
+            //             $capachildstatus = trim(strtolower($ext->status));
+            //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
+            //                 $hasPending = true;
+            //                 break;
+            //             }
+            //         }
+            //    if ($hasPending) {
+            //     // $capachildstatus = trim(strtolower($extensionchild->status));
+            //        if ($hasPending) {
+            //            Session::flash('swal', [
+            //                'title' => 'CAPA Child Pending!',
+            //                'message' => 'You cannot proceed — CAPA Item Child is still pending',
+            //                'type' => 'warning',
+            //            ]);
 
-                   return redirect()->back();
-                   }
-               } else {
-                   // Flash message for success (when the form is filled correctly)
-                   Session::flash('swal', [
-                       'title' => 'Success!',
-                       'message' => 'Document Sent',
-                       'type' => 'success',
-                   ]);
-               }
+            //        return redirect()->back();
+            //        }
+            //    } else {
+            //        // Flash message for success (when the form is filled correctly)
+            //        Session::flash('swal', [
+            //            'title' => 'Success!',
+            //            'message' => 'Document Sent',
+            //            'type' => 'success',
+            //        ]);
+            //    }
 
                 $rcachilds = RootCauseAnalysis::where('parent_id', $id)
                 ->where('parent_type', 'Observation')

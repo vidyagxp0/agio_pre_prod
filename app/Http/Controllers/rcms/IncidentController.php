@@ -8092,33 +8092,105 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
 
 
+                   
 
+                    //RCA child validation
+                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingRCA = false;
+                        foreach ($rcachilds as $ext) {
+                                $rcachildstatus = trim(strtolower($ext->status));
+                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==
+                                    'closed-cancelled' ) {
+                                    $hasPendingRCA = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
 
-                    $extension = Extension::where('parent_id', $incident->id)->first();
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
 
-                    $rca = RootCauseAnalysis::where('parent_record', str_pad($incident->id, 4, 0, STR_PAD_LEFT))->first();
+                    //action item child validation
 
-                    // if ($extension && $extension->status !== 'Closed-Done') {
-                    //     Session::flash('swal', [
-                    //         'title' => 'Extension record pending!',
-                    //         'message' => 'There is an Extension record which is yet to be closed/done!',
-                    //         'type' => 'warning',
-                    //     ]);
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    // //CAPA child validations
+                    // $capachilds = Capa::where('parent_id', $id)
+                    //     ->where('parent_type', 'Incident')
+                    //     ->get();
+                    //     $hasPendingcapa = false;
+                    //     foreach($capachilds as $ext) {
+                    //             $capachildstatus = trim(strtolower($ext->status));
+                    //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed - cancelled') {
+                    //                 $hasPendingcapa = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPendingcapa) {
+                    //     // $capachildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPendingcapa) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'CAPA Child Pending!',
+                    //             'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
                     //     return redirect()->back();
-                    // }
-
-                    // if ($rca && $rca->status !== 'Closed-Done') {
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
                     //     Session::flash('swal', [
-                    //         'title' => 'RCA record pending!',
-                    //         'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
-                    //         'type' => 'warning',
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
                     //     ]);
-
-                    //     return redirect()->back();
                     // }
-
-                    // return "PAUSE";
 
                     $incident->stage = "9";
                     $incident->status = "Closed-Done";
@@ -8195,11 +8267,6 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
                         }
                     }
-
-
-
-
-
 
                     $incident->update();
                     toastr()->success('Document Sent');
@@ -8567,8 +8634,6 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 toastr()->success('Document Sent');
                 return back();
             }
-
-
 
             if ($incident->stage == 6) {
                 $incident->stage = "5";
