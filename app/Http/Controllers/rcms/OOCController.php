@@ -26,6 +26,7 @@ use App\Models\CapaGrid;
 use App\Models\OpenStage;
 use App\Models\extension_new;
 use App\Models\ActionItem;
+use App\Models\RootCauseAnalysis;
 
 
 
@@ -7294,7 +7295,7 @@ class OOCController extends Controller
                 $record = $lastAi ? $lastAi->record + 1 : 1;
                 $record = str_pad($record, 4, '0', STR_PAD_LEFT);
                 $record_number =$record;
-                return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','parent_division_id'));
 
             }
             if ($request->revision == "Resampling") {
