@@ -965,7 +965,7 @@ class DashboardController extends Controller
     public function ccView($id, $type)
     {
 
-        
+
 
         $division_name = "NA";
 
@@ -995,7 +995,6 @@ class DashboardController extends Controller
         } elseif ($type == "Capa") {
             $data = Capa::find($id);
             $single = "capaSingleReport/" . $data->id;
-            $family="#";
             $audit = "capaAuditReport/" . $data->id;
             $family = "capaFamilyReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
@@ -1010,7 +1009,6 @@ class DashboardController extends Controller
         } elseif ($type == "Deviation") {
             $data = Deviation::find($id);
             $single = "deviationSingleReport/" . $data->id;
-            $family="#";
             $audit = "DeviationAuditTrialPdf/" . $data->id;
             $family = "deviationfamilyReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
@@ -1099,7 +1097,6 @@ class DashboardController extends Controller
         } elseif ($type == "Management-Review") {
             $data = ManagementReview::find($id);
             $single = "managementReview/" . $data->id;
-            $family="#";
             $audit = "managementReviewReport/" . $data->id;
             $family = "managementReFamily_report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
@@ -1107,7 +1104,6 @@ class DashboardController extends Controller
         }elseif ($type == "OOS_OOT") {
             $data = OOS::find($id);
             $single = "oos/single_report/" . $data->id;
-            $family="#";
             $audit = "oos/audit_report/" . $data->id;
             $family = "oos/family_report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
@@ -1131,6 +1127,7 @@ class DashboardController extends Controller
         elseif ($type == "Market demo") {
             $data = MarketComplaint::find($id);
             $single = "marketComplaintSingleReport/" . $data->id;
+            $family="#";
             $audit = "MarketComplaintAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
@@ -1161,7 +1158,6 @@ class DashboardController extends Controller
             $single = "incident-single-report/" . $data->id;
             $family = "incident-family-report/" . $data->id;
             $audit = "incident-audit-pdf/" . $data->id;
-            $family="#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
@@ -1177,7 +1173,7 @@ class DashboardController extends Controller
             $data = Resampling::find($id);
             $single = "resamplingSingleReport/" . $data->id;
             $audit = "resamplingAuditReport/" . $data->id;
-            $parent = "#";
+            // $parent = "#";
             $family="#";
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
@@ -1213,7 +1209,9 @@ class DashboardController extends Controller
                         <div class="drop-list">
                             <a target="__blank" href="' . $audit . '" class="inner-item">Audit Trail</a>
                             <a target="__blank" href="' . $single . '" class="inner-item">' . $type . ' Single Report</a>
-                           
+                            <a target="__blank" href="' . $family . '" class="inner-item">' . $type . ' Family Report</a>
+
+
                             ' . ($type == 'External-Audit' ? '<a target="__blank" href="' . $summaryResponse . '" class="inner-item">' . $type . ' Audit Response Report</a>' : '') . '
 
                         </div>
