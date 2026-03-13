@@ -21,7 +21,7 @@
 
 @endphp
 @php
-    $istab13 = $data->stage == 13 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 3) || Helpers::check_roles($data->division_id, 'OOS/OOT', 22) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18));
+    $istab13 = $data->stage == 13 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 3) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18));
 @endphp
 <div id="CCForm5" class="inner-block cctabcontent">
     <div class="inner-block-content">
@@ -227,7 +227,7 @@
                         <option value="Product/Material Related Error"{{ $data->hypo_exp_required_piii ==
                             'Product/Material Related Error' ? 'selected' : '' }}>Product/Material Related Error</option>
                         <option value="Human Error"{{ $data->hypo_exp_required_piii ==
-                            'Human Error' ? 'selected' : '' }}>Human Error</option>    
+                            'Human Error' ? 'selected' : '' }}>Human Error</option>
                         <option value="Other Error"{{ $data->hypo_exp_required_piii ==
                             'Other Error' ? 'selected' : '' }}>Other Error</option>
                         <option value="NA"{{ $data->hypo_exp_required_piii ==
