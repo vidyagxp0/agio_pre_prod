@@ -54,7 +54,7 @@
             margin-bottom: 20px;
         }
     </style>
-    
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -212,7 +212,7 @@
                            $lockdatafileds11 = !($data->stage == 11 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)));
                            $lockdatafileds12 = !($data->stage == 12 && (Helpers::check_roles($data->division_id, 'Change Control', 39)|| Helpers::check_roles($data->division_id, 'Change Control', 42) || Helpers::check_roles($data->division_id, 'Change Control', 9) || Helpers::check_roles($data->division_id, 'Change Control', 43) || Helpers::check_roles($data->division_id, 'Change Control', 65)|| Helpers::check_roles($data->division_id, 'Change Control', 18)));
 
-                           
+
                     @endphp
 
 
@@ -233,7 +233,7 @@
                             {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>  --}}
-                          
+
                         @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
 
@@ -258,11 +258,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Initial Assessment Complete
                             </button>
-                            
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            
+
                         {{--  @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Assessment Complete
@@ -287,30 +287,30 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                     Child
                                 </button>
-                                    
+
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                         More Information Required
                                     </button>
                                   <!--
     @endif  -->
                              @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-                            
-                            
-                      
 
-                                                    
+
+
+
+
                             <button id="approval-button" class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal" style="display: none;">
                                 RA Approval Required
                             </button>
-                          
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#opened-state-modal">
                                 Send to Initiator
                             </button>
-                           
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                          
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-modal">
                                 Send to HOD
                             </button>
@@ -351,11 +351,11 @@
                             {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>  --}}
-                          
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
                                 Child
                             </button>
-                          
+
                      @elseif($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
 
@@ -423,7 +423,7 @@
                         border: 1px solid #e0e0e0;
                         background: #f5f5f5;
                     }
-                    
+
                     .progress-bars div {
                         padding: 8px 12px;
                         font-size: 14px;
@@ -433,17 +433,17 @@
                         transition: all 0.3s ease;
                         border-right: 1px solid #fff;
                     }
-                    
+
                     .progress-bars div:last-child {
                         border-right: none;
                     }
-                    
+
                     /* Completed Stages - Solid Green */
                     .progress-bars div.completed {
                         background-color: #4CAF50;
                         color: black;
                     }
-                    
+
                     /* CURRENT Stage - Animated Blue (Pending Action) */
                     .progress-bars div.current {
                         background-color: #fec009;
@@ -451,19 +451,19 @@
                         font-weight: bold;
                         animation: pulse-blue 1.5s infinite;
                     }
-                    
+
                     /* Pending Stages - Light Gray */
                     .progress-bars div.pending {
                         background-color: #f5f5f5;
                         color: black;
                     }
-                    
+
                     /* Closed States */
                     .progress-bars div.closed {
                         background-color: #f44336;
                         color: white;
                     }
-                    
+
                     /* Blue Pulse Animation */
                     @keyframes pulse-blue {
                         0% { background-color: #de8d0a; }
@@ -486,14 +486,14 @@
                         <div class="progress-bars d-flex">
                             @php
                                 $currentStage = $data->stage;
-                            @endphp   
+                            @endphp
 
                             <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened</div>
 
                             <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">HOD Assessment</div>
 
                             <div class="{{ $currentStage > 3 ? 'active' : ($currentStage == 3 ? 'current' : '') }}">QA/CQA Initial Assessment</div>
-                        
+
                             <div class="{{ $currentStage > 4 ? 'active' : ($currentStage == 4 ? 'current' : '') }}">CFT Assessment</div>
 
                             <div class="{{ $currentStage > 5 ? 'active' : ($currentStage == 5 ? 'current' : '') }}">QA/CQA Final Review</div>
@@ -503,8 +503,8 @@
                                 <div id="pending-ra-stage" class="">Pending RA Approval</div>
                             @endif --}}
                             <div id="pending-ra-stage"
-                                class="{{ ($data->stage > 6 || $data->status == 'Pending RA Approval') 
-                                            ? ($data->stage == 6 ? 'current' : 'active') 
+                                class="{{ ($data->stage > 6 || $data->status == 'Pending RA Approval')
+                                            ? ($data->stage == 6 ? 'current' : 'active')
                                             : '' }}">Pending RA Approval
                             </div>
 
@@ -579,28 +579,28 @@
                             function activateTabBasedOnStage(stage) {
                                 const tabContents = document.querySelectorAll('.cctabcontent');
                                 const tabLinks = document.querySelectorAll('.cctablinks');
-                                
+
                                 tabContents.forEach(content => content.style.display = 'none');
                                 tabLinks.forEach(link => link.classList.remove('active'));
-                                
+
                                 let tabToActivate = '';
-                                
+
                                 if (stage == 1) {
-                                    tabToActivate = 'CCForm1'; 
+                                    tabToActivate = 'CCForm1';
                                 } else if (stage == 2) {
-                                    tabToActivate = 'CCForm12'; 
+                                    tabToActivate = 'CCForm12';
                                 }  else if (stage == 3) {
-                                    tabToActivate = 'CCForm3'; 
+                                    tabToActivate = 'CCForm3';
                                 } else if (stage == 4) {
-                                    tabToActivate = 'CCForm11'; 
+                                    tabToActivate = 'CCForm11';
                                 } else if (stage == 5) {
-                                    tabToActivate = 'CCForm14'; 
+                                    tabToActivate = 'CCForm14';
                                 } else if (stage == 6) {
-                                    tabToActivate = 'CCForm15'; 
+                                    tabToActivate = 'CCForm15';
                                 } else if (stage == 7) {
-                                    tabToActivate = 'CCForm17'; 
+                                    tabToActivate = 'CCForm17';
                                 } else if (stage == 9) {
-                                    tabToActivate = 'CCForm5'; 
+                                    tabToActivate = 'CCForm5';
                                 } else if (stage == 10){
                                     tabToActivate = 'CCForm6';
                                 } else if (stage == 11) {
@@ -611,13 +611,13 @@
                                     tabToActivate = 'CCForm10';
                                 }else if (stage == 0){
                                     tabToActivate = 'CCForm10';
-                                }                     
+                                }
 
-                            
+
                                 if (tabToActivate) {
                                     const tabContent = document.getElementById(tabToActivate);
                                     const tabLink = document.querySelector(`.cctablinks[onclick*="${tabToActivate}"]`);
-                                    
+
                                     if (tabContent) tabContent.style.display = 'block';
                                     if (tabLink) tabLink.classList.add('active');
                                 }
@@ -626,19 +626,19 @@
                             function openCity(evt, cityName) {
                                 const tabContents = document.querySelectorAll('.cctabcontent');
                                 tabContents.forEach(content => content.style.display = 'none');
-                                
+
                                 const tabLinks = document.querySelectorAll('.cctablinks');
                                 tabLinks.forEach(link => link.classList.remove('active'));
-                                
+
                                 document.getElementById(cityName).style.display = 'block';
                                 evt.currentTarget.classList.add('active');
-                                
+
                                 currentStep = Array.from(tabLinks).findIndex(button => button === evt.currentTarget);
                             }
 
                             document.addEventListener('DOMContentLoaded', function() {
                                 const currentStage = <?php echo json_encode($data->stage ?? 1); ?>;
-                                
+
                                 activateTabBasedOnStage(currentStage);
                             });
                         </script>
@@ -672,10 +672,10 @@
 
 
                                                     <input type="hidden" name="record_number">
-                                             
+
                                                 <input disabled type="text"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
-                                            
+
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -771,7 +771,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator"><b>Initiation Department</b></label>
-                                                    <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                                    <input readonly type="text" name="Initiator_Group" id="initiator_group"
                                                         value="{{ $data->Initiator_Group }}">
                                                 </div>
                                             </div>
@@ -942,8 +942,8 @@
                                                             <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                         </label>
 
-                                                       <select 
-                                                            name="risk_assessment_required" 
+                                                       <select
+                                                            name="risk_assessment_required"
                                                             id="risk_assessment_required"
                                                             @if ($lockdatafileds1)
                                                                 disabled
@@ -957,14 +957,14 @@
                                                         </select>
 
                                                         @if ($lockdatafileds1)
-                                                            <input 
-                                                                type="hidden" 
-                                                                name="risk_assessment_required" 
+                                                            <input
+                                                                type="hidden"
+                                                                name="risk_assessment_required"
                                                                 value="{{ $data->risk_assessment_required }}"
                                                             >
                                                         @endif
 
-                                                           
+
                                                     </div>
                                                 </div>
 
@@ -978,7 +978,7 @@
                                             <div class="col-lg-6" id="justification_div" style="display:none;">
                                                 <div class="group-input">
                                                     <label for="Justification">Justification <span class="text-danger">*</span></label>
-                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." 
+                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required."
                                                         {{ $lockdatafileds1 ? 'readonly' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
                                                     <span id="justification_error" class="text-danger" style="display: none;">This field is required.</span>
                                                 </div>
@@ -1084,7 +1084,7 @@
                                                         <input type="hidden" name="severity" value="{{ $data->severity }}">
                                                     @endif
 
-                                                    
+
                                                 </div>
                                             </div>
 
@@ -1505,7 +1505,7 @@
                                                     </label>
                                                     <textarea name="migration_action" id="migration_action"
                                                      {{ !$lockdatafileds1 ? '' : 'readonly' }}
-                                                      
+
                                                      >{{ $data->migration_action }}</textarea>
                                                 </div>
                                             </div>
@@ -1543,7 +1543,7 @@
                                                         <input type="file" id="myfile" name="risk_assessment_atch[]"
                                                             oninput="addMultipleFiles(this, 'risk_assessment_atch')"  {{ $lockdatafileds1  ? 'disabled' : '' }} multiple>
                                                     </div>
-                                                 
+
 
                                             </div>
 
@@ -1705,7 +1705,7 @@
                                                     }
                                                 }
                                             </script>
-                                        
+
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
@@ -1728,7 +1728,7 @@
                                         <div class="group-input">
                                             <label for="qa-eval-comments">HOD Assessment Comments  @if($data->stage == 2) <span class="text-danger">*</span>@endif
                                         </label>
-                                    
+
                                             <textarea name="hod_assessment_comments"  {{ $lockdatafileds2 ? 'readonly' : 'required' }}>{{$cc_cfts->hod_assessment_comments}}</textarea>
                                         </div>
 
@@ -2009,7 +2009,7 @@
                                                     <select multiple name="reviewer_person_value[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
                                                         data-silent-initial-value-set="true" id="reviewer_person_value"  {{   $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                        
+
                                                         @foreach ($cft as $data1)
                                                             @if (Helpers::checkUserRolesMicrobiology_Person($data1))
                                                                 @if (in_array($data1->id, $cftReviewerIds))
@@ -2374,9 +2374,9 @@
                                                             class="text-danger">*</span></label>
                                                     <select name="Quality_Assurance_Review" id="Quality_Assurance_Review" {{$lockdatafileds3 ? "disabled" : ''}}>
                                                         <option value="">-- Select --</option>
-                                                       
+
                                                     <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value='yes'>Yes</option>
-                                                      
+
                                                         <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value='no'>
                                                             No</option>
                                                         <option @if ($data1->Quality_Assurance_Review == 'NA' || empty($data1->Quality_Assurance_Review)) selected @endif value='NA'>
@@ -2543,8 +2543,8 @@
                                                         <option value="">-- Select --</option>
 
                                                         <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value='yes'>Yes</option>
-                                                  
-                                                      
+
+
                                                         <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value='no'>
                                                             No</option>
                                                         <option @if ($data1->Quality_Assurance_Review == 'NA' || empty($data1->Quality_Assurance_Review)) selected @endif value='NA'>
@@ -2715,9 +2715,9 @@
                                                             Yes</option>
                                                         <option @if ($data1->Production_Table_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                     
-                                                        <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>  
-                                                              
+
+                                                        <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>
+
                                                     </select>
 
                                                 </div>
@@ -2868,7 +2868,7 @@
                                             </script>
 
                                             @else
-                                            
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Production Tablet">Production Tablet/Capsule/Powder Review Required</label>
@@ -2878,7 +2878,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Production_Table_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>  
+                                                            <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -3049,7 +3049,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                         <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>  
+                                                         <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -3208,7 +3208,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option> 
+                                                        <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -3372,7 +3372,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Production_Injection_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Production_Injection_Review == 'NA' || empty($data1->Production_Injection_Review)) selected @endif value='NA'>NA</option> 
+                                                            <option @if ($data1->Production_Injection_Review == 'NA' || empty($data1->Production_Injection_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -3480,7 +3480,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Production_Injection_On" name="Production_Injection_On"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3603,7 +3603,7 @@
                                                 <!-- <div class="col-md-12 mb-3 productionInjection">
                                                     <div class="group-input">
                                                         <label for="Production Injection feedback">Production Injection Feedback
-                                                          
+
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
@@ -3663,7 +3663,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Production_Injection_On" name="Production_Injection_On"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Production_Injection_On)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3825,7 +3825,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Store_on" name="Store_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -3997,7 +3997,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Store_on" name="Store_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Store_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4162,7 +4162,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Quality_Control_on" name="Quality_Control_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4334,7 +4334,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Quality_Control_on" name="Quality_Control_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4501,7 +4501,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4548,7 +4548,7 @@
                                                     });
                                                 });
                                             </script>
-                                            
+
                                             @else
 
                                             <div class="col-lg-6">
@@ -4675,7 +4675,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="ResearchDevelopment_on" name="ResearchDevelopment_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->ResearchDevelopment_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4735,7 +4735,7 @@
 
                                                 </div>
                                             </div>
-                                             
+
                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
@@ -4839,7 +4839,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Engineering_on" name="Engineering_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5011,7 +5011,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Engineering_on" name="Engineering_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Engineering_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5175,7 +5175,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Human_Resource_on" name="Human_Resource_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5347,7 +5347,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Human_Resource_on" name="Human_Resource_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Human_Resource_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5488,7 +5488,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 Microbiology">
                                                 <div class="group-input">
-                                                    <label for="Microbiology Completed By">Microbiology Review Completed 
+                                                    <label for="Microbiology Completed By">Microbiology Review Completed
                                                          By</label>
                                                     <input readonly type="text" value="{{ $data1->Microbiology_by }}"
                                                         name="Microbiology_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -5509,7 +5509,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Microbiology_on" name="Microbiology_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5681,7 +5681,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Microbiology_on" name="Microbiology_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Microbiology_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -5844,7 +5844,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="RegulatoryAffair_on" name="RegulatoryAffair_on"
-                   
+
                    value="{{ \Carbon\Carbon::parse($data1->RegulatoryAffair_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6016,7 +6016,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="RegulatoryAffair_on" name="RegulatoryAffair_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->RegulatoryAffair_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6180,7 +6180,7 @@
 
                                                     <!-- Hidden date input for date selection -->
                                                     <input type="date" id="CorporateQualityAssurance_on" name="CorporateQualityAssurance_on"
-                                                        
+
                                                         value="{{ \Carbon\Carbon::parse($data1->CorporateQualityAssurance_on)->format('Y-m-d') }}"
                                                         class="hide-input"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6352,7 +6352,7 @@
 
                                                     <!-- Hidden date input for date selection -->
                                                     <input type="date" id="CorporateQualityAssurance_on" name="CorporateQualityAssurance_on"
-                                                       
+
                                                         value="{{ \Carbon\Carbon::parse($data1->CorporateQualityAssurance_on)->format('Y-m-d') }}"
                                                         class="hide-input"
                                                         {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6515,7 +6515,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Environment_Health_Safety_on" name="Environment_Health_Safety_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6687,7 +6687,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Environment_Health_Safety_on" name="Environment_Health_Safety_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Environment_Health_Safety_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -6851,7 +6851,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Information_Technology_on" name="Information_Technology_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -7023,7 +7023,7 @@
 
                                                         <!-- Hidden date input for date selection -->
                                                         <input type="date" id="Information_Technology_on" name="Information_Technology_on"
-                                                            
+
                                                             value="{{ \Carbon\Carbon::parse($data1->Information_Technology_on)->format('Y-m-d') }}"
                                                             class="hide-input"
                                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -7363,7 +7363,7 @@
 
 
 
-                                    
+
 
 
 
@@ -7380,7 +7380,7 @@
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
                                             <option value="NA" @if ($data1->Other1_review == 'NA' || empty($data1->Other1_review)) selected @endif>NA</option>
 
-                                            
+
                                         </select>
                                     </div>
                                 </div>
@@ -7412,7 +7412,7 @@
                                     @endif
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-12 other1_reviews">
                                     <div class="group-input">
                                         <label for="Department1">Other's 1 Department
@@ -7809,7 +7809,7 @@
                             <div class="col-lg-12 Other3_reviews">
                                 <div class="group-input">
                                     <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                      
+
                                     <input type="text" name="Other3_Department_person" id="Other3_Department_person"
                                             value="{{ old('Other3_Department_person', $data1->Other3_Department_person) }}"
                                             @if ($data->stage != 3) readonly @endif>
@@ -8173,8 +8173,8 @@
 
 
 
-                            
-                              
+
+
                                     </div>
                                     <div class="button-block">
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
@@ -8233,7 +8233,7 @@
                                                             <option value="Yes" {{ $cc_cfts->RA_data_person == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $cc_cfts->RA_data_person == 'No' ? 'selected' : '' }}>No</option>
                                                         </select>
-                                                       
+
                                                     @else
 
                                                     <select name="RA_data_person_display" class="RA_data_person" id="RA_head_required" disabled>
@@ -8242,7 +8242,7 @@
                                                             <option value="No" {{ $cc_cfts->RA_data_person == 'No' ? 'selected' : '' }}>No</option>
                                                         </select>
                                                         <input type="hidden" name="RA_data_person" value="{{ $cc_cfts->RA_data_person }}">
-                                                        
+
                                                     @endif
                                                 </div>
                                             </div>
@@ -8281,7 +8281,7 @@
                                             }
                                         });
                                         </script>
-                                        {{--   
+                                        {{--
                                              <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="RA notification">QA/CQA Head Approval Person
@@ -8317,7 +8317,7 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
-                                                    
+
                                                     @else
 
                                                     <select name="QA_CQA_person_display" class="QA_CQA_person" id="QA_CQA_person" disabled>
@@ -8329,8 +8329,8 @@
                                                             @endforeach
                                                     </select>
                                                     <input type="hidden" name="QA_CQA_person" value="{{ $cc_cfts->QA_CQA_person }}">
-                                                    
-                                                       
+
+
                                                     @endif
                                                 </div>
                                             </div>
@@ -8338,7 +8338,7 @@
 
 
 
-                                            
+
 
                                         <div class="group-input">
                                             <label for="qa-eval-comments">QA/CQA Final Review Comments
@@ -9253,7 +9253,7 @@
                                         Comment
                                     </label>
                                      <textarea name="effect_comment" id="effect_comment"  {{$lockdatafileds12 ? 'readonly' : '' }}>{{ $cc_cfts->effect_comment ?? '' }}</textarea>
-                                   
+
                                 </div>
                             </div>
                             <script>
@@ -9432,7 +9432,7 @@
                                         Justification</label>
                                     <textarea name="due_date_extension" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}> {{ $due_date_extension }}</textarea> -->
                                 </div>
-                                 
+
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -9476,10 +9476,10 @@
 
 
 
-                     
 
 
-                        
+
+
 
                         <div class="sub-head">HOD Assessment Complete</div>
                         <div class="col-lg-3">
@@ -9501,7 +9501,7 @@
                             </div>
                         </div>
 
-                      
+
                     {{--
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -9591,7 +9591,7 @@
                             </div>
                         </div>
 
-                        {{-- 
+                        {{--
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit by">More Info Require By :-</label>
@@ -9654,7 +9654,7 @@
                         </div>
 
 
-                    {{-- 
+                    {{--
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="submit by">More Info Require By :-</label>
@@ -9715,7 +9715,7 @@
                             </div>
                         </div>
 
-                       
+
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="CFT Review Complete By">Sent To Send Hod By :-</label>
@@ -9829,7 +9829,7 @@
 
 
 
-                      
+
 
 
                         <div class="sub-head"> QA/CQA Head/Manager Designee Approval </div>
@@ -9852,7 +9852,7 @@
                             </div>
                         </div>
 
-                         {{--  
+                         {{--
                         <div class="col-lg-3">
                             <div class="group-input">
                                 <label for="QA Final Review Complete By">  More Info Required  By :-</label>
@@ -10178,10 +10178,10 @@
     </div>
 
 
-    
+
 
      <script>
-            
+
         document.addEventListener('DOMContentLoaded', function() {
             var signatureForm = document.getElementById('signatureModalForm');
 
@@ -10299,15 +10299,15 @@
                                     <input type="radio" name="revision" id="minor" value="RCA">
                                     RCA
                                 </label>
-                            @endif    
-                            
+                            @endif
+
                                 @if(Helpers::getChildData($data->id, 'CC') < 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
                                 </label>
                                 @endif
-                         
+
                             @if($data->stage == 5)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Capa">
@@ -10370,7 +10370,7 @@
                                         <input type="radio" name="revision" id="minor" value="Extension">
                                         Extension
                                     </label>
-                                @endif    
+                                @endif
                             </div>
 
 
@@ -10773,10 +10773,10 @@
     </div>
 
 
-    
+
 
      <script>
-            
+
         document.addEventListener('DOMContentLoaded', function() {
             var signatureForm = document.getElementById('signatureModalForm2');
 
@@ -10888,7 +10888,7 @@
     </div>
 
      <script>
-            
+
         document.addEventListener('DOMContentLoaded', function() {
             var signatureForm = document.getElementById('signatureModalForm3');
 
@@ -11067,42 +11067,72 @@
         let currentStep = 0;
 
         function nextStep() {
-            // Check if there is a next step
-            if (currentStep < steps.length - 1) {
+
+            let riskRequired = $('#risk_assessment_required').val();
+            let RAHeadRequired = $('#RA_head_required').val();
+
+            let nextStepIndex = currentStep + 1;
+
+            // Skip Risk Assessment step
+            if (riskRequired !== 'yes' && steps[nextStepIndex]?.id === 'CCForm7') {
+                nextStepIndex++;
+            }
+
+            // Skip RA Head step
+            if (RAHeadRequired !== 'yes' && steps[nextStepIndex]?.id === 'CCForm15') {
+                nextStepIndex++;
+            }
+
+            // Check if next step exists
+            if (nextStepIndex < steps.length) {
+
                 // Hide current step
                 steps[currentStep].style.display = "none";
 
                 // Show next step
-                steps[currentStep + 1].style.display = "block";
+                steps[nextStepIndex].style.display = "block";
 
-                // Add active class to next button
-                stepButtons[currentStep + 1].classList.add("active");
-
-                // Remove active class from current button
+                // Update active button
                 stepButtons[currentStep].classList.remove("active");
+                stepButtons[nextStepIndex].classList.add("active");
 
                 // Update current step
-                currentStep++;
+                currentStep = nextStepIndex;
             }
         }
 
         function previousStep() {
-            // Check if there is a previous step
-            if (currentStep > 0) {
+
+            let riskRequired = $('#risk_assessment_required').val();
+            let RAHeadRequired = $('#RA_head_required').val();
+
+            let prevStepIndex = currentStep - 1;
+
+            // Skip Risk Assessment step
+            if (riskRequired !== 'yes' && steps[prevStepIndex]?.id === 'CCForm7') {
+                prevStepIndex--;
+            }
+
+            // Skip RA Head step
+            if (RAHeadRequired !== 'yes' && steps[prevStepIndex]?.id === 'CCForm15') {
+                prevStepIndex--;
+            }
+
+            // Check if previous step exists
+            if (prevStepIndex >= 0) {
+
                 // Hide current step
                 steps[currentStep].style.display = "none";
 
                 // Show previous step
-                steps[currentStep - 1].style.display = "block";
+                steps[prevStepIndex].style.display = "block";
 
-                // Add active class to previous button
-                stepButtons[currentStep - 1].classList.add("active");
-
-                // Remove active class from current button
+                // Update active button
                 stepButtons[currentStep].classList.remove("active");
+                stepButtons[prevStepIndex].classList.add("active");
 
                 // Update current step
-                currentStep--;
+                currentStep = prevStepIndex;
             }
         }
     </script>
