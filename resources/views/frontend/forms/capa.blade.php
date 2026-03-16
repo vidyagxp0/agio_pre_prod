@@ -37,7 +37,12 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / CAPA
+
+            @if(!empty($parent_division_id))
+               {{ Helpers::getDivisionName($parent_division_id) }} / CAPA
+            @else
+               {{ Helpers::getDivisionName(session()->get('division')) }} / CAPA
+            @endif
         </div>
     </div>
 
