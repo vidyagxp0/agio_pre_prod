@@ -4020,7 +4020,7 @@ class OOCController extends Controller
 
 
 
-       
+
 
         // =============================================Update Grid ================================//
         $oocGrid = $ooc->id;
@@ -4270,7 +4270,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                          
+
                         }
                     }
 
@@ -4434,8 +4434,8 @@ class OOCController extends Controller
                         $hasPending2 = false;
                     foreach ($extensionchild as $ext) {
                             $extensionchildStatus = trim(strtolower($ext->status));
-                            if ($extensionchildStatus !== 'closed - done' && 
-                                $extensionchildStatus !== 'closed cancelled' &&   
+                            if ($extensionchildStatus !== 'closed - done' &&
+                                $extensionchildStatus !== 'closed cancelled' &&
                                 $extensionchildStatus !== 'closed - rejected'
                             ) {
                                 $hasPending2 = true;
@@ -4497,7 +4497,7 @@ class OOCController extends Controller
 
 
 
-                
+
                 $list = Helpers::getInitiatorUserList($oocchange->division_id);
 
                     foreach ($list as $u) {
@@ -4526,7 +4526,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                           
+
                         }
                     }
 
@@ -4730,7 +4730,7 @@ class OOCController extends Controller
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
 
-                           
+
                         }
                     }
 
@@ -5014,7 +5014,7 @@ class OOCController extends Controller
                             $extensionchildStatus = trim(strtolower($ext->status));
                             if ($extensionchildStatus !== 'closed - done' &&
                                 $extensionchildStatus !== 'closed cancelled' &&
-                                $extensionchildStatus !== 'closed - rejected') 
+                                $extensionchildStatus !== 'closed - rejected')
                             {
                                 $hasPending7 = true;
                                 break;
@@ -5380,7 +5380,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                          
+
                         }
                     }
 
@@ -5520,7 +5520,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                          
+
                         }
                     }
 
@@ -5613,7 +5613,7 @@ class OOCController extends Controller
                 }
                 $history->stage='Phase IA HOD Review Complete';
                 $history->save();
-              
+
 
 
                 $list = Helpers::getQAHeadUserList($oocchange->division_id);
@@ -6000,7 +6000,7 @@ class OOCController extends Controller
                             }
 
 
-                            
+
                         }
                     // }
                 }
@@ -6085,7 +6085,7 @@ class OOCController extends Controller
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
 
-                           
+
                         }
               // }
                 }
@@ -6142,7 +6142,7 @@ class OOCController extends Controller
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
 
-                            
+
                         }
 
 
@@ -6208,7 +6208,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                            
+
                         }
 
                     // }
@@ -6271,7 +6271,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                            
+
                         }
                     // }
                 }
@@ -6336,7 +6336,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                           
+
                         }
                     // }
                 }
@@ -6397,7 +6397,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                            
+
                         }
                     // }
                 }
@@ -6458,7 +6458,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                           
+
                         }
                     // }
                 }
@@ -6520,7 +6520,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                            
+
                         }
                     // }
                 }
@@ -6583,7 +6583,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                           
+
                         }
                     // }
                 }
@@ -6646,7 +6646,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                           
+
                         }
                     // }
                 }
@@ -6773,9 +6773,9 @@ class OOCController extends Controller
 
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
-                            }     
+                            }
 
-                           
+
                         }
                     // }
                 }
@@ -6878,7 +6878,7 @@ class OOCController extends Controller
                             } catch (\Exception $e) {
                                 \Log::error('Mail Error: ' . $e->getMessage());
                             }
-                           
+
                         }
                     // }
                 }
@@ -7223,7 +7223,7 @@ class OOCController extends Controller
                 $record = str_pad($record, 4, '0', STR_PAD_LEFT);
                 $record_number =$record;
 
-                return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
+                return view('frontend.forms.capa', compact('record','record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record','parent_division_id'));
                 }
 
                if ($request->revision == "Action-Item") {
@@ -7301,7 +7301,7 @@ class OOCController extends Controller
             if ($request->revision == "Resampling") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $relatedRecords = Helpers::getAllRelatedRecords();
-                return view('frontend.resampling.resapling_create', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords'));
+                return view('frontend.resampling.resapling_create', compact('record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','parent_division_id'));
            }
 
            if ($request->revision == "Extension") {
@@ -7454,7 +7454,7 @@ class OOCController extends Controller
                 // Merge the records into the collection
                 $relatedRecords = $relatedRecords->merge($records);
                 }
-                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record','parentRecord','data_record','data','relatedRecords'));
+                return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record','parentRecord','data_record','data','relatedRecords','parent_division_id'));
 
             }
 
@@ -7469,7 +7469,7 @@ class OOCController extends Controller
                 $old_records = $old_record;
                 $Capachild = OutOfCalibration::find($id);
                 $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
-                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record'));
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_records', 'cft','relatedRecords','reference_record','parent_division_id'));
                 }
                if ($request->revision == "Extension") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -7757,14 +7757,14 @@ class OOCController extends Controller
                 } else {
                     $capa_teamNamesString = null;
                 }
-            } 
+            }
 
             $ActionItem = ActionItem::where('parent_id', $parentId)
                 ->where('parent_type', 'OOC')
                 ->get();
 
             $investigation_teamNamesString = '';
-            $selectedMethodologies = [];    
+            $selectedMethodologies = [];
 
             $RootCause = RootCauseAnalysis::where('parent_id', $parentId)
                 ->where('parent_type', 'OOC')
@@ -7783,7 +7783,7 @@ class OOCController extends Controller
                 $investigation_teamNamesString = implode(', ', $teamNames);
 
                 $selectedMethodologies = explode(',', $rca->root_cause_methodology ?? '');
-            }     
+            }
 
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
