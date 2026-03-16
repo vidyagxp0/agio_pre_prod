@@ -18,7 +18,12 @@
     <div class="form-field-head">
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Root Cause Analysis
+
+            @if(!empty($parent_division_id))
+               {{ Helpers::getDivisionName($parent_division_id) }} / Root Cause Analysis
+            @else
+               {{ Helpers::getDivisionName(session()->get('division')) }} / Root Cause Analysis
+            @endif
             {{-- KSA / Root Cause Analysis   --}}
             {{-- EHS-North America --}}
         </div>

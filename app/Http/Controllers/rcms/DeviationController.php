@@ -9419,6 +9419,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
             $lastAuditrecord = Capa::orderBy('record', 'desc')->first();
             $record = $lastAuditrecord ? $lastAuditrecord->record + 1 : 1;
+            
 
 
             $Capachild->Capachild = $record_number;
@@ -9426,10 +9427,13 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $old_records = $old_record;
 
             $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'DEV' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+            // dd($reference_record = Helpers::getDivisionName($Capachild->division_id ));
+            $data = $Capachild;
+
 
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id','relatedRecords','record_number','record', 'parent_record','parent_type', 'record',  'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name','reference_record', 'parent_division_id', 'parent_record', 'old_records', 'cft','parent_due_date',));
+            return view('frontend.forms.capa', compact('data','parent_id','relatedRecords','record_number','record', 'parent_record','parent_type', 'record',  'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name','reference_record', 'parent_division_id', 'parent_record', 'old_records', 'cft','parent_due_date','parent_division_id'));
             } elseif ($request->child_type == "Action_Item") {
             $parent_name = "Action Item";
             $actionchild = Deviation::find($id);
@@ -9511,6 +9515,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $parent_name = "CAPA";
             $Changecontrolchild = Deviation::find($id);
             $Changecontrolchild->Changecontrolchild = $record_number;
+            
 
             $Changecontrolchild->save();
 

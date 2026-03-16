@@ -590,7 +590,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/Deviation
+            {{ Helpers::getDivisionName($data->division_id) }} /Deviation
         </div>
     </div>
 
@@ -7052,7 +7052,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <div class="group-input">
                                             <label for="Microbiology"> Microbiology Impact Assessment Required ? <span
                                                     class="text-danger">*</span></label>
-                                            <select name="Microbiology_Review" id="Microbiology_Review">
+                                            <select name="Microbiology_Review" id="Microbiology_Review" 
+                                                @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->Microbiology_Review == 'yes') selected @endif
                                                     value='yes'>
@@ -7788,7 +7789,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <div class="group-input">
                                             <label for="Contract Giver">Contract Giver Impact Assessment Required <span
                                                     class="text-danger">*</span></label>
-                                            <select name="ContractGiver_Review" id="ContractGiver_Review">
+                                            <select name="ContractGiver_Review" id="ContractGiver_Review"
+                                            @if ($data->stage == 4) disabled @endif>
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data1->ContractGiver_Review == 'yes') selected @endif
                                                     value='yes'>Yes</option>
