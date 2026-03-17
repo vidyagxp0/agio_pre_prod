@@ -2674,39 +2674,39 @@ class OOSController extends Controller
                         ]);
                     }
 
-                    $capachilds = Capa::where('parent_id', $id)
-                        ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
-                        ->get();
-                            $hasPending = false;
-                        foreach ($capachilds as $ext) {
-                                $capachildstatus = trim(strtolower($ext->status));
-                                if ($capachildstatus !== 'closed - done' && 
-                                    $capachildstatus !== 'closed cancelled' &&
-                                    $capachildstatus !== 'closed - rejected'
-                                ) {
-                                    $hasPending = true;
-                                    break;
-                                }
-                            }
-                    if ($hasPending) {
-                        // $capachildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPending) {
-                            Session::flash('swal', [
-                                'title' => 'CAPA Child Pending!',
-                                'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                    // $capachilds = Capa::where('parent_id', $id)
+                    //     ->whereIn('parent_type', ['OOS Chemical', 'OOS Micro', 'OOT'])
+                    //     ->get();
+                    //         $hasPending = false;
+                    //     foreach ($capachilds as $ext) {
+                    //             $capachildstatus = trim(strtolower($ext->status));
+                    //             if ($capachildstatus !== 'closed - done' && 
+                    //                 $capachildstatus !== 'closed cancelled' &&
+                    //                 $capachildstatus !== 'closed - rejected'
+                    //             ) {
+                    //                 $hasPending = true;
+                    //                 break;
+                    //             }
+                    //         }
+                    // if ($hasPending) {
+                    //     // $capachildstatus = trim(strtolower($extensionchild->status));
+                    //     if ($hasPending) {
+                    //         Session::flash('swal', [
+                    //             'title' => 'CAPA Child Pending!',
+                    //             'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                    //             'type' => 'warning',
+                    //         ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    //     }
+                    // } else {
+                    //     // Flash message for success (when the form is filled correctly)
+                    //     Session::flash('swal', [
+                    //         'title' => 'Success!',
+                    //         'message' => 'Document Sent',
+                    //         'type' => 'success',
+                    //     ]);
+                    // }
 
                 $changestage->stage = "21";
                 $changestage->status = "Closed - Done";
