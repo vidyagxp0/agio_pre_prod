@@ -5617,7 +5617,9 @@
                                             <div class="group-input">
                                                 <label for="Microbiology"> Microbiology Review Required ? <span
                                                         class="text-danger">*</span></label>
-                                                <select name="Microbiology_Review" id="Microbiology_Review">
+                                                <select name="Microbiology_Review" id="Microbiology_Review" 
+                                                     @if ($data->stage == 3) disabled @endif
+                                                    >
                                                     <option value="">-- Select --</option>
                                                     <option @if ($data1->Microbiology_Review == 'Yes') selected @endif
                                                         value='Yes'>

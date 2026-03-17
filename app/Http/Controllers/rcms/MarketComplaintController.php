@@ -2466,7 +2466,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->repeat_nature_gi = $request->repeat_nature_gi;
         $marketComplaint->description_gi = $request->description_gi;
         $marketComplaint->assign_to = $request->assign_to;
-        $marketComplaint->parent_type = $request->parent_type;
+        // $marketComplaint->parent_type = $request->parent_type;
         // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
 
@@ -10924,7 +10924,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
         $cft = [];
         $parent_id = $id;
-        $parent_type = "Audit_Program";
+        $parent_type = "Market Complaint";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -11010,7 +11010,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         $cc = MarketComplaint::find($id);
         $cft = [];
 
-        $parent_type = "Capa";
+        $parent_type = "Market Complaint";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         // $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = $cc->record;
