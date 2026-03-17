@@ -2769,6 +2769,27 @@ Not Applicable
                     </tr>
                 </table>
 
+                 <table>
+                    <tr>
+                        <th class="w-20">Reopened By :</th>
+                        <td class="w-30">
+                            <div class="static">{{ $data->reopen_by ?? 'Not Applicable' }}</div>
+                        </td>
+                        <th class="w-20">Reopened On :</th>
+                        <td class="w-30">
+                            <div class="static">{{ !empty($data->reopen_on) ? Helpers::getdateFormat($data->send_to_opened_on) : 'Not Applicable' }}</div>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Reopened Comment :</th>
+                        <td class="w-80">
+                            <div class="static">{{ $data->commentreopen ?? 'Not Applicable' }}</div>
+                        </td>
+                    </tr>
+                </table>
+
                 <table>
                     <tr>
                         <th class="w-20">Approval Complete By :</th>

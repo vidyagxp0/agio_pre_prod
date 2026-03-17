@@ -8708,6 +8708,32 @@
                                     </div>
 
 
+                                    <div class="col-12 sub-head" style="font-size: 16px">
+                                        Reopened
+                                    </div>
+
+
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Observation Submitted By">Reopened By</label>
+                                            <div class="">{{ $data->reopen_by ?? 'Not Applicable' }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Observation Submitted On">Reopened On</label>
+                                            <div class="">{{ $data->reopen_on ?? 'Not Applicable' }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Comments">Reopened Comment</label>
+                                            <div class="">{{ $data->commentreopen ?? 'Not Applicable'}}</div>
+                                        </div>
+                                    </div>
+
+
+
                                    
 
 
