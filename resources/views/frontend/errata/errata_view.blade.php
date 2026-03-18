@@ -2914,7 +2914,7 @@
                                                 placeholder="DD-MMM-YYYY"
                                                {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'disabled' : '' }} {{ $showdata->stage == 5 && $initiatorRole ? '' : 'readonly' }}
                                                 value="{{ Helpers::getdateFormat($showdata->Date_and_time_of_correction) }}" />
-                                            <input type="date" name="Date_and_time_of_correction" class="hide-input"
+                                            <input type="date" name="Date_and_time_of_correction" class="hide-input" max="{{ date('Y-m-d') }}"
                                                {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'disabled' : '' }} {{ $showdata->stage == 5 && $initiatorRole ? '' : 'readonly' }}
                                                 oninput="handleDateInput(this, 'Date_and_time_of_correction')"  required/>
                                         </div>
