@@ -9654,7 +9654,7 @@
 
 
         const button6 = $('.button6');
-        if (selectedOptions.includes('RM-PM')) {
+        if (selectedOptions.includes('RM-PM Sampling')) {
             button6.show()
             console.log('Show button6');
         } else {
