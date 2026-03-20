@@ -228,6 +228,8 @@
                             'Product/Material Related Error' ? 'selected' : '' }}>Product/Material Related Error</option>
                         <option value="Human Error"{{ $data->hypo_exp_required_piii ==
                             'Human Error' ? 'selected' : '' }}>Human Error</option>
+                        <option value="Operator Error"{{ $data->hypo_exp_required_piii ==
+                            'Operator Error' ? 'selected' : '' }}>Operator Error</option>
                         <option value="Other Error"{{ $data->hypo_exp_required_piii ==
                             'Other Error' ? 'selected' : '' }}>Other Error</option>
                         <option value="NA"{{ $data->hypo_exp_required_piii ==

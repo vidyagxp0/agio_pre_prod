@@ -1337,6 +1337,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         <tbody>
                                                             @php
                                                                 $serialNumber = 1;
+                                                                // dd(Helpers::getNewLeadAuditorUsersList($data->division_id));
                                                             @endphp
 
                                                             @if (!empty($auditorview->data) && is_iterable($auditorview->data))
@@ -1347,7 +1348,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         <td>
                                                                             <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][auditornew]" @if ($data->stage != 1) readonly @endif required>
                                                                                 <option value="">-Select-</option>
-                                                                                @foreach ($users as $value)
+                                                                                @foreach (Helpers::getNewLeadAuditorUsersList($data->division_id) as $value)
                                                                                     <option value="{{ $value->id }}"
                                                                                         {{ isset($audditor['auditornew']) && $audditor['auditornew'] == $value->id ? 'selected' : '' }}>
                                                                                         {{ $value->name }}

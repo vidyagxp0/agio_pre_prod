@@ -773,7 +773,7 @@
                                         Cancel
                                     </button>
                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                   <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                   <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button>
                                     @endif
@@ -786,7 +786,7 @@
                                         QA Initial Review Complete
                                     </button>
                                     @if(Helpers::getChildData($data->id, 'Incident') < 3)
-                                   <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                   <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                         Child
                                     </button>
                                     @endif

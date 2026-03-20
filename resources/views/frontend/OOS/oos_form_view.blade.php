@@ -1039,7 +1039,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getArrayKey($ph_meters->data[$loop->index], 'response') == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         </div>
                                                     </td>
@@ -1089,7 +1089,7 @@
                                                              <option value="">Select an Option</option>
                                                              <option value="Yes" {{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                              <option value="No" {{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                             <option value="N/A" {{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                             <option value="NA" {{ Helpers::getArrayKey($Viscometers->data[$loop->index], 'response') == 'NA' ? 'selected' : '' }}>NA</option>
                                                          </select>
                                                      </div>
                                                  </td>
@@ -1149,7 +1149,7 @@
 
                                                             <option value="Yes" {{ Helpers::getArrayKey($meltingData, 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getArrayKey($meltingData, 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getArrayKey($meltingData, 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getArrayKey($meltingData, 'response') == 'NA' ? 'selected' : '' }}>NA</option>
                                                          </select>
                                                      </div>
                                                  </td>
@@ -1242,7 +1242,7 @@
                                                                  <option value="">Select an Option</option>
                                                                  <option value="Yes" {{ Helpers::getArrayKey($Dis_solutions->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                  <option value="No" {{ Helpers::getArrayKey($Dis_solutions->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                                 <option value="N/A" {{ Helpers::getArrayKey($Dis_solutions->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                 <option value="NA" {{ Helpers::getArrayKey($Dis_solutions->data[$loop->index], 'response') == 'NA' ? 'selected' : '' }}>NA</option>
                                                              </select>
                                                          </div>
                                                      </td>
@@ -1381,7 +1381,7 @@
                                                                  <option value="">Select an Option</option>
                                                                  <option value="Yes" {{ Helpers::getArrayKey($HPLC_GCs->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                  <option value="No" {{ Helpers::getArrayKey($HPLC_GCs->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                                 <option value="N/A" {{ Helpers::getArrayKey($HPLC_GCs->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                 <option value="NA" {{ Helpers::getArrayKey($HPLC_GCs->data[$loop->index], 'response') == 'NA' ? 'selected' : '' }}>NA</option>
                                                              </select>
                                                          </div>
                                                      </td>
@@ -1497,7 +1497,7 @@
                                                                  <option value="">Select an Option</option>
                                                                  <option value="Yes" {{ Helpers::getArrayKey($General_Checklists->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                  <option value="No" {{ Helpers::getArrayKey($General_Checklists->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                                 <option value="N/A" {{ Helpers::getArrayKey($General_Checklists->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                 <option value="NA" {{ Helpers::getArrayKey($General_Checklists->data[$loop->index], 'response') == 'NA' ? 'selected' : '' }}>NA</option>
                                                              </select>
                                                          </div>
                                                      </td>
@@ -1594,7 +1594,7 @@
                                                                  <option value="">Select an Option</option>
                                                                  <option value="Yes" {{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                  <option value="No" {{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                                 <option value="N/A" {{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                 <option value="NA" {{ Helpers::getArrayKey($kF_Potentionmeters->data[$loop->index], 'response') == 'NA' ? 'selected' : '' }}>NA</option>
                                                              </select>
                                                          </div>
                                                      </td>
@@ -1684,7 +1684,7 @@
                                                                  <option value="">Select an Option</option>
                                                                  <option value="Yes" {{ Helpers::getArrayKey($RM_PMs->data[$loop->index], 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                  <option value="No" {{ Helpers::getArrayKey($RM_PMs->data[$loop->index], 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                                 <option value="N/A" {{ Helpers::getArrayKey($RM_PMs->data[$loop->index], 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                 <option value="NA" {{ Helpers::getArrayKey($RM_PMs->data[$loop->index], 'response') == 'NA' ? 'selected' : '' }}>NA</option>
                                                              </select>
                                                          </div>
                                                      </td>
@@ -1823,7 +1823,7 @@
                                                                     <option value="">Select an Option</option>
                                                                     <option value="Yes" {{ Helpers::getChemicalGridData($data, 'analyst_training_procedure', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                     <option value="No" {{ Helpers::getChemicalGridData($data, 'analyst_training_procedure', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'analyst_training_procedure', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                    <option value="NA" {{ Helpers::getChemicalGridData($data, 'analyst_training_procedure', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                 </select>
                                                             @endif
                                                         </div>
@@ -1923,7 +1923,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'sample_receiving_var', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -2135,7 +2135,7 @@
                                                                     <option value="">Select an Option</option>
                                                                     <option value="Yes" {{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                     <option value="No" {{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                    <option value="NA" {{ Helpers::getChemicalGridData($data, 'method_used_during_analysis', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                 </select>
                                                             @endif
                                                         </div>
@@ -2293,7 +2293,7 @@
                                                                     <option value="">Select an Option</option>
                                                                     <option value="Yes" {{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                     <option value="No" {{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                    <option value="NA" {{ Helpers::getChemicalGridData($data, 'instrument_equipment_detailss', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                 </select>
                                                             @endif
                                                         </div>
@@ -2383,7 +2383,7 @@
                                                                     <option value="">Select an Option</option>
                                                                     <option value="Yes" {{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                     <option value="No" {{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                    <option value="NA" {{ Helpers::getChemicalGridData($data, 'result_and_calculation', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                 </select>
                                                             @endif
                                                         </div>
@@ -2503,7 +2503,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'Training_records_Analyst_Involved1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -2613,7 +2613,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -2718,7 +2718,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'test_methods_Procedure1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'test_methods_Procedure1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'test_methods_Procedure1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'test_methods_Procedure1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -2852,7 +2852,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'Review_of_Media_Buffer_Standards_prep1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -2965,7 +2965,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Revi_of_Media_Buffer_Stand_prep1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -3094,7 +3094,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'ccheck_for_disinfectant_detail1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'ccheck_for_disinfectant_detail1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'ccheck_for_disinfectant_detail1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'ccheck_for_disinfectant_detail1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -3213,7 +3213,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_instrument_equip1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -3380,7 +3380,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_Training_records_Analyst1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -3529,7 +3529,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_of_sampling_and_Transport1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -3569,7 +3569,7 @@
 
                             ],
                             [
-                                'question' => "Was the test procedure mentioned in specification/analytical procedure validated w.r.t. product concentration?",
+                                'question' => "Was the test procedure mentioned in specificatioNAnalytical procedure validated w.r.t. product concentration?",
                                 'is_sub_question' => true,
                                 'input_type' => 'text'
 
@@ -3675,7 +3675,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proceds1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proceds1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proceds1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_of_Test_Method_proceds1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -3726,7 +3726,7 @@
                                                             <option value="">Enter Your Selection Here</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="NA">NA</option>
                                                         </select>
                                                     </div>
 
@@ -3779,7 +3779,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="NA">NA</option>
                                                         </select>
                                                     </div>
 
@@ -3805,7 +3805,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="NA">NA</option>
                                                         </select>
                                                     </div>
 
@@ -3857,7 +3857,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="NA">NA</option>
                                                         </select>
                                                     </div>
 
@@ -4073,7 +4073,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -4108,7 +4108,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'Checklist_for_Review_Media_prepara_RTU_medias1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -4218,7 +4218,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'Checklist_Review_Environment_condition_in_tests1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -4374,7 +4374,7 @@
                                                                     <option value="">Select an Option</option>
                                                                     <option value="Yes" {{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                     <option value="No" {{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                    <option value="N/A" {{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                    <option value="NA" {{ Helpers::getChemicalGridData($data, 'review_of_instrument_bioburden_and_waters1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                 </select>
                                                             @endif
                                                         </div>
@@ -4474,7 +4474,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_tests1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_tests1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_tests1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_of_bioburden_and_water_tests1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -4619,7 +4619,7 @@
                                                                         <option value="">Select an Option</option>
                                                                         <option value="Yes" {{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssays1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                         <option value="No" {{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssays1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                        <option value="N/A" {{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssays1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                        <option value="NA" {{ Helpers::getChemicalGridData($data, 'training_records_analyst_involvedIn_testing_microbial_asssays1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                     </select>
                                                                 @endif
                                                             </div>
@@ -4743,7 +4743,7 @@
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'sample_intactness_before_analysis22', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                         </select>
                                                                     @endif
                                                                 </div>
@@ -4881,7 +4881,7 @@
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'checklist_for_review_of_test_method_IMA1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                         </select>
                                                                     @endif
                                                                 </div>
@@ -5104,7 +5104,7 @@
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'cr_of_media_buffer_st_IMA1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                             </select>
                                                                         @endif
                                                                     </div>
@@ -5238,7 +5238,7 @@
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'CR_of_microbial_cultures_inoculation_IMA1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                         </select>
                                                                     @endif
                                                                 </div>
@@ -5359,7 +5359,7 @@
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'CR_of_Environmental_condition_in_testing_IMA1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                             </select>
                                                                         @endif
                                                                     </div>
@@ -5535,7 +5535,7 @@
                                                                                 <option value="">Select an Option</option>
                                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equipment_IMA1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                             </select>
                                                                         @endif
                                                                     </div>
@@ -5645,7 +5645,7 @@
                                                                             <option value="">Select an Option</option>
                                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_IMA1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                                         </select>
                                                                     @endif
                                                                 </div>
@@ -5815,7 +5815,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'CR_of_training_rec_anaylst_in_monitoring_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -5918,7 +5918,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'Check_for_Sample_details_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -6035,7 +6035,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'Check_for_comparision_of_results_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -6138,7 +6138,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_dehydrated_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -6256,7 +6256,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'checklist_for_media_prepara_sterilization_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -6349,7 +6349,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'CR_of_En_condition_in_testing_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -6446,7 +6446,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'check_for_disinfectant_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -6544,7 +6544,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'checklist_for_fogging_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -6631,7 +6631,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'CR_of_test_method_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -6737,7 +6737,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'CR_microbial_isolates_contamination_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -6895,7 +6895,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'CR_of_instru_equip_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -6982,7 +6982,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM1', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM1', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM1', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'Ch_Trend_analysis_CIEM1', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -7140,7 +7140,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'checklist_for_analyst_training_CIMT2', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -7257,7 +7257,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'checklist_for_comp_results_CIMT2', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -7375,7 +7375,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'checklist_for_Culture_verification_CIMT2', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -7477,7 +7477,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'sterilize_accessories_CIMT2', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -7644,7 +7644,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'checklist_for_intrument_equip_last_CIMT2', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -7743,7 +7743,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                            <option value="N/A" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                            <option value="NA" {{ Helpers::getChemicalGridData($data, 'disinfectant_details_last_CIMT2', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -7840,7 +7840,7 @@
                                                                 <option value="">Select an Option</option>
                                                                 <option value="Yes" {{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT2', true, 'response', true, $index) == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT2', true, 'response', true, $index) == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT2', true, 'response', true, $index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ Helpers::getChemicalGridData($data, 'checklist_for_result_calculation_CIMT2', true, 'response', true, $index) == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                         @endif
                                                     </div>
@@ -7976,7 +7976,7 @@
 
                                                                 <option value="Yes" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
                                                                 <option value="No" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'No' ? 'selected' : '' }}>No</option>
-                                                                <option value="N/A" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                                                <option value="NA" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'NA' ? 'selected' : '' }}>NA</option>
                                                             </select>
                                                             </div>
                                                         </td>

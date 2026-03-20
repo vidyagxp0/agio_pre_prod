@@ -205,9 +205,14 @@
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         @if (!empty($parent_division_id))
-                                            <input disabled type="text" name="division_code"
+
+                                         <input readonly type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+
+                                            {{-- <input disabled type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
                                         @else
                                             <input disabled type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}">
@@ -465,39 +470,33 @@
 
 
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Risk Assessment Required">Risk Assessment Required? </label>
-                                        <select name="risk_assessment_required" id="risk_assessment_required">
-                                            <option value="">-- Select --</option>
-                                            <option @if (property_exists($data, 'risk_assessment_required') && $data?->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
-                                            <option @if (property_exists($data, 'risk_assessment_required') && $data?->risk_assessment_required == 'no') selected @endif value='no'>No</option>
-                                        </select>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Risk Assessment Required">Risk Assessment Required? </label>
+                                                <select name="risk_assessment_required" id="risk_assessment_required">
+                                                    <option value="">-- Select --</option>
+                                                    <option @if (property_exists($data, 'risk_assessment_required') && $data?->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
+                                                    <option @if (property_exists($data, 'risk_assessment_required') && $data?->risk_assessment_required == 'no') selected @endif value='no'>No</option>
+                                                </select>
 
-                                    </div>
-                                </div>
-
-                                <!-- <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Risk Assessment Required">Justification </label>
-                                        <textarea name="train_comments" id=""></textarea>
-                                    </div>
-                                </div> -->
+                                            </div>
+                                        </div>
 
 
 
-                                <div class="col-lg-6" id="justification_div" style="display:none;">
-                                    <div class="group-input">
-                                        <label for="Justification">Justification</label>
-                                        <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required."></textarea>
-                                        <!-- @error('justification')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror -->
-                                    </div>
-                                </div>
+
+                                        <div class="col-lg-6" id="justification_div" style="display:none;">
+                                            <div class="group-input">
+                                                <label for="Justification">Justification</label>
+                                                <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required."></textarea>
+                                                <!-- @error('justification')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror -->
+                                            </div>
+                                        </div>
 
                                             @php
-                                            $division = DB::table('q_m_s_divisions')
+                                                $division = DB::table('q_m_s_divisions')
                                                 ->where('name', Helpers::getDivisionName(session()->get('division')))
                                                 ->first();
                                                 $userRoles = DB::table('user_roles')
@@ -525,19 +524,17 @@
                                             </div>
 
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars"
-                                            class="text-primary">255 </span><span class="text-primary"> characters
-                                            remaining</span>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description<span
+                                                        class="text-danger">*</span></label><span id="rchars"
+                                                    class="text-primary">255 </span><span class="text-primary"> characters
+                                                    remaining</span>
 
-                                        <input id="docname" type="text" name="short_description" maxlength="255"
-                                            required>
-                                    </div>
-                                </div>
-
-
+                                                <input id="docname" type="text" name="short_description" maxlength="255"
+                                                    required>
+                                            </div>
+                                        </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -552,8 +549,6 @@
                                             <option value="document" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'document' ? 'selected' : '' }}>Document</option>
                                             <option value="other" {{ old('severity', property_exists($data ?? (object)[], 'severity') ? $data->severity : '') == 'other' ? 'selected' : '' }}>Other</option>
                                         </select>
-
-
                                     </div>
                                 </div>
 
@@ -731,9 +726,6 @@
 
                                     </div>
                                 </div>
-
-
-
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton on-submit-disable-button ">Save</button>

@@ -97,7 +97,7 @@
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="N/A">NA</option>
                                                         </select>
                                                         @endif
                                                     </div>
