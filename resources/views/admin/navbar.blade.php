@@ -171,7 +171,7 @@ if($submenu=="Login Account"){
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ route('role_groups.index') }}"
                                 class="nav-link @php
 if($submenu=="Role Permission"){
@@ -180,7 +180,7 @@ if($submenu=="Role Permission"){
                                 <i class="fa fa-user-circle nav-icon"></i>
                                 <p>Role Permission</p>
                             </a>
-                        </li>
+                        </li> --}}
                         {{-- <li class="nav-item">
                             <a href="{{ route('GroupPermission.index') }}"
                                 class="nav-link @php
