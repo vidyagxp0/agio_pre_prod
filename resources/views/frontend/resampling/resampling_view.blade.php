@@ -472,38 +472,21 @@
 
                                 </div>
 
-                                    {{--  <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Related Records">Related Records</label>
-                                            <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
-                                                placeholder="Select Reference Records">
-                                                <option value="">--select record--</option>
-                                                @if (!empty($old_record))
-                                                @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}"{{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                        </option>
-                                                    @endforeach
-                                                    @endif
-                                            </select>
-                                            <input type="longText" name="related_records"{{ $data->stage == 0 || $data->stage == 5 ? "disabled" : "" }} value="{{ $data->related_records }}">
-
-                                        </div>
-                                    </div>  --}}
+                                  
 
                                 
 
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="related_records">
-                                                Related Records <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                Related Records <span class="text-danger"></span>
                                             </label>
 
                                             <!-- Select Field -->
                                             <select multiple name="related_records[]" id="related_records" placeholder="Select Reference Records"
                                                 data-silent-initial-value-set="true"
                                                 {{ in_array($data->stage, [0, 2, 3, 4, 5]) ? 'disabled' : '' }} 
-                                                {{ $data->stage == 1 ? 'required' : '' }} {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}>
+                                                {{ $data->stage == 1 && $initiator ? '' : 'disabled' }}>
 
                                                 @if (!empty($relatedRecords))
                                                     @foreach ($relatedRecords as $records)
@@ -532,48 +515,7 @@
 
 
 
-                                    {{--  <div class="col-6">
-                                        <div class="group-input">
-                                            <label for="related_records">Related Records</label>
-    
-                                            <!-- Virtual Select Dropdown -->
-                                            <div id="related_records" class="virtual-select">
-                                                <select multiple name="related_records[]" data-silent-initial-value-set="true"
-                                                    data-search="false" data-placeholder="Select Reference Records">
-                                                    @if (!empty($relatedRecords))
-                                                        @foreach ($relatedRecords as $records)
-                                                            @php
-                                                                $recordValue =
-                                                                    Helpers::getDivisionName(
-                                                                        $records->division_id ||
-                                                                            $records->division ||
-                                                                            $records->division_code ||
-                                                                            $records->site_location_code,
-                                                                    ) .
-                                                                    '/' .
-                                                                    $records->process_name .
-                                                                    '/' .
-                                                                    date('Y') .
-                                                                    '/' .
-                                                                    Helpers::recordFormat($records->record);
-    
-                                                                $selected = in_array(
-                                                                    $recordValue,
-    
-                                                                    explode(',', $data->related_records),
-                                                                )
-                                                                    ? 'selected'
-                                                                    : '';
-                                                            @endphp
-                                                            <option value="{{ $recordValue }}" {{ $selected }}>
-                                                                {{ $recordValue }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>  --}}
+                                
     
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -602,31 +544,7 @@
 
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="related_records">Resampling Related Records</label>
-                                            <select multiple name="related_records" placeholder="Select Reference Records"
-                                                data-search="false" data-silent-initial-value-set="true"
-                                                id="related_records">
-                                                <option {{ $data->related_records == '31' ? 'selected' : '' }}
-                                                    value="31">QMS-EMEA/PROD/2023/31</option>
-                                                <option {{ $data->related_records == '32' ? 'selected' : '' }}
-                                                    value="32">QMS-EMEA/PROD/2023/32</option>
-                                                <option {{ $data->related_records == '33' ? 'selected' : '' }}
-                                                    value="33">QMS-EMEA/PROD/2023/33</option>
-                                                <option {{ $data->related_records == '34' ? 'selected' : '' }}
-                                                    value="34">QMS-EMEA/PROD/2023/34</option>
-                                                <option {{ $data->related_records== '35' ? 'selected' : '' }}
-                                                    value="35">QMS-EMEA/PROD/2023/35</option>
-                                                <option {{ $data->related_records == '36' ? 'selected' : '' }}
-                                                    value="36">QMS-EMEA/PROD/2023/36</option>
-                                                <option {{ $data->related_records == '37' ? 'selected' : '' }}
-                                                    value="37">QMS-EMEA/PROD/2023/37</option>
-                                                <option {{ $data->related_records == '38' ? 'selected' : '' }}
-                                                    value="38">QMS-EMEA/PROD/2023/38</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
+                                    
 
                                     <div class="col-12" >
                                         <div class="group-input">
@@ -757,22 +675,7 @@
                                         </div>
                                     </div>
 
-                                    {{--  <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="related_records">Related Records</label>
-    
-                                            <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                                data-silent-initial-value-set="true" id="related_records">
-    
-                                                @foreach ($relatedRecords as $record)
-                                                    <option value="{{ $record->id }}" 
-                                                        {{ in_array($record->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
-                                                        {{ Helpers::getDivisionName($record->c) }}/{{ Helpers::year($record->created_at) }}/{{ Helpers::record($record->record) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>  --}}
+                                  
                                     <div class="col-12">
                                     <div class="group-input">
                                         <label for="file_attach">File Attachments</label>
