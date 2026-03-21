@@ -1415,132 +1415,133 @@
                                     </div>
 
                                     <div class="col-lg-6 new-date-data-field">
-    <div class="group-input input-date">
-        <label for="short_description_required">Repeat Deviation? <span class="text-danger">*</span></label>
-        <select name="short_description_required"
-        class="stage-control" data-stage="{{$data->stage}}"
-                id="short_description_required" onchange="checkRecurring(this)"
-                value="{{ $data->short_description_required }}">
-            <option value="0">-- Select --</option>
-            <option value="Yes"
-                @if ($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes') selected @endif>Yes</option>
-            <option value="No"
-                @if ($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
-        </select>
-    </div>
-</div>
+                                        <div class="group-input input-date">
+                                            <label for="short_description_required">Repeat Deviation? <span class="text-danger">*</span></label>
+                                            <select name="short_description_required"
+                                            class="stage-control" data-stage="{{$data->stage}}"
+                                                    id="short_description_required" onchange="checkRecurring(this)"
+                                                    value="{{ $data->short_description_required }}">
+                                                <option value="0">-- Select --</option>
+                                                <option value="Yes"
+                                                    @if ($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes') selected @endif>Yes</option>
+                                                <option value="No"
+                                                    @if ($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
-<div class="col-lg-6" id="nature_of_repeat_block"
-    @if ($data->short_description_required != 'Yes') style="display: none" @endif>
-    <div class="group-input" id="nature_of_repeat">
-        <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviRecurring"
-                style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
-                class="text-danger">*</span></label>
-        <textarea class="nature_of_repeat"
-            name="nature_of_repeat"  {{ $data->stage == 1 ? '' : 'readonly' }} id="nature_of_repeat"
-            class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
-    </div>
-</div>
+                                    <div class="col-lg-6" id="nature_of_repeat_block"
+                                        @if ($data->short_description_required != 'Yes') style="display: none" @endif>
+                                        <div class="group-input" id="nature_of_repeat">
+                                            <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviRecurring"
+                                                    style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <textarea class="nature_of_repeat"
+                                                name="nature_of_repeat"  {{ $data->stage == 1 ? '' : 'readonly' }} id="nature_of_repeat"
+                                                class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
+                                        </div>
+                                    </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var selectField = document.getElementById('short_description_required');
-        var natureOfRepeatBlock = document.getElementById('nature_of_repeat_block');
-        var asteriskIcon = document.getElementById('asteriskInviRecurring');
-        var natureOfRepeatField = document.getElementById('nature_of_repeat');
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var selectField = document.getElementById('short_description_required');
+                                    var natureOfRepeatBlock = document.getElementById('nature_of_repeat_block');
+                                    var asteriskIcon = document.getElementById('asteriskInviRecurring');
+                                    var natureOfRepeatField = document.getElementById('nature_of_repeat');
 
-        // Show/hide 'Repeat Nature' field and asterisk based on initial selection
-        toggleNatureOfRepeatField(selectField.value === 'Yes');
+                                    // Show/hide 'Repeat Nature' field and asterisk based on initial selection
+                                    toggleNatureOfRepeatField(selectField.value === 'Yes');
 
-        // Listen for changes in 'Repeat Deviation' dropdown
-        selectField.addEventListener('change', function() {
-            var isYesSelected = this.value === 'Yes';
-            toggleNatureOfRepeatField(isYesSelected);
-        });
+                                    // Listen for changes in 'Repeat Deviation' dropdown
+                                    selectField.addEventListener('change', function() {
+                                        var isYesSelected = this.value === 'Yes';
+                                        toggleNatureOfRepeatField(isYesSelected);
+                                    });
 
-        // Toggle display and required attribute for 'Repeat Nature' based on 'Yes' or 'No' selection
-        function toggleNatureOfRepeatField(isYes) {
-            natureOfRepeatBlock.style.display = isYes ? 'block' : 'none';
-            asteriskIcon.style.display = isYes ? 'inline' : 'none';
-            natureOfRepeatField.required = isYes;
-        }
-    });
+                                    // Toggle display and required attribute for 'Repeat Nature' based on 'Yes' or 'No' selection
+                                    function toggleNatureOfRepeatField(isYes) {
+                                        natureOfRepeatBlock.style.display = isYes ? 'block' : 'none';
+                                        asteriskIcon.style.display = isYes ? 'inline' : 'none';
+                                        natureOfRepeatField.required = isYes;
+                                    }
+                                });
 
-    function checkRecurring(selectElement) {
-        var repeatNatureField = document.getElementById('nature_of_repeat');
-        if (selectElement.value === 'Yes') {
-            repeatNatureField.setAttribute('required', 'required');
-        } else {
-            repeatNatureField.removeAttribute('required');
-        }
-    }
-</script>
+                                function checkRecurring(selectElement) {
+                                    var repeatNatureField = document.getElementById('nature_of_repeat');
+                                    if (selectElement.value === 'Yes') {
+                                        repeatNatureField.setAttribute('required', 'required');
+                                    } else {
+                                        repeatNatureField.removeAttribute('required');
+                                    }
+                                }
+                            </script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let fields = document.querySelectorAll(".stage-control"); // Get all select fields with class "stage-control"
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            let fields = document.querySelectorAll(".stage-control"); // Get all select fields with class "stage-control"
 
-        fields.forEach(field => {
-            let stage = parseInt(field.getAttribute("data-stage"));
+                                            fields.forEach(field => {
+                                                let stage = parseInt(field.getAttribute("data-stage"));
 
-            if (stage !== 1) {
-                field.style.pointerEvents = "none";  // Prevent user interaction
-                field.style.backgroundColor = "#e9ecef"; // Grey out field
-                field.style.opacity = "0.7"; // Reduce visibility for disabled effect
-            }
-        });
-    });
-</script>
+                                                if (stage !== 1) {
+                                                    field.style.pointerEvents = "none";  // Prevent user interaction
+                                                    field.style.backgroundColor = "#e9ecef"; // Grey out field
+                                                    field.style.opacity = "0.7"; // Reduce visibility for disabled effect
+                                                }
+                                            });
+                                        });
+                                    </script>
 
-<div class="col-6 new-date-data-field">
-    <div class="group-input input-date">
-        <label for="Deviation_date">Deviation Observed On <span class="text-danger">*</span></label>
-        <div class="calenderauditee">
-            <input type="text" id="Deviation_date" placeholder="DD-MMM-YYYY"
-                value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
-            <input type="date" name="Deviation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                value="{{ $data->Deviation_date }}"
-                class="hide-input" oninput="handleDateInput(this, 'Deviation_date')" />
-        </div>
-        @error('Deviation_date')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                <div class="col-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Deviation_date">Deviation Observed On <span class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="Deviation_date" placeholder="DD-MMM-YYYY"
+                                                value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
+                                            <input type="date" name="Deviation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                value="{{ $data->Deviation_date }}"
+                                                class="hide-input" oninput="handleDateInput(this, 'Deviation_date')" />
+                                        </div>
+                                        @error('Deviation_date')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-{{-- Deviation Observed On (Time) --}}
-<div class="col-lg-6 new-time-data-field">
-    <div class="group-input input-time">
-        <label for="deviation_time">Deviation Observed On (Time) <span class="text-danger">*</span></label>
-        <input type="text" name="deviation_time" id="deviation_time"
-            value="{{ old('deviation_time') ?? $data->deviation_time }}"
-            {{ $data->stage == 1 ? '' : 'readonly' }}>
-        @error('deviation_time')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                {{-- Deviation Observed On (Time) --}}
+                                <div class="col-lg-6 new-time-data-field">
+                                    <div class="group-input input-time">
+                                        <label for="deviation_time">Deviation Observed On (Time) <span class="text-danger">*</span></label>
+                                        <input type="text" name="deviation_time" id="deviation_time"
+                                            value="{{ old('deviation_time') ?? $data->deviation_time }}"
+                                            {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                        @error('deviation_time')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-<div class="col-lg-6 new-time-data-field" id="delayJustificationContainer" style="display: none;">
-    <div class="group-input input-time delayJustificationBlock">
-        <label for="Delay_Justification">Delay Justification <span class="text-danger">*</span></label>
-        <textarea id="Delay_Justification" name="Delay_Justification"
-            {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Delay_Justification }}</textarea>
-    </div>
-    @error('Delay_Justification')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-</div>
+                                <div class="col-lg-6 new-time-data-field">
+                                    <div class="group-input input-time delayJustificationBlock">
+                                        <label>Delay Justification<span class="text-danger">*</span></label>
+                                        <textarea id="Delay_Justification"
+                                            name="Delay_Justification"
+                                            {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Delay_Justification }}</textarea>
+                                    </div>
+                                @error('Delay_Justification')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                                </div>
 
-<script>
-    flatpickr("#deviation_time", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i", // 24-hour format with date and time
-        time_24hr: true, // Enable 24-hour time format
-        minuteIncrement: 1 // Set minute increment to 1
-    });
-</script>
+                                <script>
+                                    flatpickr("#deviation_time", {
+                                        enableTime: true,
+                                        noCalendar: true,
+                                        dateFormat: "H:i", // 24-hour format with date and time
+                                        time_24hr: true, // Enable 24-hour time format
+                                        minuteIncrement: 1 // Set minute increment to 1
+                                    });
+                                </script>
 
 
                                     <div class="col-lg-6">
@@ -1556,69 +1557,110 @@
                                     </div>
 
                                     {{-- Deviation Reported On (Date + optional time) --}}
-<div class="col-6 new-date-data-field">
-    <div class="group-input input-date">
-        <label for="Deviation_reported_date">Deviation Reported On <span class="text-danger">*</span></label>
-        <div class="calenderauditee">
-            <input type="text" id="Deviation_reported_date" placeholder="DD-MMM-YYYY"
-                value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
-            <input type="date" name="Deviation_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                value="{{ $data->Deviation_reported_date }}"
-                class="hide-input" oninput="handleDateInput(this, 'Deviation_reported_date')" />
-        </div>
-        @error('Deviation_reported_date')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
-<script>
-    flatpickr("#deviation_time", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        minuteIncrement: 1
-    });
-</script>
+                                        
 
-{{-- Main Logic --}}
-<script>
-    $(document).ready(function () {
-        $('#delayJustificationContainer').hide();
+                                    <script>
+                                        flatpickr("#deviation_time", {
+                                            enableTime: true,
+                                            noCalendar: true,
+                                            dateFormat: "H:i",
+                                            time_24hr: true,
+                                            minuteIncrement: 1
+                                        });
+                                    </script>
+                                            @php
+                                                $incidentDateTime = $data->Deviation_reported_date 
+                                                    ?? \Carbon\Carbon::now()->format('Y-m-d H:i:s');
+                                            @endphp
 
-        // On change of any related fields
-        $('input[name=Deviation_date], input[name=Deviation_reported_date], #deviation_time').on('change', function () {
-            checkDelayJustification();
-        });
+                                            <input type="hidden"
+                                                id="deviation_reported_datetime"
+                                                value="{{ $incidentDateTime }}">
 
-        function checkDelayJustification() {
-            let deviationDate = $('input[name=Deviation_date]').val();
-            let reportedDate = $('input[name=Deviation_reported_date]').val();
-            let deviationTime = $('#deviation_time').val();
+                                            <div class="col-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <label>
+                                                        Incident Reported On <span class="text-danger">*</span>
+                                                    </label>
 
-            if (!deviationDate || !reportedDate || !deviationTime) {
-                $('#delayJustificationContainer').hide();
-                $('#Delay_Justification').removeAttr('required');
-                return;
-            }
+                                                    <div class="calenderauditee">
 
-            let deviationDateTime = moment(`${deviationDate} ${deviationTime}`, 'YYYY-MM-DD HH:mm');
-            let reportedDateTime = moment(`${reportedDate} 23:59`, 'YYYY-MM-DD HH:mm'); // assume end of day report
+                                                        {{-- Display field --}}
+                                                        <input type="text"
+                                                            id="Deviation_reported_date"
+                                                            value="{{ Helpers::getdateFormat1($incidentDateTime) }}"
+                                                            placeholder="DD-MM-YYYY"
+                                                            readonly />
 
-            let diffHours = reportedDateTime.diff(deviationDateTime, 'hours', true); // true = decimal
+                                                        {{-- Actual value (submit hoga) --}}
+                                                        <input type="hidden"
+                                                            name="Deviation_reported_date"
+                                                            value="{{ $incidentDateTime }}" />
 
-            if (diffHours > 24) {
-                $('#delayJustificationContainer').show();
-                $('#Delay_Justification').attr('required', true);
-            } else {
-                $('#delayJustificationContainer').hide();
-                $('#Delay_Justification').removeAttr('required').val('');
-            }
-        }
+                                                    </div>
 
-        // Initial check
+                                                    @error('Deviation_reported_date')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+
+                            <script>
+$(document).ready(function () {
+
+    // Hide initially
+    $('.delayJustificationBlock').hide();
+
+    // Trigger on change
+    $('#deviation_time, input[name=Deviation_date]').on('change input', function () {
         checkDelayJustification();
     });
+
+    // Run on load
+    checkDelayJustification();
+
+});
+
+function checkDelayJustification() {
+
+    let deviationDate = $('input[name=Deviation_date]').val();
+    let deviationTime = $('#deviation_time').val();
+    let reportedDateTime = $('#deviation_reported_datetime').val();
+
+    console.log("Deviation Date:", deviationDate);
+    console.log("Deviation Time:", deviationTime);
+    console.log("Reported:", reportedDateTime);
+
+    if (!deviationDate || !deviationTime || !reportedDateTime) {
+        $('.delayJustificationBlock').hide();
+        $('#Delay_Justification').removeAttr('required');
+        return;
+    }
+
+    let deviationDateTime = moment(
+        deviationDate + " " + deviationTime,
+        "YYYY-MM-DD HH:mm"
+    );
+
+    let reported = moment(
+        reportedDateTime,
+        "YYYY-MM-DD HH:mm:ss"
+    );
+
+    let diffHours = reported.diff(deviationDateTime, 'hours', true);
+
+    console.log("Diff Hours:", diffHours);
+
+    // ✅ FINAL FIX (SHOW + REQUIRED)
+    if (diffHours > 24) {
+        $('.delayJustificationBlock').show();
+        $('#Delay_Justification').attr('required', true);
+    } else {
+        $('.delayJustificationBlock').hide();
+        $('#Delay_Justification').removeAttr('required').val('');
+    }
+}
 </script>
 
 

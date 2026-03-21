@@ -1458,36 +1458,37 @@
                                     </script>
 
 
-                                        <div class="col-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="severity-level">Incident Observed On (Date)<span
-                                                        class="text-danger">*</span></label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="incident_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date) }}" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}/>
-                                                    <input type="date" name="incident_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->incident_date }}"
-                                                    class="hide-input"
-                                                    oninput="handleDateInput(this, 'incident_date')" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}/>
-                                                </div>
-                                                @error('Deviation_date')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                       <div class="col-6 new-date-data-field">
+    <div class="group-input input-date">
+        <label>Incident Observed On (Date)<span class="text-danger">*</span></label>
+        <div class="calenderauditee">
+            <input type="text" id="incident_date_display" readonly
+                placeholder="DD-MM-YYYY"
+                value="{{ Helpers::getdateFormat($data->incident_date) }}" />
+
+            <input type="date"
+                name="incident_date"
+                id="incident_date"
+                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                value="{{ $data->incident_date }}"
+                class="hide-input"
+                oninput="handleDateInput(this, 'incident_date_display')"
+                {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}/>
+        </div>
+    </div>
+</div>
 
 
-                                            <div class="col-lg-6 new-time-data-field">
-                                                <div class="group-input input-time">
-                                                    <label for="incident_time">Incident Observed On (Time)<span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="time"
-                                                        name="incident_time"
-                                                        id="incident_time"
-                                                        value="{{ old('incident_time') ? old('incident_time') : $data->incident_time }}" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>
-                                                    @error('incident_time')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
+                                           <div class="col-lg-6 new-time-data-field">
+    <div class="group-input input-time">
+        <label>Incident Observed On (Time)<span class="text-danger">*</span></label>
+        <input type="time"
+            name="incident_time"
+            id="incident_time"
+            value="{{ old('incident_time') ?? $data->incident_time }}"
+            {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>
+    </div>
+</div>
 
                                             <script>
                                                 flatpickr("#incident_time", {
@@ -1500,15 +1501,12 @@
                                             </script>
 
                                             <div class="col-lg-6 new-time-data-field">
-                                                <div
-                                                    class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
-                                                    <label for="incident_time">Delay Justification<span
-                                                            class="text-danger">*</span></label>
-                                                    <textarea id="Delay_Justification" name="Delay_Justification" {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>{{ $data->Delay_Justification }}</textarea>
+                                                <div class="group-input input-time delayJustificationBlock">
+                                                    <label>Delay Justification<span class="text-danger">*</span></label>
+                                                    <textarea id="Delay_Justification"
+                                                        name="Delay_Justification"
+                                                        {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>{{ $data->Delay_Justification }}</textarea>
                                                 </div>
-                                                @error('Delay_Justification')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
                                             </div>
 
 
@@ -1528,7 +1526,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-6 new-date-data-field">
+                                         {{--  <div class="col-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="severity-level">Incident Reported On<span
                                                             class="text-danger">*</span></label>
@@ -1542,81 +1540,96 @@
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
+                                            </div>--}}   
+                                            
+                                            @php
+                                                $incidentDateTime = $data->incident_reported_date 
+                                                    ?? \Carbon\Carbon::now()->format('Y-m-d H:i:s');
+                                            @endphp
+
+                                            <input type="hidden"
+                                                id="incident_reported_datetime"
+                                                value="{{ $incidentDateTime }}">
+
+                                            <div class="col-6 new-date-data-field">
+                                                <div class="group-input input-date">
+                                                    <label>
+                                                        Incident Reported On <span class="text-danger">*</span>
+                                                    </label>
+
+                                                    <div class="calenderauditee">
+
+                                                        {{-- Display field --}}
+                                                        <input type="text"
+                                                            id="incident_reported_date"
+                                                            value="{{ Helpers::getdateFormat1($incidentDateTime) }}"
+                                                            placeholder="DD-MM-YYYY"
+                                                            readonly />
+
+                                                        {{-- Actual value (submit hoga) --}}
+                                                        <input type="hidden"
+                                                            name="incident_reported_date"
+                                                            value="{{ $incidentDateTime }}" />
+
+                                                    </div>
+
+                                                    @error('incident_reported_date')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
                                             </div>
 
-                                            {{--<script>
-                                                $(document).ready(function() {
-                                                    // Hide the delayJustificationBlock initially
-                                                    $('.delayJustificationBlock').hide();
-
-                                                    // Check the condition on page load
-                                                    checkDateDifference();
-                                                });
-
-                                                function checkDateDifference() {
-                                                    let incidentDate = $('input[name=incident_date]').val();
-                                                    let reportedDate = $('input[name=incident_reported_date]').val();
-
-                                                    if (!incidentDate || !reportedDate) {
-                                                        console.error('Incident date or reported date is missing.');
-                                                        return;
-                                                    }
-
-                                                    let incidentDateMoment = moment(incidentDate);
-                                                    let reportedDateMoment = moment(reportedDate);
-
-                                                    let diffInDays = reportedDateMoment.diff(incidentDateMoment, 'days');
-
-                                                    if (diffInDays > 0) {
-                                                        $('.delayJustificationBlock').show();
-                                                    } else {
-                                                        $('.delayJustificationBlock').hide();
-                                                    }
-                                                }
-
-                                                // Call checkDateDifference whenever the values are changed
-                                                $('input[name=incident_date], input[name=incident_reported_date]').on('change', function() {
-                                                    checkDateDifference();
-                                                });
-                                            </script>--}}
-
                                             <script>
-                                                $(document).ready(function() {
-                                                    // Hide the delayJustificationBlock initially
-                                                    $('.delayJustificationBlock').hide();
+                                                $(document).ready(function () {
 
-                                                    // Check the condition on page load or whenever input changes
+                                                    // Run on load
                                                     checkDateDifference();
 
-                                                    // Call checkDateDifference whenever the values are changed
-                                                    $('input[name=incident_date], input[name=incident_time]').on('change', function() {
+                                                    // Run when user changes anything
+                                                    $('#incident_date, #incident_time').on('change input', function () {
                                                         checkDateDifference();
                                                     });
+
                                                 });
 
                                                 function checkDateDifference() {
-                                                    let incidentDate = $('input[name=incident_date]').val(); // Incident Date
-                                                    let incidentTime = $('input[name=incident_time]').val(); // Incident Time
 
-                                                    if (!incidentDate || !incidentTime) {
-                                                        console.error('Incident date or time is missing.');
-                                                        $('.delayJustificationBlock').hide(); // Ensure it's hidden if either is missing
+                                                    let incidentDate = $('#incident_date').val();
+                                                    let incidentTime = $('#incident_time').val();
+                                                    let reportedDateTime = $('#incident_reported_datetime').val();
+
+                                                    // Debug logs (remove later)
+                                                    console.log("Observed Date:", incidentDate);
+                                                    console.log("Observed Time:", incidentTime);
+                                                    console.log("Reported:", reportedDateTime);
+
+                                                    if (!incidentDate || !incidentTime || !reportedDateTime) {
+                                                        $('.delayJustificationBlock').hide();
                                                         return;
                                                     }
 
-                                                    // Combine the incident date and time into a single moment object
-                                                    let incidentDateTime = moment(`${incidentDate} ${incidentTime}`, 'YYYY-MM-DD HH:mm');
-                                                    let currentDateTime = moment(); // Get the current date and time
+                                                    // Combine observed datetime
+                                                    let observedDateTime = moment(
+                                                        incidentDate + " " + incidentTime,
+                                                        "YYYY-MM-DD HH:mm"
+                                                    );
 
-                                                    // Calculate the difference in hours
-                                                    let diffInHours = currentDateTime.diff(incidentDateTime, 'hours');
-                                                    //alert(diffInHours);
-                                                    // Show delay justification if the difference is more than 24 hours
-                                                    if (diffInHours < 24) {
-                                                        $('.delayJustificationBlock').hide();
+                                                    // Reported datetime
+                                                    let reported = moment(
+                                                        reportedDateTime,
+                                                        "YYYY-MM-DD HH:mm:ss"
+                                                    );
 
-                                                    } else {
+                                                    // Exact hour difference
+                                                    let diffInHours = reported.diff(observedDateTime, 'hours', true);
+
+                                                    console.log("Diff Hours:", diffInHours);
+
+                                                    // FINAL CONDITION ✅
+                                                    if (diffInHours > 24) {
                                                         $('.delayJustificationBlock').show();
+                                                    } else {
+                                                        $('.delayJustificationBlock').hide();
                                                     }
                                                 }
                                             </script>

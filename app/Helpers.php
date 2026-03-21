@@ -596,6 +596,19 @@ class Helpers
             return DB::table('user_roles')->where(['q_m_s_roles_id' => '12', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
         }
     }
+    public static function getNewLeadAuditorUsersList($division = null)
+{
+    $query = DB::table('user_roles')
+        ->join('users', 'users.id', '=', 'user_roles.user_id')
+        ->where('user_roles.q_m_s_roles_id', '12')
+        ->select('user_roles.user_id as id', 'users.name'); // add name here
+
+    if ($division) {
+        $query->where('user_roles.q_m_s_divisions_id', $division);
+    }
+
+    return $query->distinct()->get();
+}
 
     public static function getAuditManagerUsersList($division = null){
         if (!$division) {

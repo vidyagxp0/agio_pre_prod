@@ -140,7 +140,7 @@ class DeviationController extends Controller
         $deviation->Hod_person_to = $request->Hod_person_to;
         $deviation->Reviewer_to = $request->Reviewer_to;
         $deviation->Approver_to = $request->Approver_to;
-        $deviation->Deviation_reported_date = $request->Deviation_reported_date;
+        $deviation->Deviation_reported_date = Carbon::now()->format('Y-m-d H:i:s');
         if (is_array($request->audit_type)) {
             $deviation->audit_type = implode(',', $request->audit_type);
         }
@@ -1424,7 +1424,7 @@ class DeviationController extends Controller
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Reported on';
             $history->previous = "Null";
-            $history->current = Helpers::getdateFormat($deviation->Deviation_reported_date);
+            $history->current = Helpers::getdateFormat1($deviation->Deviation_reported_date);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1435,12 +1435,12 @@ class DeviationController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-        if (is_array($request->Deviation_reported_date)){
+        if (is_array($request->deviation_time)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Deviation Observed On (Time)';
             $history->previous = "Null";
-            $history->current = $deviation->Deviation_reported_date;
+            $history->current = $deviation->deviation_time;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1925,11 +1925,28 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 'Deviation_reported_date' => 'required',
                 'Delay_Justification' => [
                     function ($attribute, $value, $fail) use ($request) {
-                        $deviation_date = Carbon::parse($request->Deviation_date);
-                        $reported_date = Carbon::parse($request->Deviation_reported_date);
-                        $diff_in_days = $reported_date->diffInDays($deviation_date);
-                        if ($diff_in_days !== 0) {
-                            if(!$request->Delay_Justification){
+
+                        if (!$request->Deviation_date || !$request->deviation_time || !$request->Deviation_reported_date) {
+                            return; // skip if incomplete
+                        }
+
+                        // ✅ Combine deviation date + time
+                        $deviationDateTime = Carbon::parse(
+                            $request->Deviation_date . ' ' . $request->deviation_time
+                        );
+
+                        // ✅ Reported datetime (already has time)
+                        $reportedDateTime = Carbon::parse($request->Deviation_reported_date);
+
+                        // ✅ Get exact difference in hours
+                        $diffInHours = $reportedDateTime->floatDiffInHours($deviationDateTime);
+
+                        // Debug (optional)
+                        // \Log::info('Diff Hours: ' . $diffInHours);
+
+                        // ✅ FINAL CONDITION (same as JS)
+                        if ($diffInHours > 24) {
+                            if (empty($request->Delay_Justification)) {
                                 $fail('The Delay Justification is required!');
                             }
                         }
@@ -2171,7 +2188,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
             $deviation->short_description = $deviation->short_description;
         }
         $deviation->initiator_group_code = $request->initiator_group_code;
-        $deviation->Deviation_reported_date = $request->Deviation_reported_date;
+
         $deviation->Deviation_date = $request->Deviation_date;
         $deviation->deviation_time = $request->deviation_time;
         $deviation->Hod_person_to = $request->Hod_person_to;
@@ -4268,25 +4285,7 @@ $newDataGridFishbone->save();
             $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
-         if ($lastDeviation->Deviation_reported_date != $deviation->Deviation_reported_date || !empty ($request->comment)) {
-            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Deviation Reported On')
-                            ->exists();
-            $history = new DeviationAuditTrail;
-            $history->deviation_id = $id;
-            $history->activity_type = 'Deviation Reported On';
-             $history->previous = Helpers::getdateFormat($lastDeviation->Deviation_reported_date);
-            $history->current =Helpers::getdateFormat ($deviation->Deviation_reported_date);
-            $history->comment = $deviation->submit_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDeviation->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDeviation->status;
-            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
-            $history->save();
-        }
+    
 
 
 

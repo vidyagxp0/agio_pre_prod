@@ -515,14 +515,14 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button>
 
-                    @if ($data->phase_ii_a_assi_cause == "Yes")
+                    {{-- @if ($data->phase_ii_a_assi_cause == "Yes")
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
-                    @endif
+                    @endif --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
-                    @if ($data->stage == 17 || $data->stage == 18 || $data->stage == 19 || $data->stage == 20 || $data->stage == 21 || $data->stage == 22)
+                    @if ($data->phase_ii_a_assi_cause == "Yes" || $data->stage == 17 || $data->stage == 18 || $data->stage == 19 || $data->stage == 20 || $data->stage == 21 || $data->stage == 22 )
                       <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
                     @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>

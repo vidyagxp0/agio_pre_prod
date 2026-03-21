@@ -123,7 +123,8 @@ class IncidentController extends Controller
         $incident->short_description = $request->short_description;
         $incident->incident_date = $request->incident_date;
         $incident->incident_time = $request->incident_time;
-        $incident->incident_reported_date = $request->incident_reported_date;
+        $incident->incident_reported_date = Carbon::now()->format('Y-m-d H:i:s');
+
 
         if (is_array($request->audit_type)) {
             $incident->audit_type = implode(',', $request->audit_type);
@@ -2498,24 +2499,35 @@ class IncidentController extends Controller
                 //        }
                 //    },
                 //],
-               'Delay_Justification' => [
-                        function ($attribute, $value, $fail) use ($request) {
-                            // Combine incident date and time
-                            $incident_date_time = Carbon::parse($request->incident_date . ' ' . $request->incident_time);
-                            // Get current date and time
-                            $current_date_time = Carbon::now();
+                'Delay_Justification' => [
+                    function ($attribute, $value, $fail) use ($request) {
 
-                            // Calculate the difference in hours
-                            $diff_in_hours = $current_date_time->diffInHours($incident_date_time);
+                        if (!$request->incident_date || !$request->incident_time) {
+                            return; // skip if incomplete
+                        }
 
-                            // Check if the difference is greater than 24 hours
-                            if ($diff_in_hours > 24) {
-                                if (!$request->Delay_Justification) {
-                                    $fail('The Delay Justification is required!');
-                                }
+                        // ✅ Combine incident date + time
+                        $incidentDateTime = Carbon::parse(
+                            $request->incident_date . ' ' . $request->incident_time
+                        );
+
+                        // ✅ Use current datetime (same as frontend logic)
+                        $currentDateTime = Carbon::now();
+
+                        // ✅ Exact difference in hours (decimal)
+                        $diffInHours = $currentDateTime->floatDiffInHours($incidentDateTime);
+
+                        // Optional debug
+                        // \Log::info('Incident Diff Hours: ' . $diffInHours);
+
+                        // ✅ FINAL CONDITION
+                        if ($diffInHours > 24) {
+                            if (empty($request->Delay_Justification)) {
+                                $fail('The Delay Justification is required!');
                             }
-                        },
-                    ],
+                        }
+                    },
+                ],
 
 
 
@@ -2712,15 +2724,11 @@ class IncidentController extends Controller
         $incident->assign_to = $request->assign_to;
         $incident->Initiator_Group = $request->Initiator_Group;
 
-
-        // if ($incident->stage < 3) {
-        //     $incident->short_description = $request->short_description;
-        // } else {
-        //     $incident->short_description = $incident->short_description;
-        // }
         $incident->short_description = $request->short_description;
         $incident->initiator_group_code = $request->initiator_group_code;
-        $incident->incident_reported_date = $request->incident_reported_date;
+        // $incident->incident_reported_date = $request->incident_reported_date;
+        // $incident->incident_reported_date == now();
+
         $incident->incident_date = $request->incident_date;
         $incident->incident_time = $request->incident_time;
         $incident->Delay_Justification = $request->Delay_Justification;
@@ -3928,25 +3936,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                 $history->save();
             }
 
-            if($lastIncident->incident_reported_date != $incident->incident_reported_date || !empty($request->comment)) {
-                $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)
-                                ->where('activity_type', 'Incident Reported On')
-                                ->exists();
-                $history = new IncidentAuditTrail();
-                $history->incident_id = $incident->id;
-                $history->activity_type = 'Incident Reported On';
-                $history->previous =  Helpers::getdateFormat($lastIncident->incident_reported_date);
-                $history->current = Helpers::getdateFormat($incident->incident_reported_date);
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastIncident->status;
-                $history->change_to = "Not Applicable";
-                $history->change_from = $lastIncident->status;
-                $history->action_name = $lastDataAuditTrail ? "Update" : "New";
-                $history->save();
-            }
+            
 
             if($lastIncident->audit_type != $incident->audit_type || !empty($request->audit_type_comment)) {
                 $lastDataAuditTrail = IncidentAuditTrail::where('incident_id', $incident->id)

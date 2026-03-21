@@ -1236,131 +1236,83 @@ dd($pre);
                                             placeholder="Enter Person Name">
                                     </div>
                                 </div>
+
+                                @php
+                                    $today = \Carbon\Carbon::now()->format('Y-m-d H:i:s');
+                                @endphp
+
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule End Date">Incident Reported on</label>
+
                                         <div class="calenderauditee">
-                                            <input type="text" id="incident_reported_date" readonly
-                                                placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="incident_reported_date"
-                                                max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'incident_reported_date')" />
+
+                                            <input type="text"
+                                                value="{{ Helpers::getdateFormat1($today) }}"
+                                                readonly />
+
+                                            <input type="hidden"
+                                                name="incident_reported_date"
+                                                value="{{ $today }}" />
+
                                         </div>
+
                                     </div>
                                 </div>
-                                {{--<script>
-                                    $('.delayJustificationBlock').hide();
-
-                                    function calculateDateDifference() {
-                                        let incidentDate = $('input[name=incident_date]').val();
-                                        let reportedDate = $('input[name=incident_reported_date]').val();
-
-                                        if (!incidentDate || !reportedDate) {
-                                            console.error('Incident date or reported date is missing.');
-                                            return;
-                                        }
-
-                                        let incidentDateMoment = moment(incidentDate);
-                                        let reportedDateMoment = moment(reportedDate);
-
-                                        let diffInDays = reportedDateMoment.diff(incidentDateMoment, 'days');
-
-                                        if (diffInDays > 0) {
-                                            $('.delayJustificationBlock').show();
-                                        } else {
-                                            $('.delayJustificationBlock').hide();
-                                        }
-
-                                    }
-
-                                    $('input[name=incident_date]').on('change', function() {
-                                        calculateDateDifference();
-                                    })
-
-                                    $('input[name=incident_reported_date]').on('change', function() {
-                                        calculateDateDifference();
-                                    })
-                                </script>--}}
-
-                                {{--<script>
-                                    $(document).ready(function() {
-                                        // Hide the delayJustificationBlock initially
-                                        $('.delayJustificationBlock').hide();
-
-                                        // Check the condition on page load
-                                        checkDateDifference();
-                                    });
-
-                                    function checkDateDifference() {
-                                        let incidentDate = $('input[name=incident_date]').val();
-                                        let incidentTime = $('input[name=incident_time]').val(); // Get incident time
-
-                                        if (!incidentDate || !incidentTime) {
-                                            console.error('Incident date or time is missing.');
-                                            return;
-                                        }
-
-                                        // Combine the incident date and time into a single moment object
-                                        let incidentDateTime = moment(`${incidentDate} ${incidentTime}`, 'YYYY-MM-DD HH:mm');
-                                        let currentDateTime = moment(); // Get current date and time
-
-                                        // Calculate the difference in hours
-                                        let diffInHours = currentDateTime.diff(incidentDateTime, 'hours');
-
-                                        // Show delay justification if the difference is more than 24 hours
-                                        if (diffInHours > 24) {
-                                            $('.delayJustificationBlock').show();
-                                        } else {
-                                            $('.delayJustificationBlock').hide();
-                                        }
-                                    }
-
-                                    // Call checkDateDifference whenever the values are changed
-                                    $('input[name=incident_date], input[name=incident_time]').on('change', function() {
-                                        checkDateDifference();
-                                    });
-                                </script>--}}
-
                                 <script>
-                                    $(document).ready(function() {
-                                        // Hide the delayJustificationBlock initially
-                                        $('.delayJustificationBlock').hide();
+                                                $(document).ready(function () {
 
-                                        // Check the condition on page load or whenever input changes
-                                        checkDateDifference();
+                                                    // Run on load
+                                                    checkDateDifference();
 
-                                        // Call checkDateDifference whenever the values are changed
-                                        $('input[name=incident_date], input[name=incident_time]').on('change', function() {
-                                            checkDateDifference();
-                                        });
-                                    });
+                                                    // Run when user changes anything
+                                                    $('#incident_date, #incident_time').on('change input', function () {
+                                                        checkDateDifference();
+                                                    });
 
-                                    function checkDateDifference() {
-                                        let incidentDate = $('input[name=incident_date]').val(); // Incident Date
-                                        let incidentTime = $('input[name=incident_time]').val(); // Incident Time
+                                                });
 
-                                        if (!incidentDate || !incidentTime) {
-                                            console.error('Incident date or time is missing.');
-                                            $('.delayJustificationBlock').hide(); // Ensure it's hidden if either is missing
-                                            return;
-                                        }
+                                                function checkDateDifference() {
 
-                                        // Combine the incident date and time into a single moment object
-                                        let incidentDateTime = moment(`${incidentDate} ${incidentTime}`, 'YYYY-MM-DD HH:mm');
-                                        let currentDateTime = moment(); // Get the current date and time
+                                                    let incidentDate = $('#incident_date').val();
+                                                    let incidentTime = $('#incident_time').val();
+                                                    let reportedDateTime = $('#incident_reported_datetime').val();
 
-                                        // Calculate the difference in hours
-                                        let diffInHours = currentDateTime.diff(incidentDateTime, 'hours');
-                                        //alert(diffInHours);
-                                        // Show delay justification if the difference is more than 24 hours
-                                        if (diffInHours < 24) {
-                                            $('.delayJustificationBlock').hide();
+                                                    // Debug logs (remove later)
+                                                    console.log("Observed Date:", incidentDate);
+                                                    console.log("Observed Time:", incidentTime);
+                                                    console.log("Reported:", reportedDateTime);
 
-                                        } else {
-                                            $('.delayJustificationBlock').show();
-                                        }
-                                    }
-                                </script>
+                                                    if (!incidentDate || !incidentTime || !reportedDateTime) {
+                                                        $('.delayJustificationBlock').hide();
+                                                        return;
+                                                    }
+
+                                                    // Combine observed datetime
+                                                    let observedDateTime = moment(
+                                                        incidentDate + " " + incidentTime,
+                                                        "YYYY-MM-DD HH:mm"
+                                                    );
+
+                                                    // Reported datetime
+                                                    let reported = moment(
+                                                        reportedDateTime,
+                                                        "YYYY-MM-DD HH:mm:ss"
+                                                    );
+
+                                                    // Exact hour difference
+                                                    let diffInHours = reported.diff(observedDateTime, 'hours', true);
+
+                                                    console.log("Diff Hours:", diffInHours);
+
+                                                    // FINAL CONDITION ✅
+                                                    if (diffInHours > 24) {
+                                                        $('.delayJustificationBlock').show();
+                                                    } else {
+                                                        $('.delayJustificationBlock').hide();
+                                                    }
+                                                }
+                                            </script>
 
 
                                 <div class="col-lg-6">

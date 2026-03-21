@@ -10598,71 +10598,71 @@ class RiskManagementController extends Controller
                         ]);
                     }
 
-                   $ccchilds = CC::where('parent_id', $id)
-                        ->where('parent_type', 'risk-assesment')
-                        ->get();
-                            $hasPending = false;
-                        foreach ($ccchilds as $ext) {
-                                $ccchildstatus = trim(strtolower($ext->status));
+                //    $ccchilds = CC::where('parent_id', $id)
+                //         ->where('parent_type', 'risk-assesment')
+                //         ->get();
+                //             $hasPending = false;
+                //         foreach ($ccchilds as $ext) {
+                //                 $ccchildstatus = trim(strtolower($ext->status));
                                 
-                                if ($ccchildstatus !== 'closed - done' && $ccchildstatus !== 'closed - rejected'  && $ccchildstatus !== 'closed-cancelled') {
-                                    $hasPending = true;
-                                    break;
-                                }
-                            }
+                //                 if ($ccchildstatus !== 'closed - done' && $ccchildstatus !== 'closed - rejected'  && $ccchildstatus !== 'closed-cancelled') {
+                //                     $hasPending = true;
+                //                     break;
+                //                 }
+                //             }
                             
-                    if ($hasPending) {
-                        // $ccchildstatus = trim(strtolower($extensionchild->status));
-                        if ($hasPending) {
-                            Session::flash('swal', [
-                                'title' => 'Change Control Child Pending!',
-                                'message' => 'You cannot proceed until Change Control Child is Closed-Done.',
-                                'type' => 'warning',
-                            ]);
+                //     if ($hasPending) {
+                //         // $ccchildstatus = trim(strtolower($extensionchild->status));
+                //         if ($hasPending) {
+                //             Session::flash('swal', [
+                //                 'title' => 'Change Control Child Pending!',
+                //                 'message' => 'You cannot proceed until Change Control Child is Closed-Done.',
+                //                 'type' => 'warning',
+                //             ]);
 
-                        return redirect()->back();
-                        }
-                    } else {
-                        // Flash message for success (when the form is filled correctly)
-                        Session::flash('swal', [
-                            'title' => 'Success!',
-                            'message' => 'Document Sent',
-                            'type' => 'success',
-                        ]);
-                    }
+                //         return redirect()->back();
+                //         }
+                //     } else {
+                //         // Flash message for success (when the form is filled correctly)
+                //         Session::flash('swal', [
+                //             'title' => 'Success!',
+                //             'message' => 'Document Sent',
+                //             'type' => 'success',
+                //         ]);
+                //     }
 
                     // CAPA Child
 
-                    $capachilds = Capa::where('parent_id', $id)
-                            ->where('parent_type', 'risk-assesment')
-                            ->get();
-                                $hasPending = false;
-                            foreach ($capachilds as $ext) {
-                                    $capachildstatus = trim(strtolower($ext->status));
-                                if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
-                                        $hasPending = true;
-                                        break;
-                                    }
-                                }
-                        if ($hasPending) {
-                            // $capachildstatus = trim(strtolower($extensionchild->status));
-                            if ($hasPending) {
-                                Session::flash('swal', [
-                                    'title' => 'CAPA Child Pending!',
-                                    'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                                    'type' => 'warning',
-                                ]);
+                    // $capachilds = Capa::where('parent_id', $id)
+                    //         ->where('parent_type', 'risk-assesment')
+                    //         ->get();
+                    //             $hasPending = false;
+                    //         foreach ($capachilds as $ext) {
+                    //                 $capachildstatus = trim(strtolower($ext->status));
+                    //             if ($capachildstatus !== 'closed - done' && $capachildstatus !== 'closed-cancelled' ) {
+                    //                     $hasPending = true;
+                    //                     break;
+                    //                 }
+                    //             }
+                    //     if ($hasPending) {
+                    //         // $capachildstatus = trim(strtolower($extensionchild->status));
+                    //         if ($hasPending) {
+                    //             Session::flash('swal', [
+                    //                 'title' => 'CAPA Child Pending!',
+                    //                 'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                    //                 'type' => 'warning',
+                    //             ]);
 
-                            return redirect()->back();
-                            }
-                        } else {
-                            // Flash message for success (when the form is filled correctly)
-                            Session::flash('swal', [
-                                'title' => 'Success!',
-                                'message' => 'Document Sent',
-                                'type' => 'success',
-                            ]);
-                        }
+                    //         return redirect()->back();
+                    //         }
+                    //     } else {
+                    //         // Flash message for success (when the form is filled correctly)
+                    //         Session::flash('swal', [
+                    //             'title' => 'Success!',
+                    //             'message' => 'Document Sent',
+                    //             'type' => 'success',
+                    //         ]);
+                    //     }
 
                         // Action Item
 

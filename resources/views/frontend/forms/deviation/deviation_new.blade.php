@@ -954,59 +954,59 @@
                                 </div>
 
                                 <div class="col-lg-6 new-time-data-field">
-    <div class="group-input input-time">
-        <label for="deviation_time">Deviation Observed On (Time)</label>
-        <input type="text" name="deviation_time" id="deviation_time" placeholder="HH:MM">
-    </div>
-</div>
+                                    <div class="group-input input-time">
+                                        <label for="deviation_time">Deviation Observed On (Time)</label>
+                                        <input type="text" name="deviation_time" id="deviation_time" placeholder="HH:MM">
+                                    </div>
+                                </div>
 
-<div class="col-lg-6 new-time-data-field">
-    <div class="group-input input-time delayJustificationBlock" style="display: none;">
-        <label for="Delay_Justification">Delay Justification <span style="color: red">*</span></label>
-        <textarea id="Delay_Justification" name="Delay_Justification"></textarea>
-        <div class="text-danger" id="delayError" style="display: none;">This field is required due to delay.</div>
-    </div>
-</div>
+                                    <div class="col-lg-6 new-time-data-field">
+                                        <div class="group-input input-time delayJustificationBlock" style="display: none;">
+                                            <label for="Delay_Justification">Delay Justification <span style="color: red">*</span></label>
+                                            <textarea id="Delay_Justification" name="Delay_Justification"></textarea>
+                                            <div class="text-danger" id="delayError" style="display: none;">This field is required due to delay.</div>
+                                        </div>
+                                    </div>
 
-<script>
-    const delayBlock = document.querySelector('.delayJustificationBlock');
-    const justificationField = document.getElementById('Delay_Justification');
-    const delayError = document.getElementById('delayError');
+                                <script>
+                                    const delayBlock = document.querySelector('.delayJustificationBlock');
+                                    const justificationField = document.getElementById('Delay_Justification');
+                                    const delayError = document.getElementById('delayError');
 
-    flatpickr("#deviation_time", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        minuteIncrement: 1,
-        onChange: function (selectedDates, dateStr, instance) {
-            const [hour, minute] = dateStr.split(':').map(Number);
-            const selectedMinutes = hour * 60 + minute;
-            const thresholdMinutes = 24 * 60; // 10:00 AM
+                                    flatpickr("#deviation_time", {
+                                        enableTime: true,
+                                        noCalendar: true,
+                                        dateFormat: "H:i",
+                                        time_24hr: true,
+                                        minuteIncrement: 1,
+                                        onChange: function (selectedDates, dateStr, instance) {
+                                            const [hour, minute] = dateStr.split(':').map(Number);
+                                            const selectedMinutes = hour * 60 + minute;
+                                            const thresholdMinutes = 24 * 60; // 10:00 AM
 
-            if (selectedMinutes > thresholdMinutes) {
-                delayBlock.style.display = 'block';
-                justificationField.setAttribute('required', 'required');
-            } else {
-                delayBlock.style.display = 'none';
-                justificationField.removeAttribute('required');
-                justificationField.value = '';
-                delayError.style.display = 'none';
-            }
-        }
-    });
+                                            if (selectedMinutes > thresholdMinutes) {
+                                                delayBlock.style.display = 'block';
+                                                justificationField.setAttribute('required', 'required');
+                                            } else {
+                                                delayBlock.style.display = 'none';
+                                                justificationField.removeAttribute('required');
+                                                justificationField.value = '';
+                                                delayError.style.display = 'none';
+                                            }
+                                        }
+                                    });
 
-    // Optional: Validate on submit
-    document.querySelector("form").addEventListener("submit", function (e) {
-        if (justificationField.hasAttribute('required') && justificationField.value.trim() === "") {
-            e.preventDefault();
-            delayError.style.display = 'block';
-            justificationField.focus();
-        } else {
-            delayError.style.display = 'none';
-        }
-    });
-</script>
+                                    // Optional: Validate on submit
+                                    document.querySelector("form").addEventListener("submit", function (e) {
+                                        if (justificationField.hasAttribute('required') && justificationField.value.trim() === "") {
+                                            e.preventDefault();
+                                            delayError.style.display = 'block';
+                                            justificationField.focus();
+                                        } else {
+                                            delayError.style.display = 'none';
+                                        }
+                                    });
+                                </script>
 
 
                                 <div class="col-lg-6">
@@ -1034,7 +1034,7 @@
                                 </div> -->
 
 
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule End Date">Deviation Reported on</label>
                                         <div class="calenderauditee">
@@ -1045,8 +1045,30 @@
                                                 oninput="handleDateInput(this, 'Deviation_reported_date')" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
+                                @php
+                                    $today = \Carbon\Carbon::now()->format('Y-m-d H:i:s');
+                                @endphp
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule End Date">Deviation Reported on</label>
+
+                                        <div class="calenderauditee">
+
+                                            <input type="text"
+                                                value="{{ Helpers::getdateFormat1($today) }}"
+                                                readonly />
+
+                                            <input type="hidden"
+                                                name="Deviation_reported_date"
+                                                value="{{ $today }}" />
+
+                                        </div>
+
+                                    </div>
+                                </div>
                                 <script>
                                     $('.delayJustificationBlock').hide();
 
@@ -1329,12 +1351,7 @@
                                                         name="Document_Remarks[]"></td>
                                                 <td><button type="text" class="removeRowBtn"
                                                         name="Action[]">Remove</button></td>
-
-
-
-
                                             </tbody>
-
                                         </table>
                                     </div>
                                 </div>

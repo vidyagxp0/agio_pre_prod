@@ -237,13 +237,13 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="related_records">
-                                            Related Records <span class="text-danger">*</span>
+                                            Related Records <span class="text-danger"></span>
                                         </label>
 
                                         <select multiple name="related_records[]" id="related_records" 
                                             placeholder="Select Reference Records"
                                             data-silent-initial-value-set="true"
-                                            required>
+                                            >
                                             
                                             @if (!empty($relatedRecords))
                                                 @foreach ($relatedRecords as $records)
