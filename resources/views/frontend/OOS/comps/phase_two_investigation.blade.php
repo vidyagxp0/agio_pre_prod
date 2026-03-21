@@ -86,7 +86,7 @@
 
                                                 <option value="N/A"
                                                 {{ !$response || $response == 'N/A' ? 'selected' : '' }}>
-                                                N/A
+                                                NA
                                                 </option>
 
                                                 </select>
