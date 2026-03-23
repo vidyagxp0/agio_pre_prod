@@ -276,9 +276,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('deviation/cftnotreqired/{id}', [DeviationController::class, 'cftnotreqired'])->name('cftnotreqired');
             Route::post('deviation/Qa/{id}', [DeviationController::class, 'deviation_qa_more_info'])->name('deviation_qa_more_info');
             Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
-      Route::post('deviation/reopen/store/{id}', 
-    [DeviationController::class, 'reopenStore'])
-    ->name('deviation.reopen.store');            Route::get('deviationfamilyReport/{id}', [DeviationController::class, 'familyReport'])->name('deviationfamilyReport');
+            Route::get('deviation/reopen/store/{id}',    [DeviationController::class, 'reopenStore'])->name('deviation.reopen.store');
+            Route::get('deviationfamilyReport/{id}', [DeviationController::class, 'familyReport'])->name('deviationfamilyReport');
 
             Route::post('dev-launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('dev-launch-extension-deviation');
             Route::post('dev-launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('dev-launch-extension-capa');
@@ -452,9 +451,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
                 Route::get('auditDetailsMarket/{id}', [MarketComplaintController::class, 'auditDetailsMarket'])->name('marketauditDetails');
 
-                  Route::post('marketcomplaint/reopen/store/{id}', 
-                    [MarketComplaintController::class, 'reopenStore'])
-                    ->name('reopen.store');
+                  Route::get('marketcomplaint/reopen/store/{id}', [MarketComplaintController::class, 'reopenStore'])->name('reopen.store');
                 Route::get('MarketComplaintAuditReport/{id}', [MarketComplaintController::class, 'MarketAuditTrial'])->name('MarketComplaintAuditReport');
                 Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
                 Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');

@@ -136,14 +136,15 @@
              <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis">Child</button>
              @elseif($data->stage == 21 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 4) ))
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#request-more-info-modal">More Information Required</button> --}}
-             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase III Investigation Applicable/Not Applicable</button>
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase III Investigation Applicable</button>
              {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button> --}}
              @elseif($data->stage == 22 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18) || Helpers::check_roles($data->division_id, 'OOS/OOT', 7)))
+             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button>
 
-             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
+             {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
              </a> </button>
              <button class="button_theme1"> <a class="text-white" href="{{ url('root-cause-analysis') }}"> Root Cause Analysis
-             </a> </button>
+             </a> </button> --}}
              @endif
              <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit</a> </button>
 
@@ -590,7 +591,7 @@
     </div>
 </div>
 <!-- child model -->
-{{-- <div class="modal fade" id="child-modal">
+{{-- <div class="modal fade" id="child-modal22">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <!-- Modal Header -->

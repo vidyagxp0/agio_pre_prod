@@ -105,15 +105,15 @@
 
                             @else
                             <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input type="hidden" name="record" >
-                                               {{-- <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ str_pad($record_number, 4, '0', STR_PAD_LEFT) }}">
-                                        <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
-                                           <input disabled type="text" name="record" id="record" placeholder="Record Number">
-                                    </div>
+                                <div class="group-input">
+                                    <label for="RLS Record Number"><b>Record Number</b></label>
+                                    <input type="hidden" name="record" >
+                                            {{-- <input disabled type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ str_pad($record_number, 4, '0', STR_PAD_LEFT) }}">
+                                    <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <input disabled type="text" name="record" id="record" placeholder="Record Number">
                                 </div>
+                            </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>

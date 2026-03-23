@@ -763,7 +763,7 @@
                             @endif
 
                             <!--
-    @endif -->
+        
                         @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Deviation', 7) || Helpers::check_roles($data->division_id, 'Deviation', 66)) )
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Initiator
@@ -864,12 +864,9 @@
                             {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/deviation') }}">
                                     Reopen
                                 </a> </button> --}}
-                        <button type="button"
-                                class="btn btn-dark"
-                                data-bs-toggle="modal"
-                                data-bs-target="#reopenModal">
+                       <a href="{{ route('deviation.reopen.store', $data->id) }}" class="btn btn-dark">
                             Reopen
-                        </button>
+                        </a>
                         @endif
 
 

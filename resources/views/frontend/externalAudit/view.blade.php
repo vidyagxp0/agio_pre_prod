@@ -390,12 +390,9 @@
                             {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('auditee') }}">
                                     Reopen
                                 </a> </button> --}}
-                        <button type="button"
-                                class="btn btn-dark"
-                                data-bs-toggle="modal"
-                                data-bs-target="#reopenModal">
+                                <a href="{{ route('reopenExternal.store', $data->id) }}" class="btn btn-dark">
                             Reopen
-                        </button>
+                            </a>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>

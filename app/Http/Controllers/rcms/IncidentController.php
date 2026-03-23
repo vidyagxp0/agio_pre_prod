@@ -7021,8 +7021,6 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                         }
                     }
 
-
-
                     $incident->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -7551,10 +7549,6 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
 
 
-
-
-
-
                     $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
                     $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
                     // Define the column names
@@ -7661,6 +7655,73 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                             $stage->comment = $request->comment;
                             $stage->save();
                         }
+                    }
+
+                    
+                    //RCA child validation
+                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingRCA = false;
+                        foreach ($rcachilds as $ext) {
+                                $rcachildstatus = trim(strtolower($ext->status));
+                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==
+                                    'closed-cancelled' ) {
+                                    $hasPendingRCA = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
+
+                    //action item child validation
+
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
+
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
                     }
 
                     $checkCFTCount = IncidentCftResponse::withoutTrashed()->where(['status' => 'Completed', 'incident_id' => $id])->count();

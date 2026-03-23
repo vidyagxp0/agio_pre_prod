@@ -16,7 +16,11 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Action Item
+            @if(!empty($parent_division_id))
+               {{ Helpers::getDivisionName($parent_division_id) }} / Action Item
+            @else
+               {{ Helpers::getDivisionName(session()->get('division')) }} / Action Item
+            @endif
         </div>
     </div>
     @php
@@ -57,8 +61,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $record_number }}">
+                                        @if (!empty($parent_division_id))
+                                        <input disabled type="text" name="record_number"                                           
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $record_number }}">
+                                        @else
+                                         <input disabled type="text" name="record_number"                                           
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $record_number }}">
+                                        @endif
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -499,7 +508,6 @@
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

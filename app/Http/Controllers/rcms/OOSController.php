@@ -2556,6 +2556,8 @@ class OOSController extends Controller
                                 break;
                             }
                         }
+                        
+
 
                     if ($hasPending15) {
                         // $extensionchildStatus = trim(strtolower($extensionchild->status));
@@ -2583,7 +2585,7 @@ class OOSController extends Controller
                             foreach ($actionchilds as $ext) {
                                 $actionchildstatus = trim(strtolower($ext->status));
                                 if ($actionchildstatus !== 'closed - done' && 
-                                $actionchildstatus !== 'closed cancelled' &&
+                                $actionchildstatus !== 'closed-cancelled' &&
                                 $actionchildstatus !== 'closed - rejected'
                                 ) {
                                     $hasPendingaction = true;

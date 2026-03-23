@@ -11654,13 +11654,12 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
       public function reopenStore(Request $request, $id)
    { 
-     if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $oldMarketComplain = MarketComplaint::findOrFail($id);
             $market = MarketComplaint::find($id);
 
             $market->reopen_by = Auth::user()->name;
             $market->reopen_on = Carbon::now()->format('d-M-Y');
-            $market->commentreopen = $request->comment;
+            $market->commentreopen = 'Reopened Market Complaint';
             $market->save();  
 
   
@@ -11670,7 +11669,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $history->previous = $oldMarketComplain->status;
             $history->current = "Reopened as New Deviation Record";
             $history->action = 'Reopened';
-            $history->comment = $request->comment;
+            $history->comment = 'Reopened Market Complaint';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -11701,7 +11700,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                                     'site'    => "MC",
                                     'history' => "Reopned",
                                     'process' => 'Market Complaint',
-                                    'comment' => $request->comment,
+                                    'comment' => 'Reopened Market Complaint',
                                     'user'    => Auth::user()->name
                                 ];
 
@@ -11719,11 +11718,5 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                         }
 
              return redirect()->to('rcms/marketcomplaint/market_complaint_new');
-     
-     
-     }else {
-            toastr()->error('E-signature Not match');
-            return back();
-        }
    }
 }

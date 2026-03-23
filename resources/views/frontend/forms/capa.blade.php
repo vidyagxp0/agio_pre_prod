@@ -32,12 +32,9 @@
         }
     </script>
 
-
     <div class="form-field-head">
-
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-
             @if(!empty($parent_division_id))
                {{ Helpers::getDivisionName($parent_division_id) }} / CAPA
             @else
@@ -45,9 +42,6 @@
             @endif
         </div>
     </div>
-
-
-
 
     {{-- ======================================
                     DATA FIELDS
@@ -68,10 +62,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">HOD Final Review</button>
                  <button class="cctablinks" onclick="openCity(event, 'CCForm14')">QA/CQA Closure Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CAPA Closure</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
-
-
-
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button> 
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button> --}}
             </div>
 

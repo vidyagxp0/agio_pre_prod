@@ -9249,15 +9249,14 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
 
 
-    public function reopenStore(Request $request, $id)
+    public function reopenStore($id)
     { 
-        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $oldAudittee = Auditee::findOrFail($id);
                 $Auditee = Auditee::find($id);
 
                 $Auditee->reopen_by = Auth::user()->name;
                 $Auditee->reopen_on = Carbon::now()->format('d-M-Y');
-                $Auditee->commentreopen = $request->comment;
+                $Auditee->commentreopen = 'Reopened External Audit';
                 $Auditee->save();  
 
         // 🔥 NEW RECORD CREATE
@@ -9280,7 +9279,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         $history->previous = $oldAudittee->status;
         $history->current = "Reopened as New External Audit Record";
         $history->action = 'Reopened';
-        $history->comment = $request->comment;
+        $history->comment = 'Reopened External Audit';
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -9315,7 +9314,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                                 'site'    => "EA",
                                 'history' => "Reopened",
                                 'process' => 'External Audit',
-                                'comment' => $request->comments,
+                                'comment' => 'Reopened External Audit',
                                 'user'    => Auth::user()->name
                             ];
 
@@ -9345,10 +9344,6 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
         return redirect()->to('auditee');
         
-        
-        }else {
-                toastr()->error('E-signature Not match');
-                return back();
-            }
+
     }
 }

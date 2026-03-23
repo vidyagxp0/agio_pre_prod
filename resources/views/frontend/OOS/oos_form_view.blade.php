@@ -8203,6 +8203,7 @@
                                 <select id="production_person_ib" name="production_person_ib" placeholder="Select Production Person" {{Helpers::isOOSChemical($data->stage)}} {{ $istab9 ? '' : 'disabled' }} {{ $data->phase_ii_inv_req_ib == 'Yes' ? 'required' : '' }}>
                                     <option value="">-- Select Production Person --</option>
                                     <option value="NA" @if($data->production_person_ib == 'NA') selected @endif>NA</option>
+                                    <option value="Vendor" @if($data->production_person_ib == 'Vendor') selected @endif>Vendor</option>
                                     @if (!empty(Helpers::getProductionDropdown()))
                                         @foreach (Helpers::getProductionDropdown() as $listPersone)
                                             <option value="{{ $listPersone['id'] }}"
