@@ -687,12 +687,12 @@
                                 @endphp
 
                                 <!-- <div class="col-lg-6">
-                                                                                                                        <div class="group-input">
-                                                                                                                            <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                                                                                                            <input type="date" id="intiation_date" name="intiation_date" required />
-                                                                                                                             <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-                                                                                                                        </div>
-                                                                                                                    </div> -->
+                                    <div class="group-input">
+                                        <label for="Date of Initiation"><b>Date of Initiation</b></label>
+                                        <input type="date" id="intiation_date" name="intiation_date" required />
+                                            <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                    </div>
+                                </div> -->
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -720,6 +720,14 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        let today = new Date().toISOString().split('T')[0];
+                                        document.getElementById("due_date_checkdate").setAttribute("min", today);
+                                    });
+                                </script>
+
                                 <script>
                                     function calculateDueDate() {
                                         const initiationDateInput = document.getElementById('intiation_date');
@@ -762,48 +770,6 @@
                                     document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
                                 </script>
 
-
-
-                               {{--                                
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="initiator-group">Initiation Department</label>
-                                        <select name="Initiator_Group" id="initiator_group">
-                                            <option value="">Select Department</option>
-                                            <option value="Corporate Quality Assurance">Corporate Quality Assurance
-                                            </option>
-                                            <option value="Quality Assurance">Quality Assurance</option>
-                                            <option value="Quality Control">Quality Control</option>
-                                            <option value="Quality Control (Microbiology department)">Quality Control
-                                                (Microbiology department)</option>
-                                            <option value="roduction General">Production General</option>
-                                            <option value="Production Liquid Orals">Production Liquid Orals</option>
-                                            <option value="Production Tablet and Powder">Production Tablet and Powder
-                                            </option>
-                                            <option value="Production External (Ointment, Gels, Creams and Liquid)">
-                                                Production External (Ointment, Gels, Creams and Liquid)
-                                            </option>
-                                            <option value="Production Capsules">Production Capsules</option>
-                                            <option value="Production Injectable">Production Injectable</option>
-                                            <option value="Engineering">Engineering</option>
-                                            <option value="Human Resource">Human Resource</option>
-                                            <option value="Store">Store</option>
-                                            <option value="Electronic Data Processing">Electronic Data Processing</option>
-                                            <option value="Formulation Development">Formulation Development</option>
-                                            <option value="Analytical research and Development Laboratory">Analytical
-                                                research and Development Laboratory</option>
-                                            <option value="Packaging Development">Packaging Development</option>
-                                            <option value="Purchase Department">Purchase Department</option>
-                                            <option value="Document Cell">Document Cell</option>
-                                            <option value="Regulatory Affairs">Regulatory Affairs</option>
-                                            <option value="Pharmacovigilance">Pharmacovigilance</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                --}}
-
-
-                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator Department</b></label>

@@ -55,6 +55,23 @@ class MarketComplaintController extends Controller
         return view('frontend.market_complaint.market_complaint_new', compact('due_date', 'old_records'));
     }
 
+    public function market_complaint_new_reopen($id)
+    {
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+        // $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $old_record = MarketComplaint::select('id', 'division_id', 'record')->get();
+        // $lastAi = MarketComplaint::orderBy('record', 'desc')->first();
+        // $record_number = $lastAi ? $lastAi->record + 1 : 1;
+       // $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // dd($record);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('Y-m-d');
+        $old_records = Capa::select('id', 'division_id', 'record')->get();
+        $parent_division_id = $id;
+
+        return view('frontend.market_complaint.market_complaint_new', compact('due_date', 'old_records','parent_division_id'));
+    }
 
     public function store(Request $request)
     {
@@ -11717,6 +11734,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                             }
                         }
 
-             return redirect()->to('rcms/marketcomplaint/market_complaint_new');
+            //  return redirect()->to('rcms/marketcomplaint/market_complaint_new');
+             return redirect()->to('rcms/marketcomplaint/market_complaint_new_reopen/' . $id);
    }
 }

@@ -261,6 +261,7 @@ Route::group(['prefix' => 'rcms'], function () {
             /********************* Deviation Routes Starts *******************/
 
             Route::get('deviation', [DeviationController::class, 'deviation'])->name('deviation');
+            Route::get('deviationReopen/{id}', [DeviationController::class, 'deviationReopen'])->name('deviationReopen');
             Route::get('DeviationAuditTrialPdf/{id}', [DeviationController::class, 'deviationAuditTrailPdf']);
             Route::post('deviationstore', [DeviationController::class, 'store'])->name('deviationstore');
             Route::get('devshow/{id}', [DeviationController::class, 'devshow'])->name('devshow');
@@ -442,6 +443,7 @@ Route::group(['prefix' => 'rcms'], function () {
              */
             Route::group(['prefix' => 'marketcomplaint', 'as' => 'marketcomplaint.'], function() {
                 Route::get('/market_complaint_new',[MarketComplaintController::class, 'index'])->name('market_complaint_new');
+                Route::get('/market_complaint_new_reopen/{id}',[MarketComplaintController::class, 'market_complaint_new_reopen'])->name('market_complaint_new_reopen');
                 Route::post('/marketcomplaint/store', [MarketComplaintController::class, 'store'])->name('mcstore');
                 Route::get('/marketcomplaint_view/{id}', [MarketComplaintController::class, 'show'])->name('marketcomplaint_view');
                 Route::put('/marketcomplaintupdate/{id}', [MarketComplaintController::class, 'update'])->name('marketcomplaintupdate');

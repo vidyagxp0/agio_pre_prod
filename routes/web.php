@@ -519,6 +519,7 @@ Route::view('vendor-entity', 'frontend.forms.vendor-entity');
 
 // Route::view('auditee', 'frontend.forms.auditee');
 Route::get('auditee', [AuditeeController::class, 'external_audit']);
+Route::get('external_audit_reopen/{id}', [AuditeeController::class, 'external_audit_reopen']);
 
 
 Route::get('meeting', [ManagementReviewController::class, 'meeting']);

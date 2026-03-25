@@ -43,19 +43,24 @@ use Illuminate\Support\Facades\Validator;
 class DeviationController extends Controller
 {
     public function deviation(Request $request){
-        // $old_record = Deviation::select('id', 'division_id', 'record')->get();
-        // $record_number = (RecordNumber::first()->value('counter')) + 1;
 
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
-        // $lastAi = Deviation::orderBy('record', 'desc')->first();
-        // $record_number = $lastAi ? $lastAi->record + 1 : 1;
-
-        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $pre = Deviation::all();
         return response()->view('frontend.forms.deviation.deviation_new', compact('formattedDate', 'due_date', 'old_record', 'pre',));
+    }
+
+    public function deviationReopen($id){
+
+        $old_record = Deviation::select('id', 'division_id', 'record')->get();
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $pre = Deviation::all();
+        $parent_division_id = $id;
+        return response()->view('frontend.forms.deviation.deviation_new', compact('formattedDate', 'due_date', 'old_record', 'pre','parent_division_id'));
     }
 
     public function store(Request $request)
@@ -13798,7 +13803,7 @@ public function audit_trail_filter(Request $request, $id)
                 // }
             }
 
-        return redirect()->to('rcms/deviation');
+        return redirect()->to('rcms/deviationReopen/' . $id);
     }
 
 }

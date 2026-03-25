@@ -50,6 +50,19 @@ class AuditeeController extends Controller
 
         return view("frontend.forms.auditee", compact('due_date', 'old_record'));
     }
+     public function external_audit_reopen($id)
+    {
+        $old_record = Auditee::select('id', 'division_id', 'record')->get();
+      //  $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $old_record = Auditee::select('id', 'division_id', 'record')->get();
+
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('Y-m-d');
+        $parent_division_id = $id;
+
+        return view("frontend.forms.auditee", compact('due_date', 'old_record', 'parent_division_id'));
+    }
 
     public function store(Request $request)
     {
@@ -9342,7 +9355,8 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
         
 
-        return redirect()->to('auditee');
+        // return redirect()->to('auditee');
+        return redirect()->to('external_audit_reopen/' . $id);
         
 
     }

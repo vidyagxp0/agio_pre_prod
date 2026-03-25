@@ -120,8 +120,6 @@
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">P-III Investigation Applicable/Not Applicable</button>
             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-rootcause-analysis-Action-item">Child</button>
             @elseif($micro_data->stage == 22 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
-                
-                
             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/action-items-create') }}"> Action Item
             </a> </button>
             <button class="button_theme1"> <a class="text-white" href="{{ url('root-cause-analysis') }}"> Root Cause Analysis

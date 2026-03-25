@@ -19,7 +19,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/ Market Complaint
+            {{ Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')) }} / Market Complaint
         </div>
     </div>
 
@@ -206,10 +206,10 @@
                                     General Information
                                 </div>
                                 @php
-                                    $getDiv = Helpers::getDivisionName(session()->get('division'));
+                                    $getDiv = Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division'));
                                     // $substract = strtoupper(Str::substr($getDiv, 0, 2));
                                 @endphp
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                
@@ -220,9 +220,19 @@
                                         @else  
                                               <input type="hidden" name="record" id="record">
                                               <input disabled type="text" name="record" id="record" placeholder="Record Number">
-                                        {{--<input disabled type="text" name="record" id="record"
-                                            value="{{ $getDiv }}/MC/{{ date('Y') }}/{{ str_pad($record, 4, '0', STR_PAD_LEFT) }}">--}}
+                                        
                                         @endif
+                                    </div>
+                                </div> --}}
+
+                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                            <input type="hidden" name="record" id="record" >
+                                       {{--  <input disabled type="text" name="record_number"
+                                            value="{{ Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')) }}/DEV/{{ date('Y') }}/{{ $record_number }}">--}}
+                                             <input disabled type="text" name="record" id="record" placeholder="Record Number">
+                                     
                                     </div>
                                 </div>
 
@@ -237,8 +247,8 @@
                                             <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
                                         @else  
                                             <input disabled type="text" name="division_code"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                                value="{{ Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')) }}">
+                                            <input type="hidden" name="division_id" value="{{ !empty($parent_division_id) ? $parent_division_id : session()->get('division') }}">
                                         @endif
                                     </div>
                                 </div>
@@ -2677,7 +2687,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -2775,7 +2785,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -2881,7 +2891,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -2983,7 +2993,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 31, 'q_m_s_divisions_id' => $division->id])
@@ -3092,7 +3102,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -3203,7 +3213,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 23, 'q_m_s_divisions_id' => $division->id])
@@ -3295,7 +3305,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $division->id])
@@ -3421,7 +3431,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -3516,7 +3526,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 25, 'q_m_s_divisions_id' => $division->id])
@@ -3629,7 +3639,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -3724,7 +3734,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 24, 'q_m_s_divisions_id' => $division->id])
@@ -3830,7 +3840,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -3925,7 +3935,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 30, 'q_m_s_divisions_id' => $division->id])
@@ -4038,7 +4048,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -4140,7 +4150,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 34, 'q_m_s_divisions_id' => $division->id])
@@ -4267,7 +4277,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 35, 'q_m_s_divisions_id' => $division->id])
@@ -4396,7 +4406,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 36, 'q_m_s_divisions_id' => $division->id])
@@ -4525,7 +4535,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 37, 'q_m_s_divisions_id' => $division->id])
@@ -4655,7 +4665,7 @@ function handleExpDateInput(expInput, expTextId) {
                             </div>
                             @php
                                 $division = DB::table('q_m_s_divisions')
-                                    ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                    ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                     ->first();
                                 $userRoles = DB::table('user_roles')
                                     ->where(['q_m_s_roles_id' => 38, 'q_m_s_divisions_id' => $division->id])
