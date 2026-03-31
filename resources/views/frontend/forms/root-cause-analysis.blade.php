@@ -206,7 +206,7 @@
                                         <label for="assign_to"> Name of Responsible Department Head</label>
                                         <select id="assign_to" name="assign_to" class="form-control">
                                             <option value="">Select a value</option>
-                                            @foreach (Helpers::getHODRoleUser(!empty($parent_division_id) ? $parent_division_id : session()->get('division')) as $value)
+                                            @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
