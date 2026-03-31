@@ -295,10 +295,6 @@
     @endif  -->
                              @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
-
-
-
-
                             <button id="approval-button" class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal" style="display: none;">
                                 RA Approval Required
                             </button>
@@ -8472,11 +8468,11 @@
                                                 <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                             </div>
                                             <textarea class="tiny" name="ra_tab_comments" id="ra_tab_comments"
-                                                {{ $lockdatafileds6 ? 'readonly' : '' }} >{{ isset($data1->ra_tab_comments) ? $data1->ra_tab_comments : '' }}</textarea>
+                                                {{ $lockdatafileds6 ? 'readonly' : 'required' }} >{{ isset($data1->ra_tab_comments) ? $data1->ra_tab_comments : '' }}</textarea>
                                         </div>
                                     </div>
 
-                                                <div class="col-12">
+                                    <div class="col-12">
                                     <div class="group-input">
                                         <label for="RA_attachment_second">RA Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>

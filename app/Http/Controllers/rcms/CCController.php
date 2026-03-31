@@ -9631,17 +9631,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     } else {
                         
 
-
-
-
-
-
-
-
-
-
-
-
                     $IsCFTRequired = ChangeControlCftResponse::withoutTrashed()->where(['is_required' => 1, 'cc_id' => $id])->latest()->first();
                     $cftUsers = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
                     // Define the column names
@@ -10389,12 +10378,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             }
                         }
                     }
-                        
-
-
-                        
-
-
                         $changeControl->update();
                     }
                 }    
@@ -10487,9 +10470,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Plan Proposed';
                 $history->save();
-
-                
-
 
                    $CQAheaddesilist = Helpers::getRAUsersList($changeControl->division_id);
                     foreach ($CQAheaddesilist as $u) {
@@ -10604,8 +10584,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $changeControl->stage = "7";
                 $changeControl->status = "QA/CQA Head/Manager Designee Approval";
              
-
-
                 $changeControl->RA_review_completed_by = Auth::user()->name;
                 $changeControl->RA_review_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->RA_review_completed_comment = $request->comments;
@@ -10637,7 +10615,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
- 
 
                   $QARevlist = Helpers::getQAUserList($changeControl->division_id);
 
@@ -10680,10 +10657,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                            
                         }
                     }
-
-
-
-                
 
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -12725,39 +12698,39 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                      // CAPA Child
 
-                    $capachilds = Capa::where('parent_id', $id)
-                            ->where('parent_type', 'CC')
-                            ->get();
-                                $hasPending = false;
-                            foreach ($capachilds as $ext) {
-                                    $capachildstatus = trim(strtolower($ext->status));
-                                    if ($capachildstatus !== 'closed - done' &&
-                                        $capachildstatus !== 'closed-cancelled' )
-                                    {
-                                        $hasPending = true;
-                                        break;
-                                    }
-                                    }
-                                    // dd($capachildstatus);
-                        if ($hasPending) {
-                            // $capachildstatus = trim(strtolower($extensionchild->status));
-                            if ($hasPending) {
-                                Session::flash('swal', [
-                                    'title' => 'CAPA Child Pending!',
-                                    'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                                    'type' => 'warning',
-                                ]);
+                    // $capachilds = Capa::where('parent_id', $id)
+                    //         ->where('parent_type', 'CC')
+                    //         ->get();
+                    //             $hasPending = false;
+                    //         foreach ($capachilds as $ext) {
+                    //                 $capachildstatus = trim(strtolower($ext->status));
+                    //                 if ($capachildstatus !== 'closed - done' &&
+                    //                     $capachildstatus !== 'closed-cancelled' )
+                    //                 {
+                    //                     $hasPending = true;
+                    //                     break;
+                    //                 }
+                    //                 }
+                    //                 // dd($capachildstatus);
+                    //     if ($hasPending) {
+                    //         // $capachildstatus = trim(strtolower($extensionchild->status));
+                    //         if ($hasPending) {
+                    //             Session::flash('swal', [
+                    //                 'title' => 'CAPA Child Pending!',
+                    //                 'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                    //                 'type' => 'warning',
+                    //             ]);
 
-                            return redirect()->back();
-                            }
-                        } else {
-                            // Flash message for success (when the form is filled correctly)
-                            Session::flash('swal', [
-                                'title' => 'Success!',
-                                'message' => 'Document Sent',
-                                'type' => 'success',
-                            ]);
-                        }
+                    //         return redirect()->back();
+                    //         }
+                    //     } else {
+                    //         // Flash message for success (when the form is filled correctly)
+                    //         Session::flash('swal', [
+                    //             'title' => 'Success!',
+                    //             'message' => 'Document Sent',
+                    //             'type' => 'success',
+                    //         ]);
+                    //     }
 
 
                         // RCA Child

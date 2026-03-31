@@ -7430,70 +7430,70 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     }
 
                     //   //rca child validation
-                    // $rcachilds = RootCauseAnalysis::where('parent_id', $id)
-                    //     ->where('parent_type', 'Incident')
-                    //     ->get();
-                    //         $hasPendingRCA = false;
-                    //     foreach ($rcachilds as $ext) {
-                    //             $rcachildstatus = trim(strtolower($ext->status));
-                    //             if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==
-                    //                 'closed-cancelled' ) {
-                    //                 $hasPendingRCA = true;
-                    //                 break;
-                    //             }
-                    //         }
-                    // if ($hasPendingRCA) {
-                    //     // $rcachildstatus = trim(strtolower($extensionchild->status));
-                    //     if ($hasPendingRCA) {
-                    //         Session::flash('swal', [
-                    //             'title' => 'RCA Child Pending!',
-                    //             'message' => 'You cannot proceed until RCA Child is Closed-Done.',
-                    //             'type' => 'warning',
-                    //         ]);
+                    $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingRCA = false;
+                        foreach ($rcachilds as $ext) {
+                                $rcachildstatus = trim(strtolower($ext->status));
+                                if ($rcachildstatus !== 'closed - done' && $rcachildstatus !==
+                                    'closed-cancelled' ) {
+                                    $hasPendingRCA = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingRCA) {
+                        // $rcachildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingRCA) {
+                            Session::flash('swal', [
+                                'title' => 'RCA Child Pending!',
+                                'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
 
-                    //     return redirect()->back();
-                    //     }
-                    // } else {
-                    //     // Flash message for success (when the form is filled correctly)
-                    //     Session::flash('swal', [
-                    //         'title' => 'Success!',
-                    //         'message' => 'Document Sent',
-                    //         'type' => 'success',
-                    //     ]);
-                    // }
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
 
                     // //action item child validation
 
-                    // $actionchilds = ActionItem::where('parent_id', $id)
-                    //     ->where('parent_type', 'Incident')
-                    //     ->get();
-                    //         $hasPendingaction = false;
-                    //     foreach ($actionchilds as $ext) {
-                    //             $actionchildstatus = trim(strtolower($ext->status));
-                    //             if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
-                    //                 $hasPendingaction = true;
-                    //                 break;
-                    //             }
-                    //         }
-                    // if ($hasPendingaction) {
-                    //     // $actionchildstatus = trim(strtolower($extensionchild->status));
-                    //     if ($hasPendingaction) {
-                    //         Session::flash('swal', [
-                    //             'title' => 'Action Item Child Pending!',
-                    //             'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                    //             'type' => 'warning',
-                    //         ]);
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                        ->where('parent_type', 'Incident')
+                        ->get();
+                            $hasPendingaction = false;
+                        foreach ($actionchilds as $ext) {
+                                $actionchildstatus = trim(strtolower($ext->status));
+                                if ($actionchildstatus !== 'closed - done' && $actionchildstatus !== 'closed-cancelled' ) {
+                                    $hasPendingaction = true;
+                                    break;
+                                }
+                            }
+                    if ($hasPendingaction) {
+                        // $actionchildstatus = trim(strtolower($extensionchild->status));
+                        if ($hasPendingaction) {
+                            Session::flash('swal', [
+                                'title' => 'Action Item Child Pending!',
+                                'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                'type' => 'warning',
+                            ]);
 
-                    //     return redirect()->back();
-                    //     }
-                    // } else {
-                    //     // Flash message for success (when the form is filled correctly)
-                    //     Session::flash('swal', [
-                    //         'title' => 'Success!',
-                    //         'message' => 'Document Sent',
-                    //         'type' => 'success',
-                    //     ]);
-                    // }
+                        return redirect()->back();
+                        }
+                    } else {
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Document Sent',
+                            'type' => 'success',
+                        ]);
+                    }
 
                     // //CAPA child validations
                     // $capachilds = Capa::where('parent_id', $id)
@@ -7526,8 +7526,6 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
                     //         'type' => 'success',
                     //     ]);
                     // }
-
-
 
 
                     if(empty($incident->capa_implementation) || empty($incident->check_points) || empty($incident->corrective_actions) || empty($incident->batch_release) || empty($incident->affected_documents) || empty($incident->QA_Feedbacks)) {

@@ -472,7 +472,6 @@ dd($data->initiator_id , Auth::user()->id);
                                 Exit
                             </a> </button>
 
-
                     </div>
 
                 </div>

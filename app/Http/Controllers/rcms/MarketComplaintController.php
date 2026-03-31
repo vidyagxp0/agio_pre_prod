@@ -10806,12 +10806,12 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $lastAi = RootCauseAnalysis::orderBy('record', 'desc')->first();
             $record = $lastAi ? $lastAi->record + 1 : 1;
 
-
+            $parent_division_id = MarketComplaint::where('id', $id)->value('division_id');
                // $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number =$record;
 
-            return view('frontend.forms.root-cause-analysis', compact('record_number', 'record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
+            return view('frontend.forms.root-cause-analysis', compact('record_number', 'record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','parent_division_id'));
         }
 
         elseif ($request->revision == "extension") {
@@ -10856,9 +10856,6 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
-
-
-
 
                 return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
             }

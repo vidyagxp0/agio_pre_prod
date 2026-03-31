@@ -304,8 +304,6 @@
                                     data-bs-target="#signature-modal">
                                     Submit
                                 </button>
-
-
                         @elseif(
                             $data->stage == 2 &&
                                 (Helpers::check_roles($data->division_id, 'Market Complaint', 9) ||
@@ -326,9 +324,12 @@
                                     data-bs-target="#cancel-modal">
                                     Cancel
                                 </button></a>
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
-                                Child
-                            </button>
+                                @if (Helpers::getChildData($data->id, 'Market Complaint') < 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
+                                        Child
+                                    </button>
+                                @endif
+                               
                         @elseif(
                             $data->stage == 3 &&
                                 (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
@@ -363,9 +364,13 @@
                                     data-bs-target="#signature-modal">
                                     CFT Review Complete
                                 </button></a>
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
-                                Child
-                            </button>
+
+                                @if (Helpers::getChildData($data->id, 'Market Complaint') < 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
+                                        Child
+                                    </button>
+                                @endif
+                                
                             @endif
                         @elseif(
                             $data->stage == 5 &&
@@ -380,9 +385,11 @@
                                     data-bs-target="#rejection-modal">
                                     More Information Required
                                 </button></a>
+                            @if(Helpers::getChildData($data->id, 'Market Complaint') < 3)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
                                 Child
                             </button>
+                            @endif
                         @elseif(
                             $data->stage == 6 &&
                                 (Helpers::check_roles($data->division_id, 'Market Complaint', 9) ||
@@ -399,9 +406,11 @@
                                     data-bs-target="#rejection-modal">
                                     More Information Required
                                 </button></a>
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
-                                Child
-                            </button>
+                                @if (Helpers::getChildData($data->id, 'Market Complaint') < 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
+                                        Child
+                                    </button>
+                                @endif
                         @elseif(
                             $data->stage == 7 &&
                                 (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
@@ -414,10 +423,11 @@
                             {{-- <a href="#rejection-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="">
                                 Reopen
                             </button></a> --}}
-
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
-                                Child
-                            </button>
+                                @if (Helpers::getChildData($data->id, 'Market Complaint') < 3)
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal2">
+                                        Child
+                                    </button>
+                                @endif
                         @elseif(
                             $data->stage == 8 &&
                                 (Helpers::check_roles($data->division_id, 'Market Complaint', 7) ||
@@ -433,13 +443,11 @@
                             <a href="{{ route('marketcomplaint.reopen.store', $data->id) }}" class="btn btn-dark">
                             Reopen
                             </a>
-
-
                         @endif
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                 Exit
-                            </a> </button>
+                        </a> </button>
 
 
                     </div>
@@ -10566,7 +10574,7 @@ document.getElementById('initiator_group').addEventListener('change', function()
             <div class="modal-body">
                 <form action="{{ route('marketcomplaint.marketCompalinExtensionChild', $data->id) }}" method="POST">
                     @csrf
-                    @if(Helpers::getChildData($data->id, 'RCA') < 3)
+                    @if(Helpers::getChildData($data->id, 'Market Complaint') < 3)
                     <div class="form-check mb-3">
                         <input class="" type="radio" name="revision" id="extension" value="extension" required>
                         <label class="form-check-label" for="extension">Extension</label>
