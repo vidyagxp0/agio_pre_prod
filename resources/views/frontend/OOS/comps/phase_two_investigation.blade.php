@@ -31,7 +31,11 @@
         <div class="row">
             <div class="col-12">
                 <center>
-                   <label style="font-weight: bold;" for="Audit Attachments">PHASE II OOS INVESTIGATION</label>
+                    @if($data->Form_type == 'OOT')
+                    <label style="font-weight: bold;" for="Audit Attachments">PHASE II OOT INVESTIGATION</label>
+                    @else
+                    <label style="font-weight: bold;" for="Audit Attachments">PHASE II OOS INVESTIGATION</label>
+                    @endif
                </center>
                <!-- <label for="Reference Recores"> </label> -->
                <div class="group-input">
@@ -202,7 +206,12 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Report Attachments">OOS/OOT Cause Identified II A</label>
+
+                    @if ($data->Form_type == 'OOT')
+                    <label for="Report Attachments">OOT Cause Identified II A</label>
+                    @else
+                    <label for="Report Attachments">OOS Cause Identified II A</label>
+                    @endif
                     <select name="manufact_invest_required_piii" {{Helpers::isOOSChemical($data->stage)}} {{ $istab13 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->manufact_invest_required_piii === 'Yes' ? 'selected' :
@@ -217,7 +226,11 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Attachments">OOS/OOT Category II A</label>
+                    @if ($data->Form_type == 'OOT')
+                    <label for="Audit Attachments">OOT Category II A</label>
+                    @else
+                    <label for="Audit Attachments">OOS Category II A</label>
+                    @endif
                     <select name="hypo_exp_required_piii" {{Helpers::isOOSChemical($data->stage)}} {{ $istab13 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->hypo_exp_required_piii ==
@@ -242,7 +255,11 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Preparation Completed On">OOS/OOT Category If Others</label>
+                    @if ($data->form_type == 'OOT')
+                    <label for="Audit Preparation Completed On">OOT Category If Others</label>
+                    @else
+                    <label for="Audit Preparation Completed On">OOS Category If Others</label>
+                    @endif
                     <input type="text" name="if_others_oos_category"
                         value="{{$data->if_others_oos_category}}" {{Helpers::isOOSChemical($data->stage)}} {{ $istab13 ? '' : 'readonly' }}>
                 </div>
@@ -271,7 +288,11 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Details of Obvious Error">OOS/OOT Review For Similar Nature II A</label>
+                    @if($data->Form_type == 'OOT')
+                    <label for="Details of Obvious Error">OOT Review For Similar Nature II A</label>
+                    @else
+                    <label for="Details of Obvious Error">OOS Review For Similar Nature II A</label>
+                    @endif
                     <input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="OOS_review_similar" value="{{ $data->OOS_review_similar }}" {{ $istab13 ? '' : 'readonly' }}>
                 </div>
             </div>

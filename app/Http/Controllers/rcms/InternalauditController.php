@@ -5002,8 +5002,8 @@ if ($areIniAttachmentsSame2 != true) {
             // ======================= STAGE 2 FIXED =======================
 if ($changeControl->stage == 2) {
 
-        $changeControl->stage  = 3;
-        $changeControl->status = 'Audit';
+        // $changeControl->stage  = 3;
+        // $changeControl->status = 'Audit';
     $userId   = Auth::user()->id;
     $userName = Auth::user()->name;
     $now      = Carbon::now()->format('d-M-Y');

@@ -1509,7 +1509,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-                                        @php
+                                            @php
                                                 // Default to not editable
                                                 $isCommentEditable = false;
 

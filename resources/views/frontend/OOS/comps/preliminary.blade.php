@@ -183,7 +183,11 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Product/Material Name">OOS/OOT Cause Identified<span class="text-danger">*</span></label>
+                    @if ($data->Form_type == 'OOT')
+                    <label for="Product/Material Name">OOT Cause Identified<span class="text-danger">*</span></label>
+                    @else
+                    <label for="Product/Material Name">OOS Cause Identified<span class="text-danger">*</span></label>
+                    @endif
                     <select name="phase_i_investigation_pli" {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes"{{ $data->phase_i_investigation_pli ==
@@ -222,7 +226,11 @@
 
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Team"> OOS/OOT Category<span class="text-danger">*</span></label>
+                    @if ($data->Form_type == 'OOT')
+                    <label for="Audit Team">OOT Category<span class="text-danger">*</span></label>
+                    @else
+                    <label for="Audit Team"> OOS Category<span class="text-danger">*</span></label>
+                    @endif
                     <select name="oos_category_root_cause_ident_plic"  {{Helpers::isOOSChemical($data->stage)}} {{ $istab5 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->oos_category_root_cause_ident_plic ==
@@ -244,7 +252,11 @@
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">OOS/OOT Category(If Others)</label>
+                    @if($data->Form_type == 'OOT')
+                    <label for="Description Deviation">OOT Category(If Others)</label>
+                    @else
+                    <label for="Description Deviation">OOS Category(If Others)</label>
+                    @endif
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                             require completion</small></div>
                     <textarea class="summernote" data-stage="5" name="oos_category_others_plic" id="summernote-1"
@@ -279,7 +291,11 @@
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">OOS/OOT Review For Similar Nature</label>
+                    @if ($data->Form_type == 'OOT')
+                    <label for="Description Deviation">OOT Review For Similar Nature</label>
+                    @else
+                    <label for="Description Deviation">OOS Review For Similar Nature</label>
+                    @endif
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" data-stage="5" name="review_comments_plir" id="summernote-1"
                         value="" {{Helpers::isOOSChemical($data->stage)}}>{{  $data->review_comments_plir ?  $data->review_comments_plir : '' }}
