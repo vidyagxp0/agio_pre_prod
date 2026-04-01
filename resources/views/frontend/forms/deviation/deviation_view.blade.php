@@ -865,7 +865,7 @@
                             {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/deviation') }}">
                                     Reopen
                                 </a> </button> --}}
-                       <a href="{{ route('deviation.reopen.store', $data->id) }}" class="btn btn-dark">
+                       <a href="{{ route('deviation.reopen.store', $data->division_id) }}" class="btn btn-dark">
                             Reopen
                         </a>
                         @endif

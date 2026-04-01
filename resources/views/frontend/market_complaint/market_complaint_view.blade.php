@@ -440,7 +440,7 @@
                                     data-bs-toggle="modal" data-bs-target="">
                                     Reopen
                                 </button></a> --}}
-                            <a href="{{ route('marketcomplaint.reopen.store', $data->id) }}" class="btn btn-dark">
+                            <a href="{{ route('marketcomplaint.reopen.store', $data->division_id) }}" class="btn btn-dark">
                             Reopen
                             </a>
                         @endif

@@ -390,7 +390,7 @@
                             {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('auditee') }}">
                                     Reopen
                                 </a> </button> --}}
-                                <a href="{{ route('reopenExternal.store', $data->id) }}" class="btn btn-dark">
+                                <a href="{{ route('reopenExternal.store', $data->division_id) }}" class="btn btn-dark">
                             Reopen
                             </a>
                         @endif
