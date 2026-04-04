@@ -214,7 +214,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / External Audit
+            {{ Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')) }} / External Audit
         </div>
     </div>
 
@@ -266,9 +266,9 @@
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            value="{{ Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -1546,7 +1546,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -1647,7 +1647,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -1753,7 +1753,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -1853,7 +1853,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 31, 'q_m_s_divisions_id' => $division->id])
@@ -1961,7 +1961,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -2073,7 +2073,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 23, 'q_m_s_divisions_id' => $division->id])
@@ -2165,7 +2165,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 26, 'q_m_s_divisions_id' => $division->id])
@@ -2291,7 +2291,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -2388,7 +2388,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 25, 'q_m_s_divisions_id' => $division->id])
@@ -2503,7 +2503,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -2600,7 +2600,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 24, 'q_m_s_divisions_id' => $division->id])
@@ -2708,7 +2708,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -2804,7 +2804,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 30, 'q_m_s_divisions_id' => $division->id])
@@ -2920,7 +2920,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
@@ -3022,7 +3022,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 34, 'q_m_s_divisions_id' => $division->id])
@@ -3149,7 +3149,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 35, 'q_m_s_divisions_id' => $division->id])
@@ -3278,7 +3278,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 36, 'q_m_s_divisions_id' => $division->id])
@@ -3407,7 +3407,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 37, 'q_m_s_divisions_id' => $division->id])
@@ -3537,7 +3537,7 @@
                                 </div>
                                 @php
                                     $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
+                                        ->where('name', Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')))
                                         ->first();
                                     $userRoles = DB::table('user_roles')
                                         ->where(['q_m_s_roles_id' => 38, 'q_m_s_divisions_id' => $division->id])

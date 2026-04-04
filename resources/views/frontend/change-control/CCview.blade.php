@@ -730,9 +730,6 @@
                                             </div> -->
 
 
-
-
-
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label for="Due Date"> Due Date
@@ -746,16 +743,24 @@
                                                             // Set formattedDate to an empty string if due_date is not set
                                                             $formattedDate = str_contains('NaN-undefined-NaN', $data->due_date) ? '' : $data->due_date;
                                                         @endphp
-                                                        <input type="text" id="due_date" name="due_date" placeholder="Select Due Date" value="{{ Helpers::getdateFormat($formattedDate) }}" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} />
+                                                        <input type="text"  id="due_date" name="due_date" placeholder="Select Due Date" 
+                                                                value="{{ Helpers::getdateFormat($formattedDate) }}" 
+                                                                {{ $data->stage == 1 ? '' : 'readonly' }} />
                                                     </div>
                                                     <script>
                                                         $(document).ready(function() {
+                                                            var stage = "{{ $data->stage }}";
+
                                                             $("#due_date").datepicker({
                                                                 dateFormat: "dd-M-yy",
-                                                                // Do not set a default date, let the user select it
+                                                                beforeShow: function(input, inst) {
+                                                                    if (stage != 1) {
+                                                                        return false; // ❌ prevent datepicker from opening
+                                                                    }
+                                                                },
                                                                 onClose: function(dateText, inst) {
                                                                     if (!dateText) {
-                                                                        $(this).val('');  // Ensure input stays empty if no date is selected
+                                                                        $(this).val('');
                                                                     }
                                                                 }
                                                             });
@@ -773,67 +778,6 @@
                                             </div>
 
 
-
-                                            {{-- <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="initiator-group">Initiation Department</label>
-                                                    <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 13 ? '' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option value="CQA"
-                                                            @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
-                                                        <option value="QA"
-                                                            @if ($data->Initiator_Group == 'QA') selected @endif>Quality Assurance</option>
-                                                        <option value="QC"
-                                                            @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
-                                                        <option value="QM"
-                                                            @if ($data->Initiator_Group == 'QM') selected @endif>Quality Control (Microbiology department)
-                                                        </option>
-                                                        <option value="PG"
-                                                            @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option>
-                                                        <option value="PL"
-                                                            @if ($data->Initiator_Group == 'PL') selected @endif>Production Liquid Orals</option>
-                                                        <option value="PT"
-                                                            @if ($data->Initiator_Group == 'PT') selected @endif>Production Tablet and Powder</option>
-                                                        <option value="PE"
-                                                            @if ($data->Initiator_Group == 'PE') selected @endif>Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                        <option value="PC"
-                                                            @if ($data->Initiator_Group == 'PC') selected @endif>Production Capsules</option>
-                                                        <option value="PI"
-                                                            @if ($data->Initiator_Group == 'PI') selected @endif>Production Injectable</option>
-                                                        <option value="EN"
-                                                            @if ($data->Initiator_Group == 'EN') selected @endif>Engineering</option>
-                                                        <option value="HR"
-                                                            @if ($data->Initiator_Group == 'HR') selected @endif>Human Resource</option>
-                                                        <option value="ST"
-                                                            @if ($data->Initiator_Group == 'ST') selected @endif>Store</option>
-                                                        <option value="IT"
-                                                            @if ($data->Initiator_Group == 'IT') selected @endif>Electronic Data Processing
-                                                        </option>
-                                                        <option value="FD"
-                                                            @if ($data->Initiator_Group == 'FD') selected @endif>Formulation  Development
-                                                        </option>
-                                                        <option value="AL"
-                                                            @if ($data->Initiator_Group == 'AL') selected @endif>Analytical research and Development Laboratory
-                                                        </option>
-                                                        <option value="PD"
-                                                            @if ($data->Initiator_Group == 'PD') selected @endif>Packaging Development
-                                                        </option>
-
-                                                        <option value="PU"
-                                                            @if ($data->Initiator_Group == 'PU') selected @endif>Purchase Department
-                                                        </option>
-                                                        <option value="DC"
-                                                            @if ($data->Initiator_Group == 'DC') selected @endif>Document Cell
-                                                        </option>
-                                                        <option value="RA"
-                                                            @if ($data->Initiator_Group == 'RA') selected @endif>Regulatory Affairs
-                                                        </option>
-                                                        <option value="PV"
-                                                            @if ($data->Initiator_Group == 'PV') selected @endif>Pharmacovigilance
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div> --}}
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -946,7 +890,7 @@
                                                                 style="background-color: #e9ecef;"
                                                             @endif
                                                             required
-                                                        >
+                                                                        >
                                                             <option value="">-- Select --</option>
                                                             <option value="yes" {{ $data->risk_assessment_required == 'yes' ? 'selected' : '' }}>Yes</option>
                                                             <option value="no" {{ $data->risk_assessment_required == 'no' ? 'selected' : '' }}>No</option>
@@ -1429,23 +1373,6 @@
                                         <div class="sub-head">
                                             Risk Assessment
                                         </div>
-
-                                        <!-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="risk_assessment_related_record">Related Records</label>
-                                                <select  multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]" placeholder="Select Reference Records"
-                                                        data-search="false" data-silent-initial-value-set="true"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                    @foreach ($preRiskAssessment as $prix)
-                                                        <option value="{{ $prix->id }}"
-                                                            {{ in_array($prix->id, explode(',', $data->risk_assessment_related_record)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($prix->division_id) }}/Risk-Assessment/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div> -->
-
-
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="risk_assessment_related_record">Related Records
@@ -2075,25 +2002,25 @@
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="col-12">
+                                            <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="related_records">Related Records</label>
-                                                    <select{{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    <select  {{ $lockdatafileds3 ? 'disabled' : '' }}
                                                         multiple id="related_records" name="related_records[]"
                                                         placeholder="Select Reference Records" data-search="false"
                                                         data-silent-initial-value-set="true">
                                                         @foreach ($pre as $prix)
                                                             <option value="{{ $prix->id }}" {{ in_array($prix->id, explode(',', $data->related_records)) ? 'selected' : '' }}>
-                                                                {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
+                                                                {{ Helpers::getDivisionName($prix->division_id) }}/CC/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
                                                             </option>
 
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                            </div> -->
+                                            </div> 
 
-                                            <div class="col-12">
-                                        <div class="group-input">
+                                     <!--       <div class="col-12">
+                                            <div class="group-input">
                                             <label for="related_records">Related Records</label>
 
                                             <select multiple name="related_records[]" placeholder="Select Reference Records"
@@ -2131,7 +2058,7 @@
                                                     @endif
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
                                     <div class="col-12">

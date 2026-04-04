@@ -3052,12 +3052,14 @@ class CCController extends Controller
         }
        $cc_cfts->save();
         // $openState->initiator_id = Auth::user()->id;
+        if($openState->stage == 1){
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
         $openState->risk_assessment_required = $request->risk_assessment_required;
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
+        }
         //dd($request->related_records)
         if ($request->related_records) {
             $openState->related_records = implode(',', $request->related_records);
@@ -4353,7 +4355,7 @@ if (!empty($request->Human_Resource_attachment)) {
             $history->save();
         }
 
-        if ($lastDocument->due_date != $request->due_date) {
+        if (Helpers::getdateFormat($lastDocument->due_date) != $request->due_date) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Due Date')
             ->exists();
