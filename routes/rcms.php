@@ -4,6 +4,7 @@ use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ExtensionNewController;
 use App\Http\Controllers\InductionTrainingcontroller;
 use App\Http\Controllers\JobDescriptionController;
+use App\Http\Controllers\ChangeProposalJustController;
 use App\Http\Controllers\rcms\ActionItemController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CCController;
@@ -508,6 +509,13 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('LabIncidentStateCancel/{id}', [LabIncidentController::class, 'LabIncidentStateCancel'])->name('StageChangeLabcancel');
             Route::post('traning_required/{id}', [CCController::class, 'TrainingRequired'])->name('traning_required');
             Route::get('/get-training-details/{id}', [CCController::class, 'DocumentsDetails']);
+
+
+            /**************************Change Justification And Proposal Report************************************/ 
+
+            Route::get('cpjsingleReport/{id}', [ChangeProposalJustController::class, 'cpjSingleReport'])->name('cpjsingleReport');
+            Route::get('cpjauditReport/{id}', [ChangeProposalJustController::class, 'auditReport'])->name('cpjauditReport');
+
 
 
         }

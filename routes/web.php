@@ -745,12 +745,16 @@ Route::post('moreinfoState_resampling/{id}', [ResamplingController::class, 'resa
 
 // Change Control Justification
 
-Route::get('cpjcreate', [ChangeProposalJustController::class, 'create']);
+Route::get('cpjcreate', [ChangeProposalJustController::class, 'create'])->name('cpjcreate');
 Route::post('cpjstore' , [ChangeProposalJustController::class,'store'])->name('cpjstore');
-Route::get('cpshow/{id}' , [ChangeProposalJustController::class,'show']);
+Route::get('cpshow/{id}' , [ChangeProposalJustController::class,'show'])->name('cpshow');
 Route::put('cpupdate/{id}' , [ChangeProposalJustController::class,'update'])->name('cpupdate');
-Route::post('extension_send_stage/{id}', [ChangeProposalJustController::class, 'sendstage'])->name('cpj_send_stage');
+Route::post('cp_send_stage/{id}', [ChangeProposalJustController::class, 'cpsendstage'])->name('cpj_send_stage');
 Route::post('more_info_stage/{id}', [ChangeProposalJustController::class, 'moreinfoStateChange'])->name('more_info_stage');
+Route::post('cpjCancle/{id}', [ChangeProposalJustController::class, 'cpjCancle'])->name('cpjCancle');
+Route::get('cpjAudittrial/{id}', [ChangeProposalJustController::class, 'changePropsalNewAuditTrail']);
+
+
 
 
 

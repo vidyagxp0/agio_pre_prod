@@ -9,7 +9,11 @@ class ChangeProposalJustGrid extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cpjg_id'];
+    protected $fillable = [
+        'cpjg_id',
+        'identifier',
+        'data'
+    ];
 
     protected $casts = [
         'data' => 'array',

@@ -9561,7 +9561,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         }
 
 
- ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
                      $userId = Auth::user()->name;
                     $userAssignments = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
                     $incompleteFields = [];
@@ -9570,7 +9570,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         $incompleteFields[] = 'Production Table Assessment';
                     }
                     
-                    if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_AssessmentA)) {
+                    if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
                         $incompleteFields[] = 'Production Injection Assessment';
                     }
                     
@@ -9616,6 +9616,10 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     
                     if ($userAssignments->Human_Resource_person == $userId && empty($userAssignments->Human_Resource_assessment)) {
                         $incompleteFields[] = 'Human Resourcec Assessment';
+                    }
+
+                    if ($userAssignments->Information_Technology_person == $userId && empty($userAssignments->Information_Technology_assessment)) {
+                        $incompleteFields[] = 'Information Technology Assessment';
                     }
                     
                     if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {

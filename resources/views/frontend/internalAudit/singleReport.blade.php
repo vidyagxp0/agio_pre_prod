@@ -807,9 +807,9 @@ $checklists = [
                
 
                 @foreach ($checklists as $checklist)
-    <div class="block" style="color:#4274da;border-bottom:1px solid #4274da;">
-        {{ $checklist['title'] }}
-    </div>
+                <div class="block" style="color:#4274da;border-bottom:1px solid #4274da;">
+                    {{ $checklist['title'] }}
+                </div>
 
     <table class="table table-bordered">
         <thead>

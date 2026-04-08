@@ -2010,8 +2010,14 @@
                                                         placeholder="Select Reference Records" data-search="false"
                                                         data-silent-initial-value-set="true">
                                                         @foreach ($pre as $prix)
-                                                            <option value="{{ $prix->id }}" {{ in_array($prix->id, explode(',', $data->related_records)) ? 'selected' : '' }}>
-                                                                {{ Helpers::getDivisionName($prix->division_id) }}/CC/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
+                                                            <option value="{{ $prix->id }}"
+                                                                {{ in_array($prix->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
+
+                                                                {{ !empty($prix->record) 
+                                                                    ? Helpers::getDivisionName($prix->division_id) . '/CC/' . Helpers::year($prix->created_at) . '/' . str_pad($prix->record, 4, '0', STR_PAD_LEFT)
+                                                                    : 'N/A' 
+                                                                }}
+
                                                             </option>
 
                                                         @endforeach
@@ -2019,7 +2025,7 @@
                                                 </div>
                                             </div> 
 
-                                     <!--       <div class="col-12">
+                                     <!--   <div class="col-12">
                                             <div class="group-input">
                                             <label for="related_records">Related Records</label>
 
@@ -3493,46 +3499,29 @@
                                                     <div class="group-input">
                                                         <label for="Production Injection assessment">Impact Assessment (By Production Injection)
                                                             <!-- <span
-                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                            class="text-danger">*</span> -->
+                                                            id="asteriskInvi12" style="display: none"
+                                                            class="text-danger">*</span> -->
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="col-md-12 mb-3 productionInjection">
-                                                    <div class="group-input">
-                                                        <label for="Production Injection feedback">Production Injection Feedback
-                                                                            </label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                does not require completion</small></div>
-                                                        <textarea class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
-                                                    </div>
-                                                </div> -->
+                                                
                                             @else
                                                 <div class="col-md-12 mb-3 productionInjection">
                                                     <div class="group-input">
                                                         <label for="Production Injection assessment">Impact Assessment (By Production Injection)
                                                             <!-- <span
-                                                                                                                                            id="asteriskInvi12" style="display: none"
-                                                                                                                                            class="text-danger">*</span> -->
+                                                                            id="asteriskInvi12" style="display: none"
+                                                                            class="text-danger">*</span> -->
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea disabled class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="col-md-12 mb-3 productionInjection">
-                                                    <div class="group-input">
-                                                        <label for="Production Injection feedback">Production Injection Feedback
-
-                                                        </label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
-                                                    </div>
-                                                </div> -->
+                                               
                                             @endif
                                             <div class="col-12 productionInjection">
                                                 <div class="group-input">

@@ -448,6 +448,37 @@
                                                                     </div>
                                                                 </a>
                                                             @endif
+
+                                                            {{-- Change proposal just --}}
+                                                        @elseif ($datas->type == 'Change Proposal And Justification')
+                                                                @php 
+                                                                DB::table('change_proposal_justs')
+                                                                ->where('id', $datas->id)
+                                                                ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
+
+                                                            <a href="{{ route('cpshow', $datas->id) }}"
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
+                                                                {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
+                                                            </a>
+                                                            @if (!empty($datas->parent_id))
+                                                                <a
+                                                                    href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/lab_incident">
+                                                                    <div class="icon" onclick="showChild()"
+                                                                        data-bs-toggle="tooltip" title="Related Records">
+                                                                        {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                                    </div>
+                                                                </a>
+                                                            @endif
                                                         @elseif ($datas->type == 'Out Of Calibration')
                                                             @php 
                                                                 DB::table('out_of_calibrations')

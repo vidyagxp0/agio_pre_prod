@@ -38,6 +38,7 @@ use App\Models\OOS;
 use App\Models\errata;
 use App\Models\MarketComplaint;
 use App\Models\OOS_micro;
+use App\Models\ChangeProposalJust;
 
 
 class DashboardController extends Controller
@@ -90,6 +91,7 @@ class DashboardController extends Controller
         $datas25 = NonConformance::orderByDesc('id')->get();
         $incident = Incident::orderByDesc('id')->get();
         $resampling = Resampling::orderByDesc('id')->get();
+        $changeProposalData = ChangeProposalJust::orderByDesc('id')->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -608,6 +610,28 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->created_at,
+                "date_close" => $data->updated_at,
+                "dashboard_unique_id" => $data->dashboard_unique_id,
+            ]);
+        }
+        foreach ($changeProposalData as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "record" => $data->record,
+                "type" => "Change Proposal And Justification",
+                "due_date" => $data->due_date ? $data->due_date : "-",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->cpdescription ? $data->cpdescription : "-",
                 "initiator_id" => $data->initiator_id,
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
@@ -1173,6 +1197,15 @@ class DashboardController extends Controller
             $data = Resampling::find($id);
             $single = "resamplingSingleReport/" . $data->id;
             $audit = "resamplingAuditReport/" . $data->id;
+            // $parent = "#";
+            $family="#";
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }
+         elseif ($type == "Change Proposal And Justification") {
+            $data = ChangeProposalJust::find($id);
+            $single = "cpjsingleReport/" . $data->id;
+            $audit = "cpjauditReport/" . $data->id;
             // $parent = "#";
             $family="#";
             $division = QMSDivision::find($data->division_id);
