@@ -146,7 +146,7 @@
                     <strong> Change Proposal And Justification No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->division_id) }}/ Change Proposal And Justificatin
+                    {{ Helpers::getDivisionName($doc->division_id) }}/CPJ
                     /{{ Helpers::year($doc->created_at) }}/
                     {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>

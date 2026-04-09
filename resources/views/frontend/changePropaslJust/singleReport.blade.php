@@ -286,7 +286,7 @@
             <tr>
                 <td class="w-70" style="text-align: center; vertical-align: middle;">
                     <div style="font-size: 18px; font-weight: 800; display: inline-block;">
-                    Extension Report
+                   Change Proposal And Justification Report
                     </div>
                 </td>
                 <td class="w-30">
