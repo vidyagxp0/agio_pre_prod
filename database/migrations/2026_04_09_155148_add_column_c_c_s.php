@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('change_proposal_justs', function (Blueprint $table) {
-            $table->string('due_date')->nullable();
+        Schema::table('c_c_s', function (Blueprint $table) {
+            $table->integer('refence_change')->nullable();
         });
     }
 
@@ -25,8 +25,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('change_proposal_justs', function (Blueprint $table) {
-            //
-        });
+        //
     }
 };

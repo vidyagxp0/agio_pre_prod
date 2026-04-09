@@ -514,8 +514,8 @@ class ChangeProposalJustController extends Controller
 
         if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
             $history = new ChangeProposalAuditTrial;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA Review Comments';
+            $history->cpjg_id = $id;
+            $history->activity_type = 'Due Date';
             $history->previous = $lastDocument->due_date;
             $history->current = $data->due_date;
             $history->comment = $request->due_date_comment;

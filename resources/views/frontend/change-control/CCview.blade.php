@@ -978,7 +978,7 @@
                                             </div>  --}}
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="Short Description">Short Description<span
+                                                    <label for="Short Description">Short Description <span
                                                             class="text-danger">*</span></label><span id="rchars"
                                                         class="text-primary">255 </span><span class="text-primary">
                                                         characters remaining</span>
@@ -988,12 +988,47 @@
                                                         {{ $lockdatafileds1  ? 'readonly' : '' }} value="{{ $data->short_description }}">
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
-
                                             </div>
 
 
-
                                             <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="change_related_to">Reference Change Proposal and Justification
+                                                        @if($data->stage == 1)
+                                                            <span class="text-danger">*</span>
+                                                        @endif
+                                                    </label>
+
+                                                    @if($data->stage == 1 && !$lockdatafileds1)
+                                                        <select name="refence_change" id="refence_change" required>
+                                                            <option value="">Select Change Proposal and Justification Record</option>
+                                                            @if($changeProposalRecords)
+                                                                @foreach($changeProposalRecords as $record)
+                                                                    <option value="{{ $record->id }}" {{ $record->id == $data->refence_change ? 'selected' : '' }}>
+                                                                        {{ Helpers::getChangeProposalJustificationRecordNumber($record->id) }}
+                                                                    </option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    @else
+                                                        <select name="refence_change_display" id="refence_change" disabled>
+                                                            <option value="">Select Change Proposal and Justification Record</option>
+                                                            @if($changeProposalRecords)
+                                                                @foreach($changeProposalRecords as $record)
+                                                                    <option value="{{ $record->id }}" {{ $record->id == $data->refence_change ? 'selected' : '' }}>
+                                                                        {{ Helpers::getChangeProposalJustificationRecordNumber($record->id) }}
+                                                                    </option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                        <input type="hidden" name="refence_change" value="{{ $data->refence_change }}">
+                                                    @endif
+
+
+                                                </div>
+                                            </div>
+
+                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="change_related_to">Change Related To
                                                         @if($data->stage == 1)
@@ -1027,6 +1062,13 @@
 
                                                 </div>
                                             </div>
+
+
+                                            
+                                               
+                                                  
+
+
 
                                             <!-- Textbox for 'Other' option -->
                                             <div class="col-lg-6" id="other_specify_div" style="display:none;">
