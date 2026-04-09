@@ -145,14 +145,14 @@
                             </button>
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Review
+                                HOD Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
                         @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Approved
+                                QA/CQA Review Complete
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
