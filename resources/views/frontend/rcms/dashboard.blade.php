@@ -132,7 +132,7 @@
 <style>
     #short_width {
         display: inline-block;
-        width: 320px !important;
+        width: 600px !important;
         white-space: nowrap;
         overflow: hidden !important;
         text-overflow: ellipsis;
@@ -159,9 +159,6 @@
         width: 100px !important;
     }
 
-    .td_desc {
-        width: 10px;
-    }
 </style>
 @section('rcms_container')
     <div id="rcms-dashboard">
@@ -203,16 +200,15 @@
                                 <table class="table table-bordered" id="auditTable">
                                     <thead class="table-header11">
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Parent ID</th>
-                                            <th>Division</th>
-                                            <th>Process</th>
-                                            <th>Initiated Through</th>
-                                            <th class="td_desc">Short Description</th>
-                                            <th>Date Opened</th>
-                                            <th>Originator</th>
-                                            <th> Due Date</th>
-                                            <th>Status</th>
+                                            <th style="width: 5%">ID</th>
+                                            <th style="width: 5%">Parent ID</th>
+                                            <th style="width: 6%">Division</th>
+                                            <th style="width: 8%">Process</th>
+                                            <th style="width: 40%">Short Description</th>
+                                            <th style="width: 8%">Date Opened</th>
+                                            <th style="width: 8%">Originator</th>
+                                            <th style="width: 6%"> Due Date</th>
+                                            <th style="width: 10%">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody id="searchTable">
@@ -1156,13 +1152,7 @@
                                                         {{ $datas->type }}
                                                     </td>
 
-                                                    <td class="viewdetails" data-id="{{ $datas->id }}"
-                                                        data-type="{{ $datas->type }}" data-bs-toggle="modal"
-                                                        data-bs-target="#record-modal">
-                                                        {{ ucwords(str_replace('_', ' ', $datas->initiated_through)) }}
-                                                    </td>
-
-                                                    <td id="short_width" class="viewdetails"
+                                                    <td id="short_width" class="viewdetails" title="{{ $datas->short_description }}"
                                                         data-id="{{ $datas->id }}" data-type="{{ $datas->type }}"
                                                         data-bs-toggle="modal" data-bs-target="#record-modal">
                                                         {{ $datas->short_description }}

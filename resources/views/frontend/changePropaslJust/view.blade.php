@@ -120,37 +120,28 @@
                             ->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
-                    @php
-                        $userRoles = DB::table('user_roles')
-                            ->where([
-                                'user_id' => Auth::user()->id,
-                                'q_m_s_divisions_id' => $data->site_location_code,
-                            ])
-                            ->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    @endphp
-
+                  
                     <div class="d-flex" style="gap:20px;">
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('cpjAudittrial', $data->id) }}">Audit Trail</a> </button>
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))
+                        @if ($data->stage == 1 && ($data->initiator_id == Auth::user()->id || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-required-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 4) ||  Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 48) || (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 63) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Review Complete
                             </button>
@@ -158,7 +149,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))
+                        @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 43) || (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 9) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 65) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Head/Designe Approval Complete
                             </button>
@@ -348,10 +339,17 @@
                 @method('PUT')
                 <!-- Tab content -->
                 <div id="step-form">
-
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+
+                                 @php
+                                $istab1 = ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 3)));
+                                $istab2 = ($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 4)  || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18)));
+                                $istab3 = ($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 48) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 63) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18)));
+                                $istab4 = ($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 43) || (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 9) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 65) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))))
+                                @endphp
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
@@ -431,7 +429,7 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         Characters remaining
                                         <input id="docname" type="text" name="cpdescription"
-                                            value="{{ $data->cpdescription }}" maxlength="255" required>
+                                            value="{{ $data->cpdescription }}" maxlength="255" {{ $istab1 ? "required" : "readonly" }}>
                                     </div>
                                 </div>
                                 <script>
@@ -445,7 +443,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Impact Assesment">Impact Assesment</label>
-                                        <textarea name="impassesment">{{ $data->impassesment }}</textarea>
+                                        <textarea name="impassesment" {{ $istab1 ? "" : "readonly" }}>{{ $data->impassesment }}</textarea>
                                     </div>
                                 </div>
 
@@ -453,7 +451,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Change Proposal Grid
-                                            <button type="button" id="traceblity_add">+</button>
+                                            <button type="button" id="traceblity_add" {{ $istab1 ? "" : "disabled" }}>+</button>
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="traceblity" style="width: 100%;">
@@ -477,25 +475,25 @@
                                                                 <td>
                                                                     <input disabled type="text"
                                                                         name="change_proposal_grid[{{ $index }}][serial]"
-                                                                        value="{{ $loop->iteration }}">
+                                                                        value="{{ $loop->iteration }}" {{ $istab1 ? "" : "readonly" }}>
                                                                 </td>
 
                                                                 <td>
                                                                     <input type="text"
                                                                         name="change_proposal_grid[{{ $index }}][existing_system]"
-                                                                        value="{{ $item['existing_system'] ?? '' }}">
+                                                                        value="{{ $item['existing_system'] ?? '' }}" {{ $istab1 ? "" : "readonly" }}>
                                                                 </td>
 
                                                                 <td>
                                                                     <input type="text"
                                                                         name="change_proposal_grid[{{ $index }}][proposed_change]"
-                                                                        value="{{ $item['proposed_change'] ?? '' }}">
+                                                                        value="{{ $item['proposed_change'] ?? '' }}" {{ $istab1 ? "" : "readonly" }}>
                                                                 </td>
 
                                                                 <td>
                                                                     <input type="text"
                                                                         name="change_proposal_grid[{{ $index }}][justification]"
-                                                                        value="{{ $item['justification'] ?? '' }}">
+                                                                        value="{{ $item['justification'] ?? '' }}" {{ $istab1 ? "" : "readonly" }}>
                                                                 </td>
 
                                                                 <td>
@@ -528,13 +526,13 @@
                                                     '][serial]" value="' + (serialNumber + 1) + '"></td>' +
 
                                                     '<td><input type="text" name="change_proposal_grid[' + serialNumber +
-                                                    '][existing_system]"></td>' +
+                                                    '][existing_system]" {{ $istab1 ? "" : "readonly" }}></td>' +
 
                                                     '<td><input type="text" name="change_proposal_grid[' + serialNumber +
-                                                    '][proposed_change]"></td>' +
+                                                    '][proposed_change]" {{ $istab1 ? "" : "readonly" }}></td>' +
 
                                                     '<td><input type="text" name="change_proposal_grid[' + serialNumber +
-                                                    '][justification]"></td>' +
+                                                    '][justification]" {{ $istab1 ? "" : "readonly" }}></td>' +
 
                                                     '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
 
@@ -695,17 +693,17 @@
                                                                     <option value="">Select</option>
 
                                                                     <option value="Yes"
-                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? 'selected' : '' }}>
+                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? 'selected' : '' }} {{ $istab1 ? "" : "readonly" }}>
                                                                         Yes
                                                                     </option>
 
                                                                     <option value="No"
-                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'No' ? 'selected' : '' }}>
+                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'No' ? 'selected' : '' }} {{ $istab1 ? "" : "readonly" }}>
                                                                         No
                                                                     </option>
 
                                                                     <option value="N/A"
-                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'N/A' ? 'selected' : '' }}>
+                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'N/A' ? 'selected' : '' }} {{ $istab1 ? "" : "readonly" }}>
                                                                         N/A
                                                                     </option>
 
@@ -753,7 +751,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="cpAttachment[]"
-                                                    oninput="addMultipleFiles(this, 'cpAttachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'cpAttachment')" {{ $istab1 ? "" : "disabled" }} multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -778,8 +776,10 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">HOD Remarks</label>
-                                    <textarea name="hod_comment" id="hod_comment" cols="30">{{ $data->hod_comment }}</textarea>
+                                    <label for="Assigned To">HOD Remarks @if($data->stage == 2) <span class="text-danger">*</span>
+                                        
+                                    @endif</label>
+                                    <textarea name="hod_comment" id="hod_comment" cols="30" {{ $istab2 ? "required" : "readonly" }}>{{ $data->hod_comment }}</textarea>
                                 </div>
                             </div>
 
@@ -817,7 +817,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input value="{{ $data->hodAttachment }}" type="file" id="myfile"
-                                                name="hodAttachment[]" oninput="addMultipleFiles(this, 'hodAttachment')"
+                                                name="hodAttachment[]" oninput="addMultipleFiles(this, 'hodAttachment')" {{ $istab2 ? "" : "disabled" }}
                                                 multiple>
                                         </div>
                                     </div>
@@ -841,7 +841,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Assigned To">QA/CQA Review Comments</label>
-                                    <textarea name="qa_comment" id="qa_comment" cols="30">{{ $data->qa_comment }}</textarea>
+                                    <textarea name="qa_comment" id="qa_comment" cols="30" {{ $istab3 ? "required" : "readonly" }}>{{ $data->qa_comment }}</textarea>
                                 </div>
                             </div>
 
@@ -879,7 +879,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="HOD_Attachments" name="qaAttachment[]"
-                                                oninput="addMultipleFiles(this, 'qaAttachment')" multiple>
+                                                oninput="addMultipleFiles(this, 'qaAttachment')" {{ $istab3 ? "" : "disabled" }} multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -905,7 +905,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Assigned To">QA/CQA Head Approval Comments</label>
-                                    <textarea name="qa_cqa_head_comment" id="qa_cqa_head_comment" cols="30">{{ $data->qa_cqa_head_comment }}</textarea>
+                                    <textarea name="qa_cqa_head_comment" id="qa_cqa_head_comment" cols="30" {{ $istab4 ? "required" : "readonly" }}>{{ $data->qa_cqa_head_comment }}</textarea>
                                 </div>
                             </div>
 
@@ -944,7 +944,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="HOD_Attachments" name="qa_cqa_head_Attachment[]"
-                                                oninput="addMultipleFiles(this, 'qa_cqa_head_Attachment')" multiple>
+                                                oninput="addMultipleFiles(this, 'qa_cqa_head_Attachment')" {{ $istab3 ? "" : "disabled" }} multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1118,16 +1118,7 @@
 
 
                         </div>
-                        {{-- <div class="button-block">
-                        <button type="submit" class="saveButton">Save</button>
-                        <a href="/rcms/qms-dashboard">
-                            <button type="button" class="backButton">Back</button>
-                        </a>
-                        <button type="submit">Submit</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div> --}}
-
+                        
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton"
                                 {{ $data->stage == 0 || $data->stage == 5 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>

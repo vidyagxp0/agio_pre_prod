@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deviation;
-use App\Models\Document;
+use App\Models\QMSDivision;
 use App\Models\Errata;
 use App\Models\FailureInvestigation;
 use App\Models\Incident;
@@ -38,6 +38,8 @@ use App\Models\Auditee;
 use App\Models\AuditProgram;
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
+use App\Models\ChangeProposalJust;
+
 
 class DashboardController extends Controller
 {
@@ -52,10 +54,12 @@ class DashboardController extends Controller
         return $this->random_color_part() . $this->random_color_part() . $this->random_color_part();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $due_dates = [];
         $today = \Carbon\Carbon::today();
+        $year = $request->get('year', date('Y'));
+        $type = $request->get('type', 'yearly'); 
 
         // 🔥 Common function for all modules
         $processRecords = function ($records, $type, $titleFormat, $urlPath) use (&$due_dates, $today) {
@@ -108,7 +112,7 @@ class DashboardController extends Controller
         $processRecords(Resampling::all(), 'Resampling', 'Resampling', 'resampling_view');
         $processRecords(Observation::all(), 'Observation', 'Observation', 'rcms/observationshow');
         $processRecords(RootCauseAnalysis::all(), 'Root Cause Analysis', 'Root Cause Analysis', 'rootshow');
-        $processRecords(RiskAssessment::all(), 'Risk Assessment', 'Risk Assessment', 'RiskManagement');
+        $processRecords(RiskManagement::all(), 'Risk Assessment', 'Risk Assessment', 'RiskManagement');
         $processRecords(ManagementReview::all(), 'Management Review', 'Management Review', 'manageshow');
         $processRecords(Auditee::all(), 'External Audit', 'External Audit', 'show');
         $processRecords(InternalAudit::all(), 'Internal Audit', 'Internal Audit', 'rcms/internalAuditShow');
@@ -118,115 +122,180 @@ class DashboardController extends Controller
         $processRecords(Incident::all(), 'Incident', 'Incident', 'rcms/incident-show');
         $processRecords(FailureInvestigation::all(), 'Failure Investigation', 'Failure Investigation', 'rcms/failure-investigation-show');
         $processRecords(Errata::all(), 'Errata', 'Errata', 'errata/show');
+        $processRecords(ChangeProposalJust::all(), 'Change Proposal And Justification', 'Change Proposal And Justification', 'cpshow');
 
-        // ================= ROLE BASED =================
+         $analytics  = [
+            'CC' => CC::whereYear('created_at', $year)->count(),
+            'Deviation' => Deviation::whereYear('created_at', $year)->count(),
+            'Lab Incident' => LabIncident::whereYear('created_at', $year)->count(),
+            'OOS Chemical' => OOS::where('Form_type', 'OOS_Chemical')->whereYear('created_at', $year)->count(),
+            'OOT' => OOS::where('Form_type', 'OOT')->whereYear('created_at', $year)->count(),
+            'OOS Micro' => OOS::where('Form_type', 'OOS_Micro')->whereYear('created_at', $year)->count(),
+            'CAPA' => Capa::whereYear('created_at', $year)->count(),
+            'Action Item' => ActionItem::whereYear('created_at', $year)->count(),
+            'Audit Program' => AuditProgram::whereYear('created_at', $year)->count(),
+            'Extension' => Extension::whereYear('created_at', $year)->count(),
+            'Resampling' => Resampling::whereYear('created_at', $year)->count(),
+            'Observation' => Observation::whereYear('created_at', $year)->count(),
+            'Risk Assessment' => RiskManagement::whereYear('created_at', $year)->count(),
+            'Market Complaint' => MarketComplaint::whereYear('created_at', $year)->count(),
+            'Incident' => Incident::whereYear('created_at', $year)->count(),
+            'Change Proposal And Justification' => ChangeProposalJust::whereYear('created_at', $year)->count(),
+        ];
 
-        if (Helpers::checkRoles(3)) {
+        // ===============================
+        // 📊 STATUS-WISE ANALYTICS
+        // ===============================
 
-            $count = [];
-            $userId = Auth::user()->id;
+        $statusAnalytics = [
 
-            $draft = Document::where('originator_id', $userId)->where('stage', 1)->count();
-            $in_review = Document::where('originator_id', $userId)->where('stage', 2)->count();
-            $reviewed = Document::where('originator_id', $userId)->where('stage', 3)->count();
-            $for_approve = Document::where('originator_id', $userId)->where('stage', 4)->count();
-            $approved = Document::where('originator_id', $userId)->where('stage', 5)->count();
-            $training = Document::where('originator_id', $userId)->where('stage', 6)->count();
-            $effective = Document::where('originator_id', $userId)->where('stage', 8)->count();
+    'CC' => CC::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-            $count = implode(',', [$draft, $in_review, $reviewed, $for_approve, $approved, $training, $effective]);
+    'Deviation' => Deviation::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-            $data = Document::where('originator_id', $userId)->get();
+    'Lab Incident' => LabIncident::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-            foreach ($data as $temp) {
-                $temp->created_at = \Carbon\Carbon::parse($temp->created_at)->format('Y-m-d');
-            }
+    'OOS Chemical' => OOS::where('Form_type', 'OOS_Chemical')
+        ->whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-            return view('frontend.dashboard', compact('data', 'count', 'due_dates'));
-        }
+    'OOT' => OOS::where('Form_type', 'OOT')
+        ->whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-        if (Helpers::checkRoles(2)) {
+    'OOS Micro' => OOS::where('Form_type', 'OOS_Micro')
+        ->whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-            $array1 = [];
-            $array2 = [];
-            $document = Document::where('stage', '>=', 2)->get();
+    'CAPA' => Capa::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-            foreach ($document as $data) {
+    'Action Item' => ActionItem::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-                $data->originator_name = User::where('id', $data->originator_id)->value('name');
+    'Audit Program' => AuditProgram::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-                if ($data->reviewers_group) {
-                    foreach (explode(',', $data->reviewers_group) as $groupId) {
-                        $groupUsers = Grouppermission::where('id', $groupId)->value('user_ids');
-                        foreach (explode(',', $groupUsers) as $userId) {
-                            if ($userId == Auth::id()) {
-                                $array1[] = $data;
-                            }
-                        }
-                    }
-                }
+    'Extension' => Extension::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-                if ($data->reviewers) {
-                    foreach (explode(',', $data->reviewers) as $userId) {
-                        if ($userId == Auth::id()) {
-                            $array2[] = $data;
-                        }
-                    }
-                }
-            }
+    'Resampling' => Resampling::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-            $arrayTask = array_unique(array_merge($array1, $array2), SORT_REGULAR);
+    'Observation' => Observation::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-            foreach ($arrayTask as $temp) {
-                $temp->created_at = \Carbon\Carbon::parse($temp->created_at)->format('Y-m-d');
-            }
+    'Risk Assessment' => RiskManagement::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-            return view('frontend.dashboard', [
-                'data' => $arrayTask,
-                'due_dates' => $due_dates
-            ]);
-        }
+    'Market Complaint' => MarketComplaint::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-        if (Helpers::checkRoles(1)) {
+    'Incident' => Incident::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
 
-            $array1 = [];
-            $array2 = [];
-            $document = Document::where('stage', '>=', 4)->get();
+    'Change Proposal And Justification' => ChangeProposalJust::whereYear('created_at', $year)
+        ->selectRaw('LOWER(status) as status, COUNT(*) as count')
+        ->groupBy('status')
+        ->pluck('count', 'status'),
+];
 
-            foreach ($document as $data) {
+$divisions = QMSDivision::pluck('name', 'id');
+$allDivisionIds = QMSDivision::pluck('id');
 
-                $data->originator_name = User::where('id', $data->originator_id)->value('name');
+$divisionNames = [];
+$processData = [];
 
-                if ($data->approver_group) {
-                    foreach (explode(',', $data->approver_group) as $groupId) {
-                        $groupUsers = Grouppermission::where('id', $groupId)->value('user_ids');
-                        foreach (explode(',', $groupUsers) as $userId) {
-                            if ($userId == Auth::id()) {
-                                $array1[] = $data;
-                            }
-                        }
-                    }
-                }
+// 🔥 DEFINE ALL PROCESSES HERE (ONLY THIS NEEDS UPDATE IN FUTURE)
+$processes = [
+    'CC' => fn($divisionId) => CC::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
 
-                if ($data->approvers) {
-                    foreach (explode(',', $data->approvers) as $userId) {
-                        if ($userId == Auth::id()) {
-                            $array2[] = $data;
-                        }
-                    }
-                }
-            }
+    'Deviation' => fn($divisionId) => Deviation::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
 
-            $arrayTask = array_unique(array_merge($array1, $array2), SORT_REGULAR);
+    'Lab Incident' => fn($divisionId) => LabIncident::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
 
-            foreach ($arrayTask as $temp) {
-                $temp->created_at = \Carbon\Carbon::parse($temp->created_at)->format('Y-m-d');
-            }
+    'OOS Chemical' => fn($divisionId) => OOS::where('Form_type', 'OOS_Chemical')
+        ->where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
 
-            return view('frontend.dashboard', ['data' => $arrayTask]);
-        }
+    'OOT' => fn($divisionId) => OOS::where('Form_type', 'OOT')
+        ->where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
 
-        return view('frontend.dashboard', compact('due_dates'));
+    'OOS Micro' => fn($divisionId) => OOS::where('Form_type', 'OOS_Micro')
+        ->where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
+
+    'CAPA' => fn($divisionId) => Capa::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
+
+    'Action Item' => fn($divisionId) => ActionItem::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
+
+    'Audit Program' => fn($divisionId) => AuditProgram::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
+
+    'Extension' => fn($divisionId) => Extension::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
+
+    'Resampling' => fn($divisionId) => Resampling::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
+
+    'Observation' => fn($divisionId) => Observation::where('division_code', $divisionId)->whereYear('created_at', $year)->count(),
+
+    'Risk Assessment' => fn($divisionId) => RiskManagement::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
+
+    'Market Complaint' => fn($divisionId) => MarketComplaint::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
+
+    'Incident' => fn($divisionId) => Incident::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
+
+    'Change Proposal And Justification' => fn($divisionId) => ChangeProposalJust::where('division_id', $divisionId)->whereYear('created_at', $year)->count(),
+];
+
+
+// 🔥 LOOP ALL DIVISIONS
+foreach ($allDivisionIds as $divisionId) {
+
+    $divisionName = $divisions[$divisionId] ?? 'Unknown';
+    $divisionNames[] = $divisionName;
+
+    foreach ($processes as $processName => $callback) {
+        $processData[$processName][] = $callback($divisionId);
+    }
+}
+
+// FINAL DATA
+$finalChartData = [
+    'labels' => $divisionNames,
+    'datasets' => $processData
+];
+
+        return view('frontend.dashboard', compact('due_dates','analytics', 'year', 'statusAnalytics', 'finalChartData'));
     }
 
     public function subscribe(Request $request)
