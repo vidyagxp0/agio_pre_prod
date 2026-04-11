@@ -55,6 +55,7 @@ class ProcessSeeder extends Seeder
             // "Failure Investigation",
             "ERRATA",
             // "OOS Microbiology"
+            "Change Proposal And Justification"
         ];
 
         // Loop through each process name

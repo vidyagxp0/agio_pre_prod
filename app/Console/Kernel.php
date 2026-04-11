@@ -13,9 +13,10 @@ class Kernel extends ConsoleKernel
 {
 
 
-    protected $commands = [
-        \App\Console\Commands\SendScheduledEmail::class,
-    ];
+        protected $commands = [
+            \App\Console\Commands\SendScheduledEmail::class,
+            \App\Console\Commands\SendProcessDueReminders::class,
+        ];
 
     /**
      * Define the application's command schedule.
@@ -23,45 +24,51 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+
     protected function schedule(Schedule $schedule)
     {
+        // Due Date Reminder (Daily Check)
+        // $schedule->command('due:reminder')->everyMinute();
+        $schedule->command('due:reminders')->everyMinute();
+
+        // Existing Scheduled Emails
         $scheduledEmails = DB::table('subscribes')->get();
-            foreach ($scheduledEmails as $email) {
-                $recipents = Recipent::where('subscribe_id',$email->id)->get();
-                foreach($recipents as $temp){
-                    $user = User::where('id',$temp->user_id)->value('email');
-                    if($email->type == "Weekly"){
-                        $schedule->command('email:send '.$user)
+
+        foreach ($scheduledEmails as $email) {
+
+            $recipents = Recipent::where('subscribe_id',$email->id)->get();
+
+            foreach($recipents as $temp){
+
+                $user = User::where('id',$temp->user_id)->value('email');
+
+                if($email->type == "Weekly"){
+
+                    $schedule->command('email:send '.$user)
                         ->weekly()
-                        ->days([$email->day]) // Replace [1] with an array of the desired day(s) (1 for Monday, 2 for Tuesday, etc.)
+                        ->days([$email->day])
                         ->at($email->time);
-                    }
-                    if($email->type == "Daily"){
-                        $schedule->command('email:send '.$user)
+
+                }
+
+                if($email->type == "Daily"){
+
+                    $schedule->command('email:send '.$user)
                         ->dailyAt($email->time);
-                    }
-                    // if($email->type == "Monthly"){
-                    //     $schedule->command('email:send '.$user)
-                    //     ->monthly()
-                    //     ->days([3]) // Replace [3] with the desired day(s) of the week (0-6, where 0 is Sunday)
-                    //     ->when(4)
-                    //     ->at('10:20');
-                    // }
-                    if ($email->type == "Monthly") {
-                        $schedule->command('email:send ' . $user)
-                            ->monthly()
-                            ->days([$email->day]) // Replace [3] with the desired day(s) of the week (0-6, where 0 is Sunday)
-                            ->when(function () use ($email) {
-                                return function ($date) use ($email) {
-                                $date->weekOfMonth === $email->week;
-                                };
-                            })
-                            ->at($email->time);
-                    }
 
                 }
+
+                if ($email->type == "Monthly") {
+
+                    $schedule->command('email:send '.$user)
+                        ->monthly()
+                        ->days([$email->day])
+                        ->at($email->time);
+
                 }
 
+            }
+        }
     }
 
     /**

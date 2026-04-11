@@ -35,6 +35,7 @@ use App\Models\RiskManagement;
 use App\Models\RcmDocHistory;
 use App\Models\RiskLevelKeywords;
 use App\Models\RoleGroup;
+use App\Models\ChangeProposalJust;
 use App\Models\User;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -114,8 +115,7 @@ class CCController extends Controller
         $hod = User::get();
         $cft = User::get();
         $pre = CC::all();
-
-        return view('frontend.change-control.new-change-control', compact("riskData", "preRiskAssessment", "due_date", "hod", "cft", "pre",));
+        return view('frontend.change-control.new-change-control', compact("riskData", "preRiskAssessment", "due_date", "hod", "cft", "pre"));
     }
 
     public function store(Request $request)
@@ -134,6 +134,7 @@ class CCController extends Controller
         $openState->form_type = "CC";
         $openState->division_id = $request->division_id;
         $openState->initiator_id = Auth::user()->id;
+        $openState->refence_change = $request->refence_change;
        // $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->record = $record_number;
       
@@ -1132,6 +1133,23 @@ class CCController extends Controller
             $history->change_from = "Initiation";
             $history->action_name = 'Create';
             $history->save();
+
+            if(!empty($request->refence_change)){
+            $history = new RcmDocHistory;
+            $history->cc_id = $openState->id;
+            $history->activity_type = 'Reference Change Proposal and Justification';
+            $history->previous = "NULL";
+            $history->current = Helpers::getChangeProposalJustificationRecordNumber($openState->refence_change);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+        }
 
         if(!empty($request->assign_to)){
             $history = new RcmDocHistory;
@@ -2647,8 +2665,7 @@ class CCController extends Controller
     public function show($id)
     {
 
-
-
+   
         $pre = [
             'DEV' => \App\Models\Deviation::class,
            'AP' => \App\Models\AuditProgram::class,
@@ -2695,6 +2712,10 @@ class CCController extends Controller
 
 
         $data = CC::find($id);
+
+
+        $changeProposalRecords = ChangeProposalJust::where('division_id', $data->division_id)->get();
+
         $cftReviewerIds = explode(',', $data->reviewer_person_value);
         $cc_lid = $data->id;
         $data->originator = User::where('id', $data->initiator_id)->value('name');
@@ -2754,7 +2775,8 @@ class CCController extends Controller
             "cc_lid",
             "pre",
             "previousRelated",
-        "relatedRecords"
+        "relatedRecords",
+        "changeProposalRecords"
         ));
     }
 
@@ -3052,12 +3074,15 @@ class CCController extends Controller
         }
        $cc_cfts->save();
         // $openState->initiator_id = Auth::user()->id;
+        if($openState->stage == 1){
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
         $openState->risk_assessment_required = $request->risk_assessment_required;
         $openState->short_description = $request->short_description;
+        $openState->refence_change = $request->refence_change;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
+        }
         //dd($request->related_records)
         if ($request->related_records) {
             $openState->related_records = implode(',', $request->related_records);
@@ -4204,6 +4229,26 @@ if (!empty($request->Human_Resource_attachment)) {
             $history->save();
         }
 
+        if ($lastDocument->refence_change != $request->refence_change) {
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+            ->where('activity_type', 'HOD Person')
+            ->exists();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Reference Change Proposal and Justification';
+            $history->previous = Helpers::getChangeProposalJustificationRecordNumber($lastDocument->refence_change);
+            $history->current = Helpers::getChangeProposalJustificationRecordNumber($request->refence_change);
+            $history->comment = $request->Initiator_Group_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
 
 
         if ($lastDocument->risk_assessment_required != $request->risk_assessment_required) {
@@ -4353,7 +4398,7 @@ if (!empty($request->Human_Resource_attachment)) {
             $history->save();
         }
 
-        if ($lastDocument->due_date != $request->due_date) {
+        if (Helpers::getdateFormat($lastDocument->due_date) != $request->due_date) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Due Date')
             ->exists();
@@ -9559,7 +9604,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         }
 
 
- ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
                      $userId = Auth::user()->name;
                     $userAssignments = DB::table('cc_cfts')->where(['cc_id' => $id])->first();
                     $incompleteFields = [];
@@ -9568,7 +9613,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         $incompleteFields[] = 'Production Table Assessment';
                     }
                     
-                    if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_AssessmentA)) {
+                    if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
                         $incompleteFields[] = 'Production Injection Assessment';
                     }
                     
@@ -9614,6 +9659,10 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     
                     if ($userAssignments->Human_Resource_person == $userId && empty($userAssignments->Human_Resource_assessment)) {
                         $incompleteFields[] = 'Human Resourcec Assessment';
+                    }
+
+                    if ($userAssignments->Information_Technology_person == $userId && empty($userAssignments->Information_Technology_assessment)) {
+                        $incompleteFields[] = 'Information Technology Assessment';
                     }
                     
                     if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {

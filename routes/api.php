@@ -86,6 +86,8 @@ Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api
  Route::post('/incident',[LogFilterController::class,'IncidentFilter'])->name('api.incident.filter');
  Route::post('/oot',[LogFilterController::class,'OOT_Filter'])->name('api.oot.filter');
  Route::get('/chngecontrol-management/{id}',[CCController::class,'audit_trail_filter'])->name('api.Change_Control.filter');
+ Route::post('/changeProposalJustification',[LogFilterController::class,'changeProposalJustificationFilter'])->name('api.changeProposalJustification.filter');
+
 
 
 

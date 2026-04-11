@@ -32,6 +32,7 @@ use App\Models\Auditee;
 use App\Models\ManagementReview;
 use App\Models\Resampling;
 use App\Models\RootCauseAnalysis;
+use App\Models\ChangeProposalJust;
 
 
 class LogController extends Controller
@@ -56,6 +57,17 @@ class LogController extends Controller
                    
                     return view('frontend.forms.Logs.ChangeControlLog',compact('ccontrol'));
                     break;
+
+            case 'change-proposal-and-justification':
+
+                $changeProposalJustification = ChangeProposalJust::get();
+                // foreach($changeProposalJustification as $dd)
+                //     return $dd->initiator_id;
+                // dd($changeProposalJustification->initiator_id);
+    
+                return view('frontend.forms.Logs.changeProposalJustification',compact('changeProposalJustification'));   
+
+                break;
 
                 
             case 'errata':
@@ -226,9 +238,8 @@ class LogController extends Controller
             //  dd($riskmanagements);
                 return view('frontend.forms.Logs.riskmanagementLog',compact('riskmanagements'));
 
-   
 
-                
+             
             case 'inernal-audit':
                 $internal_audi = InternalAudit::get();
                 
@@ -249,7 +260,7 @@ class LogController extends Controller
                 // foreach($Inc as $ias)
                 // foreach ($ias->Grid as $a)
                 // return $a->product_name;
-                   return view('frontend.forms.Logs.incidentLog',compact('Inc'));
+                return view('frontend.forms.Logs.incidentLog',compact('Inc'));
             return $slug;
                    
             default:

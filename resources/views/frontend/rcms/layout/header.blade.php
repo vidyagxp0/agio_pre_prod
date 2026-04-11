@@ -473,34 +473,31 @@
         }
     </style>
 
-@php
+    @php
     $logs_list = [
         'ActionItem',
         'AuditProgram',
         'CAPA',
         'Change Control',
+        'Change Proposal And Justification',
         'Deviation',
-        'Errata',
         'Effectiveness-Check',
+        'Errata',
         'Extension',
         'External Audit',
-        'Observation',
-        
-        // 'Failure Investigation',
         'Incident',
         'Inernal Audit',
         'Lab Incident',
-         'ManagementReview',
+        'ManagementReview',
         'Market Complaint',
-        // 'Non Conformance',
+        'Observation',
         'OOC',
         'OOS',
         'Resampling',
         'Risk Management',
         'Root Cause Analysis',
-
     ];
-@endphp
+    @endphp
 
     {{-- LOG LIST MODAL START --}}
   <!-- Modal -->

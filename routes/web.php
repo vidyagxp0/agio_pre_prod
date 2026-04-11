@@ -49,6 +49,7 @@ use App\Http\Controllers\tms\QuizeController;
 use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\tms\TrainerController;
 use App\Http\Controllers\tms\TNIController;
+use App\Http\Controllers\ChangeProposalJustController;
 
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
@@ -519,7 +520,8 @@ Route::view('vendor-entity', 'frontend.forms.vendor-entity');
 
 // Route::view('auditee', 'frontend.forms.auditee');
 Route::get('auditee', [AuditeeController::class, 'external_audit']);
-Route::get('external_audit_reopen/{id}', [AuditeeController::class, 'external_audit_reopen']);
+// Route::get('external_audit_reopen', [AuditeeController::class, 'external_audit_reopen']);
+Route::get('/external_audit_reopen/{id}',[AuditeeController::class, 'external_audit_reopen']);
 
 
 Route::get('meeting', [ManagementReviewController::class, 'meeting']);
@@ -740,6 +742,25 @@ Route::post('resapling-stage-cancel/{id}', [ResamplingController::class, 'resamp
 Route::get('resampling-audittrialshow/{id}', [ResamplingController::class, 'resamplingAuditTrialShow'])->name('resampling-audittrialshow');
 Route::post('send-resampling/{id}', [ResamplingController::class, 'stageChange'])->name('send-resampling');
 Route::post('moreinfoState_resampling/{id}', [ResamplingController::class, 'resamplingmoreinfo'])->name('moreinfoState_resampling');
+
+// Change Control Justification
+
+Route::get('cpjcreate', [ChangeProposalJustController::class, 'create'])->name('cpjcreate');
+Route::post('cpjstore' , [ChangeProposalJustController::class,'store'])->name('cpjstore');
+Route::get('cpshow/{id}' , [ChangeProposalJustController::class,'show'])->name('cpshow');
+Route::put('cpupdate/{id}' , [ChangeProposalJustController::class,'update'])->name('cpupdate');
+Route::post('cp_send_stage/{id}', [ChangeProposalJustController::class, 'cpsendstage'])->name('cpj_send_stage');
+Route::post('more_info_stage/{id}', [ChangeProposalJustController::class, 'moreinfoStateChange'])->name('more_info_stage');
+Route::post('cpjCancle/{id}', [ChangeProposalJustController::class, 'cpjCancle'])->name('cpjCancle');
+Route::get('cpjAudittrial/{id}', [ChangeProposalJustController::class, 'changePropsalNewAuditTrail']);
+
+
+
+
+
+
+
+
 
 
 // ============================================

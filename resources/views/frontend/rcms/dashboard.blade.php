@@ -132,7 +132,7 @@
 <style>
     #short_width {
         display: inline-block;
-        width: 320px !important;
+        width: 600px !important;
         white-space: nowrap;
         overflow: hidden !important;
         text-overflow: ellipsis;
@@ -159,9 +159,6 @@
         width: 100px !important;
     }
 
-    .td_desc {
-        width: 10px;
-    }
 </style>
 @section('rcms_container')
     <div id="rcms-dashboard">
@@ -203,16 +200,15 @@
                                 <table class="table table-bordered" id="auditTable">
                                     <thead class="table-header11">
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Parent ID</th>
-                                            <th>Division</th>
-                                            <th>Process</th>
-                                            <th>Initiated Through</th>
-                                            <th class="td_desc">Short Description</th>
-                                            <th>Date Opened</th>
-                                            <th>Originator</th>
-                                            <th> Due Date</th>
-                                            <th>Status</th>
+                                            <th style="width: 5%">ID</th>
+                                            <th style="width: 5%">Parent ID</th>
+                                            <th style="width: 6%">Division</th>
+                                            <th style="width: 8%">Process</th>
+                                            <th style="width: 40%">Short Description</th>
+                                            <th style="width: 8%">Date Opened</th>
+                                            <th style="width: 8%">Originator</th>
+                                            <th style="width: 6%"> Due Date</th>
+                                            <th style="width: 10%">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody id="searchTable">
@@ -427,6 +423,37 @@
                                                                 @endphp
 
                                                             <a href="{{ route('incident-show', $datas->id) }}"
+                                                              style="display: inline-block; 
+                                                        padding: 6px 12px; 
+                                                        background-color: #0f43cf; 
+                                                        color: white; 
+                                                        text-decoration: none; 
+                                                        border-radius: 4px; 
+                                                        border: 1px solid #0f43cf; 
+                                                        font-weight: bold; 
+                                                        text-align: center;">
+                                                                {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
+                                                            </a>
+                                                            @if (!empty($datas->parent_id))
+                                                                <a
+                                                                    href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/lab_incident">
+                                                                    <div class="icon" onclick="showChild()"
+                                                                        data-bs-toggle="tooltip" title="Related Records">
+                                                                        {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                                    </div>
+                                                                </a>
+                                                            @endif
+
+                                                            {{-- Change proposal just --}}
+                                                        @elseif ($datas->type == 'Change Proposal And Justification')
+                                                                @php 
+                                                                DB::table('change_proposal_justs')
+                                                                ->where('id', $datas->id)
+                                                                ->update(['dashboard_unique_id' => ($total_count - $loop->index)]);
+                                                                @endphp
+
+                                                            <a href="{{ route('cpshow', $datas->id) }}"
                                                               style="display: inline-block; 
                                                         padding: 6px 12px; 
                                                         background-color: #0f43cf; 
@@ -1125,13 +1152,7 @@
                                                         {{ $datas->type }}
                                                     </td>
 
-                                                    <td class="viewdetails" data-id="{{ $datas->id }}"
-                                                        data-type="{{ $datas->type }}" data-bs-toggle="modal"
-                                                        data-bs-target="#record-modal">
-                                                        {{ ucwords(str_replace('_', ' ', $datas->initiated_through)) }}
-                                                    </td>
-
-                                                    <td id="short_width" class="viewdetails"
+                                                    <td id="short_width" class="viewdetails" title="{{ $datas->short_description }}"
                                                         data-id="{{ $datas->id }}" data-type="{{ $datas->type }}"
                                                         data-bs-toggle="modal" data-bs-target="#record-modal">
                                                         {{ $datas->short_description }}

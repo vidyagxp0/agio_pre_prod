@@ -84,5 +84,8 @@ class FormDivisionController extends Controller
         elseif ($request->process_name == 'Incident') {
             return redirect()->route('incident');
         }
+        elseif ($request->process_name == 'Change Proposal And Justification') {
+            return redirect()->route('cpjcreate');
+        }
     }
 }

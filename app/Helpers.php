@@ -3,7 +3,8 @@
 
 use App\Http\Controllers\ExtensionNewController;
 use App\Models\ActionItem;
-use App\Models\Division;
+use App\Models\ChangeProposalJust;
+use App\Models\Department;
 use App\Models\Document;
 use App\Models\extension_new;
 use App\Models\QMSDivision;
@@ -1999,7 +2000,16 @@ public static function check_roles_qms_new($role_id, $process_name)
         return $roleExists ? true : false;
     }
 
+    public static function getChangeProposalJustificationRecordNumber($id){
+        $data = ChangeProposalJust::find($id);
+        return Helpers::getDivisionName($data->division_id) .'/CPJ/'.  Helpers::year($data->created_at) .'/'.  str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
 
+
+    public static function getUserDepartmentFromDB($id){
+        $data = Department::find($id);
+        return $data->name;
+    }
 
 
 }
