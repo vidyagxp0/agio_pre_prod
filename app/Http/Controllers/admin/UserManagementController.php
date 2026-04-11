@@ -119,7 +119,7 @@ class UserManagementController extends Controller
             $user->save();
 
             // ✅ Dispatch Job instead of Mail::send
-            // SendAdminUserEmailJob::dispatch($user, $plainPassword);
+            SendAdminUserEmailJob::dispatch($user, $plainPassword);
 
             toastr()->success('User added successfully & email queued');
             return redirect()->route('user_management.index');

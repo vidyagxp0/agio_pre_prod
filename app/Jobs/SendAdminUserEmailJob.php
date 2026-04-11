@@ -33,14 +33,14 @@ class SendAdminUserEmailJob implements ShouldQueue
      *
      * @return void
      */
-    // public function handle()
-    //  {
-    //     Mail::send('mail.adminUserDetail', [
-    //         'user' => $this->user,
-    //         'plainPassword' => $this->plainPassword
-    //     ], function ($message) {
-    //         $message->to($this->user->email)
-    //                 ->subject('Your Account Credentials');
-    //     });
-    // }
+    public function handle()
+     {
+        Mail::send('mail.adminUserDetail', [
+            'user' => $this->user,
+            'plainPassword' => $this->plainPassword
+        ], function ($message) {
+            $message->to($this->user->email)
+                    ->subject('Your Account Credentials');
+        });
+    }
 }
