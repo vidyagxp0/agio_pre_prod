@@ -208,7 +208,7 @@ class RoleGroupSeeder extends Seeder
         ];
 
 
-        $newroel4 = ['Initiator', 'HOD/Designee', 'QA', 'CFT','QA Head/Designee','CQA Head/Designee' ,'View Only', 'FP', 'Closed Record'];
+        $newroel4 = ['Initiator', 'HOD/Designee', 'QA', 'CFT','QA Head/Designee' ,'View Only', 'FP', 'Closed Record'];
         
         $processes5 = [
             'Management Review'
@@ -228,19 +228,19 @@ class RoleGroupSeeder extends Seeder
             }
         }
 
-        // $processes_roles_new = [
-        //     'Change Proposal And Justification' => ['Initiator', 'QA', 'HOD/Designee', 'QA Head/Designee', 'View Only', 'FP', 'Closed Record'],
-        // ];
-        // foreach ($sites as $site) {
-        //     foreach ($processes_roles_new as $process => $roles) {
-        //         foreach ($roles as $role) {
-        //             $group = new RoleGroup();
-        //             $group->name = "$site-$process-$role";
-        //             $group->description = "$site-$process-$role";
-        //             $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
-        //             $group->save();
-        //         }
-        //     }
-        // }
+        $processes_roles_new = [
+            'Change Proposal And Justification' => ['Initiator', 'QA', 'HOD/Designee', 'QA Head/Designee', 'View Only', 'FP', 'Closed Record'],
+        ];
+        foreach ($sites as $site) {
+            foreach ($processes_roles_new as $process => $roles) {
+                foreach ($roles as $role) {
+                    $group = new RoleGroup();
+                    $group->name = "$site-$process-$role";
+                    $group->description = "$site-$process-$role";
+                    $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+                    $group->save();
+                }
+            }
+        }
     }
 }

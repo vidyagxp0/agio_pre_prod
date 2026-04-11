@@ -174,7 +174,6 @@ class UserManagementController extends Controller
             'name' => 'required|string|max:255',
             'emp_code' => 'required|string|max:255|unique:users,emp_code',
             'email' => 'required|email',
-            'password' => 'required',
             'departmentid' => 'required',
             'roles' => 'required|array',
         ]);

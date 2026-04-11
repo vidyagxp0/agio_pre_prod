@@ -20,167 +20,71 @@
             <div class="card-body">
 
                 <div class="form-group">
+                    <label>Name *</label>
+                    <input type="text" name="name"
+                        value="{{ old('name', $data->name) }}"
+                        class="form-control @error('name') is-invalid @enderror"
+                        placeholder="Enter User Name">
 
-                    <label for="exampleInputName1">Name*</label>
-                    <input type="name" name="name" class="form-control" value="{{ $data->name }}"
-                        id="exampleInputName1" placeholder="Enter User Name" required>
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleInputName1">Code*</label>
-                    <input type="emp_code" name="emp_code" class="form-control" value="{{ $data->emp_code }}"
-                        id="exampleInputName1" placeholder="Enter Employee Code" required>
-                </div>
+                    <label>Code *</label>
+                    <input type="text" name="emp_code"
+                        value="{{ old('emp_code', $data->emp_code) }}"
+                        class="form-control @error('emp_code') is-invalid @enderror"
+                        placeholder="Enter Employee Code">
 
-
-
-                <div class="form-group">
-
-                    <label for="exampleInputName1">email*</label>
-                    <input type="email" name="email" class="form-control" value="{{ $data->email }}"
-                        id="exampleInputName1" placeholder="enter email" required>
+                    @error('emp_code')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email"
+                        value="{{ old('email', $data->email) }}"
+                        class="form-control @error('email') is-invalid @enderror"
+                        placeholder="Enter Email">
 
-                    <label for="exampleInputName1">password*</label>
-                    <input type="name" name="password" class="form-control" id="exampleInputName1"
-                        placeholder="Enter password">
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
+
                 <div class="form-group">
-                    <label for="exampleInputName1">Department Name*</label>
-                    <select class="form-control" id="documentid" name="departmentid" required >
-                    <option class="selected disabled hidden;">Select Document Name</option>
-                    @foreach ($department as $temp)
-                        <option value="{{ $temp->id }}" @if ($data->departmentid == $temp->id) Selected @endif>
-                            {{ $temp->name }}</option>
-                    @endforeach
-                    </select>
-                </div>
-                {{-- <div class="form-group" id="roleGroup">
-                    <label for="exampleInputName1">Roles (Ctrl (windows) or Command (Mac) button to select multiple options)<span style="color: red">*</span></label>
-                    <select class="form-control2" id="roles" name="roles[]" multiple required onchange="updateSelectedOptions()">
-                        @foreach ($group as $role)
-                            <option value="{{ $role->id }}" {{ in_array($role->id, $userRoles) ? 'selected' : '' }}>{{ $role->name }}</option>
-                        @endforeach
+                    <label>Password</label>
+                    <input type="password" name="password"
+                        class="form-control @error('password') is-invalid @enderror"
+                        placeholder="Enter new password (optional)">
 
-                    </select>
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
-                <div id="selectedOptions"></div>
 
-                <script>
-                    function updateSelectedOptions() {
-                        var selectElement = document.getElementById("roles");
-                        var selectedOptions = [];
-                        for (var i = 0; i < selectElement.options.length; i++) {
-                            if (selectElement.options[i].selected) {
-                                selectedOptions.push(selectElement.options[i].text);
-                            }
-                        }
-                        document.getElementById("selectedOptions").innerHTML = "Selected roles: <br>" + selectedOptions.join("<br>");
-                    }
-                </script> --}}
-                {{-- only ctr a se select but not remove  --}}
-                {{-- <div class="form-group" id="roleGroup">
-                    <label for="exampleInputName1">
-                        Roles (Click to select multiple options)<span style="color: red">*</span>
-                    </label>
-                    <select class="form-control2" id="roles" name="roles[]" multiple required>
-                        @foreach ($group as $role)
-                            <option value="{{ $role->id }}" {{ in_array($role->id, $userRoles) ? 'selected' : '' }}>
-                                {{ $role->name }}
+                <div class="form-group">
+                    <label>Department Name *</label>
+                    <select name="departmentid"
+                        class="form-control @error('departmentid') is-invalid @enderror">
+
+                        <option value="">Select Department</option>
+
+                        @foreach ($department as $temp)
+                            <option value="{{ $temp->id }}"
+                                {{ old('departmentid', $data->departmentid) == $temp->id ? 'selected' : '' }}>
+                                {{ $temp->name }}
                             </option>
                         @endforeach
                     </select>
+
+                    @error('departmentid')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
-
-                <div id="selectedOptions"></div>
-
-                <script>
-                    const selectElement = document.getElementById("roles");
-
-                    for (let i = 0; i < selectElement.options.length; i++) {
-                        selectElement.options[i].addEventListener("mousedown", function (e) {
-                            e.preventDefault(); // stop default deselect behavior
-                            this.selected = !this.selected; // toggle selection
-                            updateSelectedOptions();
-                        });
-                    }
-
-                    function updateSelectedOptions() {
-                        let selectedOptions = [];
-                        for (let i = 0; i < selectElement.options.length; i++) {
-                            if (selectElement.options[i].selected) {
-                                selectedOptions.push(selectElement.options[i].text);
-                            }
-                        }
-                        document.getElementById("selectedOptions").innerHTML =
-                            "Selected roles: <br>" + selectedOptions.join("<br>");
-                    }
-
-                    updateSelectedOptions();
-                </script> --}}
-                {{-- both select and ct +a and also unslected ctr+a  --}}
-                {{-- <div class="form-group" id="roleGroup">
-                    <label for="exampleInputName1">
-                        Roles (Click to select multiple options)<span style="color: red">*</span>
-                    </label>
-                    <select class="form-control2" id="roles" name="roles[]" multiple required style="height: 150px;">
-                        @foreach ($group as $role)
-                            <option value="{{ $role->id }}" {{ in_array($role->id, $userRoles) ? 'selected' : '' }}>
-                                {{ $role->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div id="selectedOptions"></div>
-
-                <script>
-                    const selectElement = document.getElementById("roles");
-
-                    // Prevent default click and make toggle on click
-                    for (let i = 0; i < selectElement.options.length; i++) {
-                        selectElement.options[i].addEventListener("mousedown", function (e) {
-                            e.preventDefault(); // stop normal behavior
-                            this.selected = !this.selected; // toggle select
-                            updateSelectedOptions();
-                        });
-                    }
-
-                    // ✅ Handle Ctrl + A to select/unselect all
-                    selectElement.addEventListener("keydown", function (e) {
-                        if (e.ctrlKey && e.key === "a") {
-                            e.preventDefault();
-
-                            // Check if all are already selected
-                            const allSelected = Array.from(selectElement.options).every(opt => opt.selected);
-
-                            // Toggle all
-                            for (let opt of selectElement.options) {
-                                opt.selected = !allSelected;
-                            }
-
-                            updateSelectedOptions();
-                        }
-                    });
-
-                    function updateSelectedOptions() {
-                        let selectedOptions = [];
-                        for (let i = 0; i < selectElement.options.length; i++) {
-                            if (selectElement.options[i].selected) {
-                                selectedOptions.push(selectElement.options[i].text);
-                            }
-                        }
-
-                        document.getElementById("selectedOptions").innerHTML =
-                            selectedOptions.length
-                                ? "Selected roles:<br>" + selectedOptions.join("<br>")
-                                : "No roles selected";
-                    }
-
-                    updateSelectedOptions();
-                </script> --}}
 
                 <div class="form-group" id="roleGroup">
                     <label for="roles">
