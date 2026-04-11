@@ -205,9 +205,6 @@
                                             <th>Short Description</th>
                                             <th>Initiator</th>
                                             <th>Division</th>
-                                            {{-- <th>Department</th> --}}
-                                            {{-- <th>Type of Error</th> --}}
-                                            {{-- <th>Department Head</th> --}}
                                             <th>Due Date</th>
                                             <th>QA Reviewer</th>
                                             <th>Status</th>
