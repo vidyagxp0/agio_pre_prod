@@ -58,6 +58,15 @@ Route::group(['prefix' => 'rcms'], function () {
         Route::middleware(['rcms', 'active-account'])->group(
         function () {
 
+        Route::get('/change-password', [UserLoginController::class, 'showChangePasswordForm'])->name('password.change.form');
+        Route::post('/change-password', [UserLoginController::class, 'changePassword2'])->name('password.change');
+
+
+        //user password
+        Route::get('/change-password-user', [UserLoginController::class, 'showChangePasswordForm'])->name('password.form');
+        Route::post('/change-password-user', [UserLoginController::class, 'changePasswordNew'])->name('change.password');
+
+
             Route::post('job_trainer_send/{id}', [JobTrainingController::class, 'sendStage']);
             Route::get('traineraudittrail/{id}', [TrainerController::class, 'trainerAuditTrial'])->name('trainer.audittrail');
             Route::get('trainer_report/{id}', [TrainerController::class, 'trainerReport'])->name('trainer_report');

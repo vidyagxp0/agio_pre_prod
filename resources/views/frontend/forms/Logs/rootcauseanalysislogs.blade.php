@@ -332,7 +332,7 @@
                                             <th rowspan="2">Site/Location Code</th>
                                             <th rowspan="2">Initiator</th>
                                             <th rowspan="2">Initiator Department</th>
-                                            <th rowspan="2" style="text-align: center">Short Descriptiobn</th>
+                                            <th rowspan="2" style="text-align: center">Short Description</th>
                                             <th rowspan="2">Name of Responsible Department Head</th>
                                             <th rowspan="2">QA Reviewer</th>
                                             <th rowspan="2">Due Date</th>

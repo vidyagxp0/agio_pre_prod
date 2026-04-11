@@ -285,7 +285,7 @@ table {
                                         <th>Originator</th>
                                         <th>Department</th>
                                         <th>Division</th>
-                                        <th>Short Descriptiobn</th>
+                                        <th>Short Description</th>
                                         <th>Incident Related to</th>
                                         {{-- <th>Description of Incident</th> --}}
                                         

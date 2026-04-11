@@ -20,9 +20,64 @@ use Illuminate\Support\Facades\Hash;
 
 class UserLoginController extends Controller
 {
+
+    public function showChangePasswordForm()
+    {
+        return view('frontend.rcms.change-password'); // your blade file
+    }
+
+
+    public function changePasswordNew(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => [
+                'required',
+                'min:7',
+                'max:20',
+                'confirmed',
+                'regex:/[a-z]/',      // lowercase
+                'regex:/[A-Z]/',      // uppercase
+                'regex:/[0-9]/',      // number
+                'regex:/[@$!%*#?&]/'  // special char
+            ],
+        ], [
+            'new_password.min' => 'Password must be at least 7 characters.',
+            'new_password.max' => 'Password must not exceed 20 characters.',
+            'new_password.confirmed' => 'Passwords do not match.',
+            'new_password.regex' => 'Password must include uppercase, lowercase, number and special character.',
+        ]);
+
+        $user = Auth::user();
+        
+
+        // ✅ Check current password
+        if (!Hash::check($request->current_password, $user->password)) {
+            toastr()->error('Current password is incorrect.');
+            return redirect()->back();
+        }
+
+        // ✅ Prevent same password reuse (optional but recommended)
+        if (Hash::check($request->new_password, $user->password)) {
+            toastr()->error('New password cannot be same as current password.');
+            return redirect()->back();
+        }
+
+        // ✅ Update password
+        $user->password = Hash::make($request->new_password);
+        $user->password_change_time = now();
+        $user->force_password_change = 0;
+        $user->failed_attempts = 0;
+        $user->locked_at = null;
+        $user->save();
+
+        toastr()->success('Password updated successfully.');
+
+        return redirect('rcms/qms-dashboard'); // or rcms dashboard
+    }
+
     public function userlogin()
     {
-        // dd(TotalLogin::userCheck());
         if (Auth::check()) {
             // If the user is already authenticated, redirect them to the dashboard
             return redirect('/rcms/qms-dashboard');
@@ -75,22 +130,22 @@ class UserLoginController extends Controller
         ]);
         // Set the timezone
         $checkEmail = User::where('emp_code', $request->emp_code)->count();
-        
+
         if ($checkEmail > 0) {
-            if (Auth::attempt(['emp_code' => $request->emp_code, 'password' => $request->password])) {
+        if (Auth::attempt(['emp_code' => $request->emp_code, 'password' => $request->password])) {
                 // check user login limit
-                if (TotalLogin::ifUserExist(Auth::id())) {
-                    TotalLogin::removeUser(Auth::id());
-                }
-                if (TotalLogin::isUserLimitReached()) {
-                    toastr()->warning('User login limit is over please wait.');
-                    return redirect()->back()->withInput();
-                } else {
+            if (TotalLogin::ifUserExist(Auth::id())) {
+                TotalLogin::removeUser(Auth::id());
+            }
+            if (TotalLogin::isUserLimitReached()) {
+                toastr()->warning('User login limit is over please wait.');
+                return redirect()->back()->withInput();
+            } else {
                     // Save the user ID to the total_logins table for check login user limit
-                    TotalLogin::addUser();
-                    toastr()->success('Login Successfully.');
-                    return redirect('dashboard');
-                }
+                TotalLogin::addUser();
+                toastr()->success('Login Successfully.');
+                return redirect('dashboard');
+            }
             } else {
                 toastr()->error('Login failed.');
                 return redirect()->back();
@@ -131,30 +186,87 @@ class UserLoginController extends Controller
             'password' => ['required'],
             'timezone' => ['required']
         ]);
-        // Set the timezone
-        $checkEmail = User::where('emp_code', $request->emp_code)->count();
-        if ($checkEmail > 0) {
-            if (Auth::attempt(['emp_code' => $request->emp_code, 'password' => $request->password])) {
-                // check user login limit
-                if (TotalLogin::ifUserExist(Auth::id())) {
-                    TotalLogin::removeUser(Auth::id());
-                }
-                if (TotalLogin::isUserLimitReached()) {
-                    toastr()->warning('User login limit is over please wait.');
-                    return redirect()->back()->withInput();
-                } else {
-                    // Save the user ID to the total_logins table for check login user limit
-                    TotalLogin::addUser();
-                    toastr()->success('Login Successfully.');
-                    session()->put('last_activity', time());
-                    return redirect('rcms/qms-dashboard');
-                }
+
+        $user = User::where('emp_code', $request->emp_code)->first();
+
+        // ❌ User not found
+        if (!$user) {
+            toastr()->error('Email not registered.');
+            return redirect()->back();
+        }
+
+        // ❌ Check if user is locked/disabled
+        if ($user->is_active == 0) {
+
+            // Optional auto unlock after 15 minutes
+            if ($user->locked_at && now()->diffInMinutes($user->locked_at) >= 15) {
+                $user->is_active = 1;
+                $user->failed_attempts = 0;
+                $user->locked_at = null;
+                $user->save();
             } else {
-                toastr()->error('Login failed.');
+                toastr()->error('Your account is locked. Please try later or contact admin.');
                 return redirect()->back();
             }
+        }
+
+        // ✅ Attempt login
+        if (Auth::attempt(['emp_code' => $request->emp_code, 'password' => $request->password])) {
+
+            // ✅ Reset failed attempts
+            $user->failed_attempts = 0;
+            $user->locked_at = null;
+            $user->save();
+
+            if (Auth::check() && Auth::user()->force_password_change == 1) {
+                toastr()->warning('This is your first login. As per system security policy, you must create a new password before proceeding.');
+                return redirect()->route('password.change.form');
+            }
+
+            // ✅ NEW: CHECK 90 DAYS PASSWORD EXPIRY
+            if ($user->password_change_time) {
+                $passwordChangedAt = \Carbon\Carbon::parse($user->password_change_time);
+
+                if ($passwordChangedAt->diffInDays(now()) >= 90) {
+                    // Optional: set flag
+                    $user->force_password_change = 1;
+                    $user->save();
+
+                    toastr()->warning('Your password has expired as per system security policy (90 days validity). Please update your password to continue accessing the system.');
+                    return redirect()->route('password.change.form');
+                }
+            }
+
+            // Existing login limit logic
+            if (TotalLogin::ifUserExist(Auth::id())) {
+                TotalLogin::removeUser(Auth::id());
+            }
+
+            if (TotalLogin::isUserLimitReached()) {
+                toastr()->warning('User login limit is over please wait.');
+                return redirect()->back()->withInput();
+            } else {
+                TotalLogin::addUser();
+                toastr()->success('Login Successfully.');
+                session()->put('last_activity', time());
+                return redirect('rcms/qms-dashboard');
+            }
+
         } else {
-            toastr()->error('Email not registered.');
+            // ❌ Failed login attempt
+            $user->failed_attempts += 1;
+
+            if ($user->failed_attempts >= 3) {
+                $user->is_active = 0;
+                $user->locked_at = now();
+
+                toastr()->error('Account locked after 3 failed attempts.');
+            } else {
+                toastr()->error('Login failed. Attempt '.$user->failed_attempts.' of 3.');
+            }
+
+            $user->save();
+
             return redirect()->back();
         }
     }
@@ -350,6 +462,31 @@ public function employeeLogin(Request $request)
 
     toastr()->error('Login failed. Please check your credentials.');
     return redirect()->back();
+}
+
+
+
+// public function showChangePasswordForm()
+// {
+//     return view('auth.change-password');
+// }
+
+public function changePassword2(Request $request)
+{
+    $request->validate([
+        'password' => 'required|min:6|confirmed',
+    ]);
+
+    $user = Auth::user();
+
+    $user->password = Hash::make($request->password);
+    $user->password_change_time = now();
+    $user->force_password_change = 0; // ✅ مهم
+    $user->save();
+
+    toastr()->success('Password changed successfully.');
+
+    return redirect('dashboard'); // or rcms dashboard
 }
 
 }

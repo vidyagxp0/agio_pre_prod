@@ -333,7 +333,7 @@
                                             <th rowspan="2">Initiator</th>
                                             <th rowspan="2">Current Due Date (Parent)</th>
                                           
-                                            <th rowspan="2" style="text-align: center">Short Descriptiobn</th>
+                                            <th rowspan="2" style="text-align: center">Short Description</th>
                                             <th rowspan="2">Extension Number</th>
                                             <th rowspan="2">HOD Review</th>
                                             <th rowspan="2">QA/CQA Approval</th>

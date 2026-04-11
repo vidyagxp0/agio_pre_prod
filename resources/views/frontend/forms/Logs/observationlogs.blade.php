@@ -345,7 +345,7 @@
                                             <th rowspan="2">Initiator</th>
                                             <th rowspan="2">Auditee Department Head</th>
                                              <th rowspan="2">Observation Report Due Date</th>
-                                            <th rowspan="2" style="text-align: center">Short Descriptiobn</th>
+                                            <th rowspan="2" style="text-align: center">Short Description</th>
                                             {{-- <th rowspan="2">Related Records</th> --}}
                                             <th rowspan="2">Response Due Date</th>
                                            

@@ -28,9 +28,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Code<span style="color: red">*</span></label>
-                    <input type="name" name="emp_code" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Employee Code" required>
-                    @error('name')
+                    <label>Code <span style="color:red">*</span></label>
+                    <input type="text" name="emp_code"
+                        class="form-control @error('emp_code') is-invalid @enderror"
+                        placeholder="Enter Employee Code" required>
+
+                    @error('emp_code')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -45,7 +48,7 @@
 
                 <div class="form-group">
                     <label for="password">Password <span style="color: red">*</span></label>
-                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Enter password" required>
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"  value="Agio@123" id="password" placeholder="Enter password" required>
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

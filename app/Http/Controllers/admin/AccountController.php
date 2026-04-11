@@ -8,12 +8,20 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    public function toggle_status($id)
+   public function toggle_status($id)
     {
         try {
+            $user = User::findOrFail($id);
 
-            $user = User::find($id);
+            // Toggle active status
             $user->is_active = !$user->is_active;
+
+            // ✅ If activating user → reset lock data
+            if ($user->is_active == 1) {
+                $user->failed_attempts = 0;
+                $user->locked_at = null;
+            }
+
             $user->save();
 
             toastr()->success('Account updated!');

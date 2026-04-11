@@ -333,7 +333,7 @@
                                             <th rowspan="2">Originator</th>
                                             <th rowspan="2">Initiator Department</th>
                                            
-                                            <th rowspan="2" style="text-align: center">Short Descriptiobn</th>
+                                            <th rowspan="2" style="text-align: center">Short Description</th>
                                             <th rowspan="2">Assigned To </th>
                                             <th rowspan="2">Assigned To Department</th>
                                             <th rowspan="2">Type </th>

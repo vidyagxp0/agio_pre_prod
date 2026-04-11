@@ -369,7 +369,7 @@
                                             <th rowspan="2">Assigned To </th>
                                             <th rowspan="2">Due Date</th>
                                           
-                                            <th rowspan="2" style="text-align: center">Short Descriptiobn</th>
+                                            <th rowspan="2" style="text-align: center">Short Description</th>
                                            
                                             <th rowspan="2">HOD Persons</th>
                                            

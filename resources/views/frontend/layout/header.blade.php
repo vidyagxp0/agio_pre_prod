@@ -104,6 +104,8 @@
                                 </div>
                                 <div class="icon-block small-block">
                                     <div data-bs-toggle="modal" data-bs-target="#about-modal">About</div>
+                                    <div><a href="/rcms/change-password-user">Change Password</a></div>
+                                    <div><a href="/rcms/helpdesk-personnel">Helpdesk Personnel</a></div>
                                     <div><a href="{{ route('logout-employee') }}">Log Out</a></div>
                                 </div>
                             </div>
@@ -120,7 +122,8 @@
                                 </div>
                                 <div class="icon-block small-block">
                                     <div data-bs-toggle="modal" data-bs-target="#about-modal">About</div>
-                                    <div><a href="/helpdesk-personnel">Helpdesk Personel</a></div>
+                                    <div><a href="/rcms/change-password-user">Change Password</a></div>
+                                    <div><a href="/rcms/helpdesk-personnel">Helpdesk Personnel</a></div>
                                     <div><a href="{{ route('logout') }}">Log Out</a></div>
                                 </div>
                             </div>
