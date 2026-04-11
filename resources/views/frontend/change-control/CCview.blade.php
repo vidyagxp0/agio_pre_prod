@@ -2044,69 +2044,46 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12">
+                                              <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="related_records">Related Records</label>
-                                                    <select  {{ $lockdatafileds3 ? 'disabled' : '' }}
-                                                        multiple id="related_records" name="related_records[]"
-                                                        placeholder="Select Reference Records" data-search="false"
-                                                        data-silent-initial-value-set="true">
-                                                        @foreach ($pre as $prix)
-                                                            <option value="{{ $prix->id }}"
-                                                                {{ in_array($prix->id, explode(',', $data->related_records ?? '')) ? 'selected' : '' }}>
 
-                                                                {{ !empty($prix->record) 
-                                                                    ? Helpers::getDivisionName($prix->division_id) . '/CC/' . Helpers::year($prix->created_at) . '/' . str_pad($prix->record, 4, '0', STR_PAD_LEFT)
-                                                                    : 'N/A' 
-                                                                }}
+                                                    <select multiple name="related_records[]" placeholder="Select Reference Records"
+                                                        data-silent-initial-value-set="true" id="related_records"  {{ $lockdatafileds3 ? 'disabled' : '' }}>
 
-                                                            </option>
+                                                        @if (!empty($relatedRecords))
+                                                                @foreach ($relatedRecords as $records)
+                                                                    @php
+                                                                        $recordValue =
+                                                                            Helpers::getDivisionName(
+                                                                                $records->division_id ||
+                                                                                    $records->division ||
+                                                                                    $records->division_code ||
+                                                                                    $records->site_location_code,
+                                                                            ) .
+                                                                            '/' .
+                                                                            $records->process_name .
+                                                                            '/' .
+                                                                            date('Y') .
+                                                                            '/' .
+                                                                            Helpers::recordFormat($records->record);
 
-                                                        @endforeach
+                                                                        $selected = in_array(
+                                                                            $recordValue,
+
+                                                                            explode(',', $data->related_records),
+                                                                        )
+                                                                            ? 'selected'
+                                                                            : '';
+                                                                    @endphp
+                                                                    <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                        {{ $recordValue }}
+                                                                    </option>
+                                                                @endforeach
+                                                            @endif
                                                     </select>
                                                 </div>
-                                            </div> 
-
-                                     <!--   <div class="col-12">
-                                            <div class="group-input">
-                                            <label for="related_records">Related Records</label>
-
-                                            <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                                data-silent-initial-value-set="true" id="related_records"  {{ $lockdatafileds3 ? 'disabled' : '' }}>
-
-                                                 @if (!empty($relatedRecords))
-                                                        @foreach ($relatedRecords as $records)
-                                                            @php
-                                                                $recordValue =
-                                                                    Helpers::getDivisionName(
-                                                                        $records->division_id ||
-                                                                            $records->division ||
-                                                                            $records->division_code ||
-                                                                            $records->site_location_code,
-                                                                    ) .
-                                                                    '/' .
-                                                                    $records->process_name .
-                                                                    '/' .
-                                                                    date('Y') .
-                                                                    '/' .
-                                                                    Helpers::recordFormat($records->record);
-
-                                                                $selected = in_array(
-                                                                    $recordValue,
-
-                                                                    explode(',', $data->related_records),
-                                                                )
-                                                                    ? 'selected'
-                                                                    : '';
-                                                            @endphp
-                                                            <option value="{{ $recordValue }}" {{ $selected }}>
-                                                                {{ $recordValue }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
-                                            </select>
-                                        </div>
-                                    </div> -->
+                                            </div>
 
 
                                     <div class="col-12">
@@ -6740,17 +6717,6 @@
                                                     @if ($data->stage == 3 || (isset($data1->Information_Technology_person) && Auth::user()->name != $data1->Information_Technology_person)) readonly @endif name="Information_Technology_assessment" id="summernote-17">{{ $data1->Information_Technology_assessment }}</textarea>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-12 mb-3 Information_Technology">
-                                                <div class="group-input">
-                                                    <label for="Information Technology feedback">Information Technology Feedback <span id="asteriskPT2"
-                                                            style="display: {{ $data1->Information_Technology_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
-                                                            class="text-danger">*</span></label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                            does not require completion</small></div>
-                                                    <textarea class="summernote Information_Technology_feedback" @if ($data->stage == 3 || (isset($data1->Information_Technology_person) && Auth::user()->name != $data1->Information_Technology_person)) readonly @endif
-                                                        name="Information_Technology_feedback" id="summernote-18" @if ($data1->Information_Technology_review == 'yes' && $data->stage == 4) required @endif>{{ $data1->Information_Technology_feedback }}</textarea>
-                                                </div>
-                                            </div> -->
                                             <div class="col-12 Information_Technology">
                                                 <div class="group-input">
                                                     <label for="Information Technology attachment">Information Technology Attachments</label>

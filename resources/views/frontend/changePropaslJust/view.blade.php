@@ -375,6 +375,13 @@
                                             value="{{ Helpers::getInitiatorName($data->initiator_id) }}">
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator">Initiation Department</label>
+                                        <input disabled type="text" value="{{ Helpers::getUserDepartmentFromDB(Auth::user()->departmentid) }}">
+                                        {{-- <input disabled type="text" name="" value="{{ Helpers::getInitiatorName($data->initiator_id)  }}"> --}}
+                                    </div>
+                                </div>
                                 @php
                                     // Calculate the due date (30 days from the initiation date)
                                     $initiationDate = date('Y-m-d'); // Current date as initiation date

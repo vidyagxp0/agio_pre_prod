@@ -70,6 +70,7 @@ class ChangeProposalJustController extends Controller
         $data->initiator_id = Auth::id();
         $data->record = $record;
         $data->division_code = $request->division_code;
+        $data->department =  Helpers::getUserDepartmentFromDB(Auth::user()->departmentid);
         $data->due_date = $request->due_date;
         $data->division_id = $request->division_id;
         $data->intiation_date = $request->intiation_date;
@@ -222,6 +223,22 @@ class ChangeProposalJustController extends Controller
             $history->action_name = 'Create';
             $history->save();
 
+            $history = new ChangeProposalAuditTrial();
+            $history->cpjg_id = $data->id;
+            $history->activity_type = 'Initiation Department';
+            $history->previous = "Null";
+            $history->current =  Helpers::getUserDepartmentFromDB(Auth::user()->departmentid);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = 'Create';
+            $history->save();
+
+
          if (!empty($request->cpdescription)) {
             $history = new ChangeProposalAuditTrial();
             $history->cpjg_id = $data->id;
@@ -273,107 +290,6 @@ class ChangeProposalJustController extends Controller
             $history->save();
         }
 
-        if (!empty($request->hod_comment)) {
-            $history = new ChangeProposalAuditTrial();
-            $history->cpjg_id = $data->id;
-            $history->activity_type = 'HOD Comment';
-            $history->previous = "Null";
-            $history->current = $data->hod_comment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-        
-        if (!empty($request->hodAttachment)) {
-            $history = new ChangeProposalAuditTrial();
-            $history->cpjg_id = $data->id;
-            $history->activity_type = 'HOD Comment';
-            $history->previous = "Null";
-            $history->current = $data->hodAttachment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-
-        if (!empty($request->qa_comment)) {
-            $history = new ChangeProposalAuditTrial();
-            $history->cpjg_id = $data->id;
-            $history->activity_type = 'QA/CQA Review Comments';
-            $history->previous = "Null";
-            $history->current = $data->qa_comment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-
-        if (!empty($request->qaAttachment)) {
-            $history = new ChangeProposalAuditTrial();
-            $history->cpjg_id = $data->id;
-            $history->activity_type = 'QA Attachment';
-            $history->previous = "Null";
-            $history->current = $data->qaAttachment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-
-        if (!empty($request->qa_cqa_head_comment)) {
-            $history = new ChangeProposalAuditTrial();
-            $history->cpjg_id = $data->id;
-            $history->activity_type = 'QA/CQA Head Comment';
-            $history->previous = "Null";
-            $history->current = $data->qa_cqa_head_comment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-
-        if (!empty($request->qa_cqa_head_Attachment)) {
-            $history = new ChangeProposalAuditTrial();
-            $history->cpjg_id = $data->id;
-            $history->activity_type = 'QA/CQA Head Attachment';
-            $history->previous = "Null";
-            $history->current = $data->qa_cqa_head_Attachment;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
 
         toastr()->success('Document created');
         return redirect('rcms/qms-dashboard');

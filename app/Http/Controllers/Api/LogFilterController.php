@@ -39,6 +39,7 @@ use Carbon\Carbon;
 use App\Models\Capa;
 use App\Models\ManagementReview;
 use App\Models\Resampling;
+use App\Models\ChangeProposalJust;
 use App\Models\CapaGrid;
 use PDF;
 use App\Http\Controllers\Controller;
@@ -1804,6 +1805,86 @@ public function IncidentFilter(Request $request)
 
     return response()->json($res);
 }
+
+public function changeProposalJustificationFilter(Request $request)
+    {
+    
+        $res = [
+            'status' => 'ok',
+            'message' => 'success',
+            'body' => []
+        ];
+
+        try {
+
+            
+            $query = ChangeProposalJust::query();
+            
+            if ($request->changeProposalJustification_department)
+            {
+                $query->where('departments', $request->changeProposalJustification_department);
+            }
+
+            if($request->div_idchangeProposalJustification)
+            {
+                $query->where('division_code',$request->div_idchangeProposalJustification);
+            }
+            // if($request->categoryofcomplaints)
+            // {
+            //     $query->where('categorization_of_complaint_gi',$request->categoryofcomplaints);
+            // }
+
+            if ($request->period_lab) {
+                $currentDate = Carbon::now();
+                switch ($request->period_lab) {
+                    case 'Yearly':
+                        $startDate = $currentDate->startOfYear();
+                        break;
+                    case 'Quarterly':
+                        $startDate = $currentDate->firstOfQuarter();
+                        break;
+                    case 'Monthly':
+                        $startDate = $currentDate->startOfMonth();
+                        break;
+                    default:
+                        $startDate = null;
+                        break;
+                }
+                if ($startDate) {
+                    $query->whereDate('intiation_date', '>=', $startDate);
+                }
+            }
+
+            if ($request->datechangeProposalJustificationFrom) {
+                $from = Carbon::createFromFormat('Y-m-d', $request->datechangeProposalJustificationFrom)
+                            ->format('d-m-Y');
+
+                $query->where('intiation_date', '>=', $from);
+            }
+
+            if ($request->datechangeProposalJustificationTo) {
+                $to = Carbon::createFromFormat('Y-m-d', $request->datechangeProposalJustificationTo)
+                            ->format('d-m-Y');
+
+                $query->where('intiation_date', '<=', $to);
+            }
+
+            $changeProposalJustification = $query->get();
+
+            $htmlData = view('frontend.forms.Logs.filterData.changeProposalJustificationData', compact('changeProposalJustification'))->render();
+            
+           
+            $res['body'] = $htmlData;
+
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+
+        }
+        return response()->json($res);
+        
+    }
 
 
     

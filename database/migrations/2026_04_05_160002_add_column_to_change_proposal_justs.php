@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('Complete_On')->nullable();
             $table->string('Complete_Comments')->nullable();
             $table->integer('dashboard_unique_id')->nullable();
+            $table->string('department')->nullable();
         });
     }
 

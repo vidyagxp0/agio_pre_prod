@@ -86,10 +86,19 @@
                                     </div>
                                 </div>
 
+                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator">Initiator</label>
                                         <input disabled type="text" value="{{ Auth::user()->name }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator">Initiation Department</label>
+                                        <input disabled type="text" value="{{ Helpers::getUserDepartmentFromDB(Auth::user()->departmentid) }}">
                                         {{-- <input disabled type="text" name="" value="{{ Helpers::getInitiatorName($data->initiator_id)  }}"> --}}
                                     </div>
                                 </div>
