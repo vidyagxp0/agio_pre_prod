@@ -207,16 +207,17 @@ class RoleGroupSeeder extends Seeder
             "HOD Human Resource & Administration",
         ];
 
+
+        $newroel4 = ['Initiator', 'HOD/Designee', 'QA', 'CFT','QA Head/Designee','CQA Head/Designee' ,'View Only', 'FP', 'Closed Record'];
+        
         $processes5 = [
             'Management Review'
         ];
 
-        // $incrementCount1 = $incrementCount;
-
         foreach ($processes5 as $process)
         {
             foreach ($sites as $site) {
-                foreach ($cft_roles4 as $role) {
+                foreach ($newroel4 as $role) {
                     $group = new RoleGroup();
                     // $group->id = $incrementCount++;
                     $group->name = "$site-$process-$role";
@@ -227,19 +228,19 @@ class RoleGroupSeeder extends Seeder
             }
         }
 
-        $processes_roles_new = [
-            'Change Proposal And Justification' => ['Initiator', 'QA', 'HOD/Designee', 'QA Head/Designee', 'View Only', 'FP', 'Closed Record'],
-        ];
-        foreach ($sites as $site) {
-            foreach ($processes_roles_new as $process => $roles) {
-                foreach ($roles as $role) {
-                    $group = new RoleGroup();
-                    $group->name = "$site-$process-$role";
-                    $group->description = "$site-$process-$role";
-                    $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
-                    $group->save();
-                }
-            }
-        }
+        // $processes_roles_new = [
+        //     'Change Proposal And Justification' => ['Initiator', 'QA', 'HOD/Designee', 'QA Head/Designee', 'View Only', 'FP', 'Closed Record'],
+        // ];
+        // foreach ($sites as $site) {
+        //     foreach ($processes_roles_new as $process => $roles) {
+        //         foreach ($roles as $role) {
+        //             $group = new RoleGroup();
+        //             $group->name = "$site-$process-$role";
+        //             $group->description = "$site-$process-$role";
+        //             $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        //             $group->save();
+        //         }
+        //     }
+        // }
     }
 }
