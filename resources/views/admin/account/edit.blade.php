@@ -37,10 +37,6 @@
                         value="{{ old('emp_code', $data->emp_code) }}"
                         class="form-control @error('emp_code') is-invalid @enderror"
                         placeholder="Enter Employee Code">
-
-                    @error('emp_code')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -49,10 +45,6 @@
                         value="{{ old('email', $data->email) }}"
                         class="form-control @error('email') is-invalid @enderror"
                         placeholder="Enter Email">
-
-                    @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
                 </div>
 
                 <div class="form-group">

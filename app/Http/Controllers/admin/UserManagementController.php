@@ -172,7 +172,7 @@ class UserManagementController extends Controller
          // ✅ Validation (IGNORE current user)
         $request->validate([
             'name' => 'required|string|max:255',
-            'emp_code' => 'required|string|max:255|unique:users,emp_code',
+            'emp_code' => 'required|string|max:255',
             'email' => 'required|email',
             'departmentid' => 'required',
             'roles' => 'required|array',
