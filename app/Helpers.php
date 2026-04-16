@@ -1034,66 +1034,66 @@ class Helpers
 
     public static function getInitiatorGroupFullName($shortName)
     {
-    {
+        {
 
-        switch ($shortName) {
-            case 'Corporate Quality Assurance':
-                return 'Corporate Quality Assurance';
-                break;
-            case 'QAB':
-                return 'Quality Assurance Biopharma';
-                break;
-            case 'CQC':
-                return 'Central Quality Control';
-                break;
-            case 'MANU':
-                return 'Manufacturing';
-                break;
-            case 'PSG':
-                return 'Plasma Sourcing Group';
-                break;
-            case 'CS':
-                return 'Central Stores';
-                break;
-            case 'ITG':
-                return 'Information Technology Group';
-                break;
-            case 'MM':
-                return 'Molecular Medicine';
-                break;
-            case 'CL':
-                return 'Central Laboratory';
-                break;
-            case 'TT':
-                return 'Tech Team';
-                break;
-            case 'QA':
-                return 'Quality Assurance';
-                break;
-            case 'QM':
-                return 'Quality Management';
-                break;
-            case 'IA':
-                return 'IT Administration';
-                break;
-            case 'ACC':
-                return 'Accounting';
-                break;
-            case 'LOG':
-                return 'Logistics';
-                break;
-            case 'SM':
-                return 'Senior Management';
-                break;
-            case 'BA':
-                return 'Business Administration';
-                break;
-            default:
-                return '';
-                break;
+            switch ($shortName) {
+                case 'Corporate Quality Assurance':
+                    return 'Corporate Quality Assurance';
+                    break;
+                case 'QAB':
+                    return 'Quality Assurance Biopharma';
+                    break;
+                case 'CQC':
+                    return 'Central Quality Control';
+                    break;
+                case 'MANU':
+                    return 'Manufacturing';
+                    break;
+                case 'PSG':
+                    return 'Plasma Sourcing Group';
+                    break;
+                case 'CS':
+                    return 'Central Stores';
+                    break;
+                case 'ITG':
+                    return 'Information Technology Group';
+                    break;
+                case 'MM':
+                    return 'Molecular Medicine';
+                    break;
+                case 'CL':
+                    return 'Central Laboratory';
+                    break;
+                case 'TT':
+                    return 'Tech Team';
+                    break;
+                case 'QA':
+                    return 'Quality Assurance';
+                    break;
+                case 'QM':
+                    return 'Quality Management';
+                    break;
+                case 'IA':
+                    return 'IT Administration';
+                    break;
+                case 'ACC':
+                    return 'Accounting';
+                    break;
+                case 'LOG':
+                    return 'Logistics';
+                    break;
+                case 'SM':
+                    return 'Senior Management';
+                    break;
+                case 'BA':
+                    return 'Business Administration';
+                    break;
+                default:
+                    return '';
+                    break;
+            }
         }
     }
-}
 
     static public function userIsQA()
     {
@@ -2011,6 +2011,30 @@ public static function check_roles_qms_new($role_id, $process_name)
         return $data->name;
     }
 
+    private function getRecordUrl($processKey, $record)
+{
+    $baseUrl = config('app.url'); // https://yourdomain.com
+    
+    switch ($processKey) {
+        case 'Action Item':
+           return $baseUrl . '/rcms/actionItem/' . $record->id;
+            
+        case 'change_control':
+            return $baseUrl . '/change-control/view/' . $record->id;
+            
+        case 'capa':
+            return $baseUrl . '/capa/view/' . $record->id;
+            
+        case 'deviation':
+            return $baseUrl . '/deviation/view/' . $record->id;
+            
+        case 'change_proposal':
+            return $baseUrl . '/change-proposal/view/' . $record->id;
+            
+        default:
+            return $baseUrl . '/dashboard';
+    }
+}
 
 }
 

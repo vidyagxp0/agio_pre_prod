@@ -20,12 +20,17 @@
         {{ $logs->division_code ?? '-' }}
     </td>
 
-    {{-- <td>{{ $logs->Department ?? '-' }}</td> --}}
+    <td>{{ $logs->department ?? '-' }}</td>
 
     {{-- <td>{{ $logs->type_of_error ?? '-' }}</td> --}}
 
     {{-- <td>{{ Helpers::getInitiatorName($logs->department_head_to) ?? '-' }}</td> --}}
-    <td>{{ $logs->due_date ?? '-' }}</td>
+
+    <td>
+        {{ $logs->due_date 
+            ? \Carbon\Carbon::parse($logs->due_date)->format('d-M-Y') 
+            : 'NA' }}
+    </td>
 
 
    <td>

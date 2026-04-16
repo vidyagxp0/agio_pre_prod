@@ -13,11 +13,6 @@ class Kernel extends ConsoleKernel
 {
 
 
-        protected $commands = [
-            \App\Console\Commands\SendScheduledEmail::class,
-            \App\Console\Commands\SendProcessDueReminders::class,
-        ];
-
     /**
      * Define the application's command schedule.
      *
@@ -28,8 +23,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Due Date Reminder (Daily Check)
-        // $schedule->command('due:reminder')->everyMinute();
-        $schedule->command('due:reminders')->everyMinute();
+        $schedule->command('reminder:due-date')->everyMinute();
 
         // Existing Scheduled Emails
         $scheduledEmails = DB::table('subscribes')->get();

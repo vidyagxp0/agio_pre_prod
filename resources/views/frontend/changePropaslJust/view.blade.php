@@ -379,7 +379,6 @@
                                     <div class="group-input">
                                         <label for="Initiator">Initiation Department</label>
                                         <input disabled type="text" value="{{ Helpers::getUserDepartmentFromDB(Auth::user()->departmentid) }}">
-                                        {{-- <input disabled type="text" name="" value="{{ Helpers::getInitiatorName($data->initiator_id)  }}"> --}}
                                     </div>
                                 </div>
                                 @php
@@ -695,22 +694,22 @@
                                                             </td>
                                                             <td>
                                                                 <select name="checklist[{{ $key }}][response]"
-                                                                    style="width:100%; border:1px solid #000; background:#f0f0f0;">
+                                                                    style="width:100%; border:1px solid #000; background:#f0f0f0;" {{ $istab1 ? "" : "disabled" }}>
 
                                                                     <option value="">Select</option>
 
                                                                     <option value="Yes"
-                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? 'selected' : '' }} {{ $istab1 ? "" : "readonly" }}>
+                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? 'selected' : '' }}>
                                                                         Yes
                                                                     </option>
 
                                                                     <option value="No"
-                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'No' ? 'selected' : '' }} {{ $istab1 ? "" : "readonly" }}>
+                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'No' ? 'selected' : '' }}>
                                                                         No
                                                                     </option>
 
                                                                     <option value="N/A"
-                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'N/A' ? 'selected' : '' }} {{ $istab1 ? "" : "readonly" }}>
+                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'N/A' ? 'selected' : '' }}>
                                                                         N/A
                                                                     </option>
 

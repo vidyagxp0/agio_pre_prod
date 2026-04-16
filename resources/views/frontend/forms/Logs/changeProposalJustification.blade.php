@@ -205,7 +205,7 @@
                                             <th>Short Description</th>
                                             <th>Initiator</th>
                                             <th>Division</th>
-                                            {{-- <th>Department</th> --}}
+                                            <th>Department</th>
                                             {{-- <th>Type of Error</th> --}}
                                             {{-- <th>Department Head</th> --}}
                                             <th>Due Date</th>
@@ -232,56 +232,58 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js" integrity="sha512-JSCFHhKDilTRRXe9ak/FJ28dcpOJxzQaCd3Xg8MyF6XFjODhy/YMCM8HW0TFDckNHWUewW+kfvhin43hKtJxAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
-    const filterData = {
-        changeProposalJustification_department: null,
-        div_idchangeProposalJustification: null,
-        period_lab: null,
-        datechangeProposalJustificationFrom: null,
-        datechangeProposalJustificationTo: null
-    }
+        const filterData = {
+            changeProposalJustification_department: '',
+            div_idchangeProposalJustification: '',
+            datechangeProposalJustificationFrom: '',
+            datechangeProposalJustificationTo: ''
+        };
 
-    $('#initiator_group').change(function() {
-        filterData.changeProposalJustification_department = $(this).val();
-        filterRecords();
-    });
+        // Department
+        $('#initiator_group').on('change', function() {
+            filterData.changeProposalJustification_department = $(this).val() || '';
+            filterRecords();
+        });
 
-    $('#division_id').change(function() {
-        filterData.div_idchangeProposalJustification = $(this).val();
-        filterRecords();
-    });
+        // Division
+        $('#division_id').on('change', function() {
+            filterData.div_idchangeProposalJustification = $(this).val() || '';
+            filterRecords();
+        });
 
-    $('#date_from').change(function() {
-        filterData.datechangeProposalJustificationFrom = $(this).val();
-        filterRecords();
-    });
+        // From Date
+        $('#date_from').on('change', function() {
+            filterData.datechangeProposalJustificationFrom = $(this).val() || '';
+            filterRecords();
+        });
 
-    $('#date_to').change(function() {
-        filterData.datechangeProposalJustificationTo = $(this).val();
-        filterRecords();
-    });
+        // To Date
+        $('#date_to').on('change', function() {
+            filterData.datechangeProposalJustificationTo = $(this).val() || '';
+            filterRecords();
+        });
 
-    $('#datewise').change(function() {
-        filterData.period_lab = $(this).val();
-        filterRecords();
-    });
+        async function filterRecords() {
+            $('#spinner').show();
 
-    async function filterRecords() {
-        $('#tableData').html('');
-        $('#spinner').show();
+            try {
+                const postUrl = "{{ route('api.changeProposalJustification.filter') }}";
 
-        try {
-            const postUrl = "{{ route('api.changeProposalJustification.filter') }}";
-            const res = await axios.post(postUrl, filterData);
+                const res = await axios.post(postUrl, filterData);
 
-            if (res.data.status === 'ok') {
-                $('#tableData').html(res.data.body);
+                if (res.data.status === 'ok') {
+                    $('#tableData').html(res.data.body);
+                } else {
+                    $('#tableData').html('<tr><td colspan="10">No Data Found</td></tr>');
+                }
+
+            } catch (err) {
+                console.log('Error in filterRecords', err);
             }
-        } catch (err) {
-            console.log('Error in filterRecords', err.message);
-        }
 
-        $('#spinner').hide();
-    }
-</script>
+            $('#spinner').hide();
+        }
+    </script>
 @endsection
