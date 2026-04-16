@@ -720,7 +720,25 @@ class ChangeProposalJustController extends Controller
                 }
 
                 if ($data->stage == 2) {
-                    
+
+                if (empty($data->hod_comment))
+                 {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'HOD Remarks Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA CQA Review state'
+                    ]);
+                }
+                
                     $data->stage = "3";
                     $data->status = "QA CQA Review";
                     $data->HOD_Review_Complete_By = Auth::user()->name;
@@ -790,6 +808,24 @@ class ChangeProposalJustController extends Controller
                 }
 
                 if ($data->stage == 3) {
+
+                if (empty($data->qa_comment))
+                 {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'QA CQA Review Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA/CQA Head / Designe Review state'
+                    ]);
+                }
                     
                     $data->stage = "4";
                     $data->status = "QA/CQA Head/Designee";
@@ -862,6 +898,25 @@ class ChangeProposalJustController extends Controller
                 }
 
                 if ($data->stage == 4) {
+
+
+                if (empty($data->qa_cqa_head_comment))
+                 {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'QA/CQA Head / Designe Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Closed-Done state'
+                    ]);
+                }
                     
                     $data->stage = "5";
                     $data->status = "Closed - Done";
@@ -1183,19 +1238,19 @@ class ChangeProposalJustController extends Controller
 
                     $extensionNew->stage = "0";
                     $extensionNew->status = "Closed Cancelled";
-                    $extensionNew->rejected_by = Auth::user()->name;
-                    $extensionNew->rejected_on = Carbon::now()->format('d-M-Y');
-                    // $extensionNew->reject_comment = $request->comment;
+                    $extensionNew->cancelled_by = Auth::user()->name;
+                    $extensionNew->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $extensionNew->cancel_comment = $request->comment;
 
                     $history = new ChangeProposalAuditTrial();
                     $history->cpjg_id = $id;
                     $history->activity_type = 'Cancel By, Cancel On';
-                    if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                         $history->previous = "Null";
                     } else {
-                        $history->previous = $lastDocument->rejected_by . ' , ' . $lastDocument->rejected_on;
+                        $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
                     }
-                    $history->current = $extensionNew->rejected_by . ' , ' . $extensionNew->rejected_on;
+                    $history->current = $extensionNew->cancelled_by . ' , ' . $extensionNew->cancelled_on;
                     $history->action = 'Cancel';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
@@ -1205,7 +1260,7 @@ class ChangeProposalJustController extends Controller
                     $history->change_to =   "Closed - Cancelled";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Closed - Cancelled';
-                    if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
+                    if (is_null($lastDocument->cancelled_by) || $lastDocument->cancelled_by === '') {
                         $history->action_name = 'New';
                     } else {
                         $history->action_name = 'Update';

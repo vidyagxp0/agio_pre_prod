@@ -140,45 +140,214 @@ class DueDateReminder extends Command
         ]);
     }
 
-    private function resolveReminderUser($record, $processKey)
-    {
-        $stage = $record->stage;
-        $divisionId = $record->division_id ?? 1;
+    // private function resolveReminderUser($record, $processKey)
+    // {
+    //     $stage = $record->stage;
+    //     $divisionId = $record->division_id ?? 1;
         
-        switch ($processKey) {
+    //     switch ($processKey) {
             
-            case 'Action Item':
-                if ($stage == 1) {
-                    $users = collect();
-                    if (!empty($record->initiator_id)) {
-                        $users = $users->merge(User::where('id', $record->initiator_id)->get());
-                    }
-                    $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 3));
-                    return $users->unique('id');
-                }
-                if ($stage == 2 || $stage == 3) {
-                    $users = collect();
-                    if (!empty($record->assign_to)) {
-                        $users = $users->merge(User::where('id', $record->assign_to)->get());
-                    }
-                    $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 18));
-                    return $users->unique('id');
-                }
-                if ($stage == 4) {
-                    $users = collect();
-                    $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 7));
-                    $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 66));
-                    return $users->unique('id');
-                }
-                if ($stage == 5) {
-                    return collect();
-                }
-                break;
+    //         case 'Action Item':
+    //             if ($stage == 1) {
+    //                 $users = collect();
+    //                 if (!empty($record->initiator_id)) {
+    //                     $users = $users->merge(User::where('id', $record->initiator_id)->get());
+    //                 }
+    //                 $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 3));
+    //                 return $users->unique('id');
+    //             }
+    //             if ($stage == 2 || $stage == 3) {
+    //                 $users = collect();
+    //                 if (!empty($record->assign_to)) {
+    //                     $users = $users->merge(User::where('id', $record->assign_to)->get());
+    //                 }
+    //                 $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 18));
+    //                 return $users->unique('id');
+    //             }
+    //             if ($stage == 4) {
+    //                 $users = collect();
+    //                 $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 7));
+    //                 $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 66));
+    //                 return $users->unique('id');
+    //             }
+    //             if ($stage == 5) {
+    //                 return collect();
+    //             }
+    //             break;
+
                  
-        }
+    //     }
         
-        return collect();
+    //     return collect();
+    // }
+
+    private function resolveReminderUser($record, $processKey)
+{
+    $stage = $record->stage;
+    $divisionId = $record->division_id ?? 1;
+    
+    switch ($processKey) {
+        
+        case 'Action Item':
+            if ($stage == 1) {
+                $users = collect();
+                if (!empty($record->initiator_id)) {
+                    $users = $users->merge(User::where('id', $record->initiator_id)->get());
+                }
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 3));
+                return $users->unique('id');
+            }
+            if ($stage == 2 || $stage == 3) {
+                $users = collect();
+                if (!empty($record->assign_to)) {
+                    $users = $users->merge(User::where('id', $record->assign_to)->get());
+                }
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 18));
+                return $users->unique('id');
+            }
+            if ($stage == 4) {
+                $users = collect();
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 7));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Action Item', 66));
+                return $users->unique('id');
+            }
+            if ($stage == 5) {
+                return collect();
+            }
+            break;
+            
+        case 'Change Proposal And Justification':
+            if ($stage == 1) {
+                $users = collect();
+                if (!empty($record->initiator_id)) {
+                    $users = $users->merge(User::where('id', $record->initiator_id)->get());
+                }
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Proposal And Justification', 3));
+                return $users->unique('id');
+            }
+            if ($stage == 2) {
+                $users = collect();
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Proposal And Justification', 4));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Proposal And Justification', 18));
+                return $users->unique('id');
+            }
+            if ($stage == 3) {
+                $users = collect();
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Proposal And Justification', 48));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Proposal And Justification', 63));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Proposal And Justification', 18));
+                return $users->unique('id');
+            }
+            if ($stage == 4) {
+                $users = collect();
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Proposal And Justification', 43));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Proposal And Justification', 9));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Proposal And Justification', 65));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Proposal And Justification', 18));
+                return $users->unique('id');
+            }
+            if ($stage == 5) {
+                return collect();
+            }
+            break;
+            
+        // ✅ CHANGE CONTROL
+        case 'Change Control':
+            
+            // STAGE 1: Role 3
+            if ($stage == 1) {
+                return $this->getUsersByRole($divisionId, 'Change Control', 3);
+            }
+            
+            // STAGE 2: Role 4
+            if ($stage == 2) {
+                return $this->getUsersByRole($divisionId, 'Change Control', 4);
+            }
+            
+            // STAGE 3: Roles 7, 66
+            if ($stage == 3) {
+                $users = collect();
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 7));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 66));
+                return $users->unique('id');
+            }
+            
+            // STAGE 5: Roles 7, 66
+            if ($stage == 5) {
+                $users = collect();
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 7));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 66));
+                return $users->unique('id');
+            }
+            
+            // STAGE 6: Role 50
+            if ($stage == 6) {
+                return $this->getUsersByRole($divisionId, 'Change Control', 50);
+            }
+            
+            // STAGE 7: Roles 39, 43, 42, 9, 65
+            if ($stage == 7) {
+                $users = collect();
+                $roleIds = [39, 43, 42, 9, 65];
+                foreach ($roleIds as $roleId) {
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', $roleId));
+                }
+                return $users->unique('id');
+            }
+            
+            // STAGE 9: Roles 3, 18
+            if ($stage == 9) {
+                $users = collect();
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 3));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 18));
+                return $users->unique('id');
+            }
+            
+            // STAGE 10: Roles 4, 18
+            if ($stage == 10) {
+                $users = collect();
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 4));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 18));
+                return $users->unique('id');
+            }
+            
+            // STAGE 11: Roles 7, 66, 18
+            if ($stage == 11) {
+                $users = collect();
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 7));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 66));
+                $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', 18));
+                return $users->unique('id');
+            }
+            
+            // STAGE 12: Roles 39, 42, 9, 43, 65, 18
+            if ($stage == 12) {
+                $users = collect();
+                $roleIds = [39, 42, 9, 43, 65, 18];
+                foreach ($roleIds as $roleId) {
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Change Control', $roleId));
+                }
+                return $users->unique('id');
+            }
+            
+            // STAGE 4, 8, 13+ : No mail or default
+            return collect();
+            
+        case 'CAPA':
+            // Add CAPA logic here
+            return collect();
+            
+        case 'Deviation':
+            // Add Deviation logic here
+            return collect();
+            
+        default:
+            return collect();
     }
+    
+    return collect();
+}
+   
 
     private function getUsersByRole($divisionId, $processName, $roleId)
     {
@@ -244,7 +413,7 @@ class DueDateReminder extends Command
             'Market Complaint' => 'MC',
             'Incident' => 'INC',
             'ERRATA' => 'ERR',
-            'Change Proposal And Justification' => 'CP',
+            'Change Proposal And Justification' => 'CPJ',
         ];
         
         return $codes[$processName] ?? 'XX';

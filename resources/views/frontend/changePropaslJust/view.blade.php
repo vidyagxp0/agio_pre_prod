@@ -343,7 +343,7 @@
                         <div class="inner-block-content">
                             <div class="row">
 
-                                 @php
+                                @php
                                 $istab1 = ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 3)));
                                 $istab2 = ($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 4)  || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18)));
                                 $istab3 = ($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 48) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 63) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18)));
@@ -782,8 +782,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">HOD Remarks @if($data->stage == 2) <span class="text-danger">*</span>
-                                        
+                                    <label for="Assigned To">HOD Remarks @if($data->stage == 2) <span class="text-danger">*</span>                                        
                                     @endif</label>
                                     <textarea name="hod_comment" id="hod_comment" cols="30" {{ $istab2 ? "required" : "readonly" }}>{{ $data->hod_comment }}</textarea>
                                 </div>
@@ -846,7 +845,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">QA/CQA Review Comments</label>
+                                    <label for="Assigned To">QA/CQA Review Comments @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
                                     <textarea name="qa_comment" id="qa_comment" cols="30" {{ $istab3 ? "required" : "readonly" }}>{{ $data->qa_comment }}</textarea>
                                 </div>
                             </div>
@@ -910,7 +909,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">QA/CQA Head Approval Comments</label>
+                                    <label for="Assigned To">QA/CQA Head Approval Comments @if($data->stage == 4) <span class="text-danger">*</span>@endif</label>
                                     <textarea name="qa_cqa_head_comment" id="qa_cqa_head_comment" cols="30" {{ $istab4 ? "required" : "readonly" }}>{{ $data->qa_cqa_head_comment }}</textarea>
                                 </div>
                             </div>
@@ -1072,52 +1071,26 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for=" Rejected By">Reject By</label>
-                                    <div class="static">
-                                        {{ !empty($data->submit_by_inapproved) ? $data->submit_by_inapproved : 'Not Applicable' }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">Reject On</label>
-                                    <div class="static">
-                                        {{ !empty($data->submit_on_inapproved) ? $data->submit_on_inapproved : 'Not Applicable' }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">Reject Comment</label>
-                                    <div class="static">
-                                        {{ !empty($data->submit_commen_inapproved) ? $data->submit_commen_inapproved : 'Not Applicable' }}
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">Cancel By</label>
                                     <div class="static">
-                                        {{ !empty($data->reject_by) ? $data->reject_by : 'Not Applicable' }}</div>
+                                        {{ !empty($data->cancelled_by) ? $data->cancelled_by : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Cancel On</label>
                                     <div class="static">
-                                        {{ !empty($data->reject_on) ? $data->reject_on : 'Not Applicable' }}</div>
+                                        {{ !empty($data->cancelled_on) ? $data->cancelled_on : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Cancel Comment</label>
                                     <div class="static">
-                                        {{ !empty($data->reject_comment) ? $data->reject_comment : 'Not Applicable' }}
+                                        {{ !empty($data->cancel_comment) ? $data->cancel_comment : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>

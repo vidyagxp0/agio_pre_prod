@@ -2011,30 +2011,30 @@ public static function check_roles_qms_new($role_id, $process_name)
         return $data->name;
     }
 
-    private function getRecordUrl($processKey, $record)
-{
-    $baseUrl = config('app.url'); // https://yourdomain.com
+//     private function getRecordUrl($processKey, $record)
+// {
+//     $baseUrl = config('app.url'); // https://yourdomain.com
     
-    switch ($processKey) {
-        case 'Action Item':
-           return $baseUrl . '/rcms/actionItem/' . $record->id;
+//     switch ($processKey) {
+//         case 'Action Item':
+//            return $baseUrl . '/rcms/actionItem/' . $record->id;
             
-        case 'change_control':
-            return $baseUrl . '/change-control/view/' . $record->id;
+//         case 'change_control':
+//             return $baseUrl . '/change-control/view/' . $record->id;
             
-        case 'capa':
-            return $baseUrl . '/capa/view/' . $record->id;
+//         case 'capa':
+//             return $baseUrl . '/capa/view/' . $record->id;
             
-        case 'deviation':
-            return $baseUrl . '/deviation/view/' . $record->id;
+//         case 'deviation':
+//             return $baseUrl . '/deviation/view/' . $record->id;
             
-        case 'change_proposal':
-            return $baseUrl . '/change-proposal/view/' . $record->id;
+//         case 'change_proposal':
+//             return $baseUrl . '/change-proposal/view/' . $record->id;
             
-        default:
-            return $baseUrl . '/dashboard';
-    }
-}
+//         default:
+//             return $baseUrl . '/dashboard';
+//     }
+// }
 
 }
 

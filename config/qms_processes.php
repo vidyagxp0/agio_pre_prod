@@ -3,9 +3,20 @@ return [
 
     'processes' => [
 
-        'change_proposal' => [
+        'Change Proposal And Justification' => [
             'model' => App\Models\ChangeProposalJust::class,
             'name' => 'Change Proposal And Justification'
+        ],
+
+        'Action Item' => [
+            'model' => App\Models\ActionItem::class,
+            'name' => 'Action Item'
+        ],
+
+        
+        'Change Control' => [
+            'model' => App\Models\CC::class,
+            'name' => 'Change Control'
         ],
 
         'capa' => [
@@ -18,19 +29,6 @@ return [
             'name' => 'Deviation'
         ],
 
-        'Change Control' => [
-            'model' => App\Models\CC::class,
-            'name' => 'Change Control'
-        ],
-
-        'Action Item' => [
-            'model' => App\Models\ActionItem::class,
-            'name' => 'Action Item'
-        ],
-
-        
-
-        // 🔥 jitne bhi process hai add karte jao
     ]
 
 ];
