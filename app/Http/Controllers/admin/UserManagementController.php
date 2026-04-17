@@ -42,7 +42,7 @@ class UserManagementController extends Controller
     public function create()
     {
         //
-        $group = Roles::all();
+        $group = Roles::select('name')->distinct()->get();
         $department = Department::all();
         return view('admin.account.create', compact('group','department'));
     }
@@ -149,7 +149,7 @@ class UserManagementController extends Controller
     public function edit($id)
     {
         //
-        $group = Roles::all();
+        $group = Roles::select('name')->distinct()->get();
         $department = Department::all();
 
         $data = User::find($id);
@@ -172,7 +172,7 @@ class UserManagementController extends Controller
          // ✅ Validation (IGNORE current user)
         $request->validate([
             'name' => 'required|string|max:255',
-            'emp_code' => 'required|string|max:255|unique:users,emp_code',
+            'emp_code' => 'required|string|max:255',
             'email' => 'required|email',
             'departmentid' => 'required',
             'roles' => 'required|array',

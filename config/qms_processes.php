@@ -19,7 +19,7 @@ return [
             'name' => 'Change Control'
         ],
 
-        'capa' => [
+        'CAPA' => [
             'model' => App\Models\Capa::class,
             'name' => 'CAPA'
         ],
