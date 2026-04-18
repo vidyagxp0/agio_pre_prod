@@ -8043,15 +8043,15 @@ if ($lastCft->RegulatoryAffair_on != $Cft->RegulatoryAffair_on && $request->Regu
             $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
-        if ($lastCft->Other1_Department_person != $request->Other1_Department_person && $request->Other1_Department_person != null) {
+        if ($lastCft->Other1_person != $request->Other1_person && $request->Other1_person != null) {
             $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
             ->where('activity_type', 'Others 1 Department ')
             ->exists();
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Others 1 Department ';
-            $history->previous = Helpers::getFullDepartmentName($lastCft->Other1_Department_person);
-            $history->current = Helpers::getFullDepartmentName($request->Other1_Department_person);
+            $history->previous = $lastCft->Other1_Department_person;
+            $history->current = $request->Other1_Department_person;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
