@@ -17,7 +17,7 @@ use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendAdminUserEmailJob;
-
+use Illuminate\Validation\Rule;
 class UserManagementController extends Controller
 {
     /**
@@ -169,10 +169,10 @@ class UserManagementController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::with('userRoles')->find($id); 
-         // ✅ Validation (IGNORE current user)
+        // ✅ Validation (IGNORE current user)
         $request->validate([
-            'name' => 'required|string|max:255',
-            'emp_code' => 'required|string|max:255',
+            'name' => 'required|string|max:255', 
+            'emp_code' => ['required','string','max:255',Rule::unique('users', 'emp_code')->ignore($id)],
             'email' => 'required|email',
             'departmentid' => 'required',
             'roles' => 'required|array',
