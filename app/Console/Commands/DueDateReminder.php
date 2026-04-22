@@ -487,6 +487,124 @@ class DueDateReminder extends Command
                     return collect(); 
                 }
                 break;
+
+                case 'Effectiveness Check':
+    
+                // STAGE 1: Initiator ya Role 3, 18
+                if ($stage == 1) {
+                    $users = collect();
+                    if (!empty($record->initiator_id)) {
+                        $users = $users->merge(User::where('id', $record->initiator_id)->get());
+                    }
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Effectiveness Check', 3));
+                    return $users->unique('id');
+                }
+                
+                // STAGE 2: assign_to ya Role 18 (Acknowledge Complete)
+                if ($stage == 2) {
+                    $users = collect();
+                    if (!empty($record->assign_to)) {
+                        $users = $users->merge(User::where('id', $record->assign_to)->get());
+                    }
+                    return $users->unique('id');
+                }
+                
+                // STAGE 3: assign_to ya Role 18 (Complete)
+                if ($stage == 3) {
+                    $users = collect();
+                    if (!empty($record->assign_to)) {
+                        $users = $users->merge(User::where('id', $record->assign_to)->get());
+                    }
+                    return $users->unique('id');
+                }
+                
+                // STAGE 4: Roles 4, 18 (HOD Review Complete)
+                if ($stage == 4) {
+                    $users = collect();
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Effectiveness Check', 4));
+                    return $users->unique('id');
+                }
+                
+                // STAGE 5: Roles 66, 7, 18 (Effective/Not Effective)
+                if ($stage == 5) {
+                    $users = collect();
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Effectiveness Check', 66));
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Effectiveness Check', 7));
+                    return $users->unique('id');
+                }
+                
+                // STAGE 6: Roles 43, 42, 39, 9, 65, 18 (Effective Approval Completed)
+                if ($stage == 6) {
+                    $users = collect();
+                    $roleIds = [43, 42, 39, 9, 65];
+                    foreach ($roleIds as $roleId) {
+                        $users = $users->merge($this->getUsersByRole($divisionId, 'Effectiveness Check', $roleId));
+                    }
+                    return $users->unique('id');
+                }
+                
+                // STAGE 8: Roles 43, 42, 39, 9, 65, 18 (Not Effective Approval Completed)
+                if ($stage == 8) {
+                    $users = collect();
+                    $roleIds = [43, 42, 39, 9, 65];
+                    foreach ($roleIds as $roleId) {
+                        $users = $users->merge($this->getUsersByRole($divisionId, 'Effectiveness Check', $roleId));
+                    }
+                    return $users->unique('id');
+                }
+                
+                // STAGE 9: Roles 43, 42, 39, 9, 65, 18 (Child - Not Effective)
+                if ($stage == 9) {
+                    $users = collect();
+                    $roleIds = [43, 42, 39, 9, 65];
+                    foreach ($roleIds as $roleId) {
+                        $users = $users->merge($this->getUsersByRole($divisionId, 'Effectiveness Check', $roleId));
+                    }
+                    return $users->unique('id');
+                }
+                
+                // STAGE 7, 10+: Closed - No mail
+                if ($stage >= 7 && $stage != 8 && $stage != 9) {
+                    return collect();
+                }
+                
+                break;
+
+                    case 'Extension':
+        
+                if ($stage == 1) {
+                    $users = collect();
+                    if (!empty($record->initiator)) {
+                        $users = $users->merge(User::where('id', $record->initiator)->get());
+                    }
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Extension', 3));
+                    return $users->unique('id');
+                }
+        
+                if ($stage == 2) {
+                    $users = collect();
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Extension', 4));
+                    return $users->unique('id');
+                }
+    
+                if ($stage == 3) {
+                    $users = collect();
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Extension', 67));
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Extension', 64));
+                    return $users->unique('id');
+                }
+                
+                if ($stage == 5) {
+                    $users = collect();
+                    $users = $users->merge($this->getUsersByRole($divisionId, 'Extension', 64));
+                    return $users->unique('id');
+                }
+                
+                if ($stage >= 6) {
+                    return collect();
+                }
+            break;
+
             default:
                  return collect();
         }
@@ -527,6 +645,8 @@ class DueDateReminder extends Command
             'CAPA' => '/capashow/',
             'Deviation' => '/rcms/deviation/',
             'Change Proposal And Justification' => '/rcms/changeProposal/',
+            'Effectiveness-Check' => '/rcms/effectiveness/',
+            'Extension' => '/extension_newshow/',
         ];
 
         $path = $urls[$processName] ?? '/rcms/dashboard/';
@@ -536,7 +656,7 @@ class DueDateReminder extends Command
     private function getProcessCode($processName)
     {
         $codes = [
-            'Extension' => 'EXT',
+            'Extension' => 'Ext',
             'Action Item' => 'AI',
             'Resampling' => 'RS',
             'Observation' => 'OB',

@@ -169,7 +169,7 @@
                                     Cancel
                                 </button></a>
                         @elseif($data->stage == 2 )
-                           @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18))
+                           @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18) || ($data->initiator_id == Auth::user()->id))
                            <a href="#cancel-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#more-info-required-modal">
                                     More Information Required
@@ -180,7 +180,7 @@
                                 </button></a>
                            @endif
                         @elseif($data->stage == 3)
-                        @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18))
+                        @if (Auth::user()->id == $data->assign_to || Helpers::check_roles($data->division_id, 'Action Item', 18) || ($data->initiator_id == Auth::user()->id))
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Complete

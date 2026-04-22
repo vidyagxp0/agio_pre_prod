@@ -87,10 +87,23 @@ class Helpers
     }
 }
 
+    // public static function getdateFormat1($date)
+    // {
+    //     return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y H:i:s');
+    // }
+
     public static function getdateFormat1($date)
-    {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y H:i:s');
+{
+    if (empty($date)) {
+        return null; // or return 'Invalid date';
     }
+    
+    try {
+        return Carbon::parse($date)->format('d-M-Y H:i:s');
+    } catch (\Exception $e) {
+        return null; // or handle error gracefully
+    }
+}
 
     public static function isRevised($data)
     {

@@ -10,7 +10,7 @@
 @section('container')
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Create Account </h3>
+            <h3 class="card-title">Update Account </h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
@@ -37,6 +37,11 @@
                         value="{{ old('emp_code', $data->emp_code) }}"
                         class="form-control @error('emp_code') is-invalid @enderror"
                         placeholder="Enter Employee Code">
+                        @error('emp_code')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                 </div>
 
                 <div class="form-group">

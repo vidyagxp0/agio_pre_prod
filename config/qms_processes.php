@@ -29,6 +29,11 @@ return [
             'name' => 'Deviation'
         ],
 
+        'Effectiveness Check' => [
+            'model' => App\Models\EffectivenessCheck::class,
+            'name' => 'Effectiveness Check'
+        ],
+
     ]
 
 ];

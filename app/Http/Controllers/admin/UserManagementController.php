@@ -16,7 +16,7 @@ use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Jobs\SendAdminUserEmailJob;
+use App\Jobs\SendAdminUserEmailJob; 
 use Illuminate\Validation\Rule;
 class UserManagementController extends Controller
 {
@@ -42,7 +42,11 @@ class UserManagementController extends Controller
     public function create()
     {
         //
-        $group = Roles::select('name')->distinct()->get();
+        $group = Roles::whereIn('id', function ($query) {
+                    $query->selectRaw('MIN(id)')
+                        ->from('role_groups')
+                        ->groupBy('name');
+                })->get();
         $department = Department::all();
         return view('admin.account.create', compact('group','department'));
     }
@@ -73,9 +77,9 @@ class UserManagementController extends Controller
         $user->emp_code = $request->emp_code;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->force_password_change = 1;
-        $user->failed_attempts = 0;
-        $user->locked_at = null;
+        // $user->force_password_change = 1;
+        // $user->failed_attempts = 0;
+        // $user->locked_at = null;
         $user->departmentid = $request->departmentid;
         $usertableRole = ''; // Initialize the variable to store concatenated role IDs
 
@@ -149,7 +153,11 @@ class UserManagementController extends Controller
     public function edit($id)
     {
         //
-        $group = Roles::select('name')->distinct()->get();
+       $group = Roles::whereIn('id', function ($query) {
+                    $query->selectRaw('MIN(id)')
+                        ->from('role_groups')
+                        ->groupBy('name');
+                })->get();
         $department = Department::all();
 
         $data = User::find($id);
@@ -183,10 +191,10 @@ class UserManagementController extends Controller
         $user->email = $request->email;
         if (!empty($request->password)) {
             $user->password = Hash::make($request->password);
-            $user->force_password_change = 0;
-            $user->password_change_time = null;
-            $user->failed_attempts = 0;
-            $user->locked_at = null;
+            // $user->force_password_change = 0;
+            // $user->password_change_time = null;
+            // $user->failed_attempts = 0;
+            // $user->locked_at = null;
         }
         $user->departmentid = $request->departmentid;
 
