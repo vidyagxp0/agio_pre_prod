@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use PDF;
+use App\Jobs\SendMail;
+use Illuminate\Support\Facades\Mail;
+
 
 
 
@@ -50,8 +53,8 @@ class ChangeProposalJustController extends Controller
         }
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
-        $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.changePropaslJust.create', compact('due_date', 'record', 'old_record'));
+        
+        return view('frontend.changePropaslJust.create', compact('record', 'old_record'));
     }
 
     
@@ -71,7 +74,6 @@ class ChangeProposalJustController extends Controller
         $data->record = $record;
         $data->division_code = $request->division_code;
         $data->department =  Helpers::getUserDepartmentFromDB(Auth::user()->departmentid);
-        $data->due_date = $request->due_date;
         $data->division_id = $request->division_id;
         $data->intiation_date = $request->intiation_date;
         $data->cpdescription = $request->cpdescription;
@@ -191,23 +193,6 @@ class ChangeProposalJustController extends Controller
             $history->save();
         }
 
-        if (!empty($data->due_date)) {
-            $history = new ChangeProposalAuditTrial();
-            $history->cpjg_id = $data->id;
-            $history->activity_type = 'Due Date';
-            $history->previous = "Null";
-            $history->current =  Helpers::getdateFormat($data->due_date);
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->change_to =   "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = 'Create';
-            $history->save();
-        }
-
             $history = new ChangeProposalAuditTrial();
             $history->cpjg_id = $data->id;
             $history->activity_type = 'Initiator';
@@ -259,7 +244,7 @@ class ChangeProposalJustController extends Controller
          if (!empty($request->impassesment)) {
             $history = new ChangeProposalAuditTrial();
             $history->cpjg_id = $data->id;
-            $history->activity_type = 'Impact Assesment';
+            $history->activity_type = 'Description of Change';
             $history->previous = "Null";
             $history->current = $data->impassesment;
             $history->comment = "Not Applicable";
@@ -327,7 +312,6 @@ class ChangeProposalJustController extends Controller
         $lastDocument = ChangeProposalJust::find($id);
 
         // $data->division_code = $request->division_code;
-        $data->due_date = $request->due_date;
         $data->cpdescription = $request->cpdescription;
         $data->impassesment = $request->impassesment;
         $data->hod_comment = $request->hod_comment;
@@ -428,23 +412,6 @@ class ChangeProposalJustController extends Controller
             );
         }
 
-        if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
-            $history = new ChangeProposalAuditTrial;
-            $history->cpjg_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $data->due_date;
-            $history->comment = $request->due_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiator";
-            $history->action_name = "store";
-   
-            $history->save();
-        }
 
         if ($lastDocument->cpdescription != $data->cpdescription) {
 
@@ -470,7 +437,7 @@ class ChangeProposalJustController extends Controller
 
             $history = new ChangeProposalAuditTrial();
             $history->cpjg_id = $id;
-            $history->activity_type = 'Impact Assessment';
+            $history->activity_type = 'Description of Change';
             $history->previous = $lastDocument->impassesment;
             $history->current = $data->impassesment;
             $history->comment = $request->impassesment_comment;
@@ -653,7 +620,7 @@ class ChangeProposalJustController extends Controller
                 if ($data->stage == 1) {
                 
                     $data->stage = "2";
-                    $data->status = "HOD Review";
+                    $data->status = "HOD/Designee Review";
                     $data->submit_by = Auth::user()->name;
                     $data->submit_on = Carbon::now()->format('d-M-Y');
                     $data->submit_comment = $request->comment;
@@ -726,7 +693,7 @@ class ChangeProposalJustController extends Controller
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'HOD Remarks Tab is yet to be filled'
+                        'message' => 'HOD/Designee Review Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();
@@ -735,7 +702,7 @@ class ChangeProposalJustController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for QA CQA Review state'
+                        'message' => 'Sent for QA/CQA Review state'
                     ]);
                 }
                 
@@ -747,7 +714,7 @@ class ChangeProposalJustController extends Controller
 
                     $history = new ChangeProposalAuditTrial();
                     $history->cpjg_id = $id;
-                    $history->activity_type = 'HOD Review By, HOD Review On';
+                    $history->activity_type = 'HOD/Designee Review By, HOD/Designee Review On';
                     if (is_null($lastDocument->HOD_Review_Complete_By) || $lastDocument->HOD_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -760,9 +727,9 @@ class ChangeProposalJustController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "QA CQA Review";
+                    $history->change_to =   "QA/CQA Review";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'QA CQA Review';
+                    $history->stage = 'QA/CQA Review';
                     if (is_null($lastDocument->HOD_Review_Complete_By) || $lastDocument->HOD_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1231,16 +1198,16 @@ class ChangeProposalJustController extends Controller
     {
         try {
             if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
-                $extensionNew = ChangeProposalJust::find($id);
+                $cpjdata = ChangeProposalJust::find($id);
                 $lastDocument = ChangeProposalJust::find($id);
 
-                if ($extensionNew->stage == 1) {
+                if ($cpjdata->stage == 1) {
 
-                    $extensionNew->stage = "0";
-                    $extensionNew->status = "Closed Cancelled";
-                    $extensionNew->cancelled_by = Auth::user()->name;
-                    $extensionNew->cancelled_on = Carbon::now()->format('d-M-Y');
-                    $extensionNew->cancel_comment = $request->comment;
+                    $cpjdata->stage = "0";
+                    $cpjdata->status = "Closed Cancelled";
+                    $cpjdata->cancelled_by = Auth::user()->name;
+                    $cpjdata->cancelled_on = Carbon::now()->format('d-M-Y');
+                    $cpjdata->cancel_comment = $request->comment;
 
                     $history = new ChangeProposalAuditTrial();
                     $history->cpjg_id = $id;
@@ -1250,7 +1217,7 @@ class ChangeProposalJustController extends Controller
                     } else {
                         $history->previous = $lastDocument->cancelled_by . ' , ' . $lastDocument->cancelled_on;
                     }
-                    $history->current = $extensionNew->cancelled_by . ' , ' . $extensionNew->cancelled_on;
+                    $history->current = $cpjdata->cancelled_by . ' , ' . $cpjdata->cancelled_on;
                     $history->action = 'Cancel';
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
@@ -1266,7 +1233,7 @@ class ChangeProposalJustController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
-                //  $list = Helpers::getInitiatorUserList($extensionNew->division_id)
+                //  $list = Helpers::getInitiatorUserList($cpjdata->division_id)
                 //     ->unique('user_id')
                 //     ->values(); // Notify HOD
                 //     foreach ($list as $u) {
@@ -1276,7 +1243,7 @@ class ChangeProposalJustController extends Controller
                 //             try{
 
                 //                 $data = [
-                //                     'data'    => $extensionNew,
+                //                     'data'    => $cpjdata,
                 //                     'site'    => "Extension",
                 //                     'history' => "Cancel",
                 //                     'process' => 'Extension',
@@ -1287,7 +1254,7 @@ class ChangeProposalJustController extends Controller
                 //                 SendMail::dispatch(
                 //                     $data,
                 //                     $email,
-                //                     $extensionNew,
+                //                     $cpjdata,
                 //                     'Extension'
                 //                 );
 
@@ -1297,13 +1264,124 @@ class ChangeProposalJustController extends Controller
                 //            }
                 //        // }
                 //     }
-                    $extensionNew->update();
+                    $cpjdata->update();
                     return back();
                 }
             } else {
                 toastr()->error('E-signature Not match');
                 return back();
             }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function cpjrejectStage(Request $request, $id)
+    {
+
+        try {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
+                $cpjdata = ChangeProposalJust::find($id);
+                $lastDocument = ChangeProposalJust::find($id);
+
+        if ($cpjdata->stage == 4) {
+                if (empty($cpjdata->qa_cqa_head_comment))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'QA/CQA Head / Designee ApprovalTab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Closed-Done State'
+                    ]);
+                }
+            $cpjdata->stage = "6";
+            $cpjdata->status = "Closed - Reject";
+
+
+            $cpjdata->rejected_by = Auth::user()->name;
+            $cpjdata->rejected_on = Carbon::now()->format('d-M-Y');
+            $cpjdata->reject_comment = $request->comment;
+
+            $history = new ChangeProposalAuditTrial();
+            $history->cpjg_id = $id;
+            $history->activity_type = 'Reject By, Reject On';
+            if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
+                $history->previous = "Null";
+            } else {
+                $history->previous = $lastDocument->rejected_by . ' , ' . $lastDocument->rejected_on;
+            }
+            $history->current = $cpjdata->rejected_by . ' , ' . $cpjdata->rejected_on;
+            $history->action = 'Reject';
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->change_to =   "Closed - Reject";
+            $history->change_from = $lastDocument->status;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->stage = 'Closed - Reject';
+            if (is_null($lastDocument->rejected_by) || $lastDocument->rejected_by === '') {
+                $history->action_name = 'New';
+            } else {
+                $history->action_name = 'Update';
+            }
+            $history->save();
+
+
+                 $usersmail = collect()
+                    ->merge(Helpers::getQAApproverUserList($cpjdata->division_id))
+                    ->merge(Helpers::getInitiatorUserList($cpjdata->division_id))
+                    ->unique('user_id')
+                    ->values();
+                    foreach ($usersmail as $u) {
+                       // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                           $email = Helpers::getUserEmail($u->user_id);
+                               if (!empty($email)) {
+                                   try{
+
+                                        $data = [
+                                            'data'    => $cpjdata,
+                                            'site'    => "Change Proposal And Justification",
+                                            'history' => "Reject",
+                                            'process' => 'Change Proposal And Justification',
+                                            'comment' => $request->comment,
+                                            'user'    => Auth::user()->name
+                                        ];
+
+                                        SendMail::dispatch(
+                                            $data,
+                                            $email,
+                                            $cpjdata,
+                                            'Change Proposal And Justification'
+                                        );
+
+                                    } catch (\Exception $e) {
+                                        \Log::error('Mail Error: ' . $e->getMessage());
+                                    }
+                           }
+                       // }
+                    }
+
+            $cpjdata->update();
+            toastr()->success('Document Sent');
+            return back();
+        }
+
+        }else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

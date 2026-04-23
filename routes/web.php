@@ -753,6 +753,7 @@ Route::post('cp_send_stage/{id}', [ChangeProposalJustController::class, 'cpsends
 Route::post('more_info_stage/{id}', [ChangeProposalJustController::class, 'moreinfoStateChange'])->name('more_info_stage');
 Route::post('cpjCancle/{id}', [ChangeProposalJustController::class, 'cpjCancle'])->name('cpjCancle');
 Route::get('cpjAudittrial/{id}', [ChangeProposalJustController::class, 'changePropsalNewAuditTrail']);
+Route::post('cpjreject/{id}', [ChangeProposalJustController::class, 'cpjrejectStage'])->name('cpjreject');
 
 
 

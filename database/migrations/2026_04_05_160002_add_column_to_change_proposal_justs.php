@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('dashboard_unique_id')->nullable();
             $table->string('department')->nullable();
             $table->string('cancel_comment')->nullable();
+            $table->string('reject_comment')->nullable()->after('rejected_by');
         });
     }
 

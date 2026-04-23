@@ -145,6 +145,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Review Complete
                             </button>
+                           
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
@@ -155,6 +156,9 @@
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
+                            </button>
+                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-modal">
+                                Reject
                             </button>
                         @endif
                         <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"><button class="button_theme1"> Exit
@@ -251,14 +255,12 @@
                             <div class="{{ $currentStage > 1 ? 'active' : ($currentStage == 1 ? 'current' : '') }}">Opened
                             </div>
 
-                            <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">HOD
-                                Review</div>
+                            <div class="{{ $currentStage > 2 ? 'active' : ($currentStage == 2 ? 'current' : '') }}">HOD/Designee Review
+                                </div>
 
-                            <div class="{{ $data->stage > 3 ? 'active' : ($data->stage == 3 ? 'current' : '') }}"> QA CQA
-                                Review</div>
+                            <div class="{{ $data->stage > 3 ? 'active' : ($data->stage == 3 ? 'current' : '') }}"> QA/CQA Review</div>
 
-                            <div class="{{ $data->stage > 4 ? 'active' : ($data->stage == 4 ? 'current' : '') }}">QA/CQA
-                                Head / Designe</div>
+                            <div class="{{ $data->stage > 4 ? 'active' : ($data->stage == 4 ? 'current' : '') }}">QA/CQA Head / Designee Approval</div>
 
 
                             @if ($data->stage >= 5)
@@ -275,9 +277,9 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD/Designee Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA CQA Head Designee</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Head / Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
             <script>
@@ -397,7 +399,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Due Date">Due Date <span class="text-danger">*</span></label>
                                         <div class="calenderauditee">
@@ -413,9 +415,9 @@
                                                 oninput="handleDateInput(this, 'due_date_display')" required />
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                                <script>
+                                {{-- <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
                                         if (dateInput.value) {
@@ -426,7 +428,7 @@
                                             document.getElementById(displayId).value = '';
                                         }
                                     }
-                                </script>
+                                </script> --}}
 
 
                                 <div class="col-12">
@@ -448,7 +450,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Impact Assesment">Impact Assesment</label>
+                                        <label for="Impact Assesment">Description of Change</label>
                                         <textarea name="impassesment" {{ $istab1 ? "" : "readonly" }}>{{ $data->impassesment }}</textarea>
                                     </div>
                                 </div>
@@ -456,7 +458,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
-                                            Change Proposal Grid
+                                            Change Proposal And Justification Details Grid
                                             <button type="button" id="traceblity_add" {{ $istab1 ? "" : "disabled" }}>+</button>
                                         </label>
                                         <div class="table-responsive">
@@ -464,9 +466,9 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Sr. No.</th>
-                                                        <th>Existing System</th>
+                                                        <th>Current Practice</th>
                                                         <th>Proposed Change</th>
-                                                        <th>Justification</th>
+                                                        <th>Justification / reason for change</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -556,112 +558,115 @@
                                 </script>
 
                                 <div class="sub-head">
-                                    Change Proposal And Justification Checklist
+                                    Impact Assessment
                                 </div>
 
                                 @php
                                     $questions = [
-                                        'q3_1' => 'Availability of Product Permission.',
-                                        'q3_2' => 'Availability of Manufacturing License.',
-                                        'q3_3' => 'Availability of Marketing Authorization.',
-                                        'q3_4' => 'Technical Agreement.',
-                                        'q3_5' => 'Site Variation Filing (for New Site).',
-                                        'q3_6' => 'New Product Code.',
-                                        'q3_7' => 'Facility Qualification / Modification.',
-                                        'q3_8' => 'Utility Requirements / Qualification',
-                                        'q3_9' => 'New Equipment Req. or Modifications.',
-                                        'q3_10' => 'Process Validation.',
-                                        'q3_11' => 'Cleaning Validation .',
-                                        'q3_12' => 'Master Formula Record.',
-                                        'q3_13' => 'Master Packing Record.',
-                                        'q3_14' => 'Additional studies.',
-                                        'q3_15' => 'Reagents/ Chemicals/ Solvents or any other Resources.',
-                                        'q3_16' => 'Equipment/ Instrument Accessories/ Parts / Change Parts & Layout.',
-                                        'q3_17' => 'Analytical Method Validation.',
-                                        'q3_18' => 'PM BOM.',
-                                        'q3_19' => 'BMR.',
-                                        'q3_20' => 'Hold Time Study.',
-                                        'q3_21' => 'Site Master File.',
-                                        'q3_22' => 'Validation Master Plan.',
-                                        'q3_23' => 'Requirement of outside test.',
-                                        'q3_24' => 'Additional Equipment / Instruments.',
-                                        'q3_25' => 'Environmental Condition.',
-                                        'q3_26' => 'Testing Feasibility.',
-                                        'q3_27' => 'Annual Product Review.',
-                                        'q3_28' => 'New Source/ Vendor Requirement.',
-                                        'q3_29' => 'Vendor Qualification.',
-                                        'q3_30' => 'Approved Vendor List Updation.',
-                                        'q3_31' => 'New Code Generation/ Item Codification.',
-                                        'q3_32' => 'List of Item Codes.',
-                                        'q3_33' => 'Approved Specimen/ Shade Card.',
-                                        'q3_34' => 'Status of Old Stocks (for Usage / Destruction).',
-                                        'q3_35' => 'Customer/ Contract Giver Approval.',
-                                        'q3_36' => 'Process Parameters.',
-                                        'q3_37' => 'Training.',
-                                        'q3_38' => 'GMP   / GLP Requirements.',
-                                        'q3_39' => 'MOC Requirements.',
-                                        'q3_40' => 'List of Equipment / instruments.',
-                                        'q3_41' => 'New Utility Connections / Modifications.',
-                                        'q3_42' => 'Drawings / layouts.',
-                                        'q3_43' => 'Equipment P & I Diagram.',
-                                        'q3_44' => 'Regulatory Submissions.',
-                                        'q3_46' => 'Equipment Location Layout.',
-                                        'q3_47' => 'Responsibilities.',
-                                        'q3_48' => 'Intimation/ Notification to Regulatory Bodies.',
-                                        'q3_49' => 'Quality Management System.',
-                                        'q3_50' => 'Facility and Other Layouts.',
-                                        'q3_51' => 'Pharmacopeia Requirements.',
-                                        'q3_52' => 'Raw Material Specifications.',
-                                        'q3_53' => 'Packing Material Specification.',
-                                        'q3_54' => 'In process Specification.',
-                                        'q3_55' => 'Finished Product Specification.',
-                                        'q3_56' => 'Approved Art works/ Proofs.',
-                                        'q3_57' => 'Packaging Specification / configuration.',
-                                        'q3_58' => 'Status of Existing stock in case of Artwork/ packing material related changes.',
-                                        'q3_59' => 'Quality Agreements with vendors.',
-                                        'q3_60' => 'Calibration.',
-                                        'q3_61' => 'Calibration Planner / Addendum to Calibration Planner.',
-                                        'q3_62' => 'Stability Protocol / Report / Stability studies.',
-                                        'q3_63' => 'Stability Specification.',
-                                        'q3_64' => 'Updating of Product Lists.',
-                                        'q3_65' => 'HPLC Column.',
-                                        'q3_66' => 'Placebo.',
-                                        'q3_67' => 'Primary standards.',
-                                        'q3_68' => 'Mfg. Feasibility.',
-                                        'q3_69' => 'Qualification document (URS/DQ/IQ/OQ/PQ).',
-                                        'q3_70' => 'Manual COA (Raw Material / Finish Product).',
-                                        'q3_71' => 'Safety.',
-                                        'q3_72' => 'Annual Maintenance Contract.',
-                                        'q3_73' => 'Service agreement.',
-                                        'q3_74' => 'Qualification / Re-qualification.',
-                                        'q3_75' => 'SOP.',
-                                        'q3_76' => 'STPs.',
-                                        'q3_77' => 'Logbooks.',
-                                        'q3_78' => 'Preventive Maintenance.',
-                                        'q3_79' => 'Planner for PM / Addendum to PM Planner.',
-                                        'q3_80' => 'Regulatory Requirements.',
-                                        'q3_81' => 'Tech Transfer.',
-                                        'q3_82' => 'Man & Material Movement.',
-                                        'q3_83' => 'Temperature / RH/ Differential Pressures.',
-                                        'q3_84' => 'Temperature Mapping.',
-                                        'q3_85' => 'HVAC Validation.',
-                                        'q3_86' => 'Water System Validation.',
-                                        'q3_88' => 'Area Nomenclature.',
-                                        'q3_89' => 'Qualified Personnel.',
-                                        'q3_90' => 'Any other.',
-                                        'q3_91' => 'Shelf life.',
-                                        'q3_92' => 'Text matter.',
-                                        'q3_93' => 'GTIN 1D.',
-                                        'q3_94' => 'QR code.',
-                                        'q3_95' => 'Pack size.',
-                                        'q3_96' => 'Pack style.',
-                                        'q3_97' => 'Design.',
-                                        'q3_98' => 'Formula.',
-                                        'q3_99' => 'API vendor.',
-                                        'q3_100' => 'Registration Certificate number.',
-                                        'q3_101' => 'Mfg. License number.',
+                                        'q1_1' => 'Availability of Product Permission.',
+                                        'q1_2' => 'Availability of Manufacturing License.',
+                                        'q1_3' => 'Availability of Marketing Authorization.',
+                                        'q1_4' => 'Technical Agreement.',
+                                        'q1_5' => 'Site Variation Filing (for New Site).',
+                                        'q1_6' => 'New Product Code.',
+                                        'q1_7' => 'Facility Qualification / Modification.',
+                                        'q1_8' => 'Utility Requirements / Qualification',
+                                        'q1_9' => 'New Equipment Req. or Modifications.',
+                                        'q1_10' => 'Process Validation.',
+                                        'q1_11' => 'Cleaning Validation .',
+                                        'q1_12' => 'Master Formula Record.',
+                                        'q1_13' => 'Master Packing Record.',
+                                        'q1_14' => 'Additional studies.',
+                                        'q1_15' => 'Reagents/ Chemicals/ Solvents or any other Resources.',
+                                        'q1_16' => 'Equipment/ Instrument Accessories/ Parts / Change Parts & Layout.',
+                                        'q1_17' => 'Analytical Method Validation.',
+                                        'q1_18' => 'PM BOM.',
+                                        'q1_19' => 'BMR.',
+                                        'q1_20' => 'BPR.',
+                                        'q1_21' => 'Hold Time Study.',
+                                        'q1_22' => 'Site Master File.',
+                                        'q1_23' => 'Validation Master Plan.',
+                                        'q1_24' => 'Requirement of outside test.',
+                                        'q1_25' => 'Additional Equipment / Instruments.',
+                                        'q1_26' => 'Environmental Condition.',
+                                        'q1_27' => 'Testing Feasibility.',
+                                        'q1_28' => 'Annual Product Review.',
+                                        'q1_29' => 'New Source/ Vendor Requirement.',
+                                        'q1_30' => 'Vendor Qualification.',
+                                        'q1_31' => 'Approved Vendor List Updation.',
+                                        'q1_32' => 'New Code Generation/ Item Codification.',
+                                        'q1_33' => 'List of Item Codes.',
+                                        'q1_34' => 'Approved Specimen/ Shade Card.',
+                                        'q1_35' => 'Status of Old Stocks (for Usage / Destruction).',
+                                        'q1_36' => 'Customer/ Contract Giver Approval.',
+                                        'q1_37' => 'Process Parameters.',
+                                        'q1_38' => 'Training.',
+                                        'q1_39' => 'GMP   / GLP Requirements.',
+                                        'q1_40' => 'MOC Requirements.',
+                                        'q1_41' => 'List of Equipment / instruments.',
+                                        'q1_42' => 'New Utility Connections / Modifications.',
+                                        'q1_43' => 'Drawings / layouts.',
+                                        'q1_44' => 'Equipment P & I Diagram.',
+                                        'q1_45' => 'Regulatory Submissions.',
+                                        'q1_46' => 'Validation Activity (Other).',
+                                        'q1_47' => 'Equipment Location Layout.',
+                                        'q1_48' => 'Responsibilities.',
+                                        'q1_49' => 'Intimation/ Notification to Regulatory Bodies.',
+                                        'q1_50' => 'Quality Management System.',
+                                        'q1_51' => 'Facility and Other Layouts.',
+                                        'q1_52' => 'Pharmacopeia Requirements.',
+                                        'q1_53' => 'Raw Material Specifications.',
+                                        'q1_54' => 'Packing Material Specification.',
+                                        'q1_55' => 'In process Specification.',
+                                        'q1_56' => 'Finished Product Specification.',
+                                        'q1_57' => 'Approved Art works/ Proofs.',
+                                        'q1_58' => 'Packaging Specification / configuration.',
+                                        'q1_59' => 'Status of Existing stock in case of Artwork/ packing material related changes.',
+                                        'q1_60' => 'Quality Agreements with vendors.',
+                                        'q1_61' => 'Calibration.',
+                                        'q1_62' => 'Calibration Planner / Addendum to Calibration Planner.',
+                                        'q1_63' => 'Stability Protocol / Report / Stability studies.',
+                                        'q1_64' => 'Stability Specification.',
+                                        'q1_65' => 'Updating of Product Lists.',
+                                        'q1_66' => 'HPLC Column.',
+                                        'q1_67' => 'Placebo.',
+                                        'q1_68' => 'Impurity standards.',
+                                        'q1_69' => 'Primary standards.',
+                                        'q1_70' => 'Mfg. Feasibility.',
+                                        'q1_71' => 'Qualification document (URS/DQ/IQ/OQ/PQ).',
+                                        'q1_72' => 'Manual COA (Raw Material / Finish Product).',
+                                        'q1_73' => 'Safety.',
+                                        'q1_74' => 'Annual Maintenance Contract.',
+                                        'q1_75' => 'Service agreement.',
+                                        'q1_76' => 'Qualification / Re-qualification.',
+                                        'q1_77' => 'SOP.',
+                                        'q1_78' => 'STPs.',
+                                        'q1_79' => 'Logbooks.',
+                                        'q1_80' => 'Preventive Maintenance.',
+                                        'q1_81' => 'Planner for PM / Addendum to PM Planner.',
+                                        'q1_82' => 'Regulatory Requirements.',
+                                        'q1_83' => 'Tech Transfer.',
+                                        'q1_84' => 'Man & Material Movement.',
+                                        'q1_85' => 'Temperature / RH/ Differential Pressures.',
+                                        'q1_86' => 'Temperature Mapping.',
+                                        'q1_87' => 'HVAC Validation.',
+                                        'q1_88' => 'Water System Validation.',
+                                        'q1_89' => 'Area Nomenclature.',
+                                        'q1_90' => 'Qualified Personnel.',
+                                        'q1_91' => 'Shelf life.',
+                                        'q1_92' => 'Text matter.',
+                                        'q1_93' => 'GTIN 1D.',
+                                        'q1_94' => 'QR code.',
+                                        'q1_95' => 'Pack size.',
+                                        'q1_96' => 'Pack style.',
+                                        'q1_97' => 'Design.',
+                                        'q1_98' => 'Formula.',
+                                        'q1_99' => 'API vendor.',
+                                        'q1_100' => 'Registration Certificate number.',
+                                        'q1_101' => 'Mfg. License number.',
+                                        'q1_102' => 'Final COA (Raw Material/ Finish Product).',
+                                        'q1_103' => 'Any Other', // Last question with manual input
                                     ];
-
                                     $savedChecklist = isset($checklistData->data) ? $checklistData->data : [];
                                 @endphp
 
@@ -672,54 +677,49 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 10%;">Sr. No.</th>
-                                                        <th style="width: 40%;">Question</th>
-                                                        <th style="width: 20%;">Response</th>
-                                                        {{-- <th>Remarks</th> --}}
+                                                        <th style="width: 50%;">Particular</th>
+                                                        <th style="width: 40%;">Yes/No</th>
                                                     </tr>
                                                 </thead>
 
                                                 <tbody>
                                                     @foreach ($questions as $key => $question)
+                                                        @php
+                                                            $isLastQuestion = $loop->last;
+                                                        @endphp
                                                         <tr>
-                                                            <td class="text-center">1.{{ $loop->iteration }}</td>
-
-                                                            {{-- <td>
-                                                                {{ $question }}
-                                                                <input type="hidden"
-                                                                    name="checklist[{{ $key }}][question]"
-                                                                    value="{{ $question }}">
-                                                            </td> --}}
+                                                            <td class="text-center">{{ $loop->iteration }}.</td>
+                                                            
                                                             <td>
                                                                 {{ $question }}
+                                                                <input type="hidden" name="checklist[{{ $key }}][question]" value="{{ $question }}">
                                                             </td>
+                                                            
                                                             <td>
-                                                                <select name="checklist[{{ $key }}][response]"
-                                                                    style="width:100%; border:1px solid #000; background:#f0f0f0;" {{ $istab1 ? "" : "disabled" }}>
-
-                                                                    <option value="">Select</option>
-
-                                                                    <option value="Yes"
-                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? 'selected' : '' }}>
-                                                                        Yes
-                                                                    </option>
-
-                                                                    <option value="No"
-                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'No' ? 'selected' : '' }}>
-                                                                        No
-                                                                    </option>
-
-                                                                    <option value="N/A"
-                                                                        {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'N/A' ? 'selected' : '' }}>
-                                                                        N/A
-                                                                    </option>
-
-                                                                </select>
+                                                                @if(!$isLastQuestion)
+                                                                    {{-- Yes/No Dropdown for all except last question --}}
+                                                                    <select name="checklist[{{ $key }}][response]"
+                                                                        style="width:100%; border:1px solid #000; background:#f0f0f0;" {{ $istab1 ? "" : "disabled" }}>
+                                                                        
+                                                                        <option value="No" 
+                                                                            {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? '' : 'selected' }}>
+                                                                            No
+                                                                        </option>
+                                                                        
+                                                                        <option value="Yes"
+                                                                            {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? 'selected' : '' }}>
+                                                                            Yes
+                                                                        </option>
+                                                                    </select>
+                                                                @else
+                                                                    {{-- Manual text input for last question --}}
+                                                                    <textarea name="checklist[{{ $key }}][manual_response]" 
+                                                                        rows="3"
+                                                                        style="width:100%; border:1px solid #ccc; padding:8px; border-radius:5px;"
+                                                                        placeholder="Enter additional comments or remarks here..."
+                                                                        {{ $istab1 ? "" : "disabled" }}>{{ isset($savedChecklist[$key]['manual_response']) ? $savedChecklist[$key]['manual_response'] : '' }}</textarea>
+                                                                @endif
                                                             </td>
-
-                                                            {{-- <td>
-                                                            <textarea name="checklist[{{ $key }}][remark]"
-                                                                style="width:100%; border-radius:5px;">{{ $savedChecklist[$key]['remark'] ?? '' }}</textarea>
-                                                        </td> --}}
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -782,7 +782,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">HOD Remarks @if($data->stage == 2) <span class="text-danger">*</span>                                        
+                                    <label for="Assigned To">HOD/Designee Review Comment @if($data->stage == 2) <span class="text-danger">*</span>                                        
                                     @endif</label>
                                     <textarea name="hod_comment" id="hod_comment" cols="30" {{ $istab2 ? "required" : "readonly" }}>{{ $data->hod_comment }}</textarea>
                                 </div>
@@ -796,7 +796,7 @@
                             @endif
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="HOD Attachments">HOD Attachments</label>
+                                    <label for="HOD Attachments">HOD/Designee Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -909,7 +909,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assigned To">QA/CQA Head Approval Comments @if($data->stage == 4) <span class="text-danger">*</span>@endif</label>
+                                    <label for="Assigned To">QA/CQA Head / Designee Approval Comments @if($data->stage == 4) <span class="text-danger">*</span>@endif</label>
                                     <textarea name="qa_cqa_head_comment" id="qa_cqa_head_comment" cols="30" {{ $istab4 ? "required" : "readonly" }}>{{ $data->qa_cqa_head_comment }}</textarea>
                                 </div>
                             </div>
@@ -995,7 +995,7 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for=" Rejected By">HOD Review By</label>
+                                    <label for="HOD /Designee Review comment By">HOD/Designee Review By</label>
                                     <div class="static">
                                         {{ !empty($data->HOD_Review_Complete_By) ? $data->HOD_Review_Complete_By : 'Not Applicable' }}
                                     </div>
@@ -1003,7 +1003,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">HOD Review On</label>
+                                    <label for="HOD /Designee Review comment By">HOD/Designee Review On </label>
                                     <div class="static">
                                         {{ !empty($data->HOD_Review_Complete_On) ? $data->HOD_Review_Complete_On : 'Not Applicable' }}
                                     </div>
@@ -1011,7 +1011,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">HOD Review Comment</label>
+                                    <label for="HOD /Designee Review comment By">HOD/Designee Review Comment</label>
                                     <div class="static">
                                         {{ !empty($data->HOD_Review_Comments) ? $data->HOD_Review_Comments : 'Not Applicable' }}
                                     </div>
@@ -1050,7 +1050,7 @@
                                 <div class="group-input">
                                     <label for=" Rejected By">QA/CQA Head/Designee Complete By</label>
                                     <div class="static">
-                                        {{ !empty($data->qa_cqa_Review_Complete_By) ? $data->qa_cqa_Review_Complete_By : 'Not Applicable' }}
+                                        {{ !empty($data->qa_cqa_head_Review_Complete_By) ? $data->qa_cqa_head_Review_Complete_By : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
@@ -1058,7 +1058,7 @@
                                 <div class="group-input">
                                     <label for="Rejected On">QA/CQA Head/Designee Complete On</label>
                                     <div class="static">
-                                        {{ !empty($data->qa_cqa__Review_Complete_On) ? $data->qa_cqa__Review_Complete_On : 'Not Applicable' }}
+                                        {{ !empty($data->qa_cqa_head_Review_Complete_On) ? $data->qa_cqa_head_Review_Complete_On : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
@@ -1066,7 +1066,7 @@
                                 <div class="group-input">
                                     <label for="Rejected On">QA/CQA Head/Designee Complete Comment</label>
                                     <div class="static">
-                                        {{ !empty($data->qa_cqa__Review_Comments) ? $data->qa_cqa__Review_Comments : 'Not Applicable' }}
+                                        {{ !empty($data->qa_cqa_head_Review_Comments) ? $data->qa_cqa_head_Review_Comments : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
@@ -1343,7 +1343,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('extension_reject_stage', $data->id) }}" method="POST">
+                <form action="{{ route('cpjreject', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">

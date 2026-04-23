@@ -331,7 +331,7 @@
                         {{ Helpers::getDivisionName($data->division_id) }}/CPJ/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                     </td>
 
-                    <th class="w-20">Division</th>
+                    <th class="w-20">Site/Location Code</th>
                     <td class="w-30">
                         {{ $data->division_code ?? 'Not Applicable' }}
                     </td>
@@ -343,7 +343,7 @@
                         {{ Helpers::getInitiatorName($data->initiator_id) }}
                     </td>
 
-                    <th class="w-20">Date</th>
+                    <th class="w-20">Date of Initiation</th>
                     <td class="w-30">
                         {{ Helpers::getdateFormat($data->created_at) }}
                     </td>
@@ -361,7 +361,7 @@
 
             <table>
                 <tr>
-                    <th class="w-20">Impact Assessment</th>
+                    <th class="w-20">Description of Change</th>
                     <td class="w-80">
                         {{ $data->impassesment ?? 'Not Applicable' }}
                     </td>
@@ -371,16 +371,16 @@
 
         <div class="block">
                     <div class="block-head">
-                        Change Proposal And Justification Grid
+                        Change Proposal And Justification Details Grid
                     </div>
                     <div class="border-table">
                         <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                             <thead>
                                 <tr class="table_bg">
                                     <th style="width: 5%">Sr. No.</th>
-                                    <th style="width: 12%">Existing System</th>
+                                    <th style="width: 12%">Current Practice</th>
                                     <th style="width: 16%">Proposed Change</th>
-                                    <th style="width: 15%">Justification</th>
+                                    <th style="width: 15%">Justification / reason for change</th>
                                     {{-- <th style="width: 8%">Action</th> --}}
                                 </tr>
                             </thead>
@@ -426,7 +426,7 @@
                 <table>
                     <tr class="table_bg">
                         <th>Sr.No.</th>
-                        <th>File</th>
+                        <th>Attachment</th>
                     </tr>
 
                     @if ($data->cpAttachment)
@@ -448,23 +448,23 @@
 
         {{-- ================= HOD ================= --}}
         <div class="block">
-            <div class="block-head">HOD Review</div>
+            <div class="block-head">HOD/Designee Review</div>
 
             <table>
                 <tr>
-                    <th class="w-20">Comment</th>
+                    <th class="w-20">HOD/Designee Review comment</th>
                     <td class="w-80">{{ $data->hod_comment ?? 'Not Applicable' }}</td>
                 </tr>
             </table>
         </div>
 
         <div class="block">
-            <div class="block-head">HOD Attachment</div>
+            <div class="block-head">HOD/Designee Attachment</div>
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
                         <th>Sr.No.</th>
-                        <th>File</th>
+                        <th>Attachment</th>
                     </tr>
 
                     @if ($data->hodAttachment)
@@ -486,23 +486,23 @@
 
         {{-- ================= QA ================= --}}
         <div class="block">
-            <div class="block-head">QA Review</div>
+            <div class="block-head">QA/CQA Review</div>
 
             <table>
                 <tr>
-                    <th class="w-20">Comment</th>
+                    <th class="w-20">QA/CQA Review Comments</th>
                     <td class="w-80">{{ $data->qa_comment ?? 'Not Applicable' }}</td>
                 </tr>
             </table>
         </div>
 
         <div class="block">
-            <div class="block-head">QA Attachment</div>
+            <div class="block-head">QA/CQA Review Attachments</div>
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
                         <th>Sr.No.</th>
-                        <th>File</th>
+                        <th>Attachment</th>
                     </tr>
 
                     @if ($data->qaAttachment)
@@ -524,23 +524,23 @@
 
         {{-- ================= QA CQA HEAD ================= --}}
         <div class="block">
-            <div class="block-head">QA CQA Head Review</div>
+            <div class="block-head">QA/CQA Head / Designee Approval</div>
 
             <table>
                 <tr>
-                    <th class="w-20">Comment</th>
+                    <th class="w-20">QA/CQA Head / Designee Approval Comments</th>
                     <td class="w-80">{{ $data->qa_cqa_head_comment ?? 'Not Applicable' }}</td>
                 </tr>
             </table>
         </div>
 
         <div class="block">
-            <div class="block-head">QA CQA Head Attachment</div>
+            <div class="block-head">QA/CQA Head / designee Attachment</div>
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
                         <th>Sr.No.</th>
-                        <th>File</th>
+                        <th>Attachment</th>
                     </tr>
 
                     @if ($data->qa_cqa_head_Attachment)
@@ -581,30 +581,39 @@
                     </tr>
                     
                     <tr>
-                        <th class="w-20">HOD Review By</th>
+                        <th class="w-20">HOD/Designee Review By</th>
                         <td class="w-30">@if ($data->HOD_Review_Complete_By) {{ $data->HOD_Review_Complete_By }} @else Not Applicable @endif</td>
-                        <th class="w-20">Review On</th>
+                        <th class="w-20">HOD/Designee Review On</th>
                         <td class="w-30">@if ($data->HOD_Review_Complete_On) {{ $data->HOD_Review_Complete_On }} @else Not Applicable @endif</td>
-                        <th class="w-20">Review Comment</th>
+                        <th class="w-20">HOD/Designee Review Comment</th>
                         <td class="w-30">@if ($data->HOD_Review_Comments) {{ $data->HOD_Review_Comments }} @else Not Applicable @endif</td>
                     </tr>
 
                      <tr>
                         <th class="w-20">QA/CQA Review By</th>
                         <td class="w-30">@if ($data->qa_cqa_Review_Complete_By) {{ $data->qa_cqa_Review_Complete_By }} @else Not Applicable @endif</td>
-                        <th class="w-20">Review On</th>
+                        <th class="w-20">QA/CQA Review On</th>
                         <td class="w-30">@if ($data->qa_cqa__Review_Complete_On) {{ $data->qa_cqa__Review_Complete_On }} @else Not Applicable @endif</td>
-                        <th class="w-20">Review Comment</th>
+                        <th class="w-20">QA/CQA Review Comment</th>
                         <td class="w-30">@if ($data->qa_cqa__Review_Comments) {{ $data->qa_cqa__Review_Comments }} @else Not Applicable @endif</td>
                     </tr>
                    
                     <tr>
                         <th class="w-20">QA/CQA Head/Designee Complete By</th>
-                        <td class="w-30">@if ($data->qa_cqa_Review_Complete_By) {{ $data->qa_cqa_Review_Complete_By }} @else Not Applicable @endif</td>
-                        <th class="w-20">CQA Head/Designee Complete On</th>
-                        <td class="w-30">@if ($data->qa_cqa__Review_Complete_On) {{ $data->qa_cqa__Review_Complete_On }} @else Not Applicable @endif</td>
-                        <th class="w-20">CQA Head/Designee Complete Comment</th>
-                        <td class="w-30">@if ($data->qa_cqa__Review_Comments) {{ $data->qa_cqa__Review_Comments }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if ($data->qa_cqa_head_Review_Complete_By) {{ $data->qa_cqa_head_Review_Complete_By }} @else Not Applicable @endif</td>
+                        <th class="w-20">QA/CQA Head/Designee Complete On</th>
+                        <td class="w-30">@if ($data->qa_cqa_head_Review_Complete_On) {{ $data->qa_cqa_head_Review_Complete_On }} @else Not Applicable @endif</td>
+                        <th class="w-20">QA/CQA Head/Designee Complete Comment</th>
+                        <td class="w-30">@if ($data->qa_cqa_head_Review_Comments) {{ $data->qa_cqa_head_Review_Comments }} @else Not Applicable @endif</td>
+                    </tr>
+
+                     <tr>
+                        <th class="w-20">Reject By</th>
+                        <td class="w-30">@if ($data->rejected_by) {{ $data->rejected_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">Reject On</th>
+                        <td class="w-30">@if ($data->rejected_on) {{ $data->rejected_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">Reject Comment</th>
+                        <td class="w-30">@if ($data->reject_comment) {{ $data->reject_comment }} @else Not Applicable @endif</td>
                     </tr>
                 </table>
             </div>
