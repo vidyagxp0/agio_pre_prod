@@ -135,7 +135,7 @@
             <tr>
                 <td class="w-70" style="text-align: center; vertical-align: middle;">
                     <div style="font-size: 18px; font-weight: 800; display: inline-block;">
-                     OOS/OOT Report
+                      {{ ucwords(str_replace('_', ' ', $data->Form_type)) }} Report
                     </div>
                 </td>
                 <td class="w-30">
@@ -240,7 +240,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Type</th>
-                        <td class="w-30">{{ $data->Form_type }}</td>
+                        <td class="w-30">{{ ucwords(str_replace('_', ' ', $data->Form_type)) }}</td>
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             {{ Helpers::getDivisionName($data->division_id) }}/{{ $data->Form_type }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, '0', STR_PAD_LEFT) : '1' }}
