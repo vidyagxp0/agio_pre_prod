@@ -1279,6 +1279,91 @@ class ChangeProposalJustController extends Controller
         }
     }
 
+    public function hodCancle(Request $request, $id)
+    {
+        try {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
+                $cpjdata = ChangeProposalJust::find($id);
+                $lastDocument = ChangeProposalJust::find($id);
+
+                if ($cpjdata->stage == 2) {
+
+                    $cpjdata->stage = "0";
+                    $cpjdata->status = "Closed Cancelled";
+                    $cpjdata->hod_cancelled_by = Auth::user()->name;
+                    $cpjdata->hod_cancelled_on = Carbon::now()->format('d-M-Y');
+                    $cpjdata->hod_cancel_comment = $request->comment;
+
+                    $history = new ChangeProposalAuditTrial();
+                    $history->cpjg_id = $id;
+                    $history->activity_type = 'HOD Cancel By, HOD Cancel On';
+                    if (is_null($lastDocument->hod_cancelled_by) || $lastDocument->hod_cancelled_by === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->hod_cancelled_by . ' , ' . $lastDocument->hod_cancelled_on;
+                    }
+                    $history->current = $cpjdata->hod_cancelled_by . ' , ' . $cpjdata->hod_cancelled_on;
+                    $history->action = 'Cancel';
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "Closed - Cancelled";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'Closed - Cancelled';
+                    if (is_null($lastDocument->hod_cancelled_by) || $lastDocument->hod_cancelled_by === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+                //  $list = Helpers::getInitiatorUserList($cpjdata->division_id)
+                //     ->unique('user_id')
+                //     ->values(); // Notify HOD
+                //     foreach ($list as $u) {
+                //        // if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //            $email = Helpers::getUserEmail($u->user_id);
+                //                if (!empty($email)) {
+                //             try{
+
+                //                 $data = [
+                //                     'data'    => $cpjdata,
+                //                     'site'    => "Extension",
+                //                     'history' => "Cancel",
+                //                     'process' => 'Extension',
+                //                     'comment' => $request->comment,
+                //                     'user'    => Auth::user()->name
+                //                 ];
+
+                //                 SendMail::dispatch(
+                //                     $data,
+                //                     $email,
+                //                     $cpjdata,
+                //                     'Extension'
+                //                 );
+
+                //             } catch (\Exception $e) {
+                //                 \Log::error('Mail Error: ' . $e->getMessage());
+                //             }
+                //            }
+                //        // }
+                //     }
+                    $cpjdata->update();
+                    return back();
+                }
+            } else {
+                toastr()->error('E-signature Not match');
+                return back();
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
     public function cpjrejectStage(Request $request, $id)
     {
 

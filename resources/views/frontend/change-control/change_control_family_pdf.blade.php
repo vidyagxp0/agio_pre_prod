@@ -198,6 +198,18 @@
                             aliquid error vel? Vel, omnis veritatis.
                         </td>
                     </tr>
+
+                    <tr>
+                        <th class="w-20">Reference Change Proposal and Justification</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->refence_change)
+                                {{ Helpers::getChangeProposalJustificationRecordNumber($data->refence_change) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-80" colspan="3">23-02-2023 11:00</td>

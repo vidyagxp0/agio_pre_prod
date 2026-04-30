@@ -752,6 +752,7 @@ Route::put('cpupdate/{id}' , [ChangeProposalJustController::class,'update'])->na
 Route::post('cp_send_stage/{id}', [ChangeProposalJustController::class, 'cpsendstage'])->name('cpj_send_stage');
 Route::post('more_info_stage/{id}', [ChangeProposalJustController::class, 'moreinfoStateChange'])->name('more_info_stage');
 Route::post('cpjCancle/{id}', [ChangeProposalJustController::class, 'cpjCancle'])->name('cpjCancle');
+Route::post('hodCancle/{id}', [ChangeProposalJustController::class, 'hodCancle'])->name('hodCancle');
 Route::get('cpjAudittrial/{id}', [ChangeProposalJustController::class, 'changePropsalNewAuditTrail']);
 Route::post('cpjreject/{id}', [ChangeProposalJustController::class, 'cpjrejectStage'])->name('cpjreject');
 

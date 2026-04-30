@@ -6,20 +6,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::table('change_proposal_justs', function (Blueprint $table) {
-            $table->string('Complete_By')->nullable();
-            $table->string('Complete_On')->nullable();
-            $table->string('Complete_Comments')->nullable();
-            $table->integer('dashboard_unique_id')->nullable();
-            $table->string('department')->nullable();
-            $table->string('cancel_comment')->nullable();
+            $table->string('hod_cancelled_by')->nullable();
+            $table->string('hod_cancelled_on')->nullable();
+            $table->string('hod_cancel_comment')->nullable();
+            $table->string('reject_comment')->nullable()->after('rejected_by');
         });
     }
 
-    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
         Schema::table('change_proposal_justs', function (Blueprint $table) {

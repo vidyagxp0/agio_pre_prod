@@ -3433,7 +3433,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet assessment">Impact Assessment(By Production (Tablet/Capsule/Powder)
+                                        <label for="Production Tablet assessment">Impact Assessment(By Production (Tablet/Capsule/Powder))
                                             <span id="asteriskPT1"
                                                 style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
