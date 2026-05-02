@@ -222,6 +222,254 @@
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
+
+                <div class="inner-block">
+    <div class="content-table">
+
+        @if(!empty($cpjDetails) && count($cpjDetails))
+
+            @foreach($cpjDetails as $cpj)
+
+            {{-- ================= CPJ HEADER ================= --}}
+            <div class="block">
+                <div class="block-head">
+                    Change Proposal & Justification 
+                </div>
+            </div>
+
+            {{-- ================= GENERAL INFO ================= --}}
+            <div class="block">
+                <div class="block-head">General Information</div>
+
+                <table>
+                    <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">
+                            {{ Helpers::getDivisionName($cpj->division_id) }}/CPJ/{{ Helpers::year($cpj->created_at) }}/{{ str_pad($cpj->record, 4, '0', STR_PAD_LEFT) }}
+                        </td>
+
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">
+                            {{ $cpj->division_code ?? 'Not Applicable' }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Initiator</th>
+                        <td>{{ Helpers::getInitiatorName($cpj->initiator_id) }}</td>
+
+                        <th>Date of Initiation</th>
+                        <td>{{ Helpers::getdateFormat($cpj->created_at) }}</td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <th>Short Description</th>
+                        <td>{{ $cpj->cpdescription ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <th>Description of Change</th>
+                        <td>{{ $cpj->impassesment ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+            </div>
+
+
+            @php
+                $grid = is_array($cpj->gridData) 
+                    ? $cpj->gridData 
+                    : json_decode($cpj->gridData ?? '[]', true);
+            @endphp
+
+            <div class="block">
+                <div class="block-head">Change Proposal And Justification Details Grid</div>
+
+                <table>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Current Practice</th>
+                        <th>Proposed Change</th>
+                        <th>Justification</th>
+                    </tr>
+
+                  @if(!empty($grid))
+                    @foreach($grid as $key => $row)
+                        <tr>
+                            <td>{{ $key+1 }}</td>
+                            <td>{{ $row['existing_system'] ?? '' }}</td>
+                            <td>{{ $row['proposed_change'] ?? '' }}</td>
+                            <td>{{ $row['justification'] ?? '' }}</td>
+                        </tr>
+                    @endforeach
+                @endif
+                </table>
+            </div>
+
+            @php
+                $checklist = is_array($cpj->checklistData) 
+                    ? $cpj->checklistData 
+                    : json_decode($cpj->checklistData ?? '{}', true);
+            @endphp
+
+                    
+
+            <div class="block">
+                <div class="block-head">Impact Assessment</div>
+
+                <table>
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Question</th>
+                        <th>Response</th>
+                    </tr>
+
+                  @if(!empty($checklist))
+                        @foreach($checklist as $key => $item)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+
+                                <td>
+                                    {{ is_array($item) ? ($item['question'] ?? $key) : $key }}
+                                </td>
+
+                                <td>
+                                    @if(is_array($item))
+                                        {{ $item['manual_response'] ?? $item['response'] ?? '' }}
+                                    @else
+                                        {{ $item }}
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </table>
+            </div>
+
+
+            {{-- ================= INITIATOR ATTACHMENT ================= --}}
+            <div class="block">
+                <div class="block-head">Initiator Attachment</div>
+
+                <table>
+                    @if ($cpj->cpAttachment)
+                        @foreach (json_decode($cpj->cpAttachment) as $file)
+                            <tr><td>{{ $file }}</td></tr>
+                        @endforeach
+                    @else
+                        <tr><td>Not Applicable</td></tr>
+                    @endif
+                </table>
+            </div>
+
+            {{-- ================= HOD ================= --}}
+            <div class="block">
+                <div class="block-head">HOD/Designee Review</div>
+
+                <table>
+                    <tr>
+                        <th class="w-20">HOD/Designee Review comment</th>
+                        <td class="w-80">{{ $cpj->hod_comment ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+            </div>
+
+             <div class="block">
+                <div class="block-head">HOD/Designee Attachment</div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th>Sr.No.</th>
+                            <th>Attachment</th>
+                        </tr>
+
+                        @if ($cpj->hodAttachment)
+                            @foreach (json_decode($cpj->hodAttachment) as $key => $file)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $file }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td>1</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+
+            {{-- ================= QA ================= --}}
+
+             <div class="block">
+                <div class="block-head">QA/CQA Review</div>
+                <table>
+                    <tr>
+                        <th class="w-20">QA/CQA Review Comments</th>
+                        <td class="w-80">{{ $cpj->qa_comment ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">QA/CQA Review Attachments</div>
+                <table>
+                    @if ($cpj->qaAttachment)
+                        @foreach (json_decode($cpj->qaAttachment) as $file)
+                            <tr><td>{{ $file }}</td></tr>
+                        @endforeach
+                    @else
+                        <tr><td>Not Applicable</td></tr>
+                    @endif
+                </table>
+            </div>
+
+            {{-- ================= QA HEAD ================= --}}
+        
+            <div class="block">
+                <div class="block-head">QA/CQA Head / Designee Approval</div>
+                <table>
+                    <tr>
+                        <th class="w-20">QA/CQA Head / Designee Approval Comments</th>
+                        <td class="w-80">{{ $cpj->qa_cqa_head_comment ?? 'Not Applicable' }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">QA/CQA Head Approval Attachments</div>
+                <table>
+                    @if ($cpj->qa_cqa_head_Attachment)
+                        @foreach (json_decode($cpj->qa_cqa_head_Attachment) as $file)
+                            <tr><td>{{ $file }}</td></tr>
+                        @endforeach
+                    @else
+                        <tr><td>Not Applicable</td></tr>
+                    @endif
+                </table>
+            </div>
+
+            {{-- PAGE BREAK --}}
+            <div style="page-break-after: always;"></div>
+
+            @endforeach
+
+        @else
+            <div class="block">
+                <div class="block-head">No Change Proposal Found</div>
+            </div>
+        @endif
+
+    </div>
+</div>
+
+
+
+                
                 <div class="block-head">
                     General Information
                 </div>
@@ -3784,7 +4032,7 @@
     </div>
 
 
-    @if (count($Extension) > 0)
+    @if(!empty($Extension) && $Extension->count() > 0)
         @foreach ($Extension as $data)
 
         <center>

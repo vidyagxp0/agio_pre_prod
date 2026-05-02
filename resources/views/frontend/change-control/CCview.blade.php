@@ -5,6 +5,8 @@
 
     @endphp
 
+    
+
     <style>
         #step-form>div {
             display: none
@@ -201,7 +203,7 @@
                             ->first();
                         // dd($cftCompleteUser);
 
-                           $lockdatafileds1 = !($data->stage == 1 && ( Helpers::check_roles($data->division_id, 'Change Control', 3) ));
+                           $lockdatafileds1 = !($data->stage == 1 && ( Helpers::check_roles($data->division_id, 'Change Control', 3)));
                            $lockdatafileds2 = !($data->stage == 2 && ( Helpers::check_roles($data->division_id, 'Change Control', 4)));
                            $lockdatafileds3 = !($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)));
                            $lockdatafileds5 = !($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)));
@@ -1023,8 +1025,6 @@
                                                         </select>
                                                         <input type="hidden" name="refence_change" value="{{ $data->refence_change }}">
                                                     @endif
-
-
                                                 </div>
                                             </div>
 
@@ -1530,9 +1530,6 @@
                                             Change Details
                                         </div>
                                         <div class="row">
-
-
-
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="current-practice">Current Practice
@@ -8159,7 +8156,7 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                        <script>
+                                        {{-- <script>
                                         $(document).ready(function () {
                                             // Initially check dropdown and textarea
                                             toggleElements($('#RA_head_required').val(), $('#ra_tab_comments').val());
@@ -8193,6 +8190,26 @@
                                                 }
                                             }
                                         });
+                                        </script> --}}
+                                        <script>
+                                            $(document).ready(function () {
+                                                toggleElements($('#RA_head_required').val());
+
+                                                $('#RA_head_required').change(function () {
+                                                    toggleElements($(this).val());
+                                                });
+
+                                                function toggleElements(selectValue) {
+                                                    if (selectValue && selectValue.trim().toLowerCase() === 'yes') {
+                                                        $('#approval-button').show();
+                                                        $('#pending-ra-stage').show();
+                                                    } else {
+                                                        $('#approval-button').hide();
+                                                        $('#pending-ra-stage').hide();
+                                                    }
+                                                }
+                                            });
+                                            
                                         </script>
                                         {{--
                                              <div class="col-lg-6">
@@ -8261,7 +8278,7 @@
                                         </div>
 
 
-                                        <div class="col-12">
+                                    <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_final_attach">QA/CQA Final Review Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>

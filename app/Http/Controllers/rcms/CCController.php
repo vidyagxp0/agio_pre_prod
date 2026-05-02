@@ -36,6 +36,7 @@ use App\Models\RcmDocHistory;
 use App\Models\RiskLevelKeywords;
 use App\Models\RoleGroup;
 use App\Models\ChangeProposalJust;
+use App\Models\ChangeProposalJustGrid;
 use App\Models\User;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -15532,7 +15533,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
     public function family_report($id)
     {
 
-
         $data = CC::find($id);
         $cftData =  CcCft::where('cc_id', $id)->first();
         $cc_cfts =  CcCft::where('cc_id', $id)->first();
@@ -15566,7 +15566,26 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $selectedMethodologies = [];
 
             $RootCause = RootCauseAnalysis::where('parent_id', $parentId)->where('parent_type', 'CC')->get();
+            $cpjIds = array_filter(explode(',', $data->refence_change));
+            $cpjDetails = ChangeProposalJust::whereIn('id', $cpjIds)->get();
 
+             $cpjIds = array_filter(explode(',', $data->refence_change));
+             $cpjDetails = ChangeProposalJust::whereIn('id', $cpjIds)->get();
+
+            // 🔥 Attach GRID + CHECKLIST per CPJ
+            foreach ($cpjDetails as $cpj) {
+
+                    $cpj->gridData = ChangeProposalJustGrid::where('cpjg_id', $cpj->id)
+                        ->where('identifier', 'change_proposal_grid')
+                        ->value('data'); // 👈 IMPORTANT (string directly le lo)
+
+                    $cpj->checklistData = ChangeProposalJustGrid::where('cpjg_id', $cpj->id)
+                        ->where('identifier', 'stage3_checklist')
+                        ->value('data'); // 👈 IMPORTANT
+                }
+
+            // dd($cpj);
+                
             foreach ($RootCause as $rca) {
 
                 $rca->originator_name = User::where('id', $rca->initiator_id)->value('name');
@@ -15639,7 +15658,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 'investigation_teamNamesString',
                 'ActionItem',
                 'capa_Data',
-                'capa_teamNamesString'
+                'capa_teamNamesString',
+                'cpjDetails',
             ))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
@@ -15667,6 +15687,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             return $pdf->stream('change_control' . $id . '.pdf');
         }
     }
+
 
 
 

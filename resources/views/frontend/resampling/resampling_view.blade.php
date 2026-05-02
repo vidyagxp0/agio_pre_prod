@@ -479,7 +479,7 @@
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="related_records">
-                                                Related Records <span class="text-danger"></span>
+                                                Related Records <span class="text-danger">*</span>
                                             </label>
 
                                             <!-- Select Field -->
@@ -513,10 +513,6 @@
                                         </div>
                                     </div>
 
-
-
-                                
-    
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="HOD Persons">

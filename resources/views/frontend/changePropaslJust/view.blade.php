@@ -1119,7 +1119,7 @@
                                 </div>
                             </div>
 
-                             <div class="col-lg-4">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Cancel hod By">Rejected By</label>
                                     <div class="static">

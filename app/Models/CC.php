@@ -17,4 +17,9 @@ class CC extends Model
     {
         return $this->belongsTo(User::class,'initiator_id');
     }
+
+    public function cpj()
+    {
+        return $this->belongsTo(ChangeProposalJust::class, 'refence_change');
+    }
 }

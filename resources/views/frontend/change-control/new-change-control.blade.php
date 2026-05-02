@@ -536,20 +536,20 @@
                                             $changeProposalRecords = DB::table('change_proposal_justs')->where('division_id', !empty($parent_division_id) ? $parent_division_id : session()->get('division'))->get();
                                         @endphp
                                         <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="refence_change">Reference Change Proposal and Justification </label>
-                                                    <select name="refence_change" id="refence_change">
-                                                        <option value="">Select Change Proposal and Justification Record</option>
-                                                         @if($changeProposalRecords)
-                                                                @foreach($changeProposalRecords as $record)
-                                                                    <option value="{{ $record->id }}" {{ $record->id == $data->refence_change ? 'selected' : '' }}>
-                                                                        {{ Helpers::getChangeProposalJustificationRecordNumber($record->id) }}
-                                                                    </option>
-                                                                @endforeach
-                                                            @endif
-                                                    </select>
-                                                </div>
+                                            <div class="group-input">
+                                                <label for="refence_change">Reference Change Proposal and Justification <span class="text-danger">*</span></label>
+                                                <select name="refence_change" id="refence_change" required>
+                                                    <option value="">Select Change Proposal and Justification Record</option>
+                                                        @if($changeProposalRecords)
+                                                            @foreach($changeProposalRecords as $record)
+                                                                <option value="{{ $record->id }}" {{ $record->id == $data->refence_change ? 'selected' : '' }}>
+                                                                    {{ Helpers::getChangeProposalJustificationRecordNumber($record->id) }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                </select>
                                             </div>
+                                        </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">

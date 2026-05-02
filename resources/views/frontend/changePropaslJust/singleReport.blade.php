@@ -317,250 +317,292 @@
     </footer>
 
 
-<div class="inner-block">
-    <div class="content-table">
+    <div class="inner-block">
+        <div class="content-table">
 
-        {{-- ================= GENERAL INFO ================= --}}
-        <div class="block">
-            <div class="block-head">General Information</div>
+            {{-- ================= GENERAL INFO ================= --}}
+            <div class="block">
+                <div class="block-head">General Information</div>
 
-            <table>
-                <tr>
-                    <th class="w-20">Record Number</th>
-                    <td class="w-30">
-                        {{ Helpers::getDivisionName($data->division_id) }}/CPJ/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                    </td>
+                <table>
+                    <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">
+                            {{ Helpers::getDivisionName($data->division_id) }}/CPJ/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                        </td>
 
-                    <th class="w-20">Site/Location Code</th>
-                    <td class="w-30">
-                        {{ $data->division_code ?? 'Not Applicable' }}
-                    </td>
-                </tr>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">
+                            {{ $data->division_code ?? 'Not Applicable' }}
+                        </td>
+                    </tr>
 
-                <tr>
-                    <th class="w-20">Initiator</th>
-                    <td class="w-30">
-                        {{ Helpers::getInitiatorName($data->initiator_id) }}
-                    </td>
+                    <tr>
+                        <th class="w-20">Initiator</th>
+                        <td class="w-30">
+                            {{ Helpers::getInitiatorName($data->initiator_id) }}
+                        </td>
 
-                    <th class="w-20">Date of Initiation</th>
-                    <td class="w-30">
-                        {{ Helpers::getdateFormat($data->created_at) }}
-                    </td>
-                </tr>
-            </table>
+                        <th class="w-20">Date of Initiation</th>
+                        <td class="w-30">
+                            {{ Helpers::getdateFormat($data->created_at) }}
+                        </td>
+                    </tr>
+                </table>
 
-            <table>
-                <tr>
-                    <th class="w-20">Short Description</th>
-                    <td class="w-80">
-                        {{ $data->cpdescription ?? 'Not Applicable' }}
-                    </td>
-                </tr>
-            </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80">
+                            {{ $data->cpdescription ?? 'Not Applicable' }}
+                        </td>
+                    </tr>
+                </table>
 
-            <table>
-                <tr>
-                    <th class="w-20">Description of Change</th>
-                    <td class="w-80">
-                        {{ $data->impassesment ?? 'Not Applicable' }}
-                    </td>
-                </tr>
-            </table>
-        </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Description of Change</th>
+                        <td class="w-80">
+                            {{ $data->impassesment ?? 'Not Applicable' }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-        <div class="block">
-                    <div class="block-head">
-                        Change Proposal And Justification Details Grid
-                    </div>
-                    <div class="border-table">
-                        <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                            <thead>
-                                <tr class="table_bg">
-                                    <th style="width: 5%">Sr. No.</th>
-                                    <th style="width: 12%">Current Practice</th>
-                                    <th style="width: 16%">Proposed Change</th>
-                                    <th style="width: 15%">Justification / reason for change</th>
-                                    {{-- <th style="width: 8%">Action</th> --}}
-                                </tr>
-                            </thead>
-                             <tbody>
-                                    @php $productsdetails = 1; @endphp
-                                    @if (!empty($changeProposalGrid) && is_array($changeProposalGrid->data))
+            <div class="block">
+                        <div class="block-head">
+                            Change Proposal And Justification Details Grid
+                        </div>
+                        <div class="border-table">
+                            <table style="margin-top: 20px; width:100%;table-layout:fixed;">
+                                <thead>
+                                    <tr class="table_bg">
+                                        <th style="width: 5%">Sr. No.</th>
+                                        <th style="width: 12%">Current Practice</th>
+                                        <th style="width: 16%">Proposed Change</th>
+                                        <th style="width: 15%">Justification / reason for change</th>
+                                        {{-- <th style="width: 8%">Action</th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        @php $productsdetails = 1; @endphp
+                                        @if (!empty($changeProposalGrid) && is_array($changeProposalGrid->data))
 
-                                        @foreach ($changeProposalGrid->data as $index => $detail)
+                                            @foreach ($changeProposalGrid->data as $index => $detail)
+                                                <tr>
+                                                    <td>{{ $productsdetails++ }}</td>
+                                                    <td class="w-20">
+                                                        {{ isset($detail['existing_system']) ? $detail['existing_system'] : '' }} </td>
+                                                    <td class="w-20">
+                                                        {{ isset($detail['proposed_change']) ? $detail['proposed_change'] : '' }} </td>
+                                                    <td class="w-20">
+                                                        {{ isset($detail['justification']) ? $detail['justification'] : '' }}
+                                                    </td>
+                                                    
+                                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
+
+                                                </tr>
+                                            @endforeach
+                                        @else
                                             <tr>
-                                                <td>{{ $productsdetails++ }}</td>
-                                                <td class="w-20">
-                                                    {{ isset($detail['existing_system']) ? $detail['existing_system'] : '' }} </td>
-                                                <td class="w-20">
-                                                    {{ isset($detail['proposed_change']) ? $detail['proposed_change'] : '' }} </td>
-                                                <td class="w-20">
-                                                    {{ isset($detail['justification']) ? $detail['justification'] : '' }}
-                                                </td>
-                                                
-                                                {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
+                                                <td>1</td>
+
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                <td>Not Applicable</td>
+                                                {{-- <td>Not Applicable</td> --}}
 
                                             </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td>1</td>
-
-                                            <td>Not Applicable</td>
-                                            <td>Not Applicable</td>
-                                            <td>Not Applicable</td>
-                                            {{-- <td>Not Applicable</td> --}}
-
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
 
-        {{-- ================= INITIATOR ATTACHMENT ================= --}}
-        <div class="block">
-            <div class="block-head">Initiator Attachment</div>
-            <div class="border-table">
-                <table>
-                    <tr class="table_bg">
-                        <th>Sr.No.</th>
-                        <th>Attachment</th>
-                    </tr>
+                        {{-- Impact Assesment --}}
 
-                    @if ($data->cpAttachment)
-                        @foreach (json_decode($data->cpAttachment) as $key => $file)
+                    @php
+                            $checklist = $checklistData->data ?? [];
+                        @endphp
+
+                    <table class="table table-bordered">
+                        <thead>
                             <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $file }}</td>
+                                <th width="5%">Sr.No.</th>
+                                <th width="55%">Particular</th>
+                                <th width="40%">Yes/No</th>
                             </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td>1</td>
-                            <td>Not Applicable</td>
+                        </thead>
+
+                        <tbody>
+                            @foreach ($checklist as $key => $item)
+
+                                <tr>
+                                    <td class="text-center">
+                                        {{ $loop->iteration }}
+                                    </td>
+
+                                    <td>
+                                        {{ $item['question'] ?? '' }}
+                                    </td>
+
+                                    <td class="text-center">
+                                        {{-- If manual input exists (Any Other) --}}
+                                        @if(isset($item['manual_response']))
+                                            {{ $item['manual_response'] }}
+                                        @else
+                                            {{ $item['response'] ?? '' }}
+                                        @endif
+                                    </td>
+
+                                </tr>
+
+                            @endforeach
+                        </tbody>
+                    </table>
+
+            {{-- ================= INITIATOR ATTACHMENT ================= --}}
+            <div class="block">
+                <div class="block-head">Initiator Attachment</div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th>Sr.No.</th>
+                            <th>Attachment</th>
                         </tr>
-                    @endif
+
+                        @if ($data->cpAttachment)
+                            @foreach (json_decode($data->cpAttachment) as $key => $file)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $file }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td>1</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+
+            {{-- ================= HOD ================= --}}
+            <div class="block">
+                <div class="block-head">HOD/Designee Review</div>
+
+                <table>
+                    <tr>
+                        <th class="w-20">HOD/Designee Review comment</th>
+                        <td class="w-80">{{ $data->hod_comment ?? 'Not Applicable' }}</td>
+                    </tr>
                 </table>
             </div>
-        </div>
 
-        {{-- ================= HOD ================= --}}
-        <div class="block">
-            <div class="block-head">HOD/Designee Review</div>
-
-            <table>
-                <tr>
-                    <th class="w-20">HOD/Designee Review comment</th>
-                    <td class="w-80">{{ $data->hod_comment ?? 'Not Applicable' }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="block">
-            <div class="block-head">HOD/Designee Attachment</div>
-            <div class="border-table">
-                <table>
-                    <tr class="table_bg">
-                        <th>Sr.No.</th>
-                        <th>Attachment</th>
-                    </tr>
-
-                    @if ($data->hodAttachment)
-                        @foreach (json_decode($data->hodAttachment) as $key => $file)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $file }}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td>1</td>
-                            <td>Not Applicable</td>
+            <div class="block">
+                <div class="block-head">HOD/Designee Attachment</div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th>Sr.No.</th>
+                            <th>Attachment</th>
                         </tr>
-                    @endif
+
+                        @if ($data->hodAttachment)
+                            @foreach (json_decode($data->hodAttachment) as $key => $file)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $file }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td>1</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+
+            {{-- ================= QA ================= --}}
+            <div class="block">
+                <div class="block-head">QA/CQA Review</div>
+
+                <table>
+                    <tr>
+                        <th class="w-20">QA/CQA Review Comments</th>
+                        <td class="w-80">{{ $data->qa_comment ?? 'Not Applicable' }}</td>
+                    </tr>
                 </table>
             </div>
-        </div>
 
-        {{-- ================= QA ================= --}}
-        <div class="block">
-            <div class="block-head">QA/CQA Review</div>
-
-            <table>
-                <tr>
-                    <th class="w-20">QA/CQA Review Comments</th>
-                    <td class="w-80">{{ $data->qa_comment ?? 'Not Applicable' }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="block">
-            <div class="block-head">QA/CQA Review Attachments</div>
-            <div class="border-table">
-                <table>
-                    <tr class="table_bg">
-                        <th>Sr.No.</th>
-                        <th>Attachment</th>
-                    </tr>
-
-                    @if ($data->qaAttachment)
-                        @foreach (json_decode($data->qaAttachment) as $key => $file)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $file }}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td>1</td>
-                            <td>Not Applicable</td>
+            <div class="block">
+                <div class="block-head">QA/CQA Review Attachments</div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th>Sr.No.</th>
+                            <th>Attachment</th>
                         </tr>
-                    @endif
+
+                        @if ($data->qaAttachment)
+                            @foreach (json_decode($data->qaAttachment) as $key => $file)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $file }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td>1</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+
+            {{-- ================= QA CQA HEAD ================= --}}
+            <div class="block">
+                <div class="block-head">QA/CQA Head / Designee Approval</div>
+
+                <table>
+                    <tr>
+                        <th class="w-20">QA/CQA Head / Designee Approval Comments</th>
+                        <td class="w-80">{{ $data->qa_cqa_head_comment ?? 'Not Applicable' }}</td>
+                    </tr>
                 </table>
             </div>
-        </div>
 
-        {{-- ================= QA CQA HEAD ================= --}}
-        <div class="block">
-            <div class="block-head">QA/CQA Head / Designee Approval</div>
-
-            <table>
-                <tr>
-                    <th class="w-20">QA/CQA Head / Designee Approval Comments</th>
-                    <td class="w-80">{{ $data->qa_cqa_head_comment ?? 'Not Applicable' }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="block">
-            <div class="block-head">QA/CQA Head / designee Attachment</div>
-            <div class="border-table">
-                <table>
-                    <tr class="table_bg">
-                        <th>Sr.No.</th>
-                        <th>Attachment</th>
-                    </tr>
-
-                    @if ($data->qa_cqa_head_Attachment)
-                        @foreach (json_decode($data->qa_cqa_head_Attachment) as $key => $file)
-                            <tr>
-                                <td>{{ $key + 1 }}</td>
-                                <td>{{ $file }}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td>1</td>
-                            <td>Not Applicable</td>
+            <div class="block">
+                <div class="block-head">QA/CQA Head / designee Attachment</div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th>Sr.No.</th>
+                            <th>Attachment</th>
                         </tr>
-                    @endif
-                </table>
-            </div>
-        </div>
 
-        <div class="block">
+                        @if ($data->qa_cqa_head_Attachment)
+                            @foreach (json_decode($data->qa_cqa_head_Attachment) as $key => $file)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $file }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td>1</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+
+            <div class="block">
                 <div class="block-head">Activity Log</div>
                 <table>
                     <tr>
@@ -589,7 +631,7 @@
                         <td class="w-30">@if ($data->HOD_Review_Comments) {{ $data->HOD_Review_Comments }} @else Not Applicable @endif</td>
                     </tr>
 
-                     <tr>
+                    <tr>
                         <th class="w-20">QA/CQA Review By</th>
                         <td class="w-30">@if ($data->qa_cqa_Review_Complete_By) {{ $data->qa_cqa_Review_Complete_By }} @else Not Applicable @endif</td>
                         <th class="w-20">QA/CQA Review On</th>
@@ -597,7 +639,7 @@
                         <th class="w-20">QA/CQA Review Comment</th>
                         <td class="w-30">@if ($data->qa_cqa__Review_Comments) {{ $data->qa_cqa__Review_Comments }} @else Not Applicable @endif</td>
                     </tr>
-                   
+                
                     <tr>
                         <th class="w-20">QA/CQA Head/Designee Complete By</th>
                         <td class="w-30">@if ($data->qa_cqa_head_Review_Complete_By) {{ $data->qa_cqa_head_Review_Complete_By }} @else Not Applicable @endif</td>
@@ -607,7 +649,7 @@
                         <td class="w-30">@if ($data->qa_cqa_head_Review_Comments) {{ $data->qa_cqa_head_Review_Comments }} @else Not Applicable @endif</td>
                     </tr>
 
-                     <tr>
+                    <tr>
                         <th class="w-20">Reject By</th>
                         <td class="w-30">@if ($data->rejected_by) {{ $data->rejected_by }} @else Not Applicable @endif</td>
                         <th class="w-20">Reject On</th>
@@ -617,9 +659,8 @@
                     </tr>
                 </table>
             </div>
-
+        </div>
     </div>
-</div>
 
 
 

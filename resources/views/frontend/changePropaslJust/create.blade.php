@@ -165,7 +165,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
-                                            Change Proposal And Justificatin Details Grid
+                                            Change Proposal And Justification Details Grid
                                             <button type="button" id="traceblity_add">+</button>
                                            
                                         </label>

@@ -1491,12 +1491,15 @@ class ChangeProposalJustController extends Controller
     {
         $data = ChangeProposalJust::find($id);
         $changeProposalGrid = ChangeProposalJustGrid::where('cpjg_id', $id)->where('identifier', 'change_proposal_grid')->first();
+        $checklistData = ChangeProposalJustGrid::where('cpjg_id', $id)->where('identifier', 'stage3_checklist')->first();
+
+        // dd($checklistData);
 
     if (!empty($data)) {
         $data->originator = User::where('id', $data->initiator_id)->value('name');
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.changePropaslJust.singleReport', compact('data','changeProposalGrid'))
+        $pdf = PDF::loadview('frontend.changePropaslJust.singleReport', compact('data','changeProposalGrid','checklistData'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
