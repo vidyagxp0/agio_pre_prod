@@ -15566,11 +15566,10 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $selectedMethodologies = [];
 
             $RootCause = RootCauseAnalysis::where('parent_id', $parentId)->where('parent_type', 'CC')->get();
-            $cpjIds = array_filter(explode(',', $data->refence_change));
-            $cpjDetails = ChangeProposalJust::whereIn('id', $cpjIds)->get();
-
+           
              $cpjIds = array_filter(explode(',', $data->refence_change));
              $cpjDetails = ChangeProposalJust::whereIn('id', $cpjIds)->get();
+             
 
             // 🔥 Attach GRID + CHECKLIST per CPJ
             foreach ($cpjDetails as $cpj) {
