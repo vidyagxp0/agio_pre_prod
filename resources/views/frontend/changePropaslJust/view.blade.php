@@ -682,47 +682,56 @@
                                                         <th style="width: 40%;">Yes/No</th>
                                                     </tr>
                                                 </thead>
-
+                                                
                                                 <tbody>
-                                                    @foreach ($questions as $key => $question)
-                                                        @php
-                                                            $isLastQuestion = $loop->last;
-                                                        @endphp
-                                                        <tr>
-                                                            <td class="text-center">{{ $loop->iteration }}.</td>
-                                                            
-                                                            <td>
-                                                                {{ $question }}
-                                                                <input type="hidden" name="checklist[{{ $key }}][question]" value="{{ $question }}">
-                                                            </td>
-                                                            
-                                                            <td>
-                                                                @if(!$isLastQuestion)
-                                                                    {{-- Yes/No Dropdown for all except last question --}}
-                                                                    <select name="checklist[{{ $key }}][response]"
-                                                                        style="width:100%; border:1px solid #000; background:#f0f0f0;" {{ $istab1 ? "" : "disabled" }}>
-                                                                        
-                                                                        <option value="No" 
-                                                                            {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? '' : 'selected' }}>
-                                                                            No
-                                                                        </option>
-                                                                        
-                                                                        <option value="Yes"
-                                                                            {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? 'selected' : '' }}>
-                                                                            Yes
-                                                                        </option>
-                                                                    </select>
-                                                                @else
-                                                                    {{-- Manual text input for last question --}}
-                                                                    <textarea name="checklist[{{ $key }}][manual_response]" 
-                                                                        rows="3"
-                                                                        style="width:100%; border:1px solid #ccc; padding:8px; border-radius:5px;"
-                                                                        placeholder="Enter additional comments or remarks here..."
-                                                                        {{ $istab1 ? "" : "disabled" }}>{{ isset($savedChecklist[$key]['manual_response']) ? $savedChecklist[$key]['manual_response'] : '' }}</textarea>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
+                                                @foreach ($questions as $key => $question)
+                                                    @php
+                                                        $isLastQuestion = $loop->last;
+                                                        $saved = $savedChecklist[$key] ?? [];
+                                                    @endphp
+
+                                                    <tr>
+                                                        <td class="text-center">{{ $loop->iteration }}.</td>
+
+                                                        {{-- Question --}}
+                                                        <td>
+                                                            {{ $question }}
+                                                            <input type="hidden" name="checklist[{{ $key }}][question]" value="{{ $question }}">
+                                                        </td>
+
+                                                        {{-- Answer --}}
+                                                        <td>
+                                                            @if(!$isLastQuestion)
+
+                                                                {{-- YES / NO --}}
+                                                                <select name="checklist[{{ $key }}][response]" style="width:100%; border:1px solid #000;">
+
+                                                                    <option value="No"
+                                                                        {{ isset($saved['response']) && $saved['response'] == 'No' ? 'selected' : '' }}>
+                                                                        No
+                                                                    </option>
+
+                                                                    <option value="Yes"
+                                                                        {{ isset($saved['response']) && $saved['response'] == 'Yes' ? 'selected' : '' }}>
+                                                                        Yes
+                                                                    </option>
+
+                                                                </select>
+
+                                                            @else
+
+                                                                {{-- LAST QUESTION (Manual Input) --}}
+                                                                <textarea 
+                                                                    name="checklist[{{ $key }}][manual_response]"
+                                                                    rows="3"
+                                                                    style="width:100%; border:1px solid #ccc; padding:8px; border-radius:5px;"
+                                                                    placeholder="Enter additional comments..."
+                                                                >{{ $saved['manual_response'] ?? '' }}</textarea>
+
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                                 </tbody>
 
                                             </table>
@@ -950,7 +959,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="HOD_Attachments" name="qa_cqa_head_Attachment[]"
-                                                oninput="addMultipleFiles(this, 'qa_cqa_head_Attachment')" {{ $istab3 ? "" : "disabled" }} multiple>
+                                                oninput="addMultipleFiles(this, 'qa_cqa_head_Attachment')" {{ $istab4 ? "" : "disabled" }} multiple>
                                         </div>
                                     </div>
                                 </div>

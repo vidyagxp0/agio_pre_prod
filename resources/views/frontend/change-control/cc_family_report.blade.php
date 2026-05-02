@@ -287,7 +287,6 @@
 
             <div class="block">
                 <div class="block-head">Change Proposal And Justification Details Grid</div>
-
                 <table>
                     <tr>
                         <th>Sr No</th>
@@ -314,8 +313,6 @@
                     ? $cpj->checklistData 
                     : json_decode($cpj->checklistData ?? '{}', true);
             @endphp
-
-                    
 
             <div class="block">
                 <div class="block-head">Impact Assessment</div>
@@ -465,6 +462,64 @@
         @endif
 
     </div>
+
+    <div class="block">
+                <div class="block-head">Activity Log</div>
+                <table>
+                    <tr>
+                        <th class="w-20">Submit By</th>
+                        <td class="w-30">@if ($data->submit_by) {{ $data->submit_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">Submit On</th>
+                        <td class="w-30">@if ($data->submit_on) {{ $data->submit_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">Submit Comment</th>
+                        <td class="w-30">@if ($data->submit_comment) {{ $data->submit_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancel By</th>
+                        <td class="w-30">@if ($data->reject_by) {{ $data->reject_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">Cancel On</th>
+                        <td class="w-30">@if ($data->reject_on) {{ $data->reject_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">Cancel Comment</th>
+                        <td class="w-30">@if ($data->reject_comment) {{ $data->reject_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                    
+                    <tr>
+                        <th class="w-20">HOD/Designee Review By</th>
+                        <td class="w-30">@if ($data->HOD_Review_Complete_By) {{ $data->HOD_Review_Complete_By }} @else Not Applicable @endif</td>
+                        <th class="w-20">HOD/Designee Review On</th>
+                        <td class="w-30">@if ($data->HOD_Review_Complete_On) {{ $data->HOD_Review_Complete_On }} @else Not Applicable @endif</td>
+                        <th class="w-20">HOD/Designee Review Comment</th>
+                        <td class="w-30">@if ($data->HOD_Review_Comments) {{ $data->HOD_Review_Comments }} @else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">QA/CQA Review By</th>
+                        <td class="w-30">@if ($data->qa_cqa_Review_Complete_By) {{ $data->qa_cqa_Review_Complete_By }} @else Not Applicable @endif</td>
+                        <th class="w-20">QA/CQA Review On</th>
+                        <td class="w-30">@if ($data->qa_cqa__Review_Complete_On) {{ $data->qa_cqa__Review_Complete_On }} @else Not Applicable @endif</td>
+                        <th class="w-20">QA/CQA Review Comment</th>
+                        <td class="w-30">@if ($data->qa_cqa__Review_Comments) {{ $data->qa_cqa__Review_Comments }} @else Not Applicable @endif</td>
+                    </tr>
+                
+                    <tr>
+                        <th class="w-20">QA/CQA Head/Designee Complete By</th>
+                        <td class="w-30">@if ($data->qa_cqa_head_Review_Complete_By) {{ $data->qa_cqa_head_Review_Complete_By }} @else Not Applicable @endif</td>
+                        <th class="w-20">QA/CQA Head/Designee Complete On</th>
+                        <td class="w-30">@if ($data->qa_cqa_head_Review_Complete_On) {{ $data->qa_cqa_head_Review_Complete_On }} @else Not Applicable @endif</td>
+                        <th class="w-20">QA/CQA Head/Designee Complete Comment</th>
+                        <td class="w-30">@if ($data->qa_cqa_head_Review_Comments) {{ $data->qa_cqa_head_Review_Comments }} @else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Reject By</th>
+                        <td class="w-30">@if ($data->rejected_by) {{ $data->rejected_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">Reject On</th>
+                        <td class="w-30">@if ($data->rejected_on) {{ $data->rejected_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">Reject Comment</th>
+                        <td class="w-30">@if ($data->reject_comment) {{ $data->reject_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                </table>
+            </div>
 </div>
 
 

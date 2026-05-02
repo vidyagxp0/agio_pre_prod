@@ -407,7 +407,7 @@ class ChangeProposalJustController extends Controller
                     'identifier' => 'stage3_checklist'
                 ],
                 [
-                    'data' => $request->checklist // direct array
+                    'data' => $request->checklist
                 ]
             );
         }
