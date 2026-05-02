@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Deviation;
 use App\Models\QMSDivision;
-use App\Models\Errata;
+use App\Models\errata;
+use App\Models\extension_new;
 use App\Models\FailureInvestigation;
 use App\Models\Incident;
 use App\Models\MarketComplaint;
@@ -108,7 +109,7 @@ class DashboardController extends Controller
         $processRecords(Capa::all(), 'CAPA', 'CAPA', 'capashow');
         $processRecords(ActionItem::all(), 'Action Item', 'AI', 'rcms/actionItem');
         $processRecords(AuditProgram::all(), 'Audit Program', 'Audit Program', 'rcms/AuditProgramShow');
-        $processRecords(Extension::all(), 'Extension', 'Extension', 'extension_newshow');
+        $processRecords(extension_new::all(), 'Extension', 'Extension', 'extension_newshow');
         $processRecords(Resampling::all(), 'Resampling', 'Resampling', 'resampling_view');
         $processRecords(Observation::all(), 'Observation', 'Observation', 'rcms/observationshow');
         $processRecords(RootCauseAnalysis::all(), 'Root Cause Analysis', 'Root Cause Analysis', 'rootshow');
@@ -134,7 +135,7 @@ class DashboardController extends Controller
             'CAPA' => Capa::whereYear('created_at', $year)->count(),
             'Action Item' => ActionItem::whereYear('created_at', $year)->count(),
             'Audit Program' => AuditProgram::whereYear('created_at', $year)->count(),
-            'Extension' => Extension::whereYear('created_at', $year)->count(),
+            'Extension' => extension_new::whereYear('created_at', $year)->count(),
             'Resampling' => Resampling::whereYear('created_at', $year)->count(),
             'Observation' => Observation::whereYear('created_at', $year)->count(),
             'Risk Assessment' => RiskManagement::whereYear('created_at', $year)->count(),
