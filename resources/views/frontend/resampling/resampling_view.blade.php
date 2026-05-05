@@ -1037,53 +1037,53 @@
                         </div>
 
                         
-    <script>
-        function handleDateInput(inputElement, displayElementId) {
-            var displayElement = document.getElementById(displayElementId);
-            var dateValue = new Date(inputElement.value);
-            displayElement.value = dateValue.toLocaleDateString('en-GB', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            });
-        }
+                        <script>
+                            function handleDateInput(inputElement, displayElementId) {
+                                var displayElement = document.getElementById(displayElementId);
+                                var dateValue = new Date(inputElement.value);
+                                displayElement.value = dateValue.toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                });
+                            }
 
-        function updateEndDateMin() {
-            var startDate = document.getElementById('start_date_name').value;
-            var endDateInput = document.getElementById('end_date_name');
+                            function updateEndDateMin() {
+                                var startDate = document.getElementById('start_date_name').value;
+                                var endDateInput = document.getElementById('end_date_name');
 
-            if (startDate) {
-                // Set the minimum date to one day after the start date
-                var minEndDate = new Date(startDate);
-                minEndDate.setDate(minEndDate.getDate());
+                                if (startDate) {
+                                    // Set the minimum date to one day after the start date
+                                    var minEndDate = new Date(startDate);
+                                    minEndDate.setDate(minEndDate.getDate());
 
-                // Format the date to match the input type date format (yyyy-mm-dd)
+                                    // Format the date to match the input type date format (yyyy-mm-dd)
 
-                var formattedMinEndDate = minEndDate.toISOString().split('T')[0];
-                endDateInput.setAttribute('min', formattedMinEndDate);
+                                    var formattedMinEndDate = minEndDate.toISOString().split('T')[0];
+                                    endDateInput.setAttribute('min', formattedMinEndDate);
 
-                // Ensure the next audit date is after the last audit date
-                // if (endDateInput.value && endDateInput.value <= startDate) {
-                //     endDateInput.value = '';
-                //     // alert("The next audit date must be after the last audit date.");
-                // }
-            }
-        }
+                                    // Ensure the next audit date is after the last audit date
+                                    // if (endDateInput.value && endDateInput.value <= startDate) {
+                                    //     endDateInput.value = '';
+                                    //     // alert("The next audit date must be after the last audit date.");
+                                    // }
+                                }
+                            }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            updateEndDateMin(); // Initialize the end date min on page load
+                            document.addEventListener("DOMContentLoaded", function() {
+                                updateEndDateMin(); // Initialize the end date min on page load
 
-            // Reapply the min attribute whenever the start date is changed
-            document.getElementById('start_date_name').addEventListener('input', function() {
-                updateEndDateMin();
-            });
+                                // Reapply the min attribute whenever the start date is changed
+                                document.getElementById('start_date_name').addEventListener('input', function() {
+                                    updateEndDateMin();
+                                });
 
-            // Validate the end date when it is changed
-            document.getElementById('end_date_name').addEventListener('input', function() {
-                updateEndDateMin();
-            });
-        });
-    </script>
+                                // Validate the end date when it is changed
+                                document.getElementById('end_date_name').addEventListener('input', function() {
+                                    updateEndDateMin();
+                                });
+                            });
+                        </script>
                                 </div>
                                       <div class="col-12">
                                         <div class="group-input">

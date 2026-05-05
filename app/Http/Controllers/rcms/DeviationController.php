@@ -13456,7 +13456,7 @@ public function audit_trail_filter(Request $request, $id)
         switch ($request->typedata) {
             case 'cft_review':
                 // Filter by specific CFT review actions
-                $cft_field = ['CFT Review Complete','CFT Review Not Required',];
+                $cft_field = ['CFT Review Complete','CFT Review Not Required'];
                 $query->whereIn('action', $cft_field);
                 break;
 

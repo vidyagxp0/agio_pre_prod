@@ -1511,7 +1511,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                </tr>
+                            </tr>
 
                             <tr>
                                 <th class="w-20">Production Injection Review Completed By</th>
@@ -1698,7 +1698,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    </tr>
+                                </tr>
 
                                 <tr>
 

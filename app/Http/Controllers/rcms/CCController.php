@@ -12102,9 +12102,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
 
             if ($changeControl->stage == 9) {
-
-
-
                         $extensionchild = extension_new::where('parent_id', $id)
                         ->where('parent_type', 'CC')
                         ->get();
@@ -12138,37 +12135,68 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                  //Action Item Child
 
-                    // $actionchilds = ActionItem::where('parent_id', $id)
-                    //         ->where('parent_type', 'CC')
-                    //         ->get();
-                    //             $hasPendingaction = false;
-                    //         foreach ($actionchilds as $ext) {
-                    //                 $actionchildstatus = trim(strtolower($ext->status));
-                    //              if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
-                    //                     $hasPendingaction = true;
-                    //                     break;
-                    //                 }
-                    //             }
-                    //     if ($hasPendingaction) {
-                    //         // $actionchildstatus = trim(strtolower($extensionchild->status));
-                    //         if ($hasPendingaction) {
-                    //             Session::flash('swal', [
-                    //                 'title' => 'Action Item Child Pending!',
-                    //                 'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
-                    //                 'type' => 'warning',
-                    //             ]);
+                    $actionchilds = ActionItem::where('parent_id', $id)
+                            ->where('parent_type', 'CC')
+                            ->get();
+                                $hasPendingaction = false;
+                            foreach ($actionchilds as $ext) {
+                                    $actionchildstatus = trim(strtolower($ext->status));
+                                 if ($actionchildstatus !== 'closed - done'  && $actionchildstatus !== 'closed-cancelled') {
+                                        $hasPendingaction = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPendingaction) {
+                            // $actionchildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPendingaction) {
+                                Session::flash('swal', [
+                                    'title' => 'Action Item Child Pending!',
+                                    'message' => 'You cannot proceed until Action Item Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
 
-                    //         return redirect()->back();
-                    //         }
-                    //     } else {
-                    //         // Flash message for success (when the form is filled correctly)
-                    //         Session::flash('swal', [
-                    //             'title' => 'Success!',
-                    //             'message' => 'Document Sent',
-                    //             'type' => 'success',
-                    //         ]);
-                    //     }
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
 
+                         $rcachilds = RootCauseAnalysis::where('parent_id', $id)
+                            ->where('parent_type', 'CC')
+                            ->get();
+                                $hasPending = false;
+                            foreach ($rcachilds as $ext) {
+                                    $rcachildstatus = trim(strtolower($ext->status));
+                                    if ($rcachildstatus !== 'closed - done' && $rcachildstatus !== 'closed-cancelled' )
+                                    {
+                                        $hasPending = true;
+                                        break;
+                                    }
+                                }
+                        if ($hasPending) {
+                            // $rcachildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPending) {
+                                Session::flash('swal', [
+                                    'title' => 'RCA Child Pending!',
+                                    'message' => 'You cannot proceed until RCA Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
+
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
 
              //CAPA Child
 
@@ -12748,39 +12776,39 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                      // CAPA Child
 
-                    // $capachilds = Capa::where('parent_id', $id)
-                    //         ->where('parent_type', 'CC')
-                    //         ->get();
-                    //             $hasPending = false;
-                    //         foreach ($capachilds as $ext) {
-                    //                 $capachildstatus = trim(strtolower($ext->status));
-                    //                 if ($capachildstatus !== 'closed - done' &&
-                    //                     $capachildstatus !== 'closed-cancelled' )
-                    //                 {
-                    //                     $hasPending = true;
-                    //                     break;
-                    //                 }
-                    //                 }
-                    //                 // dd($capachildstatus);
-                    //     if ($hasPending) {
-                    //         // $capachildstatus = trim(strtolower($extensionchild->status));
-                    //         if ($hasPending) {
-                    //             Session::flash('swal', [
-                    //                 'title' => 'CAPA Child Pending!',
-                    //                 'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
-                    //                 'type' => 'warning',
-                    //             ]);
+                    $capachilds = Capa::where('parent_id', $id)
+                            ->where('parent_type', 'CC')
+                            ->get();
+                                $hasPending = false;
+                            foreach ($capachilds as $ext) {
+                                    $capachildstatus = trim(strtolower($ext->status));
+                                    if ($capachildstatus !== 'closed - done' &&
+                                        $capachildstatus !== 'closed-cancelled' )
+                                    {
+                                        $hasPending = true;
+                                        break;
+                                    }
+                                    }
+                                    // dd($capachildstatus);
+                        if ($hasPending) {
+                            // $capachildstatus = trim(strtolower($extensionchild->status));
+                            if ($hasPending) {
+                                Session::flash('swal', [
+                                    'title' => 'CAPA Child Pending!',
+                                    'message' => 'You cannot proceed until CAPA Child is Closed-Done.',
+                                    'type' => 'warning',
+                                ]);
 
-                    //         return redirect()->back();
-                    //         }
-                    //     } else {
-                    //         // Flash message for success (when the form is filled correctly)
-                    //         Session::flash('swal', [
-                    //             'title' => 'Success!',
-                    //             'message' => 'Document Sent',
-                    //             'type' => 'success',
-                    //         ]);
-                    //     }
+                            return redirect()->back();
+                            }
+                        } else {
+                            // Flash message for success (when the form is filled correctly)
+                            Session::flash('swal', [
+                                'title' => 'Success!',
+                                'message' => 'Document Sent',
+                                'type' => 'success',
+                            ]);
+                        }
 
 
                         // RCA Child

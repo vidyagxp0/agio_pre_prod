@@ -665,12 +665,12 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator"><b>Initiator</b></label>
-                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="division_code" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}
-                                            value="{{ $data->initiator_name }}">
+                                        <label for="Initiator">Initiator</label>
+                                        <div class="static"><input disabled type="text"
+                                                value="{{ Helpers::getInitiatorName($data->initiator_id) }}"></div>
                                     </div>
                                 </div>
+                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
@@ -757,7 +757,7 @@
                                     .hide-input {
                                         display: none;
                                     }
-                                    </style>
+                                </style>
 
                                         <div class="col-lg-6">
                                             <div class="group-input" id="incident_interval_others_gi">
@@ -2925,7 +2925,7 @@
                               
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment"> Comment</label>
+                                        <label for="Comment">Comment</label>
                                         <div class="static">{{$data->more_info_req_3_comment}}</div>
                                     </div>
                                 </div>
@@ -3040,7 +3040,6 @@
                                 </div>
 
 
-                                
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Verification Complete">More Info Required By</label>

@@ -2522,13 +2522,6 @@ class LabIncidentController extends Controller
         $history->save();
     }
 
-
-
-
-
-
-
-
         toastr()->success('Record is created Successfully');
 
         // return redirect('rcms/qms-dashboard');
@@ -2554,7 +2547,6 @@ class LabIncidentController extends Controller
         $lastLabtab = Labincident_Second::where('lab_incident_id', $id)->first();
         $labtab= Labincident_Second::where('lab_incident_id',$id)->first();
         $sectionheadname = User::find($id);
-        $data->initiator_id = Auth::user()->id;
         $data->short_desc = $request->short_desc;
         $data->Initiator_Group= $request->Initiator_Group;
         $data->initiator_group_code= $request->initiator_group_code;

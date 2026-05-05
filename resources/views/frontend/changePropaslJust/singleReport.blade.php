@@ -421,7 +421,7 @@
 
                         {{-- Impact Assesment --}}
 
-                    @php
+                        @php
                             $checklist = $checklistData->data ?? [];
                         @endphp
 
@@ -461,7 +461,7 @@
                         </tbody>
                     </table>
 
-            {{-- ================= INITIATOR ATTACHMENT ================= --}}
+            {{-- ================= INITIATOR ATTACHMENT ================= --}} 
             <div class="block">
                 <div class="block-head">Initiator Attachment</div>
                 <div class="border-table">
@@ -491,7 +491,6 @@
             {{-- ================= HOD ================= --}}
             <div class="block">
                 <div class="block-head">HOD/Designee Review</div>
-
                 <table>
                     <tr>
                         <th class="w-20">HOD/Designee Review comment</th>
