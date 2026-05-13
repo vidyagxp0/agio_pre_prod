@@ -576,7 +576,7 @@
             </div>
 
             <div class="block">
-                <div class="block-head">QA/CQA Head / designee Attachment</div>
+                <div class="block-head">QA/CQA Head / Designee Attachment</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -660,8 +660,6 @@
             </div>
         </div>
     </div>
-
-
 
 </body>
 

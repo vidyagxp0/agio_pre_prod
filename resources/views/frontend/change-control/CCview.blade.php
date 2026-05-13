@@ -280,21 +280,21 @@
                             @elseif(
                                 $data->stage == 4 && (Helpers::check_roles($data->division_id, 'Change Control', 5) ||
                                 in_array(Auth::user()->id, $valuesArray)))
-                                 <!-- @if (!$cftCompleteUser)
-    -->
+                                @if (!$cftCompleteUser)
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                         CFT Assessment Complete
-
                                     </button>
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                    Child
-                                </button>
-
+                                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                        Child
+                                    </button>
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                         More Information Required
                                     </button>
-                                  <!--
-    @endif  -->
+                                @endif 
+                            @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Change Control', 7))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                    More Information Required
+                                </button>
                              @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
                             <button id="approval-button" class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal" style="display: none;">
