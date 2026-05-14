@@ -1,9 +1,9 @@
 @extends('frontend.layout.main')
 @section('container')
 
-    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+    <link href='https://cdn.jsdelivr.net/npm/frola1-editor@latest/css/frola1_editor.pkgd.min.css' rel='stylesheet'
         type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/frola1-editor@latest/js/frola1_editor.pkgd.min.js'>
     </script>
 
 
@@ -1765,7 +1765,7 @@ dd($pre);
                                         <label for="Description Incident">Description of Incident</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="froala" name="Description_incident" id="summernote-1"> </textarea>
+                                        <textarea class="frola1" name="Description_incident" id="summernote-1"> </textarea>
                                     </div>
                                     @error('Description_incident[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1776,7 +1776,7 @@ dd($pre);
                                         <label for="Description Incident">Investigation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="froala" name="investigation"> </textarea>
+                                        <textarea class="frola1" name="investigation"> </textarea>
                                     </div>
                                     @error('investigation[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1787,7 +1787,7 @@ dd($pre);
                                         <label for="Description Incident">Immediate corrective action</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="immediate_correction"> </textarea>
+                                        <textarea class="tiny1" name="immediate_correction"> </textarea>
                                     </div>
                                     @error('immediate_correction[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1805,7 +1805,7 @@ dd($pre);
                                         <label for="Immediate Action">Immediate Action (if any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"></textarea>
+                                        <textarea class="tiny1" name="Immediate_Action[]" id="summernote-2"></textarea>
                                     </div>
                                     @error('record')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1822,7 +1822,7 @@ dd($pre);
                                         <label for="Preliminary Impact">Preliminary Impact of Incident </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required>  </textarea>
+                                        <textarea class="tiny1" name="Preliminary_Impact[]" id="summernote-3" required>  </textarea>
                                     </div>
                                     @error('Preliminary_Impact')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1867,7 +1867,7 @@ dd($pre);
                                         <label for="HOD Remarks">Review Of Incident And Verification Of Effectiveness Of Corrcetion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="review_of_verific" disabled>  </textarea>
+                                        <textarea class="tiny1" name="review_of_verific" disabled>  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
@@ -1875,7 +1875,7 @@ dd($pre);
                                         <label for="HOD Remarks">Recommendations</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Recommendations" disabled>  </textarea>
+                                        <textarea class="tiny1" name="Recommendations" disabled>  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">
@@ -1883,7 +1883,7 @@ dd($pre);
                                         <label for="HOD Remarks">Impact Assessment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Impact_Assessmenta" disabled>  </textarea>
+                                        <textarea class="tiny1" name="Impact_Assessmenta" disabled>  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -2049,7 +2049,7 @@ dd($pre);
                                             <label for="QAInitialRemark">If Yes, Then Mention:</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-                                            <textarea class="tiny" name="any_similar_incident_in_past" disabled></textarea>
+                                            <textarea class="tiny1" name="any_similar_incident_in_past" disabled></textarea>
                                         </div>
                                     </div>
 
@@ -2090,7 +2090,7 @@ dd($pre);
                                         <label for="QAInitialRemark">QA Initial Review Remarks</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="QAInitialRemark" id="summernote-7" disabled></textarea>
+                                        <textarea class="tiny1" name="QAInitialRemark" id="summernote-7" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -2154,7 +2154,7 @@ dd($pre);
                                         <label for="HOD Remarks">QA Head/Designee Approval Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="qa_head_deginee_comment" id="summernote-4" disabled></textarea>
+                                        <textarea class="tiny1" name="qa_head_deginee_comment" id="summernote-4" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -2294,7 +2294,7 @@ dd($pre);
                                             <div class="group-input">
                                                 <label for="Closure">Closure</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="tiny" name="closure_ini" id="summernote-14"></textarea>
+                                                <textarea class="tiny1" name="closure_ini" id="summernote-14"></textarea>
                                             </div>
                                         </div> --}}
 
@@ -2334,7 +2334,7 @@ dd($pre);
                                         <label for="QA Feedbacks">Initiator Update Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="QA_Feedbacks" id="summernote-14" disabled>  </textarea>
+                                        <textarea class="tiny1" name="QA_Feedbacks" id="summernote-14" disabled>  </textarea>
                                     </div>
                                     </div>
                                   <div class="col-lg-12">
@@ -2384,7 +2384,7 @@ dd($pre);
                                         <label for="HOD Remarks">HOD Final Review  Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="qa_head_Remarks" id="summernote-4" disabled>  </textarea>
+                                        <textarea class="tiny1" name="qa_head_Remarks" id="summernote-4" disabled>  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -2530,7 +2530,7 @@ dd($pre);
                                         <label for="HOD Remarks">QA Final Review Comments</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="qa_final_review" id="summernote-4" disabled>  </textarea>
+                                        <textarea class="tiny1" name="qa_final_review" id="summernote-4" disabled>  </textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -2597,19 +2597,19 @@ dd($pre);
                                             Category</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Investigation_Of_Review" id="summernote-13">   </textarea>
+                                        <textarea class="tiny1" name="Investigation_Of_Review" id="summernote-13">   </textarea>
                                     </div>
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Remarks">Closure Comments</label>
-                                        <textarea class="tiny" name="Closure_Comments" id="summernote-15" disabled></textarea>
+                                        <textarea class="tiny1" name="Closure_Comments" id="summernote-15" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Disposition of Batch</label>
-                                        <textarea class="tiny" name="Disposition_Batch" id="summernote-16" disabled></textarea>
+                                        <textarea class="tiny1" name="Disposition_Batch" id="summernote-16" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -4319,7 +4319,7 @@ dd($pre);
         </script>
 
         <script>
-            var editor = new FroalaEditor('.froala', {
+            var editor = new frola1Editor('.frola1', {
                 key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
                 imageUploadParam: 'image_param',
                 imageUploadMethod: 'POST',
@@ -4332,7 +4332,7 @@ dd($pre);
                 videoMaxSize: 500 * 1024 * 1024,
             });
             
-            $(".froala-disabled").FroalaEditor("edit.off");
+            $(".frola1-disabled").frola1Editor("edit.off");
         </script>
 
 

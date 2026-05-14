@@ -4,9 +4,9 @@
         $users = DB::table('users')->get();
 @endphp
 
-<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+<link href='https://cdn.jsdelivr.net/npm/frola1-editor@latest/css/frola1_editor.pkgd.min.css' rel='stylesheet'
         type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/frola1-editor@latest/js/frola1_editor.pkgd.min.js'>
     </script>
 
 
@@ -1970,13 +1970,13 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Action Taken">Action Taken  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                                        <textarea name="Action_Taken" class="tiny" {{$istab4 ? "required" : "readonly"}}>{{ $data->Action_Taken }}</textarea>
+                                        <textarea name="Action_Taken" class="tiny1" {{$istab4 ? "required" : "readonly"}}>{{ $data->Action_Taken }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Root Cause">Probable Root Cause  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                                        <textarea name="Root_Cause" class="tiny" {{$istab4 ? "required" : "readonly"}}>{{ $data->Root_Cause }}</textarea>
+                                        <textarea name="Root_Cause" class="tiny1" {{$istab4 ? "required" : "readonly"}}>{{ $data->Root_Cause }}</textarea>
                                     </div>
                                 </div>
 
@@ -2043,7 +2043,7 @@
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="proposed corrective action ">Proposed Corrective Action/Corrective Action Taken  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                            <textarea name="proposed_correctivei_ia" class="tiny" {{ $istab4 ? "required" : "readonly"  }}>{{$data->proposed_correctivei_ia}}</textarea>
+                            <textarea name="proposed_correctivei_ia" class="tiny1" {{ $istab4 ? "required" : "readonly"  }}>{{$data->proposed_correctivei_ia}}</textarea>
                         </div>
                      </div>
 
@@ -2051,7 +2051,7 @@
                     <div class="col-12">
                         <div class="group-input">
                                 <label for="Repeat Analysis Plan ">Repeat Analysis Plan  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                            <textarea name="repeat_analysis_plan_ia" class="tiny" {{$istab4 ? "required" : "readonly"}}>{{$data->repeat_analysis_plan_ia}}</textarea>
+                            <textarea name="repeat_analysis_plan_ia" class="tiny1" {{$istab4 ? "required" : "readonly"}}>{{$data->repeat_analysis_plan_ia}}</textarea>
                         </div>
                     </div>
 
@@ -2064,21 +2064,21 @@
                 <div class="col-12">
                     <div class="group-input">
                         <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                        <textarea name="result_of_repeat_analysis_ia" class="tiny" {{ $istab4 ? "required" : "readonly" }}>{{$data->result_of_repeat_analysis_ia}}</textarea>
+                        <textarea name="result_of_repeat_analysis_ia" class="tiny1" {{ $istab4 ? "required" : "readonly" }}>{{$data->result_of_repeat_analysis_ia}}</textarea>
                     </div>
                 </div>
 
                 <div class="col-12">
                         <div class="group-input">
                             <label for="detail investigation">Root Cause   @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                        <textarea name="details_investigation_ia" class="tiny" {{ $istab4 ? "required" : "readonly" }}>{{$data->details_investigation_ia}}</textarea>
+                        <textarea name="details_investigation_ia" class="tiny1" {{ $istab4 ? "required" : "readonly" }}>{{$data->details_investigation_ia}}</textarea>
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="group-input">
                         <label for="Corrective and Preventive Action">Corrective and Preventive Action  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                        <textarea name="corrective_and_preventive_action_ia" class="tiny" {{ $istab4 ? "required" : "readonly" }}>{{$data->corrective_and_preventive_action_ia}}</textarea>
+                        <textarea name="corrective_and_preventive_action_ia" class="tiny1" {{ $istab4 ? "required" : "readonly" }}>{{$data->corrective_and_preventive_action_ia}}</textarea>
                     </div>
                 </div>
 
@@ -2098,7 +2098,7 @@
             <div class="col-12">
                 <div class="group-input">
                     <label for="Investigation Summary">Investigation Summary @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-                    <textarea name="investigation_summary_ia" class="tiny" {{ $istab4 ? "required" : "readonly" }}>{{$data->investigation_summary_ia}}</textarea>
+                    <textarea name="investigation_summary_ia" class="tiny1" {{ $istab4 ? "required" : "readonly" }}>{{$data->investigation_summary_ia}}</textarea>
                 </div>
             </div>
 
@@ -2191,7 +2191,7 @@
                         <label for="search">
                             QC Investigator @if($data->stage==4)<span class="text-danger">*</span> @endif
                         </label>
-                            <textarea name="investigator_data" class="tiny" id="" {{ $istab4 ? "required" : "readonly" }}>{{ $data->investigator_data }}</textarea>
+                            <textarea name="investigator_data" class="tiny1" id="" {{ $istab4 ? "required" : "readonly" }}>{{ $data->investigator_data }}</textarea>
                     </div>
                 </div>
 
@@ -2694,7 +2694,7 @@
                             <div class="group-input">
                                 <label for=" qa head remark"><b>QA Head Comment</b> <span class="text-danger">*</span>
                                 </label>
-                               <textarea name="qa_hear_remark_c" class="tiny" {{ $istab7 ? "required" : "readonly"}}>{{$labnew->qa_hear_remark_c}}</textarea>
+                               <textarea name="qa_hear_remark_c" class="tiny1" {{ $istab7 ? "required" : "readonly"}}>{{$labnew->qa_hear_remark_c}}</textarea>
                             </div>
                         </div>
 
@@ -4343,7 +4343,7 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
 
 <script>
-         var editor = new FroalaEditor('.summernote', {
+         var editor = new frola1Editor('.summernote', {
             key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
             imageUploadParam: 'image_param',
             imageUploadMethod: 'POST',
@@ -4356,7 +4356,7 @@ document.getElementById('initiator_group').addEventListener('change', function()
             videoMaxSize: 500 * 1024 * 1024,
          });
          
-        $(".summernote-disabled").FroalaEditor("edit.off");
+        $(".summernote-disabled").frola1Editor("edit.off");
     </script>
 
 

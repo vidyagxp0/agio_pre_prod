@@ -1433,7 +1433,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not
                                                 require completion</small></div>
-                                        <textarea class="tiny" readonly name="qa_head_comment" id="qa_head_comment">
+                                        <textarea class="tiny1" readonly name="qa_head_comment" id="qa_head_comment">
                                 </textarea>
                                     </div>
                                 </div>
@@ -1561,7 +1561,7 @@ function handleExpDateInput(expInput, expTextId) {
                                             Record (BMR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1575,7 +1575,7 @@ function handleExpDateInput(expInput, expTextId) {
                                             manufacturing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1586,7 +1586,7 @@ function handleExpDateInput(expInput, expTextId) {
                                             (BPR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny"  name="review_of_Batch_Packing_record_bpr_gi" id="summernote-4" readonly>
+                                        <textarea class="tiny1"  name="review_of_Batch_Packing_record_bpr_gi" id="summernote-4" readonly>
                                     </textarea>
                                     </div>
                                 </div>
@@ -1598,7 +1598,7 @@ function handleExpDateInput(expInput, expTextId) {
                                             Packing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1608,7 +1608,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         <label for="Review of Analytical Data">Review of Analytical Data</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="review_of_analytical_data_gi" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="review_of_analytical_data_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1619,7 +1619,7 @@ function handleExpDateInput(expInput, expTextId) {
                                             of Concern Persons</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="review_of_training_record_of_concern_persons_gi" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="review_of_training_record_of_concern_persons_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1630,7 +1630,7 @@ function handleExpDateInput(expInput, expTextId) {
                                             of Equipment/Instrument qualification/Calibration record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly  name="rev_eq_inst_qual_calib_record_gi" id="summernote-1">
+                                        <textarea class="tiny1" readonly  name="rev_eq_inst_qual_calib_record_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1641,7 +1641,7 @@ function handleExpDateInput(expInput, expTextId) {
                                             Equipment Break-down And Maintainance Record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1652,7 +1652,7 @@ function handleExpDateInput(expInput, expTextId) {
                                             Product</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="review_of_past_history_of_product_gi" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="review_of_past_history_of_product_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1769,7 +1769,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="conclusion_pi" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="conclusion_pi" id="summernote-1">
                                 </textarea>
                                     </div>
                                 </div>
@@ -1778,7 +1778,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         <label for="Conclusion">Root Cause Analysis</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="conclusion_hodsr" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1787,7 +1787,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         <label for="Root Cause Analysis">Other Methodology</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="root_cause_analysis_hodsr" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="root_cause_analysis_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1797,7 +1797,7 @@ function handleExpDateInput(expInput, expTextId) {
                                             Root Cause </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="the_probable_root" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="the_probable_root" id="summernote-1">
                                 </textarea>
                                     </div>
                                 </div>
@@ -1835,7 +1835,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         <label for="Impact Assessment">Impact Assessment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="impact_assessment_hodsr" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="impact_assessment_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1846,7 +1846,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         <label for="Corrective Action">Corrective Action</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="corrective_action_hodsr" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="corrective_action_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1857,7 +1857,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         <label for="Preventive Action">Preventive Action</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="preventive_action_hodsr" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="preventive_action_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1867,7 +1867,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         <label for="Summary and Conclusion">Summary And Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" readonly name="summary_and_conclusion_hodsr" id="summernote-1">
+                                        <textarea class="tiny1" readonly name="summary_and_conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1939,7 +1939,7 @@ function handleExpDateInput(expInput, expTextId) {
                                     <label for="Manufacturer name & Address">Manufacturer Name & Address</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="tiny" readonly name="manufacturer_name_address_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="manufacturer_name_address_ca" id="summernote-1">
                                     </textarea>
                                 </div>
                             </div>
@@ -2142,7 +2142,7 @@ function handleExpDateInput(expInput, expTextId) {
                                     <label for="Analytical Data review observation">Complaint Sample Status</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" readonly name="complaint_sample_status_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="complaint_sample_status_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2152,7 +2152,7 @@ function handleExpDateInput(expInput, expTextId) {
                                     <label for="Brief Description of complaint">Brief Description of complaint</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" readonly name="brief_description_of_complaint_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="brief_description_of_complaint_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2162,7 +2162,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" readonly name="batch_record_review_observation_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="batch_record_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2172,7 +2172,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" readonly name="analytical_data_review_observation_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="analytical_data_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2182,7 +2182,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" readonly name="retention_sample_review_observation_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="retention_sample_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2191,7 +2191,7 @@ function handleExpDateInput(expInput, expTextId) {
                                     <label for="Stablity study data review">Stablity Study Data Review</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" readonly name="stability_study_data_review_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="stability_study_data_review_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2201,7 +2201,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" readonly name="qms_events_ifany_review_observation_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="qms_events_ifany_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2211,7 +2211,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         For Product:</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" readonly name="repeated_complaints_queries_for_product_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="repeated_complaints_queries_for_product_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2221,7 +2221,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         Sample(if recieved)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" readonly name="interpretation_on_complaint_sample_ifrecieved_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="interpretation_on_complaint_sample_ifrecieved_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -2230,7 +2230,7 @@ function handleExpDateInput(expInput, expTextId) {
                                     <label for="Comments">Comments(if Any)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" readonly name="comments_ifany_ca" id="summernote-1">
+                                    <textarea class="tiny1" readonly name="comments_ifany_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -4855,7 +4855,7 @@ function handleExpDateInput(expInput, expTextId) {
                                     <label for="Closure Comment">QA/CQA Comment</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="tiny" readonly name="qa_cqa_comments" id="qa_cqa_comments">
+                                    <textarea class="tiny1" readonly name="qa_cqa_comments" id="qa_cqa_comments">
                                     </textarea>
                                 </div>
                             </div>
@@ -4903,7 +4903,7 @@ function handleExpDateInput(expInput, expTextId) {
                                     <label for="Closure Comment">QA/CQA Head Approval Comment</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="tiny" readonly name="qa_cqa_head_comm" id="qa_cqa_head_comm">
+                                    <textarea class="tiny1" readonly name="qa_cqa_head_comm" id="qa_cqa_head_comm">
                                     </textarea>
                                 </div>
                             </div>

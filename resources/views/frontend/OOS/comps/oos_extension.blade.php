@@ -38,7 +38,7 @@
                             <label for="oos_extension_justification">Extension Justification (OOS)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does
                                     not require completion</small></div> -->
-                            <textarea class="tiny" name="oos_extension_justification" id="summernote-10">
+                            <textarea class="tiny1" name="oos_extension_justification" id="summernote-10">
                         </textarea>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                             <label for="capa_extension_justification">Extension Justification (CAPA)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does
                                     not require completion</small></div> -->
-                            <textarea class="tiny" name="capa_extension_justification" id="summernote-10">
+                            <textarea class="tiny1" name="capa_extension_justification" id="summernote-10">
                         </textarea>
                         </div>
                     </div>
@@ -232,7 +232,7 @@
                         <div class="group-input">
                             <label for="qrm_extension_justification">Extension Justification (Quality Risk Management)</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                            <textarea class="tiny" name="qrm_extension_justification" id="summernote-10"></textarea>
+                            <textarea class="tiny1" name="qrm_extension_justification" id="summernote-10"></textarea>
                         </div>
                     </div>
                     @endif
@@ -329,7 +329,7 @@
                             <label for="investigation_extension_justification">Extension Justification (Investigation)</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                     not require completion</small></div>
-                            <textarea class="tiny" name="investigation_extension_justification" id="summernote-10">
+                            <textarea class="tiny1" name="investigation_extension_justification" id="summernote-10">
                         </textarea>
                         </div>
                     </div>

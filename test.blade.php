@@ -3314,7 +3314,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="Production_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Production_assessment }}</textarea>
+                                            <textarea class="tiny1" name="Production_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Production_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 p_erson">
@@ -3325,7 +3325,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="Production_feedback" id="summernote-18">{{ isset($data1) && $data1->Production_feedback }}</textarea>
+                                            <textarea class="tiny1" name="Production_feedback" id="summernote-18">{{ isset($data1) && $data1->Production_feedback }}</textarea>
                                         </div>
                                     </div>
                                 @else
@@ -3337,7 +3337,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="Production_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Production_assessment }}</textarea>
+                                            <textarea disabled class="tiny1" name="Production_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Production_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 p_erson">
@@ -3348,7 +3348,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="Production_feedback" id="summernote-18">{{ isset($data1) && isset($data1) && $data1->Production_feedback }}</textarea>
+                                            <textarea disabled class="tiny1" name="Production_feedback" id="summernote-18">{{ isset($data1) && isset($data1) && $data1->Production_feedback }}</textarea>
                                         </div>
                                     </div>
                                 @endif
@@ -3635,7 +3635,7 @@
                                             <label for="Impact Assessment1">Impact Assessment (By Warehouse)</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it does not require completion</small></div>
-                                            <textarea class="tiny" name="Warehouse_assessment" id="summernote-19">{{ isset($data1) && $data1->Warehouse_assessment }}</textarea>
+                                            <textarea class="tiny1" name="Warehouse_assessment" id="summernote-19">{{ isset($data1) && $data1->Warehouse_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 warehouse">
@@ -3643,7 +3643,7 @@
                                             <label for="Warehouse Feedback">Warehouse Feedback</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it does not require completion</small></div>
-                                            <textarea class="tiny" name="Warehouse_feedback" id="summernote-20">{{ isset($data1) && $data1->Warehouse_feedback }}</textarea>
+                                            <textarea class="tiny1" name="Warehouse_feedback" id="summernote-20">{{ isset($data1) && $data1->Warehouse_feedback }}</textarea>
                                         </div>
                                     </div>
                         </div>
@@ -3653,7 +3653,7 @@
                                 <label for="Impact Assessment1">Impact Assessment (By Warehouse)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                         require completion</small></div>
-                                <textarea disabled class="tiny" name="Warehouse_assessment" id="summernote-19">{{ isset($data1) && isset($data1) && $data1->Warehouse_assessment }}</textarea>
+                                <textarea disabled class="tiny1" name="Warehouse_assessment" id="summernote-19">{{ isset($data1) && isset($data1) && $data1->Warehouse_assessment }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3 warehouse">
@@ -3661,7 +3661,7 @@
                                 <label for="Warehouse Feedback">Warehouse Feedback</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                         require completion</small></div>
-                                <textarea disabled class="tiny" name="Warehouse_feedback" id="summernote-20">{{ isset($data1) && $data1->Warehouse_feedback }}</textarea>
+                                <textarea disabled class="tiny1" name="Warehouse_feedback" id="summernote-20">{{ isset($data1) && $data1->Warehouse_feedback }}</textarea>
                             </div>
                         </div>
                         @endif
@@ -4806,7 +4806,7 @@
                                         Safety) <span id="asteriskEH1"
                                             style="display: {{ isset($data1) && $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if (isset($data1) && $data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Health_Safety_assessment"
+                                    {{-- <textarea @if (isset($data1) && $data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class="tiny1" name="Health_Safety_assessment"
                                             @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Environment_Health_Safety_person)) readonly @endif id="summernote-33">{{ isset($data1) && $data1->Health_Safety_assessment }}</textarea> --}}
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
                                         @if ($data->stage == 4 || (isset($data1) && $data1->Health_Safety_assessment)) readonly @endif name="Health_Safety_assessment" id="summernote-17">{{ isset($data1) ? $data1->Production_assessment : '' }}</textarea>
@@ -4820,7 +4820,7 @@
                                             id="asteriskEH2"
                                             style="display: {{ isset($data1) && $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if (isset($data1) && $data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Health_Safety_feedback"
+                                    {{-- <textarea @if (isset($data1) && $data1->Environment_Health_review == 'yes' && $data->stage == 4) required @endif class="tiny1" name="Health_Safety_feedback"
                                             id="summernote-34" @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Environment_Health_Safety_person)) readonly @endif>{{ isset($data1) && $data1->Health_Safety_feedback }}</textarea> --}}
 
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
@@ -5777,7 +5777,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="Store_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Store_assessment }}</textarea>
+                                            <textarea class="tiny1" name="Store_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Store_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 p_erson">
@@ -5787,7 +5787,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="Store_feedback" id="summernote-18">{{ isset($data1) && $data1->Store_feedback }}</textarea>
+                                            <textarea class="tiny1" name="Store_feedback" id="summernote-18">{{ isset($data1) && $data1->Store_feedback }}</textarea>
                                         </div>
                                     </div>
                                 @else
@@ -5799,7 +5799,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="Store_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Store_assessment }}</textarea>
+                                            <textarea disabled class="tiny1" name="Store_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Store_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 p_erson">
@@ -5809,7 +5809,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="Store_feedback" id="summernote-18">{{ isset($data1) && isset($data1) && $data1->Store_feedback }}</textarea>
+                                            <textarea disabled class="tiny1" name="Store_feedback" id="summernote-18">{{ isset($data1) && isset($data1) && $data1->Store_feedback }}</textarea>
                                         </div>
                                     </div>
                                 @endif
@@ -6036,7 +6036,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->RegulatoryAffair_assessment }}</textarea>
+                                            <textarea class="tiny1" name="RegulatoryAffair_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->RegulatoryAffair_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 p_erson">
@@ -6047,7 +6047,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ isset($data1) && $data1->RegulatoryAffair_feedback }}</textarea>
+                                            <textarea class="tiny1" name="RegulatoryAffair_feedback" id="summernote-18">{{ isset($data1) && $data1->RegulatoryAffair_feedback }}</textarea>
                                         </div>
                                     </div>
                                 @else
@@ -6059,7 +6059,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->RegulatoryAffair_assessment }}</textarea>
+                                            <textarea disabled class="tiny1" name="RegulatoryAffair_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->RegulatoryAffair_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 p_erson">
@@ -6070,7 +6070,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ isset($data1) && isset($data1) && $data1->RegulatoryAffair_feedback }}</textarea>
+                                            <textarea disabled class="tiny1" name="RegulatoryAffair_feedback" id="summernote-18">{{ isset($data1) && isset($data1) && $data1->RegulatoryAffair_feedback }}</textarea>
                                         </div>
                                     </div>
                                 @endif --}}
@@ -6296,7 +6296,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="Microbiology_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Microbiology_assessment }}</textarea>
+                                            <textarea class="tiny1" name="Microbiology_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Microbiology_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 p_erson">
@@ -6307,7 +6307,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="Microbiology_feedback" id="summernote-18">{{ isset($data1) && $data1->Microbiology_feedback }}</textarea>
+                                            <textarea class="tiny1" name="Microbiology_feedback" id="summernote-18">{{ isset($data1) && $data1->Microbiology_feedback }}</textarea>
                                         </div>
                                     </div>
                                 @else
@@ -6319,7 +6319,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="Microbiology_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Microbiology_assessment }}</textarea>
+                                            <textarea disabled class="tiny1" name="Microbiology_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->Microbiology_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 p_erson">
@@ -6329,7 +6329,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="Microbiology_feedback" id="summernote-18">{{ isset($data1) && isset($data1) && $data1->Microbiology_feedback }}</textarea>
+                                            <textarea disabled class="tiny1" name="Microbiology_feedback" id="summernote-18">{{ isset($data1) && isset($data1) && $data1->Microbiology_feedback }}</textarea>
                                         </div>
                                     </div>
                                 @endif --}}
@@ -6560,7 +6560,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="ContractGiver_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->ContractGiver_assessment }}</textarea>
+                                            <textarea class="tiny1" name="ContractGiver_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->ContractGiver_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 p_erson">
@@ -6571,7 +6571,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="ContractGiver_feedback" id="summernote-18">{{ isset($data1) && $data1->ContractGiver_feedback }}</textarea>
+                                            <textarea class="tiny1" name="ContractGiver_feedback" id="summernote-18">{{ isset($data1) && $data1->ContractGiver_feedback }}</textarea>
                                         </div>
                                     </div>
                                 @else
@@ -6583,7 +6583,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="ContractGiver_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->ContractGiver_assessment }}</textarea>
+                                            <textarea disabled class="tiny1" name="ContractGiver_assessment" id="summernote-17">{{ isset($data1) && isset($data1) && $data1->ContractGiver_assessment }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-3 p_erson">
@@ -6594,7 +6594,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if
                                                     it
                                                     does not require completion</small></div>
-                                            <textarea disabled class="tiny" name="ContractGiver_feedback" id="summernote-18">{{ isset($data1) && isset($data1) && $data1->ContractGiver_feedback }}</textarea>
+                                            <textarea disabled class="tiny1" name="ContractGiver_feedback" id="summernote-18">{{ isset($data1) && isset($data1) && $data1->ContractGiver_feedback }}</textarea>
                                         </div>
                                     </div>
                                 @endif
@@ -6659,7 +6659,7 @@
                                     <label for="Impact Assessment2">Impact Assessment (By Quality Control)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Quality_Control_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-21">{{ isset($data1) && isset($data1) && $data1->Quality_Control_assessment }}</textarea>
                                 </div>
@@ -6669,7 +6669,7 @@
                                     <label for="Quality Control Feedback">Quality Control Feedback</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Quality_Control_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-22">{{ isset($data1) && isset($data1) && $data1->Quality_Control_feedback }}</textarea>
                                 </div>
@@ -6766,7 +6766,7 @@
                                     <label for="Impact Assessment3">Impact Assessment (By Quality Assurance)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="QualityAssurance_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-23">{{ isset($data1) && isset($data1) && $data1->QualityAssurance_assessment }}</textarea>
                                 </div>
@@ -6776,7 +6776,7 @@
                                     <label for="Quality Assurance Feedback">Quality Assurance Feedback</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="QualityAssurance_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-24">{{ isset($data1) && isset($data1) && $data1->QualityAssurance_feedback }}</textarea>
                                 </div>
@@ -6874,7 +6874,7 @@
                                     <label for="Impact Assessment4">Impact Assessment (By Engineering)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Engineering_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-25">{{ isset($data1) && isset($data1) && $data1->Engineering_assessment }}</textarea>
                                 </div>
@@ -6884,7 +6884,7 @@
                                     <label for="Engineering Feedback">Engineering Feedback</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="tiny" name="Engineering_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                    <textarea class="tiny1" name="Engineering_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-26">{{ isset($data1) && isset($data1) && $data1->Engineering_feedback }}</textarea>
                                 </div>
                             </div>
@@ -6987,7 +6987,7 @@
                                 <div class="group-input">
                                     <label for="Impact Assessment5">Impact Assessment (By Analytical Development
                                         Laboratory)</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Analytical_Development_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-27">{{ isset($data1) && isset($data1) && $data1->Analytical_Development_assessment }}</textarea>
                                 </div>
@@ -6996,7 +6996,7 @@
                                 <div class="group-input">
                                     <label for="Analytical Development Laboratory Feedback"> Analytical Development
                                         Laboratory Feedback</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Analytical_Development_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-28">{{ isset($data1) && isset($data1) && $data1->Analytical_Development_feedback }}</textarea>
                                 </div>
@@ -7102,7 +7102,7 @@
                                 <div class="group-input">
                                     <label for="Impact Assessment6">Impact Assessment (By Process Development
                                         Laboratory / Kilo Lab)</label>
-                                    <textarea class="tiny" name="Kilo_Lab_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                    <textarea class="tiny1" name="Kilo_Lab_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-29">{{ isset($data1) && isset($data1) && $data1->Kilo_Lab_assessment }}</textarea>
                                 </div>
                             </div>
@@ -7110,7 +7110,7 @@
                                 <div class="group-input">
                                     <label for="Kilo Lab Feedback"> Process Development Laboratory / Kilo Lab
                                         Feedback</label>
-                                    <textarea class="tiny" name="Kilo_Lab_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                    <textarea class="tiny1" name="Kilo_Lab_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-30">{{ isset($data1) && isset($data1) && $data1->Kilo_Lab_feedback }}</textarea>
                                 </div>
                             </div>
@@ -7212,7 +7212,7 @@
                                 <div class="group-input">
                                     <label for="Impact Assessment7">Impact Assessment (By Technology Transfer /
                                         Design)</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Technology_transfer_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-31">{{ isset($data1) && isset($data1) && $data1->Technology_transfer_assessment }}</textarea>
                                 </div>
@@ -7220,7 +7220,7 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Design Feedback"> Technology Transfer / Design Feedback</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Technology_transfer_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-32">{{ isset($data1) && isset($data1) && $data1->Technology_transfer_feedback }}</textarea>
                                 </div>
@@ -7323,7 +7323,7 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Impact Assessment8">Impact Assessment (By Safety)</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Health_Safety_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-33">{{ isset($data1) && isset($data1) && $data1->Health_Safety_assessment }}</textarea>
                                 </div>
@@ -7331,7 +7331,7 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Safety Feedback"> Safety Feedback</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Health_Safety_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-34">{{ isset($data1) && isset($data1) && $data1->Health_Safety_feedback }}</textarea>
                                 </div>
@@ -7435,7 +7435,7 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="productionfeedback">Impact Assessment (By Human Resource )</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Human_Resource_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-35">{{ isset($data1) && isset($data1) && $data1->Human_Resource_assessment }}</textarea>
                                 </div>
@@ -7443,7 +7443,7 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="productionfeedback">Human Resource Feedback</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Human_Resource_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-36">{{ isset($data1) && isset($data1) && $data1->Human_Resource_feedback }}</textarea>
                                 </div>
@@ -7549,7 +7549,7 @@
                                 <div class="group-input">
                                     <label for="Impact Assessment10">Impact Assessment (By Information
                                         Technology)</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Information_Technology_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-37">{{ isset($data1) && isset($data1) && $data1->Information_Technology_assessment }}</textarea>
                                 </div>
@@ -7558,7 +7558,7 @@
                                 <div class="group-input">
                                     <label for="Information Technology Feedback">Information Technology
                                         Feedback</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Information_Technology_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-38">{{ isset($data1) && isset($data1) && $data1->Information_Technology_feedback }}</textarea>
                                 </div>
@@ -7660,7 +7660,7 @@
                                 <div class="group-input">
                                     <label for="Impact Assessment11">Impact Assessment (By Project management
                                         )</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Project_management_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-39">{{ isset($data1) && $data1->Project_management_assessment }}</textarea>
                                 </div>
@@ -7668,7 +7668,7 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Project management Feedback"> Project management Feedback</label>
-                                    <textarea class="tiny"
+                                    <textarea class="tiny1"
                                         name="Project_management_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                         id="summernote-40">{{ isset($data1) && $data1->Project_management_feedback }}</textarea>
                                 </div>
@@ -7841,7 +7841,7 @@
                                             id=""
                                             style="display: {{ isset($data1) && $data1->Other1_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if (isset($data1) && $data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_assessment"
+                                    {{-- <textarea @if (isset($data1) && $data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny1" name="Other1_assessment"
                                             @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other1_person)) readonly @endif id="summernote-41">{{ isset($data1) && $data1->Other1_assessment }}</textarea> --}}
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
                                         @if ($data->stage == 4 || (isset($data1) && $data1->Other1_assessment)) readonly @endif name="Other1_assessment" id="summernote-17">{{ isset($data1) ? $data1->Production_assessment : '' }}</textarea>
@@ -7853,7 +7853,7 @@
                                     <label for="Feedback1"> Other's 1 Feedback <span id=""
                                             style="display: {{ isset($data1) && $data1->Other1_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if (isset($data1) && $data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny" name="Other1_feedback"
+                                    {{-- <textarea @if (isset($data1) && $data1->Other1_review == 'yes' && $data->stage == 4) required @endif class="tiny1" name="Other1_feedback"
                                             @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other1_person)) readonly @endif id="summernote-42">{{ isset($data1) && $data1->Other1_feedback }}</textarea> --}}
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
                                         @if ($data->stage == 4 || (isset($data1) && $data1->Other1_feedback)) readonly @endif name="Other1_feedback" id="summernote-17">{{ isset($data1) ? $data1->Production_assessment : '' }}</textarea>
@@ -8076,7 +8076,7 @@
                                             id=""
                                             style="display: {{ isset($data1) && $data1->Other2_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other2_person)) readonly @endif class="tiny" name="Other2_Assessment"
+                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other2_person)) readonly @endif class="tiny1" name="Other2_Assessment"
                                             @if (isset($data1) && $data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-43">{{ isset($data1) && $data1->Other2_Assessment }}</textarea> --}}
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
                                         @if ($data->stage == 4 || (isset($data1) && $data1->Production_person)) readonly @endif name="Other2_Assessment" id="summernote-17">{{ isset($data1) ? $data1->Production_assessment : '' }}</textarea>
@@ -8087,7 +8087,7 @@
                                     <label for="Feedback2"> Other's 2 Feedback <span id=""
                                             style="display: {{ isset($data1) && $data1->Other2_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other2_person)) readonly @endif class="tiny" name="Other2_feedback"
+                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other2_person)) readonly @endif class="tiny1" name="Other2_feedback"
                                             @if (isset($data1) && $data1->Other2_review == 'yes' && $data->stage == 4) required @endif id="summernote-44">{{ isset($data1) && $data1->Other2_feedback }}</textarea> --}}
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
                                         @if ($data->stage == 4 || (isset($data1) && $data1->Other2_feedback)) readonly @endif name="Other2_feedback" id="summernote-17">{{ isset($data1) ? $data1->Production_assessment : '' }}</textarea>
@@ -8283,7 +8283,7 @@
                                             id=""
                                             style="display: {{ isset($data1) && $data1->Other3_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other3_person)) readonly @endif class="tiny" name="Other3_Assessment"
+                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other3_person)) readonly @endif class="tiny1" name="Other3_Assessment"
                                             @if (isset($data1) && $data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-45">{{ isset($data1) && $data1->Other3_Assessment }}</textarea> --}}
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
                                         @if ($data->stage == 4 || (isset($data1) && $data1->Other3_Assessment)) readonly @endif name="Other3_Assessment" id="summernote-17">{{ isset($data1) ? $data1->Production_assessment : '' }}</textarea>
@@ -8295,7 +8295,7 @@
                                     <label for="feedback3"> Other's 3 Feedback <span id=""
                                             style="display: {{ isset($data1) && $data1->Other3_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other3_person)) readonly @endif class="tiny" name="Other3_feedback"
+                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other3_person)) readonly @endif class="tiny1" name="Other3_feedback"
                                             @if (isset($data1) && $data1->Other3_review == 'yes' && $data->stage == 4) required @endif id="summernote-46">{{ isset($data1) && $data1->Other3_Assessment }}</textarea> --}}
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
                                         @if ($data->stage == 4 || (isset($data1) && $data1->Other3_Assessment)) readonly @endif name="Other3_feedback" id="summernote-17">{{ isset($data1) ? $data1->Production_assessment : '' }}</textarea>
@@ -8488,7 +8488,7 @@
                                             id=""
                                             style="display: {{ isset($data1) && $data1->Other4_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other4_person)) readonly @endif class="tiny" name="Other4_Assessment"
+                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other4_person)) readonly @endif class="tiny1" name="Other4_Assessment"
                                             @if (isset($data1) && $data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-47">{{ isset($data1) && $data1->Other4_Assessment }}</textarea> --}}
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
                                         @if ($data->stage == 4 || (isset($data1) && $data1->Other4_Assessment)) readonly @endif name="Other4_Assessment" id="summernote-17">{{ isset($data1) ? $data1->Production_assessment : '' }}</textarea>
@@ -8500,7 +8500,7 @@
                                     <label for="feedback4"> Other's 4 Feedback <span id=""
                                             style="display: {{ isset($data1) && $data1->Other4_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other4_person)) readonly @endif class="tiny" name="Other4_feedback"
+                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other4_person)) readonly @endif class="tiny1" name="Other4_feedback"
                                             @if (isset($data1) && $data1->Other4_review == 'yes' && $data->stage == 4) required @endif id="summernote-48">{{ isset($data1) && $data1->Other4_feedback }}</textarea> --}}
 
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
@@ -8695,7 +8695,7 @@
                                             id=""
                                             style="display: {{ isset($data1) && $data1->Other5_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other5_person)) readonly @endif class="tiny"
+                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other5_person)) readonly @endif class="tiny1"
                                             name="Other5_Assessment"@if (isset($data1) && $data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-49">{{ isset($data1) && $data1->Other5_Assessment }}</textarea> --}}
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
                                         @if ($data->stage == 4 || (isset($data1) && $data1->Other5_Assessment)) readonly @endif name="Other5_Assessment" id="summernote-17">{{ isset($data1) ? $data1->Production_assessment : '' }}</textarea>
@@ -8707,7 +8707,7 @@
                                     <label for="productionfeedback"> Other's 5 Feedback <span id=""
                                             style="display: {{ isset($data1) && $data1->Other5_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                             class="text-danger">*</span></label>
-                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other5_person)) readonly @endif class="tiny"
+                                    {{-- <textarea @if ($data->stage == 3 || (Auth::user()->id != isset($data1) && $data1->Other5_person)) readonly @endif class="tiny1"
                                             name="Other5_feedback"@if (isset($data1) && $data1->Other5_review == 'yes' && $data->stage == 4) required @endif id="summernote-50">{{ isset($data1) && $data1->Other5_feedback }}</textarea> --}}
 
                                     <textarea @if (isset($data1) && $data1->Production_Review == 'yes' && $data->stage == 4) required @endif class="summernote Production_assessment"
@@ -8854,14 +8854,14 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Impact Assessment12">Impact Assessment (By Other's 1)</label>
-                                    <textarea disabled class="tiny"
+                                    <textarea disabled class="tiny1"
                                         name="Other1_assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-41">{{ isset($data1) && $data1->Other1_assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Feedback1"> Other's 1 Feedback</label>
-                                    <textarea disabled class="tiny"
+                                    <textarea disabled class="tiny1"
                                         name="Other1_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-42">{{ isset($data1) && $data1->Other1_feedback }}</textarea>
                                 </div>
                             </div>
@@ -9010,7 +9010,7 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Feedback2"> Other's 2 Feedback</label>
-                                    <textarea disabled class="tiny"
+                                    <textarea disabled class="tiny1"
                                         name="Other2_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-44">{{ isset($data1) && $data1->Other2_feedback }}</textarea>
                                 </div>
                             </div>
@@ -9152,14 +9152,14 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Impact Assessment14">Impact Assessment (By Other's 3)</label>
-                                    <textarea disabled class="tiny"
+                                    <textarea disabled class="tiny1"
                                         name="Other3_Assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-45">{{ isset($data1) && $data1->Other3_Assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="feedback3"> Other's 3 Feedback</label>
-                                    <textarea disabled class="tiny"
+                                    <textarea disabled class="tiny1"
                                         name="Other3_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-46">{{ isset($data1) && $data1->Other3_Assessment }}</textarea>
                                 </div>
                             </div>
@@ -9298,14 +9298,14 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Impact Assessment15">Impact Assessment (By Other's 4)</label>
-                                    <textarea disabled class="tiny"
+                                    <textarea disabled class="tiny1"
                                         name="Other4_Assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-47">{{ isset($data1) && $data1->Other4_Assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="feedback4"> Other's 4 Feedback</label>
-                                    <textarea disabled class="tiny"
+                                    <textarea disabled class="tiny1"
                                         name="Other4_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-48">{{ isset($data1) && $data1->Other4_feedback }}</textarea>
                                 </div>
                             </div>
@@ -9447,14 +9447,14 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Impact Assessment16">Impact Assessment (By Other's 5)</label>
-                                    <textarea disabled class="tiny"
+                                    <textarea disabled class="tiny1"
                                         name="Other5_Assessment"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-49">{{ isset($data1) && $data1->Other5_Assessment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="productionfeedback"> Other's 5 Feedback</label>
-                                    <textarea disabled class="tiny"
+                                    <textarea disabled class="tiny1"
                                         name="Other5_feedback"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-50">{{ isset($data1) && $data1->Other5_feedback }}</textarea>
                                 </div>
                             </div>

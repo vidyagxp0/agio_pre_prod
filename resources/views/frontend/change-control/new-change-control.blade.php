@@ -3435,7 +3435,7 @@
                                                         <label for="RA feedback">RA Approval Comment</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="RA_feedback" id="summernote-18" readonly></textarea>
+                                                        <textarea class="tiny1" name="RA_feedback" id="summernote-18" readonly></textarea>
                                                     </div>
                                                 </div>
 
@@ -4568,7 +4568,7 @@
                             that don't significantly affect the product's characteristics.</li>
 
                         <li>These changes may still require some level of evaluation and documentation but may not
-                            necessitate the same level of scrutiny as major changes.</li>
+                            necessitate the same level of scrutiny1 as major changes.</li>
                     </ul>
 
 

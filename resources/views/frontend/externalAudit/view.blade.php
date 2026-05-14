@@ -2623,7 +2623,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 productionTable">
@@ -2635,7 +2635,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
+                                                            <textarea class="tiny1" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -2650,7 +2650,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 productionTable">
@@ -2662,7 +2662,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -3015,7 +3015,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 productionInjection">
@@ -3028,7 +3028,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
+                                                            <textarea class="tiny1" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -3044,7 +3044,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 productionInjection">
@@ -3057,7 +3057,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="Production_Injection_Feedback" id="summernote-18">{{ $data1->Production_Injection_Feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -3394,7 +3394,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 researchDevelopment">
@@ -3405,7 +3405,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
+                                                            <textarea class="tiny1" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -3416,7 +3416,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 researchDevelopment">
@@ -3427,7 +3427,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -3762,7 +3762,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Human_Resource">
@@ -3773,7 +3773,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
+                                                            <textarea class="tiny1" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -3785,7 +3785,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Human_Resource">
@@ -3796,7 +3796,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -4165,7 +4165,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 CQA">
@@ -4178,7 +4178,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
+                                                            <textarea class="tiny1" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -4191,7 +4191,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 CQA">
@@ -4204,7 +4204,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -4547,7 +4547,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 store">
@@ -4557,7 +4557,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
+                                                            <textarea class="tiny1" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -4568,7 +4568,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 store">
@@ -4578,7 +4578,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -4922,7 +4922,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Engineering">
@@ -4932,7 +4932,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
+                                                            <textarea class="tiny1" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -4944,7 +4944,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Engineering">
@@ -4954,7 +4954,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -5301,7 +5301,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 RegulatoryAffair">
@@ -5312,7 +5312,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
+                                                            <textarea class="tiny1" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -5325,7 +5325,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 RegulatoryAffair">
@@ -5336,7 +5336,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -5879,7 +5879,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 productionLiquid">
@@ -5890,7 +5890,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
+                                                            <textarea class="tiny1" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -5901,7 +5901,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 productionLiquid">
@@ -5912,7 +5912,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -6257,7 +6257,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 qualityControl">
@@ -6268,7 +6268,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
+                                                            <textarea class="tiny1" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -6281,7 +6281,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 qualityControl">
@@ -6292,7 +6292,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -6629,7 +6629,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Microbiology">
@@ -6639,7 +6639,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
+                                                            <textarea class="tiny1" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -6651,7 +6651,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Microbiology">
@@ -6661,7 +6661,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -7009,7 +7009,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 safety">
@@ -7019,7 +7019,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea class="tiny" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
+                                                            <textarea class="tiny1" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @else
@@ -7031,7 +7031,7 @@
                                                                 field if
                                                                 it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 safety">
@@ -7041,7 +7041,7 @@
                                                                     field if
                                                                     it
                                                                     does not require completion</small></div>
-                                                            <textarea disabled class="tiny" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
+                                                            <textarea disabled class="tiny1" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
                                                         </div>
                                                     </div> -->
                                             @endif
@@ -7512,7 +7512,7 @@
                                 <div class="col-md-12 mb-3 other1_reviews">
                                     <div class="group-input">
                                         <label for="Impact Assessment12">Review comment (By Other's 1)</label>
-                                        <textarea class="tiny" name="Other1_assessment" id="summernote-41" @if ($data->stage != 3 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_assessment }}</textarea>
+                                        <textarea class="tiny1" name="Other1_assessment" id="summernote-41" @if ($data->stage != 3 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_assessment }}</textarea>
                                     </div>
                                 </div>
 
@@ -7522,7 +7522,7 @@
                                 <!-- <div class="col-md-12 mb-3 other1_reviews">
                                     <div class="group-input">
                                         <label for="Feedback1">Other's 1 Feedback</label>
-                                        <textarea class="tiny" name="Other1_feedback" id="summernote-42" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_feedback }}</textarea>
+                                        <textarea class="tiny1" name="Other1_feedback" id="summernote-42" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_feedback }}</textarea>
                                     </div>
                                 </div> -->
 
@@ -7657,7 +7657,7 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment12">Review comment (By Other's 1)</label>
-                                        <textarea disabled class="tiny" name="Other1_assessment" id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
+                                        <textarea disabled class="tiny1" name="Other1_assessment" id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
                                     </div>
                                 </div>
 
@@ -7666,7 +7666,7 @@
                                 <!-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Feedback1">Other's 1 Feedback</label>
-                                        <textarea disabled class="tiny" name="Other1_feedback" id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
+                                        <textarea disabled class="tiny1" name="Other1_feedback" id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
                                     </div>
                                 </div> -->
 
@@ -7802,14 +7802,14 @@
                             <div class="col-md-12 mb-3 Other2_reviews">
                                 <div class="group-input">
                                     <label for="Impact Assessment13">Review comment (By Other's 2)</label>
-                                    <textarea class="tiny" name="Other2_Assessment" id="summernote-43" @if ($data->stage != 3 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_Assessment }}</textarea>
+                                    <textarea class="tiny1" name="Other2_Assessment" id="summernote-43" @if ($data->stage != 3 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_Assessment }}</textarea>
                                 </div>
                             </div>
 
                             <!-- <div class="col-md-12 mb-3 Other2_reviews">
                                 <div class="group-input">
                                     <label for="Feedback2"> Other's 2 Feedback</label>
-                                    <textarea class="tiny" name="Other2_feedback" id="summernote-44" @if ($data->stage != 4 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_feedback }}</textarea>
+                                    <textarea class="tiny1" name="Other2_feedback" id="summernote-44" @if ($data->stage != 4 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_feedback }}</textarea>
                                 </div>
                             </div> -->
 
@@ -7944,14 +7944,14 @@
                             <div class="col-md-12 mb-3 Other3_reviews">
                                 <div class="group-input">
                                     <label for="Impact Assessment14">Review comment (By Other's 3)</label>
-                                    <textarea class="tiny" name="Other3_Assessment" id="summernote-45" @if ($data->stage != 3 || Auth::user()->name != $data1->Other3_person) readonly @endif>{{ $data1->Other3_Assessment }}</textarea>
+                                    <textarea class="tiny1" name="Other3_Assessment" id="summernote-45" @if ($data->stage != 3 || Auth::user()->name != $data1->Other3_person) readonly @endif>{{ $data1->Other3_Assessment }}</textarea>
                                 </div>
                             </div>
 
                             <!-- <div class="col-md-12 mb-3 Other3_reviews">
                                 <div class="group-input">
                                     <label for="feedback3">Other's 3 Feedback</label>
-                                    <textarea class="tiny" name="Other3_feedback" id="summernote-46" @if ($data->stage != 4 || Auth::user()->name != $data1->Other3_person) readonly @endif>{{ $data1->Other3_feedback }}</textarea>
+                                    <textarea class="tiny1" name="Other3_feedback" id="summernote-46" @if ($data->stage != 4 || Auth::user()->name != $data1->Other3_person) readonly @endif>{{ $data1->Other3_feedback }}</textarea>
                                 </div>
                             </div> -->
 
@@ -8090,7 +8090,7 @@
                             <div class="col-md-12 mb-3 Other4_reviews">
                                 <div class="group-input">
                                     <label for="Description of Action Item15">Review comment (By Other's 4)</label>
-                                    <textarea class="tiny" name="Other4_Assessment" id="summernote-47"
+                                    <textarea class="tiny1" name="Other4_Assessment" id="summernote-47"
                                         @if ($data->stage != 3 || Auth::user()->name != $data1->Other4_person) readonly @endif>{{ $data1->Other4_Assessment }}</textarea>
                                 </div>
                             </div>
@@ -8098,7 +8098,7 @@
                             <!-- <div class="col-md-12 mb-3 Other4_reviews">
                                 <div class="group-input">
                                     <label for="feedback4">Other's 4 Status of Action Item</label>
-                                    <textarea class="tiny" name="Other4_feedback" id="summernote-48"
+                                    <textarea class="tiny1" name="Other4_feedback" id="summernote-48"
                                         @if ($data->stage != 4 || Auth::user()->name != $data1->Other4_person) readonly @endif>{{ $data1->Other4_feedback }}</textarea>
                                 </div>
                             </div> -->
@@ -8254,7 +8254,7 @@
                             <div class="col-md-12 mb-3 Other5_reviews">
                                 <div class="group-input">
                                     <label for="Description of Action Item16">Review comment (By Other's 5)</label>
-                                    <textarea class="tiny" name="Other5_Assessment" id="summernote-49"
+                                    <textarea class="tiny1" name="Other5_Assessment" id="summernote-49"
                                     @if ($data->stage != 3 || Auth::user()->name != $data1->Other5_person) readonly @endif>{{ $data1->Other5_Assessment }}</textarea>
                                 </div>
                             </div>
@@ -8262,7 +8262,7 @@
                             <!-- <div class="col-md-12 mb-3 Other5_reviews">
                                 <div class="group-input">
                                     <label for="productionfeedback">Other's 5 Status of Action Item</label>
-                                    <textarea class="tiny" name="Other5_feedback" id="summernote-50"
+                                    <textarea class="tiny1" name="Other5_feedback" id="summernote-50"
                                     @if ($data->stage != 4 || Auth::user()->name != $data1->Other5_person) readonly @endif>{{ $data1->Other5_feedback }}</textarea>
                                 </div>
                             </div> -->

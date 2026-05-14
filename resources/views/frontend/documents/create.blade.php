@@ -15348,7 +15348,7 @@
     </style>
 
     <script>
-        var editor = new FroalaEditor('.summernote', {
+        var editor = new frola1Editor('.summernote', {
             key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
             imageUploadParam: 'image_param',
             imageUploadMethod: 'POST',

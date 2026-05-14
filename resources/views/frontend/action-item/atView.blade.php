@@ -1,9 +1,9 @@
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
 
-<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+<link href='https://cdn.jsdelivr.net/npm/frola1-editor@latest/css/frola1_editor.pkgd.min.css' rel='stylesheet'
         type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/frola1-editor@latest/js/frola1_editor.pkgd.min.js'>
     </script>
     <style>
         /* header {
@@ -1179,7 +1179,7 @@
                                                     <span class="text-danger">*</span>
                                                 @endif--}}
                                             </label>
-                                            <textarea class="tiny" readonly {{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'readonly' }} name="action_taken">{{ $data->action_taken }}</textarea>
+                                            <textarea class="tiny1" readonly {{ $data->stage == 3 ? '' : 'readonly' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'readonly' }} name="action_taken">{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
                                 @endif
@@ -1209,7 +1209,7 @@
                                         <div class="group-input input-date">
                                             <label for="Audit Schedule Start Date">Actual Start Date <span class="text-danger">*</span></label>
                                             <div class="calenderauditee">
-                                                <input type="text" id="start_date" class="tiny" readonly
+                                                <input type="text" id="start_date" class="tiny1" readonly
                                                     placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                                 <input class="hide-input" type="date" readonly
@@ -1245,7 +1245,7 @@
                                                 <label for="Audit Schedule End Date">Actual End Date</label>
                                                 {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="end_date" class="tiny" readonly
+                                                    <input type="text" id="end_date" class="tiny1" readonly
                                                         placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->end_date) }}" />
                                                     <input class="hide-input" type="date" readonly
@@ -1407,7 +1407,7 @@
                                             <div>Add</div>
                                             <input disabled {{ $data->stage == 3 ? '' : 'disabled' }}  {{ $data->stage == 3 && $assigntoPerson ? '' : 'disabled' }}
                                                 type="file" id="myfile" name="Support_doc[]"
-                                                oninput="addMultipleFiles(this, 'Support_doc')" class="tiny" multiple>
+                                                oninput="addMultipleFiles(this, 'Support_doc')" class="tiny1" multiple>
                                         </div>
                                     </div>
 
@@ -1455,7 +1455,7 @@
                                         <label for="qa_comments">QA/CQA Verification Comments @if ($data->stage == 4)
                                                 <span class="text-danger">*</span>
                                             @endif </label>
-                                        <textarea class="tiny" readonly {{ $data->stage == 4 ? '' : 'readonly' }}  {{ $data->stage == 4 && $QA_CQA ? '' : 'readonly' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
+                                        <textarea class="tiny1" readonly {{ $data->stage == 4 ? '' : 'readonly' }}  {{ $data->stage == 4 && $QA_CQA ? '' : 'readonly' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
                                     </div>
 
                                 </div>
@@ -1839,7 +1839,7 @@
     </style>
 
 <script>
-         var editor = new FroalaEditor('.summernote', {
+         var editor = new frola1Editor('.summernote', {
             key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
             imageUploadParam: 'image_param',
             imageUploadMethod: 'POST',
@@ -1852,7 +1852,7 @@
             videoMaxSize: 500 * 1024 * 1024,
          });
 
-        $(".summernote-disabled").FroalaEditor("edit.off");
+        $(".summernote-disabled").frola1Editor("edit.off");
     </script>
 
     <script>

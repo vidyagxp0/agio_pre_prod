@@ -1,9 +1,9 @@
  @extends('frontend.layout.main')
         @section('container')
 
-        <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        <link href='https://cdn.jsdelivr.net/npm/frola1-editor@latest/css/frola1_editor.pkgd.min.css' rel='stylesheet'
             type='text/css' />
-        <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+        <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/frola1-editor@latest/js/frola1_editor.pkgd.min.js'>
         </script>
 
 
@@ -2131,7 +2131,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                                     </div>
                                                     <textarea name="investigation"
-                                                            class="froala"
+                                                            class="frola1"
                                                             {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>{{ $data->investigation }}</textarea>
                                                 </div>
                                                 @error('investigation')
@@ -2197,7 +2197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="immediate_correction"
+                                                    <textarea class="tiny1" name="immediate_correction"
                                                     {{ $data->stage == 1 ? '' : 'readonly' }} {{ $data->stage == 1 && $initiatorRole ? '' : 'readonly' }}>{{ $data->immediate_correction }}</textarea>
                                                 </div>
                                                 @error('immediate_correction')
@@ -2212,7 +2212,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="Immediate_Action[]" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    <textarea class="tiny1" name="Immediate_Action[]" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                         id="summernote-2">{{ $data->Immediate_Action }}</textarea>
                                                 </div>
                                                 @error('Immediate_Action')
@@ -2226,7 +2226,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="Preliminary_Impact[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    <textarea class="tiny1" name="Preliminary_Impact[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                         id="summernote-3">{{ $data->Preliminary_Impact }}</textarea>
                                                 </div>
                                                 @error('Preliminary_Impact')
@@ -2323,7 +2323,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         <label for="HOD Remarks">Review Of Incident And Verification Of Effectiveness Of Correction <span class="text-danger">{{$data->stage==2 ? '*' : ''}}</span></label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="review_of_verific" {{ $data->stage == 2 ? '' : 'readonly' }} {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->review_of_verific }}</textarea>
+                                                        <textarea class="tiny1" name="review_of_verific" {{ $data->stage == 2 ? '' : 'readonly' }} {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->review_of_verific }}</textarea>
                                                     </div>
 
                                                 @error('review_of_verific')
@@ -2335,7 +2335,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     <label for="HOD Remarks">Recommendations  <span class="text-danger">{{$data->stage==2 ? '*' : ''}}</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="Recommendations" id="summernote-4" {{ $data->stage == 2 ? '' : 'readonly' }}  {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->Recommendations }}</textarea>
+                                                    <textarea class="tiny1" name="Recommendations" id="summernote-4" {{ $data->stage == 2 ? '' : 'readonly' }}  {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->Recommendations }}</textarea>
                                                 </div>
 
                                             @error('Recommendations')
@@ -2347,7 +2347,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 <label for="HOD Remarks">Impact Assessment  <span class="text-danger">{{$data->stage==2 ? '*' : ''}}</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea class="tiny" name="Impact_Assessmenta" {{ $data->stage == 2 ? '' : 'readonly' }}  {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->Impact_Assessmenta }}</textarea>
+                                                <textarea class="tiny1" name="Impact_Assessmenta" {{ $data->stage == 2 ? '' : 'readonly' }}  {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->Impact_Assessmenta }}</textarea>
                                             </div>
 
                                         @error('Impact_Assessment')
@@ -2368,14 +2368,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required {{ $data->stage == 2 ? '' : 'readonly' }}  {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->HOD_Remarks }}</textarea>
+                                                <textarea class="tiny1" name="HOD_Remarks" id="summernote-4" required {{ $data->stage == 2 ? '' : 'readonly' }}  {{ $data->stage == 2 && $hodrole ? '' : 'readonly' }}>{{ $data->HOD_Remarks }}</textarea>
                                             </div>
                                         @else
                                             <div class="group-input">
                                                 <label for="HOD Remark">HOD Remark</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea  class="tiny" name="HOD_Remarks" id="summernote-4" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->HOD_Remarks }}</textarea>
+                                                <textarea  class="tiny1" name="HOD_Remarks" id="summernote-4" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->HOD_Remarks }}</textarea>
                                             </div>
                                         @endif
                                         @error('HOD_Remarks')
@@ -3193,7 +3193,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             categorization <span class="text-danger">*</span></label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny Justification_for_categorization"
+                                                        <textarea class="tiny1 Justification_for_categorization"
                                                             name="Justification_for_categorization"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             id="summernote-5" required>{{ $data->Justification_for_categorization }}</textarea>
                                                     </div>
@@ -3205,7 +3205,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                             categorization</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny Justification_for_categorization"
+                                                        <textarea class="tiny1 Justification_for_categorization"
                                                             name="Justification_for_categorization"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                             id="summernote-5">{{ $data->Justification_for_categorization }}</textarea>
                                                     </div>
@@ -3404,14 +3404,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                             class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="qa_head_deginee_comment" id="summernote-4" required {{ $data->stage == 4 ? '' : 'readonly' }}  {{ $data->stage == 4 && $QAHeadRole ? '' : 'readonly' }}>{{ $data->qa_head_deginee_comment }}</textarea>
+                                        <textarea class="tiny1" name="qa_head_deginee_comment" id="summernote-4" required {{ $data->stage == 4 ? '' : 'readonly' }}  {{ $data->stage == 4 && $QAHeadRole ? '' : 'readonly' }}>{{ $data->qa_head_deginee_comment }}</textarea>
                                     </div>
                                     @else
                                     <div class="group-input">
                                         <label for="HOD Remarks">QA Head/Designee Approval Comment</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="qa_head_deginee_comment" id="summernote-4" {{ $data->stage == 4 ? '' : 'readonly' }}>{{ $data->qa_head_deginee_comment }}</textarea>
+                                        <textarea class="tiny1" name="qa_head_deginee_comment" id="summernote-4" {{ $data->stage == 4 ? '' : 'readonly' }}>{{ $data->qa_head_deginee_comment }}</textarea>
                                     </div>
                                      @endif
                                 </div>
@@ -3571,7 +3571,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <div class="group-input">
                                                 <label for="Closure">Closure</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="tiny" name="closure_ini" {{ $data->closure_ini }}></textarea>
+                                                <textarea class="tiny1" name="closure_ini" {{ $data->closure_ini }}></textarea>
                                             </div>
                                         </div> --}}
 
@@ -3720,7 +3720,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     <label for="QA Feedbacks">HOD Final Review Comments <span class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                             require completion</small></div>
-                                                    <textarea class="tiny" name="qa_head_Remarks"
+                                                    <textarea class="tiny1" name="qa_head_Remarks"
                                                         id="summernote-14" required {{ $data->stage == 6 ? '' : 'readonly' }} {{ $data->stage == 6 && $hodrole ? '' : 'readonly' }}>{{ $data->qa_head_Remarks }}</textarea>
                                                 </div>
                                             @else
@@ -3728,7 +3728,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     <label for="QA Feedbacks">HOD Final Review  Comments</label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                             require completion</small></div>
-                                                    <textarea  class="tiny"
+                                                    <textarea  class="tiny1"
                                                         name="qa_head_Remarks" id="summernote-14" {{ $data->stage == 6 ? '' : 'readonly' }}>{{ $data->qa_head_Remarks }}</textarea>
                                                 </div>
                                             @endif
@@ -3859,7 +3859,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <label for="QA Feedbacks">QA Final Review Comments <span class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion</small></div>
-                                            <textarea class="tiny" name="qa_final_review"
+                                            <textarea class="tiny1" name="qa_final_review"
                                                 id="summernote-14" required {{ $data->stage == 7 && $QArole ? '' : 'readonly' }}>{{ $data->qa_final_review }}</textarea>
                                         </div>
                                     @else
@@ -3867,7 +3867,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <label for="QA Feedbacks">QA Final Review Comments</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion</small></div>
-                                            <textarea  class="tiny"
+                                            <textarea  class="tiny1"
                                                 name="qa_final_review"  id="summernote-14" {{ $data->stage == 7 ? '' : 'readonly' }}>{{ $data->qa_final_review }}</textarea>
                                         </div>
                                     @endif
@@ -4038,7 +4038,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                                 completion</small></div>
-                                        <textarea  class="tiny"
+                                        <textarea  class="tiny1"
                                             name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                             id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                                     </div>
@@ -4053,7 +4053,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             </span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                                 completion</small></div>
-                                        <textarea   class="tiny"
+                                        <textarea   class="tiny1"
                                             name="Closure_Comments"  id="summernote-15" {{ $data->stage == 8 ? '' : 'readonly' }} {{ $data->stage == 8 && $QAHeadRole ? '' : 'readonly' }}>{{ $data->Closure_Comments }}</textarea>
                                     </div>
                                     @error('Closure_Comments')
@@ -4070,7 +4070,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             </span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                                 completion</small></div>
-                                        <textarea  class="tiny"
+                                        <textarea  class="tiny1"
                                             name="Disposition_Batch" id="summernote-16" {{ $data->stage == 8 ? '' : 'readonly' }} {{ $data->stage == 8 && $QAHeadRole ? '' : 'readonly' }}>{{ $data->Disposition_Batch }}</textarea>
                                     </div>
                                     @error('Disposition_Batch')
@@ -4825,14 +4825,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                 class="text-danger">*</span></label>
                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                 does not require completion</small></div>
-                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
+                        <textarea class="tiny1" name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
                     </div>
                 @else
                     <div class="group-input">
                         <label for="HOD Remarks">HOD Remarks</label>
                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                 does not require completion</small></div>
-                        <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
+                        <textarea readonly class="tiny1" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
                     </div>
                 @endif
                 @error('HOD_Remarks')
@@ -4984,7 +4984,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Investigation Summary">Description of Event</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="Discription_Event" id="summernote-8" >{{ $data->Discription_Event }}</textarea>
+                                    <textarea class="tiny1" name="Discription_Event" id="summernote-8" >{{ $data->Discription_Event }}</textarea>
                                 </div>
                             </div>
 
@@ -4993,7 +4993,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Impact Assessment">Objective</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="objective" id="summernote-9" >{{ $data->objective }}</textarea>
+                                    <textarea class="tiny1" name="objective" id="summernote-9" >{{ $data->objective }}</textarea>
                                 </div>
                             </div>
 
@@ -5002,7 +5002,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Root Cause">Scope</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="scope" id="summernote-10" >{{ $data->scope }}</textarea>
+                                    <textarea class="tiny1" name="scope" id="summernote-10" >{{ $data->scope }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -5010,7 +5010,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Root Cause">Immediate Action</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="imidiate_action" id="summernote-10" >{{ $data->imidiate_action }}</textarea>
+                                    <textarea class="tiny1" name="imidiate_action" id="summernote-10" >{{ $data->imidiate_action }}</textarea>
                                 </div>
                             </div>
 
@@ -5019,7 +5019,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Root Cause">Impact Assesment</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="impact_ass" id="summernote-10" >{{ $data->impact_ass }}</textarea>
+                                    <textarea class="tiny1" name="impact_ass" id="summernote-10" >{{ $data->impact_ass }}</textarea>
                                 </div>
                             </div>
 
@@ -6546,7 +6546,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Immediate_Action_Take">Detail Of Root Cause </label>
-                                <textarea class="tiny" name="detail_of_root" id="detail_of_root">{{ $data->detail_of_root }}</textarea>
+                                <textarea class="tiny1" name="detail_of_root" id="detail_of_root">{{ $data->detail_of_root }}</textarea>
                             </div>
                         </div>
 
@@ -6853,7 +6853,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Description_of_Discrepancy">Description of Discrepancy </label>
-                                    <textarea class="tiny" name="Description_of_Discrepancy" id="Description_of_Discrepancy" value="">{{ $data->Description_of_Discrepancy }}</textarea>
+                                    <textarea class="tiny1" name="Description_of_Discrepancy" id="Description_of_Discrepancy" value="">{{ $data->Description_of_Discrepancy }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -6861,7 +6861,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Root_Cause">Root Cause</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="capa_root_cause" id="capa_root_cause">{{ $data->capa_root_cause }}</textarea>
+                                    <textarea class="tiny1" name="capa_root_cause" id="capa_root_cause">{{ $data->capa_root_cause }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -6869,7 +6869,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Immediate_Action_Take">Immediate Action Taken (If Applicable)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="Immediate_Action_Take" id="Immediate_Action_Take">{{ $data->Immediate_Action_Take }}</textarea>
+                                    <textarea class="tiny1" name="Immediate_Action_Take" id="Immediate_Action_Take">{{ $data->Immediate_Action_Take }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -6877,7 +6877,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Corrective_Action_Details">Corrective Action Details</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="Corrective_Action_Details" id="Corrective_Action_Details" value="">{{ $data->Corrective_Action_Details }}</textarea>
+                                    <textarea class="tiny1" name="Corrective_Action_Details" id="Corrective_Action_Details" value="">{{ $data->Corrective_Action_Details }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
@@ -6885,7 +6885,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Preventive_Action_Details">Preventive Action Details</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="Preventive_Action_Details" id="Preventive_Action_Details" value="">{{ $data->Preventive_Action_Details }}</textarea>
+                                    <textarea class="tiny1" name="Preventive_Action_Details" id="Preventive_Action_Details" value="">{{ $data->Preventive_Action_Details }}</textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6 new-date-data-field">
@@ -6913,7 +6913,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Interim_Control">Interim Control(If Any)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="Interim_Control" id="Interim_Control" value="">{{ $data->Interim_Control }}</textarea>
+                                    <textarea class="tiny1" name="Interim_Control" id="Interim_Control" value="">{{ $data->Interim_Control }}</textarea>
                                 </div>
                             </div>
                             <div class="sub-head">
@@ -6924,7 +6924,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Corrective_Action_Taken">Corrective Action Taken</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="Corrective_Action_Taken" id="Corrective_Action_Taken" value="">{{ $data->Corrective_Action_Taken }}</textarea>
+                                    <textarea class="tiny1" name="Corrective_Action_Taken" id="Corrective_Action_Taken" value="">{{ $data->Corrective_Action_Taken }}</textarea>
                                 </div>
 
                             </div>
@@ -6933,7 +6933,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <label for="Preventive_action_Taken">Preventive Action Taken</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                             completion</small></div>
-                                    <textarea class="tiny" name="Preventive_action_Taken" id="Preventive_action_Taken" value="">{{ $data->Preventive_action_Taken }}</textarea>
+                                    <textarea class="tiny1" name="Preventive_action_Taken" id="Preventive_action_Taken" value="">{{ $data->Preventive_action_Taken }}</textarea>
                                 </div>
                             </div>
                             <div class="sub-head">
@@ -8404,7 +8404,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </script>
 
                 <script>
-                    var editor = new FroalaEditor('.froala', {
+                    var editor = new frola1Editor('.frola1', {
                         key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
                         imageUploadParam: 'image_param',
                         imageUploadMethod: 'POST',
@@ -8417,7 +8417,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         videoMaxSize: 500 * 1024 * 1024,
                     });
                     
-                    $(".froala-disabled").FroalaEditor("edit.off");
+                    $(".frola1-disabled").frola1Editor("edit.off");
                 </script>
 
 

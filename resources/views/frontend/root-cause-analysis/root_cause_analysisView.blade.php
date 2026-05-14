@@ -1,9 +1,9 @@
 @extends('frontend.layout.main')
 @section('container')
 
-<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+<link href='https://cdn.jsdelivr.net/npm/frola1-editor@latest/css/frola1_editor.pkgd.min.css' rel='stylesheet'
         type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/frola1-editor@latest/js/frola1_editor.pkgd.min.js'>
     </script>
     <style>
         textarea.note-codable {
@@ -3467,7 +3467,7 @@ $(document).ready(function () {
 
   
   {{-- <script>
-         var editor = new FroalaEditor('.summernote', {
+         var editor = new frola1Editor('.summernote', {
             key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
             imageUploadParam: 'image_param',
             imageUploadMethod: 'POST',
@@ -3480,7 +3480,7 @@ $(document).ready(function () {
             videoMaxSize: 500 * 1024 * 1024,
          });
          
-        $(".summernote-disabled").FroalaEditor("edit.off");
+        $(".summernote-disabled").frola1Editor("edit.off");
     </script> --}}
   
 @endsection

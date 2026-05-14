@@ -766,19 +766,19 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Investigation Details ">Investigation Details</label>
-                                        <textarea name="Investigation_Details" class="tiny" disabled></textarea>
+                                        <textarea name="Investigation_Details" class="tiny1" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Action Taken">Action Taken</label>
-                                        <textarea name="Action_Taken" class="tiny" disabled></textarea>
+                                        <textarea name="Action_Taken" class="tiny1" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Root Cause">Root Cause</label>
-                                        <textarea name="Root_Cause" class="tiny" disabled></textarea>
+                                        <textarea name="Root_Cause" class="tiny1" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -800,13 +800,13 @@
                                 <div class="col-12">
                                 <div class="group-input">
                                     <label for="detail investigation ">Detail Investigation / Probable Root Cause</label>
-                                <textarea name="details_investigation_ia" class="tiny" disabled></textarea>
+                                <textarea name="details_investigation_ia" class="tiny1" disabled></textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="proposed corrective action ">Proposed Corrective Action/Corrective Action Taken</label>
-                            <textarea name="proposed_correctivei_ia" class="tiny" disabled></textarea>
+                            <textarea name="proposed_correctivei_ia" class="tiny1" disabled></textarea>
                         </div>
                      </div>
 
@@ -814,7 +814,7 @@
                      <div class="col-12">
                         <div class="group-input">
                             <label for="Repeat Analysis Plan ">Repeat Analysis Plan</label>
-                        <textarea name="repeat_analysis_plan_ia" class="tiny" disabled></textarea>
+                        <textarea name="repeat_analysis_plan_ia" class="tiny1" disabled></textarea>
                       </div>
                          </div>
 
@@ -823,13 +823,13 @@
                 <div class="col-12">
                     <div class="group-input">
                         <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis</label>
-                    <textarea name="result_of_repeat_analysis_ia" class="tiny" disabled></textarea>
+                    <textarea name="result_of_repeat_analysis_ia" class="tiny1" disabled></textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
                     <label for="Corrective and Preventive Action">Corrective and Preventive Action</label>
-                <textarea name="corrective_and_preventive_action_ia" class="tiny" disabled></textarea>
+                <textarea name="corrective_and_preventive_action_ia" class="tiny1" disabled></textarea>
             </div>
         </div>
         <div class="col-12">
@@ -842,7 +842,7 @@
          <div class="col-12">
             <div class="group-input">
                 <label for="Investigation Summary">Investigation Summary</label>
-            <textarea name="investigation_summary_ia" class="tiny" disabled></textarea>
+            <textarea name="investigation_summary_ia" class="tiny1" disabled></textarea>
         </div>
     </div>
 
@@ -910,7 +910,7 @@
                         <label for="search">
                             QC Investigator <span class="text-danger"></span>
                         </label>
-                            <textarea name="investigator_data" class="tiny" id="" disabled></textarea>
+                            <textarea name="investigator_data" class="tiny1" id="" disabled></textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -1132,7 +1132,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for=" qa head remark"><b>QA Head Comment</b></label>
-                                   <textarea name="qa_hear_remark_c" class="tiny" disabled></textarea>
+                                   <textarea name="qa_hear_remark_c" class="tiny1" disabled></textarea>
                                 </div>
                             </div>
 

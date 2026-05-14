@@ -1816,14 +1816,14 @@
                                                         <label for="HOD Remarks">HOD Remarks</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->HOD_Remarks }}</textarea>
+                                                        <textarea class="tiny1" name="HOD_Remarks" id="summernote-4" required  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->HOD_Remarks }}</textarea>
                                                     </div>
                                                 @else
                                                     <div class="group-input">
                                                         <label for="HOD Remarks">HOD Remarks</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->HOD_Remarks }}</textarea>
+                                                        <textarea readonly class="tiny1" name="HOD_Remarks" id="summernote-4"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->HOD_Remarks }}</textarea>
                                                     </div>
                                                 @endif
                                                 @error('HOD_Remarks')
@@ -2524,7 +2524,7 @@
                                                         <label for="Quality Assurance assessment">Impact Assessment (By Quality Assurance)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 QualityAssurance">
@@ -2532,7 +2532,7 @@
                                                         <label for="Quality Assurance feedback">Quality Assurance Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="QualityAssurance_feedback" id="summernote-18">{{ $data1->QualityAssurance_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="QualityAssurance_feedback" id="summernote-18">{{ $data1->QualityAssurance_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -2541,7 +2541,7 @@
                                                         <label for="Quality Assurance assessment">Impact Assessment (By Quality Assurance)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="QualityAssurance_assessment" id="summernote-17">{{ $data1->QualityAssurance_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 QualityAssurance">
@@ -2549,7 +2549,7 @@
                                                         <label for="Quality Assurance feedback">Quality Assurance Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="QualityAssurance_feedback" id="summernote-18">{{ $data1->QualityAssurance_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="QualityAssurance_feedback" id="summernote-18">{{ $data1->QualityAssurance_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -2858,7 +2858,7 @@
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 productionTable">
@@ -2867,7 +2867,7 @@
                                                                    </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
+                                                        <textarea class="tiny1" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -2880,7 +2880,7 @@
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 productionTable">
@@ -2889,7 +2889,7 @@
                                                                                </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -3184,7 +3184,7 @@
                                                         <label for="Production Liquid assessment">Impact Assessment(By Production Liquid/Ointment) </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 mb-3 productionLiquid">
@@ -3192,7 +3192,7 @@
                                                         <label for="Production Liquid feedback">Impact Assessment(By Production Liquid/Ointment)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                     </div>
                                                 </div>
                                             @else
@@ -3201,7 +3201,7 @@
                                                         <label for="Production Liquid assessment">Impact Assessment(By Production Liquid/Ointment)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="ProductionLiquid_assessment" id="summernote-17">{{ $data1->ProductionLiquid_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 productionLiquid">
@@ -3209,7 +3209,7 @@
                                                         <label for="Production Liquid feedback">Production Liquid/Ointment Feedback </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="ProductionLiquid_feedback" id="summernote-18">{{ $data1->ProductionLiquid_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -3517,7 +3517,7 @@
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 
@@ -3531,7 +3531,7 @@
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Production_Injection_Assessment" id="summernote-17">{{ $data1->Production_Injection_Assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                
@@ -3841,7 +3841,7 @@
                                                         <label for="Store assessment">Impact Assessment (By Store)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 store">
@@ -3849,7 +3849,7 @@
                                                         <label for="Store feedback">Store Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -3858,7 +3858,7 @@
                                                         <label for="Store assessment">Impact Assessment (By Store)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Store_assessment" id="summernote-17">{{ $data1->Store_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 store">
@@ -3866,7 +3866,7 @@
                                                         <label for="Store feedback">Store Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Store_feedback" id="summernote-18">{{ $data1->Store_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -4178,7 +4178,7 @@
                                                         <label for="Quality Control assessment">Impact Assessment (By Quality Control)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 qualityControl">
@@ -4186,7 +4186,7 @@
                                                         <label for="Quality Control feedback">Quality Control Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -4195,7 +4195,7 @@
                                                         <label for="Quality Control assessment">Impact Assessment (By Quality Control)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Quality_Control_assessment" id="summernote-17">{{ $data1->Quality_Control_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 qualityControl">
@@ -4203,7 +4203,7 @@
                                                         <label for="Quality Control feedback">Quality Control Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Quality_Control_feedback" id="summernote-18">{{ $data1->Quality_Control_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -4518,7 +4518,7 @@
                                                         <label for="Research Development assessment">Impact Assessment (By Research & Development)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 researchDevelopment">
@@ -4526,7 +4526,7 @@
                                                         <label for="Research Development feedback">Research & Development Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -4535,7 +4535,7 @@
                                                         <label for="Research Development assessment">Impact Assessment (By Research & Development)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="ResearchDevelopment_assessment" id="summernote-17">{{ $data1->ResearchDevelopment_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 researchDevelopment">
@@ -4543,7 +4543,7 @@
                                                         <label for="Research Development feedback">Research & Development Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="ResearchDevelopment_feedback" id="summernote-18">{{ $data1->ResearchDevelopment_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -4854,7 +4854,7 @@
                                                         <label for="Engineering assessment">Impact Assessment (By Engineering)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Engineering">
@@ -4862,7 +4862,7 @@
                                                         <label for="Engineering feedback">Engineering Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -4871,7 +4871,7 @@
                                                         <label for="Engineering assessment">Impact Assessment (By Engineering)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Engineering_assessment" id="summernote-17">{{ $data1->Engineering_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Engineering">
@@ -4879,7 +4879,7 @@
                                                         <label for="Engineering feedback">Engineering Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Engineering_feedback" id="summernote-18">{{ $data1->Engineering_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -5190,7 +5190,7 @@
                                                         <label for="Human Resource assessment">Impact Assessment (By Human Resource)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Human_Resource">
@@ -5198,7 +5198,7 @@
                                                         <label for="Human Resource feedback">Human Resource Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -5207,7 +5207,7 @@
                                                         <label for="Human Resource assessment">Impact Assessment (By Human Resource)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Human_Resource_assessment" id="summernote-17">{{ $data1->Human_Resource_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Human_Resource">
@@ -5215,7 +5215,7 @@
                                                         <label for="Human Resource feedback">Human Resource Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Human_Resource_feedback" id="summernote-18">{{ $data1->Human_Resource_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -5524,7 +5524,7 @@
                                                         <label for="Microbiology assessment">Impact Assessment (By Microbiology)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Microbiology">
@@ -5532,7 +5532,7 @@
                                                         <label for="Microbiology feedback">Microbiology Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -5541,7 +5541,7 @@
                                                         <label for="Microbiology assessment">Impact Assessment (By Microbiology)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Microbiology_assessment" id="summernote-17">{{ $data1->Microbiology_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Microbiology">
@@ -5549,7 +5549,7 @@
                                                         <label for="Microbiology feedback">Microbiology Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Microbiology_feedback" id="summernote-18">{{ $data1->Microbiology_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -5859,7 +5859,7 @@
                                                         <label for="Regulatory Affair assessment">Impact Assessment (By Regulatory Affair)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 RegulatoryAffair">
@@ -5867,7 +5867,7 @@
                                                         <label for="Regulatory Affair feedback">Regulatory Affair Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -5876,7 +5876,7 @@
                                                         <label for="Regulatory Affair assessment">Impact Assessment (By Regulatory Affair)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="RegulatoryAffair_assessment" id="summernote-17">{{ $data1->RegulatoryAffair_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 RegulatoryAffair">
@@ -5884,7 +5884,7 @@
                                                         <label for="Regulatory Affair feedback">Regulatory Affair Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="RegulatoryAffair_feedback" id="summernote-18">{{ $data1->RegulatoryAffair_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -6195,7 +6195,7 @@
                                                         <label for="Corporate Quality Assurance assessment">Impact Assessment (By Corporate Quality Assurance)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 CQA">
@@ -6203,7 +6203,7 @@
                                                         <label for="Corporate Quality Assurance feedback">Corporate Quality Assurance Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -6212,7 +6212,7 @@
                                                         <label for="Corporate Quality Assurance assessment">Impact Assessment (By Corporate Quality Assurance)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="CorporateQualityAssurance_assessment" id="summernote-17">{{ $data1->CorporateQualityAssurance_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 CQA">
@@ -6220,7 +6220,7 @@
                                                         <label for="Corporate Quality Assurance feedback">Corporate Quality Assurance Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="CorporateQualityAssurance_feedback" id="summernote-18">{{ $data1->CorporateQualityAssurance_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -6530,7 +6530,7 @@
                                                         <label for="Safety assessment">Impact Assessment (By Safety)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 safety">
@@ -6538,7 +6538,7 @@
                                                         <label for="Safety feedback">Safety Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -6547,7 +6547,7 @@
                                                         <label for="Safety assessment">Impact Assessment (By Safety)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Health_Safety_assessment" id="summernote-17">{{ $data1->Health_Safety_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 safety">
@@ -6555,7 +6555,7 @@
                                                         <label for="Safety feedback">Safety Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Health_Safety_feedback" id="summernote-18">{{ $data1->Health_Safety_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -6855,7 +6855,7 @@
                                                         <label for="Information Technology assessment">Impact Assessment (By Information Technology)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Information_Technology_assessment" id="summernote-17">{{ $data1->Information_Technology_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="Information_Technology_assessment" id="summernote-17">{{ $data1->Information_Technology_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Information_Technology">
@@ -6863,7 +6863,7 @@
                                                         <label for="Information Technology feedback">Information Technology Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="Information_Technology_feedback" id="summernote-18">{{ $data1->Information_Technology_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="Information_Technology_feedback" id="summernote-18">{{ $data1->Information_Technology_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -6872,7 +6872,7 @@
                                                         <label for="Information Technology assessment">Impact Assessment (By Information Technology)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Information_Technology_assessment" id="summernote-17">{{ $data1->Information_Technology_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Information_Technology_assessment" id="summernote-17">{{ $data1->Information_Technology_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 Information_Technology">
@@ -6880,7 +6880,7 @@
                                                         <label for="Information Technology feedback">Information Technology Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="Information_Technology_feedback" id="summernote-18">{{ $data1->Information_Technology_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="Information_Technology_feedback" id="summernote-18">{{ $data1->Information_Technology_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -7185,7 +7185,7 @@
                                                         <label for="Contract Giver assessment">Impact Assessment (By Contract Giver)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
+                                                        <textarea class="tiny1" name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 ContractGiver">
@@ -7193,7 +7193,7 @@
                                                         <label for="Contract Giver feedback">Contract Giver Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea class="tiny" name="ContractGiver_feedback" id="summernote-18">{{ $data1->ContractGiver_feedback }}</textarea>
+                                                        <textarea class="tiny1" name="ContractGiver_feedback" id="summernote-18">{{ $data1->ContractGiver_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @else
@@ -7202,7 +7202,7 @@
                                                         <label for="Contract Giver assessment">Impact Assessment (By Contract Giver)</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
+                                                        <textarea disabled class="tiny1" name="ContractGiver_assessment" id="summernote-17">{{ $data1->ContractGiver_assessment }}</textarea>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-md-12 mb-3 ContractGiver">
@@ -7210,7 +7210,7 @@
                                                         <label for="Contract Giver feedback">Contract Giver Feedback</label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
-                                                        <textarea disabled class="tiny" name="ContractGiver_feedback" id="summernote-18">{{ $data1->ContractGiver_feedback }}</textarea>
+                                                        <textarea disabled class="tiny1" name="ContractGiver_feedback" id="summernote-18">{{ $data1->ContractGiver_feedback }}</textarea>
                                                     </div>
                                                 </div> -->
                                             @endif
@@ -7341,14 +7341,14 @@
                                 <div class="col-md-12 mb-3 other1_reviews">
                                     <div class="group-input">
                                         <label for="Impact Assessment12">Impact Assessment (By Other's 1)</label>
-                                        <textarea class="tiny" name="Other1_assessment" id="summernote-41" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person || $data1->Other1_on != null) readonly @endif>{{ $data1->Other1_assessment }}</textarea>
+                                        <textarea class="tiny1" name="Other1_assessment" id="summernote-41" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person || $data1->Other1_on != null) readonly @endif>{{ $data1->Other1_assessment }}</textarea>
                                     </div>
                                 </div>
 
                                 <!-- <div class="col-md-12 mb-3 other1_reviews">
                                     <div class="group-input">
                                         <label for="Feedback1">Other's 1 Feedback</label>
-                                        <textarea class="tiny" name="Other1_feedback" id="summernote-42" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_feedback }}</textarea>
+                                        <textarea class="tiny1" name="Other1_feedback" id="summernote-42" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_feedback }}</textarea>
                                     </div>
                                 </div> -->
 
@@ -7481,14 +7481,14 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Impact Assessment12">Impact Assessment (By Other's 1)</label>
-                                        <textarea disabled class="tiny" name="Other1_assessment" id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
+                                        <textarea disabled class="tiny1" name="Other1_assessment" id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Feedback1">Other's 1 Feedback</label>
-                                        <textarea disabled class="tiny" name="Other1_feedback" id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
+                                        <textarea disabled class="tiny1" name="Other1_feedback" id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
                                     </div>
                                 </div>
 
@@ -7590,14 +7590,14 @@
                             <div class="col-md-12 mb-3 Other2_reviews">
                                 <div class="group-input">
                                     <label for="Impact Assessment13">Impact Assessment (By Other's 2)</label>
-                                    <textarea class="tiny" name="Other2_Assessment" id="summernote-43" @if ($data->stage != 4 || Auth::user()->name != $data1->Other2_person || $data1->Other2_on != null) readonly @endif>{{ $data1->Other2_Assessment }}</textarea>
+                                    <textarea class="tiny1" name="Other2_Assessment" id="summernote-43" @if ($data->stage != 4 || Auth::user()->name != $data1->Other2_person || $data1->Other2_on != null) readonly @endif>{{ $data1->Other2_Assessment }}</textarea>
                                 </div>
                             </div>
 
                             <!-- <div class="col-md-12 mb-3 Other2_reviews">
                                 <div class="group-input">
                                     <label for="Feedback2"> Other's 2 Feedback</label>
-                                    <textarea class="tiny" name="Other2_feedback" id="summernote-44" @if ($data->stage != 4 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_feedback }}</textarea>
+                                    <textarea class="tiny1" name="Other2_feedback" id="summernote-44" @if ($data->stage != 4 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_feedback }}</textarea>
                                 </div>
                             </div> -->
 
@@ -7732,14 +7732,14 @@
                             <div class="col-md-12 mb-3 Other3_reviews">
                                 <div class="group-input">
                                     <label for="Impact Assessment14">Impact Assessment (By Other's 3)</label>
-                                    <textarea class="tiny" name="Other3_Assessment" id="summernote-45" @if ($data->stage != 4 || Auth::user()->name != $data1->Other3_person || $data1->Other3_on != null) readonly @endif>{{ $data1->Other3_Assessment }}</textarea>
+                                    <textarea class="tiny1" name="Other3_Assessment" id="summernote-45" @if ($data->stage != 4 || Auth::user()->name != $data1->Other3_person || $data1->Other3_on != null) readonly @endif>{{ $data1->Other3_Assessment }}</textarea>
                                 </div>
                             </div>
 
                             <!-- <div class="col-md-12 mb-3 Other3_reviews">
                                 <div class="group-input">
                                     <label for="feedback3">Other's 3 Feedback</label>
-                                    <textarea class="tiny" name="Other3_feedback" id="summernote-46" @if ($data->stage != 4 || Auth::user()->name != $data1->Other3_person) readonly @endif>{{ $data1->Other3_feedback }}</textarea>
+                                    <textarea class="tiny1" name="Other3_feedback" id="summernote-46" @if ($data->stage != 4 || Auth::user()->name != $data1->Other3_person) readonly @endif>{{ $data1->Other3_feedback }}</textarea>
                                 </div>
                             </div> -->
 
@@ -7879,7 +7879,7 @@
                             <div class="col-md-12 mb-3 Other4_reviews">
                                 <div class="group-input">
                                     <label for="Description of Action Item15">Impact Assessment (By Other's 4)</label>
-                                    <textarea class="tiny" name="Other4_Assessment" id="summernote-47"
+                                    <textarea class="tiny1" name="Other4_Assessment" id="summernote-47"
                                         @if ($data->stage != 4 || Auth::user()->name != $data1->Other4_person || $data1->Other4_on != null) readonly @endif>{{ $data1->Other4_Assessment }}</textarea>
                                 </div>
                             </div>
@@ -7887,7 +7887,7 @@
                             <!-- <div class="col-md-12 mb-3 Other4_reviews">
                                 <div class="group-input">
                                     <label for="feedback4">Other's 4 Status of Action Item</label>
-                                    <textarea class="tiny" name="Other4_feedback" id="summernote-48"
+                                    <textarea class="tiny1" name="Other4_feedback" id="summernote-48"
                                         @if ($data->stage != 4 || Auth::user()->name != $data1->Other4_person) readonly @endif>{{ $data1->Other4_feedback }}</textarea>
                                 </div>
                             </div> -->
@@ -8027,7 +8027,7 @@
                             <div class="col-md-12 mb-3 Other5_reviews">
                                 <div class="group-input">
                                     <label for="Description of Action Item16">Impact Assessment (By Other's 5)</label>
-                                    <textarea class="tiny" name="Other5_Assessment" id="summernote-49"
+                                    <textarea class="tiny1" name="Other5_Assessment" id="summernote-49"
                                     @if ($data->stage != 4 || Auth::user()->name != $data1->Other5_person || $data1->Other5_on != null) readonly @endif>{{ $data1->Other5_Assessment }}</textarea>
                                 </div>
                             </div>
@@ -8035,7 +8035,7 @@
                             <!-- <div class="col-md-12 mb-3 Other5_reviews">
                                 <div class="group-input">
                                     <label for="productionfeedback">Other's 5 Status of Action Item</label>
-                                    <textarea class="tiny" name="Other5_feedback" id="summernote-50"
+                                    <textarea class="tiny1" name="Other5_feedback" id="summernote-50"
                                     @if ($data->stage != 4 || Auth::user()->name != $data1->Other5_person) readonly @endif>{{ $data1->Other5_feedback }}</textarea>
                                 </div>
                             </div> -->
@@ -8401,7 +8401,7 @@
                                             <div>
                                                 <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                             </div>
-                                            <textarea class="tiny" name="ra_tab_comments" id="ra_tab_comments"
+                                            <textarea class="tiny1" name="ra_tab_comments" id="ra_tab_comments"
                                                 {{ $lockdatafileds6 ? 'readonly' : 'required' }} >{{ isset($data1->ra_tab_comments) ? $data1->ra_tab_comments : '' }}</textarea>
                                         </div>
                                     </div>
