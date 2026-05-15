@@ -1715,7 +1715,7 @@ dd($pre);
                                         </label>
                                     {!! quillEditor(
                                         'Description_incident') !!}
-                                    @error('Description_incident[]')
+                                    @error('Description_incident')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

@@ -3155,7 +3155,7 @@
 
                                                 </div>
                                             </div>
-                                            @php
+                                             @php
                                                 $userRoles = DB::table('user_roles')
                                                     ->where([
                                                         'q_m_s_roles_id' => 52,
@@ -3167,9 +3167,12 @@
                                             @endphp
                                             <div class="col-lg-6 productionLiquid">
                                                 <div class="group-input">
-                                                    <label for="Production Liquid notification">Production Liquid/Ointment Person <span id="asteriskInvi11"
-                                                            style="display: none" class="text-danger">*</span></label>
-                                                    <select name="ProductionLiquid_person" disabled id="ProductionLiquid_person">
+                                                     <label for="Production Liquid notification">Production Liquid/Ointment Person <span id="asteriskPT"
+                                                            style="display: {{ $data1->ProductionLiquid_Review == 'yes' ? 'inline' : 'none' }}"
+                                                            class="text-danger">*</span>
+                                                    </label>
+                                                     <select name="ProductionLiquid_person" disabled
+                                                        class="ProductionLiquid_person" id="ProductionLiquid_person">
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $data1->ProductionLiquid_person) selected @endif>

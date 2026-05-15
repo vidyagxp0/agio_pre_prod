@@ -748,8 +748,8 @@
                         @elseif(
                             ($data->stage == 4 && Helpers::check_roles($data->division_id, 'Deviation', 5)) ||
                                 in_array(Auth::user()->id, $valuesArray))
-                            <!-- @if (!$cftCompleteUser)
-    -->
+                             @if (!$cftCompleteUser)
+                            
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
@@ -761,9 +761,12 @@
                                 Child
                             </button>
                             @endif
+                            @endif 
 
-                            <!--
-    @endif -->
+                            @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Deviation',7))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                                More Info Required
+                            </button>
         
                         @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Deviation', 7) || Helpers::check_roles($data->division_id, 'Deviation', 66)) )
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
@@ -3335,8 +3338,8 @@
                                                 <label for="Production Tablet feedback">Production Tablet/Capsule/Powder
                                                     Feedback
                                                     <!-- <span
-                                                                                                                                                                                                                                                                                                                                                                id="asteriskInvi22" style="display: none"
-                                                                                                                                                                                                                                                                                                                                                                class="text-danger">*</span> -->
+                                                        id="asteriskInvi22" style="display: none"
+                                                        class="text-danger">*</span> -->
                                                 </label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if
                                                         it
