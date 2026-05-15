@@ -2082,7 +2082,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div> --}}
-                                            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
                                             <div class="col-md-12">
                                                 {!! quillEditor(
                                                     'Description_incident',
@@ -2121,7 +2120,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                             </div> --}}
 
                                             <!-- CKEditor Script -->
-                                            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 
                                             <!-- Investigation Field -->
                                            {{-- <div class="col-md-12">

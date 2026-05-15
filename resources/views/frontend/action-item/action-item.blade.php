@@ -1,9 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
-<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
-        type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
-    </script>
+
     <style>
         textarea.note-codable {
             display: none !important;
@@ -470,12 +467,19 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Short Description"> Description<span
                                                 class="text-danger"></span></label>
-                                        <textarea class="summernote" name="description"  id="summernote-1"></textarea>
+                                        <textarea class="" name="description"  id=""></textarea>
                                     </div>
+                                </div> --}}
+                                <div class="col-md-12">
+                                          <label>
+                                            Description <span class="text-danger"></span>
+                                        </label>
+                                    {!! quillEditor(
+                                        'description') !!}
                                 </div>
 
                                 {{--
@@ -976,22 +980,5 @@
             $('#rchars').text(textlen);});
     </script>
 
-
-<script>
-         var editor = new FroalaEditor('.summernote', {
-            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
-            imageUploadParam: 'image_param',
-            imageUploadMethod: 'POST',
-            imageMaxSize: 20 * 1024 * 1024,
-            imageUploadURL: "{{ secure_url('api/upload-files') }}",
-            fileUploadParam: 'image_param',
-            fileUploadURL: "{{ secure_url('api/upload-files')}}",
-            videoUploadParam: 'image_param',
-            videoUploadURL: "{{ secure_url('api/upload-files') }}",
-            videoMaxSize: 500 * 1024 * 1024,
-         });
-
-        $(".summernote-disabled").FroalaEditor("edit.off");
-    </script>
 
 @endsection

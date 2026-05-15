@@ -1,12 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
 
-    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
-        type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
-    </script>
-
-
     @php
         $users = DB::table('users')->select('id', 'name')->get();
 
@@ -1703,85 +1697,51 @@ dd($pre);
                                         });
                                     });
                                 </script>
-                                <!-- <div class="col-lg-6">
-                                                <div class="group-input" id="external_agencies_req">
-                                                    <label for="others">HOD / Designee<span class="text-danger d-none">*</span></label>
-                                                  <select name="hod_designee" id="">
-                                                    <option value="">-- Select --</option>
-                                                    <option value="person1">person 1</option>
-                                                    <option value="person2">person 2</option>
-                                                  </select>
-
-
-
-                                                </div>
-                                  </div> -->
-                                <!-- <div class="col-lg-6">
-                                                <div class="group-input" id="external_agencies_req">
-                                                    <label for="others">Head QA / Designee<span class="text-danger d-none">*</span></label>
-                                                  <select name="hod_designee" id="">
-                                                    <option value="">-- Select --</option>
-                                                    <option value="person1">person 1</option>
-                                                    <option value="person2">person 2</option>
-                                                  </select>
-
-
-
-                                                </div>
-                                  </div> -->
-                                <!-- <div class="col-lg-6">
-                                                <div class="group-input" id="external_agencies_req">
-                                                    <label for="others">QA<span class="text-danger d-none">*</span></label>
-                                                  <select name="hod_designee" id="">
-                                                    <option value="">-- Select --</option>
-                                                    <option value="person1">person 1</option>
-                                                    <option value="person2">person 2</option>
-                                                  </select>
-
-
-                                                </div>
-                                  </div> -->
-                                <!-- <div class="col-6">
-                                                <div class="group-input">
-                                                    <label for="Facility Name">Notify To</label>
-                                                    <select multiple name="Facility[]" placeholder="Select Facility Name"
-                                                        data-search="false" data-silent-initial-value-set="true" id="Facility">
-                                                        <option value="Plant 1"> 1</option>
-                                                        <option value="Plant 1"> 2</option>
-                                                        <option value="Plant 1"> 3</option>
-
-                                                    </select>
-                                                </div>
-                                            </div> -->
-
-                                {{-- <div class="col-6">
-                                    <div class="group-input">
-                                        <label for="Description Incident">Description of Incident</label>
-                                        <textarea class="" id="Description_incident" name="Description_incident[]"></textarea>
-                                    </div>
-                                </div> --}}
-                                <div class="col-md-12 mb-3">
+                                
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Description Incident">Description of Incident</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="froala" name="Description_incident" id="summernote-1"> </textarea>
+                                        <textarea class="" name="Description_incident" id="summernote-1"> </textarea>
                                     </div>
                                     @error('Description_incident[]')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                </div> --}}
+                                <div class="col-md-12">
+                                          <label>
+                                            Description of Incident <span class="text-danger"></span>
+                                        </label>
+                                    {!! quillEditor(
+                                        'Description_incident') !!}
+                                    @error('Description_incident[]')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="col-md-12 mb-3">
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Description Incident">Investigation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="froala" name="investigation"> </textarea>
+                                        <textarea class="" name="investigation"> </textarea>
                                     </div>
                                     @error('investigation[]')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                </div> --}}
+
+                                <div class="col-md-12">
+                                          <label>
+                                            Investigation <span class="text-danger"></span>
+                                        </label>
+                                    {!! quillEditor(
+                                        'investigation') !!}
+                                    @error('investigation[]')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Description Incident">Immediate corrective action</label>
@@ -4317,24 +4277,5 @@ dd($pre);
                 });
             });
         </script>
-
-        <script>
-            var editor = new FroalaEditor('.froala', {
-                key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
-                imageUploadParam: 'image_param',
-                imageUploadMethod: 'POST',
-                imageMaxSize: 20 * 1024 * 1024,
-                imageUploadURL: "{{ secure_url('api/upload-files') }}",
-                fileUploadParam: 'image_param',
-                fileUploadURL: "{{ secure_url('api/upload-files')}}",
-                videoUploadParam: 'image_param',
-                videoUploadURL: "{{ secure_url('api/upload-files') }}",
-                videoMaxSize: 500 * 1024 * 1024,
-            });
-            
-            $(".froala-disabled").FroalaEditor("edit.off");
-        </script>
-
-
 
     @endsection
