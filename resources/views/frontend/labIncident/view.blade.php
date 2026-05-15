@@ -4,12 +4,6 @@
         $users = DB::table('users')->get();
 @endphp
 
-<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
-        type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
-    </script>
-
-
 <style>
         
         /*Main Table Styling */
@@ -1206,7 +1200,7 @@
 
 
 
-                        <div class="col-lg-12">
+                        {{-- <div class="col-lg-12">
                             <div class="group-input" id="description_incidence_gi">
                                 <label for="Description_incidence"> Description Of Incidence
                                 @if($data->stage == 1)    
@@ -1218,7 +1212,26 @@
                                 </label>
                                 <textarea name="description_incidence_gi" class="summernote" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"")}}>{{ $data->description_incidence_gi }}</textarea>
                             </div>
+                        </div> --}}
 
+                        <div class="col-md-12">
+                            {!! quillEditor(
+                                'description_incidence_gi',
+                                $data->description_incidence_gi,
+
+                                '
+                                <label>
+                                    Description Of Incidence 
+                                    ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                </label>
+                                ',
+
+                                $data->stage == 0 || $data->stage >= 2
+                            ) !!}
+                            
+                            @error('investigation')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-6">
                             <div class="group-input">
@@ -1960,13 +1973,33 @@
                                 </div> --}}
 
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Investigation Details ">Investigation Details @if($data->stage==4)<span class="text-danger">*</span> @endif
                                            </label>
                                         <textarea name="Investigation_Details" class="summernote" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Investigation_Details }}</textarea>
                                     </div>
+                                </div> --}}
+                                <div class="col-md-12">
+                                    {!! quillEditor(
+                                        'Investigation_Details',
+                                        $data->Investigation_Details,
+
+                                        '
+                                        <label>
+                                            Investigation Details 
+                                            ' . ($data->stage == 4 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        ',
+
+                                        $data->stage <= 3 || $data->stage >= 5
+                                    ) !!}
+
+                                    @error('Investigation_Details')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Action Taken">Action Taken  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
@@ -4342,22 +4375,6 @@ document.getElementById('initiator_group').addEventListener('change', function()
 </script>
 
 
-<script>
-         var editor = new FroalaEditor('.summernote', {
-            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
-            imageUploadParam: 'image_param',
-            imageUploadMethod: 'POST',
-            imageMaxSize: 20 * 1024 * 1024,
-            imageUploadURL: "{{ secure_url('api/upload-files') }}",
-            fileUploadParam: 'image_param',
-            fileUploadURL: "{{ secure_url('api/upload-files')}}",
-            videoUploadParam: 'image_param',
-            videoUploadURL: "{{ secure_url('api/upload-files') }}",
-            videoMaxSize: 500 * 1024 * 1024,
-         });
-         
-        $(".summernote-disabled").FroalaEditor("edit.off");
-    </script>
 
 
         <style>
