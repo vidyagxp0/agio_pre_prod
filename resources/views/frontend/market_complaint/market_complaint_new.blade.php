@@ -669,43 +669,28 @@
 
 
 
-                                {{-- <script>
-                                    document.addEventListener('DOMContentLoaded', (event) => {
-                                        const dateInput = document.getElementById('complaint_date_picker');
-                                        const today = new Date().toISOString().split('T')[0];
-                                        dateInput.setAttribute('max', today);
-
-                                        // Show the date picker when clicking on the readonly input
-                                        const readonlyInput = document.getElementById('complaint_dat');
-                                        readonlyInput.addEventListener('click', () => {
-                                            dateInput.style.display = 'block';
-                                            dateInput.focus();
-                                        });
-
-                                        // Update the readonly input when a date is selected
-                                        dateInput.addEventListener('change', () => {
-                                            const selectedDate = new Date(dateInput.value);
-                                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                            readonlyInput.value = selectedDate.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                            dateInput.style.display = 'none';
-                                        });
-                                    });
-
-                                    function handleDateInput(dateInput, readonlyInputId) {
-                                        const readonlyInput = document.getElementById(readonlyInputId);
-                                        const selectedDate = new Date(dateInput.value);
-                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                        readonlyInput.value = selectedDate.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                    }
-                                </script> --}}
-
-                                <div class="col-md-12 mb-3">
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Details Of Nature Market Complaint">Details of Nature of Market Complaint</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="details_of_nature_market_complaint_gi" id="summernote-1">
                                     </textarea>
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-12">
+                                    <div class="group-input" id="">
+                                          <label>
+                                            Details of Nature of Market Complaint <span class="text-danger"></span>
+                                            <small class="text-primary d-block">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </label>
+                                    {!! quillEditor(
+                                        'details_of_nature_market_complaint_gi') !!}
+                                    @error('details_of_nature_market_complaint_gi')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </div>
                                 </div>
 
@@ -1105,7 +1090,7 @@ function handleExpDateInput(expInput, expTextId) {
                                     </div>
                                 </div> --}}
 
-                                <div class="col-md-12 mb-3">
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Review of Complaint Sample">Review of Complaint Sample</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -1113,9 +1098,26 @@ function handleExpDateInput(expInput, expTextId) {
                                         <textarea class="summernote" name="review_of_complaint_sample_gi" id="summernote-1">
                                     </textarea>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-md-12">
+                                    <div class="group-input" id="">
+                                          <label>
+                                            Review of Complaint Sample <span class="text-danger"></span>
+                                            <small class="text-primary d-block">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </label>
+                                    {!! quillEditor(
+                                        'review_of_complaint_sample_gi') !!}
+                                    @error('review_of_complaint_sample_gi')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </div>
                                 </div>
 
-                                <div class="col-md-12 mb-3">
+
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Review of Control Sample">Review of Control Sample</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -1123,29 +1125,80 @@ function handleExpDateInput(expInput, expTextId) {
                                         <textarea class="summernote" name="review_of_control_sample_gi" id="summernote-1">
                                     </textarea>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-md-12">
+                                    <div class="group-input" id="">
+                                          <label>
+                                            Review of Control Sample <span class="text-danger"></span>
+                                            <small class="text-primary d-block">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </label>
+                                    {!! quillEditor(
+                                        'review_of_control_sample_gi') !!}
+                                    @error('review_of_control_sample_gi')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </div>
                                 </div>
-                                <div class="col-md-12 mb-3">
+
+
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Review of stability study program and samples">Review of stability
-                                            study program and samples</label>
+                                        <label for="Review of stability study program and samples">Review of stability study program and samples</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_stability_study_gi" id="summernote-1">
                                     </textarea>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-md-12">
+                                    <div class="group-input" id="">
+                                          <label>
+                                            Review of stability study program and samples <span class="text-danger"></span>
+                                            <small class="text-primary d-block">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </label>
+                                    {!! quillEditor(
+                                        'review_of_stability_study_gi') !!}
+                                    @error('review_of_stability_study_gi')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </div>
                                 </div>
-                                <div class="col-md-12 mb-3">
+
+
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Review of product manufacturing and analytical process">Review of
-                                            product manufacturing and analytical process </label>
+                                        <label for="Review of product manufacturing and analytical process">Review of product manufacturing and analytical process </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_product_manu_gi" id="summernote-1">
                                     </textarea>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-md-12">
+                                    <div class="group-input" id="">
+                                          <label>
+                                            Review of product manufacturing and analytical process <span class="text-danger"></span>
+                                            <small class="text-primary d-block">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </label>
+                                    {!! quillEditor(
+                                        'review_of_product_manu_gi') !!}
+                                    @error('review_of_product_manu_gi')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </div>
                                 </div>
 
-                                <div class="col-md-12 mb-3">
+
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="In case of Invalide complain then">Additional information if require
                                         </label>
@@ -1154,7 +1207,25 @@ function handleExpDateInput(expInput, expTextId) {
                                         <textarea class="summernote" name="additional_inform" id="summernote-1">
                                     </textarea>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-md-12">
+                                    <div class="group-input" id="">
+                                          <label>
+                                            Additional information if require <span class="text-danger"></span>
+                                            <small class="text-primary d-block">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </label>
+                                    {!! quillEditor(
+                                        'additional_inform') !!}
+                                    @error('additional_inform')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </div>
                                 </div>
+
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Additional information if require ">Type of Market Complaints </label>
@@ -1166,7 +1237,7 @@ function handleExpDateInput(expInput, expTextId) {
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3">
+                                {{-- <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="In case of Invalide complain then">Comments </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -1174,7 +1245,24 @@ function handleExpDateInput(expInput, expTextId) {
                                         <textarea class="summernote" name="in_case_Invalide_com" id="summernote-1">
                                     </textarea>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-md-12">
+                                    <div class="group-input" id="">
+                                          <label>
+                                            Comments <span class="text-danger"></span>
+                                            <small class="text-primary d-block">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </label>
+                                    {!! quillEditor(
+                                        'in_case_Invalide_com') !!}
+                                    @error('in_case_Invalide_com')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </div>
                                 </div>
+
 
                                 {{-- <div class="col-12">
                                     <div class="group-input">
@@ -5295,30 +5383,7 @@ function handleExpDateInput(expInput, expTextId) {
             ele: '#reference_record, #notify_to'
         });
 
-        $('#summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-
-        $('.summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-
+        
         let referenceCount = 1;
 
         function addReference() {

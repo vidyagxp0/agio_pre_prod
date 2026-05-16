@@ -1394,17 +1394,24 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Details of OOC">Details of OOC
-                                    @if($ooc->stage ==1)
-                                            <span class="text-danger">*</span>
-                                    @endif
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="details_of_ooc" id="repeat_nature_textarea"
-                                        {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}>{{ $ooc->details_of_ooc }}</textarea>
+                                    {!! quillEditor(
+                                        'details_of_ooc',
+                                        $ooc->details_of_ooc,
+
+                                        '
+                                        <label>
+                                            Details of OOC 
+                                            ' . ($ooc->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        in_array($ooc->stage, [0, 9, 14])
+                                    ) !!}
                                 </div>
                             </div>
-
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -2038,39 +2045,47 @@
                                     });
                                 </script>
 
-                                {{-- by kuldeep end  grid  --}}
-
-
-
-
                                 <div class="sub-head"> Delay Justification for Reporting</div>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Delay Justification for Reporting">Delay Justification for
-                                            Reporting</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="Delay_Justification_for_Reporting" id="summernote-1"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
-                                    {{ $ooc->Delay_Justification_for_Reporting }}</textarea>
+                                        {!! quillEditor(
+                                            'Delay_Justification_for_Reporting',
+                                            $ooc->Delay_Justification_for_Reporting,
+
+                                            '
+                                            <label>
+                                                Delay Justification for Reporting
+                                            </label>
+                                            <div><small class="text-primary">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small></div>
+                                            ',
+
+                                            in_array($ooc->stage, [0, 9, 14])
+                                        ) !!}
                                     </div>
                                 </div>
-
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Immediate Action">Immediate Action</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="Immediate_Action_ooc" id="summernote-1"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->Immediate_Action_ooc }}
-                                    </textarea>
+                                        {!! quillEditor(
+                                            'Immediate_Action_ooc',
+                                            $ooc->Immediate_Action_ooc,
+
+                                            '
+                                            <label>
+                                                Immediate Action
+                                            </label>
+                                            <div><small class="text-primary">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small></div>
+                                            ',
+
+                                            in_array($ooc->stage, [0, 9, 14])
+                                        ) !!}
                                     </div>
                                 </div>
-
 
                                 <div class="button-block">
                                     <button type="submit" class="saveButton"
@@ -2345,16 +2360,22 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Analyst Remarks">Analyst Interview
+                                        {!! quillEditor(
+                                            'analysis_remarks_stage_ooc',
+                                            $ooc->analysis_remarks_stage_ooc,
 
-                                        @if($ooc->stage ==4)
-                                            <span class="text-danger">*</span>
-                                         @endif
-                                        </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if
-                                                it does not require completion</small></div>
-                                        <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"
-                                        {{ $istab4 ? '' : 'readonly' }}>{{ $ooc->analysis_remarks_stage_ooc }}  </textarea>
+                                            '
+                                            <label>
+                                                Analyst Interview 
+                                                ' . ($ooc->stage == 4 ? '<span class="text-danger">*</span>' : '') . '
+                                            </label>
+                                            <div><small class="text-primary">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small></div>
+                                            ',
+
+                                            !$istab4
+                                        ) !!}
                                     </div>
                                 </div>
 
@@ -2449,41 +2470,61 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Protocol Based Study/Hypothesis Study">Protocol Based Study/Hypothesis
-                                            Study</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" id="summernote-1"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 3 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
-                                    {{ $ooc->protocol_based_study_hypthesis_study_ooc }}</textarea>
+                                        {!! quillEditor(
+                                            'protocol_based_study_hypthesis_study_ooc',
+                                            $ooc->protocol_based_study_hypthesis_study_ooc,
+
+                                            '
+                                            <label>
+                                                Protocol Based Study/Hypothesis Study
+                                            </label>
+                                            <div><small class="text-primary">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small></div>
+                                            ',
+
+                                            in_array($ooc->stage, [0, 3, 9, 14])
+                                        ) !!}
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Justification for Protocol study/ Hypothesis Study">Justification for
-                                            Protocol study/ Hypothesis Study</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="justification_for_protocol_study_hypothesis_study_ooc" id="summernote-1"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->justification_for_protocol_study_hypothesis_study_ooc }}
-                                    </textarea>
+                                        {!! quillEditor(
+                                            'justification_for_protocol_study_hypothesis_study_ooc',
+                                            $ooc->justification_for_protocol_study_hypothesis_study_ooc,
+
+                                            '
+                                            <label>
+                                                Justification for Protocol study/ Hypothesis Study
+                                            </label>
+                                            <div><small class="text-primary">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small></div>
+                                            ',
+
+                                            in_array($ooc->stage, [0, 9, 14])
+                                        ) !!}
                                     </div>
                                 </div>
 
-
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Plan of Protocol Study/ Hypothesis Study">Plan of Protocol
-                                            Study/Hypothesis Study</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="plan_of_protocol_study_hypothesis_study" id="summernote-1"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->plan_of_protocol_study_hypothesis_study }}
-                                    </textarea>
+                                        {!! quillEditor(
+                                            'plan_of_protocol_study_hypothesis_study',
+                                            $ooc->plan_of_protocol_study_hypothesis_study,
+
+                                            '
+                                            <label>
+                                                Plan of Protocol Study/Hypothesis Study
+                                            </label>
+                                            <div><small class="text-primary">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small></div>
+                                            ',
+
+                                            in_array($ooc->stage, [0, 9, 14])
+                                        ) !!}
                                     </div>
                                 </div>
 
@@ -2527,75 +2568,64 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Conclusion of Protocol based Study/Hypothesis Study">Conclusion of
-                                            Protocol based Study/Hypothesis Study</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="conclusion_of_protocol_based_study_hypothesis_study_ooc" id="summernote-1"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
-                                  {{ $ooc->conclusion_of_protocol_based_study_hypothesis_study_ooc }}  </textarea>
+                                        {!! quillEditor(
+                                            'conclusion_of_protocol_based_study_hypothesis_study_ooc',
+                                            $ooc->conclusion_of_protocol_based_study_hypothesis_study_ooc,
+
+                                            '
+                                            <label>
+                                                Conclusion of Protocol based Study/Hypothesis Study
+                                            </label>
+                                            <div><small class="text-primary">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small></div>
+                                            ',
+
+                                            in_array($ooc->stage, [0, 9, 14])
+                                        ) !!}
                                     </div>
                                 </div>
+
                                 <div class="inner-block-content">
                                     <div class="row">
 
-
-                                        {{-- <div class="col-md-12 mb-3">
-                                            <div class="group-input">
-                                                <label for="Analyst Remarks">Analyst Interview </label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if
-                                                        it does not require completion</small></div>
-                                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->analysis_remarks_stage_ooc }}  </textarea>
-                                            </div>
-                                        </div>  --}}
-
-
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
-                                                <label for="Calibration Results">Calibration Results</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if
-                                                        it does not require completion</small></div>
-                                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1"
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->calibration_results_stage_ooc }}</textarea>
+                                                {!! quillEditor(
+                                                    'calibration_results_stage_ooc',
+                                                    $ooc->calibration_results_stage_ooc,
+
+                                                    '
+                                                    <label>
+                                                        Calibration Results
+                                                    </label>
+                                                    <div><small class="text-primary">
+                                                        Please insert "NA" in the data field if it does not require completion
+                                                    </small></div>
+                                                    ',
+
+                                                    in_array($ooc->stage, [0, 9, 14])
+                                                ) !!}
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="Initiator Group">Results Naturey</label>
-                                                <select name="is_repeat_result_naturey_ooc"
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
-                                                    onchange="">
-                                                    <option value="0"
-                                                        {{ $ooc->is_repeat_result_naturey_ooc == '0' ? 'selected' : '' }}>
-                                                        -- Select --</option>
-                                                    <option value="Yes"
-                                                        {{ $ooc->is_repeat_result_naturey_ooc == 'Yes' ? 'selected' : '' }}>
-                                                        Yes</option>
-                                                    <option value="No"
-                                                        {{ $ooc->is_repeat_result_naturey_ooc == 'No' ? 'selected' : '' }}>
-                                                        No</option>
-
-                                                </select>
-                                            </div>
-                                        </div> --}}
-
-
-
 
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
-                                                <label for="Review of Calibration Results of Analyst">Review of
-                                                    Calibration Results of Analyst</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if
-                                                        it does not require completion</small></div>
-                                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1"
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->review_of_calibration_results_of_analyst_ooc }}</textarea>
+                                                {!! quillEditor(
+                                                    'review_of_calibration_results_of_analyst_ooc',
+                                                    $ooc->review_of_calibration_results_of_analyst_ooc,
+
+                                                    '
+                                                    <label>
+                                                        Review of Calibration Results of Analyst
+                                                    </label>
+                                                    <div><small class="text-primary">
+                                                        Please insert "NA" in the data field if it does not require completion
+                                                    </small></div>
+                                                    ',
+
+                                                    in_array($ooc->stage, [0, 9, 14])
+                                                ) !!}
                                             </div>
                                         </div>
 
@@ -2640,12 +2670,21 @@
 
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
-                                                <label for="Results Criteria">Result Criteria</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if
-                                                        it does not require completion</small></div>
-                                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1"
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->results_criteria_stage_ooc }}</textarea>
+                                                {!! quillEditor(
+                                                    'results_criteria_stage_ooc',
+                                                    $ooc->results_criteria_stage_ooc,
+
+                                                    '
+                                                    <label>
+                                                        Result Criteria
+                                                    </label>
+                                                    <div><small class="text-primary">
+                                                        Please insert "NA" in the data field if it does not require completion
+                                                    </small></div>
+                                                    ',
+
+                                                    in_array($ooc->stage, [0, 9, 14])
+                                                ) !!}
                                             </div>
                                         </div>
 
@@ -2674,78 +2713,86 @@
 
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
-                                                <label for="Additinal Remarks (if any)">Additional Remarks (if
-                                                    any)</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if
-                                                        it does not require completion</small></div>
-                                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} name="additional_remarks_stage_ooc"
-                                                    id="summernote-1">{{ $ooc->additional_remarks_stage_ooc }}</textarea>
+                                                {!! quillEditor(
+                                                    'additional_remarks_stage_ooc',
+                                                    $ooc->additional_remarks_stage_ooc,
+
+                                                    '
+                                                    <label>
+                                                        Additional Remarks (if any)
+                                                    </label>
+                                                    <div><small class="text-primary">
+                                                        Please insert "NA" in the data field if it does not require completion
+                                                    </small></div>
+                                                    ',
+
+                                                    in_array($ooc->stage, [0, 9, 14])
+                                                ) !!}
                                             </div>
                                         </div>
 
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
-                                                <label for="Corrective Action">Corrective Action</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if
-                                                        it
-                                                        does not require completion</small></div>
-                                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} name="initiated_through_capas_ooc"
-                                                    id="summernote-1">{{ $ooc->initiated_through_capas_ooc }}</textarea>
+                                                {!! quillEditor(
+                                                    'initiated_through_capas_ooc',
+                                                    $ooc->initiated_through_capas_ooc,
+
+                                                    '
+                                                    <label>
+                                                        Corrective Action
+                                                    </label>
+                                                    <div><small class="text-primary">
+                                                        Please insert "NA" in the data field if it does not require completion
+                                                    </small></div>
+                                                    ',
+
+                                                    in_array($ooc->stage, [0, 9, 14])
+                                                ) !!}
                                             </div>
                                         </div>
 
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
-                                                <label for="Preventive Action">Preventive Action</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if
-                                                        it
-                                                        does not require completion</small></div>
-                                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} name="initiated_through_capa_prevent_ooc"
-                                                    id="summernote-1">{{ $ooc->initiated_through_capa_prevent_ooc }}</textarea>
+                                                {!! quillEditor(
+                                                    'initiated_through_capa_prevent_ooc',
+                                                    $ooc->initiated_through_capa_prevent_ooc,
+
+                                                    '
+                                                    <label>
+                                                        Preventive Action
+                                                    </label>
+                                                    <div><small class="text-primary">
+                                                        Please insert "NA" in the data field if it does not require completion
+                                                    </small></div>
+                                                    ',
+
+                                                    in_array($ooc->stage, [0, 9, 14])
+                                                ) !!}
                                             </div>
                                         </div>
 
-                                       {{--
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
-                                                <label for="Corrective & Preventive Action">Corrective and Preventive
-                                                    Action</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if
-                                                        it
-                                                        does not require completion</small></div>
-                                                <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} name="initiated_through_capa_corrective_ooc"
-                                                    id="summernote-1">{{ $ooc->initiated_through_capa_corrective_ooc }}</textarea>
-                                            </div>
-                                        </div>
-                                        --}}
-                                        <div class="col-md-12 mb-3">
-                                            <div class="group-input">
-                                                <label for="Cause for failure"> Phase IA Summary
-                                                @if($ooc->stage ==4)
-                                                    <span class="text-danger">*</span>
-                                                @endif
-                                                </label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if
-                                                        it does not require completion</small></div>
-                                                <textarea class="summernote" name="phase_ia_investigation_summary" id="summernote-1">{{ $ooc->phase_ia_investigation_summary }}</textarea>
+                                                {!! quillEditor(
+                                                    'phase_ia_investigation_summary',
+                                                    $ooc->phase_ia_investigation_summary,
+
+                                                    '
+                                                    <label>
+                                                        Phase IA Summary 
+                                                        ' . ($ooc->stage == 4 ? '<span class="text-danger">*</span>' : '') . '
+                                                    </label>
+                                                    <div><small class="text-primary">
+                                                        Please insert "NA" in the data field if it does not require completion
+                                                    </small></div>
+                                                    ',
+
+                                                    false
+                                                ) !!}
                                             </div>
                                         </div>
 
                                     </div>
-
-
-                                    <!-- <div class="button-block">
-                                                                            <button type="submit" class="saveButton" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>Save</button>
-                                                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                                                            <button type="button" class="nextButton" onclick="nextStep()" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>Next</button>
-
-                                                                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                                                                    Exit </a> </button>
-                                                                        </div> -->
                                 </div>
                             </div>
 
@@ -3376,84 +3423,103 @@
 
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Impact Assessment at Stage II">Impact Assessment
-                               @if ($ooc->stage == 10)
-                                    <span class="text-danger">*</span>
-                                @endif
+                            {!! quillEditor(
+                                'initiated_throug_stageii_ooc',
+                                $ooc->initiated_throug_stageii_ooc,
 
-                            </label>
-                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                    completion</small></div>
-                            <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} name="initiated_throug_stageii_ooc"
-                                id="summernote-1">{{ $ooc->initiated_throug_stageii_ooc }}</textarea>
+                                '
+                                <label>
+                                    Impact Assessment 
+                                    ' . ($ooc->stage == 10 ? '<span class="text-danger">*</span>' : '') . '
+                                </label>
+                                <div><small class="text-primary">
+                                    Please insert "NA" in the data field if it does not require completion
+                                </small></div>
+                                ',
+
+                                in_array($ooc->stage, [0, 9, 14])
+                            ) !!}
                         </div>
                     </div>
+
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Details of Impact Evaluation">Details of Impact Evaluation
-                            @if ($ooc->stage == 10)
-                                    <span class="text-danger">*</span>
-                                @endif
+                            {!! quillEditor(
+                                'initiated_through_stageii_ooc',
+                                $ooc->initiated_through_stageii_ooc,
 
-                            </label>
-                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                    completion</small></div>
-                            <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} name="initiated_through_stageii_ooc"
-                                id="summernote-1">{{ $ooc->initiated_through_stageii_ooc }}</textarea>
+                                '
+                                <label>
+                                    Details of Impact Evaluation 
+                                    ' . ($ooc->stage == 10 ? '<span class="text-danger">*</span>' : '') . '
+                                </label>
+                                <div><small class="text-primary">
+                                    Please insert "NA" in the data field if it does not require completion
+                                </small></div>
+                                ',
+
+                                in_array($ooc->stage, [0, 9, 14])
+                            ) !!}
                         </div>
                     </div>
+
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Details of Impact Evaluation">Justification for Recalibration
-                            @if ($ooc->stage == 10)
-                                    <span class="text-danger">*</span>
-                                @endif
+                            {!! quillEditor(
+                                'justification_for_recalibration',
+                                $ooc->justification_for_recalibration,
 
-                            </label>
-                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                    completion</small></div>
-                            <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} name="justification_for_recalibration"
-                                id="summernote-1">{{ $ooc->justification_for_recalibration }}</textarea>
+                                '
+                                <label>
+                                    Justification for Recalibration 
+                                    ' . ($ooc->stage == 10 ? '<span class="text-danger">*</span>' : '') . '
+                                </label>
+                                <div><small class="text-primary">
+                                    Please insert "NA" in the data field if it does not require completion
+                                </small></div>
+                                ',
+
+                                in_array($ooc->stage, [0, 9, 14])
+                            ) !!}
                         </div>
                     </div>
 
                     <div class="col-lg-12">
                         <div class="group-input">
-                            <label for="Initiator Group">Result of Recalibration
-                            @if ($ooc->stage == 10)
-                                    <span class="text-danger">*</span>
-                                @endif
+                            {!! quillEditor(
+                                'is_repeat_reanalysis_stageii_ooc',
+                                $ooc->is_repeat_reanalysis_stageii_ooc,
 
-                            </label>
-                            <!-- <select name="is_repeat_reanalysis_stageii_ooc" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} onchange="">
-                                                                                        <option value="0" {{ $ooc->is_repeat_reanalysis_stageii_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
-                                                                                        <option value="Yes" {{ $ooc->is_repeat_reanalysis_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                                                        <option value="No" {{ $ooc->is_repeat_reanalysis_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
+                                '
+                                <label>
+                                    Result of Recalibration 
+                                    ' . ($ooc->stage == 10 ? '<span class="text-danger">*</span>' : '') . '
+                                </label>
+                                ',
 
-
-                                                                                    </select> -->
-
-                            <textarea class="summernote" name ="is_repeat_reanalysis_stageii_ooc">{{ $ooc->is_repeat_reanalysis_stageii_ooc }}</textarea>
-
+                                false
+                            ) !!}
                         </div>
                     </div>
 
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Cause for failure">Cause for failure
-                            @if ($ooc->stage == 10)
-                                    <span class="text-danger">*</span>
-                                @endif
+                            {!! quillEditor(
+                                'initiated_through_stageii_cause_failure_ooc',
+                                $ooc->initiated_through_stageii_cause_failure_ooc,
 
-                            </label>
-                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                    completion</small></div>
-                            <textarea class="summernote" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} name="initiated_through_stageii_cause_failure_ooc"
-                                id="summernote-1">{{ $ooc->initiated_through_stageii_cause_failure_ooc }}</textarea>
+                                '
+                                <label>
+                                    Cause for failure 
+                                    ' . ($ooc->stage == 10 ? '<span class="text-danger">*</span>' : '') . '
+                                </label>
+                                <div><small class="text-primary">
+                                    Please insert "NA" in the data field if it does not require completion
+                                </small></div>
+                                ',
+
+                                in_array($ooc->stage, [0, 9, 14])
+                            ) !!}
                         </div>
                     </div>
 
@@ -3487,30 +3553,24 @@
                         </div>
                     </div>
 
-                    {{--
-                        <div class="col-md-12 mb-3">
-                            <div class="group-input">
-                                <label for="Corrective & Preventive Action">Corrective and preventive action IB Investigation</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                        completion</small></div>
-                                <textarea name="initiated_through_capa_corrective_ooc_IB"
-                                    {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} id="summernote-1">{{ $ooc->initiated_through_capa_corrective_ooc_IB }}</textarea>
-                            </div>
-                        </div>
-                    --}}
-
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Cause for failure">Phase IB Summary
-                            @if ($ooc->stage == 10)
-                                    <span class="text-danger">*</span>
-                                @endif
+                            {!! quillEditor(
+                                'phase_ib_investigation_summary',
+                                $ooc->phase_ib_investigation_summary,
 
-                            </label>
-                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                    completion</small></div>
-                            <textarea class="summernote" name="phase_ib_investigation_summary" id="summernote-1">{{ $ooc->phase_ib_investigation_summary }}</textarea>
+                                '
+                                <label>
+                                    Phase IB Summary 
+                                    ' . ($ooc->stage == 10 ? '<span class="text-danger">*</span>' : '') . '
+                                </label>
+                                <div><small class="text-primary">
+                                    Please insert "NA" in the data field if it does not require completion
+                                </small></div>
+                                ',
+
+                                false
+                            ) !!}
                         </div>
                     </div>
 
@@ -3520,8 +3580,6 @@
                             <label for="Initial Attachment">Phase IB Attachment</label>
                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
                             </div>
-                            {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                    value="{{ $data->Initial_Attachment }}"> --}}
                             <div class="file-attachment-field">
                                 <div class="file-attachment-list" id="initial_attachment_reanalysisi_ooc">
                                     @if ($ooc->initial_attachment_reanalysisi_ooc)

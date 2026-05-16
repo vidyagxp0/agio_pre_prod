@@ -498,13 +498,25 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input" id="description_incidence_gi">
                                         <label for="Description_incidence"> Description Of Incidence<span
                                                 class="text-danger d-none">*</span></label>
                                         <textarea name="description_incidence_gi" id="summernote-1" class="summernote"></textarea>
                                     </div>
 
+                                </div> --}}
+                                <div class="col-md-12">
+                                    <div class="group-input" id="description_incidence_gi">
+                                          <label>
+                                            Description Of Incidence <span class="text-danger"></span>
+                                        </label>
+                                    {!! quillEditor(
+                                        'description_incidence_gi') !!}
+                                    @error('description_incidence_gi')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6">

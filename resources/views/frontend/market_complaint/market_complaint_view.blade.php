@@ -1030,7 +1030,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12 mb-3">
+                            {{-- <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of Control Sample">Details of Nature of Market Complaint  @if($data->stage ==1)
                                             <span class="text-danger">*</span>
@@ -1039,8 +1039,31 @@
                                             require completion</small></div>
                                     <textarea class="summernote" data-stage="1" name="details_of_nature_market_complaint_gi"  id="summernote-1">{{ trim($data->details_of_nature_market_complaint_gi) }} </textarea>
                                 </div>
-                            </div>
+                            </div> --}}
+                            <div class="col-md-12 mb-3">
+                                {!! quillEditor(
+                                    'details_of_nature_market_complaint_gi',
+                                    trim($data->details_of_nature_market_complaint_gi),
 
+                                    '
+                                    <label>
+                                        Details of Nature of Market Complaint 
+                                        ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                    </label>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small>
+                                    </div>
+                                    ',
+
+                                    $data->stage != 1
+                                ) !!}
+
+                                @error('details_of_nature_market_complaint_gi')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
 
                             <div class="col-12">
@@ -1461,7 +1484,7 @@
                                 });
                             </script>
 
-                            <div class="col-md-12 mb-3">
+                            {{-- <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of Control Sample">Review of Complaint Sample @if($data->stage ==1)
                                             <span class="text-danger">*</span>
@@ -1525,6 +1548,101 @@
                                     <textarea class="summernote" data-stage="1" name="additional_inform" id="summernote-1">{{ $data->additional_inform }}
                                 </textarea>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-md-12 mb-3">
+                                {!! quillEditor(
+                                    'review_of_complaint_sample_gi',
+                                    $data->review_of_complaint_sample_gi,
+
+                                    '
+                                    <label>
+                                        Review of Complaint Sample 
+                                        ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                    </label>
+                                    <div><small class="text-primary">
+                                        Please insert "NA" in the data field if it does not require completion
+                                    </small></div>
+                                    ',
+
+                                    $data->stage != 1
+                                ) !!}
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                {!! quillEditor(
+                                    'review_of_control_sample_gi',
+                                    $data->review_of_control_sample_gi,
+
+                                    '
+                                    <label>
+                                        Review of Control Sample 
+                                        ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                    </label>
+                                    <div><small class="text-primary">
+                                        Please insert "NA" in the data field if it does not require completion
+                                    </small></div>
+                                    ',
+
+                                    $data->stage != 1
+                                ) !!}
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                {!! quillEditor(
+                                    'review_of_stability_study_gi',
+                                    $data->review_of_stability_study_gi,
+
+                                    '
+                                    <label>
+                                        Review of stability study program and samples 
+                                        ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                    </label>
+                                    <div><small class="text-primary">
+                                        Please insert "NA" in the data field if it does not require completion
+                                    </small></div>
+                                    ',
+
+                                    $data->stage != 1
+                                ) !!}
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                {!! quillEditor(
+                                    'review_of_product_manu_gi',
+                                    $data->review_of_product_manu_gi,
+
+                                    '
+                                    <label>
+                                        Review of product manufacturing and analytical process 
+                                        ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                    </label>
+                                    <div><small class="text-primary">
+                                        Please insert "NA" in the data field if it does not require completion
+                                    </small></div>
+                                    ',
+
+                                    $data->stage != 1
+                                ) !!}
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                {!! quillEditor(
+                                    'additional_inform',
+                                    $data->additional_inform,
+
+                                    '
+                                    <label>
+                                        Additional information if require 
+                                        ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                    </label>
+                                    <div><small class="text-primary">
+                                        Please insert "NA" in the data field if it does not require completion
+                                    </small></div>
+                                    ',
+
+                                    $data->stage != 1
+                                ) !!}
                             </div>
 
                             <div class="col-lg-12">
@@ -1551,7 +1669,7 @@
                                 </div>
                                     <!-- <input type="hidden" name="probable_root_causes_complaint_hodsr" value="{{ $data->probable_root_causes_complaint_hodsr }}"> -->
                             </div>
-                            <div class="col-md-12 mb-3">
+                            {{-- <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="In case of Invalide complain then">Comments @if($data->stage ==1)
                                             <span class="text-danger">*</span>
@@ -1562,6 +1680,25 @@
                                          >{{ $data->in_case_Invalide_com }}
                                 </textarea>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-md-12 mb-3">
+                                {!! quillEditor(
+                                    'in_case_Invalide_com',
+                                    $data->in_case_Invalide_com,
+
+                                    '
+                                    <label>
+                                        Comments 
+                                        ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                    </label>
+                                    <div><small class="text-primary">
+                                        Please insert "NA" in the data field if it does not require completion
+                                    </small></div>
+                                    ',
+
+                                    $data->stage != 1
+                                ) !!}
                             </div>
                             
                             <div class="button-block">
@@ -1598,19 +1735,24 @@
 
                             <div class="sub-head">Complaint Acknowledgement</div>
 
+                            
                             <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Manufacturer name & Address">Manufacturer Name & Address
-                                     @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif
+                                {!! quillEditor(
+                                    'manufacturer_name_address_ca',
+                                    $data->manufacturer_name_address_ca,
+
+                                    '
+                                    <label>
+                                        Manufacturer Name & Address 
+                                        ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
                                     </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <textarea class="summernote" data-stage="1" name="manufacturer_name_address_ca" id="summernote-1"
-                                        >{{ $data->manufacturer_name_address_ca }}
-                                    </textarea>
-                                </div>
+                                    <div><small class="text-primary">
+                                        Please insert "NA" in the data field if it does not require completion
+                                    </small></div>
+                                    ',
+
+                                    $data->stage != 1
+                                ) !!}
                             </div>
 
                             <div class="col-12">
@@ -1885,132 +2027,206 @@
                                 @endif
                             </div>
 
+                            
                             <div class="col-md-12 mb-3" id="complaint_sample_status_div"
                                 style="display: {{ isset($data) && $data->complaint_sample_required_ca == 'yes' ? 'block' : 'none' }};">
-                                <div class="group-input">
-                                    <label for="Analytical Data review observation">Complaint Sample Status
-                                        @if($data->stage == 1)
-                                            <span class="text-danger">*</span>
-                                        @endif
+
+                                {!! quillEditor(
+                                    'complaint_sample_status_ca',
+                                    $data->complaint_sample_status_ca,
+
+                                    '
+                                    <label>
+                                        Complaint Sample Status 
+                                        ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
                                     </label>
-                                    <div>
-                                        <small class="text-primary">
-                                            Please insert "NA" in the data field if it does not require completion
-                                        </small>
-                                    </div>
-                                    <textarea class="summernote" data-stage="1" name="complaint_sample_status_ca" id="summernote-1"
-                                        >{{ $data->complaint_sample_status_ca }}</textarea>
-                                </div>
+                                    <div><small class="text-primary">
+                                        Please insert "NA" in the data field if it does not require completion
+                                    </small></div>
+                                    ',
+
+                                    $data->stage != 1
+                                ) !!}
                             </div>
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Brief Description of complaint">Brief Description Of Complaint @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" data-stage="1" name="brief_description_of_complaint_ca"  id="summernote-1"
-                                        >{{ $data->brief_description_of_complaint_ca }}</textarea>
+                                    {!! quillEditor(
+                                        'brief_description_of_complaint_ca',
+                                        $data->brief_description_of_complaint_ca,
+
+                                        '
+                                        <label>
+                                            Brief Description Of Complaint 
+                                            ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        $data->stage != 1
+                                    ) !!}
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Batch Record review observation">Batch Record Review
-                                        Observation
-                                        @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" data-stage="1" name="batch_record_review_observation_ca"  id="summernote-1"
-                                        >{{ $data->batch_record_review_observation_ca }}</textarea>
+                                    {!! quillEditor(
+                                        'batch_record_review_observation_ca',
+                                        $data->batch_record_review_observation_ca,
+
+                                        '
+                                        <label>
+                                            Batch Record Review Observation 
+                                            ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        $data->stage != 1
+                                    ) !!}
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Analytical Data review observation">Analytical Data Review
-                                        Observation @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" data-stage="1" name="analytical_data_review_observation_ca"  id="summernote-1"
-                                        >{{ $data->analytical_data_review_observation_ca }}</textarea>
+                                    {!! quillEditor(
+                                        'analytical_data_review_observation_ca',
+                                        $data->analytical_data_review_observation_ca,
+
+                                        '
+                                        <label>
+                                            Analytical Data Review Observation 
+                                            ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        $data->stage != 1
+                                    ) !!}
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Retention sample review observation">Retention Sample Review
-                                        Observation
-                                        @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" data-stage="1" name="retention_sample_review_observation_ca" id="summernote-1"
-                                    >{{ $data->retention_sample_review_observation_ca }}
-                                </textarea>
+                                    {!! quillEditor(
+                                        'retention_sample_review_observation_ca',
+                                        $data->retention_sample_review_observation_ca,
+
+                                        '
+                                        <label>
+                                            Retention Sample Review Observation 
+                                            ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        $data->stage != 1
+                                    ) !!}
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Stablity study data review">Stablity Study Data Review
-                                        @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" data-stage="1" name="stability_study_data_review_ca" id="summernote-1"
-                                    >{{ $data->stability_study_data_review_ca }}
-                                </textarea>
+                                    {!! quillEditor(
+                                        'stability_study_data_review_ca',
+                                        $data->stability_study_data_review_ca,
+
+                                        '
+                                        <label>
+                                            Stability Study Data Review 
+                                            ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        $data->stage != 1
+                                    ) !!}
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="QMS Events(if any) review Observation">QMS Events(if Any) Review
-                                        Observation
-                                        @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" data-stage="1" name="qms_events_ifany_review_observation_ca"  id="summernote-1"
-                                        >{{ $data->qms_events_ifany_review_observation_ca }}</textarea>
+                                    {!! quillEditor(
+                                        'qms_events_ifany_review_observation_ca',
+                                        $data->qms_events_ifany_review_observation_ca,
+
+                                        '
+                                        <label>
+                                            QMS Events(if Any) Review Observation 
+                                            ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        $data->stage != 1
+                                    ) !!}
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Repeated complaints/queries for product">Repeated Complaints/Queries
-                                        For Product: @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" data-stage="1" name="repeated_complaints_queries_for_product_ca"  id="summernote-1"
-                                        >{{ $data->repeated_complaints_queries_for_product_ca }}</textarea>
+                                    {!! quillEditor(
+                                        'repeated_complaints_queries_for_product_ca',
+                                        $data->repeated_complaints_queries_for_product_ca,
+
+                                        '
+                                        <label>
+                                            Repeated Complaints/Queries For Product 
+                                            ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        $data->stage != 1
+                                    ) !!}
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Interpretation on compalint sample">Interpretation on Complaint sample(if
-                                        recieved)<span
-                                        class="text-danger">*</span></label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" data-stage="1" name="interpretation_on_complaint_sample_ifrecieved_ca"  id="summernote-1"
-                                        >{{ $data->interpretation_on_complaint_sample_ifrecieved_ca }}</textarea>
+                                    {!! quillEditor(
+                                        'interpretation_on_complaint_sample_ifrecieved_ca',
+                                        $data->interpretation_on_complaint_sample_ifrecieved_ca,
+
+                                        '
+                                        <label>
+                                            Interpretation on Complaint Sample (if recieved)
+                                            ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        $data->stage != 1
+                                    ) !!}
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Comments">Comments(if Any) @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" data-stage="1" name="comments_ifany_ca"  id="summernote-1"
-                                        >{{ $data->comments_ifany_ca }}</textarea>
+                                    {!! quillEditor(
+                                        'comments_ifany_ca',
+                                        $data->comments_ifany_ca,
+
+                                        '
+                                        <label>
+                                            Comments(if Any) 
+                                            ' . ($data->stage == 1 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        $data->stage != 1
+                                    ) !!}
                                 </div>
                             </div>
 
@@ -2693,251 +2909,199 @@
                         </script>
 
                             <div class="col-md-12">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="HOD Remarks">Review of Batch Manufacturing Record (BMR) <span
-                                                class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                does not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1" required >{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Review of Batch Manufacturing Record (BMR)">Review of Batch
-                                            Manufacturing Record (BMR)</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                does not require completion</small></div>
-                                        <textarea readonly class="summernote" data-stage="3" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1" >{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
-                                    </div>
-                                @endif
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'review_of_batch_manufacturing_record_BMR_gi',
+                                        $data->review_of_batch_manufacturing_record_BMR_gi,
+
+                                        '
+                                        <label>
+                                            Review of Batch Manufacturing Record (BMR)
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
                                 @error('review_of_batch_manufacturing_record_BMR_gi')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label
-                                            for="Review of Raw materials used in batch manufacturing">Review
-                                            Of Raw Materials Used In Batch
-                                            Manufacturing <span
-                                            class="text-danger">*</span> </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
-                                        required >{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }} </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label
-                                            for="Review of Raw materials used in batch manufacturing">Review
-                                            Of Raw Materials Used In Batch
-                                            Manufacturing </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
-                                           >{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}</textarea>
-                                    </div>
-                                @endif
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'review_of_raw_materials_used_in_batch_manufacturing_gi',
+                                        $data->review_of_raw_materials_used_in_batch_manufacturing_gi,
 
-                            </div>
+                                        '
+                                        <label>
+                                            Review Of Raw Materials Used In Batch Manufacturing
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
 
-                            <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Review of Batch Packing record (BPR)">Review of Batch Packing Record
-                                            (BPR)<span
-                                            class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
-                                        required  >{{ $data->review_of_Batch_Packing_record_bpr_gi }}</textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Review of Batch Packing record (BPR)">Review of Batch Packing Record
-                                            (BPR)</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea readonly class="summernote" data-stage="3" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
-                                        >{{ $data->review_of_Batch_Packing_record_bpr_gi }}  </textarea>
-                                    </div>
-                                @endif
-
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Review of packing materials used in batch packing">Review Of Packing
-                                            Materials Used In Batch
-                                            Packing <span
-                                            class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1"
-                                        required >{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}</textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Review of packing materials used in batch packing">Review Of Packing
-                                            Materials Used In Batch
-                                            Packing</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea readonly class="summernote" data-stage="3" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1"
-                                            >{{ $data->review_of_packing_materials_used_in_batch_packing_gi }} </textarea>
-                                    </div>
-                                @endif
-
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Review of Analytical Data">Review of Analytical Data <span
-                                        class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_analytical_data_gi" id="summernote-1"
-                                        required >{{ $data->review_of_analytical_data_gi }}
-                                       </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Review of Analytical Data">Review of Analytical Data</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_analytical_data_gi" id="summernote-1"
-                                            >{{ $data->review_of_analytical_data_gi }}
-                                        </textarea>
-                                    </div>
-                                @endif
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Review of Complaint Sample (if applicable)">Review of Complaint Sample (if applicable) <span
-                                    class="text-danger">*</span></label>
-                                    <div>
-                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
-                                    </div>
-                                    <textarea class="summernote"  data-stage="3"  name="review_of_complaint_sample_if" id="summernote-1"  {{ $data->stage == 3 ? 'required' : '' }}
-                                     >{{ $data->review_of_complaint_sample_if }}</textarea>
+                                    {!! quillEditor(
+                                        'review_of_Batch_Packing_record_bpr_gi',
+                                        $data->review_of_Batch_Packing_record_bpr_gi,
+
+                                        '
+                                        <label>
+                                            Review of Batch Packing Record (BPR)
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
                                 </div>
                             </div>
 
-
                             <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Review of training record of Concern Persons">Review Of Training
-                                            Record
-                                            Of Concern Persons <span
-                                            class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
-                                        required >{{ $data->review_of_training_record_of_concern_persons_gi }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Review of training record of Concern Persons">Review Of Training
-                                            Record
-                                            Of Concern Persons</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
-                                            >{{ $data->review_of_training_record_of_concern_persons_gi }}
-                                         </textarea>
-                                    </div>
-                                @endif
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'review_of_packing_materials_used_in_batch_packing_gi',
+                                        $data->review_of_packing_materials_used_in_batch_packing_gi,
 
+                                        '
+                                        <label>
+                                            Review Of Packing Materials Used In Batch Packing
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label
-                                            for="Review of Equipment/Instrument qualification/Calibration record">Review
-                                            of Equipment/Instrument qualification/Calibration Record <span
-                                            class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1"
-                                        required >{{ $data->rev_eq_inst_qual_calib_record_gi }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label
-                                            for="Review of Equipment/Instrument qualification/Calibration record">Review
-                                            of Equipment/Instrument qualification/Calibration Record</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1"
-                                            >{{ $data->rev_eq_inst_qual_calib_record_gi }}
-                                        </textarea>
-                                    </div>
-                                @endif
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'review_of_analytical_data_gi',
+                                        $data->review_of_analytical_data_gi,
 
+                                        '
+                                        <label>
+                                            Review of Analytical Data
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Review of Equipment Break-down and Maintainance Record">Review of
-                                            Equipment Break-down and Maintenance Record <span
-                                            class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1"
-                                        required >{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Review of Equipment Break-down and Maintainance Record">Review of
-                                            Equipment Break-down and Maintenance Record</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea  class="summernote" data-stage="3" name="review_of_equipment_break_down_and_maintainance_record_gi"
-                                            id="summernote-1">{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
-                                        </textarea>
-                                    </div>
-                                @endif
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'review_of_complaint_sample_if',
+                                        $data->review_of_complaint_sample_if,
 
+                                        '
+                                        <label>
+                                            Review of Complaint Sample (if applicable)
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Review of Past history of product">Review Of Past History Of
-                                            Product <span
-                                            class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_past_history_of_product_gi" id="summernote-1"
-                                        required >{{ $data->review_of_past_history_of_product_gi }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Review of Past history of product">Review Of Past History Of
-                                            Product</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="review_of_past_history_of_product_gi" id="summernote-1"
-                                            >{{ $data->review_of_past_history_of_product_gi }}
-                                        </textarea>
-                                    </div>
-                                @endif
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'review_of_training_record_of_concern_persons_gi',
+                                        $data->review_of_training_record_of_concern_persons_gi,
 
+                                        '
+                                        <label>
+                                            Review Of Training Record Of Concern Persons
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
                             </div>
 
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'rev_eq_inst_qual_calib_record_gi',
+                                        $data->rev_eq_inst_qual_calib_record_gi,
+
+                                        '
+                                        <label>
+                                            Review of Equipment/Instrument qualification/Calibration Record
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'review_of_equipment_break_down_and_maintainance_record_gi',
+                                        $data->review_of_equipment_break_down_and_maintainance_record_gi,
+
+                                        '
+                                        <label>
+                                            Review of Equipment Break-down and Maintenance Record
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'review_of_past_history_of_product_gi',
+                                        $data->review_of_past_history_of_product_gi,
+
+                                        '
+                                        <label>
+                                            Review Of Past History Of Product
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
+                            </div>
 
 
                             <div class="col-12">
@@ -3091,206 +3255,156 @@
                             </script>
 
                             <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label
-                                            for="Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ">Conclusion <span
-                                            class="text-danger">*</span>
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'conclusion_pi',
+                                        $data->conclusion_pi,
+
+                                        '
+                                        <label>
+                                            Conclusion 
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
                                         </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="conclusion_pi" id="summernote-1"
-                                        required>{{ $data->conclusion_pi }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label
-                                            for="Conclusion (A dedicated provision must be established to record the inference or outcome of brainstorming sessions) ">Conclusion
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'conclusion_hodsr',
+                                        $data->conclusion_hodsr,
+
+                                        '
+                                        <label>
+                                            Root Cause Analysis 
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
                                         </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="conclusion_pi" id="summernote-1"
-                                           >{{ $data->conclusion_pi }}
-                                        </textarea>
-                                    </div>
-                                @endif
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Conclusion">Root Cause Analysis <span
-                                        class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="conclusion_hodsr" id="summernote-1"
-                                        required>{{ $data->conclusion_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Conclusion">Root Cause Analysis</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="conclusion_hodsr" id="summernote-1"
-                                            >{{ $data->conclusion_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @endif
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'root_cause_analysis_hodsr',
+                                        $data->root_cause_analysis_hodsr,
+
+                                        '
+                                        <label>
+                                            Other Methodology 
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Root Cause Analysis">Other Methodology <span
-                                        class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="root_cause_analysis_hodsr" id="summernote-1"
-                                        required>{{ $data->root_cause_analysis_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Root Cause Analysis">Other Methodology</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="root_cause_analysis_hodsr" id="summernote-1"
-                                            >{{ $data->root_cause_analysis_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @endif
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'the_probable_root',
+                                        $data->the_probable_root,
 
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="The probable root causes or Root Cause">The probable root causes or
-                                            Root
-                                            Cause <span
-                                            class="text-danger">*</span> </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="the_probable_root" id="summernote-1"
-                                        required>{{ $data->the_probable_root }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="The probable root causes or Root Cause">The probable root causes or
-                                            Root
-                                            Cause </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="the_probable_root" id="summernote-1"
-                                            >{{ $data->the_probable_root }}
-                                        </textarea>
-                                    </div>
-                                @endif
+                                        '
+                                        <label>
+                                            The probable root causes or Root Cause 
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
 
-                            </div>
-                            
-
-                            <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Impact Assessment">Impact Assessment  <span
-                                        class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="impact_assessment_hodsr" id="summernote-1"
-                                        required >{{ $data->impact_assessment_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Impact Assessment">Impact Assessment </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="impact_assessment_hodsr" id="summernote-1"
-                                            >{{ $data->impact_assessment_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @endif
-
-                            </div>
-
-
-
-                            <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Corrective Action">Corrective Action  <span
-                                        class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="corrective_action_hodsr" id="summernote-1"
-                                        required>{{ $data->corrective_action_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Corrective Action">Corrective Action </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="corrective_action_hodsr" id="summernote-1"
-                                            >{{ $data->corrective_action_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @endif
-
-                            </div>
-
-
-                            <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Preventive Action">Preventive Action <span
-                                        class="text-danger">*</span> </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="preventive_action_hodsr" id="summernote-1"
-                                          required>{{ $data->preventive_action_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Preventive Action">Preventive Action </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="preventive_action_hodsr" id="summernote-1"
-                                          >{{ $data->preventive_action_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @endif
-
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
                             </div>
 
                             <div class="col-md-12 mb-3">
-                                @if ($data->stage == 3)
-                                    <div class="group-input">
-                                        <label for="Summary and Conclusion">Summary And Conclusion <span
-                                        class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="summary_and_conclusion_hodsr" id="summernote-1"
-                                        required>{{ $data->summary_and_conclusion_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @else
-                                    <div class="group-input">
-                                        <label for="Summary and Conclusion">Summary And Conclusion</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" data-stage="3" name="summary_and_conclusion_hodsr" id="summernote-1"
-                                        required>{{ $data->summary_and_conclusion_hodsr }}
-                                        </textarea>
-                                    </div>
-                                @endif
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'impact_assessment_hodsr',
+                                        $data->impact_assessment_hodsr,
 
+                                        '
+                                        <label>
+                                            Impact Assessment 
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
                             </div>
 
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'corrective_action_hodsr',
+                                        $data->corrective_action_hodsr,
+
+                                        '
+                                        <label>
+                                            Corrective Action 
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'preventive_action_hodsr',
+                                        $data->preventive_action_hodsr,
+
+                                        '
+                                        <label>
+                                            Preventive Action 
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    {!! quillEditor(
+                                        'summary_and_conclusion_hodsr',
+                                        $data->summary_and_conclusion_hodsr,
+
+                                        '
+                                        <label>
+                                            Summary And Conclusion 
+                                            ' . ($data->stage == 3 ? '<span class="text-danger">*</span>' : '') . '
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        ',
+
+                                        $data->stage != 3
+                                    ) !!}
+                                </div>
+                            </div>
 
 
 

@@ -242,14 +242,14 @@
 
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <p class="text-primary"> last date this record should be closed by</p>
 
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')" required/>
                                         </div>
 
                                     </div>
@@ -469,12 +469,6 @@
                                     });
                                 </script>
 
-
-
-
-
-
-
                                 <script>
                                     document.getElementById('initiator_group').addEventListener('change', function() {
                                         var selectedValue = this.value;
@@ -483,54 +477,23 @@
                                 </script>
 
 
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Details of OOC">
-                                    Details of OOC
-                                    </label>
-                                    <div>
-                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                <div class="col-md-12">
+                                    <div class="group-input" id="">
+                                          <label>
+                                            Details of OOC <span class="text-danger"></span>
+                                            <small class="text-primary d-block">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </label>
+                                    {!! quillEditor(
+                                        'details_of_ooc') !!}
+                                    @error('details_of_ooc')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </div>
-                                    <textarea class="summernote" name="details_of_ooc" id="details_of_ooc"></textarea>
                                 </div>
-                            </div>
 
-                                {{-- 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group"><b>Initiator Group</b></label>
-                                    <select name="Initiator_Group" id="initiator_group">
-                                        <option value="">-- Select --</option>
-                                        <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>Corporate Quality Assurance</option>
-                                        <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>Quality Assurance Biopharma</option>
-                                        <option value="CQC" @if (old('Initiator_Group') == 'CQA') selected @endif>Central Quality Control</option>
-                                        <option value="CQC" @if (old('Initiator_Group') == 'MANU') selected @endif>Manufacturing</option>
-                                        <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma Sourcing Group</option>
-                                        <option value="CS"  @if (old('Initiator_Group') == 'CS') selected @endif>Central Stores</option>
-                                        <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>Information Technology Group</option>
-                                        <option value="MM"  @if (old('Initiator_Group') == 'MM') selected @endif>Molecular Medicine</option>
-                                        <option value="CL"  @if (old('Initiator_Group') == 'CL') selected @endif>Central Laboratory</option>
-
-                                        <option value="TT"  @if (old('Initiator_Group') == 'TT') selected @endif>Tech team</option>
-                                        <option value="QA"  @if (old('Initiator_Group') == 'QA') selected @endif> Quality Assurance</option>
-                                        <option value="QM"  @if (old('Initiator_Group') == 'QM') selected @endif>Quality Management</option>
-                                        <option value="IA"  @if (old('Initiator_Group') == 'IA') selected @endif>IT Administration</option>
-                                        <option value="ACC"  @if (old('Initiator_Group') == 'ACC') selected @endif>Accounting</option>
-                                        <option value="LOG"  @if (old('Initiator_Group') == 'LOG') selected @endif>Logistics</option>
-                                        <option value="SM"  @if (old('Initiator_Group') == 'SM') selected @endif>Senior Management</option>
-                                        <option value="BA"  @if (old('Initiator_Group') == 'BA') selected @endif>Business Administration</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="nitiator_group_code" value="" readonly>
-                                    </div>
-                                </div> --}}
-
-
-
+                                
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -573,18 +536,7 @@
                                         }
                                     }
                                 </script>
-                                {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="affected documents closed"><b>Affected Documents Closed</b></label>
-                                    <select name="affected_document_closure" id="affected_document_closure">
-                                        <option value="0">-- Select --</option>
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-                                        <option value="NA">NA</option>
-                                      
-                                    </select>
-                                </div>
-                            </div> --}}
+                                
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -860,26 +812,38 @@
 
                                 <div class="sub-head"> Delay Justification for Reporting</div>
 
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Delay Justification for Reporting">Delay Justification for
-                                            Reporting</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="Delay_Justification_for_Reporting" id="summernote-1"></textarea>
+                                <div class="col-md-12">
+                                    <div class="group-input" id="">
+                                          <label>
+                                            Delay Justification for Reporting <span class="text-danger"></span>
+                                            <small class="text-primary d-block">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </label>
+                                    {!! quillEditor(
+                                        'Delay_Justification_for_Reporting') !!}
+                                    @error('Delay_Justification_for_Reporting')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Immediate Action">Immediate Action</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="Immediate_Action_ooc" id="summernote-1"></textarea>
+                                <div class="col-md-12">
+                                    <div class="group-input" id="">
+                                          <label>
+                                            Immediate Action <span class="text-danger"></span>
+                                            <small class="text-primary d-block">
+                                                Please insert "NA" in the data field if it does not require completion
+                                            </small>
+                                        </label>
+                                    {!! quillEditor(
+                                        'Immediate_Action_ooc') !!}
+                                    @error('Immediate_Action_ooc')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     </div>
                                 </div>
-
-
+                                <br> 
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -2755,30 +2719,6 @@
     <script>
         VirtualSelect.init({
             ele: '#reference_record, #notify_to'
-        });
-
-        $('#summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-
-        $('.summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
         });
 
         let referenceCount = 1;
