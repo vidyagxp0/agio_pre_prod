@@ -2512,7 +2512,7 @@ class IncidentController extends Controller
                         );
 
                         // ✅ Use current datetime (same as frontend logic)
-                        $currentDateTime = Carbon::now();
+                         $currentDateTime = Carbon::parse($request->incident_reported_date);
 
                         // ✅ Exact difference in hours (decimal)
                         $diffInHours = $currentDateTime->floatDiffInHours($incidentDateTime);
@@ -9340,7 +9340,4 @@ foreach ($pre as $processName => $modelClass) {
 
         return response()->json(['html' => $responseHtml]);
     }
-
-
-
 }
