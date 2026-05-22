@@ -112,12 +112,24 @@
                    </div>
                </div>
            </div>
-           <div class="col-lg-12 new-time-data-field">
-            <div class="group-input input-time ">
-                <label for="If Others">Checklist Outcome</label>
-                <textarea class="summernote" id="summernote-1" name="checklist_outcome_iia" {{ $istab13 ? '' : 'readonly' }}>{{ $data->checklist_outcome_iia }}</textarea>
+            <div class="col-lg-12 new-time-data-field">
+                <div class="group-input input-time">
+
+                    {!! quillEditor(
+                        'checklist_outcome_iia',
+                        $data->checklist_outcome_iia,
+
+                        '
+                        <label>
+                            Checklist Outcome
+                        </label>
+                        ',
+
+                        !$istab13
+                    ) !!}
+
+                </div>
             </div>
-        </div>
             <div class="sub-head">
                 Phase II A Investigation
             </div>
@@ -143,18 +155,33 @@
                 </div>
             </div>
             <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">Immediate Action Taken</label>
-                    <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
-                    {{$data->qa_approver_comments_piii ? $data->qa_approver_comments_piii : ""}}</textarea>
-                </div>
+                {!! quillEditor(
+                    'qa_approver_comments_piii',
+                    $data->qa_approver_comments_piii ? $data->qa_approver_comments_piii : "",
+
+                    '
+                    <label for="Description Deviation">
+                        Immediate Action Taken
+                    </label>
+                    ',
+
+                    !$istab13
+                ) !!}
             </div>
+
             <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">Delay Justification For Investigation</label>
-                    <textarea class="summernote" name="reason_manufacturing_delay" id="summernote-1">
-                    {{$data->reason_manufacturing_delay ? $data->reason_manufacturing_delay : ""}}</textarea>
-                </div>
+                {!! quillEditor(
+                    'reason_manufacturing_delay',
+                    $data->reason_manufacturing_delay ? $data->reason_manufacturing_delay : "",
+
+                    '
+                    <label for="Description Deviation">
+                        Delay Justification For Investigation
+                    </label>
+                    ',
+
+                    !$istab13
+                ) !!}
             </div>
             <div class="col-lg-12">
                 <div class="group-input">
@@ -191,18 +218,33 @@
                 </div>
             </div>
             <div class="col-12">
-                <div class="group-input">
-                    <label for="Audit Comments">Any Other Cause/Suspected Cause</label>
-                    <textarea  class="summernote" type="audit_comments_piii" name="audit_comments_piii" {{ $data->stage == 13 ? '' : 'readonly' }}>{{$data->audit_comments_piii ? $data->audit_comments_piii : ""}}
-                    </textarea>
-                </div>
+                {!! quillEditor(
+                    'audit_comments_piii',
+                    $data->audit_comments_piii ? $data->audit_comments_piii : "",
+
+                    '
+                    <label for="Audit Comments">
+                        Any Other Cause/Suspected Cause
+                    </label>
+                    ',
+
+                    $data->stage != 13
+                ) !!}
             </div>
+
             <div class="col-lg-12">
-                <div class="group-input">
-                    <label for="Reference Recores">Summary Investigation</label>
-                    <textarea class="summernote" name="hypo_exp_reference_piii" id="summernote-1">
-                    {{$data->hypo_exp_reference_piii ? $data->hypo_exp_reference_piii : ""}}</textarea>
-                </div>
+                {!! quillEditor(
+                    'hypo_exp_reference_piii',
+                    $data->hypo_exp_reference_piii ? $data->hypo_exp_reference_piii : "",
+
+                    '
+                    <label for="Reference Recores">
+                        Summary Investigation
+                    </label>
+                    ',
+
+                    !$istab13
+                ) !!}
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
@@ -299,7 +341,6 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Impact Assessment.</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="impact_assessment_IIA" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                   {{$data->impact_assessment_IIA ? $data->impact_assessment_IIA : ""}}
                 </textarea>
@@ -354,81 +395,6 @@
 
                 </div>
             </div>
-            {{-- <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Auditee"> Manufacturing Invest. Type </label>
-                    <select  name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
-                        data-search="false" data-silent-initial-value-set="true" id="auditee" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
-                        <option value="">Enter Your Selection Here</option>
-                        <option value="Chemical"{{ $data->manufacturing_invest_type_piii === 'Chemical' ? 'selected' :
-                            '' }}>Chemical</option>
-                        <option value="Microbiology"{{ $data->manufacturing_invest_type_piii === 'Microbiology' ? 'selected' :
-                            '' }}>Microbiology</option>
-                    </select>
-                </div>
-            </div>
-            <div class="sub-head">Summary of Phase II Testing</div>
-            <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">Summary of Exp./Hyp.</label>
-                    <textarea class="summernote" name="summary_of_exp_hyp_piiqcr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-                {{$data->summary_of_exp_hyp_piiqcr ?  $data->summary_of_exp_hyp_piiqcr : ''}}
-                </textarea>
-                </div>
-            </div>
-            <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">Summary Mfg. Investigation</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="summary_mfg_investigation_piiqcr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-                          {{$data->summary_mfg_investigation_piiqcr ? $data->summary_mfg_investigation_piiqcr : ''}}
-                    </textarea>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Cancelled By"> Root Casue Identified</label>
-                    <select name="root_casue_identified_piiqcr" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
-                        <option value="">Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->root_casue_identified_piiqcr === 'yes' ? 'selected' :
-                            '' }}>Yes</option>
-                        <option value="no" {{ $data->root_casue_identified_piiqcr === 'no' ? 'selected' : ''
-                            }}>No</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Cancelled By">OOS Category-Reason identified </label>
-                    <select name="oos_category_reason_identified_piiqcr" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
-                        <option value="">Enter Your Selection Here</option>
-                        <option value="Analyst Error"{{ $data->oos_category_reason_identified_piiqcr ===
-                            'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
-                        <option value="Instrument Error"{{ $data->oos_category_reason_identified_piiqcr ===
-                            'Instrument Error' ? 'selected' : '' }}>Instrument Error</option>
-                        <option value="Product/Material Related Error"{{ $data->oos_category_reason_identified_piiqcr ===
-                            'Product/Material Related Error' ? 'selected' : '' }}>Product/Material Related Error</option>
-                        <option value="Other Error"{{ $data->oos_category_reason_identified_piiqcr ===
-                            'Other Error' ? 'selected' : '' }}>Other Error</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">Details of Root Cause</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
-                {{$data->details_of_root_cause_piiqcr ? $data->details_of_root_cause_piiqcr : ''}}
-                </textarea>
-                </div>
-            </div>
-            <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">Exclamation FAR (Field alert) </label>
-                    <textarea class="summernote" name="Field_alert_QA_initial_approval" id="summernote-1">
-                    {{ $data->Field_alert_QA_initial_approval ?? '' }} </textarea>
-                </div>
-            </div>  --}}
 
             <div class="button-block">
                 @if ($data->stage == 0  || $data->stage >= 21 || $data->stage >= 23 || $data->stage >= 24 || $data->stage >= 25)

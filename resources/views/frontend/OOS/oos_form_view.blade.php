@@ -8000,15 +8000,41 @@
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Summary Of Review <span class="text-danger">*</span></label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="summaryy_of_review">{{ $data->summaryy_of_review }}</textarea>
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'summaryy_of_review',
+                                    $data->summaryy_of_review,
+
+                                    '
+                                    <label>
+                                        Summary Of Review <span class="text-danger">*</span>
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
                             </div>
                         </div>
+
+
                         <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Probable Cause Identification <span class="text-danger">*</span></label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Probable_cause_iden" >{{ $data->Probable_cause_iden }}</textarea>
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'Probable_cause_iden',
+                                    $data->Probable_cause_iden,
+
+                                    '
+                                    <label>
+                                        Probable Cause Identification <span class="text-danger">*</span>
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
                             </div>
                         </div>
 
@@ -8041,15 +8067,42 @@
 
                         </div>
                         <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Others</label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="proposal_for_hypothesis_others">{{ $data->proposal_for_hypothesis_others }}</textarea>
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'proposal_for_hypothesis_others',
+                                    $data->proposal_for_hypothesis_others,
+
+                                    '
+                                    <label>
+                                        Others
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
                             </div>
                         </div>
+
+
                         <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Details Of Results (Including original OOS/OOT results for side by side comparison) <span class="text-danger">*</span></label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="details_of_result" >{{ $data->details_of_result }}</textarea>
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'details_of_result',
+                                    $data->details_of_result,
+
+                                    '
+                                    <label>
+                                        Details Of Results (Including original OOS/OOT results for side by side comparison)
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8072,17 +8125,45 @@
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Proposal For Hypothesis Testing To Confirm Probable Cause Identified <span class="text-danger">*</span></label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Proposal_for_Hypothesis" >{{ $data->Proposal_for_Hypothesis }}</textarea>
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'Proposal_for_Hypothesis',
+                                    $data->Proposal_for_Hypothesis,
+
+                                    '
+                                    <label>
+                                        Proposal For Hypothesis Testing To Confirm Probable Cause Identified
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
                             </div>
                         </div>
+
+
                         <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Summary Of Hypothesis <span class="text-danger">*</span> </label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Summary_of_Hypothesis">{{ $data->Summary_of_Hypothesis }}</textarea>
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'Summary_of_Hypothesis',
+                                    $data->Summary_of_Hypothesis,
+
+                                    '
+                                    <label>
+                                        Summary Of Hypothesis <span class="text-danger">*</span>
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
                             </div>
                         </div>
+
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Assignable Cause <span class="text-danger">*</span></label>
@@ -8120,9 +8201,22 @@
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Evaluation Of Phase IB investigation Timeline <span class="text-danger">*</span></label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Evaluation_Timeline" >{{ $data->Evaluation_Timeline }}</textarea>
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'Evaluation_Timeline',
+                                    $data->Evaluation_Timeline,
+
+                                    '
+                                    <label>
+                                        Evaluation Of Phase IB investigation Timeline
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8178,9 +8272,21 @@
                             </div>
                         </div>
                         <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Repeat Testing Plan</label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Repeat_testing_plan">{{ $data->Repeat_testing_plan }}</textarea>
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'Repeat_testing_plan',
+                                    $data->Repeat_testing_plan,
+
+                                    '
+                                    <label>
+                                        Repeat Testing Plan
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -8244,30 +8350,87 @@
                             toggleProductionRequired();
                         </script>
                         <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Repeat Analysis Method/Resampling <span class="text-danger">*</span></label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Repeat_analysis_method" >{{ $data->Repeat_analysis_method }}</textarea>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Details Of Repeat Analysis <span class="text-danger">*</span></label></label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Details_repeat_analysis" >{{ $data->Details_repeat_analysis }}</textarea>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Impact Assessment <span class="text-danger">*</span></label></label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Impact_assessment1">{{ $data->Impact_assessment1 }}</textarea>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 new-time-data-field">
-                            <div class="group-input input-time ">
-                                <label for="If Others">Conclusion <span class="text-danger">*</span></label></label>
-                                <textarea class="summernote" data-stage="9" id="summernote-1" name="Conclusion1">{{ $data->Conclusion1 }}</textarea>
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'Repeat_analysis_method',
+                                    $data->Repeat_analysis_method,
+
+                                    '
+                                    <label>
+                                        Repeat Analysis Method/Resampling
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
                             </div>
                         </div>
 
+
+                        <div class="col-lg-12 new-time-data-field">
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'Details_repeat_analysis',
+                                    $data->Details_repeat_analysis,
+
+                                    '
+                                    <label>
+                                        Details Of Repeat Analysis
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12 new-time-data-field">
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'Impact_assessment1',
+                                    $data->Impact_assessment1,
+
+                                    '
+                                    <label>
+                                        Impact Assessment
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12 new-time-data-field">
+                            <div class="group-input input-time">
+
+                                {!! quillEditor(
+                                    'Conclusion1',
+                                    $data->Conclusion1,
+
+                                    '
+                                    <label>
+                                        Conclusion
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    ',
+
+                                    $data->stage != 9
+                                ) !!}
+
+                            </div>
+                        </div>
 
                         <div class="col-lg-12">
                             <div class="group-input">

@@ -5,7 +5,7 @@
     <div class="inner-block-content">
         <div class="sub-head">Phase IA Investigation </div>
         <div class="row">
-            <div class="col-lg-12 mb-4">
+            {{-- <div class="col-lg-12 mb-4">
                 <div class="group-input">
                     <label for="Audit Schedule Start Date">Workbench Evaluation<span class="text-danger">*</span></label>
                     <div class="col-md-12 4">
@@ -15,7 +15,31 @@
                         </div>
                     </div>
                 </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                {!! quillEditor(
+                    'Comments_plidata',
+                    $data->Comments_plidata,
+
+                    '
+                    <label>
+                        Workbench Evaluation <span class="text-danger">*</span>
+
+                        <small class="text-primary d-block">
+                            Please insert "NA" in the data field if it does not require completion
+                        </small>
+                    </label>
+                    ',
+
+                    $data->stage != 5 || !$istab5
+                ) !!}
+                @error('Comments_plidata')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
+
+
             @if ($data->Form_type == 'OOS_Micro')
             <div class="col-lg-12">
                 <div class="group-input">
@@ -79,32 +103,90 @@
 
             @endif
 
-            <div class="col-md-12 mb-4">
+            {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Checklist Outcome</label>
                     <textarea class="summernote" data-stage="5" name="justify_if_no_field_alert_pli" value=""
                         id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
               {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
                 </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                {!! quillEditor(
+                    'justify_if_no_field_alert_pli',
+                    $data->justify_if_no_field_alert_pli,
+
+                    '
+                    <label>
+                        Checklist Outcome <span class="text-danger">*</span>
+
+                    </label>
+                    ',
+
+                    $data->stage != 5 || !$istab5
+                ) !!}
+                @error('justify_if_no_field_alert_pli')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
-            <div class="col-md-12 mb-4">
+
+            {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="RootCause">Immediate Action Taken <span class="text-danger">*</span></label>
                     <textarea name="root_comment" id="rootCauseTextarea" rows="4" placeholder="Describe the root cause here" {{ $data->stage == 5 ? '' : 'readonly' }}> {{ $data->root_comment }}</textarea>
                 </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                {!! quillEditor(
+                    'root_comment',
+                    $data->root_comment,
+
+                    '
+                    <label>
+                        Immediate Action Taken <span class="text-danger">*</span>
+
+                    </label>
+                    ',
+
+                    $data->stage != 5 || !$istab5
+                ) !!}
+                @error('root_comment')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
-            <div class="col-lg-12 mb-4">
+            {{-- <div class="col-lg-12 mb-4">
                 <div class="group-input">
                     <label for="Audit Schedule Start Date">Delay Justification For Investigation</label>
                     <textarea class="summernote" data-stage="5" name="justify_if_no_analyst_int_pli" value=""
                         id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                   {{$data && $data->justify_if_no_analyst_int_pli ? $data->justify_if_no_analyst_int_pli : ''}}  </textarea>
-
                 </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                {!! quillEditor(
+                    'justify_if_no_analyst_int_pli',
+                    $data->justify_if_no_analyst_int_pli,
+
+                    '
+                    <label>
+                        Delay Justification For Investigation <span class="text-danger">*</span>
+
+                    </label>
+                    ',
+
+                    $data->stage != 5 || !$istab5
+                ) !!}
+                @error('justify_if_no_analyst_int_pli')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
-            <div class="col-lg-12 mb-4">
+
+            {{-- <div class="col-lg-12 mb-4">
                 <div class="group-input">
                     <label for="Audit Schedule Start Date">Analyst Interview Details <span class="text-danger">*</span></label>
                     <textarea class="summernote" data-stage="5" name="analyst_interview_pli" value=""
@@ -112,7 +194,27 @@
                   {{$data && $data->analyst_interview_pli ? $data->analyst_interview_pli : ''}}  </textarea>
 
                 </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                {!! quillEditor(
+                    'analyst_interview_pli',
+                    $data->analyst_interview_pli,
+
+                    '
+                    <label>
+                        Analyst Interview Details <span class="text-danger">*</span>
+
+                    </label>
+                    ',
+
+                    $data->stage != 5 || !$istab5
+                ) !!}
+                @error('analyst_interview_pli')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
+
 
             <div class="col-lg-12">
                 <div class="group-input">
@@ -147,40 +249,137 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 new-time-data-field">
+            {{-- <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Any Other Cause/Suspected Cause<span class="text-danger">*</span></label>
                     <textarea class="summernote" data-stage="5" id="summernote-1" name="Any_other_cause">{{ $data->Any_other_cause }}</textarea>
                 </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                {!! quillEditor(
+                    'Any_other_cause',
+                    $data->Any_other_cause,
+
+                    '
+                    <label>
+                        Any Other Cause/Suspected Cause <span class="text-danger">*</span>
+                    </label>
+                    ',
+
+                    $data->stage != 5 || !$istab5
+                ) !!}
+                @error('Any_other_cause')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
-            <div class="col-lg-12 new-time-data-field">
+
+            {{-- <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Any Other Batches Analyzed</label>
                     <textarea class="summernote" data-stage="5" id="summernote-1" name="Any_other_batches">{{ $data->Any_other_batches }}</textarea>
                 </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                {!! quillEditor(
+                    'Any_other_batches',
+                    $data->Any_other_batches,
+
+                    '
+                    <label>
+                        Any Other Batches Analyzed <span class="text-danger">*</span>
+                    </label>
+                    ',
+
+                    $data->stage != 5 || !$istab5
+                ) !!}
+                @error('Any_other_batches')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
-            <div class="col-lg-12 new-time-data-field">
+
+            {{-- <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Details Of Trend</label>
                     <textarea class="summernote" data-stage="5" id="summernote-1" name="details_of_trend">{{ $data->details_of_trend }}</textarea>
                 </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                {!! quillEditor(
+                    'details_of_trend',
+                    $data->details_of_trend,
+
+                    '
+                    <label>
+                        Details Of Trend <span class="text-danger">*</span>
+
+                    </label>
+                    ',
+
+                    $data->stage != 5 || !$istab5
+                ) !!}
+                @error('details_of_trend')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
-            <div class="col-lg-12 new-time-data-field">
+
+            {{-- <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Assignable Cause And Rational For Assignable Cause <span class="text-danger">*</span></label>
                     <textarea class="summernote" data-stage="5" id="summernote-1" name="rational_for_assingnable">{{ $data->rational_for_assingnable }}</textarea>
                 </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                {!! quillEditor(
+                    'rational_for_assingnable',
+                    $data->rational_for_assingnable,
+
+                    '
+                    <label>
+                        Assignable Cause And Rational For Assignable Cause <span class="text-danger">*</span>
+
+                    </label>
+                    ',
+
+                    $data->stage != 5 || !$istab5
+                ) !!}
+                @error('rational_for_assingnable')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
-            <div class="col-md-12 mb-4">
+
+            {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Summary Of Investigation <span class="text-danger">*</span></label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" data-stage="5" name="summary_of_prelim_investiga_plic"
                         id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}} >
                     {{ $data->summary_of_prelim_investiga_plic ? $data->summary_of_prelim_investiga_plic : ''}}</textarea>
                 </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                {!! quillEditor(
+                    'summary_of_prelim_investiga_plic',
+                    $data->summary_of_prelim_investiga_plic,
+
+                    '
+                    <label>
+                        Summary Of Investigation <span class="text-danger">*</span>
+
+                    </label>
+                    ',
+
+                    $data->stage != 5 || !$istab5
+                ) !!}
+                @error('summary_of_prelim_investiga_plic')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
+
             <div class="col-lg-6">
                 <div class="group-input">
                     @if ($data->Form_type == 'OOT')
@@ -252,7 +451,7 @@
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    @if($data->Form_type == 'OOT')
+                    {{-- @if($data->Form_type == 'OOT')
                     <label for="Description Deviation">OOT Category(If Others)</label>
                     @else
                     <label for="Description Deviation">OOS Category(If Others)</label>
@@ -261,7 +460,31 @@
                             require completion</small></div>
                     <textarea class="summernote" data-stage="5" name="oos_category_others_plic" id="summernote-1"
                         value=""  {{Helpers::isOOSChemical($data->stage)}} > {{ $data->oos_category_others_plic }}
-                    </textarea>
+                    </textarea> --}}
+
+                    {!! quillEditor(
+                        'oos_category_others_plic',
+                        $data->oos_category_others_plic,
+
+                        '
+                        <label>
+                            ' . ($data->Form_type == "OOT" ? "OOT Category(If Others)" : "OOS Category(If Others)") . '
+                        </label>
+
+                        <div>
+                            <small class="text-primary">
+                                Please insert "NA" in the data field if it does not require completion
+                            </small>
+                        </div>
+                        ',
+
+                        $data->stage != 5 || !$istab5
+                    ) !!}
+
+                    @error('oos_category_others_plic')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+
                 </div>
             </div>
 
@@ -291,15 +514,22 @@
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    @if ($data->Form_type == 'OOT')
-                    <label for="Description Deviation">OOT Review For Similar Nature</label>
-                    @else
-                    <label for="Description Deviation">OOS Review For Similar Nature</label>
-                    @endif
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" data-stage="5" name="review_comments_plir" id="summernote-1"
-                        value="" {{Helpers::isOOSChemical($data->stage)}}>{{  $data->review_comments_plir ?  $data->review_comments_plir : '' }}
-                    </textarea>
+
+                    {!! quillEditor(
+                        'review_comments_plir',
+                        $data->review_comments_plir ? $data->review_comments_plir : '',
+
+                        '
+                        <label>
+                            ' . ($data->Form_type == "OOT"
+                                ? "OOT Review For Similar Nature"
+                                : "OOS Review For Similar Nature") . '
+                        </label>
+                        ',
+
+                        $data->stage != 5 || !$istab5
+                    ) !!}
+
                 </div>
             </div>
 
@@ -391,31 +621,72 @@
             </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Results Of Retest/Re-Measurement</label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                            require completion </small></div>
-                    <textarea class="summernote" data-stage="5" name="Description_Deviation" id="summernote-1"
-                        value=""  {{Helpers::isOOSChemical($data->stage)}} >{{ $data->Description_Deviation ? $data->Description_Deviation : '' }}
-                    </textarea>
+
+                    {!! quillEditor(
+                        'Description_Deviation',
+                        $data->Description_Deviation ? $data->Description_Deviation : '',
+
+                        '
+                        <label>
+                            Results Of Retest/Re-Measurement
+                        </label>
+
+                        <div>
+                            <small class="text-primary">
+                                Please insert "NA" in the data field if it does not require completion
+                            </small>
+                        </div>
+                        ',
+
+                        $data->stage != 5 || !$istab5
+                    ) !!}
+
                 </div>
             </div>
 
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Results Of Repeat Testing <span class="text-danger">*</span></label>
-                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                            require completion </small></div>
-                    <textarea class="summernote" data-stage="5" name="result_of_repeat" id="summernote-1"
-                        value=""  {{Helpers::isOOSChemical($data->stage)}} >{{ $data->result_of_repeat ? $data->result_of_repeat : '' }}
-                    </textarea>
+
+                    {!! quillEditor(
+                        'result_of_repeat',
+                        $data->result_of_repeat ? $data->result_of_repeat : '',
+
+                        '
+                        <label>
+                            Results Of Repeat Testing <span class="text-danger">*</span>
+                        </label>
+
+                        <div>
+                            <small class="text-primary">
+                                Please insert "NA" in the data field if it does not require completion
+                            </small>
+                        </div>
+                        ',
+
+                        $data->stage != 5 || !$istab5
+                    ) !!}
+
                 </div>
             </div>
 
+
             <div class="col-lg-12 new-time-data-field">
-                <div class="group-input input-time ">
-                    <label for="deviation_time">Impact Assessment <span class="text-danger">*</span></label>
-                    <textarea class="summernote" data-stage="5" id="summernote-1"  name="impact_assesment_pia">{{ $data->impact_assesment_pia }}</textarea>
+                <div class="group-input input-time">
+
+                    {!! quillEditor(
+                        'impact_assesment_pia',
+                        $data->impact_assesment_pia,
+
+                        '
+                        <label>
+                            Impact Assessment <span class="text-danger">*</span>
+                        </label>
+                        ',
+
+                        $data->stage != 5 || !$istab5
+                    ) !!}
+
                 </div>
             </div>
             <div class="col-lg-12">
