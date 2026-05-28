@@ -12,6 +12,10 @@
             New
         </a>
 
+         <a href="{{ route('user_management.audit') }}" class="btn btn-primary">
+            Audit Trial
+        </a>
+
     </div>
 
     <div class="row">
