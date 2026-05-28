@@ -67,6 +67,9 @@ Route::group(['prefix' => 'admin'], function () {
             Route::resource('eqproduct', ProductMasterController::class);
             Route::get('equipment-eqproduct/export', [ProductMasterController::class, 'export'])->name('eqproduct.export');
             Route::post('equipment-eqproduct/import', [ProductMasterController::class, 'import'])->name('eqproduct.import');
+
+            Route::get('auditTrial', [UserManagementController::class, 'AdminAuditTrail'])->name('user_management.audit');
+
             
 
 
