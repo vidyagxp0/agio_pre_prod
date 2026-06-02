@@ -150,7 +150,7 @@ class UserManagementController extends Controller
                         $validation2 = new AdminUserAuditTrial();
                         $validation2->admin_id = $user->id;
                         $validation2->previous = "Null";
-                        $validation2->current = $request->name;
+                        $validation2->current = $request->emp_code;
                         $validation2->activity_type = 'Code';
                         $validation2->user_id = Auth::guard('admin')->user()->id;
                         $validation2->user_name = Auth::guard('admin')->user()->name;
@@ -281,6 +281,16 @@ class UserManagementController extends Controller
         $user = User::with('userRoles')->find($id); 
         $lastUser = User::with('userRoles')->find($id);
 
+        $oldRoles = $lastUser->userRoles
+        ->pluck('role_id')
+        ->sort()
+        ->values()
+        ->toArray();
+
+        $newRoles = collect($request->roles)
+        ->sort()
+        ->values()
+        ->toArray();
         // ✅ Validation (IGNORE current user)
         $request->validate([
             'name' => 'required|string|max:255', 
@@ -380,7 +390,7 @@ class UserManagementController extends Controller
                 $validation2->current = $request->email;
                 $validation2->activity_type = 'Email';
                 $validation2->user_id = auth()->user()?->id;
-                $validation2->user_email = auth()->user()?->email;
+                $validation2->user_name = auth()->user()?->name;
                 $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
 
                 $validation2->change_to =   "Not Applicable";
@@ -417,7 +427,7 @@ class UserManagementController extends Controller
                 $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
                 $validation2->change_to = $currentDepartmentName;
                 $validation2->change_from = $previousDepartmentName;
-                if (is_null($previousDepartmentName->email) || $previousDepartmentName->email === '') {
+                if (is_null($previousDepartmentName) || $previousDepartmentName === '') {
                     $validation2->action_name = 'New';
                 } else {
                     $validation2->action_name = 'Update';
@@ -425,45 +435,74 @@ class UserManagementController extends Controller
                 $validation2->save();
             }
 
-            if ($lastUser->role != $request->role) {
-                $oldRoleNames = DB::table('role_groups')
-                    ->whereIn('id', explode(',', $lastUser->role))
-                    ->pluck('name')
-                    ->toArray();
-                $oldRoleNamesString = implode(', ', $oldRoleNames);
+            // if ($lastUser->role != $request->role) {
+            //     $oldRoleNames = DB::table('role_groups')
+            //         ->whereIn('id', explode(',', $lastUser->role))
+            //         ->pluck('name')
+            //         ->toArray();
+            //     $oldRoleNamesString = implode(', ', $oldRoleNames);
 
-                $newRoleNames = DB::table('role_groups')
-                    ->whereIn('id', explode(',', $request->role))
-                    ->pluck('name')
-                    ->toArray();
-                $newRoleNamesString = implode(', ', $newRoleNames);
+            //     $newRoleNames = DB::table('role_groups')
+            //         ->whereIn('id', explode(',', $request->role))
+            //         ->pluck('name')
+            //         ->toArray();
+            //     $newRoleNamesString = implode(', ', $newRoleNames);
 
-                if (empty($oldRoleNamesString)) {
-                    $oldRoleNamesString = 'Null';
-                }
-                if (empty($newRoleNamesString)) {
-                    $newRoleNamesString = 'Unknown';
-                }
+            //     if (empty($oldRoleNamesString)) {
+            //         $oldRoleNamesString = 'Null';
+            //     }
+            //     if (empty($newRoleNamesString)) {
+            //         $newRoleNamesString = 'Unknown';
+            //     }
 
-                $validation2 = new AdminUserAuditTrial();
-                $validation2->admin_id = $user->id;
-                $validation2->previous = $oldRoleNamesString;
-                $validation2->current = $newRoleNamesString;
-                $validation2->activity_type = 'Roles';
-                $validation2->user_id = auth()->user()?->id;
-                $validation2->user_name = auth()->user()?->name;
-                $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
-                $validation2->change_to = "Not Applicable";
-                $validation2->change_from = $lastUser->status;
+            //     $validation2 = new AdminUserAuditTrial();
+            //     $validation2->admin_id = $user->id;
+            //     $validation2->previous = $oldRoleNamesString;
+            //     $validation2->current = $newRoleNamesString;
+            //     $validation2->activity_type = 'Roles';
+            //     $validation2->user_id = auth()->user()?->id;
+            //     $validation2->user_name = auth()->user()?->name;
+            //     $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
+            //     $validation2->change_to = "Not Applicable";
+            //     $validation2->change_from = $lastUser->status;
 
-                if (is_null($lastUser->role) || $lastUser->role === '') {
-                    $validation2->action_name = 'New';
-                } else {
+            //     if (is_null($lastUser->role) || $lastUser->role === '') {
+            //         $validation2->action_name = 'New';
+            //     } else {
+            //         $validation2->action_name = 'Update';
+            //     }
+
+            //     $validation2->save();
+            // }
+
+                if ($oldRoles != $newRoles) {
+
+                    $oldRoleNames = Roles::whereIn('id', $oldRoles)
+                        ->pluck('name')
+                        ->implode(', ');
+
+                    $newRoleNames = Roles::whereIn('id', $newRoles)
+                        ->pluck('name')
+                        ->implode(', ');
+
+                    $validation2 = new AdminUserAuditTrial();
+                    $validation2->admin_id = $user->id;
+                    $validation2->previous = $oldRoleNames ?: 'Null';
+                    $validation2->current = $newRoleNames ?: 'Null';
+                    $validation2->activity_type = 'Roles';
+                    $validation2->user_id = auth()->id();
+                    $validation2->user_name = auth()->user()?->name;
+                    $validation2->user_role = RoleGroup::where(
+                        'id',
+                        auth()->user()?->role
+                    )->value('name');
+
+                    $validation2->change_to = $newRoleNames;
+                    $validation2->change_from = $oldRoleNames;
                     $validation2->action_name = 'Update';
-                }
 
-                $validation2->save();
-            }
+                    $validation2->save();
+                }
                 toastr()->success('Update successfully');
                 return redirect()->route('user_management.index');
             } else {
@@ -495,7 +534,7 @@ class UserManagementController extends Controller
      public function AdminAuditTrail()
     {
         $users = User::all();
-        $admin_audit = AdminUserAuditTrial::paginate(5);
+        $admin_audit = AdminUserAuditTrial::orderBy('id', 'desc')->paginate(5);
         return view('admin.account.admin_user_auditTrial', compact('users','admin_audit'));
     }
 

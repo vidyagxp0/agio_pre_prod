@@ -235,13 +235,6 @@
                     <td>{{$dataDemo ? ($admin_audit->currentPage() - 1) * $admin_audit->perPage() + $audits + 1 : 'Not Applicable' }}
                     </td>
 
-                    {{-- <td>
-                        <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
-                    </td>
-
-                    <td>
-                        <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
-                    </td> --}}
                     <td>
                         <div>
                             <strong> Data Field Name :</strong><a href="">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
@@ -279,8 +272,8 @@
                         <div style="margin-top: 5px;"> <strong>Performed On
                                 :</strong>{{ \Carbon\Carbon::parse($dataDemo->created_at )->format('d-M-Y h:i A') }}
                         </div>
-                        <div style="margin-top: 5px;"><strong> Comments
-                                :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div>
+                        {{-- <div style="margin-top: 5px;"><strong> Comments
+                                :</strong>{{ $dataDemo->comment ? $dataDemo->comment : 'Not Applicable' }}</div> --}}
 
                     </td>
                 </tr>
