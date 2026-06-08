@@ -217,7 +217,8 @@ class CCController extends Controller
             $files = [];
             if ($request->hasfile('initial_update_attach')) {
                 foreach ($request->file('initial_update_attach') as $file) {
-                    $name = $request->name . 'initial_update_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'initial_update_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'initial_update_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -229,7 +230,8 @@ class CCController extends Controller
             $files = [];
             if ($request->hasfile('hod_assessment_attach')) {
                 foreach ($request->file('hod_assessment_attach') as $file) {
-                    $name = $request->name . 'hod_assessment_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'hod_assessment_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_assessment_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -242,7 +244,7 @@ class CCController extends Controller
             $files = [];
             if ($request->hasfile('in_attachment')) {
                 foreach ($request->file('in_attachment') as $file) {
-                    $name = "CC" . '-in_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "CC-in_attachment-" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -254,7 +256,8 @@ class CCController extends Controller
             $files = [];
             if ($request->hasfile('risk_assessment_atch')) {
                 foreach ($request->file('risk_assessment_atch') as $file) {
-                    $name = "CC" . '-risk_assessment_atch' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = "CC" . '-risk_assessment_atch' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "CC-risk_assessment_atch" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2849,7 +2852,8 @@ class CCController extends Controller
     if ($request->hasFile('hod_final_review_attach')) {
         foreach ($request->file('hod_final_review_attach') as $file) {
             // Generate a unique filename
-            $filename = $request->name . '_hod_final_review_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            // $filename = $request->name . '_hod_final_review_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $name = $request->name . "_hod_final_review_attach_" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
             // Move the file to the upload directory
             $file->move(public_path('upload/'), $filename);
@@ -2884,7 +2888,8 @@ class CCController extends Controller
                             $newFiles = [];
                             if ($request->hasFile('RA_attachment_second')) {
                                 foreach ($request->file('RA_attachment_second') as $file) {
-                                    $name = $request->name . 'RA_attachment_second' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                    // $name = $request->name . 'RA_attachment_second' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                    $name = $request->name . "RA_attachment_second" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                                     $file->move(public_path('upload/'), $name);
                                     $newFiles[] = $name;
                                 }
@@ -2912,7 +2917,8 @@ class CCController extends Controller
                     $newFiles = [];
                     if ($request->hasFile('qa_final_attach')) {
                         foreach ($request->file('qa_final_attach') as $file) {
-                            $name = $request->name . 'qa_final_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            // $name = $request->name . 'qa_final_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $name = $request->name . "qa_final_attach" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                             $file->move(public_path('upload/'), $name);
                             $newFiles[] = $name;
                         }
@@ -2945,7 +2951,8 @@ class CCController extends Controller
             $newFiles = [];
             if ($request->hasFile('change_details_attachments')) {
                 foreach ($request->file('change_details_attachments') as $file) {
-                    $name = $request->name . 'change_details_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'change_details_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . "change_details_attachments" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -2974,7 +2981,8 @@ class CCController extends Controller
             $newFiles = [];
             if ($request->hasFile('hod_assessment_attachment')) {
                 foreach ($request->file('hod_assessment_attachment') as $file) {
-                    $name = $request->name . 'hod_assessment_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'hod_assessment_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . "hod_assessment_attachment" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -3020,7 +3028,8 @@ class CCController extends Controller
             $newFiles = [];
             if ($request->hasFile('qa_cqa_attach')) {
                 foreach ($request->file('qa_cqa_attach') as $file) {
-                    $name = $request->name . 'qa_cqa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'qa_cqa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . "qa_cqa_attach" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -3063,7 +3072,8 @@ class CCController extends Controller
             $newFiles = [];
             if ($request->hasFile('intial_update_attach')) {
                 foreach ($request->file('intial_update_attach') as $file) {
-                    $name = $request->name . 'intial_update_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'intial_update_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . "intial_update_attach" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -3222,7 +3232,8 @@ class CCController extends Controller
 
             if ($request->hasfile('HOD_attachment')) {
                 foreach ($request->file('HOD_attachment') as $file) {
-                    $name = "CC" . '-HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = "CC" . '-HOD_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "CC-HOD_attachment" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3243,7 +3254,8 @@ class CCController extends Controller
 
             if ($request->hasfile('risk_assessment_atch')) {
                 foreach ($request->file('risk_assessment_atch') as $file) {
-                    $name = "CC" . '-risk_assessment_atch' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = "CC" . '-risk_assessment_atch' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "CC-risk_assessment_atch" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3297,7 +3309,8 @@ class CCController extends Controller
             $newFiles = [];
             if ($request->hasFile('in_attachment')) {
                 foreach ($request->file('in_attachment') as $file) {
-                    $name = $request->name . 'in_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'in_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'in_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -3338,7 +3351,8 @@ class CCController extends Controller
             $newFiles = [];
             if ($request->hasFile('qa_head')) {
                 foreach ($request->file('qa_head') as $file) {
-                    $name = $request->name . 'qa_head' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'qa_head' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_head' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
