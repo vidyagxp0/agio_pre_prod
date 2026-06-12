@@ -1,9 +1,5 @@
 @extends('frontend.layout.main')
 @section('container')
-    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
-        type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
-    </script>
     <style>
         #fr-logo {
             display: none;
@@ -75,49 +71,6 @@
          }
     </style>
 
-
-    {{-- <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let docTypeSelect = document.getElementById("doc-type");
-
-            function showMatchingTabs(docTypeId) {
-                let allTabs = document.querySelectorAll(".hidden-tabs");
-
-                allTabs.forEach(tab => {
-                    if (tab.dataset.id === docTypeId) {
-                        tab.style.display = "inline-block";
-                    } else {
-                        tab.style.display = "none";
-                    }
-                });
-            }
-
-            if (docTypeSelect.value) {
-                showMatchingTabs(docTypeSelect.value);
-            }
-
-            docTypeSelect.addEventListener("change", function () {
-                showMatchingTabs(this.value);
-            });
-        });
-
-        function openData(evt, tabName) {
-            var i, tabcontent, tablinks;
-
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-    </script> --}}
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -2867,7 +2820,7 @@
                             @endif
 
 
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="procedure">Procedure</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
@@ -2890,8 +2843,47 @@
                                         @endif
                                     @endforeach
                                 </div>
-                            </div>
+                            </div> --}}
 
+                            <div class="col-md-12">
+                                {!! quillEditor(
+                                    'procedure',
+                                    $document->document_content ? $document->document_content->procedure : '',
+
+                                    '
+                                    <label for="procedure">Procedure</label>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small>
+                                    </div>
+                                    ',
+
+                                    false
+                                ) !!}
+
+                                @foreach ($history as $tempHistory)
+                                    @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                        @php
+                                            $users_name = DB::table('users')
+                                                ->where('id', $tempHistory->user_id)
+                                                ->value('name');
+                                        @endphp
+
+                                        <p style="color: blue">
+                                            Modify by {{ $users_name }} at {{ $tempHistory->created_at }}
+                                        </p>
+
+                                        <input
+                                            class="input-field"
+                                            style="background: #ffff0061; color: black;"
+                                            type="text"
+                                            value="{{ $tempHistory->comment }}"
+                                            disabled
+                                        >
+                                    @endif
+                                @endforeach
+                            </div>
 
 
                             <div class="col-md-12">
@@ -6621,14 +6613,9 @@
                                         <input type="text" name="brand_name" value="{{ $document->brand_name }}">
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="label-claim">Label Claim</label>
-                                        <input type="text" name="label_claim" value="{{ $document->label_claim }}">
-                                    </div>
-                                </div> --}}
+             
 
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                      Label Claim
                                     <div class="group-input">
                                         <label for="procedure"></label>
@@ -6651,6 +6638,43 @@
                                             @endif
                                         @endforeach
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                    Label Claim
+
+                                    {!! quillEditor(
+                                        'label_claim',
+                                        $document->label_claim ?? '',
+
+                                        '
+                                        <label for="label_claim"></label>
+                                        ',
+
+                                        false
+                                    ) !!}
+
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+
+                                            <p style="color: blue">
+                                                Modify by {{ $users_name }} at {{ $tempHistory->created_at }}
+                                            </p>
+
+                                            <input
+                                                class="input-field"
+                                                style="background: #ffff0061; color: black;"
+                                                type="text"
+                                                value="{{ $tempHistory->comment }}"
+                                                disabled
+                                            >
+                                        @endif
+                                    @endforeach
                                 </div>
 
                                 <div class="col-md-6">
@@ -6665,18 +6689,9 @@
                                         <input type="text" name="fsstorage_condition" value="{{ $document->fsstorage_condition }}">
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="sample-quantity">Sample Quantity for Analysis</label>
-                                        <select name="sample_quantity">
-                                            <option value="" selected>Enter your Selection</option>
-                                            <option value="Chemical Analysis" {{ $document->sample_quantity == "Chemical Analysis" ? 'selected' : '' }}>Chemical Analysis</option>
-                                            <option value="Microbial Analysis" {{ $document->sample_quantity == "Microbial Analysis" ? 'selected' : '' }}>Microbial Analysis</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
+         
 
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Sample Quantity for Analysis
                                     <div class="group-input">
                                         <label for="procedure"></label>
@@ -6698,8 +6713,44 @@
                                             @endif
                                         @endforeach
                                     </div>
-                                </div>
+                                </div> --}}
 
+                                <div class="col-12 sub-head">
+                                    Sample Quantity for Analysis
+
+                                    {!! quillEditor(
+                                        'sample_quantity',
+                                        $document->sample_quantity ?? '',
+
+                                        '
+                                        <label for="sample_quantity"></label>
+                                        ',
+
+                                        false
+                                    ) !!}
+
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+
+                                            <p style="color: blue">
+                                                Modify by {{ $users_name }} at {{ $tempHistory->created_at }}
+                                            </p>
+
+                                            <input
+                                                class="input-field"
+                                                style="background: #ffff0061; color: black;"
+                                                type="text"
+                                                value="{{ $tempHistory->comment }}"
+                                                disabled
+                                            >
+                                        @endif
+                                    @endforeach
+                                </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -6727,7 +6778,7 @@
                                 </div>
 
 
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                       SPECIFICATION
                                     <div class="group-input">
                                         <label for="procedure"></label>
@@ -6750,6 +6801,43 @@
                                             @endif
                                         @endforeach
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                    SPECIFICATION
+
+                                    {!! quillEditor(
+                                        'fps_specificationGrid',
+                                        $document->fps_specificationGrid ?? '',
+
+                                        '
+                                        <label for="fps_specificationGrid"></label>
+                                        ',
+
+                                        false
+                                    ) !!}
+
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+
+                                            <p style="color: blue">
+                                                Modify by {{ $users_name }} at {{ $tempHistory->created_at }}
+                                            </p>
+
+                                            <input
+                                                class="input-field"
+                                                style="background: #ffff0061; color: black;"
+                                                type="text"
+                                                value="{{ $tempHistory->comment }}"
+                                                disabled
+                                            >
+                                        @endif
+                                    @endforeach
                                 </div>
 
                             <div class="group-input">
@@ -7676,16 +7764,6 @@
             </div>
 
 
-
-
-
-
-
-
-
-
-
-
           {{-- packing validation report tabs  by kpatel --}}
 
         <div id="doc-PacValRep" class="tabcontent">
@@ -7795,113 +7873,113 @@
             </div>
         </div>
 
+ 
+        {{-- ---------------sttrart tabs --Format for comppressed air and nitrgen ges sys protocal  ----------------------- --}}
 
-{{-- ---------------sttrart tabs --Format for comppressed air and nitrgen ges sys protocal  ----------------------- --}}
+        <div id="doc-FoCoANGsP" class="tabcontent">
+            <div class="orig-head">
+                Format for Compressed Air and Nitrogen Gas System Protocol
+            </div>
+            <div class="input-fields">
+                <div class="row">
 
-<div id="doc-FoCoANGsP" class="tabcontent">
-    <div class="orig-head">
-        Format for Compressed Air and Nitrogen Gas System Protocol
-    </div>
-    <div class="input-fields">
-        <div class="row">
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment"><b>Format For Compressed Air And Nitrogen Gas System Protocol</b></label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
 
-                <div class="col-12">
-                    <div class="group-input">
-                        <label for="File_Attachment"><b>Format For Compressed Air And Nitrogen Gas System Protocol</b></label>
-                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="formateCompresedAirAndNirogenProtocol">
+                                        @if ($document->ForComANiGasProtocolfile_attach)
+                                            @foreach(json_decode($document->ForComANiGasProtocolfile_attach) as $file)
+                                                <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_ForComANiGasProtocolfile_attach[]" value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
 
-                        <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="formateCompresedAirAndNirogenProtocol">
-                                @if ($document->ForComANiGasProtocolfile_attach)
-                                    @foreach(json_decode($document->ForComANiGasProtocolfile_attach) as $file)
-                                        <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $file }}</b>
-                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                                            </a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                                            </a>
-                                            <input type="hidden" name="existing_ForComANiGasProtocolfile_attach[]" value="{{ $file }}">
-                                        </h6>
-                                    @endforeach
-                                @endif
-                            </div>
-
-                            <div class="add-btn">
-                                <label for="annex_V_user_attachmentDataformateCompresedAirAndNirogenPr" style="cursor: pointer;">Add</label>
-                                <input type="file" id="annex_V_user_attachmentDataformateCompresedAirAndNirogenPr" name="ForComANiGasProtocolfile_attach[]"
-                                    oninput="addMultipleFiles(this, 'formateCompresedAirAndNirogenProtocol')" multiple hidden>
+                                    <div class="add-btn">
+                                        <label for="annex_V_user_attachmentDataformateCompresedAirAndNirogenPr" style="cursor: pointer;">Add</label>
+                                        <input type="file" id="annex_V_user_attachmentDataformateCompresedAirAndNirogenPr" name="ForComANiGasProtocolfile_attach[]"
+                                            oninput="addMultipleFiles(this, 'formateCompresedAirAndNirogenProtocol')" multiple hidden>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Hidden field to store deleted files -->
+                        <input type="hidden" id="deleted_ForComANiGasProtocolfile_attach" name="deleted_ForComANiGasProtocolfile_attach" value="">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                document.querySelectorAll('.remove-file').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput = document.getElementById('deleted_ForComANiGasProtocolfile_attach');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                for (let file of input.files) {
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = file.name;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function () {
+                                        fileContainer.style.display = 'none';
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(removeLink);
+                                    fileList.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
+
+
                     </div>
                 </div>
-
-                <!-- Hidden field to store deleted files -->
-                <input type="hidden" id="deleted_ForComANiGasProtocolfile_attach" name="deleted_ForComANiGasProtocolfile_attach" value="">
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        document.querySelectorAll('.remove-file').forEach(button => {
-                            button.addEventListener('click', function () {
-                                const fileName = this.getAttribute('data-file-name');
-                                const fileContainer = this.closest('.file-container');
-
-                                if (fileContainer) {
-                                    fileContainer.style.display = 'none';
-
-                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
-                                    if (hiddenInput) {
-                                        hiddenInput.remove();
-                                    }
-
-                                    const deletedFilesInput = document.getElementById('deleted_ForComANiGasProtocolfile_attach');
-                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
-                                    deletedFiles.push(fileName);
-                                    deletedFilesInput.value = deletedFiles.join(',');
-                                }
-                            });
-                        });
-                    });
-
-                    function addMultipleFiles(input, listId) {
-                        let fileList = document.getElementById(listId);
-                        for (let file of input.files) {
-                            let fileContainer = document.createElement('h6');
-                            fileContainer.classList.add('file-container', 'text-dark');
-                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-
-                            let fileText = document.createElement('b');
-                            fileText.textContent = file.name;
-
-                            let removeLink = document.createElement('a');
-                            removeLink.classList.add('remove-file');
-                            removeLink.dataset.fileName = file.name;
-                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
-                            removeLink.addEventListener('click', function () {
-                                fileContainer.style.display = 'none';
-                            });
-
-                            fileContainer.appendChild(fileText);
-                            fileContainer.appendChild(removeLink);
-                            fileList.appendChild(fileContainer);
-                        }
-                    }
-                </script>
-
-
+                <div class="button-block">
+                    <button type="submit" value="save" name="submit" id="DocsaveButton"
+                        class="saveButton">Save</button>
+                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        </a>
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="button-block">
-            <button type="submit" value="save" name="submit" id="DocsaveButton"
-                class="saveButton">Save</button>
-            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                </a>
-            </button>
-        </div>
-    </div>
 
             {{-- bill of material tabs --}}
 
@@ -10460,9 +10538,6 @@
                         </div>
                     </div>
 
-
-
-
                     <div id="doc-istp" class="tabcontent">
                         <div class="orig-head">
                          Inprocess Standard Testing Procedure
@@ -10617,8 +10692,6 @@
                             </button>
                         </div>
                     </div>
-
-
 
                     <div id="doc-cvstp" class="tabcontent">
                         <div class="orig-head">
@@ -14767,7 +14840,7 @@
                         </div>
                     </div>
 
-                    <div class="input-fields">
+                    {{-- <div class="input-fields">
                         @if ($document->document_content && !empty($document->document_content->annexuredata))
                             @foreach (unserialize($document->document_content->annexuredata) as $data)
                                 <div class="group-input mb-3">
@@ -14783,6 +14856,38 @@
                                 </div>
                             @endfor
                         @endif
+                    </div> --}}
+
+                    <div class="input-fields">
+
+                        @if ($document->document_content && !empty($document->document_content->annexuredata))
+
+                            @foreach (unserialize($document->document_content->annexuredata) as $index => $data)
+
+                                {!! quillEditor(
+                                    "annexuredata[$index]",
+                                    $data,
+                                    '<label>Annexure A-' . ($index + 1) . '</label>',
+                                    false
+                                ) !!}
+
+                            @endforeach
+
+                        @else
+
+                            @for ($i = 0; $i < 20; $i++)
+
+                                {!! quillEditor(
+                                    "annexuredata[$i]",
+                                    '',
+                                    '<label>Annexure A-' . ($i + 1) . '</label>',
+                                    false
+                                ) !!}
+
+                            @endfor
+
+                        @endif
+
                     </div>
                     <div class="button-block">
                         <button type="submit" name="submit" value="save" class="saveButton">Save</button>
@@ -15771,7 +15876,7 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
          var editor = new FroalaEditor('.summernote', {
             key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
             imageUploadParam: 'image_param',
@@ -15786,24 +15891,24 @@
          });
          
         $(".summernote-disabled").FroalaEditor("edit.off");
-    </script>
+    </script> --}}
 
     <script>
         VirtualSelect.init({
             ele: '#reference_record,#parent_child, #notify_to'
         });
 
-        $('#summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
+        // $('#summernote').summernote({
+        //     toolbar: [
+        //         ['style', ['style']],
+        //         ['font', ['bold', 'underline', 'clear', 'italic']],
+        //         ['color', ['color']],
+        //         ['para', ['ul', 'ol', 'paragraph']],
+        //         ['table', ['table']],
+        //         ['insert', ['link', 'picture', 'video']],
+        //         ['view', ['fullscreen', 'codeview', 'help']]
+        //     ]
+        // });
     </script>
 
     <script>
