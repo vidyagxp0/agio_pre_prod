@@ -354,6 +354,49 @@
             display: block;
             margin: 5px auto;
         }
+        .quill-pdf-content{
+            width:100%;
+            font-size:12px;
+            line-height:1.4;
+        }
+
+        .quill-pdf-content p{
+            margin:5px 0;
+        }
+
+        .quill-pdf-content table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+
+        .quill-pdf-content table,
+        .quill-pdf-content th,
+        .quill-pdf-content td{
+            border:1px solid #000;
+        }
+
+        .quill-pdf-content td,
+        .quill-pdf-content th{
+            padding:5px;
+            vertical-align:top;
+        }
+
+        .quill-pdf-content img{
+            max-width:100%;
+            height:auto;
+        }
+
+        .quill-pdf-content ul,
+        .quill-pdf-content ol{
+            padding-left:20px;
+        }
+
+        .quill-pdf-content strong,
+        .quill-pdf-content b{
+            font-weight:bold;
+        }
         
     </style>
 
@@ -612,8 +655,8 @@
                         </tr>
                         <tr> 
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;">
-                                {!! strip_tags($data->label_claim_inps, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;" class="quill-pdf-content">
+                                {!! $data->label_claim_inps !!}
                             </td>
                         </tr>
                         <tr>
@@ -627,7 +670,7 @@
                         <tr> 
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for Analysis</td>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
-                                {!! strip_tags($data->sample_quantity_inps, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                {!! $data->sample_quantity_inps !!}
                             </td>
                         </tr>
                         <tr>
@@ -670,7 +713,7 @@
                     <div class="custom-procedure-content">
                         <div class="custom-content-wrapper">
                             <div class="table-containers">
-                                {!! strip_tags($data->ips_specificationGrid, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                {!! $data->ips_specificationGrid !!}
                             </div>
                         </div>
                     </div>

@@ -344,6 +344,50 @@
             display: block;
             margin: 5px auto;
         }
+
+        .quill-pdf-content{
+            width:100%;
+            font-size:12px;
+            line-height:1.4;
+        }
+
+        .quill-pdf-content p{
+            margin:5px 0;
+        }
+
+        .quill-pdf-content table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+
+        .quill-pdf-content table,
+        .quill-pdf-content th,
+        .quill-pdf-content td{
+            border:1px solid #000;
+        }
+
+        .quill-pdf-content td,
+        .quill-pdf-content th{
+            padding:5px;
+            vertical-align:top;
+        }
+
+        .quill-pdf-content img{
+            max-width:100%;
+            height:auto;
+        }
+
+        .quill-pdf-content ul,
+        .quill-pdf-content ol{
+            padding-left:20px;
+        }
+
+        .quill-pdf-content strong,
+        .quill-pdf-content b{
+            font-weight:bold;
+        }
         
     </style>
 
@@ -424,7 +468,7 @@
                                                 <h4 style="font-weight:bold">Annexure {{ $index + 1 }}</h4>
                                                 <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
                                             
-                                                    <div class="table-containers">
+                                                    <div class="quill-pdf-content">
                                                         {!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                                     </div>
                                                 </div>

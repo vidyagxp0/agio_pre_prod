@@ -353,6 +353,49 @@
             display: block;
             margin: 5px auto;
         }
+        .quill-pdf-content{
+            width:100%;
+            font-size:12px;
+            line-height:1.4;
+        }
+
+        .quill-pdf-content p{
+            margin:5px 0;
+        }
+
+        .quill-pdf-content table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+
+        .quill-pdf-content table,
+        .quill-pdf-content th,
+        .quill-pdf-content td{
+            border:1px solid #000;
+        }
+
+        .quill-pdf-content td,
+        .quill-pdf-content th{
+            padding:5px;
+            vertical-align:top;
+        }
+
+        .quill-pdf-content img{
+            max-width:100%;
+            height:auto;
+        }
+
+        .quill-pdf-content ul,
+        .quill-pdf-content ol{
+            padding-left:20px;
+        }
+
+        .quill-pdf-content strong,
+        .quill-pdf-content b{
+            font-weight:bold;
+        }
     </style>
 
 </head>
@@ -607,15 +650,15 @@
                   
                             <tr> 
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Formula</td>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
-                                    {!! strip_tags($data->molecular_formula_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;" class="quill-pdf-content">
+                                    {!! $data->molecular_formula_row_material !!}
                                 </td>
                             </tr>
 
                             <tr> 
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Weight</td>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
-                                    {!! strip_tags($data->molecular_weight_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;" class="quill-pdf-content">
+                                    {!! $data->molecular_weight_row_material !!}
                                 </td>
                             </tr>
 
@@ -635,8 +678,8 @@
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">
                                     Sampling procedure
                                 </td>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;">
-                                    {!! strip_tags($data->sampling_procedure_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;" class="quill-pdf-content">
+                                    {!! $data->sampling_procedure_row_material !!}
                                 </td>
                             </tr>
 
@@ -649,8 +692,8 @@
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">
                                     Sample Quantity for analysis
                                 </td>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;">
-                                    {!! strip_tags($data->sample_quantity_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;" class="quill-pdf-content">
+                                    {!! $data->sample_quantity_row_material !!}
                                 </td>
                             </tr>
                             <tr>
@@ -666,8 +709,8 @@
 
                             <tr> 
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions,warning and precautions</td>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
-                                    {!! strip_tags($data->sampling_instructions_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;" class="quill-pdf-content">
+                                    {!! $data->sampling_instructions_row_material !!}
                                 </td>
                             </tr>
 
@@ -697,8 +740,8 @@
                             <div class="custom-procedure-content">
                                 <div class="custom-content-wrapper">
 
-                                    <div class="table-containers">
-                                        {!! strip_tags($document->rawmaterials_specifications, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                    <div class="quill-pdf-content" >
+                                        {!! $document->rawmaterials_specifications !!}
                                     </div>
                                 </div>
                             </div>
