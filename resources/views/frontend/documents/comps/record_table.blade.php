@@ -1,3 +1,53 @@
+<style>
+    .document-table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    .document-table th,
+    .document-table td {
+        vertical-align: middle;
+    }
+
+    .document-table .pr-id {
+        width: 40px;
+    }
+
+    .document-table .doc-type {
+        width: 18%;
+    }
+
+    .document-table .division {
+        width: 60px;
+    }
+
+    .document-table .short-desc {
+        width: 32%;
+    }
+
+    .document-table .create-date,
+    .document-table .modify-date {
+        width: 90px;
+    }
+
+    .document-table .assign-name {
+        width: 90px;
+    }
+
+    .document-table .status {
+        width: 50px;
+    }
+
+    .document-table .action {
+        width: 50px;
+    }
+
+    .text-truncate-cell {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
 <div class="main-head">
     <div>Records</div>
     <div>
@@ -5,12 +55,12 @@
     </div>
 </div>
 <div class="table-list">
-    <table class="table table-bordered">
+    <table class="table table-bordered document-table">
         <thead>
             <th class="pr-id" data-bs-toggle="modal" data-bs-target="#division-modal">
                 ID
             </th>
-            <th class="division">
+            <th class="doc-type">
                 Document Type
             </th>
             <th class="division">
@@ -52,9 +102,9 @@
                     {{ Helpers::getDivisionName($doc->division_id) }}
                 </td>
 
-                <td style="display: inline-block;
+                <td style="display: ;
                 width: 305px;
-                white-space: nowrap;
+                white-space: ;
                 overflow: hidden !important;
                 text-overflow: ellipsis" class="short-desc">
                     {{ $doc->short_description }}

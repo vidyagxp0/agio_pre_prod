@@ -407,7 +407,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="border" style="width: 100%;">
+        <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
                     <td style="font-weight: bold;">
@@ -594,7 +594,7 @@
                         <div class="custom-container">
                             <div class="custom-table-wrapper" id="custom-table2">
                                 <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
+                                    <div class="quill-pdf-content">
                                         @if ($data->document_content)
                                             {!! $data->document_content->ipstp_testfield !!}
                                         @endif

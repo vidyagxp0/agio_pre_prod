@@ -1219,8 +1219,8 @@
                         </thead>
                     </table>
                         <div class="quill-pdf-content">
-    {!! $data->document_content->procedure !!}
-</div>
+                            {!! $data->document_content->procedure !!}
+                        </div>
                 </div>
                 {{-- PROCEDURE END --}}
 

@@ -13763,13 +13763,6 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="brand-name">Molecular Formula</label>
-                                        <input type="text" name="molecular_formula_row_material" value="{{$document->molecular_formula_row_material}}">
-                                    </div>
-                                </div> --}}
-
                                 <div class="col-12 sub-head">
                                     Molecular Formula
                                     <div class="group-input">
@@ -13777,13 +13770,6 @@
                                         <textarea name="molecular_formula_row_material" id="" class="summernote">{{ $document->molecular_formula_row_material ? $document->molecular_formula_row_material : '' }}</textarea>
                                     </div>
                                 </div>
-
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="label-claim">Molecular Weight</label>
-                                        <input type="text" name="molecular_weight_row_material" value="{{$document->molecular_weight_row_material}}">
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-12 sub-head">
                                      Molecular Weight
@@ -13889,15 +13875,23 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="rawmaterials_specifications">Specifications</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea name="rawmaterials_specifications" class="summernote">
-                                            {{ $document->rawmaterials_specifications }}
-                                        </textarea>
+                                {!! quillEditor(
+                                    'rawmaterials_specifications',
+                                    $document->rawmaterials_specifications,
+
+                                    '
+                                    <label for="rawmaterials_specifications">
+                                        Specifications
+                                    </label>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small>
                                     </div>
-                                </div>
+                                    ',
+
+                                    false
+                                ) !!}
 
                                 <div class="group-input">
                                     <label for="revision-history">Revision History</label>

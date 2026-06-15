@@ -469,7 +469,7 @@
                                                 <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
                                             
                                                     <div class="quill-pdf-content">
-                                                        {!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                                        {!! $annexure !!}
                                                     </div>
                                                 </div>
                                             </div>

@@ -416,7 +416,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="border" style="width: 100%;">
+        <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
                     <td style="font-weight: bold;">
@@ -727,7 +727,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="text-center">
+                            <th class="text-left">
                                 <div class="bold">SPECIFICATION</div>
                             </th>
                         </tr>

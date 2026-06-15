@@ -406,7 +406,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="border" style="width: 100%;">
+        <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
                     <td style="font-weight: bold;">

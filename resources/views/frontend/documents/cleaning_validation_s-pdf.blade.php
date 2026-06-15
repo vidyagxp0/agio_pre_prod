@@ -354,6 +354,50 @@
             display: block;
             margin: 5px auto;
         }
+
+        .quill-pdf-content{
+            width:100%;
+            font-size:12px;
+            line-height:1.4;
+        }
+
+        .quill-pdf-content p{
+            margin:5px 0;
+        }
+
+        .quill-pdf-content table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+
+        .quill-pdf-content table,
+        .quill-pdf-content th,
+        .quill-pdf-content td{
+            border:1px solid #000;
+        }
+
+        .quill-pdf-content td,
+        .quill-pdf-content th{
+            padding:5px;
+            vertical-align:top;
+        }
+
+        .quill-pdf-content img{
+            max-width:100%;
+            height:auto;
+        }
+
+        .quill-pdf-content ul,
+        .quill-pdf-content ol{
+            padding-left:20px;
+        }
+
+        .quill-pdf-content strong,
+        .quill-pdf-content b{
+            font-weight:bold;
+        }
         
     </style>
 
@@ -375,7 +419,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="border" style="width: 100%;">
+        <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
                     <td style="font-weight: bold;">
@@ -589,122 +633,117 @@
         </table>
     </footer>
 
-<div style="margin-top: 10px;">
-    <section class="main-section" id="pdf-page">
-        <section style="page-break-after: never;">
-            <div class="other-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="text-center">
-                                <div style="font-weight: bold;">GENERAL INFORMATION</div>
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
+        <div style="margin-top: 10px;">
+            <section class="main-section" id="pdf-page">
+                <section style="page-break-after: never;">
+                    <div class="other-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        <div style="font-weight: bold;">GENERAL INFORMATION</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
 
-                <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px; page-break-inside: avoid;">
-                    <tbody>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Generic Name</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->generic_name_cvs}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Brand Name</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->brand_name_cvs}}</td>
-                        </tr>
-                        <tr> 
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;">
-                                {!! strip_tags($data->label_claim_cvs, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Product Code</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->product_code_cvs}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->storage_condition_cvs}}</td>
-                        </tr>
-                        <tr> 
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for Analysis</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
-                                {!! strip_tags($data->sample_quantity_cvs, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample_cvs}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Custom Sample</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->custom_sample_cvs}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reference</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reference_cvs}}</td>
-                        </tr>
-                        <tr>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling Instructions Warning and Precautions</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions_cvs}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </section>
-</div>
+                        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px; page-break-inside: avoid;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Generic Name</td>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->generic_name_cvs}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Brand Name</td>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->brand_name_cvs}}</td>
+                                </tr>
+                            </tbody>  
+                        </table>      
+                    <div class="other-container ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        <div class="bold">Label Claim</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="custom-procedure-block">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper" id="custom-table2">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="quill-pdf-content">
+                                                {!! $data->label_claim_cvs !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                        <table>        
+                            <tbody>   
+                                <tr>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Product Code</td>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->product_code_cvs}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition</td>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->storage_condition_cvs}}</td>
+                                </tr>
+                            </tbody> 
+                        </table>       
+                    <div class="other-container ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        <div class="bold">Sample Quantity for Analysis</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="custom-procedure-block">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper" id="custom-table2">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="quill-pdf-content">
+                                                {!! $data->sample_quantity_cvs !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                        <table>        
+                            <tbody>    
+                                <tr>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity</td>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample_cvs}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Custom Sample</td>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->custom_sample_cvs}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reference</td>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reference_cvs}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling Instructions Warning and Precautions</td>
+                                    <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions_cvs}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </section>
+        </div>
 
-
-
-   
-    {{-- <table>
-        <thead>
-            <tr>
-                <th class="text-center">
-                    <div class="bold">SPECIFICATION</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
-
-    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold; text-align: center;">Sr. No</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold; text-align: center;">Tests</th>
-                <th style="border: 1px solid black; width: 40%; font-weight: bold; text-align: center;">Specifications</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold; text-align: center;">Reference</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if(!empty($specificationValidationData_cvs))
-                @foreach($specificationValidationData_cvs as $key => $itemData)
-                    <tr>
-                        <td style="border: 1px solid black; text-align: center; font-size: 16px; font-weight: bold;">
-                            {{ $key+1 }}
-                        </td>
-                        <td style="border: 1px solid black; text-align: center;">
-                            {{ $itemData['test'] ?? '' }}
-                        </td>
-                        <td style="border: 1px solid black; text-align: center;">
-                            {{ $itemData['specification'] ?? '' }}
-                        </td>
-                        <td style="border: 1px solid black; text-align: center;">
-                            {{ $itemData['reference'] ?? '' }}
-                        </td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="4" style="border: 1px solid black; text-align: center; font-weight: bold;">
-                        No Data Available
-                    </td>
-                </tr>
-            @endif
-        </tbody>
-    </table> --}}
 
     
                     <div class="other-container ">
@@ -722,8 +761,8 @@
                                 <div class="custom-table-wrapper" id="custom-table2">
                                     <div class="custom-procedure-content">
                                         <div class="custom-content-wrapper">
-                                            <div class="table-containers">
-                                                {!! strip_tags($data->cvs_specificationGrid, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            <div class="quill-pdf-content">
+                                                {!! $data->cvs_specificationGrid !!}
                                             </div>
                                         </div>
                                     </div>

@@ -405,7 +405,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="border" style="width: 100%;">
+        <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
                     <td style="font-weight: bold;">
@@ -637,6 +637,8 @@
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Brand Name</td>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->brand_name}}</td>
                         </tr>
+                    </tbody>    
+                </table>    
                         <tr> 
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim</td>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;" class="quill-pdf-content">
