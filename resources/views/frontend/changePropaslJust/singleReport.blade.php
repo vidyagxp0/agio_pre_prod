@@ -343,8 +343,16 @@
                             {{ Helpers::getInitiatorName($data->initiator_id) }}
                         </td>
 
-                        <th class="w-20">Date of Initiation</th>
+                        <th class="w-20">Initiation Department</th>
                         <td class="w-30">
+                            {{ Helpers::getUserDepartmentFromDB(Auth::user()->departmentid) }}
+                        </td>
+                    </tr>
+
+                    <tr>  
+
+                        <th class="w-20">Date of Initiation</th>
+                        <td class="w-30" colspan="3">
                             {{ Helpers::getdateFormat($data->created_at) }}
                         </td>
                     </tr>

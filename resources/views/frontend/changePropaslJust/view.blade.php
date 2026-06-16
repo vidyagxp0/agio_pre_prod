@@ -482,27 +482,28 @@
                                                         @foreach ($changeProposalGrid->data as $index => $item)
                                                             <tr>
                                                                 <td>
-                                                                    <input disabled type="text"
-                                                                        name="change_proposal_grid[{{ $index }}][serial]"
-                                                                        value="{{ $loop->iteration }}" {{ $istab1 ? "" : "readonly" }}>
+                                                                <input disabled type="text"
+                                                                    name="change_proposal_grid[{{ $index }}][serial]"
+                                                                    value="{{ $loop->iteration }}"
+                                                                    {{ $istab1 ? '' : 'readonly' }}>
                                                                 </td>
 
                                                                 <td>
-                                                                    <input type="text"
+                                                                    <textarea
                                                                         name="change_proposal_grid[{{ $index }}][existing_system]"
-                                                                        value="{{ $item['existing_system'] ?? '' }}" {{ $istab1 ? "" : "readonly" }}>
+                                                                        {{ $istab1 ? '' : 'readonly' }}>{{ $item['existing_system'] ?? '' }}</textarea>
                                                                 </td>
 
                                                                 <td>
-                                                                    <input type="text"
+                                                                    <textarea
                                                                         name="change_proposal_grid[{{ $index }}][proposed_change]"
-                                                                        value="{{ $item['proposed_change'] ?? '' }}" {{ $istab1 ? "" : "readonly" }}>
+                                                                        {{ $istab1 ? '' : 'readonly' }}>{{ $item['proposed_change'] ?? '' }}</textarea>
                                                                 </td>
 
                                                                 <td>
-                                                                    <input type="text"
+                                                                    <textarea
                                                                         name="change_proposal_grid[{{ $index }}][justification]"
-                                                                        value="{{ $item['justification'] ?? '' }}" {{ $istab1 ? "" : "readonly" }}>
+                                                                        {{ $istab1 ? '' : 'readonly' }}>{{ $item['justification'] ?? '' }}</textarea>
                                                                 </td>
 
                                                                 <td>
