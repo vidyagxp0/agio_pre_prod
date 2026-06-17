@@ -137,7 +137,9 @@ class ErrataController extends Controller
             $files = [];
             if ($request->hasFile('QA_Attachments')) {
                 foreach ($request->file('QA_Attachments') as $file) {
-                    $name = $request->name . 'QA_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'QA_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'QA_Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -151,7 +153,8 @@ class ErrataController extends Controller
             $files = [];
             if ($request->hasFile('HOD_Attachments')) {
                 foreach ($request->file('HOD_Attachments') as $file) {
-                    $name = $request->name . 'HOD_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'HOD_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'HOD_Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -166,7 +169,8 @@ class ErrataController extends Controller
             $files = [];
             if ($request->hasFile('Closure_Attachments')) {
                 foreach ($request->file('Closure_Attachments') as $file) {
-                    $name = $request->name . 'Closure_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'Closure_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Closure_Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -178,7 +182,8 @@ class ErrataController extends Controller
             $files = [];
             if ($request->hasFile('Initiator_Attachments')) {
                 foreach ($request->file('Initiator_Attachments') as $file) {
-                    $name = $request->name . 'Initiator_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'Initiator_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Initiator_Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -190,7 +195,8 @@ class ErrataController extends Controller
             $files = [];
             if ($request->hasFile('Approval_Attachments')) {
                 foreach ($request->file('Approval_Attachments') as $file) {
-                    $name = $request->name . 'Approval_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'Approval_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Approval_Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -202,7 +208,8 @@ class ErrataController extends Controller
             $files = [];
             if ($request->hasFile('HOD_Attachments1')) {
                 foreach ($request->file('HOD_Attachments1') as $file) {
-                    $name = $request->name . 'HOD_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'HOD_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'HOD_Attachments1' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -214,7 +221,8 @@ class ErrataController extends Controller
             $files = [];
             if ($request->hasFile('QA_Attachments1')) {
                 foreach ($request->file('QA_Attachments1') as $file) {
-                    $name = $request->name . 'QA_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'QA_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'QA_Attachments1' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -2250,7 +2258,8 @@ class ErrataController extends Controller
             $newFiles = [];
             if ($request->hasFile('QA_Attachments')) {
                 foreach ($request->file('QA_Attachments') as $file) {
-                    $name = $request->name . 'QA_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'QA_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'QA_Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -2293,7 +2302,8 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
     $newFiles = [];
     if ($request->hasFile('HOD_Attachments')) {
         foreach ($request->file('HOD_Attachments') as $file) {
-            $name = $request->name . 'HOD_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            // $name = $request->name . 'HOD_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $name = $request->name . 'HOD_Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/'), $name);
             $newFiles[] = $name;
         }
@@ -2335,7 +2345,8 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
     $newFiles = [];
     if ($request->hasFile('Closure_Attachments')) {
         foreach ($request->file('Closure_Attachments') as $file) {
-            $name = $request->name . 'Closure_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            // $name = $request->name . 'Closure_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $name = $request->name . 'Closure_Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/'), $name);
             $newFiles[] = $name;
         }
@@ -2373,7 +2384,8 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
             $newFiles = [];
             if ($request->hasFile('Initiator_Attachments')) {
                 foreach ($request->file('Initiator_Attachments') as $file) {
-                    $name = $request->name . 'Initiator_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'Initiator_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Initiator_Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -2390,7 +2402,8 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
             $files = [];
             if ($request->hasFile('QA_Attachments1')) {
                 foreach ($request->file('QA_Attachments1') as $file) {
-                    $name = $request->name . 'QA_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'QA_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'QA_Attachments1' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -2425,7 +2438,8 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
             $newFiles = [];
             if ($request->hasFile('Approval_Attachments')) {
                 foreach ($request->file('Approval_Attachments') as $file) {
-                    $name = $request->name . 'Approval_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'Approval_Attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Approval_Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -2462,7 +2476,8 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
             $newFiles = [];
             if ($request->hasFile('HOD_Attachments1')) {
                 foreach ($request->file('HOD_Attachments1') as $file) {
-                    $name = $request->name . 'HOD_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'HOD_Attachments1' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'HOD_Attachments1' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
