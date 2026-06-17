@@ -510,8 +510,8 @@
                                                 <label for="Division Code">Site/Location Code</label>
                                                 <input readonly type="text" name="division_code"
                                                     value=" {{ Helpers::getDivisionName($data->division_id) }}">
-                                                <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                                {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                                <input type="hidden" name="division_id" value="{{ $data->division_id }}">
+                                                {{-- <div class="static">{{ Helpers::getDivisionName($data->division_id) }}</div> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -802,6 +802,32 @@
                                                 <textarea name="containment_comments" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->containment_comments }}</textarea>
                                             </div>
                                         </div>
+                                        
+<script>
+document.addEventListener('click', function(e) {
+
+    let btn = e.target.closest('.remove-file');
+
+    if (!btn) return;
+
+    let fileContainer = btn.closest('.file-container');
+    let attachmentList = btn.closest('.file-attachment-list');
+
+    let inputId = attachmentList.dataset.deleteInput;
+    let hiddenInput = document.getElementById(inputId);
+
+    let deletedFiles = hiddenInput.value
+        ? JSON.parse(hiddenInput.value)
+        : [];
+
+    deletedFiles.push(btn.dataset.fileName);
+
+    hiddenInput.value = JSON.stringify(deletedFiles);
+
+    fileContainer.remove();
+});
+</script>
+
 
                                         <div class="col-12">
                                             <div class="group-input">
@@ -810,7 +836,8 @@
                                                 {{-- <input type="file" id="myfile" name="capa_attachment"
                                                     {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> --}}
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="capa_attachment">
+                                                    <input type="hidden" name="deleted_capa_files" id="deleted_capa_files">
+                                                    <div class="file-attachment-list" id="capa_attachment" data-delete-input="deleted_capa_files">
 
                                                         {{-- @if (is_array($data->capa_attachment)) --}}
                                                         @if ($data->capa_attachment)
@@ -1312,9 +1339,10 @@
                                                 <label for="Closure Attachments">File Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
-                                                {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                                               
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="capafileattachement">
+                                                     <input type="hidden" name="deleted_capafileattachement" id="deleted_capafileattachement">
+                                                    <div class="file-attachment-list" id="capafileattachement" data-delete-input="deleted_capafileattachement">
                                                         @if ($data->capafileattachement)
                                                         @foreach (json_decode($data->capafileattachement) as $file)
                                                             <h6 type="button" class="file-container text-dark"
@@ -1385,7 +1413,8 @@
                         </div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="hod_attachment">
+                         <input type="hidden" name="deleted_hod_attachment" id="deleted_hod_attachment">
+                        <div class="file-attachment-list" id="hod_attachment" data-delete-input="deleted_hod_attachment">
                             @if ($data->hod_attachment)
                             @foreach (json_decode($data->hod_attachment) as $file)
                                 <h6 type="button" class="file-container text-dark"
@@ -1483,12 +1512,13 @@
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Closure Attachments">{{--CAPA--}} QA/CQA Attachment</label>
+                    <label for="Closure Attachments">QA/CQA Attachment</label>
                     <div><small class="text-primary">Please Attach all relevant or supporting
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_attachment">
+                          <input type="hidden" name="deleted_qa_attachment" id="deleted_qa_attachment">
+                        <div class="file-attachment-list" id="qa_attachment" data-delete-input="deleted_qa_attachment">
 
                             @if ($data->qa_attachment)
                             @foreach (json_decode($data->qa_attachment) as $file)
@@ -1605,7 +1635,8 @@
                                                 {{-- <input type="file" id="myfile" name="closure_attachment"
                                                     {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> --}}
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="closure_attachment1">
+                                                    <input type="hidden" name="deleted_closure_attachment" id="deleted_closure_attachment">
+                                                    <div class="file-attachment-list" id="closure_attachment1" data-delete-input="deleted_closure_attachment">
                                                         @if ($data->closure_attachment)
                                                             @foreach (json_decode($data->closure_attachment) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
@@ -1771,7 +1802,8 @@
                                                 {{-- <input type="file" id="myfile" name="closure_attachment"
                                                     {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> --}}
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="hod_final_attachment">
+                                                    <input type="hidden" name="deleted_hod_final_attachment" id="deleted_hod_final_attachment">
+                                                    <div class="file-attachment-list" id="hod_final_attachment"  data-delete-input="deleted_hod_final_attachment">
                                                         @if ($data->hod_final_attachment)
                                                             @foreach (json_decode($data->hod_final_attachment) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
@@ -1873,7 +1905,8 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="initiator_capa_attachment">
+                       <input type="hidden" name="deleted_initiator_capa_attachment" id="deleted_initiator_capa_attachment">
+                        <div class="file-attachment-list" id="initiator_capa_attachment" data-delete-input="deleted_initiator_capa_attachment">
 
                             @if ($data->initiator_capa_attachment)
                             @foreach (json_decode($data->initiator_capa_attachment) as $file)
@@ -1971,7 +2004,8 @@
                             documents</small></div>
                     {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="qa_closure_attachment">
+                    <input type="hidden" name="deleted_qa_closure_attachment" id="deleted_qa_closure_attachment">
+                        <div class="file-attachment-list" id="qa_closure_attachment" data-delete-input="deleted_qa_closure_attachment">
 
                             @if ($data->qa_closure_attachment)
                             @foreach (json_decode($data->qa_closure_attachment) as $file)
@@ -2107,7 +2141,8 @@
                                                 {{-- <input type="file" id="myfile" name="capa_attachment"
                                                     {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> --}}
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="qah_cq_attachment">
+                                                      <input type="hidden" name="deleted_qah_cq_attachment" id="deleted_qah_cq_attachment">
+                                                    <div class="file-attachment-list" id="qah_cq_attachment" data-delete-input="deleted_qah_cq_attachment">
 
                                                         {{-- @if (is_array($data->qah_cq_attachment)) --}}
                                                         @if ($data->qah_cq_attachment)
@@ -2704,7 +2739,7 @@
                                 <div class="group-input">
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Action_Item">
-                                        <input type="hidden" name="CAPA" value="{{Helpers::getDivisionName(session()->get('division'))}}/CAPA/{{ date('Y') }}/{{ $data->record}}">
+                                        <input type="hidden" name="CAPA" value="{{Helpers::getDivisionName($data->division_id)}}/CAPA/{{ date('Y') }}/{{ $data->record}}">
                                         Action-Item
                                     </label>
                                 </div>

@@ -243,7 +243,9 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('risk_attachment')) {
                 foreach ($request->file('risk_attachment') as $file) {
-                    $name = $request->name . 'risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    //$name = $request->name . 'risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'risk_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -256,7 +258,8 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('risk_ana_attach')) {
                 foreach ($request->file('risk_ana_attach') as $file) {
-                    $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'risk_ana_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -280,7 +283,8 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('hod_design_attach')) {
                 foreach ($request->file('hod_design_attach') as $file) {
-                    $name = $request->name . 'hod_design_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . 'hod_design_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'hod_design_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -294,7 +298,8 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('reference')) {
                 foreach ($request->file('reference') as $file) {
-                    $name = $request->name . 'reference' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . 'reference' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'reference' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2898,7 +2903,8 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('risk_attachment')) {
                 foreach ($request->file('risk_attachment') as $file) {
-                    $name = $request->name . 'risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                  //  $name = $request->name . 'risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'risk_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2912,7 +2918,8 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('risk_ana_attach')) {
                 foreach ($request->file('risk_ana_attach') as $file) {
-                    $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       $name = $request->name . 'risk_ana_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2938,7 +2945,8 @@ class RiskManagementController extends Controller
             $files = [];
             if ($request->hasfile('hod_design_attach')) {
                 foreach ($request->file('hod_design_attach') as $file) {
-                    $name = $request->name . 'hod_design_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'hod_design_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       $name = $request->name . 'hod_design_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2950,7 +2958,8 @@ class RiskManagementController extends Controller
         if ($request->hasFile('qa_cqa_attachments')) {
             $files = [];
             foreach ($request->file('qa_cqa_attachments') as $file) {
-                $name = $request->name . '_qa_cqa_attachments_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                // $name = $request->name . '_qa_cqa_attachments_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'qa_cqa_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('upload/'), $name);
                 $files[] = $name;
             }
@@ -2960,7 +2969,8 @@ class RiskManagementController extends Controller
         $data->fill($request->except('qa_cqa_head_attach'));if ($request->hasFile('qa_cqa_head_attach')) {
             $files = [];
             foreach ($request->file('qa_cqa_head_attach') as $file) {
-                $name = $request->name . '_qa_cqa_head_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                //$name = $request->name . '_qa_cqa_head_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'qa_cqa_head_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('upload/'), $name);
                 $files[] = $name;
             }
@@ -3176,7 +3186,8 @@ class RiskManagementController extends Controller
 
                 if ($request->hasfile('Production_Table_Attachment')) {
                     foreach ($request->file('Production_Table_Attachment') as $file) {
-                        $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                           $name = $request->name . 'Production_Table_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3202,7 +3213,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Production_Injection_Attachment')) {
                     foreach ($request->file('Production_Injection_Attachment') as $file) {
-                        $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                      //  $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Production_Injection_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3214,7 +3226,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Quality_Control_attachment')) {
                     foreach ($request->file('Quality_Control_attachment') as $file) {
-                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Quality_Control_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3226,7 +3239,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Quality_Assurance_attachment')) {
                     foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Quality_Assurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3237,7 +3251,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Engineering_attachment')) {
                     foreach ($request->file('Engineering_attachment') as $file) {
-                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Engineering_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3248,7 +3263,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Analytical_Development_attachment')) {
                     foreach ($request->file('Analytical_Development_attachment') as $file) {
-                        $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Analytical_Development_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3260,7 +3276,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Kilo_Lab_attachment')) {
                     foreach ($request->file('Kilo_Lab_attachment') as $file) {
-                        $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Kilo_Lab_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3272,7 +3289,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Technology_transfer_attachment')) {
                     foreach ($request->file('Technology_transfer_attachment') as $file) {
-                        $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Technology_transfer_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3284,7 +3302,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Environment_Health_Safety_attachment')) {
                     foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Environment_Health_Safety_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3296,7 +3315,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Human_Resource_attachment')) {
                     foreach ($request->file('Human_Resource_attachment') as $file) {
-                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Human_Resource_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3308,8 +3328,9 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
                     foreach ($request->file('Information_Technology_attachment') as $file) {
-                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
+                       // $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Information_Technology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension(); 
+                       $file->move('upload/', $name);
                         $files[] = $name;
                     }
                 }
@@ -3320,7 +3341,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Project_management_attachment')) {
                     foreach ($request->file('Project_management_attachment') as $file) {
-                        $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Project_management_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3333,7 +3355,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('CorporateQualityAssurance_attachment')) {
                     foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'CorporateQualityAssurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3346,7 +3369,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('ProductionLiquid_attachment')) {
                     foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                        $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'ProductionLiquid_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3359,7 +3383,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Microbiology_attachment')) {
                     foreach ($request->file('Microbiology_attachment') as $file) {
-                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Microbiology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3372,7 +3397,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('ContractGiver_attachment')) {
                     foreach ($request->file('ContractGiver_attachment') as $file) {
-                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'ContractGiver_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3385,7 +3411,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
                     foreach ($request->file('Store_attachment') as $file) {
-                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                      //  $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Store_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3398,7 +3425,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('ResearchDevelopment_attachment')) {
                     foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                        $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'ResearchDevelopment_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3411,7 +3439,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('RegulatoryAffair_attachment')) {
                     foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'RegulatoryAffair_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3423,7 +3452,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Other1_attachment')) {
                     foreach ($request->file('Other1_attachment') as $file) {
-                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                      //  $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Other1_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3448,8 +3478,9 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Other3_attachment')) {
                     foreach ($request->file('Other3_attachment') as $file) {
-                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
+                     //   $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                      $name = $request->name . 'Other3_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();  
+                     $file->move('upload/', $name);
                         $files[] = $name;
                     }
                 }
@@ -3459,7 +3490,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Other4_attachment')) {
                     foreach ($request->file('Other4_attachment') as $file) {
-                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Other4_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3471,7 +3503,8 @@ class RiskManagementController extends Controller
                 $files = [];
                 if ($request->hasfile('Other5_attachment')) {
                     foreach ($request->file('Other5_attachment') as $file) {
-                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Other5_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3532,7 +3565,8 @@ class RiskManagementController extends Controller
 
                 if ($request->hasfile('Initial_attachment')) {
                     foreach ($request->file('Initial_attachment') as $file) {
-                        $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Initial_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }

@@ -358,7 +358,9 @@ class DeviationController extends Controller
             $files = [];
             if ($request->hasfile('hod_file_attachment')) {
                 foreach ($request->file('hod_file_attachment') as $file) {
-                    $name = $request->name . 'hod_file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                  //  $name = $request->name . 'hod_file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_file_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -397,7 +399,9 @@ class DeviationController extends Controller
             $files = [];
             if ($request->hasfile('initial_file')) {
                 foreach ($request->file('initial_file') as $file) {
-                    $name = $request->name . 'initial_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    //$name = $request->name . 'initial_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'initial_file' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -411,7 +415,9 @@ class DeviationController extends Controller
             $files = [];
             if ($request->hasfile('Initial_attachment')) {
                 foreach ($request->file('Initial_attachment') as $file) {
-                    $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                  //  $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Initial_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2116,7 +2122,9 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
     $newFiles = [];
     if ($request->hasFile('CAPA_Closure_attachment')) {
         foreach ($request->file('CAPA_Closure_attachment') as $file) {
-            $name = $request->name . 'CAPA_Closure_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            //$name = $request->name . 'CAPA_Closure_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+             $name = $request->name . 'CAPA_Closure_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
             $file->move(public_path('upload/'), $name);
             $newFiles[] = $name;
         }
@@ -2779,7 +2787,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('RA_attachment')) {
                     foreach ($request->file('RA_attachment') as $file) {
-                        $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                      //  $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'RA_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2790,7 +2800,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Quality_Assurance_attachment')) {
                     foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Quality_Assurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2801,7 +2813,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Production_Table_Attachment')) {
                     foreach ($request->file('Production_Table_Attachment') as $file) {
-                        $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Production_Table_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2812,7 +2826,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('ProductionLiquid_attachment')) {
                     foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                        $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'ProductionLiquid_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2823,7 +2839,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Production_Injection_Attachment')) {
                     foreach ($request->file('Production_Injection_Attachment') as $file) {
-                        $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       $name = $request->name . 'Production_Injection_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2834,7 +2852,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
                     foreach ($request->file('Store_attachment') as $file) {
-                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Store_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2845,7 +2865,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Quality_Control_attachment')) {
                     foreach ($request->file('Quality_Control_attachment') as $file) {
-                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'Quality_Control_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2856,7 +2878,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('ResearchDevelopment_attachment')) {
                     foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                        $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'ResearchDevelopment_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2867,7 +2891,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Engineering_attachment')) {
                     foreach ($request->file('Engineering_attachment') as $file) {
-                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Engineering_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2878,7 +2904,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Human_Resource_attachment')) {
                     foreach ($request->file('Human_Resource_attachment') as $file) {
-                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Human_Resource_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2889,7 +2917,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Microbiology_attachment')) {
                     foreach ($request->file('Microbiology_attachment') as $file) {
-                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Microbiology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2900,7 +2930,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('RegulatoryAffair_attachment')) {
                     foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        //$name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                         $name = $request->name . 'RegulatoryAffair_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2911,7 +2943,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('CorporateQualityAssurance_attachment')) {
                     foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'CorporateQualityAssurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2922,7 +2956,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Environment_Health_Safety_attachment')) {
                     foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                      //  $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Environment_Health_Safety_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2933,8 +2969,10 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
                     foreach ($request->file('Information_Technology_attachment') as $file) {
-                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
+                       // $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       $name = $request->name . 'Information_Technology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        
+                       $file->move('upload/', $name);
                         $files[] = $name;
                     }
                 }
@@ -2944,7 +2982,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('ContractGiver_attachment')) {
                     foreach ($request->file('ContractGiver_attachment') as $file) {
-                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'ContractGiver_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2955,7 +2995,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Other1_attachment')) {
                     foreach ($request->file('Other1_attachment') as $file) {
-                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       $name = $request->name . 'Other1_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2966,8 +3008,10 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Other2_attachment')) {
                     foreach ($request->file('Other2_attachment') as $file) {
-                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
+                       // $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       $name = $request->name . 'Other2_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        
+                       $file->move('upload/', $name);
                         $files[] = $name;
                     }
                 }
@@ -2977,7 +3021,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Other3_attachment')) {
                     foreach ($request->file('Other3_attachment') as $file) {
-                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                      //  $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                      $name = $request->name . 'Other3_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2988,7 +3034,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Other4_attachment')) {
                     foreach ($request->file('Other4_attachment') as $file) {
-                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       $name = $request->name . 'Other4_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3000,7 +3048,9 @@ $data8->save();
                 $files = [];
                 if ($request->hasfile('Other5_attachment')) {
                     foreach ($request->file('Other5_attachment') as $file) {
-                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       // $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       $name = $request->name . 'Other5_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -3111,7 +3161,9 @@ $data8->save();
     $newFiles = [];
     if ($request->hasFile('Initial_attachment')) {
         foreach ($request->file('Initial_attachment') as $file) {
-            $name = $request->name . 'Initial_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+          //  $name = $request->name . 'Initial_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+           $name = $request->name . 'Initial_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
             $file->move(public_path('upload/'), $name);
             $newFiles[] = $name;
         }
@@ -3138,6 +3190,8 @@ $data8->save();
             if ($request->hasfile('hod_file_attachment')) {
                 foreach ($request->file('hod_file_attachment') as $file) {
                     $name = $request->name . 'hod_file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'hod_file_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3158,7 +3212,9 @@ $data8->save();
 
             if ($request->hasfile('pending_attachment')) {
                 foreach ($request->file('pending_attachment') as $file) {
-                    $name = $request->name . 'pending_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . 'pending_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'pending_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3182,7 +3238,9 @@ $data8->save();
     $newFiles = [];
     if ($request->hasFile('hod_final_attachment')) {
         foreach ($request->file('hod_final_attachment') as $file) {
-            $name = $request->name . 'hod_final_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+           // $name = $request->name . 'hod_final_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+              $name = $request->name . 'hod_final_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
             $file->move(public_path('upload/'), $name);
             $newFiles[] = $name;
         }
@@ -3217,7 +3275,9 @@ if (!empty($request->qa_final_assement_attach) || !empty($request->deleted_qa_fi
  $newFiles = [];
  if ($request->hasFile('qa_final_assement_attach')) {
      foreach ($request->file('qa_final_assement_attach') as $file) {
-         $name = $request->name . 'qa_final_assement_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+       //  $name = $request->name . 'qa_final_assement_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $name = $request->name . 'qa_final_assement_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
          $file->move(public_path('upload/'), $name);
          $newFiles[] = $name;
      }
@@ -3249,7 +3309,9 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
  $newFiles = [];
  if ($request->hasFile('qa_head_designee_attach')) {
      foreach ($request->file('qa_head_designee_attach') as $file) {
-         $name = $request->name . 'qa_head_designee_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+        // $name = $request->name . 'qa_head_designee_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+          $name = $request->name . 'qa_head_designee_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
          $file->move(public_path('upload/'), $name);
          $newFiles[] = $name;
      }
@@ -3311,7 +3373,9 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
     $newFiles = [];
     if ($request->hasFile('initial_file')) {
         foreach ($request->file('initial_file') as $file) {
-            $name = $request->name . 'initial_file' . uniqid() . '.' . $file->getClientOriginalExtension();
+           // $name = $request->name . 'initial_file' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $name = $request->name . 'initial_file' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
             $file->move(public_path('upload/'), $name);
             $newFiles[] = $name;
         }
@@ -3336,7 +3400,9 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
             if ($request->hasfile('QA_attachment')) {
                 foreach ($request->file('QA_attachment') as $file) {
-                    $name = $request->name . 'QA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . 'QA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'QA_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3360,7 +3426,9 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
             if ($request->hasfile('closure_attachment')) {
                 foreach ($request->file('closure_attachment') as $file) {
-                    $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                  //  $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'closure_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3386,7 +3454,9 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
             if ($request->hasfile('Investigation_attachment')) {
                 foreach ($request->file('Investigation_attachment') as $file) {
-                    $name = $request->name . 'Investigation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    //$name = $request->name . 'Investigation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'Investigation_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3412,7 +3482,9 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
             if ($request->hasfile('other_attachment')) {
                 foreach ($request->file('other_attachment') as $file) {
-                    $name = $request->name . 'other_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . 'other_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'other_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3436,7 +3508,9 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
             if ($request->hasfile('Capa_attachment')) {
                 foreach ($request->file('Capa_attachment') as $file) {
-                    $name = $request->name . 'Capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . 'Capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'Capa_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3460,7 +3534,9 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
     $newFiles = [];
     if ($request->hasFile('QA_attachments')) {
         foreach ($request->file('QA_attachments') as $file) {
-            $name = $request->name . 'QA_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+            //$name = $request->name . 'QA_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+             $name = $request->name . 'QA_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
             $file->move(public_path('upload/'), $name);
             $newFiles[] = $name;
         }
