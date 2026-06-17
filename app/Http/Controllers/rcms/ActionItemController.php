@@ -160,7 +160,7 @@ foreach ($pre as $processName => $modelClass) {
        // $openState->hod_preson = json_encode($request->hod_preson);
        if (is_array($request->hod_preson)) {
         $openState->hod_preson = implode(',', $request->hod_preson);
-    }
+        }
         $openState->dept = $request->dept;
         $openState->description = $request->description;
         $openState->departments = $request->departments;
@@ -180,7 +180,8 @@ foreach ($pre as $processName => $modelClass) {
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
 
-                    $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -194,7 +195,7 @@ foreach ($pre as $processName => $modelClass) {
             if ($request->hasfile('acknowledge_attach')) {
                 foreach ($request->file('acknowledge_attach') as $file) {
 
-                    $name = $request->name . 'acknowledge_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'acknowledge_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -208,7 +209,9 @@ foreach ($pre as $processName => $modelClass) {
             if ($request->hasfile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
 
-                    $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Support_doc' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -221,7 +224,9 @@ foreach ($pre as $processName => $modelClass) {
             if ($request->hasfile('final_attach')) {
                 foreach ($request->file('final_attach') as $file) {
 
-                    $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'final_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -417,47 +422,12 @@ foreach ($pre as $processName => $modelClass) {
                 $history->save();
                 }
 
-        if (!empty($openState->Reference_Recores1)) {
-        $history = new ActionItemHistory();
-        $history->cc_id =   $openState->id;
-        $history->activity_type = 'Reference_Recores1';
-        $history->previous = "Null";
-        $history->current =  $openState->Reference_Recores1;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->change_to = "Opened";
-        $history->change_from = "Initiation";
-        $history->action_name = "Create";
-        $history->save();
-        }
-
-
-        if (!empty($request->departments)) {
-            $history = new ActionItemHistory();
-            $history->cc_id =  $openState->id;
-            $history->activity_type = 'Responsible Department';
-            $history->previous = "Null";
-            $history->current = $request->departments;
-            $history->comment = "Not Applicable";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->change_to = "Opened";
-            $history->change_from = "Initiation";
-            $history->action_name = "Create";
-            $history->save();
-        }
-
-        if (!empty($openState->initiatorGroup)) {
+            if (!empty($openState->Reference_Recores1)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
-            $history->activity_type = 'Inititator Group';
+            $history->activity_type = 'Reference_Recores1';
             $history->previous = "Null";
-            $history->current =  $openState->initiatorGroup;
+            $history->current =  $openState->Reference_Recores1;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -466,8 +436,43 @@ foreach ($pre as $processName => $modelClass) {
             $history->change_to = "Opened";
             $history->change_from = "Initiation";
             $history->action_name = "Create";
-
             $history->save();
+            }
+
+
+            if (!empty($request->departments)) {
+                $history = new ActionItemHistory();
+                $history->cc_id =  $openState->id;
+                $history->activity_type = 'Responsible Department';
+                $history->previous = "Null";
+                $history->current = $request->departments;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $openState->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+                $history->save();
+            }
+
+            if (!empty($openState->initiatorGroup)) {
+                $history = new ActionItemHistory();
+                $history->cc_id =   $openState->id;
+                $history->activity_type = 'Inititator Group';
+                $history->previous = "Null";
+                $history->current =  $openState->initiatorGroup;
+                $history->comment = "Not Applicable";
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $openState->status;
+                $history->change_to = "Opened";
+                $history->change_from = "Initiation";
+                $history->action_name = "Create";
+
+                $history->save();
             }
 
 
@@ -593,7 +598,7 @@ foreach ($pre as $processName => $modelClass) {
         $history->action_name = "Create";
 
         $history->save();
-   }
+        }
         if (!empty($openState->qa_comments)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
@@ -879,7 +884,9 @@ foreach ($pre as $processName => $modelClass) {
             $newFiles = [];
             if ($request->hasFile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
-                    $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -932,7 +939,9 @@ foreach ($pre as $processName => $modelClass) {
             $newFiles = [];
             if ($request->hasFile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
-                    $name = $request->name . 'Support_doc' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'Support_doc' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Support_doc' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -973,7 +982,9 @@ foreach ($pre as $processName => $modelClass) {
             $newFiles = [];
             if ($request->hasFile('acknowledge_attach')) {
                 foreach ($request->file('acknowledge_attach') as $file) {
-                    $name = $request->name . 'acknowledge_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'acknowledge_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'acknowledge_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -1003,7 +1014,9 @@ foreach ($pre as $processName => $modelClass) {
             $newFiles = [];
             if ($request->hasFile('final_attach')) {
                 foreach ($request->file('final_attach') as $file) {
-                    $name = $request->name . 'final_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'final_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'final_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
