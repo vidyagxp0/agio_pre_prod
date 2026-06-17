@@ -222,7 +222,8 @@ class CapaController extends Controller
             $files = [];
             if ($request->hasfile('capa_attachment')) {
                 foreach ($request->file('capa_attachment') as $file) {
-                    $name = $request->name . '-capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . '-capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'capa_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -233,7 +234,8 @@ class CapaController extends Controller
             $files = [];
             if ($request->hasfile('cft_attchament_new')) {
                 foreach ($request->file('cft_attchament_new') as $file) {
-                    $name = $request->name . '-cft_attchament_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . '-cft_attchament_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'cft_attchament_new' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -245,6 +247,7 @@ class CapaController extends Controller
             if ($request->hasfile('additional_attachments')) {
                 foreach ($request->file('additional_attachments') as $file) {
                     $name = $request->name . '-additional_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'additional_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -255,7 +258,9 @@ class CapaController extends Controller
             $files = [];
             if ($request->hasfile('group_attachments_new')) {
                 foreach ($request->file('group_attachments_new') as $file) {
-                    $name = $request->name . '-group_attachments_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . '-group_attachments_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       $name = $request->name . 'group_attachments_new' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -277,7 +282,9 @@ class CapaController extends Controller
             $files = [];
             if ($request->hasfile('qa_attachment')) {
                 foreach ($request->file('qa_attachment') as $file) {
-                    $name = $request->name . '-qa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . '-qa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                       $name = $request->name . 'qa_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -288,7 +295,8 @@ class CapaController extends Controller
             $files = [];
             if ($request->hasfile('capafileattachement')) {
                 foreach ($request->file('capafileattachement') as $file) {
-                    $name = $request->name . '-capafileattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    //$name = $request->name . '-capafileattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'capafileattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -310,7 +318,8 @@ class CapaController extends Controller
             $files = [];
             if ($request->hasfile('initiator_capa_attachment')) {
                 foreach ($request->file('initiator_capa_attachment') as $file) {
-                    $name = $request->name . '-initiator_capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                  //  $name = $request->name . '-initiator_capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'initiator_capa_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -322,7 +331,9 @@ class CapaController extends Controller
             $files = [];
             if ($request->hasfile('qa_closure_attachment')) {
                 foreach ($request->file('qa_closure_attachment') as $file) {
-                    $name = $request->name . '-qa_closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    //$name = $request->name . '-qa_closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_closure_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -334,7 +345,8 @@ class CapaController extends Controller
             $files = [];
             if ($request->hasfile('qah_cq_attachment')) {
                 foreach ($request->file('qah_cq_attachment') as $file) {
-                    $name = $request->name . '-qah_cq_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    //$name = $request->name . '-qah_cq_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'qah_cq_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -365,7 +377,9 @@ class CapaController extends Controller
             $files = [];
             if ($request->hasfile('closure_attachment')) {
                 foreach ($request->file('closure_attachment') as $file) {
-                    $name = $request->name . '-closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . '-closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'closure_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+       
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1748,109 +1762,481 @@ class CapaController extends Controller
         $capa->rcadetails = $request->rcadetails;
 
 
+       $files = $capa->capa_attachment
+    ? json_decode($capa->capa_attachment, true)
+    : [];
 
-        if (!empty($request->capa_attachment)) {
-            $files = [];
-            if ($request->hasfile('capa_attachment')) {
-                foreach ($request->file('capa_attachment') as $file) {
-                    $name = $request->name . 'capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $capa->capa_attachment = json_encode($files);
-        }
+// Delete files
+if ($request->deleted_capa_files) {
 
-        if (!empty($request->hod_attachment)) {
-            $files = [];
-            if ($request->hasfile('hod_attachment')) {
-                foreach ($request->file('hod_attachment') as $file) {
-                    $name = $request->name . 'hod_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $capa->hod_attachment = json_encode($files);
+    $deletedFiles = json_decode($request->deleted_capa_files, true);
+
+    foreach ($deletedFiles as $deleteFile) {
+
+        $files = array_diff($files, [$deleteFile]);
+
+        if (file_exists(public_path('upload/' . $deleteFile))) {
+            unlink(public_path('upload/' . $deleteFile));
         }
-        if (!empty($request->qa_attachment)) {
-            $files = [];
-            if ($request->hasfile('qa_attachment')) {
-                foreach ($request->file('qa_attachment') as $file) {
-                    $name = $request->name . 'qa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $capa->qa_attachment = json_encode($files);
-        }
-        if (!empty($request->capafileattachement)) {
-            $files = [];
-            if ($request->hasfile('capafileattachement')) {
-                foreach ($request->file('capafileattachement') as $file) {
-                    $name = $request->name . 'capafileattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $capa->capafileattachement = json_encode($files);
-        }
+    }
+}
+
+// Upload new files
+if ($request->hasFile('capa_attachment')) {
+
+    foreach ($request->file('capa_attachment') as $file) {
+
+        $name = $request->name . 'capa_attachment' .
+                date('d-m-Y_H-i-s') . '_' .
+                uniqid() . '.' .
+                $file->getClientOriginalExtension();
+
+        $file->move(public_path('upload'), $name);
+
+        $files[] = $name;
+    }
+}
+
+$capa->capa_attachment = json_encode(array_values($files));
 
 
-        if (!empty($request->closure_attachment)) {
-            $files = [];
-            if ($request->hasfile('closure_attachment')) {
-                foreach ($request->file('closure_attachment') as $file) {
-                    $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $capa->closure_attachment = json_encode($files);
+ $files = $capa->capafileattachement
+    ? json_decode($capa->capafileattachement, true)
+    : [];
+
+// Delete files
+if ($request->deleted_capafileattachement) {
+
+    $deletedFiles = json_decode($request->deleted_capafileattachement, true);
+
+    foreach ($deletedFiles as $deleteFile) {
+
+        $files = array_diff($files, [$deleteFile]);
+
+        if (file_exists(public_path('upload/' . $deleteFile))) {
+            unlink(public_path('upload/' . $deleteFile));
         }
-        if (!empty($request->hod_final_attachment)) {
-            $files = [];
-            if ($request->hasfile('hod_final_attachment')) {
-                foreach ($request->file('hod_final_attachment') as $file) {
-                    $name = $request->name . 'hod_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $capa->hod_final_attachment = json_encode($files);
+    }
+}
+
+// Upload new files
+if ($request->hasFile('capafileattachement')) {
+
+    foreach ($request->file('capafileattachement') as $file) {
+
+        $name = $request->name . 'capafileattachement' .
+                date('d-m-Y_H-i-s') . '_' .
+                uniqid() . '.' .
+                $file->getClientOriginalExtension();
+
+        $file->move(public_path('upload'), $name);
+
+        $files[] = $name;
+    }
+}
+
+$capa->capafileattachement = json_encode(array_values($files));
+
+
+// Hod Delete files
+ $files = $capa->hod_attachment
+    ? json_decode($capa->hod_attachment, true)
+    : [];
+
+
+if ($request->deleted_hod_attachment) {
+
+    $deletedFiles = json_decode($request->deleted_hod_attachment, true);
+
+    foreach ($deletedFiles as $deleteFile) {
+
+        $files = array_diff($files, [$deleteFile]);
+
+        if (file_exists(public_path('upload/' . $deleteFile))) {
+            unlink(public_path('upload/' . $deleteFile));
         }
-        if (!empty($request->initiator_capa_attachment)) {
-            $files = [];
-            if ($request->hasfile('initiator_capa_attachment')) {
-                foreach ($request->file('initiator_capa_attachment') as $file) {
-                    $name = $request->name . 'initiator_capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $capa->initiator_capa_attachment = json_encode($files);
+    }
+}
+
+//Hod Upload new files
+if ($request->hasFile('hod_attachment')) {
+
+    foreach ($request->file('hod_attachment') as $file) {
+
+        $name = $request->name . 'hod_attachment' .
+                date('d-m-Y_H-i-s') . '_' .
+                uniqid() . '.' .
+                $file->getClientOriginalExtension();
+
+        $file->move(public_path('upload'), $name);
+
+        $files[] = $name;
+    }
+}
+
+$capa->hod_attachment = json_encode(array_values($files));
+
+
+// 3rd tab Delete files
+ $files = $capa->qa_attachment
+    ? json_decode($capa->qa_attachment, true)
+    : [];
+
+
+if ($request->deleted_qa_attachment) {
+
+    $deletedFiles = json_decode($request->deleted_qa_attachment, true);
+
+    foreach ($deletedFiles as $deleteFile) {
+
+        $files = array_diff($files, [$deleteFile]);
+
+        if (file_exists(public_path('upload/' . $deleteFile))) {
+            unlink(public_path('upload/' . $deleteFile));
         }
-        if (!empty($request->qa_closure_attachment)) {
-            $files = [];
-            if ($request->hasfile('qa_closure_attachment')) {
-                foreach ($request->file('qa_closure_attachment') as $file) {
-                    $name = $request->name . 'qa_closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $capa->qa_closure_attachment = json_encode($files);
+    }
+}
+
+//Hod Upload new files
+if ($request->hasFile('qa_attachment')) {
+
+    foreach ($request->file('qa_attachment') as $file) {
+
+        $name = $request->name . 'qa_attachment' .
+                date('d-m-Y_H-i-s') . '_' .
+                uniqid() . '.' .
+                $file->getClientOriginalExtension();
+
+        $file->move(public_path('upload'), $name);
+
+        $files[] = $name;
+    }
+}
+
+$capa->qa_attachment = json_encode(array_values($files));
+
+
+
+// 4rd tab Delete files
+ $files = $capa->qah_cq_attachment
+    ? json_decode($capa->qah_cq_attachment, true)
+    : [];
+
+
+if ($request->deleted_qah_cq_attachment) {
+
+    $deletedFiles = json_decode($request->deleted_qah_cq_attachment, true);
+
+    foreach ($deletedFiles as $deleteFile) {
+
+        $files = array_diff($files, [$deleteFile]);
+
+        if (file_exists(public_path('upload/' . $deleteFile))) {
+            unlink(public_path('upload/' . $deleteFile));
         }
-        if (!empty($request->qah_cq_attachment)) {
-            $files = [];
-            if ($request->hasfile('qah_cq_attachment')) {
-                foreach ($request->file('qah_cq_attachment') as $file) {
-                    $name = $request->name . 'qah_cq_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $capa->qah_cq_attachment = json_encode($files);
+    }
+}
+
+//Hod Upload new files
+if ($request->hasFile('qah_cq_attachment')) {
+
+    foreach ($request->file('qah_cq_attachment') as $file) {
+
+        $name = $request->name . 'qah_cq_attachment' .
+                date('d-m-Y_H-i-s') . '_' .
+                uniqid() . '.' .
+                $file->getClientOriginalExtension();
+
+        $file->move(public_path('upload'), $name);
+
+        $files[] = $name;
+    }
+}
+
+$capa->qah_cq_attachment = json_encode(array_values($files));
+
+
+// 5rd tab Delete files
+ $files = $capa->initiator_capa_attachment
+    ? json_decode($capa->initiator_capa_attachment, true)
+    : [];
+
+
+if ($request->deleted_initiator_capa_attachment) {
+
+    $deletedFiles = json_decode($request->deleted_initiator_capa_attachment, true);
+
+    foreach ($deletedFiles as $deleteFile) {
+
+        $files = array_diff($files, [$deleteFile]);
+
+        if (file_exists(public_path('upload/' . $deleteFile))) {
+            unlink(public_path('upload/' . $deleteFile));
         }
+    }
+}
+
+//Hod Upload new files
+if ($request->hasFile('initiator_capa_attachment')) {
+
+    foreach ($request->file('initiator_capa_attachment') as $file) {
+
+        $name = $request->name . 'initiator_capa_attachment' .
+                date('d-m-Y_H-i-s') . '_' .
+                uniqid() . '.' .
+                $file->getClientOriginalExtension();
+
+        $file->move(public_path('upload'), $name);
+
+        $files[] = $name;
+    }
+}
+
+$capa->initiator_capa_attachment = json_encode(array_values($files));
+
+// 6rd tab Delete files
+ $files = $capa->hod_final_attachment
+    ? json_decode($capa->hod_final_attachment, true)
+    : [];
+
+
+if ($request->deleted_hod_final_attachment) {
+
+    $deletedFiles = json_decode($request->deleted_hod_final_attachment, true);
+
+    foreach ($deletedFiles as $deleteFile) {
+
+        $files = array_diff($files, [$deleteFile]);
+
+        if (file_exists(public_path('upload/' . $deleteFile))) {
+            unlink(public_path('upload/' . $deleteFile));
+        }
+    }
+}
+
+//Hod Upload new files
+if ($request->hasFile('hod_final_attachment')) {
+
+    foreach ($request->file('hod_final_attachment') as $file) {
+
+        $name = $request->name . 'hod_final_attachment' .
+                date('d-m-Y_H-i-s') . '_' .
+                uniqid() . '.' .
+                $file->getClientOriginalExtension();
+
+        $file->move(public_path('upload'), $name);
+
+        $files[] = $name;
+    }
+}
+
+$capa->hod_final_attachment = json_encode(array_values($files));
+
+
+
+// 7rd tab Delete files
+
+ $files = $capa->qa_closure_attachment
+    ? json_decode($capa->qa_closure_attachment, true)
+    : [];
+
+
+if ($request->deleted_qa_closure_attachment) {
+
+    $deletedFiles = json_decode($request->deleted_qa_closure_attachment, true);
+
+    foreach ($deletedFiles as $deleteFile) {
+
+        $files = array_diff($files, [$deleteFile]);
+
+        if (file_exists(public_path('upload/' . $deleteFile))) {
+            unlink(public_path('upload/' . $deleteFile));
+        }
+    }
+}
+
+//Hod Upload new files
+if ($request->hasFile('qa_closure_attachment')) {
+
+    foreach ($request->file('qa_closure_attachment') as $file) {
+
+        $name = $request->name . 'qa_closure_attachment' .
+                date('d-m-Y_H-i-s') . '_' .
+                uniqid() . '.' .
+                $file->getClientOriginalExtension();
+
+        $file->move(public_path('upload'), $name);
+
+        $files[] = $name;
+    }
+}
+
+$capa->qa_closure_attachment = json_encode(array_values($files));
+
+
+// 8rd final tab Delete files
+
+ $files = $capa->closure_attachment
+    ? json_decode($capa->closure_attachment, true)
+    : [];
+
+
+if ($request->deleted_closure_attachment) {
+
+    $deletedFiles = json_decode($request->deleted_closure_attachment, true);
+
+    foreach ($deletedFiles as $deleteFile) {
+
+        $files = array_diff($files, [$deleteFile]);
+
+        if (file_exists(public_path('upload/' . $deleteFile))) {
+            unlink(public_path('upload/' . $deleteFile));
+        }
+    }
+}
+
+//Hod Upload new files
+if ($request->hasFile('closure_attachment')) {
+
+    foreach ($request->file('closure_attachment') as $file) {
+
+        $name = $request->name . 'closure_attachment' .
+                date('d-m-Y_H-i-s') . '_' .
+                uniqid() . '.' .
+                $file->getClientOriginalExtension();
+
+        $file->move(public_path('upload'), $name);
+
+        $files[] = $name;
+    }
+}
+
+$capa->closure_attachment = json_encode(array_values($files));
+
+
+//  if (!empty($request->initiator_capa_attachment)) {
+//             $files = [];
+//             if ($request->hasfile('initiator_capa_attachment')) {
+//                 foreach ($request->file('initiator_capa_attachment') as $file) {
+//                    // $name = $request->name . 'initiator_capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+//                      $name = $request->name . 'initiator_capa_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+//                     $file->move('upload/', $name);
+//                     $files[] = $name;
+//                 }
+//             }
+//             $capa->initiator_capa_attachment = json_encode($files);
+//         }
+
+//    if (!empty($request->capafileattachement)) {
+//             $files = [];
+//             if ($request->hasfile('capafileattachement')) {
+//                 foreach ($request->file('capafileattachement') as $file) {
+//                   //  $name = $request->name . 'capafileattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+//                      $name = $request->name . 'capafileattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  
+//                     $file->move('upload/', $name);
+//                     $files[] = $name;
+//                 }
+//             }
+//             $capa->capafileattachement = json_encode($files);
+//         }
+
+        // if (!empty($request->capa_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('capa_attachment')) {
+        //         foreach ($request->file('capa_attachment') as $file) {
+        //            // $name = $request->name . 'capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //              $name = $request->name . 'capa_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $capa->capa_attachment = json_encode($files);
+        // }
+
+  
+
+        // if (!empty($request->hod_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('hod_attachment')) {
+        //         foreach ($request->file('hod_attachment') as $file) {
+        //           //  $name = $request->name . 'hod_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //              $name = $request->name . 'hod_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $capa->hod_attachment = json_encode($files);
+        // }
+        // if (!empty($request->qa_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('qa_attachment')) {
+        //         foreach ($request->file('qa_attachment') as $file) {
+        //            // $name = $request->name . 'qa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //              $name = $request->name . 'qa_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $capa->qa_attachment = json_encode($files);
+        // }
+     
+
+        // if (!empty($request->closure_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('closure_attachment')) {
+        //         foreach ($request->file('closure_attachment') as $file) {
+        //           //  $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //              $name = $request->name . 'closure_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $capa->closure_attachment = json_encode($files);
+        // }
+        // if (!empty($request->hod_final_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('hod_final_attachment')) {
+        //         foreach ($request->file('hod_final_attachment') as $file) {
+        //            // $name = $request->name . 'hod_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //              $name = $request->name . 'hod_final_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $capa->hod_final_attachment = json_encode($files);
+        // }
+       
+        // if (!empty($request->qa_closure_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('qa_closure_attachment')) {
+        //         foreach ($request->file('qa_closure_attachment') as $file) {
+        //            // $name = $request->name . 'qa_closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //              $name = $request->name . 'qa_closure_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $capa->qa_closure_attachment = json_encode($files);
+        // }
+        // if (!empty($request->qah_cq_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('qah_cq_attachment')) {
+        //         foreach ($request->file('qah_cq_attachment') as $file) {
+        //             // $name = $request->name . 'qah_cq_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //              $name = $request->name . 'qah_cq_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $capa->qah_cq_attachment = json_encode($files);
+        // }
         $capa->update();
 
 
