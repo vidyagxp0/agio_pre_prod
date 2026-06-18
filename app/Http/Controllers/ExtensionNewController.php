@@ -212,7 +212,8 @@ class ExtensionNewController extends Controller
             $files = [];
             if ($request->hasfile('file_attachment_reviewer')) {
                 foreach ($request->file('file_attachment_reviewer') as $file) {
-                    $name = $request->name . 'hod_reviewer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'hod_reviewer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_reviewer_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -225,7 +226,8 @@ class ExtensionNewController extends Controller
             $files = [];
             if ($request->hasfile('file_attachment_extension')) {
                 foreach ($request->file('file_attachment_extension') as $file) {
-                    $name = $request->name . 'attachment_extension' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'attachment_extension' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attachment_extension' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -238,7 +240,8 @@ class ExtensionNewController extends Controller
             $files = [];
             if ($request->hasfile('file_attachment_approver')) {
                 foreach ($request->file('file_attachment_approver') as $file) {
-                    $name = $request->name . 'QA_approval_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'QA_approval_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'QA_approval_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -251,7 +254,8 @@ class ExtensionNewController extends Controller
             $files = [];
             if ($request->hasfile('QAfile_attachment_approver')) {
                 foreach ($request->file('QAfile_attachment_approver') as $file) {
-                    $name = $request->name . 'CQA_approval_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'CQA_approval_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'CQA_approval_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -724,7 +728,7 @@ class ExtensionNewController extends Controller
 
     public function update(Request $request, $id)
     {
-
+  
         $extensionNew = extension_new::find($id);
         $extensionNew->site_location_code = $request->site_location_code;
         // $extensionNew->initiator = Auth::user()->id;
@@ -773,7 +777,8 @@ class ExtensionNewController extends Controller
 
             if ($request->hasfile('file_attachment_extension')) {
                 foreach ($request->file('file_attachment_extension') as $file) {
-                    $name = $request->name . 'attachment_extension' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'attachment_extension' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attachment_extension' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -796,7 +801,8 @@ class ExtensionNewController extends Controller
 
             if ($request->hasfile('file_attachment_reviewer')) {
                 foreach ($request->file('file_attachment_reviewer') as $file) {
-                    $name = $request->name . 'hod_reviewer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'hod_reviewer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_reviewer_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -835,7 +841,8 @@ class ExtensionNewController extends Controller
 
             if ($request->hasfile('file_attachment_approver')) {
                 foreach ($request->file('file_attachment_approver') as $file) {
-                    $name = $request->name . 'QA_approval_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'QA_approval_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'QA_approval_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -857,7 +864,8 @@ class ExtensionNewController extends Controller
 
             if ($request->hasfile('QAfile_attachment_approver')) {
                 foreach ($request->file('QAfile_attachment_approver') as $file) {
-                    $name = $request->name . 'CQA_approval_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'CQA_approval_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'CQA_approval_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
