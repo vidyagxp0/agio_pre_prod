@@ -1948,7 +1948,9 @@ class AuditeeController extends Controller
             $newFiles = [];
             if ($request->hasFile('qa_cqa_attach')) {
                 foreach ($request->file('qa_cqa_attach') as $file) {
-                    $name = $request->name . 'qa_cqa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  //  $name = $request->name . 'qa_cqa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'qa_cqa_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -2011,7 +2013,9 @@ class AuditeeController extends Controller
             $newFiles = [];
             if ($request->hasFile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'gi_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . 'gi_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                 $name = $request->name . 'gi_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -2085,7 +2089,9 @@ class AuditeeController extends Controller
             $newFiles = [];
             if ($request->hasFile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
-                    $name = $request->name . 'summary_response_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   // $name = $request->name . 'summary_response_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                     $name = $request->name . 'summary_response_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -6743,7 +6749,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $internalAudit = Auditee::find($id);
             $updateCFT = ExternalAuditCFT::where('external_audit_id', $id)->latest()->first();
             $cftDetails = ExternalAuditCFTResponse::where(['status' => 'In-progress', 'external_audit_id' => $id])->distinct('cft_user_id')->count();
-
+            $selecCft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
 
             if ($changeControl->stage == 1) {
@@ -6931,6 +6937,9 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             //         ]);
             //     }
 
+
+
+
                          if (!$Cft->Production_Table_Review|| !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review  || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
@@ -6942,6 +6951,35 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                         } else {
                             Session::flash('swal', [
 
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'CFT Reviews'
+                            ]);
+                        }
+
+                    if ( $selecCft->Production_Table_Review !== 'yes' &&
+                            $selecCft->Production_Injection_Review !== 'yes' &&
+                            $selecCft->ProductionLiquid_Review !== 'yes' &&
+                            $selecCft->Store_Review !== 'yes' &&
+                            $selecCft->ResearchDevelopment_Review !== 'yes' &&
+                            $selecCft->Microbiology_Review !== 'yes' &&
+                            $selecCft->RegulatoryAffair_Review !== 'yes' &&
+                            $selecCft->CorporateQualityAssurance_Review !== 'yes' &&
+                            $selecCft->ContractGiver_Review !== 'yes' &&
+                            $selecCft->Quality_review !== 'yes' &&
+                            $selecCft->Quality_Assurance_Review !== 'yes' &&
+                            $selecCft->Engineering_review !== 'yes' &&
+                            $selecCft->Environment_Health_review !== 'yes' &&
+                            $selecCft->Human_Resource_review !== 'yes') {
+                                                    Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'CFT Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
                                 'type' => 'success',
                                 'title' => 'Success',
                                 'message' => 'CFT Reviews'

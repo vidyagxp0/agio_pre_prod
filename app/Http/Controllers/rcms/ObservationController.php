@@ -1046,29 +1046,136 @@ $data->auditee_department = $user ? $user->department->name : null;
         $data->corrective_action = $request->corrective_action;
         $data->preventive_action = $request->preventive_action;
 
-        if(!empty($request->attach_files_gi)){
-            $files = [];
+       if (!empty($request->attach_files_gi) || !empty($request->deleted_attach_files_gi)) {
+            $existingFiles = json_decode($data->attach_files_gi, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_attach_files_gi)) {
+                $filesToDelete = explode(',', $request->deleted_attach_files_gi);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
             if ($request->hasFile('attach_files_gi')) {
                 foreach ($request->file('attach_files_gi') as $file) {
-                    $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  //  $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'attach_files_gi' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
                     $file->move(public_path('upload/'), $name);
-                    $files[] = $name;
+                    $newFiles[] = $name;
                 }
             }
-            $data->attach_files_gi = json_encode($files);
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $data->attach_files_gi = json_encode($allFiles);
         }
 
-        if(!empty($request->response_capa_attach)){
-            $files = [];
+
+          if (!empty($request->response_capa_attach) || !empty($request->deleted_response_capa_attach)) {
+            $existingFiles = json_decode($data->response_capa_attach, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_response_capa_attach)) {
+                $filesToDelete = explode(',', $request->deleted_response_capa_attach);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
             if ($request->hasFile('response_capa_attach')) {
                 foreach ($request->file('response_capa_attach') as $file) {
-                    $name = $request->name . 'response_capa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                  //  $name = $request->name . 'response_capa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'response_capa_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
                     $file->move(public_path('upload/'), $name);
-                    $files[] = $name;
+                    $newFiles[] = $name;
                 }
             }
-            $data->response_capa_attach = json_encode($files);
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $data->response_capa_attach = json_encode($allFiles);
         }
+
+
+           if (!empty($request->impact_analysis) || !empty($request->deleted_impact_analysis)) {
+            $existingFiles = json_decode($data->impact_analysis, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_impact_analysis)) {
+                $filesToDelete = explode(',', $request->deleted_impact_analysis);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('impact_analysis')) {
+                foreach ($request->file('impact_analysis') as $file) {
+                  //  $name = $request->name . 'impact_analysis' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'impact_analysis' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $data->impact_analysis = json_encode($allFiles);
+        }
+
+
+
+        if (!empty($request->attach_files2) || !empty($request->deleted_attach_files2)) {
+            $existingFiles = json_decode($data->attach_files2, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_attach_files2)) {
+                $filesToDelete = explode(',', $request->deleted_attach_files2);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('attach_files2')) {
+                foreach ($request->file('attach_files2') as $file) {
+                  //  $name = $request->name . 'attach_files2' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'attach_files2' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $data->attach_files2 = json_encode($allFiles);
+        }
+
+
+        // if(!empty($request->response_capa_attach)){
+        //     $files = [];
+        //     if ($request->hasFile('response_capa_attach')) {
+        //         foreach ($request->file('response_capa_attach') as $file) {
+        //             $name = $request->name . 'response_capa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $file->move(public_path('upload/'), $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $data->response_capa_attach = json_encode($files);
+        // }
+
+        
 
         // $files = [];
         // if ($request->hasFile('attach_files_gi')) {
@@ -1115,17 +1222,17 @@ $data->auditee_department = $user ? $user->department->name : null;
         $data->impact = $request->impact;
         // $data->impact_analysis = $request->impact_analysis;
 
-        if(!empty($request->impact_analysis)){
-            $files = [];
-            if ($request->hasFile('impact_analysis')) {
-                foreach ($request->file('impact_analysis') as $file) {
-                    $name = $request->name . 'response_summary_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $files[] = $name;
-                }
-            }
-            $data->impact_analysis = json_encode($files);
-        }
+        // if(!empty($request->impact_analysis)){
+        //     $files = [];
+        //     if ($request->hasFile('impact_analysis')) {
+        //         foreach ($request->file('impact_analysis') as $file) {
+        //             $name = $request->name . 'response_summary_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $file->move(public_path('upload/'), $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $data->impact_analysis = json_encode($files);
+        // }
         // $data->severity_rate = $request->severity_rate;
         $severity = [
             '1' => 'Negligible',
@@ -1227,17 +1334,17 @@ $data->auditee_department = $user ? $user->department->name : null;
         //     $data->attach_files2 = $image_name;
         // }
 
-        if (!empty($request->attach_files2)) {
-        $files = [];
-        if ($request->hasFile('attach_files2')) {
-            foreach ($request->file('attach_files2') as $file) {
-                $name = $request->name . 'response_verify_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-        }
-        $data->attach_files2 = json_encode($files);
-    }
+    //     if (!empty($request->attach_files2)) {
+    //     $files = [];
+    //     if ($request->hasFile('attach_files2')) {
+    //         foreach ($request->file('attach_files2') as $file) {
+    //             $name = $request->name . 'response_verify_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+    //             $file->move(public_path('upload/'), $name);
+    //             $files[] = $name;
+    //         }
+    //     }
+    //     $data->attach_files2 = json_encode($files);
+    // }
         // if (!empty($request->attach_files2)) {
         //     $files = [];
         //     if ($request->hasfile('attach_files2')) {
