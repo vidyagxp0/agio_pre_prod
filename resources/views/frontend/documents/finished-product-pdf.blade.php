@@ -639,12 +639,34 @@
                         </tr>
                     </tbody>    
                 </table>    
-                        <tr> 
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;" class="quill-pdf-content">
-                                {!! $data->label_claim !!}
-                            </td>
-                        </tr>
+ 
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Label Claim</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="quill-pdf-content">
+                                            {!! $data->label_claim !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table>        
+                    <tbody>    
                         <tr>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Product Code</td>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->product_code}}</td>
@@ -653,12 +675,36 @@
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition</td>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->fsstorage_condition}}</td>
                         </tr>
-                        <tr> 
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for Analysis</td>
-                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;" class="quill-pdf-content">
-                                {!! $data->sample_quantity !!}
-                            </td>
-                        </tr>
+                    </tbody>
+                </table>        
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Sample Quantity for Analysis</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="quill-pdf-content">
+                                            {!! $data->sample_quantity !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table>        
+                    <tbody>    
                         <tr>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity</td>
                             <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample}}</td>

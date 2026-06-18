@@ -174,7 +174,7 @@ foreach ($pre as $processName => $modelClass) {
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
 
-                    $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -191,7 +191,7 @@ foreach ($pre as $processName => $modelClass) {
             if ($request->hasfile('qa_head')) {
                 foreach ($request->file('qa_head') as $file) {
                     if ($file instanceof \Illuminate\Http\UploadedFile) {
-                    $name = $request->name . 'qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_head' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -205,7 +205,7 @@ foreach ($pre as $processName => $modelClass) {
             if ($request->hasfile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
 
-                    $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Support_doc' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -218,7 +218,7 @@ foreach ($pre as $processName => $modelClass) {
             if ($request->hasfile('final_attach')) {
                 foreach ($request->file('final_attach') as $file) {
 
-                    $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'final_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -944,7 +944,7 @@ foreach ($pre as $processName => $modelClass) {
         //     if ($request->hasfile('Support_doc')) {
         //         foreach ($request->file('Support_doc') as $file) {
         //             if ($file instanceof \Illuminate\Http\UploadedFile) {
-        //             $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'Support_doc' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -985,7 +985,7 @@ foreach ($pre as $processName => $modelClass) {
         //     if ($request->hasfile('final_attach')) {
         //         foreach ($request->file('final_attach') as $file) {
         //             if ($file instanceof \Illuminate\Http\UploadedFile) {
-        //             $name = $request->name . 'final_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'final_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }

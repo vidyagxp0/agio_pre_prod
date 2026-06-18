@@ -457,7 +457,8 @@ class DocumentController extends Controller
                 $document->process_id = $request->process_id;
             }
 
-            $document->record = DB::table('record_numbers')->value('counter') + 1;
+            $document->record = (DB::table('documents')->max('record') ?? 0) + 1;
+
             $document->originator_id = Auth::id();
             $document->legacy_number = $request->legacy_number;
             $document->document_name = $request->document_name;
@@ -653,7 +654,8 @@ class DocumentController extends Controller
                 if ($request->hasfile('ForComANiGasProtocolfile_attach')) {
                     foreach ($request->file('ForComANiGasProtocolfile_attach') as $file) {
 
-                        $name = $request->name . 'ForComANiGasProtocolfile_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'ForComANiGasProtocolfile_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'ForComANiGasProtocolfile_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -668,7 +670,8 @@ class DocumentController extends Controller
                 if ($request->hasfile('PacValRepfile_attach')) {
                     foreach ($request->file('PacValRepfile_attach') as $file) {
 
-                        $name = $request->name . 'PacValRepfile_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'PacValRepfile_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'PacValRepfile_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -684,7 +687,8 @@ class DocumentController extends Controller
                 if ($request->hasfile('HolTimSutRepfile_attach')) {
                     foreach ($request->file('HolTimSutRepfile_attach') as $file) {
 
-                        $name = $request->name . 'HolTimSutRepfile_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'HolTimSutRepfile_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'HolTimSutRepfile_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -700,7 +704,8 @@ class DocumentController extends Controller
                 if ($request->hasfile('TemMapProCumRepfile_attach')) {
                     foreach ($request->file('TemMapProCumRepfile_attach') as $file) {
 
-                        $name = $request->name . 'TemMapProCumRepfile_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'TemMapProCumRepfile_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'TemMapProCumRepfile_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -715,7 +720,8 @@ class DocumentController extends Controller
                 if ($request->hasfile('billMatrial')) {
                     foreach ($request->file('billMatrial') as $file) {
 
-                        $name = $request->name . 'billMatrial' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'billMatrial' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'billMatrial' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -730,7 +736,8 @@ class DocumentController extends Controller
                 if ($request->hasfile('batchManufacturingBmr')) {
                     foreach ($request->file('batchManufacturingBmr') as $file) {
 
-                        $name = $request->name . 'batchManufacturingBmr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'batchManufacturingBmr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'batchManufacturingBmr' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -745,7 +752,8 @@ class DocumentController extends Controller
                 if ($request->hasfile('MasterFormulaRecordBMR')) {
                     foreach ($request->file('MasterFormulaRecordBMR') as $file) {
 
-                        $name = $request->name . 'MasterFormulaRecordBMR' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'MasterFormulaRecordBMR' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'MasterFormulaRecordBMR' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -760,7 +768,8 @@ class DocumentController extends Controller
                 if ($request->hasfile('MasterPackingRecord')) {
                     foreach ($request->file('MasterPackingRecord') as $file) {
 
-                        $name = $request->name . 'MasterPackingRecord' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'MasterPackingRecord' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'MasterPackingRecord' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -775,7 +784,8 @@ class DocumentController extends Controller
                 if ($request->hasfile('SiteMasterFileatt')) {
                     foreach ($request->file('SiteMasterFileatt') as $file) {
 
-                        $name = $request->name . 'SiteMasterFileatt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'SiteMasterFileatt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'SiteMasterFileatt' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -790,7 +800,8 @@ class DocumentController extends Controller
                 if ($request->hasfile('ProValProtocol')) {
                     foreach ($request->file('ProValProtocol') as $file) {
 
-                        $name = $request->name . 'ProValProtocol' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'ProValProtocol' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'ProValProtocol' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -993,7 +1004,8 @@ class DocumentController extends Controller
                 $files = [];
 
                 foreach ($request->file('hod_attachments') as $file) {
-                    $name = $request->name . '-hod_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . '-hod_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1023,7 +1035,8 @@ class DocumentController extends Controller
                 $files = [];
                 if ($request->hasfile('pvir_attachment')) {
                     foreach ($request->file('pvir_attachment') as $file) {
-                        $name = $request->name . 'pvir_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'pvir_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'pvir_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -1520,7 +1533,8 @@ class DocumentController extends Controller
                 $files = [];
                 if ($request->hasfile('annex_I_gxp_attachment')) {
                     foreach ($request->file('annex_I_gxp_attachment') as $file) {
-                        $name = $request->name . 'annex_I_gxp_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'annex_I_gxp_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'annex_I_gxp_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -1536,7 +1550,8 @@ class DocumentController extends Controller
             $files = [];
             if ($request->hasfile('annex_II_risk_attachment')) {
                 foreach ($request->file('annex_II_risk_attachment') as $file) {
-                    $name = $request->name . 'annex_II_risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'annex_II_risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'annex_II_risk_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1552,7 +1567,8 @@ class DocumentController extends Controller
         $files = [];
         if ($request->hasfile('annex_III_eres_attachment')) {
             foreach ($request->file('annex_III_eres_attachment') as $file) {
-                $name = $request->name . 'annex_III_eres_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                // $name = $request->name . 'annex_III_eres_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'annex_III_eres_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -1568,7 +1584,8 @@ class DocumentController extends Controller
                 $files = [];
                 if ($request->hasfile('annex_IV_plan_attachment')) {
                     foreach ($request->file('annex_IV_plan_attachment') as $file) {
-                        $name = $request->name . 'annex_IV_plan_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'annex_IV_plan_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'annex_IV_plan_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -1584,7 +1601,8 @@ class DocumentController extends Controller
                 $files = [];
                 if ($request->hasfile('annex_V_user_attachment')) {
                     foreach ($request->file('annex_V_user_attachment') as $file) {
-                        $name = $request->name . 'annex_V_user_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'annex_V_user_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'annex_V_user_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -1602,7 +1620,8 @@ class DocumentController extends Controller
                 $files = [];
                 if ($request->hasfile('annex_VI_req_attachment')) {
                     foreach ($request->file('annex_VI_req_attachment') as $file) {
-                        $name = $request->name . 'annex_VI_req_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'annex_VI_req_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'annex_VI_req_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -1618,7 +1637,8 @@ class DocumentController extends Controller
                     $files = [];
                     if ($request->hasfile('annex_VII_fun_attachment')) {
                         foreach ($request->file('annex_VII_fun_attachment') as $file) {
-                            $name = $request->name . 'annex_VII_fun_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            // $name = $request->name . 'annex_VII_fun_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $name = $request->name . 'annex_VII_fun_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                             $file->move('upload/', $name);
                             $files[] = $name;
                         }
@@ -1634,7 +1654,8 @@ class DocumentController extends Controller
                 $files = [];
                 if ($request->hasfile('annex_VIII_tech_attachment')) {
                     foreach ($request->file('annex_VIII_tech_attachment') as $file) {
-                        $name = $request->name . 'annex_VIII_tech_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        // $name = $request->name . 'annex_VIII_tech_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'annex_VIII_tech_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -1650,7 +1671,8 @@ class DocumentController extends Controller
         $files = [];
         if ($request->hasfile('annex_IX_risk_attachment')) {
             foreach ($request->file('annex_IX_risk_attachment') as $file) {
-                $name = $request->name . 'annex_IX_risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                // $name = $request->name . 'annex_IX_risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'annex_IX_risk_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -1666,7 +1688,8 @@ class DocumentController extends Controller
         $files = [];
         if ($request->hasfile('annex_X_design_attachment')) {
             foreach ($request->file('annex_X_design_attachment') as $file) {
-                $name = $request->name . 'annex_X_design_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                // $name = $request->name . 'annex_X_design_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'annex_X_design_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -1682,7 +1705,8 @@ class DocumentController extends Controller
             $files = [];
             if ($request->hasfile('annex_XI_confi_attachment')) {
                 foreach ($request->file('annex_XI_confi_attachment') as $file) {
-                    $name = $request->name . 'annex_XI_confi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'annex_XI_confi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'annex_XI_confi_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1700,7 +1724,8 @@ class DocumentController extends Controller
         $files = [];
         if ($request->hasfile('annex_XII_qua_proto_attachment')) {
             foreach ($request->file('annex_XII_qua_proto_attachment') as $file) {
-                $name = $request->name . 'annex_XII_qua_proto_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                // $name = $request->name . 'annex_XII_qua_proto_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'annex_XII_qua_proto_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -1716,7 +1741,8 @@ class DocumentController extends Controller
             $files = [];
             if ($request->hasfile('annex_XIII_unit_integ_attachment')) {
                 foreach ($request->file('annex_XIII_unit_integ_attachment') as $file) {
-                    $name = $request->name . 'annex_XIII_unit_integ_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'annex_XIII_unit_integ_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'annex_XIII_unit_integ_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1732,7 +1758,8 @@ class DocumentController extends Controller
         $files = [];
         if ($request->hasfile('annex_XIV_data_migra_attachment')) {
             foreach ($request->file('annex_XIV_data_migra_attachment') as $file) {
-                $name = $request->name . 'annex_XIV_data_migra_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                // $name = $request->name . 'annex_XIV_data_migra_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'annex_XIV_data_migra_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -1748,7 +1775,8 @@ class DocumentController extends Controller
         $files = [];
         if ($request->hasfile('annex_XV_data_qualif_attachment')) {
             foreach ($request->file('annex_XV_data_qualif_attachment') as $file) {
-                $name = $request->name . 'annex_XV_data_qualif_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                // $name = $request->name . 'annex_XV_data_qualif_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'annex_XV_data_qualif_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -1766,7 +1794,8 @@ class DocumentController extends Controller
             if ($request->hasfile('htspattachement')) {
                 foreach ($request->file('htspattachement') as $file) {
 
-                    $name = $request->name . 'htspattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'htspattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'htspattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1780,7 +1809,8 @@ class DocumentController extends Controller
             if ($request->hasfile('pvpattachement')) {
                 foreach ($request->file('pvpattachement') as $file) {
 
-                    $name = $request->name . 'pvpattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'pvpattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'pvpattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1794,7 +1824,8 @@ class DocumentController extends Controller
             if ($request->hasfile('AIQPattachement')) {
                 foreach ($request->file('AIQPattachement') as $file) {
 
-                    $name = $request->name . 'AIQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'AIQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'AIQPattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1808,7 +1839,8 @@ class DocumentController extends Controller
             if ($request->hasfile('AOQPattachement')) {
                 foreach ($request->file('AOQPattachement') as $file) {
 
-                    $name = $request->name . 'AOQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'AOQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'AOQPattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1822,7 +1854,8 @@ class DocumentController extends Controller
             if ($request->hasfile('APQPattachement')) {
                 foreach ($request->file('APQPattachement') as $file) {
 
-                    $name = $request->name . 'APQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'APQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'APQPattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1836,7 +1869,8 @@ class DocumentController extends Controller
             if ($request->hasfile('afqpattachement')) {
                 foreach ($request->file('afqpattachement') as $file) {
 
-                    $name = $request->name . 'afqpattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'afqpattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'afqpattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1849,7 +1883,8 @@ class DocumentController extends Controller
             if ($request->hasfile('afqrattachement')) {
                 foreach ($request->file('afqrattachement') as $file) {
 
-                    $name = $request->name . 'afqrattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'afqrattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'afqrattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1865,7 +1900,8 @@ class DocumentController extends Controller
             if ($request->hasfile('afursattachement')) {
                 foreach ($request->file('afursattachement') as $file) {
 
-                    $name = $request->name . 'afursattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'afursattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'afursattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1880,7 +1916,8 @@ class DocumentController extends Controller
             if ($request->hasfile('aqpattachement')) {
                 foreach ($request->file('aqpattachement') as $file) {
 
-                    $name = $request->name . 'aqpattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'aqpattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'aqpattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1895,7 +1932,8 @@ class DocumentController extends Controller
             if ($request->hasfile('aqrattachement')) {
                 foreach ($request->file('aqrattachement') as $file) {
 
-                    $name = $request->name . 'aqrattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'aqrattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'aqrattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1910,7 +1948,8 @@ class DocumentController extends Controller
             if ($request->hasfile('pfmfattachement')) {
                 foreach ($request->file('pfmfattachement') as $file) {
 
-                    $name = $request->name . 'pfmfattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'pfmfattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'pfmfattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1925,7 +1964,8 @@ class DocumentController extends Controller
             if ($request->hasfile('rfmfattachement')) {
                 foreach ($request->file('rfmfattachement') as $file) {
 
-                    $name = $request->name . 'rfmfattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'rfmfattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'rfmfattachement' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1939,7 +1979,8 @@ class DocumentController extends Controller
             if ($request->hasfile('annex_XVI_per_qualif_attachment')) {
                 foreach ($request->file('annex_XVI_per_qualif_attachment') as $file) {
 
-                    $name = $request->name . 'annex_XVI_per_qualif_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'annex_XVI_per_qualif_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'annex_XVI_per_qualif_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1953,7 +1994,8 @@ class DocumentController extends Controller
             if ($request->hasfile('annex_XVII_valid_summ_attachment')) {
                 foreach ($request->file('annex_XVII_valid_summ_attachment') as $file) {
 
-                    $name = $request->name . 'annex_XVII_valid_summ_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'annex_XVII_valid_summ_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'annex_XVII_valid_summ_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1967,7 +2009,8 @@ class DocumentController extends Controller
             if ($request->hasfile('annex_XVIII_trac_matri_attachment')) {
                 foreach ($request->file('annex_XVIII_trac_matri_attachment') as $file) {
 
-                    $name = $request->name . 'annex_XVIII_trac_matri_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'annex_XVIII_trac_matri_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'annex_XVIII_trac_matri_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1981,7 +2024,8 @@ class DocumentController extends Controller
             if ($request->hasfile('annex_XIX_syst_retir_attachment')) {
                 foreach ($request->file('annex_XIX_syst_retir_attachment') as $file) {
 
-                    $name = $request->name . 'annex_XIX_syst_retir_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'annex_XIX_syst_retir_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'annex_XIX_syst_retir_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2570,7 +2614,8 @@ class DocumentController extends Controller
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
 
-                    $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2586,7 +2631,8 @@ class DocumentController extends Controller
             if ($request->hasfile('attach_cvpd')) {
                 foreach ($request->file('attach_cvpd') as $file) {
 
-                    $name = $request->name . 'attach_cvpd' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'attach_cvpd' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attach_cvpd' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2601,7 +2647,8 @@ class DocumentController extends Controller
             if ($request->hasfile('attachment_srt')) {
                 foreach ($request->file('attachment_srt') as $file) {
 
-                    $name = $request->name . 'attachment_srt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'attachment_srt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attachment_srt' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2615,7 +2662,8 @@ class DocumentController extends Controller
             if ($request->hasfile('attachment_spt')) {
                 foreach ($request->file('attachment_spt') as $file) {
 
-                    $name = $request->name . 'attachment_spt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'attachment_spt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attachment_spt' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2629,7 +2677,8 @@ class DocumentController extends Controller
             if ($request->hasfile('attachment_ehtsr')) {
                 foreach ($request->file('attachment_ehtsr') as $file) {
 
-                    $name = $request->name . 'attachment_ehtsr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'attachment_ehtsr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attachment_ehtsr' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2643,7 +2692,8 @@ class DocumentController extends Controller
             if ($request->hasfile('attachment_ehtsprt')) {
                 foreach ($request->file('attachment_ehtsprt') as $file) {
 
-                    $name = $request->name . 'attachment_ehtsprt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'attachment_ehtsprt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attachment_ehtsprt' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2657,7 +2707,8 @@ class DocumentController extends Controller
             if ($request->hasfile('attach_comp_nitrogen')) {
                 foreach ($request->file('attach_comp_nitrogen') as $file) {
 
-                    $name = $request->name . 'attach_comp_nitrogen' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'attach_comp_nitrogen' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attach_comp_nitrogen' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2672,7 +2723,8 @@ class DocumentController extends Controller
             if ($request->hasfile('file_attach_qm')) {
                 foreach ($request->file('file_attach_qm') as $file) {
 
-                    $name = $request->name . 'file_attach_qm' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'file_attach_qm' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach_qm' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2688,7 +2740,8 @@ class DocumentController extends Controller
             if ($request->hasfile('file_attach_vmp')) {
                 foreach ($request->file('file_attach_vmp') as $file) {
 
-                    $name = $request->name . 'file_attach_vmp' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'file_attach_vmp' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach_vmp' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2704,7 +2757,8 @@ class DocumentController extends Controller
             if ($request->hasfile('procumrepo_file_attach')) {
                 foreach ($request->file('procumrepo_file_attach') as $file) {
 
-                    $name = $request->name . 'procumrepo_file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'procumrepo_file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'procumrepo_file_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2719,7 +2773,8 @@ class DocumentController extends Controller
             if ($request->hasfile('file_attach_pvr')) {
                 foreach ($request->file('file_attach_pvr') as $file) {
 
-                    $name = $request->name . 'file_attach_pvr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'file_attach_pvr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach_pvr' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2733,7 +2788,8 @@ class DocumentController extends Controller
             if ($request->hasfile('file_attach_cvrd')) {
                 foreach ($request->file('file_attach_cvrd') as $file) {
 
-                    $name = $request->name . 'file_attach_cvrd' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    // $name = $request->name . 'file_attach_cvrd' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach_cvrd' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }

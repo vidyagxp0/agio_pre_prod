@@ -169,7 +169,7 @@ class InductionTrainingcontroller extends Controller
 
             if ($request->hasFile($attachmentKey)) {
                 $file = $request->file($attachmentKey);
-                $name = $request->name . 'attached' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'attached' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $inductionTraining->$attachmentKey = $name;
             }
@@ -445,42 +445,42 @@ class InductionTrainingcontroller extends Controller
 
         if ($request->hasFile('final_r_attachment')) {
             $file = $request->file('final_r_attachment');
-            $name = $request->employee_id . 'final_r_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'final_r_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $inductionTraining->final_r_attachment = $name;
         }
 
         if ($request->hasFile('evaluation_attachment')) {
             $file = $request->file('evaluation_attachment');
-            $name = $request->employee_id . 'evaluation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'evaluation_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $inductionTraining->evaluation_attachment = $name;
         }
 
         if ($request->hasFile('hr_head_attachment')) {
             $file = $request->file('hr_head_attachment');
-            $name = $request->employee_id . 'hr_head_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'hr_head_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $inductionTraining->hr_head_attachment = $name;
         }
 
         if ($request->hasFile('qa_final_attachment')) {
             $file = $request->file('qa_final_attachment');
-            $name = $request->employee_id . 'qa_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'qa_final_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $inductionTraining->qa_final_attachment = $name;
         }
 
         if ($request->hasFile('hr_final_attachment')) {
             $file = $request->file('hr_final_attachment');
-            $name = $request->employee_id . 'hr_final_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'hr_final_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $inductionTraining->hr_final_attachment = $name;
         }
 
         if ($request->hasFile('on_the_job_attachment')) {
             $file = $request->file('on_the_job_attachment');
-            $name = $request->employee_id . 'on_the_job_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'on_the_job_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $inductionTraining->on_the_job_attachment = $name;
         }
@@ -527,7 +527,7 @@ class InductionTrainingcontroller extends Controller
 
         if ($request->hasFile($attachmentKey)) {
             $file = $request->file($attachmentKey);
-            $name = $request->name . $attachmentKey . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->name . $attachmentKey . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $inductionTraining->$attachmentKey = $name;
         }

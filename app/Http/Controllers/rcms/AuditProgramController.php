@@ -114,7 +114,7 @@ class AuditProgramController extends Controller
             $files = [];
             if ($request->hasfile('hod_attached_File')) {
                 foreach ($request->file('hod_attached_File') as $file) {
-                    $name = $request->name . 'hod_attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_attached_File' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -130,7 +130,7 @@ class AuditProgramController extends Controller
             $files = [];
             if ($request->hasfile('cqa_qa_review_Attached_File')) {
                 foreach ($request->file('cqa_qa_review_Attached_File') as $file) {
-                    $name = $request->name . 'cqa_qa_review_Attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'cqa_qa_review_Attached_File' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -143,7 +143,7 @@ class AuditProgramController extends Controller
             $files = [];
             if ($request->hasfile('cqa_qa_Attached_File')) {
                 foreach ($request->file('cqa_qa_Attached_File') as $file) {
-                    $name = $request->name . 'cqa_qa_Attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'cqa_qa_Attached_File' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -161,7 +161,7 @@ class AuditProgramController extends Controller
             $files = [];
             if ($request->hasfile('Attached_File')) {
                 foreach ($request->file('Attached_File') as $file) {
-                    $name = $request->name . 'Attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Attached_File' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -173,7 +173,7 @@ class AuditProgramController extends Controller
             $files = [];
             if ($request->hasfile('attachments')) {
                 foreach ($request->file('attachments') as $file) {
-                    $name = $request->name . '-attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . '-attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1050,7 +1050,7 @@ class AuditProgramController extends Controller
             $files = [];
             if ($request->hasfile('hod_attached_File')) {
                 foreach ($request->file('hod_attached_File') as $file) {
-                    $name = $request->name . 'hod_attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_attached_File' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1065,7 +1065,7 @@ class AuditProgramController extends Controller
             $files = [];
             if ($request->hasfile('cqa_qa_Attached_File')) {
                 foreach ($request->file('cqa_qa_Attached_File') as $file) {
-                    $name = $request->name . 'cqa_qa_Attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'cqa_qa_Attached_File' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1078,7 +1078,7 @@ class AuditProgramController extends Controller
             $files = [];
             if ($request->hasfile('cqa_qa_review_Attached_File')) {
                 foreach ($request->file('cqa_qa_review_Attached_File') as $file) {
-                    $name = $request->name . 'cqa_qa_review_Attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'cqa_qa_review_Attached_File' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1091,7 +1091,7 @@ class AuditProgramController extends Controller
             $files = [];
             if ($request->hasfile('Attached_File')) {
                 foreach ($request->file('Attached_File') as $file) {
-                    $name = $request->name . 'Attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Attached_File' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1102,7 +1102,7 @@ class AuditProgramController extends Controller
             $files = [];
             if ($request->hasfile('attachments')) {
                 foreach ($request->file('attachments') as $file) {
-                    $name = $request->name . 'attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
