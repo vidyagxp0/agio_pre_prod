@@ -1848,31 +1848,234 @@ if ($isIsNotChanged || !empty($request->comment)) {
 
         $root->qa_reviewer = $request->qa_reviewer;
 
-        if (!empty($request->root_cause_initial_attachment_rca)) {
-            $files = [];
-            if ($request->hasfile('root_cause_initial_attachment_rca')) {
+        // if (!empty($request->root_cause_initial_attachment_rca)) {
+        //     $files = [];
+        //     if ($request->hasfile('root_cause_initial_attachment_rca')) {
+        //         foreach ($request->file('root_cause_initial_attachment_rca') as $file) {
+        //             $name = $request->name . 'investigation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $root->root_cause_initial_attachment_rca = json_encode($files);
+        // }
+
+         if (!empty($request->root_cause_initial_attachment_rca) || !empty($request->deleted_root_cause_initial_attachment_rca)) {
+            $existingFiles = json_decode($root->root_cause_initial_attachment_rca, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_root_cause_initial_attachment_rca)) {
+                $filesToDelete = explode(',', $request->deleted_root_cause_initial_attachment_rca);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('root_cause_initial_attachment_rca')) {
                 foreach ($request->file('root_cause_initial_attachment_rca') as $file) {
-                    $name = $request->name . 'investigation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+                  $name = $request->name . 'investigation_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
                 }
             }
-            $root->root_cause_initial_attachment_rca = json_encode($files);
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $root->root_cause_initial_attachment_rca = json_encode($allFiles);
         }
 
+        
+        if (!empty($request->root_cause_initial_attachment) || !empty($request->deleted_root_cause_initial_attachment)) {
+            $existingFiles = json_decode($root->root_cause_initial_attachment, true) ?? [];
 
+            // Handle deleted files
+            if (!empty($request->deleted_root_cause_initial_attachment)) {
+                $filesToDelete = explode(',', $request->deleted_root_cause_initial_attachment);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
 
-        if (!empty($request->root_cause_initial_attachment)) {
-            $files = [];
-            if ($request->hasfile('root_cause_initial_attachment')) {
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('root_cause_initial_attachment')) {
                 foreach ($request->file('root_cause_initial_attachment') as $file) {
-                    $name = $request->name . 'initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+                  //  $name = $request->name . 'root_cause_initial_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'root_cause_initial_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
                 }
             }
-            $root->root_cause_initial_attachment = json_encode($files);
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $root->root_cause_initial_attachment = json_encode($allFiles);
         }
+
+
+          if (!empty($request->hod_attachments) || !empty($request->deleted_hod_attachments)) {
+            $existingFiles = json_decode($root->hod_attachments, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_hod_attachments)) {
+                $filesToDelete = explode(',', $request->deleted_hod_attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('hod_attachments')) {
+                foreach ($request->file('hod_attachments') as $file) {
+                  //  $name = $request->name . 'hod_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'hod_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $root->hod_attachments = json_encode($allFiles);
+        }
+
+
+        if (!empty($request->cft_attchament_new) || !empty($request->deleted_cft_attchament_new)) {
+            $existingFiles = json_decode($root->cft_attchament_new, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_cft_attchament_new)) {
+                $filesToDelete = explode(',', $request->deleted_cft_attchament_new);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('cft_attchament_new')) {
+                foreach ($request->file('cft_attchament_new') as $file) {
+                  //  $name = $request->name . 'cft_attchament_new' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'cft_attchament_new' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $root->cft_attchament_new = json_encode($allFiles);
+        }
+
+
+
+          if (!empty($request->hod_final_attachments) || !empty($request->deleted_hod_final_attachments)) {
+            $existingFiles = json_decode($root->hod_final_attachments, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_hod_final_attachments)) {
+                $filesToDelete = explode(',', $request->deleted_hod_final_attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('hod_final_attachments')) {
+                foreach ($request->file('hod_final_attachments') as $file) {
+                  //  $name = $request->name . 'hod_final_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'hod_final_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $root->hod_final_attachments = json_encode($allFiles);
+        }
+
+
+         if (!empty($request->qa_final_attachments) || !empty($request->deleted_qa_final_attachments)) {
+            $existingFiles = json_decode($root->qa_final_attachments, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_qa_final_attachments)) {
+                $filesToDelete = explode(',', $request->deleted_qa_final_attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('qa_final_attachments')) {
+                foreach ($request->file('qa_final_attachments') as $file) {
+                  //  $name = $request->name . 'qa_final_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'qa_final_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $root->qa_final_attachments = json_encode($allFiles);
+        }
+
+
+        
+         if (!empty($request->qah_final_attachments) || !empty($request->deleted_qah_final_attachments)) {
+            $existingFiles = json_decode($root->qah_final_attachments, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_qah_final_attachments)) {
+                $filesToDelete = explode(',', $request->deleted_qah_final_attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('qah_final_attachments')) {
+                foreach ($request->file('qah_final_attachments') as $file) {
+                  //  $name = $request->name . 'qah_final_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                   $name = $request->name . 'qah_final_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $root->qah_final_attachments = json_encode($allFiles);
+        }
+
+
+
+        // if (!empty($request->root_cause_initial_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('root_cause_initial_attachment')) {
+        //         foreach ($request->file('root_cause_initial_attachment') as $file) {
+        //             $name = $request->name . 'initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $root->root_cause_initial_attachment = json_encode($files);
+        // }
         if (!empty($request->investigation_attachment)) {
             $files = [];
             if ($request->hasfile('investigation_attachment')) {
@@ -1885,61 +2088,61 @@ if ($isIsNotChanged || !empty($request->comment)) {
             $root->investigation_attachment = json_encode($files);
         }
 
-        if (!empty($request->cft_attchament_new)) {
-            $files = [];
-            if ($request->hasfile('cft_attchament_new')) {
-                foreach ($request->file('cft_attchament_new') as $file) {
-                    $name = $request->name . 'initial_qa_cqa_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $root->cft_attchament_new = json_encode($files);
-        }
-        if (!empty($request->qah_final_attachments)) {
-            $files = [];
-            if ($request->hasfile('qah_final_attachments')) {
-                foreach ($request->file('qah_final_attachments') as $file) {
-                    $name = $request->name . 'qah_cqah__designee_final_approval_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $root->qah_final_attachments = json_encode($files);
-        }
-        if (!empty($request->hod_attachments)) {
-            $files = [];
-            if ($request->hasfile('hod_attachments')) {
-                foreach ($request->file('hod_attachments') as $file) {
-                    $name = $request->name . 'hod_review_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $root->hod_attachments = json_encode($files);
-        }
-        if (!empty($request->hod_final_attachments)) {
-            $files = [];
-            if ($request->hasfile('hod_final_attachments')) {
-                foreach ($request->file('hod_final_attachments') as $file) {
-                    $name = $request->name . 'hod_final_review_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $root->hod_final_attachments = json_encode($files);
-        }
-        if (!empty($request->qa_final_attachments)) {
-            $files = [];
-            if ($request->hasfile('qa_final_attachments')) {
-                foreach ($request->file('qa_final_attachments') as $file) {
-                    $name = $request->name . 'qa_cqa_final_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $root->qa_final_attachments = json_encode($files);
-        }
+        // if (!empty($request->cft_attchament_new)) {
+        //     $files = [];
+        //     if ($request->hasfile('cft_attchament_new')) {
+        //         foreach ($request->file('cft_attchament_new') as $file) {
+        //             $name = $request->name . 'initial_qa_cqa_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $root->cft_attchament_new = json_encode($files);
+        // }
+        // if (!empty($request->qah_final_attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('qah_final_attachments')) {
+        //         foreach ($request->file('qah_final_attachments') as $file) {
+        //             $name = $request->name . 'qah_cqah__designee_final_approval_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $root->qah_final_attachments = json_encode($files);
+        // }
+        // if (!empty($request->hod_attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('hod_attachments')) {
+        //         foreach ($request->file('hod_attachments') as $file) {
+        //             $name = $request->name . 'hod_review_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $root->hod_attachments = json_encode($files);
+        // }
+        // if (!empty($request->hod_final_attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('hod_final_attachments')) {
+        //         foreach ($request->file('hod_final_attachments') as $file) {
+        //             $name = $request->name . 'hod_final_review_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $root->hod_final_attachments = json_encode($files);
+        // }
+        // if (!empty($request->qa_final_attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('qa_final_attachments')) {
+        //         foreach ($request->file('qa_final_attachments') as $file) {
+        //             $name = $request->name . 'qa_cqa_final_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $root->qa_final_attachments = json_encode($files);
+        // }
 
 
         // $root->investigators = json_encode($request->investigators);

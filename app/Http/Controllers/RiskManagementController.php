@@ -2899,40 +2899,191 @@ class RiskManagementController extends Controller
             $data->reference = json_encode($files);
         }
 
-        if (!empty($request->risk_attachment)) {
-            $files = [];
-            if ($request->hasfile('risk_attachment')) {
-                foreach ($request->file('risk_attachment') as $file) {
-                  //  $name = $request->name . 'risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                     $name = $request->name . 'risk_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+    
+
+
+        
+         if (!empty($request->risk_attachment) || !empty($request->deleted_risk_attachment))
+            {
+                $existingFiles = json_decode($data->risk_attachment, true) ?? [];
+
+                // Handle deleted files
+                if (!empty($request->deleted_risk_attachment)) {
+                    $filesToDelete = explode(',', $request->deleted_risk_attachment);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
                 }
+
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('risk_attachment')) {
+                    foreach ($request->file('risk_attachment') as $file) {
+                    // $name = $request->name . 'risk_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'risk_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $data->risk_attachment = json_encode($allFiles);
             }
 
-            $data->risk_attachment = json_encode($files);
-        }
 
 
-        if (!empty($request->risk_ana_attach)) {
-            $files = [];
-            if ($request->hasfile('risk_ana_attach')) {
-                foreach ($request->file('risk_ana_attach') as $file) {
-                    // $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                       $name = $request->name . 'risk_ana_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+
+
+
+
+
+
+             if (!empty($request->risk_ana_attach) || !empty($request->deleted_risk_ana_attach))
+            {
+                $existingFiles = json_decode($data->risk_ana_attach, true) ?? [];
+
+                // Handle deleted files
+                if (!empty($request->deleted_risk_ana_attach)) {
+                    $filesToDelete = explode(',', $request->deleted_risk_ana_attach);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
                 }
+
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('risk_ana_attach')) {
+                    foreach ($request->file('risk_ana_attach') as $file) {
+                    // $name = $request->name . 'risk_ana_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'risk_ana_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $data->risk_ana_attach = json_encode($allFiles);
             }
 
-            $data->risk_ana_attach = json_encode($files);
-        }
+
+
+
+            if (!empty($request->hod_design_attach) || !empty($request->deleted_hod_design_attach))
+            {
+                $existingFiles = json_decode($data->hod_design_attach, true) ?? [];
+
+                // Handle deleted files
+                if (!empty($request->deleted_hod_design_attach)) {
+                    $filesToDelete = explode(',', $request->deleted_hod_design_attach);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('hod_design_attach')) {
+                    foreach ($request->file('hod_design_attach') as $file) {
+                    // $name = $request->name . 'hod_design_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_design_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $data->hod_design_attach = json_encode($allFiles);
+            }
+
+
+               if (!empty($request->qa_cqa_attachments) || !empty($request->deleted_qa_cqa_attachments))
+            {
+                $existingFiles = json_decode($data->qa_cqa_attachments, true) ?? [];
+
+                // Handle deleted files
+                if (!empty($request->deleted_qa_cqa_attachments)) {
+                    $filesToDelete = explode(',', $request->deleted_qa_cqa_attachments);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('qa_cqa_attachments')) {
+                    foreach ($request->file('qa_cqa_attachments') as $file) {
+                    // $name = $request->name . 'qa_cqa_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'qa_cqa_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $data->qa_cqa_attachments = json_encode($allFiles);
+            }
+
+
+         if (!empty($request->qa_cqa_head_attach) || !empty($request->deleted_qa_cqa_head_attach))
+            {
+                $existingFiles = json_decode($data->qa_cqa_head_attach, true) ?? [];
+
+                // Handle deleted files
+                if (!empty($request->deleted_qa_cqa_head_attach)) {
+                    $filesToDelete = explode(',', $request->deleted_qa_cqa_head_attach);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('qa_cqa_head_attach')) {
+                    foreach ($request->file('qa_cqa_head_attach') as $file) {
+                    // $name = $request->name . 'qa_cqa_head_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'qa_cqa_head_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $data->qa_cqa_head_attach = json_encode($allFiles);
+            }
+
+
+
+        // if (!empty($request->risk_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('risk_attachment')) {
+        //         foreach ($request->file('risk_attachment') as $file) {
+        //           //  $name = $request->name . 'risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //              $name = $request->name . 'risk_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     $data->risk_attachment = json_encode($files);
+        // }
+
 
         // if (!empty($request->risk_ana_attach)) {
         //     $files = [];
         //     if ($request->hasfile('risk_ana_attach')) {
         //         foreach ($request->file('risk_ana_attach') as $file) {
-        //             $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             // $name = $request->name . 'risk_ana_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //                $name = $request->name . 'risk_ana_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2941,42 +3092,44 @@ class RiskManagementController extends Controller
         //     $data->risk_ana_attach = json_encode($files);
         // }
 
-        if (!empty($request->hod_design_attach)) {
-            $files = [];
-            if ($request->hasfile('hod_design_attach')) {
-                foreach ($request->file('hod_design_attach') as $file) {
-                    // $name = $request->name . 'hod_design_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                       $name = $request->name . 'hod_design_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
+       
 
-            $data->hod_design_attach = json_encode($files);
-        }
+        // if (!empty($request->hod_design_attach)) {
+        //     $files = [];
+        //     if ($request->hasfile('hod_design_attach')) {
+        //         foreach ($request->file('hod_design_attach') as $file) {
+        //             // $name = $request->name . 'hod_design_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //                $name = $request->name . 'hod_design_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
 
-        if ($request->hasFile('qa_cqa_attachments')) {
-            $files = [];
-            foreach ($request->file('qa_cqa_attachments') as $file) {
-                // $name = $request->name . '_qa_cqa_attachments_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                   $name = $request->name . 'qa_cqa_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-            $data->qa_cqa_attachments = json_encode($files);
-        }
+        //     $data->hod_design_attach = json_encode($files);
+        // }
 
-        $data->fill($request->except('qa_cqa_head_attach'));if ($request->hasFile('qa_cqa_head_attach')) {
-            $files = [];
-            foreach ($request->file('qa_cqa_head_attach') as $file) {
-                //$name = $request->name . '_qa_cqa_head_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                   $name = $request->name . 'qa_cqa_head_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
-            }
-            $data->qa_cqa_head_attach = json_encode($files);
-        }
-        $data->fill($request->except('qa_cqa_head_attach'));
+        // if ($request->hasFile('qa_cqa_attachments')) {
+        //     $files = [];
+        //     foreach ($request->file('qa_cqa_attachments') as $file) {
+        //         // $name = $request->name . '_qa_cqa_attachments_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //            $name = $request->name . 'qa_cqa_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $file->move(public_path('upload/'), $name);
+        //         $files[] = $name;
+        //     }
+        //     $data->qa_cqa_attachments = json_encode($files);
+        // }
+
+        // $data->fill($request->except('qa_cqa_head_attach'));if ($request->hasFile('qa_cqa_head_attach')) {
+        //     $files = [];
+        //     foreach ($request->file('qa_cqa_head_attach') as $file) {
+        //         //$name = $request->name . '_qa_cqa_head_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //            $name = $request->name . 'qa_cqa_head_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $file->move(public_path('upload/'), $name);
+        //         $files[] = $name;
+        //     }
+        //     $data->qa_cqa_head_attach = json_encode($files);
+        // }
+        // $data->fill($request->except('qa_cqa_head_attach'));
         //  return $data;
 
         // -----------grid=------
@@ -9399,6 +9552,7 @@ class RiskManagementController extends Controller
                 $lastDocument = RiskManagement::find($id);
                 $cftDetails = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'In-progress', 'risk_id' => $id])->distinct('cft_user_id')->count();
                 $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
+                $selecCft = RiskManagmentCft::where('risk_id', $id)->first();
                 if ($riskAssement->stage == 1) {
                      if (empty($riskAssement->document_used_risk) || empty($riskAssement->Brief_description) ||empty($riskAssement->purpose) || empty($riskAssement->reason_for_revision) || empty($riskAssement->scope) || empty($riskAssement->short_description) || empty($riskAssement->root_cause_methodology) || empty($riskAssement->investigation_summary) || empty($riskAssement->r_a_conclussion)) {
                         Session::flash('swal', [
@@ -9514,7 +9668,34 @@ class RiskManagementController extends Controller
                             'message' => 'Sent for CFT Review state'
                         ]);
                     }
+                    $cftReviews = [
+                        strtolower(trim($selecCft->Production_Table_Review ?? '')),
+                        strtolower(trim($selecCft->Production_Injection_Review ?? '')),
+                        strtolower(trim($selecCft->ProductionLiquid_Review ?? '')),
+                        strtolower(trim($selecCft->Store_Review ?? '')),
+                        strtolower(trim($selecCft->ResearchDevelopment_Review ?? '')),
+                        strtolower(trim($selecCft->Microbiology_Review ?? '')),
+                        strtolower(trim($selecCft->RegulatoryAffair_Review ?? '')),
+                        strtolower(trim($selecCft->CorporateQualityAssurance_Review ?? '')),
+                        strtolower(trim($selecCft->ContractGiver_Review ?? '')),
+                        strtolower(trim($selecCft->Quality_review ?? '')),
+                        strtolower(trim($selecCft->Quality_Assurance_Review ?? '')),
+                        strtolower(trim($selecCft->Engineering_review ?? '')),
+                        strtolower(trim($selecCft->Environment_Health_review ?? '')),
+                        strtolower(trim($selecCft->Human_Resource_review ?? '')),
+                    ];
 
+                    if (!in_array('yes', $cftReviews)) {
+
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'CFT Tab is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    }
+                    
                     // if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review  || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
                     //     Session::flash('swal', [
                     //         'title' => 'Mandatory Fields Required!',

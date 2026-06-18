@@ -974,61 +974,62 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="Due Date">Complaint Reported On
-                                     @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif
-                                    </label>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
 
-                                    <div class="calenderauditee">
-                                        @php
-                                            // Set formattedDate to an empty string if due_date is not set
-                                            $formattedDate = str_contains(
-                                                'NaN-undefined-NaN',
-                                                $data->complaint_reported_on_gi,
-                                            )
-                                                ? ''
-                                                : $data->complaint_reported_on_gi;
-                                        @endphp
+                                <label for="complaint_dat">
+                                    Complaint Reported On
 
-                                        <input
-                                            type="text" 
-                                            id="complaint_dat" name="complaint_reported_on_gi"
-                                            placeholder="Select Due Date"
-                                            value="{{ Helpers::getdateFormat($formattedDate) }}" />
-                                    </div>
-                                   
-                                    <script>
-                                    $(document).ready(function () {
+                                    @if($data->stage == 1)
+                                        <span class="text-danger">*</span>
+                                    @endif
+                                </label>
 
-                                        // init datepicker
-                                        $("#complaint_dat").datepicker({
-                                            dateFormat: "dd-M-yy",
-                                            minDate: 0, // ❌ prevents past dates (allows today + future)
-                                            onClose: function (dateText) {
-                                                if (!dateText) {
-                                                    $(this).val('');
-                                                }
-                                            }
-                                        });
+                                <div class="calenderauditee">
 
-                                        // 🔐 STAGE + ROLE CHECK
-                                        @if(!($data->stage == 1 && $istab1))
-                                            // disable datepicker properly
-                                            $("#complaint_dat").datepicker("disable");
+                                    @php
+                                        $formattedDate = '';
 
-                                            // hard readonly
-                                            $("#complaint_dat")
-                                                .prop("readonly", true)
-                                                .addClass("bg-light");
-                                        @endif
+                                        if (
+                                            !empty($data->complaint_reported_on_gi) &&
+                                            $data->complaint_reported_on_gi != 'NaN-undefined-NaN'
+                                        ) {
+                                            $formattedDate = Helpers::getdateFormat(
+                                                $data->complaint_reported_on_gi
+                                            );
+                                        }
+                                    @endphp
 
-                                    });
-                                    </script>
+                                    <input
+                            type="text"
+                            id="complaint_dat"
+                            name="complaint_reported_on_gi"
+                            value="{{ old('complaint_reported_on_gi', $formattedDate) }}"
+                            placeholder="Select Date"
+                            {{ $data->stage != 1 ? 'readonly' : '' }}
+                        >
                                 </div>
+
                             </div>
+                        </div>
+                        <script>
+                        $(document).ready(function () {
+
+                            @if($data->stage == 1)
+
+                                $("#complaint_dat").datepicker({
+                                    dateFormat: "dd-M-yy",
+                                    minDate: 0
+                                });
+
+                            @else
+
+                                $("#complaint_dat").prop("readonly", true);
+
+                            @endif
+
+                        });
+                        </script>
 
                             {{-- <div class="col-md-12 mb-3">
                                 <div class="group-input">

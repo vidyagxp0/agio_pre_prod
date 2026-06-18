@@ -1047,10 +1047,9 @@
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                   <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                    </a>
                                                                 </h6>
                                                             @endforeach
                                                         @endif
@@ -1065,6 +1064,73 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                              <!-- Hidden field to keep track of files to be deleted -->
+                            <input type="hidden" id="deleted_risk_attachment" name="deleted_risk_attachment" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const removeButtons = document.querySelectorAll('.remove-file');
+
+                                    removeButtons.forEach(button => {
+                                        button.addEventListener('click', function() {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            // Hide the file container
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                // Remove hidden input associated with this file
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                // Add the file name to the deleted files list
+                                                const deletedFilesInput = document.getElementById('deleted_risk_attachment');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, id) {
+                                    const fileListContainer = document.getElementById(id);
+                                    const files = input.files;
+
+                                    for (let i = 0; i < files.length; i++) {
+                                        const file = files[i];
+                                        const fileName = file.name;
+                                        const fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        const fileText = document.createElement('b');
+                                        fileText.textContent = fileName;
+
+                                        const viewLink = document.createElement('a');
+                                        viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                        viewLink.target = '_blank';
+                                        viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                        const removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = fileName;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function() {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(viewLink);
+                                        fileContainer.appendChild(removeLink);
+
+                                        fileListContainer.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
@@ -1758,6 +1824,71 @@
                                         </div>
                                     </div>
 
+                             <input type="hidden" id="deleted_risk_ana_attach" name="deleted_risk_ana_attach" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const removeButtons = document.querySelectorAll('.remove-file');
+
+                                    removeButtons.forEach(button => {
+                                        button.addEventListener('click', function() {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            // Hide the file container
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                // Remove hidden input associated with this file
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                // Add the file name to the deleted files list
+                                                const deletedFilesInput = document.getElementById('deleted_risk_ana_attach');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, id) {
+                                    const fileListContainer = document.getElementById(id);
+                                    const files = input.files;
+
+                                    for (let i = 0; i < files.length; i++) {
+                                        const file = files[i];
+                                        const fileName = file.name;
+                                        const fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        const fileText = document.createElement('b');
+                                        fileText.textContent = fileName;
+
+                                        const viewLink = document.createElement('a');
+                                        viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                        viewLink.target = '_blank';
+                                        viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                        const removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = fileName;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function() {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(viewLink);
+                                        fileContainer.appendChild(removeLink);
+
+                                        fileListContainer.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" id="ChangesaveButton02" class="saveButton"
@@ -1835,6 +1966,73 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                     <input type="hidden" id="deleted_hod_design_attach" name="deleted_hod_design_attach" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const removeButtons = document.querySelectorAll('.remove-file');
+
+                                    removeButtons.forEach(button => {
+                                        button.addEventListener('click', function() {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            // Hide the file container
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                // Remove hidden input associated with this file
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                // Add the file name to the deleted files list
+                                                const deletedFilesInput = document.getElementById('deleted_hod_design_attach');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, id) {
+                                    const fileListContainer = document.getElementById(id);
+                                    const files = input.files;
+
+                                    for (let i = 0; i < files.length; i++) {
+                                        const file = files[i];
+                                        const fileName = file.name;
+                                        const fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        const fileText = document.createElement('b');
+                                        fileText.textContent = fileName;
+
+                                        const viewLink = document.createElement('a');
+                                        viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                        viewLink.target = '_blank';
+                                        viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                        const removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = fileName;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function() {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(viewLink);
+                                        fileContainer.appendChild(removeLink);
+
+                                        fileListContainer.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
                                     @else
                                     <div class="col-12">
                                         <div class="group-input">
@@ -1873,6 +2071,8 @@
                                     </div>
                                     @endif
 
+
+                            
                                 </div>
 
                                 <h3 style="font-size: 15px; color: #333; margin-bottom: 20px">
@@ -7928,6 +8128,72 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                     <input type="hidden" id="deleted_qa_cqa_attachments" name="deleted_qa_cqa_attachments" value="">
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const removeButtons = document.querySelectorAll('.remove-file');
+
+                                            removeButtons.forEach(button => {
+                                                button.addEventListener('click', function() {
+                                                    const fileName = this.getAttribute('data-file-name');
+                                                    const fileContainer = this.closest('.file-container');
+
+                                                    // Hide the file container
+                                                    if (fileContainer) {
+                                                        fileContainer.style.display = 'none';
+                                                        // Remove hidden input associated with this file
+                                                        const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                        if (hiddenInput) {
+                                                            hiddenInput.remove();
+                                                        }
+
+                                                        // Add the file name to the deleted files list
+                                                        const deletedFilesInput = document.getElementById('deleted_qa_cqa_attachments');
+                                                        let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                        deletedFiles.push(fileName);
+                                                        deletedFilesInput.value = deletedFiles.join(',');
+                                                    }
+                                                });
+                                            });
+                                        });
+
+                                        function addMultipleFiles(input, id) {
+                                            const fileListContainer = document.getElementById(id);
+                                            const files = input.files;
+
+                                            for (let i = 0; i < files.length; i++) {
+                                                const file = files[i];
+                                                const fileName = file.name;
+                                                const fileContainer = document.createElement('h6');
+                                                fileContainer.classList.add('file-container', 'text-dark');
+                                                fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                                const fileText = document.createElement('b');
+                                                fileText.textContent = fileName;
+
+                                                const viewLink = document.createElement('a');
+                                                viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                                viewLink.target = '_blank';
+                                                viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                                const removeLink = document.createElement('a');
+                                                removeLink.classList.add('remove-file');
+                                                removeLink.dataset.fileName = fileName;
+                                                removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                                removeLink.addEventListener('click', function() {
+                                                    fileContainer.style.display = 'none';
+                                                });
+
+                                                fileContainer.appendChild(fileText);
+                                                fileContainer.appendChild(viewLink);
+                                                fileContainer.appendChild(removeLink);
+
+                                                fileListContainer.appendChild(fileContainer);
+                                            }
+                                        }
+                                    </script>
                                     @else
                                     <div class="col-12">
                                         <div class="group-input">
@@ -8055,6 +8321,74 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+                                <input type="hidden" id="deleted_qa_cqa_head_attach" name="deleted_qa_cqa_head_attach" value="">
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const removeButtons = document.querySelectorAll('.remove-file');
+
+                                            removeButtons.forEach(button => {
+                                                button.addEventListener('click', function() {
+                                                    const fileName = this.getAttribute('data-file-name');
+                                                    const fileContainer = this.closest('.file-container');
+
+                                                    // Hide the file container
+                                                    if (fileContainer) {
+                                                        fileContainer.style.display = 'none';
+                                                        // Remove hidden input associated with this file
+                                                        const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                        if (hiddenInput) {
+                                                            hiddenInput.remove();
+                                                        }
+
+                                                        // Add the file name to the deleted files list
+                                                        const deletedFilesInput = document.getElementById('deleted_qa_cqa_head_attach');
+                                                        let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                        deletedFiles.push(fileName);
+                                                        deletedFilesInput.value = deletedFiles.join(',');
+                                                    }
+                                                });
+                                            });
+                                        });
+
+                                        function addMultipleFiles(input, id) {
+                                            const fileListContainer = document.getElementById(id);
+                                            const files = input.files;
+
+                                            for (let i = 0; i < files.length; i++) {
+                                                const file = files[i];
+                                                const fileName = file.name;
+                                                const fileContainer = document.createElement('h6');
+                                                fileContainer.classList.add('file-container', 'text-dark');
+                                                fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                                const fileText = document.createElement('b');
+                                                fileText.textContent = fileName;
+
+                                                const viewLink = document.createElement('a');
+                                                viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                                viewLink.target = '_blank';
+                                                viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                                const removeLink = document.createElement('a');
+                                                removeLink.classList.add('remove-file');
+                                                removeLink.dataset.fileName = fileName;
+                                                removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                                removeLink.addEventListener('click', function() {
+                                                    fileContainer.style.display = 'none';
+                                                });
+
+                                                fileContainer.appendChild(fileText);
+                                                fileContainer.appendChild(viewLink);
+                                                fileContainer.appendChild(removeLink);
+
+                                                fileListContainer.appendChild(fileContainer);
+                                            }
+                                        }
+                                    </script>
+
                                     @else
                                     <div class="col-12">
                                         <div class="group-input">
