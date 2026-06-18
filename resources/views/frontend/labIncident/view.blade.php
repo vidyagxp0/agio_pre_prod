@@ -312,7 +312,7 @@
                                 Child
                             </button>
                             @endif
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Lab Incident', 3) || Helpers::check_roles($data->division_id, 'Lab Incident', 18))
+                        @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Lab Incident', 3) || Helpers::check_roles($data->division_id, 'Lab Incident', 18)))
 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Information Required
@@ -340,7 +340,7 @@
                                 Child
                             </button>
                             @endif
-                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Lab Incident', 48))
+                        @elseif($data->stage == 6 && (Helpers::check_roles($data->division_id, 'Lab Incident', 48)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             QA Secondary Review Complete
                         </button>
@@ -352,7 +352,7 @@
                             Child
                         </button>
                         @endif
-                        @elseif($data->stage == 7 && Helpers::check_roles($data->division_id, 'Lab Incident', 42))
+                        @elseif($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Lab Incident', 42)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#root-modal">
                                 Approved
                             </button>
@@ -364,7 +364,7 @@
                                 Child
                             </button>
                             @endif
-                         @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Lab Incident', 3))
+                         @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'Lab Incident', 3)))
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Pending Approval
                             </button> --}}
@@ -2570,7 +2570,7 @@
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Incident Category">QA Secondary Review Comments @if($data->stage==6)<span class="text-danger">*</span>@endif</label>
-                    <textarea name="QA_secondry_Comments" {{ $istab6 ? "required" : "disabled" }}>{{ $data->QA_secondry_Comments }}</textarea>
+                    <textarea name="QA_secondry_Comments" {{ $istab6 ? "required" : "readonly" }}>{{ $data->QA_secondry_Comments }}</textarea>
                 </div>
             </div>
             <div class="col-12">
@@ -3362,7 +3362,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('StageChangeLabcancel', $data->id) }}" method="POST">
+                <form action="{{ route('StageChangeLabIncidentchange', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
