@@ -2853,7 +2853,7 @@ class CCController extends Controller
         foreach ($request->file('hod_final_review_attach') as $file) {
             // Generate a unique filename
             // $filename = $request->name . '_hod_final_review_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $name = $request->name . "_hod_final_review_attach_" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $filename = $request->name . "_hod_final_review_attach_" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
             // Move the file to the upload directory
             $file->move(public_path('upload/'), $filename);
