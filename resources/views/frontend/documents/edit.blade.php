@@ -13763,13 +13763,6 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="brand-name">Molecular Formula</label>
-                                        <input type="text" name="molecular_formula_row_material" value="{{$document->molecular_formula_row_material}}">
-                                    </div>
-                                </div> --}}
-
                                 <div class="col-12 sub-head">
                                     Molecular Formula
                                     <div class="group-input">
@@ -13777,13 +13770,6 @@
                                         <textarea name="molecular_formula_row_material" id="" class="summernote">{{ $document->molecular_formula_row_material ? $document->molecular_formula_row_material : '' }}</textarea>
                                     </div>
                                 </div>
-
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="label-claim">Molecular Weight</label>
-                                        <input type="text" name="molecular_weight_row_material" value="{{$document->molecular_weight_row_material}}">
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-12 sub-head">
                                      Molecular Weight
@@ -13889,15 +13875,23 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="rawmaterials_specifications">Specifications</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea name="rawmaterials_specifications" class="summernote">
-                                            {{ $document->rawmaterials_specifications }}
-                                        </textarea>
+                                {!! quillEditor(
+                                    'rawmaterials_specifications',
+                                    $document->rawmaterials_specifications,
+
+                                    '
+                                    <label for="rawmaterials_specifications">
+                                        Specifications
+                                    </label>
+                                    <div>
+                                        <small class="text-primary">
+                                            Please insert "NA" in the data field if it does not require completion
+                                        </small>
                                     </div>
-                                </div>
+                                    ',
+
+                                    false
+                                ) !!}
 
                                 <div class="group-input">
                                     <label for="revision-history">Revision History</label>
@@ -14580,52 +14574,7 @@
                     <div class="orig-head">
                         Distribution & Retrieval
                     </div>
-                    {{-- <div class="col-md-12 input-fields">
-                        <div class="group-input">
 
-                            <label for="distribution" id="distribution">
-                                Distribution & Retrieval<button type="button" id="distributionbtnadd" name="button">+</button>
-                            </label>
-                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                            @if (!empty($document->document_content->distribution))
-                                @foreach (unserialize($document->document_content->distribution) as $data)
-                                    <input type="text" name="distribution[]" class="myclassname"
-                                        value="{{ $data }}">
-                                            @endforeach
-                                            @else
-                                            <input type="text" name="distribution[]" class="myclassname">
-                                            @endif
-
-                                            <div id="distributiondiv"></div>
-                                            @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'distribution' && !empty($tempHistory->comment))
-                                            @php
-                                            $users_name = DB::table('users')
-                                            ->where('id', $tempHistory->user_id)
-                                            ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field" style="background: #ffff0061;
-                            color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                            @endforeach
-
-
-                                        </div>
-                                        </div>
-
-                                        @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment
-                        <div class="comment">
-                            <div>
-                                <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
-
-                                            <input class="input-field" type="text" name="distribution_comment">
-                                            </div>
-                                            <div class="button">Add Comment</div>
-                                            </div>
-                                            @endif --}}
                     <div class="input-fields">
                         <div class="group-input">
                             <label for="distriution_retrieval">
@@ -15556,39 +15505,13 @@
         </div>
     </div>
 
-    {{-- <script>
-         var editor = new FroalaEditor('.summernote', {
-            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
-            imageUploadParam: 'image_param',
-            imageUploadMethod: 'POST',
-            imageMaxSize: 20 * 1024 * 1024,
-            imageUploadURL: "{{ secure_url('api/upload-files') }}",
-            fileUploadParam: 'image_param',
-            fileUploadURL: "{{ secure_url('api/upload-files')}}",
-            videoUploadParam: 'image_param',
-            videoUploadURL: "{{ secure_url('api/upload-files') }}",
-            videoMaxSize: 500 * 1024 * 1024,
-         });
-         
-        $(".summernote-disabled").FroalaEditor("edit.off");
-    </script> --}}
 
     <script>
         VirtualSelect.init({
             ele: '#reference_record,#parent_child, #notify_to'
         });
 
-        // $('#summernote').summernote({
-        //     toolbar: [
-        //         ['style', ['style']],
-        //         ['font', ['bold', 'underline', 'clear', 'italic']],
-        //         ['color', ['color']],
-        //         ['para', ['ul', 'ol', 'paragraph']],
-        //         ['table', ['table']],
-        //         ['insert', ['link', 'picture', 'video']],
-        //         ['view', ['fullscreen', 'codeview', 'help']]
-        //     ]
-        // });
+ 
     </script>
 
     <script>

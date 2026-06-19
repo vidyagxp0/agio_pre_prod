@@ -64,16 +64,6 @@ class UserManagementController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'emp_code' => 'required|string|max:255|unique:users,emp_code',
-        //     'email' => 'required|email',
-        //     'password' => 'required',
-        //     'departmentid' => 'required',
-        //     'roles' => 'required|array',
-        // ]);
-
         $request->validate([
             'name' => 'required|string|max:255',
             'emp_code' => 'required|string|max:255|unique:users,emp_code',
@@ -314,211 +304,187 @@ class UserManagementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-        public function update(Request $request, $id)
-        {
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'emp_code' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('users', 'emp_code')->ignore($id)
+            ],
+            'email' => 'required|email',
+            'departmentid' => 'required',
+            'roles' => 'required|array',
 
-            // $request->validate([
-            //     'name' => 'required|string|max:255', 
-            //     'emp_code' => ['required','string','max:255',Rule::unique('users', 'emp_code')->ignore($id)],
-            //     'email' => 'required|email',
-            //     'departmentid' => 'required',
-            //     'roles' => 'required|array',
-            // ]);
+            'password' => [
+                'nullable',
+                'min:7',
+                'max:20',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/',
+            ],
+        ], [
+            'password.min' => 'Password must be at least 7 characters.',
+            'password.max' => 'Password must not exceed 20 characters.',
+            'password.regex' => 'Password must include uppercase, lowercase, number and special character.',
+        ]);
 
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'emp_code' => [
-                    'required',
-                    'string',
-                    'max:255',
-                    Rule::unique('users', 'emp_code')->ignore($id)
-                ],
-                'email' => 'required|email',
-                'departmentid' => 'required',
-                'roles' => 'required|array',
+        $user = User::with('userRoles')->find($id); 
+        $lastUser = User::with('userRoles')->find($id);
 
-                'password' => [
-                    'nullable',
-                    'min:7',
-                    'max:20',
-                    'regex:/[a-z]/',
-                    'regex:/[A-Z]/',
-                    'regex:/[0-9]/',
-                    'regex:/[@$!%*#?&]/',
-                ],
-            ], [
-                'password.min' => 'Password must be at least 7 characters.',
-                'password.max' => 'Password must not exceed 20 characters.',
-                'password.regex' => 'Password must include uppercase, lowercase, number and special character.',
-            ]);
+        $oldRoles = $lastUser->userRoles
+        ->pluck('role_id')
+        ->sort()
+        ->values()
+        ->toArray();
 
-            $user = User::with('userRoles')->find($id); 
-            $lastUser = User::with('userRoles')->find($id);
-
-            $oldRoles = $lastUser->userRoles
-            ->pluck('role_id')
-            ->sort()
-            ->values()
-            ->toArray();
-
-            $newRoles = collect($request->roles)
-            ->sort()
-            ->values()
-            ->toArray();
-            //  Validation (IGNORE current user)
+        $newRoles = collect($request->roles)
+        ->sort()
+        ->values() 
+        ->toArray();
+        //  Validation (IGNORE current user)
 
 
-            $user->name = $request->name;
-            $user->emp_code = $request->emp_code;
-            $user->email = $request->email;
-            if (!empty($request->password)) {
-                $user->password = Hash::make($request->password);
-                // $user->force_password_change = 0;
-                // $user->password_change_time = null;
-                // $user->failed_attempts = 0;
-                // $user->locked_at = null;
+        $user->name = $request->name;
+        $user->emp_code = $request->emp_code;
+        $user->email = $request->email;
+        if (!empty($request->password)) {
+            $user->password = Hash::make($request->password);
+            // $user->force_password_change = 0;
+            // $user->password_change_time = null;
+            // $user->failed_attempts = 0;
+            // $user->locked_at = null;
+        }
+        $user->departmentid = $request->departmentid;
+
+        if ($user->save()) {
+
+            // cft person code here
+            $oldName = $lastUser->name;
+            $newName = $request->name;
+
+            if ($oldName != $newName) {
+
+                $personColumns = [
+                    'Production_person',
+                    'Quality_Control_Person',
+                    'QualityAssurance_person',
+                    'Engineering_person',
+                    'Analytical_Development_person',
+                    'Kilo_Lab_person',
+                    'Technology_transfer_person',
+                    'Environment_Health_Safety_person',
+                    'Human_Resource_person',
+                    'Information_Technology_person',
+                    'Project_management_person',
+                    'Other1_person',
+                    'Other2_person',
+                    'Other3_person',
+                    'Other4_person',
+                    'Other5_person',
+                    'RA_person',
+                    'Production_Table_Person',
+                    'Production_Injection_Person',
+                    'ProductionInjection_person',
+                    'ProductionLiquid_person',
+                    'Store_person',
+                    'ResearchDevelopment_person',
+                    'Microbiology_person',
+                    'RegulatoryAffair_person',
+                    'CorporateQualityAssurance_person',
+                    'ContractGiver_person',
+                    'RA_data_person',
+                    'QA_CQA_person',
+                ];
+
+                $tables = [
+                    'cc_cfts',
+                    'deviationcfts',
+                    'risk_managment_cfts',
+                    'external_audit_c_f_t_s',
+                    'market_complaint_cfts',
+                ];
+
+                foreach ($tables as $table) {
+
+                    $records = DB::table($table)->get();
+
+                    foreach ($records as $record) {
+
+                        $updateData = [];
+
+                        foreach ($personColumns as $column) {
+
+                            if (
+                                property_exists($record, $column) &&
+                                !empty($record->$column) &&
+                                strpos($record->$column, $oldName) !== false
+                            ) {
+
+                                $updateData[$column] = str_replace(
+                                    $oldName,
+                                    $newName,
+                                    $record->$column
+                                );
+                            }
+                        }
+
+                        if (!empty($updateData)) {
+                            DB::table($table)
+                                ->where('id', $record->id)
+                                ->update($updateData);
+                        }
+                    }
+                }
             }
-            $user->departmentid = $request->departmentid;
 
-            if ($user->save()) {
-                // Delete existing user roles
-                $user->userRoles()->delete();
+            // Delete existing user roles
+            $user->userRoles()->delete();
 
-                // Attach new roles
-                foreach ($request->roles as $roleId) {
-                    $userRole = new UserRole();                
-                    $checkRole = Roles::find($roleId);
+            // Attach new roles
+            foreach ($request->roles as $roleId) {
+                $userRole = new UserRole();                
+                $checkRole = Roles::find($roleId);
 
-                    // Split the string using the '-' delimiter
-                    $roleArray = explode('-', $checkRole->name);
+                // Split the string using the '-' delimiter
+                $roleArray = explode('-', $checkRole->name);
 
-                    // Assign values to three variables
-                    $q_m_s_divisions_name = trim($roleArray[0]);
-                    $q_m_s_processes_name = trim($roleArray[1]);
-                    $q_m_s_roles_name = trim($roleArray[2]);
-                    // Assuming you have models for q_m_s_divisions and q_m_s_process
-                    $division = QMSDivision::where('name', $q_m_s_divisions_name)->first();
-                    $process = QMSProcess::where('process_name', $q_m_s_processes_name)->where('division_id', $division->id)->first();
-                    $qmsroles = QMSRoles::where('name', $q_m_s_roles_name)->first();
-                    $q_m_s_divisions_id = $division->id;
-                    $q_m_s_processes_id = $process?->id;
-                    $q_m_s_roles_id = $qmsroles->id;
-                    $userRole->user_id = $user->id;
-                    $userRole->role_id = $roleId;
-                    $userRole->q_m_s_divisions_id = $q_m_s_divisions_id;
-                    $userRole->q_m_s_processes_id = $q_m_s_processes_id;
-                    $userRole->q_m_s_roles_id = $q_m_s_roles_id;
-                    $userRole->save();
-                }
+                // Assign values to three variables
+                $q_m_s_divisions_name = trim($roleArray[0]);
+                $q_m_s_processes_name = trim($roleArray[1]);
+                $q_m_s_roles_name = trim($roleArray[2]);
+                // Assuming you have models for q_m_s_divisions and q_m_s_process
+                $division = QMSDivision::where('name', $q_m_s_divisions_name)->first();
+                $process = QMSProcess::where('process_name', $q_m_s_processes_name)->where('division_id', $division->id)->first();
+                $qmsroles = QMSRoles::where('name', $q_m_s_roles_name)->first();
+                $q_m_s_divisions_id = $division->id;
+                $q_m_s_processes_id = $process?->id;
+                $q_m_s_roles_id = $qmsroles->id;
+                $userRole->user_id = $user->id;
+                $userRole->role_id = $roleId;
+                $userRole->q_m_s_divisions_id = $q_m_s_divisions_id;
+                $userRole->q_m_s_processes_id = $q_m_s_processes_id;
+                $userRole->q_m_s_roles_id = $q_m_s_roles_id;
+                $userRole->save();
+            }
 
-                if ($lastUser->name != $request->name) {
-                    $validation2 = new AdminUserAuditTrial();
-                    $validation2->admin_id = $user->id;
-                    $validation2->previous = $lastUser->name;
-                    $validation2->current = $request->name;
-                    $validation2->activity_type = 'Name';
-                    $validation2->user_id = auth()->user()?->id;
-                    $validation2->user_name = auth()->user()?->name;
-                    $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
-
-                    $validation2->change_to =   "Not Applicable";
-                    $validation2->change_from = $lastUser->status;
-                    if (is_null($lastUser->name) || $lastUser->name === '') {
-                        $validation2->action_name = 'New';
-                    } else {
-                        $validation2->action_name = 'Update';
-                    }
-                    $validation2->save();
-                }
-
-                if ($lastUser->emp_code != $request->emp_code) {
-                    $validation2 = new AdminUserAuditTrial();
-                    $validation2->admin_id = $user->id;
-                    $validation2->previous = $lastUser->emp_code;
-                    $validation2->current = $request->emp_code;
-                    $validation2->activity_type = 'Code';
-                    $validation2->user_id = auth()->user()?->id;
-                    $validation2->user_name = auth()->user()?->emp_code;
-                    $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
-
-                    $validation2->change_to =   "Not Applicable";
-                    $validation2->change_from = $lastUser->status;
-                    if (is_null($lastUser->emp_code) || $lastUser->emp_code === '') {
-                        $validation2->action_name = 'New';
-                    } else {
-                        $validation2->action_name = 'Update';
-                    }
-                    $validation2->save();
-                }
-
-                if ($lastUser->email != $request->email) {
-                    $validation2 = new AdminUserAuditTrial();
-                    $validation2->admin_id = $user->id;
-                    $validation2->previous = $lastUser->email;
-                    $validation2->current = $request->email;
-                    $validation2->activity_type = 'Email';
-                    $validation2->user_id = auth()->user()?->id;
-                    $validation2->user_name = auth()->user()?->name;
-                    $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
-
-                    $validation2->change_to =   "Not Applicable";
-                    $validation2->change_from = $lastUser->status;
-                    if (is_null($lastUser->email) || $lastUser->email === '') {
-                        $validation2->action_name = 'New';
-                    } else {
-                        $validation2->action_name = 'Update';
-                    }
-                    $validation2->save();
-                }
-                
-                if ($lastUser->password != $request->password) {
-                    $validation2 = new AdminUserAuditTrial();
-                    $validation2->admin_id = $user->id;
-                    // old hashed password
-                    $validation2->previous = $lastUser->password;
-
-                    // new hashed password
-                    $validation2->current = Hash::make($request->password);
-                    $validation2->activity_type = 'Password';
-                    $validation2->user_id = auth()->user()?->id;
-                    $validation2->user_name = auth()->user()?->name;
-                    $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
-
-                    $validation2->change_to =   "Not Applicable";
-                    $validation2->change_from = $lastUser->status;
-                    if (is_null($lastUser->password) || $lastUser->password === '') {
-                        $validation2->action_name = 'New';
-                    } else {
-                        $validation2->action_name = 'Update';
-                    }
-                    $validation2->save();
-                }
-
-            if ($lastUser->departmentid != $request->departmentid) {
-                $currentDepartmentName = Department::where('id', $request->departmentid)->value('name');
-
-                $previousDepartmentName = Department::where('id', $lastUser->departmentid)->value('name');
-
-                if (!$currentDepartmentName) {
-                    \Log::error('Department not found for ID: ' . $request->departmentid);
-                    $currentDepartmentName = 'Unknown';
-                }
-                if (!$previousDepartmentName) {
-                    \Log::error('Department not found for ID: ' . $lastUser->departmentid);
-                    $previousDepartmentName = 'Unknown';
-                }
-
+            if ($lastUser->name != $request->name) {
                 $validation2 = new AdminUserAuditTrial();
                 $validation2->admin_id = $user->id;
-                $validation2->previous = $previousDepartmentName;
-                $validation2->current = $currentDepartmentName;
-                $validation2->activity_type = 'Department';
+                $validation2->previous = $lastUser->name;
+                $validation2->current = $request->name;
+                $validation2->activity_type = 'Name';
                 $validation2->user_id = auth()->user()?->id;
                 $validation2->user_name = auth()->user()?->name;
                 $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
-                $validation2->change_to = $currentDepartmentName;
-                $validation2->change_from = $previousDepartmentName;
-                if (is_null($previousDepartmentName) || $previousDepartmentName === '') {
+
+                $validation2->change_to =   "Not Applicable";
+                $validation2->change_from = $lastUser->status;
+                if (is_null($lastUser->name) || $lastUser->name === '') {
                     $validation2->action_name = 'New';
                 } else {
                     $validation2->action_name = 'Update';
@@ -526,80 +492,175 @@ class UserManagementController extends Controller
                 $validation2->save();
             }
 
-            // if ($lastUser->role != $request->role) {
-            //     $oldRoleNames = DB::table('role_groups')
-            //         ->whereIn('id', explode(',', $lastUser->role))
-            //         ->pluck('name')
-            //         ->toArray();
-            //     $oldRoleNamesString = implode(', ', $oldRoleNames);
+            if ($lastUser->emp_code != $request->emp_code) {
+                $validation2 = new AdminUserAuditTrial();
+                $validation2->admin_id = $user->id;
+                $validation2->previous = $lastUser->emp_code;
+                $validation2->current = $request->emp_code;
+                $validation2->activity_type = 'Code';
+                $validation2->user_id = auth()->user()?->id;
+                $validation2->user_name = auth()->user()?->emp_code;
+                $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
 
-            //     $newRoleNames = DB::table('role_groups')
-            //         ->whereIn('id', explode(',', $request->role))
-            //         ->pluck('name')
-            //         ->toArray();
-            //     $newRoleNamesString = implode(', ', $newRoleNames);
-
-            //     if (empty($oldRoleNamesString)) {
-            //         $oldRoleNamesString = 'Null';
-            //     }
-            //     if (empty($newRoleNamesString)) {
-            //         $newRoleNamesString = 'Unknown';
-            //     }
-
-            //     $validation2 = new AdminUserAuditTrial();
-            //     $validation2->admin_id = $user->id;
-            //     $validation2->previous = $oldRoleNamesString;
-            //     $validation2->current = $newRoleNamesString;
-            //     $validation2->activity_type = 'Roles';
-            //     $validation2->user_id = auth()->user()?->id;
-            //     $validation2->user_name = auth()->user()?->name;
-            //     $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
-            //     $validation2->change_to = "Not Applicable";
-            //     $validation2->change_from = $lastUser->status;
-
-            //     if (is_null($lastUser->role) || $lastUser->role === '') {
-            //         $validation2->action_name = 'New';
-            //     } else {
-            //         $validation2->action_name = 'Update';
-            //     }
-
-            //     $validation2->save();
-            // }
-
-                if ($oldRoles != $newRoles) {
-
-                    $oldRoleNames = Roles::whereIn('id', $oldRoles)
-                        ->pluck('name')
-                        ->implode(', ');
-
-                    $newRoleNames = Roles::whereIn('id', $newRoles)
-                        ->pluck('name')
-                        ->implode(', ');
-
-                    $validation2 = new AdminUserAuditTrial();
-                    $validation2->admin_id = $user->id;
-                    $validation2->previous = $oldRoleNames ?: 'Null';
-                    $validation2->current = $newRoleNames ?: 'Null';
-                    $validation2->activity_type = 'Roles';
-                    $validation2->user_id = auth()->id();
-                    $validation2->user_name = auth()->user()?->name;
-                    $validation2->user_role = RoleGroup::where(
-                        'id',
-                        auth()->user()?->role
-                    )->value('name');
-
-                    $validation2->change_to = $newRoleNames;
-                    $validation2->change_from = $oldRoleNames;
+                $validation2->change_to =   "Not Applicable";
+                $validation2->change_from = $lastUser->status;
+                if (is_null($lastUser->emp_code) || $lastUser->emp_code === '') {
+                    $validation2->action_name = 'New';
+                } else {
                     $validation2->action_name = 'Update';
-
-                    $validation2->save();
                 }
-                toastr()->success('Update successfully');
-                return redirect()->route('user_management.index');
-            } else {
-                toastr()->error('Something went wrong');
-                return redirect()->back();
+                $validation2->save();
             }
+
+            if ($lastUser->email != $request->email) {
+                $validation2 = new AdminUserAuditTrial();
+                $validation2->admin_id = $user->id;
+                $validation2->previous = $lastUser->email;
+                $validation2->current = $request->email;
+                $validation2->activity_type = 'Email';
+                $validation2->user_id = auth()->user()?->id;
+                $validation2->user_name = auth()->user()?->name;
+                $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
+
+                $validation2->change_to =   "Not Applicable";
+                $validation2->change_from = $lastUser->status;
+                if (is_null($lastUser->email) || $lastUser->email === '') {
+                    $validation2->action_name = 'New';
+                } else {
+                    $validation2->action_name = 'Update';
+                }
+                $validation2->save();
+            }
+            
+            if ($lastUser->password != $request->password) {
+                $validation2 = new AdminUserAuditTrial();
+                $validation2->admin_id = $user->id;
+                // old hashed password
+                $validation2->previous = $lastUser->password;
+
+                // new hashed password
+                $validation2->current = Hash::make($request->password);
+                $validation2->activity_type = 'Password';
+                $validation2->user_id = auth()->user()?->id;
+                $validation2->user_name = auth()->user()?->name;
+                $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
+
+                $validation2->change_to =   "Not Applicable";
+                $validation2->change_from = $lastUser->status;
+                if (is_null($lastUser->password) || $lastUser->password === '') {
+                    $validation2->action_name = 'New';
+                } else {
+                    $validation2->action_name = 'Update';
+                }
+                $validation2->save();
+            }
+
+        if ($lastUser->departmentid != $request->departmentid) {
+            $currentDepartmentName = Department::where('id', $request->departmentid)->value('name');
+
+            $previousDepartmentName = Department::where('id', $lastUser->departmentid)->value('name');
+
+            if (!$currentDepartmentName) {
+                \Log::error('Department not found for ID: ' . $request->departmentid);
+                $currentDepartmentName = 'Unknown';
+            }
+            if (!$previousDepartmentName) {
+                \Log::error('Department not found for ID: ' . $lastUser->departmentid);
+                $previousDepartmentName = 'Unknown';
+            }
+
+            $validation2 = new AdminUserAuditTrial();
+            $validation2->admin_id = $user->id;
+            $validation2->previous = $previousDepartmentName;
+            $validation2->current = $currentDepartmentName;
+            $validation2->activity_type = 'Department';
+            $validation2->user_id = auth()->user()?->id;
+            $validation2->user_name = auth()->user()?->name;
+            $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
+            $validation2->change_to = $currentDepartmentName;
+            $validation2->change_from = $previousDepartmentName;
+            if (is_null($previousDepartmentName) || $previousDepartmentName === '') {
+                $validation2->action_name = 'New';
+            } else {
+                $validation2->action_name = 'Update';
+            }
+            $validation2->save();
+        }
+
+        // if ($lastUser->role != $request->role) {
+        //     $oldRoleNames = DB::table('role_groups')
+        //         ->whereIn('id', explode(',', $lastUser->role))
+        //         ->pluck('name')
+        //         ->toArray();
+        //     $oldRoleNamesString = implode(', ', $oldRoleNames);
+
+        //     $newRoleNames = DB::table('role_groups')
+        //         ->whereIn('id', explode(',', $request->role))
+        //         ->pluck('name')
+        //         ->toArray();
+        //     $newRoleNamesString = implode(', ', $newRoleNames);
+
+        //     if (empty($oldRoleNamesString)) {
+        //         $oldRoleNamesString = 'Null';
+        //     }
+        //     if (empty($newRoleNamesString)) {
+        //         $newRoleNamesString = 'Unknown';
+        //     }
+
+        //     $validation2 = new AdminUserAuditTrial();
+        //     $validation2->admin_id = $user->id;
+        //     $validation2->previous = $oldRoleNamesString;
+        //     $validation2->current = $newRoleNamesString;
+        //     $validation2->activity_type = 'Roles';
+        //     $validation2->user_id = auth()->user()?->id;
+        //     $validation2->user_name = auth()->user()?->name;
+        //     $validation2->user_role = RoleGroup::where('id', auth()->user()?->role)->value('name');
+        //     $validation2->change_to = "Not Applicable";
+        //     $validation2->change_from = $lastUser->status;
+
+        //     if (is_null($lastUser->role) || $lastUser->role === '') {
+        //         $validation2->action_name = 'New';
+        //     } else {
+        //         $validation2->action_name = 'Update';
+        //     }
+
+        //     $validation2->save();
+        // }
+
+            if ($oldRoles != $newRoles) {
+
+                $oldRoleNames = Roles::whereIn('id', $oldRoles)
+                    ->pluck('name')
+                    ->implode(', ');
+
+                $newRoleNames = Roles::whereIn('id', $newRoles)
+                    ->pluck('name')
+                    ->implode(', ');
+
+                $validation2 = new AdminUserAuditTrial();
+                $validation2->admin_id = $user->id;
+                $validation2->previous = $oldRoleNames ?: 'Null';
+                $validation2->current = $newRoleNames ?: 'Null';
+                $validation2->activity_type = 'Roles';
+                $validation2->user_id = auth()->id();
+                $validation2->user_name = auth()->user()?->name;
+                $validation2->user_role = RoleGroup::where(
+                    'id',
+                    auth()->user()?->role
+                )->value('name');
+
+                $validation2->change_to = $newRoleNames;
+                $validation2->change_from = $oldRoleNames;
+                $validation2->action_name = 'Update';
+
+                $validation2->save();
+            }
+            toastr()->success('Update successfully');
+            return redirect()->route('user_management.index');
+        } else {
+            toastr()->error('Something went wrong');
+            return redirect()->back();
+        }
     }
 
     /**

@@ -253,7 +253,7 @@ class TMSController extends Controller
             if (!empty($request->training_attachment) && $request->file('training_attachment')) {
                 $files = [];
                 foreach ($request->file('training_attachment') as $file) {
-                    $name = $request->traning_plan_name . 'training_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->traning_plan_name . 'training_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] =  $name; // Store the file path
                 }
@@ -693,7 +693,7 @@ class TMSController extends Controller
 
                 if ($request->hasfile('training_attachment')) {
                     foreach ($request->file('training_attachment') as $file) {
-                        $name = $request->traning_plan_name . 'training_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->traning_plan_name . 'training_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }

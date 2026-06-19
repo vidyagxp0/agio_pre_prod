@@ -122,7 +122,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('attach_file_rv')) {
                 foreach ($request->file('attach_file_rv') as $file) {
-                    $name = $request->name . 'response_verify_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'response_verify_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -569,7 +569,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('auditSheChecklist_attachment')) {
                 foreach ($request->file('auditSheChecklist_attachment') as $file) {
-                    $name = $request->name . 'auditSheChecklist_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'auditSheChecklist_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -590,7 +590,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'gi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'gi_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -605,7 +605,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('file_attachment')) {
                 foreach ($request->file('file_attachment') as $file) {
-                    $name = $request->name . 'acknowledgement_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'acknowledgement_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -617,7 +617,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
                 foreach ($request->file('file_attachment_guideline') as $file) {
-                    $name = $request->name . 'auditpreparation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'auditpreparation_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -632,7 +632,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('Audit_file')) {
                 foreach ($request->file('Audit_file') as $file) {
-                    $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Audit_file' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -646,7 +646,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('report_file')) {
                 foreach ($request->file('report_file') as $file) {
-                    $name = $request->name . 'report_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'report_file' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -659,7 +659,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
-                    $name = $request->name . 'audit_response' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'audit_response' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2364,7 +2364,7 @@ for ($i = 1; $i <= 2; $i++) {
         if (!empty($request->inv_attachment)) {
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'gi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'gi_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
 
                     $files[] = $name;
@@ -2379,7 +2379,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('attach_file_rv')) {
                 foreach ($request->file('attach_file_rv') as $file) {
-                    $name = $request->name . 'response_verify_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'response_verify_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2393,7 +2393,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('file_attachment')) {
                 foreach ($request->file('file_attachment') as $file) {
-                    $name = $request->name . 'acknowledgement_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'acknowledgement_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2402,7 +2402,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'gi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'gi_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2418,7 +2418,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
                 foreach ($request->file('file_attachment_guideline') as $file) {
-                    $name = $request->name . 'auditpreparation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'auditpreparation_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2432,7 +2432,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('auditSheChecklist_attachment_main')) {
                 foreach ($request->file('auditSheChecklist_attachment_main') as $file) {
-                    $name = $request->name . 'auditSheChecklist_attachment_main' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'auditSheChecklist_attachment_main' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2447,7 +2447,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('Audit_file')) {
                 foreach ($request->file('Audit_file') as $file) {
-                    $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Audit_file' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2461,7 +2461,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('report_file')) {
                 foreach ($request->file('report_file') as $file) {
-                    $name = $request->name . 'report_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'report_file' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2475,7 +2475,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
-                    $name = $request->name . 'audit_response' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'audit_response' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2488,7 +2488,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('supproting_attachment')) {
                 foreach ($request->file('supproting_attachment') as $file) {
-                    $name = $request->name . 'supproting_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'supproting_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2502,7 +2502,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('tablet_coating_supporting_attachment')) {
                 foreach ($request->file('tablet_coating_supporting_attachment') as $file) {
-                    $name = $request->name . 'tablet_coating_supporting_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'tablet_coating_supporting_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2515,7 +2515,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('dispensing_and_manufacturing_attachment')) {
                 foreach ($request->file('dispensing_and_manufacturing_attachment') as $file) {
-                    $name = $request->name . 'dispensing_and_manufacturing_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'dispensing_and_manufacturing_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2529,7 +2529,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('ointment_packing_attachment')) {
                 foreach ($request->file('ointment_packing_attachment') as $file) {
-                    $name = $request->name . 'ointment_packing_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'ointment_packing_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2542,7 +2542,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('engineering_response_attachment')) {
                 foreach ($request->file('engineering_response_attachment') as $file) {
-                    $name = $request->name . 'engineering_response_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'engineering_response_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2555,7 +2555,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('quality_control_response_attachment')) {
                 foreach ($request->file('quality_control_response_attachment') as $file) {
-                    $name = $request->name . 'quality_control_response_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'quality_control_response_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2568,7 +2568,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('checklist_stores_response_attachment')) {
                 foreach ($request->file('checklist_stores_response_attachment') as $file) {
-                    $name = $request->name . 'checklist_stores_response_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'checklist_stores_response_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2581,7 +2581,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('checklist_hr_response_attachment')) {
                 foreach ($request->file('checklist_hr_response_attachment') as $file) {
-                    $name = $request->name . 'checklist_hr_response_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'checklist_hr_response_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2594,7 +2594,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('remark_injection_packing_attachment')) {
                 foreach ($request->file('remark_injection_packing_attachment') as $file) {
-                    $name = $request->name . 'remark_injection_packing_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'remark_injection_packing_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2607,7 +2607,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('remark_analytical_research_attachment')) {
                 foreach ($request->file('remark_analytical_research_attachment') as $file) {
-                    $name = $request->name . 'remark_analytical_research_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'remark_analytical_research_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2620,7 +2620,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('remark_powder_manufacturing_filling_attachment')) {
                 foreach ($request->file('remark_powder_manufacturing_filling_attachment') as $file) {
-                    $name = $request->name . 'remark_powder_manufacturing_filling_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'remark_powder_manufacturing_filling_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2633,7 +2633,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('remark_formulation_research_development_attachment')) {
                 foreach ($request->file('remark_formulation_research_development_attachment') as $file) {
-                    $name = $request->name . 'remark_formulation_research_development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'remark_formulation_research_development_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2646,7 +2646,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('remark_documentation_name_attachment')) {
                 foreach ($request->file('remark_documentation_name_attachment') as $file) {
-                    $name = $request->name . 'remark_documentation_name_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'remark_documentation_name_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2659,7 +2659,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('tablet_capsule_packing_attachmen')) {
                 foreach ($request->file('tablet_capsule_packing_attachmen') as $file) {
-                    $name = $request->name . 'tablet_capsule_packing_attachmen' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'tablet_capsule_packing_attachmen' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2672,7 +2672,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('file_attach_add_2')) {
                 foreach ($request->file('file_attach_add_2') as $file) {
-                    $name = $request->name . 'file_attach_add_2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach_add_2' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2685,7 +2685,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('file_attach_add_1')) {
                 foreach ($request->file('file_attach_add_1') as $file) {
-                    $name = $request->name . 'file_attach_add_1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach_add_1' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2699,7 +2699,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
-                    $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2713,7 +2713,7 @@ for ($i = 1; $i <= 2; $i++) {
             $files = [];
             if ($request->hasfile('file_attach_capsule')) {
                 foreach ($request->file('file_attach_capsule') as $file) {
-                    $name = $request->name . 'file_attach_capsule' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach_capsule' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -4568,7 +4568,7 @@ if ($areIniAttachmentsSame2 != true) {
             $files = [];
             if ($request->hasfile('auditSheChecklist_attachment')) {
                 foreach ($request->file('auditSheChecklist_attachment') as $file) {
-                    $name = "IA-" . 'auditSheChecklist_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "IA-" . 'auditSheChecklist_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }

@@ -155,7 +155,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'GI Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'GI Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -167,7 +167,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('file_attchment_if_any')) {
                 foreach ($request->file('file_attchment_if_any') as $file) {
-                    $name = $request->name . 'file_attchment_if_any' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attchment_if_any' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -179,7 +179,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('closure_attachments')) {
                 foreach ($request->file('closure_attachments') as $file) {
-                    $name = $request->name . 'closure_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'closure_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -192,7 +192,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('meeting_and_summary_attachment')) {
                 foreach ($request->file('meeting_and_summary_attachment') as $file) {
-                    $name = $request->name . 'meeting_and_summary_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'meeting_and_summary_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -207,7 +207,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('cft_hod_attach')) {
                 foreach ($request->file('cft_hod_attach') as $file) {
-                    $name = $request->name . 'cft_hod_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'cft_hod_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -219,7 +219,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('qa_verification_file')) {
                 foreach ($request->file('qa_verification_file') as $file) {
-                    $name = $request->name . 'qa_verification_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_verification_file' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -429,7 +429,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('production_attachment')) {
                 foreach ($request->file('production_attachment') as $file) {
-                    $name = $request->name . 'production_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'production_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -442,7 +442,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Warehouse_attachment')) {
                 foreach ($request->file('Warehouse_attachment') as $file) {
-                    $name = $request->name . 'Warehouse_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Warehouse_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -455,7 +455,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Quality_Control_attachment')) {
                 foreach ($request->file('Quality_Control_attachment') as $file) {
-                    $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Quality_Control_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -468,7 +468,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Quality_Assurance_attachment')) {
                 foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                    $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Quality_Assurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -481,7 +481,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Engineering_attachment')) {
                 foreach ($request->file('Engineering_attachment') as $file) {
-                    $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Engineering_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -494,7 +494,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Analytical_Development_attachment')) {
                 foreach ($request->file('Analytical_Development_attachment') as $file) {
-                    $name = $request->name . 'Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Analytical_Development_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -507,7 +507,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Kilo_Lab_attachment')) {
                 foreach ($request->file('Kilo_Lab_attachment') as $file) {
-                    $name = $request->name . 'Kilo_Lab_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Kilo_Lab_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -520,7 +520,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Technology_transfer_attachment')) {
                 foreach ($request->file('Technology_transfer_attachment') as $file) {
-                    $name = $request->name . 'Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Technology_transfer_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -533,7 +533,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Environment_Health_Safety_attachment')) {
                 foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                    $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Environment_Health_Safety_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -546,7 +546,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Human_Resource_attachment')) {
                 foreach ($request->file('Human_Resource_attachment') as $file) {
-                    $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Human_Resource_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -559,7 +559,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Information_Technology_attachment')) {
                 foreach ($request->file('Information_Technology_attachment') as $file) {
-                    $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Information_Technology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -572,7 +572,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Project_management_attachment')) {
                 foreach ($request->file('Project_management_attachment') as $file) {
-                    $name = $request->name . 'Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Project_management_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -585,7 +585,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Other1_attachment')) {
                 foreach ($request->file('Other1_attachment') as $file) {
-                    $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Other1_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -598,7 +598,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Other2_attachment')) {
                 foreach ($request->file('Other2_attachment') as $file) {
-                    $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Other2_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -611,7 +611,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Other3_attachment')) {
                 foreach ($request->file('Other3_attachment') as $file) {
-                    $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Other3_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -624,7 +624,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Other4_attachment')) {
                 foreach ($request->file('Other4_attachment') as $file) {
-                    $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Other4_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -637,7 +637,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('Other5_attachment')) {
                 foreach ($request->file('Other5_attachment') as $file) {
-                    $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Other5_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -799,7 +799,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Quality_Control_attachment')) {
                 foreach ($request->file('hod_Quality_Control_attachment') as $file) {
-                    $name = $request->name . 'hod_Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Quality_Control_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -812,7 +812,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_CorporateQualityAssurance_attachment')) {
                 foreach ($request->file('hod_CorporateQualityAssurance_attachment') as $file) {
-                    $name = $request->name . 'hod_CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_CorporateQualityAssurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -825,7 +825,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Store_attachment')) {
                 foreach ($request->file('hod_Store_attachment') as $file) {
-                    $name = $request->name . 'hod_Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Store_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -838,7 +838,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_ResearchDevelopment_attachment')) {
                 foreach ($request->file('hod_ResearchDevelopment_attachment') as $file) {
-                    $name = $request->name . 'hod_ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_ResearchDevelopment_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -851,7 +851,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Production_Table_Attachment')) {
                 foreach ($request->file('hod_Production_Table_Attachment') as $file) {
-                    $name = $request->name . 'hod_Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Production_Table_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -864,7 +864,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Quality_Assurance_attachment')) {
                 foreach ($request->file('hod_Quality_Assurance_attachment') as $file) {
-                    $name = $request->name . 'hod_Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Quality_Assurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -877,7 +877,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Engineering_attachment')) {
                 foreach ($request->file('hod_Engineering_attachment') as $file) {
-                    $name = $request->name . 'hod_Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Engineering_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -890,7 +890,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_RegulatoryAffair_attachment')) {
                 foreach ($request->file('hod_RegulatoryAffair_attachment') as $file) {
-                    $name = $request->name . 'hod_RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_RegulatoryAffair_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -903,7 +903,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Analytical_Development_attachment')) {
                 foreach ($request->file('hod_Analytical_Development_attachment') as $file) {
-                    $name = $request->name . 'hod_Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Analytical_Development_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -917,7 +917,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Technology_transfer_attachment')) {
                 foreach ($request->file('hod_Technology_transfer_attachment') as $file) {
-                    $name = $request->name . 'hod_Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Technology_transfer_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -930,7 +930,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_ProductionLiquid_attachment')) {
                 foreach ($request->file('hod_ProductionLiquid_attachment') as $file) {
-                    $name = $request->name . 'hod_ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_ProductionLiquid_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -943,7 +943,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Environment_Health_Safety_attachment')) {
                 foreach ($request->file('hod_Environment_Health_Safety_attachment') as $file) {
-                    $name = $request->name . 'hod_Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Environment_Health_Safety_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -956,7 +956,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Human_Resource_attachment')) {
                 foreach ($request->file('hod_Human_Resource_attachment') as $file) {
-                    $name = $request->name . 'hod_Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Human_Resource_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -970,7 +970,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Project_management_attachment')) {
                 foreach ($request->file('hod_Project_management_attachment') as $file) {
-                    $name = $request->name . 'hod_Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Project_management_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -983,7 +983,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Other1_attachment')) {
                 foreach ($request->file('hod_Other1_attachment') as $file) {
-                    $name = $request->name . 'hod_Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Other1_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -996,7 +996,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Production_Injection_Attachment')) {
                 foreach ($request->file('hod_Production_Injection_Attachment') as $file) {
-                    $name = $request->name . 'hod_Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Production_Injection_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1009,7 +1009,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Other2_attachment')) {
                 foreach ($request->file('hod_Other2_attachment') as $file) {
-                    $name = $request->name . 'hod_Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Other2_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1022,7 +1022,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Other3_attachment')) {
                 foreach ($request->file('hod_Other3_attachment') as $file) {
-                    $name = $request->name . 'hod_Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Other3_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1035,7 +1035,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Other4_attachment')) {
                 foreach ($request->file('hod_Other4_attachment') as $file) {
-                    $name = $request->name . 'hod_Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Other4_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1048,7 +1048,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Other5_attachment')) {
                 foreach ($request->file('hod_Other5_attachment') as $file) {
-                    $name = $request->name . 'hod_Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Other5_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1061,7 +1061,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_ContractGiver_attachment')) {
                 foreach ($request->file('hod_ContractGiver_attachment') as $file) {
-                    $name = $request->name . 'hod_ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_ContractGiver_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1074,7 +1074,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('hod_Microbiology_attachment')) {
                 foreach ($request->file('hod_Microbiology_attachment') as $file) {
-                    $name = $request->name . 'hod_Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_Microbiology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1808,7 +1808,7 @@ class ManagementReviewController extends Controller
         //     $files = [];
         //     if ($request->hasfile('inv_attachment')) {
         //         foreach ($request->file('inv_attachment') as $file) {
-        //             $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'inv_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2036,7 +2036,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('RA_attachment')) {
                     foreach ($request->file('RA_attachment') as $file) {
-                        $name = $request->name . 'RA_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'RA_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2047,7 +2047,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Quality_Assurance_attachment')) {
                     foreach ($request->file('Quality_Assurance_attachment') as $file) {
-                        $name = $request->name . 'Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Quality_Assurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2058,7 +2058,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Production_Table_Attachment')) {
                     foreach ($request->file('Production_Table_Attachment') as $file) {
-                        $name = $request->name . 'Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Production_Table_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2069,7 +2069,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('ProductionLiquid_attachment')) {
                     foreach ($request->file('ProductionLiquid_attachment') as $file) {
-                        $name = $request->name . 'ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'ProductionLiquid_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2080,7 +2080,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Production_Injection_Attachment')) {
                     foreach ($request->file('Production_Injection_Attachment') as $file) {
-                        $name = $request->name . 'Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Production_Injection_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2091,7 +2091,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
                     foreach ($request->file('Store_attachment') as $file) {
-                        $name = $request->name . 'Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Store_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2102,7 +2102,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Quality_Control_attachment')) {
                     foreach ($request->file('Quality_Control_attachment') as $file) {
-                        $name = $request->name . 'Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Quality_Control_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2113,7 +2113,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('ResearchDevelopment_attachment')) {
                     foreach ($request->file('ResearchDevelopment_attachment') as $file) {
-                        $name = $request->name . 'ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'ResearchDevelopment_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2124,7 +2124,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Engineering_attachment')) {
                     foreach ($request->file('Engineering_attachment') as $file) {
-                        $name = $request->name . 'Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Engineering_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2135,7 +2135,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Human_Resource_attachment')) {
                     foreach ($request->file('Human_Resource_attachment') as $file) {
-                        $name = $request->name . 'Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Human_Resource_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2146,7 +2146,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Microbiology_attachment')) {
                     foreach ($request->file('Microbiology_attachment') as $file) {
-                        $name = $request->name . 'Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Microbiology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2157,7 +2157,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('RegulatoryAffair_attachment')) {
                     foreach ($request->file('RegulatoryAffair_attachment') as $file) {
-                        $name = $request->name . 'RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'RegulatoryAffair_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2169,7 +2169,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('CorporateQualityAssurance_attachment')) {
                     foreach ($request->file('CorporateQualityAssurance_attachment') as $file) {
-                        $name = $request->name . 'CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'CorporateQualityAssurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2180,7 +2180,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Environment_Health_Safety_attachment')) {
                     foreach ($request->file('Environment_Health_Safety_attachment') as $file) {
-                        $name = $request->name . 'Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Environment_Health_Safety_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2191,7 +2191,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
                     foreach ($request->file('Information_Technology_attachment') as $file) {
-                        $name = $request->name . 'Information_Technology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Information_Technology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2202,7 +2202,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('ContractGiver_attachment')) {
                     foreach ($request->file('ContractGiver_attachment') as $file) {
-                        $name = $request->name . 'ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'ContractGiver_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2213,7 +2213,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Other1_attachment')) {
                     foreach ($request->file('Other1_attachment') as $file) {
-                        $name = $request->name . 'Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Other1_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2224,7 +2224,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Other2_attachment')) {
                     foreach ($request->file('Other2_attachment') as $file) {
-                        $name = $request->name . 'Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Other2_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2235,7 +2235,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Other3_attachment')) {
                     foreach ($request->file('Other3_attachment') as $file) {
-                        $name = $request->name . 'Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Other3_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2246,7 +2246,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Other4_attachment')) {
                     foreach ($request->file('Other4_attachment') as $file) {
-                        $name = $request->name . 'Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Other4_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2258,7 +2258,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('Other5_attachment')) {
                     foreach ($request->file('Other5_attachment') as $file) {
-                        $name = $request->name . 'Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'Other5_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2506,7 +2506,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_ContractGiver_attachment')) {
                     foreach ($request->file('hod_ContractGiver_attachment') as $file) {
-                        $name = $request->name . 'hod_ContractGiver_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_ContractGiver_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2519,7 +2519,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Microbiology_attachment')) {
                     foreach ($request->file('hod_Microbiology_attachment') as $file) {
-                        $name = $request->name . 'hod_Microbiology_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Microbiology_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2532,7 +2532,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_CorporateQualityAssurance_attachment')) {
                     foreach ($request->file('hod_CorporateQualityAssurance_attachment') as $file) {
-                        $name = $request->name . 'hod_CorporateQualityAssurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_CorporateQualityAssurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2545,7 +2545,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_ResearchDevelopment_attachment')) {
                     foreach ($request->file('hod_ResearchDevelopment_attachment') as $file) {
-                        $name = $request->name . 'hod_ResearchDevelopment_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_ResearchDevelopment_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2559,7 +2559,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Store_attachment')) {
                     foreach ($request->file('hod_Store_attachment') as $file) {
-                        $name = $request->name . 'hod_Store_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Store_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2572,7 +2572,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Quality_Assurance_attachment')) {
                     foreach ($request->file('hod_Quality_Assurance_attachment') as $file) {
-                        $name = $request->name . 'hod_Quality_Assurance_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Quality_Assurance_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2585,7 +2585,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Quality_Control_attachment')) {
                     foreach ($request->file('hod_Quality_Control_attachment') as $file) {
-                        $name = $request->name . 'hod_Quality_Control_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Quality_Control_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2598,7 +2598,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Production_Table_Attachment')) {
                     foreach ($request->file('hod_Production_Table_Attachment') as $file) {
-                        $name = $request->name . 'hod_Production_Table_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Production_Table_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2611,7 +2611,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_RegulatoryAffair_attachment')) {
                     foreach ($request->file('hod_RegulatoryAffair_attachment') as $file) {
-                        $name = $request->name . 'hod_RegulatoryAffair_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_RegulatoryAffair_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2625,7 +2625,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Production_Injection_Attachment')) {
                     foreach ($request->file('hod_Production_Injection_Attachment') as $file) {
-                        $name = $request->name . 'hod_Production_Injection_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Production_Injection_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2638,7 +2638,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Engineering_attachment')) {
                     foreach ($request->file('hod_Engineering_attachment') as $file) {
-                        $name = $request->name . 'hod_Engineering_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Engineering_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2651,7 +2651,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Analytical_Development_attachment')) {
                     foreach ($request->file('hod_Analytical_Development_attachment') as $file) {
-                        $name = $request->name . 'hod_Analytical_Development_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Analytical_Development_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2665,7 +2665,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Technology_transfer_attachment')) {
                     foreach ($request->file('hod_Technology_transfer_attachment') as $file) {
-                        $name = $request->name . 'hod_Technology_transfer_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Technology_transfer_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2678,7 +2678,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_ProductionLiquid_attachment')) {
                     foreach ($request->file('hod_ProductionLiquid_attachment') as $file) {
-                        $name = $request->name . 'hod_ProductionLiquid_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_ProductionLiquid_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2691,7 +2691,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Environment_Health_Safety_attachment')) {
                     foreach ($request->file('hod_Environment_Health_Safety_attachment') as $file) {
-                        $name = $request->name . 'hod_Environment_Health_Safety_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Environment_Health_Safety_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2704,7 +2704,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Human_Resource_attachment')) {
                     foreach ($request->file('hod_Human_Resource_attachment') as $file) {
-                        $name = $request->name . 'hod_Human_Resource_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Human_Resource_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2718,7 +2718,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Project_management_attachment')) {
                     foreach ($request->file('hod_Project_management_attachment') as $file) {
-                        $name = $request->name . 'hod_Project_management_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Project_management_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2731,7 +2731,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Other1_attachment')) {
                     foreach ($request->file('hod_Other1_attachment') as $file) {
-                        $name = $request->name . 'hod_Other1_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Other1_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2744,7 +2744,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Other2_attachment')) {
                     foreach ($request->file('hod_Other2_attachment') as $file) {
-                        $name = $request->name . 'hod_Other2_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Other2_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2757,7 +2757,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Other3_attachment')) {
                     foreach ($request->file('hod_Other3_attachment') as $file) {
-                        $name = $request->name . 'hod_Other3_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Other3_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2770,7 +2770,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Other4_attachment')) {
                     foreach ($request->file('hod_Other4_attachment') as $file) {
-                        $name = $request->name . 'hod_Other4_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Other4_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2783,7 +2783,7 @@ class ManagementReviewController extends Controller
                 $files = [];
                 if ($request->hasfile('hod_Other5_attachment')) {
                     foreach ($request->file('hod_Other5_attachment') as $file) {
-                        $name = $request->name . 'hod_Other5_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . 'hod_Other5_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                         $file->move('upload/', $name);
                         $files[] = $name;
                     }
@@ -2847,7 +2847,7 @@ class ManagementReviewController extends Controller
 
             if ($request->hasfile('Initial_attachment')) {
                 foreach ($request->file('Initial_attachment') as $file) {
-                    $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Initial_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2873,7 +2873,7 @@ class ManagementReviewController extends Controller
         // if ($request->hasfile('inv_attachment')) {
         //     $files = [];
         //     foreach ($request->file('inv_attachment') as $file) {
-        //         $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //         $name = $request->name . 'inv_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //         $file->move('upload/', $name);
         //         $files[] = $name;
         //     }
@@ -2887,7 +2887,7 @@ class ManagementReviewController extends Controller
         //     $files = [];
         //     if ($request->hasfile('inv_attachment')) {
         //         foreach ($request->file('inv_attachment') as $file) {
-        //             $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'inv_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2924,7 +2924,7 @@ class ManagementReviewController extends Controller
         //     $files = [];
         //     if ($request->hasfile('file_attchment_if_any')) {
         //         foreach ($request->file('file_attchment_if_any') as $file) {
-        //             $name = $request->name . 'file_attchment_if_any' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'file_attchment_if_any' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2960,7 +2960,7 @@ class ManagementReviewController extends Controller
         //     $files = [];
         //     if ($request->hasfile('closure_attachments')) {
         //         foreach ($request->file('closure_attachments') as $file) {
-        //             $name = $request->name . 'closure_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'closure_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -3024,7 +3024,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('cft_hod_attach')) {
                 foreach ($request->file('cft_hod_attach') as $file) {
-                    $name = $request->name . 'cft_hod_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'cft_hod_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3036,7 +3036,7 @@ class ManagementReviewController extends Controller
         //     $files = [];
         //     if ($request->hasfile('qa_verification_file')) {
         //         foreach ($request->file('qa_verification_file') as $file) {
-        //             $name = $request->name . 'qa_verification_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'qa_verification_file' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }

@@ -117,7 +117,7 @@ class OOTController extends Controller
         if (!empty($request->Attachment) && $request->file('Attachment')) {
             $files = [];
             foreach ($request->file('Attachment') as $file) {
-                $name = $request->name . 'Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -133,7 +133,7 @@ class OOTController extends Controller
         if (!empty($request->inv_file_attachment) && $request->file('inv_file_attachment')) {
             $files = [];
             foreach ($request->file('inv_file_attachment') as $file) {
-                $name = $request->name . 'inv_file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'inv_file_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -158,7 +158,7 @@ class OOTController extends Controller
         if (!empty($request->supporting_attechment) && $request->file('supporting_attechment')) {
             $files = [];
             foreach ($request->file('supporting_attechment') as $file) {
-                $name = $request->name . 'supporting_attechment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'supporting_attechment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -174,7 +174,7 @@ class OOTController extends Controller
         if (!empty($request->supporting_documents) && $request->file('supporting_documents')) {
             $files = [];
             foreach ($request->file('supporting_documents') as $file) {
-                $name = $request->name . 'supporting_documents' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'supporting_documents' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -188,7 +188,7 @@ class OOTController extends Controller
         if (!empty($request->conclusion_attechment) && $request->file('conclusion_attechment')) {
             $files = [];
             foreach ($request->file('conclusion_attechment') as $file) {
-                $name = $request->name . 'conclusion_attechment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'conclusion_attechment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -199,7 +199,7 @@ class OOTController extends Controller
         if (!empty($request->doc_closure) && $request->file('doc_closure')) {
             $files = [];
             foreach ($request->file('doc_closure') as $file) {
-                $name = $request->name . 'doc_closure' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'doc_closure' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -831,7 +831,7 @@ class OOTController extends Controller
         if (!empty($request->Attachment) && $request->file('Attachment')) {
             $files = [];
             foreach ($request->file('Attachment') as $file) {
-                $name = $request->name . 'Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -847,7 +847,7 @@ class OOTController extends Controller
         if (!empty($request->inv_file_attachment) && $request->file('inv_file_attachment')) {
             $files = [];
             foreach ($request->file('inv_file_attachment') as $file) {
-                $name = $request->name . 'inv_file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'inv_file_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -873,7 +873,7 @@ class OOTController extends Controller
         if (!empty($request->supporting_attechment) && $request->file('supporting_attechment')) {
             $files = [];
             foreach ($request->file('supporting_attechment') as $file) {
-                $name = $request->name . 'supporting_attechment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'supporting_attechment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -889,7 +889,7 @@ class OOTController extends Controller
         if (!empty($request->supporting_documents) && $request->file('supporting_documents')) {
             $files = [];
             foreach ($request->file('supporting_documents') as $file) {
-                $name = $request->name . 'supporting_documents' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'supporting_documents' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -903,7 +903,7 @@ class OOTController extends Controller
         if (!empty($request->conclusion_attechment) && $request->file('conclusion_attechment')) {
             $files = [];
             foreach ($request->file('conclusion_attechment') as $file) {
-                $name = $request->name . 'conclusion_attechment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'conclusion_attechment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }
@@ -914,7 +914,7 @@ class OOTController extends Controller
         if (!empty($request->doc_closure) && $request->file('doc_closure')) {
             $files = [];
             foreach ($request->file('doc_closure') as $file) {
-                $name = $request->name . 'doc_closure' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'doc_closure' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] =  $name; // Store the file path
             }

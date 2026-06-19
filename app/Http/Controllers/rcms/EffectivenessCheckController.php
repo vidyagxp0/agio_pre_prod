@@ -115,7 +115,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('Effectiveness_check_Attachment')) {
                 foreach ($request->file('Effectiveness_check_Attachment') as $file) {
-                    $name = $request->name . 'Effectiveness_check_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Effectiveness_check_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -127,7 +127,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('acknowledge_Attachment')) {
                 foreach ($request->file('acknowledge_Attachment') as $file) {
-                    $name = $request->name . 'acknowledge_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'acknowledge_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -139,7 +139,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('qa_cqa_review_Attachment')) {
                 foreach ($request->file('qa_cqa_review_Attachment') as $file) {
-                    $name = $request->name . 'qa_cqa_review_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_cqa_review_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -151,7 +151,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('qa_cqa_approval_Attachment')) {
                 foreach ($request->file('qa_cqa_approval_Attachment') as $file) {
-                    $name = $request->name . 'qa_cqa_approval_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_cqa_approval_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -165,7 +165,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('Addendum_Attachment')) {
                 foreach ($request->file('Addendum_Attachment') as $file) {
-                    $name = $request->name . 'Addendum_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Addendum_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -178,7 +178,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('Attachment')) {
                 foreach ($request->file('Attachment') as $file) {
-                    $name = $request->name . 'Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -190,7 +190,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('Attachments')) {
                 foreach ($request->file('Attachments') as $file) {
-                    $name = $request->name . 'Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -203,7 +203,7 @@ class EffectivenessCheckController extends Controller
         $files = [];
         if ($request->hasfile('refer_record')) {
             foreach ($request->file('refer_record') as $file) {
-                $name = $request->name . 'refer_record' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'refer_record' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $files[] = $name;
             }
@@ -745,7 +745,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('Effectiveness_check_Attachment')) {
                 foreach ($request->file('Effectiveness_check_Attachment') as $file) {
-                    $name = $request->name . 'Effectiveness_check_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Effectiveness_check_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -759,7 +759,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('Addendum_Attachment')) {
                 foreach ($request->file('Addendum_Attachment') as $file) {
-                    $name = $request->name . 'Addendum_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Addendum_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -771,7 +771,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('acknowledge_Attachment')) {
                 foreach ($request->file('acknowledge_Attachment') as $file) {
-                    $name = $request->name . 'acknowledge_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'acknowledge_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -783,7 +783,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('qa_cqa_review_Attachment')) {
                 foreach ($request->file('qa_cqa_review_Attachment') as $file) {
-                    $name = $request->name . 'qa_cqa_review_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_cqa_review_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -795,7 +795,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('qa_cqa_approval_Attachment')) {
                 foreach ($request->file('qa_cqa_approval_Attachment') as $file) {
-                    $name = $request->name . 'qa_cqa_approval_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_cqa_approval_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -808,7 +808,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('Attachment')) {
                 foreach ($request->file('Attachment') as $file) {
-                    $name = $request->name . 'Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -820,7 +820,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('Attachments')) {
                 foreach ($request->file('Attachments') as $file) {
-                    $name = $request->name . 'Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -832,7 +832,7 @@ class EffectivenessCheckController extends Controller
             $files = [];
             if ($request->hasfile('refer_record')) {
                 foreach ($request->file('refer_record') as $file) {
-                    $name = $request->name . 'refer_record' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'refer_record' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }

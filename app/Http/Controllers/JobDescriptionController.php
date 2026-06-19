@@ -454,35 +454,35 @@ class JobDescriptionController extends Controller
 
         if ($request->hasFile('qa_review_attachment')) {
             $file = $request->file('qa_review_attachment');
-            $name = $request->employee_id . 'qa_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'qa_review_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $jobTraining->qa_review_attachment = $name;
         }
 
         if ($request->hasFile('qa_cqa_attachment')) {
             $file = $request->file('qa_cqa_attachment');
-            $name = $request->employee_id . 'qa_cqa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'qa_cqa_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $jobTraining->qa_cqa_attachment = $name;
         }
 
         if ($request->hasFile('responsible_person_attachment')) {
             $file = $request->file('responsible_person_attachment');
-            $name = $request->employee_id . 'responsible_person_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'responsible_person_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $jobTraining->responsible_person_attachment = $name;
         }
 
         if ($request->hasFile('respected_department_attachment')) {
             $file = $request->file('respected_department_attachment');
-            $name = $request->employee_id . 'respected_department_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'respected_department_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $jobTraining->respected_department_attachment = $name;
         }
 
         if ($request->hasFile('final_review_attachment')) {
             $file = $request->file('final_review_attachment');
-            $name = $request->employee_id . 'final_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->employee_id . 'final_review_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $jobTraining->final_review_attachment = $name;
         }

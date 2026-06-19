@@ -417,7 +417,7 @@
                 </tr>
             </tbody>
         </table>
-        <table class="border" style="width: 100%;">
+        <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
                     <td style="font-weight: bold;">
@@ -699,7 +699,7 @@
                 <div class="custom-table-wrapper" id="custom-table2">
                     <div class="custom-procedure-content">
                         <div class="custom-content-wrapper">
-                            <div class="table-containers">
+                            <div class="quill-pdf-content">
                                 {!! $data->master_specification !!}
                             </div>
                         </div>
