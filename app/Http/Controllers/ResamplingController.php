@@ -914,7 +914,7 @@ foreach ($pre as $processName => $modelClass) {
             $newFiles = [];
             if ($request->hasFile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
-                    $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attach'  . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -969,7 +969,7 @@ foreach ($pre as $processName => $modelClass) {
             $newFiles = [];
             if ($request->hasFile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
-                    $name = $request->name . 'Support_doc' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'Support_doc'  . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -1009,7 +1009,7 @@ foreach ($pre as $processName => $modelClass) {
             $newFiles = [];
             if ($request->hasFile('final_attach')) {
                 foreach ($request->file('final_attach') as $file) {
-                    $name = $request->name . 'final_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'final_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -1037,7 +1037,7 @@ foreach ($pre as $processName => $modelClass) {
             $newFiles = [];
             if ($request->hasFile('qa_head')) {
                 foreach ($request->file('qa_head') as $file) {
-                    $name = $request->name . 'qa_head' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_head' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }

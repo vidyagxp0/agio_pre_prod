@@ -2238,7 +2238,7 @@ class OOCController extends Controller
         //     $files = [];
         //     if ($request->hasfile('attachments_hodIAHODPRIMARYREVIEW_ooc')) {
         //         foreach ($request->file('attachments_hodIAHODPRIMARYREVIEW_ooc') as $file) {
-        //             $name = $request->name . 'PhaseIA_HOD_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'PhaseIA_HOD_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2253,7 +2253,7 @@ class OOCController extends Controller
         //     $files = [];
         //     if ($request->hasfile('initial_attachment_qah_post_ooc')) {
         //         foreach ($request->file('initial_attachment_qah_post_ooc') as $file) {
-        //             $name = $request->name . 'P_IA_QAH_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'P_IA_QAH_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2295,7 +2295,7 @@ class OOCController extends Controller
         //     $files = [];
         //     if ($request->hasfile('attachments_hodIBBBHODPRIMARYREVIEW_ooc')) {
         //         foreach ($request->file('attachments_hodIBBBHODPRIMARYREVIEW_ooc') as $file) {
-        //             $name = $request->name . 'Phase_IB_HOD_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'Phase_IB_HOD_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2337,7 +2337,7 @@ class OOCController extends Controller
         //     $files = [];
         //     if ($request->hasfile('attachments_QAIBBBREVIEW_ooc')) {
         //         foreach ($request->file('attachments_QAIBBBREVIEW_ooc') as $file) {
-        //             $name = $request->name . 'Phase_IB_QA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'Phase_IB_QA_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2379,7 +2379,7 @@ class OOCController extends Controller
         //     $files = [];
         //     if ($request->hasfile('Pib_attachements')) {
         //         foreach ($request->file('Pib_attachements') as $file) {
-        //             $name = $request->name . 'P_IB_QAH_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'P_IB_QAH_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2627,7 +2627,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
         //     $files = [];
         //     if ($request->hasfile('initial_attachment_ooc')) {
         //         foreach ($request->file('initial_attachment_ooc') as $file) {
-        //             $name = $request->name . 'initial_attachment_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'initial_attachment_ooc' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2638,7 +2638,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
         //     $files = [];
         //     if ($request->hasfile('initial_attachment_stageii_ooc')) {
         //         foreach ($request->file('initial_attachment_stageii_ooc') as $file) {
-        //             $name = $request->name . 'initial_attachment_stageii_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'initial_attachment_stageii_ooc' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2651,7 +2651,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
         //     $files = [];
         //     if ($request->hasfile('attachments_hod_ooc')) {
         //         foreach ($request->file('attachments_hod_ooc') as $file) {
-        //             $name = $request->name . 'attachments_hod_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'attachments_hod_ooc' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2663,7 +2663,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
         //     $files = [];
         //     if ($request->hasfile('attachments_stage_ooc')) {
         //         foreach ($request->file('attachments_stage_ooc') as $file) {
-        //             $name = $request->name . 'Phase_IA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'Phase_IA_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2675,7 +2675,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
         //     $files = [];
         //     if ($request->hasfile('attachments_hypothesis_ooc')) {
         //         foreach ($request->file('attachments_hypothesis_ooc') as $file) {
-        //             $name = $request->name . 'Hypothesis_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'Hypothesis_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2687,7 +2687,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
         //     $files = [];
         //     if ($request->hasfile('initial_attachment_reanalysisi_ooc')) {
         //         foreach ($request->file('initial_attachment_reanalysisi_ooc') as $file) {
-        //             $name = $request->name . 'initial_attachment_reanalysisi_ooc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'initial_attachment_reanalysisi_ooc' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2753,7 +2753,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
         //     $files = [];
         //     if ($request->hasfile('initial_attachment_capa_post_ooc')) {
         //         foreach ($request->file('initial_attachment_capa_post_ooc') as $file) {
-        //             $name = $request->name . 'Phase_IA_QA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'Phase_IA_QA_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2795,7 +2795,7 @@ if (!empty($request->initial_attachment_ooc) || !empty($request->deleted_initial
         //     $files = [];
         //     if ($request->hasfile('initial_attachment_capa_ooc')) {
         //         foreach ($request->file('initial_attachment_capa_ooc') as $file) {
-        //             $name = $request->name . 'QA_Head_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'QA_Head_Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }

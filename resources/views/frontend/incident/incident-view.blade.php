@@ -3439,6 +3439,72 @@ document.addEventListener('DOMContentLoaded', function() {
                                             </div>
                                         </div>
 
+
+                                          <input type="hidden" id="deleted_qa_head_deginee_attachments" name="deleted_qa_head_deginee_attachments" value="">
+
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    const fileInput = document.getElementById('file-input');
+                                                    const fileList = document.getElementById('file-list');
+                                                    const deletedFilesInput = document.getElementById('deleted_qa_head_deginee_attachments');
+
+                                                    // Handle file removal
+                                                    function handleFileRemoval() {
+                                                        const removeButtons = document.querySelectorAll('.remove-file');
+
+                                                        removeButtons.forEach(button => {
+                                                            button.addEventListener('click', function() {
+                                                                const fileName = this.getAttribute('data-file-name3');
+                                                                const fileContainer = this.closest('.file-container');
+
+                                                                // Hide the file container
+                                                                if (fileContainer) {
+                                                                    fileContainer.style.display = 'none';
+
+                                                                    // Add the file name to the deleted files list
+                                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                                    deletedFiles.push(fileName);
+                                                                    deletedFilesInput.value = deletedFiles.join(',');
+
+                                                                    // Remove hidden input associated with this file
+                                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                                    if (hiddenInput) {
+                                                                        hiddenInput.remove();
+                                                                    }
+                                                                }
+                                                            });
+                                                        });
+                                                    }
+
+                                                    // Add files dynamically without removing the existing ones
+                                                    fileInput.addEventListener('change', function() {
+                                                        const files = Array.from(fileInput.files);
+
+                                                        files.forEach((file, index) => {
+                                                            const fileName = file.name;
+                                                            const fileContainer = document.createElement('h6');
+                                                            fileContainer.classList.add('file-container', 'text-dark');
+                                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                                            fileContainer.innerHTML = `
+                                                                <b>${fileName}</b>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <a type="button" class="remove-file"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                <input type="hidden" name="new_Initial_attachment[]" value="${fileName}">
+                                                            `;
+
+                                                            fileList.appendChild(fileContainer);
+                                                        });
+
+                                                        // Rebind the remove-file click events
+                                                        handleFileRemoval();
+                                                    });
+
+                                                    // Initial binding of remove buttons
+                                                    handleFileRemoval();
+                                                });
+                                            </script>
+
                                         <script>
                                             document.addEventListener('DOMContentLoaded', function() {
                                                 const removeButtons = document.querySelectorAll('.remove-file');
@@ -3617,6 +3683,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                file-input
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Closure Attachments">Initiator Update Attachments</label>
@@ -3651,6 +3718,73 @@ document.addEventListener('DOMContentLoaded', function() {
                                         </div>
                                     </div>
                                 </div>
+
+                                 <input type="hidden" id="deleted_QA_attachments" name="deleted_QA_attachments" value="">
+
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    const fileInput = document.getElementById('file-input');
+                                                    const fileList = document.getElementById('file-list');
+                                                    const deletedFilesInput = document.getElementById('deleted_QA_attachments');
+
+                                                    // Handle file removal
+                                                    function handleFileRemoval() {
+                                                        const removeButtons = document.querySelectorAll('.remove-file');
+
+                                                        removeButtons.forEach(button => {
+                                                            button.addEventListener('click', function() {
+                                                                const fileName = this.getAttribute('data-file-name5');
+                                                                const fileContainer = this.closest('.file-container');
+
+                                                                // Hide the file container
+                                                                if (fileContainer) {
+                                                                    fileContainer.style.display = 'none';
+
+                                                                    // Add the file name to the deleted files list
+                                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                                    deletedFiles.push(fileName);
+                                                                    deletedFilesInput.value = deletedFiles.join(',');
+
+                                                                    // Remove hidden input associated with this file
+                                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                                    if (hiddenInput) {
+                                                                        hiddenInput.remove();
+                                                                    }
+                                                                }
+                                                            });
+                                                        });
+                                                    }
+
+                                                    // Add files dynamically without removing the existing ones
+                                                    fileInput.addEventListener('change', function() {
+                                                        const files = Array.from(fileInput.files);
+
+                                                        files.forEach((file, index) => {
+                                                            const fileName = file.name;
+                                                            const fileContainer = document.createElement('h6');
+                                                            fileContainer.classList.add('file-container', 'text-dark');
+                                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                                            fileContainer.innerHTML = `
+                                                                <b>${fileName}</b>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <a type="button" class="remove-file"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                <input type="hidden" name="new_Initial_attachment[]" value="${fileName}">
+                                                            `;
+
+                                                            fileList.appendChild(fileContainer);
+                                                        });
+
+                                                        // Rebind the remove-file click events
+                                                        handleFileRemoval();
+                                                    });
+
+                                                    // Initial binding of remove buttons
+                                                    handleFileRemoval();
+                                                });
+                                            </script>
+                               
+                                         
                                 <!-- <div class="col-12 sub-head">
                                     Effectiveness Check Details
                                 </div> -->

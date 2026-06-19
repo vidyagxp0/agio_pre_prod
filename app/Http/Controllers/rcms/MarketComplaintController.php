@@ -201,7 +201,7 @@ class MarketComplaintController extends Controller
             if ($request->hasFile('initial_attachment_gi')) {
                 foreach ($request->file('initial_attachment_gi') as $file) {
                     // Generate a unique name for the file
-                    $name = $request->name . '_initial_attachment_gi_' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . '_initial_attachment_gi_' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
                     // Move the file to the upload directory
                     $file->move(public_path('upload/'), $name);
@@ -219,7 +219,7 @@ class MarketComplaintController extends Controller
             $files = [];
             if ($request->hasfile('investigation_attach')) {
                 foreach ($request->file('investigation_attach') as $file) {
-                    $name = $request->name . 'investigation_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'investigation_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -231,7 +231,7 @@ class MarketComplaintController extends Controller
             $files = [];
             if ($request->hasfile('initial_attachment_ca')) {
                 foreach ($request->file('initial_attachment_ca') as $file) {
-                    $name = $request->name . 'initial_attachment_ca' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'initial_attachment_ca' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -242,7 +242,7 @@ class MarketComplaintController extends Controller
             $files = [];
             if ($request->hasfile('initial_attachment_c')) {
                 foreach ($request->file('initial_attachment_c') as $file) {
-                    $name = $request->name . 'initial_attachment_c' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'initial_attachment_c' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -255,7 +255,7 @@ class MarketComplaintController extends Controller
             $files = [];
             if ($request->hasfile('qa_cqa_attachments')) {
                 foreach ($request->file('qa_cqa_attachments') as $file) {
-                    $name = $request->name . 'qa_cqa_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_cqa_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -267,7 +267,7 @@ class MarketComplaintController extends Controller
             $files = [];
             if ($request->hasfile('qa_cqa_head_attach')) {
                 foreach ($request->file('qa_cqa_head_attach') as $file) {
-                    $name = $request->name . 'qa_cqa_head_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_cqa_head_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -280,7 +280,7 @@ class MarketComplaintController extends Controller
             $files = [];
             if ($request->hasfile('qa_cqa_he_attach')) {
                 foreach ($request->file('qa_cqa_he_attach') as $file) {
-                    $name = $request->name . 'qa_cqa_he_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_cqa_he_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }

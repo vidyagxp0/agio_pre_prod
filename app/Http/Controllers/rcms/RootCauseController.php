@@ -219,7 +219,7 @@ class RootCauseController extends Controller
             $files = [];
             if ($request->hasfile('root_cause_initial_attachment')) {
                 foreach ($request->file('root_cause_initial_attachment') as $file) {
-                    $name = $request->name . 'initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'initial_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -230,7 +230,7 @@ class RootCauseController extends Controller
             $files = [];
             if ($request->hasfile('investigation_attachment')) {
                 foreach ($request->file('investigation_attachment') as $file) {
-                    $name = $request->name . 'other_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'other_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -241,7 +241,7 @@ class RootCauseController extends Controller
             $files = [];
             if ($request->hasfile('cft_attchament_new')) {
                 foreach ($request->file('cft_attchament_new') as $file) {
-                    $name = $request->name . 'initial_qa_cqa_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'initial_qa_cqa_review_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -326,7 +326,7 @@ class RootCauseController extends Controller
             $files = [];
             if ($request->hasfile('root_cause_initial_attachment_rca')) {
                 foreach ($request->file('root_cause_initial_attachment_rca') as $file) {
-                    $name = $request->name . 'investigation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'investigation_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -337,7 +337,7 @@ class RootCauseController extends Controller
             $files = [];
             if ($request->hasfile('qah_final_attachments')) {
                 foreach ($request->file('qah_final_attachments') as $file) {
-                    $name = $request->name . 'qah_cqah__designee_final_approval_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qah_cqah__designee_final_approval_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -348,7 +348,7 @@ class RootCauseController extends Controller
             $files = [];
             if ($request->hasfile('hod_attachments')) {
                 foreach ($request->file('hod_attachments') as $file) {
-                    $name = $request->name . 'hod_review_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_review_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -359,7 +359,7 @@ class RootCauseController extends Controller
             $files = [];
             if ($request->hasfile('hod_final_attachments')) {
                 foreach ($request->file('hod_final_attachments') as $file) {
-                    $name = $request->name . 'hod_final_review_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_final_review_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -370,7 +370,7 @@ class RootCauseController extends Controller
             $files = [];
             if ($request->hasfile('qa_final_attachments')) {
                 foreach ($request->file('qa_final_attachments') as $file) {
-                    $name = $request->name . 'qa_final_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_final_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }

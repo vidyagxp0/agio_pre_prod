@@ -3628,31 +3628,33 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
             $incident->Capa_attachment = json_encode($files);
         }
 
+        if (!empty($request->QA_attachments) || !empty($request->deleted_QA_attachments)) {
+                $existingFiles = json_decode($incident->QA_attachments, true) ?? [];
 
-        if (!empty ($request->QA_attachments)) {
-
-            $files = [];
-
-            if ($incident->QA_attachments) {
-                $existingFiles = json_decode($incident->QA_attachments, true); // Convert to associative array
-                if (is_array($existingFiles)) {
-                    $files = $existingFiles;
+                // Handle deleted files
+                if (!empty($request->deleted_QA_attachments)) {
+                    $filesToDelete = explode(',', $request->deleted_QA_attachments);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
                 }
-                // $files = is_array(json_decode($incident->QA_attachments)) ? $incident->QA_attachments : [];
+
+                $newFiles = [];
+                if ($request->hasFile('QA_attachments')) {
+                    foreach ($request->file('QA_attachments') as $file) {
+                        // $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $name = $request->name . "QA_attachments" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $incident->QA_attachments = json_encode($allFiles);
             }
 
-            if ($request->hasfile('QA_attachments')) {
-                foreach ($request->file('QA_attachments') as $file) {
-                    // $name = $request->name . 'initiator_update_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $name = $request->name . "initiator_update_attachments" . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-
-
-            $incident->QA_attachments = json_encode($files);
-        }
+           
+       
         // if (!empty ($request->closure_attachment)) {
 
         //     $files = [];

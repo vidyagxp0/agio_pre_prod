@@ -92,7 +92,7 @@ class ObservationController extends Controller
             $files = [];
             if ($request->hasFile('attach_files_gi')) {
                 foreach ($request->file('attach_files_gi') as $file) {
-                    $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attach_files_gi'.date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -104,7 +104,7 @@ class ObservationController extends Controller
             $files = [];
             if ($request->hasFile('response_capa_attach')) {
                 foreach ($request->file('response_capa_attach') as $file) {
-                    $name = $request->name . 'response_capa_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'response_capa_attach'.date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -115,7 +115,7 @@ class ObservationController extends Controller
         // $files = [];
         // if ($request->hasFile('attach_files_gi')) {
         //     foreach ($request->file('attach_files_gi') as $file) {
-        //         $name = $request->name . 'attach_files_gi' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $name = $request->name . 'attach_files_gi'  . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //         $file->move(public_path('upload/'), $name);
         //         $files[] = $name;
         //     }
@@ -219,7 +219,7 @@ class ObservationController extends Controller
         $files = [];
         if ($request->hasFile('related_observations')) {
             foreach ($request->file('related_observations') as $file) {
-                $name = $request->name . 'related_observations' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'related_observations'  . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('upload/'), $name);
                 $files[] = $name;
             }
@@ -243,7 +243,7 @@ if(!empty($request->attach_files2)){
         $files = [];
         if ($request->hasFile('attach_files2')) {
             foreach ($request->file('attach_files2') as $file) {
-                $name = $request->name . 'response_verify_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'response_verify_attach'  . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('upload/'), $name);
                 $files[] = $name;
             }
@@ -256,7 +256,7 @@ if(!empty($request->attach_files2)){
         $files = [];
         if ($request->hasFile('impact_analysis')) {
             foreach ($request->file('impact_analysis') as $file) {
-                $name = $request->name . 'response_summary_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'response_summary_attach'  . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('upload/'), $name);
                 $files[] = $name;
             }
