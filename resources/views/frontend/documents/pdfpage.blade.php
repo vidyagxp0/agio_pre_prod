@@ -1374,26 +1374,6 @@
                 @php
                     $i = 1;
                 @endphp
-                {{-- @if ($data->document_content && !empty($data->document_content->annexuredata))
-                    @foreach (unserialize($data->document_content->annexuredata) as $res)
-                        @if (!empty($res))
-                            <div class="annexure-block">
-                                <div class="w-100">
-                                    <div class="w-100" style="display:inline-block;">
-                                        <div class="w-100">
-                                            <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                                {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-                @endif --}}
-
-
 
                 <div class="input-fields">
                     <div class="group-input">
@@ -1501,46 +1481,6 @@
 
                 </div>
             </section>
-            {{-- <br><br>
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;" id=table1>
-                        <div class="w-100">
-                            <div class="anne">
-                                @if (!empty($annexures))
-                                    <h3 style="text-align: left; margin-bottom: 1rem; font-weight:bold">Annexures</h3>
-                                    @foreach ($annexures as $index => $annexure)
-                                        @if (!empty($annexure))
-                                            <div style="margin-bottom: 1rem;">
-                                                <h4>Annexure {{ $index + 1 }}</h4>
-                                                <!-- Wrapping table with scrollable container -->
-                                                <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
-                                                    <div style="max-width: 100%; overflow-x: auto;">
-                                                        {!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <style>
-                .anne {
-                    width: 500px;
-                    overflow-x: hidden;
-                }
-                #table1
-                {
-                    margin-right:25px;
-                    /* padding:30px */
-                }
-
-            </style> --}}
-
 
             <section class="doc-control" style="page-break-after: never;">
                 <div class="head">
