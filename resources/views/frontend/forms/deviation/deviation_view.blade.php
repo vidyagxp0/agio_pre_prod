@@ -1555,7 +1555,7 @@
                                             <div class="col-6 new-date-data-field">
                                                 <div class="group-input input-date">
                                                     <label>
-                                                        Incident Reported On <span class="text-danger">*</span>
+                                                        Deviation  Reported On <span class="text-danger">*</span>
                                                     </label>
 
                                                     <div class="calenderauditee">

@@ -2909,7 +2909,7 @@ class ManagementReviewController extends Controller
             $newFiles = [];
             if ($request->hasFile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'GI Attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'GI Attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -2924,7 +2924,7 @@ class ManagementReviewController extends Controller
         //     $files = [];
         //     if ($request->hasfile('file_attchment_if_any')) {
         //         foreach ($request->file('file_attchment_if_any') as $file) {
-        //             $name = $request->name . 'file_attchment_if_any' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'file_attchment_if_any' . date('d-m-Y_H-i-s') . '_' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2946,7 +2946,7 @@ class ManagementReviewController extends Controller
             $newFiles = [];
             if ($request->hasFile('file_attchment_if_any')) {
                 foreach ($request->file('file_attchment_if_any') as $file) {
-                    $name = $request->name . 'file_attchment_if_any' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'file_attchment_if_any' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -2960,7 +2960,7 @@ class ManagementReviewController extends Controller
         //     $files = [];
         //     if ($request->hasfile('closure_attachments')) {
         //         foreach ($request->file('closure_attachments') as $file) {
-        //             $name = $request->name . 'closure_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'closure_attachments' . date('d-m-Y_H-i-s') . '_' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -2982,7 +2982,7 @@ class ManagementReviewController extends Controller
             $newFiles = [];
             if ($request->hasFile('closure_attachments')) {
                 foreach ($request->file('closure_attachments') as $file) {
-                    $name = $request->name . 'closure_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'closure_attachments' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -3007,7 +3007,7 @@ class ManagementReviewController extends Controller
             $newFiles = [];
             if ($request->hasFile('meeting_and_summary_attachment')) {
                 foreach ($request->file('meeting_and_summary_attachment') as $file) {
-                    $name = $request->name . 'meeting_and_summary_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'meeting_and_summary_attachment' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -3024,7 +3024,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('cft_hod_attach')) {
                 foreach ($request->file('cft_hod_attach') as $file) {
-                    $name = $request->name . 'cft_hod_attach' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'cft_hod_attach' . date('d-m-Y_H-i-s') . '_' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3036,7 +3036,7 @@ class ManagementReviewController extends Controller
         //     $files = [];
         //     if ($request->hasfile('qa_verification_file')) {
         //         foreach ($request->file('qa_verification_file') as $file) {
-        //             $name = $request->name . 'qa_verification_file' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //             $name = $request->name . 'qa_verification_file' . date('d-m-Y_H-i-s') . '_' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
         //             $file->move('upload/', $name);
         //             $files[] = $name;
         //         }
@@ -3059,7 +3059,7 @@ class ManagementReviewController extends Controller
             $newFiles = [];
             if ($request->hasFile('qa_verification_file')) {
                 foreach ($request->file('qa_verification_file') as $file) {
-                    $name = $request->name . 'qa_verification_file' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'qa_verification_file' . date('d-m-Y_H-i-s') . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
