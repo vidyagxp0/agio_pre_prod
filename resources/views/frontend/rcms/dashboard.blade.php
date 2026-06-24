@@ -201,6 +201,7 @@
                                     <thead class="table-header11">
                                         <tr>
                                             <th style="width: 5%">ID</th>
+                                            <th style="width: 8%">Record No.</th>
                                             <th style="width: 5%">Parent ID</th>
                                             <th style="width: 6%">Division</th>
                                             <th style="width: 8%">Process</th>
@@ -1040,6 +1041,11 @@
                                                             @endif
                                                         @endif
                                                     </td>
+                                                    <td id="viewdetails" class="viewdetails" data-id="{{ $datas->id }}"
+                                                        data-type="{{ $datas->type }}" data-bs-toggle="modal"
+                                                        data-bs-target="#record-modal">
+                                                            {{ $datas->record_number ?? '-' }}
+                                                    </td>
                                                           
                                                @php
                                                     $findRecord = null;
@@ -1127,7 +1133,7 @@
                                                     @endphp
                                                     
                                                 @endif
-
+                                              
                                                 <td>
                                                     @if ($findRecord) 
                                                         {{ str_pad($findRecord->dashboard_unique_id, 4, '0', STR_PAD_LEFT) }}

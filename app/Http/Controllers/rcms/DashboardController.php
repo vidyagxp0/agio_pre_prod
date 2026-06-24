@@ -94,7 +94,7 @@ class DashboardController extends Controller
         $changeProposalData = ChangeProposalJust::orderByDesc('id')->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-
+            $recordNumber = $data->record ? Helpers::CCRecordNumber($data->id) : '-';
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
@@ -102,6 +102,7 @@ class DashboardController extends Controller
                 "record" => $data->record,
                 "due_date" => $data->due_date,
                 "type" => "Change-Control",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -118,12 +119,14 @@ class DashboardController extends Controller
 
         foreach ($datas1 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::ActionItemRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
                 "record" => $data->record,
                 "type" => "Action-Item",
+                "record_number" => $recordNumber,
                 "due_date" => $data->due_date,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -141,12 +144,14 @@ class DashboardController extends Controller
         }
         foreach ($datas2 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-            // dd($data);
+            $recordNumber = $data->record ? Helpers::ExtensionRecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
                 "record" => $data->record_number,
                 "type" => "Extension",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->site_location_code,
@@ -164,12 +169,14 @@ class DashboardController extends Controller
         }
         foreach ($datas3 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::EffectivenessCheckRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "Effectiveness-Check",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_record,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -187,12 +194,14 @@ class DashboardController extends Controller
         }
         foreach ($datas4 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::InternalAuditRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "Internal-Audit",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -211,12 +220,14 @@ class DashboardController extends Controller
         foreach ($datas5 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
             $revised_date = Extension::where('parent_id', $data->id)->where('parent_type', "Capa")->value('revised_date');
+            $recordNumber = $data->record ? Helpers::CapaRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "Capa",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -232,12 +243,14 @@ class DashboardController extends Controller
         }
         foreach ($datas6 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::RiskAssessmentRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "risk-assesment",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -255,12 +268,14 @@ class DashboardController extends Controller
         }
         foreach ($datas7 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::ManagmentReviewRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "Management-Review",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -278,11 +293,14 @@ class DashboardController extends Controller
         }
         foreach ($datas8 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::LabincidentRecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "Lab-Incident",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -300,12 +318,14 @@ class DashboardController extends Controller
         }
         foreach ($datas9 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::ExternalAuditRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "External-Audit",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -323,12 +343,14 @@ class DashboardController extends Controller
         }
         foreach ($datas10 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::AuditproRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "Audit-Program",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -345,6 +367,7 @@ class DashboardController extends Controller
         }
         foreach ($datas11 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::RCARecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
@@ -353,6 +376,7 @@ class DashboardController extends Controller
                 "due_date" => $data->due_date,
                 "division_id" => $data->division_id,
                 "type" => "Root-Cause-Analysis",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
@@ -367,12 +391,15 @@ class DashboardController extends Controller
         }
         foreach ($datas12 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::ObservationRecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "division_id" => $data->division_code,
                 "type" => "Observation",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
@@ -389,12 +416,15 @@ class DashboardController extends Controller
         }
         foreach ($datas13 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::OOSRecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "division_id" => $data->division_id,
                 "type" => "OOS/OOT",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->description_gi ? $data->description_gi : "-",
@@ -410,6 +440,8 @@ class DashboardController extends Controller
         }
         foreach ($datas14 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::MarketComplaintRecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
@@ -417,6 +449,7 @@ class DashboardController extends Controller
                 "due_date" => $data->due_date_gi,
                 "division_id" => $data->division_id,
                 "type" => "Market Complaint",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->description_gi ? $data->description_gi : "-",
@@ -431,12 +464,15 @@ class DashboardController extends Controller
         }
         foreach ($datas15 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::OOTRecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record_number,
                 "division_id" => $data->division_id,
                 "type" => "OOT",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
@@ -451,12 +487,15 @@ class DashboardController extends Controller
         }
         foreach ($datas16 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::ERRATARecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "division_id" => $data->division_id,
                 "type" => "ERRATA",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
@@ -478,6 +517,7 @@ class DashboardController extends Controller
                 "record" => $data->record,
                 "division_id" => $data->division_id,
                 "type" => "OOS Microbiology",
+                // "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->description_gi ? $data->description_gi : "-",
@@ -493,12 +533,15 @@ class DashboardController extends Controller
         }
         foreach ($deviation as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::DeviaitonRecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "division_id" => $data->division_id,
                 "type" => "Deviation",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
@@ -514,12 +557,15 @@ class DashboardController extends Controller
         }
         foreach ($ooc as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::OOCRecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "due_date" => $data->due_date,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "type" => "Out Of Calibration",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -535,12 +581,14 @@ class DashboardController extends Controller
         }
         foreach ($failureInvestigation as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            // $recordNumber = $data->record ? Helpers::DeviaitonRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
                 "record" => $data->record,
                 "type" => "Failure Investigation",
+                // "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -557,11 +605,14 @@ class DashboardController extends Controller
         }
         foreach ($datas25 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            // $recordNumber = $data->record ? Helpers::DeviaitonRecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
                 "record" => $data->record,
                 "type" => "Non Conformance",
+                // "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -578,11 +629,14 @@ class DashboardController extends Controller
         }
         foreach ($incident as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::IncidentRecordNumber($data->id) : '-';
+
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
                 "record" => $data->record,
                 "type" => "Incident",
+                "record_number" => $recordNumber,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -599,12 +653,14 @@ class DashboardController extends Controller
         }
         foreach ($resampling as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::ResamplingRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
                 "record" => $data->record,
                 "type" => "Resampling",
+                "record_number" => $recordNumber,
                 "due_date" => $data->due_date,
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -621,12 +677,14 @@ class DashboardController extends Controller
         }
         foreach ($changeProposalData as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            $recordNumber = $data->record ? Helpers::getChangeProposalJustificationRecordNumber($data->id) : '-';
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
                 "record" => $data->record,
                 "type" => "Change Proposal And Justification",
+                "record_number" => $recordNumber,
                 "due_date" => $data->due_date ? $data->due_date : "-",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -644,6 +702,10 @@ class DashboardController extends Controller
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
         $datag = $this->paginate($table);
         $uniqueProcessNames = QMSProcess::select('process_name')->distinct()->pluck('process_name');
+        if ($request->ajax()) {
+            return response()->json(['data' => $datag->items()]);
+        }
+        // dd($datag);
         return view('frontend.rcms.dashboard', compact('datag', 'uniqueProcessNames'));
     }
 
