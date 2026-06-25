@@ -481,7 +481,33 @@
         .main-section {
             text-align: left;
         }
-        
+        .header-wrapper{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .master-copy{
+            position: absolute;
+            top: -35px;
+            right: 10px;
+
+            border: 2px solid #00bcd4;
+            color: #00bcd4;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            padding: 4px 12px;
+
+            transform: rotate(-4deg);
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            background: #fff;
+        }
     </style>
 
 
@@ -624,7 +650,13 @@
 </head>
 
 <body>
+<div class="header-wrapper">
 
+    @if($document->status == 'Effective' || $document->status == 'Obsolete')
+        <div class="master-copy">
+            MASTER COPY
+        </div>
+    @endif
     <header class="">
         <table class="border" style="width: 100%;">
             <tbody>
@@ -773,6 +805,7 @@
 
         </table>
     </header>
+</div>    
     
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
         <table class="border" style="width: 100%; border-collapse: collapse; text-align: left;">
@@ -858,19 +891,7 @@
     <div>
         <section class="main-section" id="pdf-page">
             <section style="page-break-after: never;">
-                {{-- <div class="other-container" style="">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-right">
-                                    <div> <span class="bold">Legacy Document Number:</span>
-                                        {{ !empty($document->legacy_number) ? $document->legacy_number : 'NA' }}</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div> --}}
-
+            
                 <div class="other-container">
                     <table>
                         <thead>
