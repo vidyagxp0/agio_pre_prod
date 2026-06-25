@@ -331,6 +331,30 @@
                         <textarea name="immediate_action" id="immediate_action" {{ Helpers::isOOSChemical($data->stage) }} {{ $istab1 ? 'required' : 'readonly' }}>{{ $data->immediate_action ?? '' }}</textarea>
                 </div>
             </div>
+
+                                                    
+<script>
+$(document).on('click', '.remove-file', function () {
+
+    let fileName = $(this).data('file-name');
+    let fieldName = $(this).data('field-name');
+
+    let value = fieldName + '|' + fileName;
+
+    let deletedFiles = $('#deleted_files').val();
+
+    if (deletedFiles) {
+        deletedFiles += ',' + value;
+    } else {
+        deletedFiles = value;
+    }
+
+    $('#deleted_files').val(deletedFiles);
+
+    $(this).closest('.file-container').remove();
+});
+</script>
+
             <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Initiator Group">Initial Attachment</label>
@@ -348,9 +372,13 @@
                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                 class="fa fa-eye text-primary"
                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                class="fa-solid fa-circle-xmark"
-                                                style="color:red; font-size:20px;"></i></a>
+                                        <a type="button"
+                                            class="remove-file"
+                                            data-field-name="initial_attachment_gi"
+                                            data-file-name="{{ $file }}">
+                                                <i class="fa-solid fa-circle-xmark"
+                                                style="color:red; font-size:20px;"></i>
+                                        </a>
                                     </h6>
                                 @endforeach
                             @endif
@@ -362,6 +390,7 @@
                             oninput="addMultipleFiles(this, 'initial_attachment_gi')"
                             {{ $istab1 ? '' : 'disabled' }}  multiple     {{Helpers::isOOSChemical($data->stage)}}>
                         </div>
+                      <input type="hidden" name="deleted_files" id="deleted_files">
                     </div>
                 </div>
             </div>

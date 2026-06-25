@@ -801,8 +801,13 @@
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                         <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
                                                     </a>
-                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                   
+                                                     <a type="button"
+                                                        class="remove-file"
+                                                        data-field-name="hod_attachment1"
+                                                        data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red; font-size:20px;"></i>
                                                     </a>
                                                 </h6>
                                             @endforeach
@@ -880,8 +885,15 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            
+
+                                            <a type="button"
+                                                        class="remove-file"
+                                                        data-field-name="QA_Head_attachment1"
+                                                        data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark"
+                                                            style="color:red; font-size:20px;"></i>
+                                             </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -8450,8 +8462,13 @@
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                             <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
                                                         </a>
-                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                       
+                                                        <a type="button"
+                                                                class="remove-file"
+                                                                data-field-name="file_attachment_IB_Inv"
+                                                                data-file-name="{{ $file }}">
+                                                                    <i class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i>
                                                         </a>
                                                     @endif
                                                 </h6>
@@ -8532,8 +8549,16 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a> -->
+
+                                            <a type="button"
+                                                class="remove-file"
+                                                data-field-name="hod_attachment2"
+                                                data-file-name="{{ $file }}">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i>
+                                            </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -8610,8 +8635,14 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                           
+                                            <a type="button"
+                                                class="remove-file"
+                                                data-field-name="QA_Head_attachment2"
+                                                data-file-name="{{ $file }}">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i>
+                                            </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -8782,8 +8813,16 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a> -->
+
+                                            <a type="button"
+                                                    class="remove-file"
+                                                    data-field-name="hod_attachment3"
+                                                    data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i>
+                                            </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -8860,8 +8899,16 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a> -->
+
+                                                <a type="button"
+                                                    class="remove-file"
+                                                    data-field-name="QA_Head_attachment3"
+                                                    data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i>
+                                                </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -9008,8 +9055,14 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            
+                                                <a type="button"
+                                                    class="remove-file"
+                                                    data-field-name="QA_Head_primary_attachment3"
+                                                    data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i>
+                                                </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -9090,8 +9143,14 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                          
+                                            <a type="button"
+                                                class="remove-file"
+                                                data-field-name="hod_attachment4"
+                                                data-file-name="{{ $file }}">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i>
+                                            </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -9171,8 +9230,15 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                           
+
+                                            <a type="button"
+                                                class="remove-file"
+                                                data-field-name="QA_Head_attachment4"
+                                                data-file-name="{{ $file }}">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i>
+                                            </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -9271,8 +9337,14 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                          
+                                            <a type="button"
+                                                class="remove-file"
+                                                data-field-name="QA_Head_primary_attachment4"
+                                                data-file-name="{{ $file }}">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i>
+                                            </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -9440,8 +9512,15 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            
+
+                                            <a type="button"
+                                                class="remove-file"
+                                                data-field-name="phaseII_attachment"
+                                                data-file-name="{{ $file }}">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i>
+                                            </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -9556,8 +9635,14 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            
+                                            <a type="button"
+                                                class="remove-file"
+                                                data-field-name="hod_attachment5"
+                                                data-file-name="{{ $file }}">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i>
+                                            </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -9638,8 +9723,15 @@
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a> -->
+                                            <a type="button"
+                                                class="remove-file"
+                                                data-field-name="QA_Head_attachment5"
+                                                data-file-name="{{ $file }}">
+                                                    <i class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i>
+                                            </a>
                                         </h6>
                                         @endforeach
                                         @endif
@@ -9653,6 +9745,13 @@
                                 </div>
                             </div>
                         </div>
+
+        
+
+
+
+
+
 
 
                         <div class="button-block">

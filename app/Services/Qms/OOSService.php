@@ -4082,19 +4082,56 @@ class OOSService
                 'provide_attachment5',
             ];
 
-            foreach ($file_input_names as $file_input_name)
-            {
-                // dd($input[$file_input_name]);
-                if (empty($request->file($file_input_name)) && !empty($oos[$file_input_name])) {
-                    // If the request does not contain file data but existing data is present, retain the existing data
-                    $input[$file_input_name] = $oos[$file_input_name];
-                } else {
-                    // If the request contains file data or existing data is not present, upload new files
-                    $input[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
-                }
+            $deletedFiles = [];
 
+            if (!empty($request->deleted_files)) {
+                $deletedFiles = explode(',', $request->deleted_files);
             }
 
+            foreach ($file_input_names as $file_input_name)
+            {
+                $existingFiles = $oos[$file_input_name] ?? [];
+
+                if (!is_array($existingFiles)) {
+                    $existingFiles = json_decode($existingFiles, true) ?? [];
+                }
+
+                foreach ($deletedFiles as $deleted) {
+
+                    $parts = explode('|', $deleted);
+
+                    if (count($parts) == 2) {
+
+                        $field = $parts[0];
+                        $file  = $parts[1];
+
+                        if ($field == $file_input_name) {
+
+                            $existingFiles = array_values(
+                                array_filter($existingFiles, function ($f) use ($file) {
+                                    return $f != $file;
+                                })
+                            );
+
+                            $path = public_path('upload/' . $file);
+
+                            if (file_exists($path)) {
+                                unlink($path);
+                            }
+                        }
+                    }
+                }
+
+                $newFiles = FileService::uploadMultipleFiles(
+                    $request,
+                    $file_input_name
+                );
+
+                $input[$file_input_name] = array_merge(
+                    $existingFiles,
+                    $newFiles
+                );
+            }
              // Find the OOS record by ID
             $oos->update($input);
 

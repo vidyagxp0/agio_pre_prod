@@ -14,7 +14,9 @@ class FileService
             if ($request->hasfile($inputName)) {
                 foreach ($request->file($inputName) as $file) {
                     
-                    $name =  'multifileupload_' . rand(1, 10000*10000) . '.' . $file->getClientOriginalExtension();
+                    // $name =  'multifileupload_' . rand(1, 10000*10000) . '.' . $file->getClientOriginalExtension();
+                    // $name = 'multifileupload_' .time() . '_' .uniqid() . '.' .$file->getClientOriginalExtension();
+                    $name = 'multifileupload_' . date('d-m-Y') . '_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move($directory, $name);
                     array_push($files, $name);
                 }

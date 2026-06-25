@@ -230,8 +230,17 @@
                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                         class="fa fa-eye text-primary"
                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                        class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                        class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a> -->
+
+
+                                <a type="button"
+                                    class="remove-file"
+                                    data-field-name="disposition_attachment_bd"
+                                    data-file-name="{{ $file }}">
+                                        <i class="fa-solid fa-circle-xmark"
+                                        style="color:red; font-size:20px;"></i>
+                                </a>
                             </h6>
                             @endforeach
                             @endif
