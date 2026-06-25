@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\ExtensionNewController;
 use App\Models\ActionItem;
+use App\Models\CC;
 use App\Models\ChangeProposalJust;
 use App\Models\Department;
 use App\Models\Document;
@@ -17,6 +18,23 @@ use App\Models\Deviation;
 use App\Models\LabIncident;
 use App\Models\OOS_micro;
 use App\Models\OOS;
+use App\Models\Capa;
+use App\Models\EffectivenessCheck;
+use App\Models\Extension;
+use App\Models\InternalAudit;
+use App\Models\ManagementReview;
+use App\Models\OutOfCalibration;
+use App\Models\Resampling;
+use App\Models\RiskManagement;
+use App\Models\Auditee;
+use App\Models\NonConformance;
+use App\Models\AuditProgram;
+use App\Models\{Division, Incident,MarketComplaint,Errata};
+use App\Models\RootCauseAnalysis;
+use App\Models\Observation;
+use App\Models\FailureInvestigation;
+use App\Models\Ootc;
+use App\Models\RecordNumber;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -1188,10 +1206,10 @@ class Helpers
                 $status = 'HOD Review Complete';
                 break;
             case '4':
-                $status = 'In-Review';
+                $status = 'For Checking';
                 break;
             case '5':
-                $status = 'Reviewed';
+                $status = 'Checked';
                 break;
             case '6':
                 $status = 'For-Approval';
@@ -1200,10 +1218,10 @@ class Helpers
                 $status = 'Approved';
                 break;
             case '8':
-                $status = $training_required ? 'Pending-Traning' : 'Effective';
+                $status = $training_required ? 'Under-Training' : 'Effective';
                 break;
             case '9':
-                $status = $training_required ? 'Traning-Complete' : 'Obsolete';
+                $status = $training_required ? 'Training-Complete' : 'Obsolete';
                 break;
             case '10':
                 $status = $training_required ? 'In-Effective' : 'In-Effective';
@@ -2022,6 +2040,258 @@ public static function check_roles_qms_new($role_id, $process_name)
     public static function getUserDepartmentFromDB($id){
         $data = Department::find($id);
         return $data->name;
+    }
+
+    public static function CCRecordNumber($id)
+    {
+        $data = CC::find($id);
+
+        if (!$data) {
+            return null;
+        }
+
+        return self::getDivisionName($data->division_id)
+            . '/CC/'
+            . date('Y', strtotime($data->created_at))
+            . '/'
+            . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function ActionItemRecordNumber($number)
+    {
+        $data = ActionItem::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/AI/' . self::year($data->created_at) . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function DeviaitonRecordNumber($number)
+    {
+        $data = Deviation::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+        return self::getDivisionName($data->division_id) . '/DEV/' . date('Y', strtotime($data->created_at)) . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function CapaRecordNumber($number)
+    {
+        $data = Capa::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/CAPA/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function EffectivenessCheckRecordNumber($number)
+    {
+        $data = EffectivenessCheck::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/EC/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function ExtensionRecordNumber($number)
+    {
+        $data = extension_new::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/Ext/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function MarketComplaintRecordNumber($number)
+    {
+        $data = MarketComplaint::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/MC/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function OOSRecordNumber($number)
+    {
+        $data = OOS::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/' . ($data->Form_type) . '/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function OOCRecordNumber($number)
+    {
+        $data = OutOfCalibration::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/OOC/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function RCARecordNumber($number)
+    {
+        $data = RootCauseAnalysis::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/RCA/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function AuditproRecordNumber($number)
+    {
+        $data = AuditProgram::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/AuditProgram/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function ExternalAuditRecordNumber($number)
+    {
+        $data = Auditee::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/EA/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function LabincidentRecordNumber($number)
+    {
+        $data = LabIncident::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/LI/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function IncidentRecordNumber($number)
+    {
+        $data = Incident::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/INC/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function ERRATARecordNumber($number)
+    {
+        $data = Errata::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/ERRATA/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function InternalAuditRecordNumber($number)
+    {
+        $data = InternalAudit::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/IA/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function RiskAssessmentRecordNumber($number)
+    {
+        $data = RiskManagement::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/RA/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function ResamplingRecordNumber($number)
+    {
+        $data = Resampling::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/Resampling/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function ManagmentReviewRecordNumber($number)
+    {
+        $data = ManagementReview::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/MR/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function ObservationRecordNumber($number)
+    {
+        $data = Observation::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_code) . '/OBS/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
+    }
+
+    public static function OOTRecordNumber($number)
+    {
+        $data = OOT::find($number);
+
+        if (!$data) {
+            return null; // or throw an exception
+        }
+
+        return self::getDivisionName($data->division_id) . '/OOT/' . date('Y', strtotime($data->created_at)) . '/' .
+            str_pad($data->record, 4, '0', STR_PAD_LEFT);
     }
 
 //     private function getRecordUrl($processKey, $record)

@@ -182,6 +182,7 @@ class DocumentController extends Controller
         $res = [];
 
         $query = Document::query();
+        
 
         if ($request->status && !empty($request->status)) {
             $query->where('status', $request->status);
@@ -199,7 +200,8 @@ class DocumentController extends Controller
             $query->where('originator_id', $request->originator_id);
         }
 
-        $documents = $query->get();
+        // $documents = $query->get();
+        $documents = $query->orderBy('id', 'desc')->get();
 
         foreach ($documents as $doc) {
             $doctype = DocumentType::where('id', $doc->document_type_id)->value('name');
@@ -2847,6 +2849,13 @@ class DocumentController extends Controller
                 }
             }
         }
+        $printHistory = PrintHistory::where('document_id', $id)->get();
+
+        $downloadHistory = DownloadHistory::where('document_id', $id)->get();
+
+        $PH = $printHistory->concat($downloadHistory)
+                        ->sortBy('created_at');
+        // $PH = PrintHistory::where('document_id', $id)->get();
 
         $print_history = PrintHistory::join('users', 'print_histories.user_id', 'users.id')->select('print_histories.*', 'users.name as user_name')->where('document_id', $id)->get();
         $document = Document::join('users', 'documents.originator_id', 'users.id')->leftjoin('document_types', 'documents.document_type_id', 'document_types.id')
@@ -3044,7 +3053,7 @@ class DocumentController extends Controller
              'RevisionGridmfpstpData',
              'ProductSpecification',
              'MaterialSpecification',
-             'revisedSopNumbers'
+             'revisedSopNumbers','PH'
 
         ));
     }
@@ -6243,8 +6252,30 @@ class DocumentController extends Controller
         return redirect()->back();
     }
 
-    public function createPDF($id)
+    public function printDownloadPDF($id)
     {
+        $issue_copies = request('issue_copies');
+        $print_reason = request('print_reason');
+        $document_print_by = request('user_id');
+        $IssueDate = request('date');
+        $IssuedCopies = request('issued_copies');
+        $date = request('date');
+
+        if (intval($issue_copies) < 1) {
+            return "Cannot issue less than 1 copies! Requested $issue_copies no. of copies.";
+        }
+        // $new = Document::find($id);
+        // $addNew = $new->id;
+
+        // $ModalData = new DownloadHistory();
+        // $ModalData->issue_copies = $issue_copies;
+        // $ModalData->user_id = $document_print_by;
+        // $ModalData->role_id = Auth::user()->role;
+        // $ModalData->document_id = $addNew;
+        // $ModalData->issued_copies = $IssuedCopies;
+        // $ModalData->date = Carbon::now()->format('d-m-Y');
+        // $ModalData->save();
+
         $roles = explode(',', Auth::user()->role);
         $controls = PrintControl::whereIn('role_id', $roles)->first();
 
@@ -6377,6 +6408,16 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
+                    $download->issue_copies = $issue_copies;
+                    $download->print_reason = $print_reason;
+                    $download->document_number = request('document_number');
+                    $download->document_printed_copies = request('document_printed_copies');
+                    $download->issuance_to = request('issuance_to');
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = request('issued_reason');
+                    $download->department = request('department');
+
                     $download->save();
 
                     // download PDF file with download method
@@ -6397,6 +6438,10 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
+                    $download->issue_copies = $issue_copies;
+                    $download->print_reason = $print_reason;
+                    $download->issued_copies = $IssuedCopies;
                     $download->save();
 
                     // download PDF file with download method
@@ -6417,6 +6462,10 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
+                    $download->issue_copies = $issue_copies;
+                    $download->print_reason = $print_reason;
+                    $download->issued_copies = $IssuedCopies;
                     $download->save();
 
                     // download PDF file with download method
@@ -6437,6 +6486,10 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
+                    $download->issue_copies = $issue_copies;
+                    $download->print_reason = $print_reason;
+                    $download->issued_copies = $IssuedCopies;
                     $download->save();
 
                     // download PDF file with download method
@@ -6457,6 +6510,10 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
+                    $download->issue_copies = $issue_copies;
+                    $download->print_reason = $print_reason;
+                    $download->issued_copies = $IssuedCopies;
                     $download->save();
 
                     // download PDF file with download method
@@ -6478,7 +6535,6 @@ class DocumentController extends Controller
             return back();
         }
     }
-
   
     public function viewPdf($id)
     {
@@ -6716,7 +6772,7 @@ class DocumentController extends Controller
 
         $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
 
-        $watermarkText = strtoupper(Helpers::getDocStatusByStage($data->stage));
+        $watermarkText = strtoupper(Helpers::getDocStatusByStage($data->stage, $data->training_required));
 
         $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
         $fontSize = 25;
@@ -6772,7 +6828,6 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'PDF generation failed']);
         }
     }
-    
 
     public function getRevisionHistory(Request $request)
     {
@@ -6871,7 +6926,6 @@ class DocumentController extends Controller
         return response()->json(['revision_data' => $historyData]);
     }
     
-
     public function getINPSRevisionHistory(Request $request)
     {
         $documentId = $request->query('document_id');
@@ -6971,7 +7025,6 @@ class DocumentController extends Controller
     
         return response()->json(['revision_cvs_data' => $historyData]);
     }
-    
 
     public function getTDSRevisionHistory(Request $request)
     {
@@ -7071,7 +7124,6 @@ class DocumentController extends Controller
     
         return response()->json(['gtp' => $gtphistoryData ]);
     }
-
 
     public function getMfpRevisionHistory(Request $request)
     {
@@ -7265,7 +7317,6 @@ class DocumentController extends Controller
         return response()->json(['revision_rawmstp_data' => $rwmstphistoryData]);
     }
 
-
     public function getFPStpRevisionHistory(Request $request)
     {
         $documentId = $request->query('document_id');
@@ -7313,7 +7364,6 @@ class DocumentController extends Controller
 
         return response()->json(['revision_fpstp_data' => $historyData]);
     }
-
 
     public function getINPStpRevisionHistory(Request $request)
     {
@@ -7504,8 +7554,6 @@ class DocumentController extends Controller
     
         return response()->json(['revision_pias_data' => $historyData]);
     }
-    
-    
 
     public function getRecordsByType(Request $request)
     {
@@ -7522,7 +7570,6 @@ class DocumentController extends Controller
         }
         return response()->json($formattedRecords);
     }    
-    
 
     public function viewAttachments($id)
     {
@@ -7670,7 +7717,6 @@ class DocumentController extends Controller
     
         return view($viewName, compact('data', 'attachments'));
     }
-
 
     public function annexureviewPdf($id)
     {
@@ -7820,8 +7866,18 @@ class DocumentController extends Controller
         return $pdf->stream('SOP' . $id . '.pdf');
     }
 
-    public function printPDF($id)
-    {
+    public function printPDF($id){
+
+        $issue_copies = request('issue_copies');
+        $print_reason = request('print_reason');
+        $document_print_by = request('user_id');
+        $documentNo = request('document_number');
+        $NoofCopies = request('document_printed_copies');
+        $IssueDate = request('date');
+        $IssuanceTo = request('issuance_to');
+        $IssuedCopies = request('issued_copies');
+        $reasonIssue = request('issued_reason');
+        $depart = request('department');
        
         $roles = explode(',', Auth::user()->role);
         $controls = PrintControl::whereIn('role_id', $roles)->first();
@@ -7874,6 +7930,17 @@ class DocumentController extends Controller
         } else {
             $sopNumber = "{$document->sop_type_short}/{$document->department_id}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
         }
+
+        // $printHistory = (object) [
+        //     'document_printed_by'     => Auth::user()->name,
+        //     'document_printed_copies' => $NoofCopies,
+        //     'issuance_date'           => $IssueDate,
+        //     'issuance_to'             => $IssuanceTo,
+        //     'issued_copies'           => $IssuedCopies,
+        //     'issued_reason'           => $reasonIssue,
+        //     'department'              => $depart,
+        //     'created_at'              => now(),
+        // ];
 
         if ($controls) {
             set_time_limit(30);
@@ -7944,17 +8011,6 @@ class DocumentController extends Controller
 
             $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
 
-            // $canvas->page_text(
-            //     $width / 2.9,
-            //     $height / 2,
-            //     $data->status,
-            //     null,
-            //     25,
-            //     [0, 0, 0],
-            //     12,
-            //     6,
-            //     -20
-            // );
 
             $watermarkText = strtoupper($data->status);
             $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
@@ -7984,6 +8040,20 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
+                    $download->issue_copies = $issue_copies;
+                    $download->print_reason = $print_reason;
+                    $download->document_number = $documentNo;
+                    $download->document_printed_copies = $NoofCopies;
+
+                    // $download->document_printed_by = Auth::user()->name;
+                    // $download->issuance_date = $IssueDate;
+
+                    $download->issuance_to = $IssuanceTo;
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = $reasonIssue;
+                    $download->department = $depart;
+        
                     $download->save();
 
                     // download PDF file with download method
@@ -8004,6 +8074,18 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
+                    $download->issue_copies = $issue_copies;
+                    $download->print_reason = $print_reason;
+                    $download->document_number = $documentNo;
+                    $download->document_printed_copies = $NoofCopies;
+                    // $download->document_printed_by = Auth::user()->name;
+                    // $download->issuance_date = $IssueDate;
+                    $download->issuance_to = $IssuanceTo;
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = $reasonIssue;
+                    $download->department = $depart;
+
                     $download->save();
 
                     // download PDF file with download method
@@ -8023,6 +8105,20 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
+                    $download->issue_copies = $issue_copies;
+                    $download->print_reason = $print_reason;
+                    $download->document_number = $documentNo;
+                    $download->document_printed_copies = $NoofCopies;
+
+                    // $download->document_printed_by = Auth::user()->name;
+                    // $download->issuance_date = $IssueDate;
+
+                    $download->issuance_to = $IssuanceTo;
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = $reasonIssue;
+                    $download->department = $depart;
+
                     $download->save();
 
                     // download PDF file with download method
@@ -8043,6 +8139,16 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
+                    $download->issue_copies = $issue_copies;
+                    $download->print_reason = $print_reason;
+                    $download->document_number = $documentNo;
+                    $download->document_printed_copies = $NoofCopies;
+                    $download->issuance_to = $IssuanceTo;
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = $reasonIssue;
+                    $download->department = $depart;
+
                     $download->save();
 
                     // download PDF file with download method
@@ -8063,6 +8169,16 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
+                    $download->issue_copies = $issue_copies;
+                    $download->print_reason = $print_reason;
+                    $download->document_number = $documentNo;
+                    $download->document_printed_copies = $NoofCopies;
+                    $download->issuance_to = $IssuanceTo;
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = $reasonIssue;
+                    $download->department = $depart;
+         
                     $download->save();
 
                     // download PDF file with download method
@@ -8305,8 +8421,6 @@ class DocumentController extends Controller
         }
     }
 
-
-
     public function import(Request $request)
     {
         // $request->validate([
@@ -8346,8 +8460,6 @@ class DocumentController extends Controller
 
         return back();
     }    
-
-
 
     public function revision(Request $request, $id){
 
@@ -8815,4 +8927,5 @@ class DocumentController extends Controller
         }
 
     }
+
 }

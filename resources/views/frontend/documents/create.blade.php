@@ -744,9 +744,9 @@
 
 
                                             // HODs field
-                                        const hodsContainer = document.getElementById('hods-container');
-                                        const hodsDropdown  = document.getElementById('hods-dropdown');
-                                        const hodsError = document.getElementById('hodError');
+                                        // const hodsContainer = document.getElementById('hods-container');
+                                        // const hodsDropdown  = document.getElementById('hods-dropdown');
+                                        // const hodsError = document.getElementById('hodError');
 
                                         const reviewersLabel = document.getElementById('reviewers-label');
                                         
@@ -790,11 +790,11 @@
                                             attacheffectContainer.style.display = 'block';
 
                                             // Show HODs field
-                                            hodsContainer.style.display = 'block';
-                                            hodsDropdown.setAttribute('required', 'required');
-                                            hodsError.style.display = 'none';
+                                                // hodsContainer.style.display = 'block';
+                                                // hodsDropdown.setAttribute('required', 'required');
+                                                // hodsError.style.display = 'none';
 
-                                            reviewersLabel.innerHTML = "Reviewers<span class='text-danger'>*</span>";
+                                            reviewersLabel.innerHTML = "Checked By<span class='text-danger'>*</span>";
 
                                             // Character counter for inputs
                                             $('#docname').off('keyup').on('keyup', function() {
@@ -844,10 +844,10 @@
 
 
                                             // Hide HODs field
-                                            hodsContainer.style.display = 'none';
-                                            hodsDropdown.removeAttribute('required');
-                                            hodsDropdown.value = '';
-                                            hodsError.style.display = 'none';
+                                                // hodsContainer.style.display = 'none';
+                                                // hodsDropdown.removeAttribute('required');
+                                                // hodsDropdown.value = '';
+                                                // hodsError.style.display = 'none';
 
                                             reviewersLabel.innerHTML = "Checked By<span class='text-danger'>*</span>";
                                             
@@ -947,7 +947,7 @@
                                    <p id="approverError" style="color:red; display: none;">** Approvers are required</p>
                                </div>
 
-                               <div class="col-md-6" id="hods-container" style="display: none;">
+                               {{-- <div class="col-md-6" id="hods-container" style="display: none;">
                                    <div class="group-input">
                                        <label for="hods">HOD's<span class="text-danger">*</span></label>
                                        <select id="hods-dropdown" class="form-control" name="hods[]" multiple required style="display: none">
@@ -957,7 +957,7 @@
                                        </select>
                                    </div>
                                    <p id="hodError" style="color:red; display: none;">** HODs are required</p>
-                               </div>
+                               </div> --}}
 
                             </div>
                             <div class="row">
