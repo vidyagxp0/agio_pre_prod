@@ -182,6 +182,7 @@ class DocumentController extends Controller
         $res = [];
 
         $query = Document::query();
+        
 
         if ($request->status && !empty($request->status)) {
             $query->where('status', $request->status);
@@ -199,7 +200,8 @@ class DocumentController extends Controller
             $query->where('originator_id', $request->originator_id);
         }
 
-        $documents = $query->get();
+        // $documents = $query->get();
+        $documents = $query->orderBy('id', 'desc')->get();
 
         foreach ($documents as $doc) {
             $doctype = DocumentType::where('id', $doc->document_type_id)->value('name');
@@ -2847,7 +2849,13 @@ class DocumentController extends Controller
                 }
             }
         }
-        $PH = PrintHistory::where('document_id', $id)->get();
+        $printHistory = PrintHistory::where('document_id', $id)->get();
+
+        $downloadHistory = DownloadHistory::where('document_id', $id)->get();
+
+        $PH = $printHistory->concat($downloadHistory)
+                        ->sortBy('created_at');
+        // $PH = PrintHistory::where('document_id', $id)->get();
 
         $print_history = PrintHistory::join('users', 'print_histories.user_id', 'users.id')->select('print_histories.*', 'users.name as user_name')->where('document_id', $id)->get();
         $document = Document::join('users', 'documents.originator_id', 'users.id')->leftjoin('document_types', 'documents.document_type_id', 'document_types.id')
@@ -6253,6 +6261,21 @@ class DocumentController extends Controller
         $IssuedCopies = request('issued_copies');
         $date = request('date');
 
+        if (intval($issue_copies) < 1) {
+            return "Cannot issue less than 1 copies! Requested $issue_copies no. of copies.";
+        }
+        // $new = Document::find($id);
+        // $addNew = $new->id;
+
+        // $ModalData = new DownloadHistory();
+        // $ModalData->issue_copies = $issue_copies;
+        // $ModalData->user_id = $document_print_by;
+        // $ModalData->role_id = Auth::user()->role;
+        // $ModalData->document_id = $addNew;
+        // $ModalData->issued_copies = $IssuedCopies;
+        // $ModalData->date = Carbon::now()->format('d-m-Y');
+        // $ModalData->save();
+
         $roles = explode(',', Auth::user()->role);
         $controls = PrintControl::whereIn('role_id', $roles)->first();
 
@@ -6512,7 +6535,6 @@ class DocumentController extends Controller
             return back();
         }
     }
-
   
     public function viewPdf($id)
     {
@@ -6750,7 +6772,7 @@ class DocumentController extends Controller
 
         $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
 
-        $watermarkText = strtoupper(Helpers::getDocStatusByStage($data->stage));
+        $watermarkText = strtoupper(Helpers::getDocStatusByStage($data->stage, $data->training_required));
 
         $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
         $fontSize = 25;
@@ -6806,7 +6828,6 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'PDF generation failed']);
         }
     }
-    
 
     public function getRevisionHistory(Request $request)
     {
@@ -6905,7 +6926,6 @@ class DocumentController extends Controller
         return response()->json(['revision_data' => $historyData]);
     }
     
-
     public function getINPSRevisionHistory(Request $request)
     {
         $documentId = $request->query('document_id');
@@ -7005,7 +7025,6 @@ class DocumentController extends Controller
     
         return response()->json(['revision_cvs_data' => $historyData]);
     }
-    
 
     public function getTDSRevisionHistory(Request $request)
     {
@@ -7105,7 +7124,6 @@ class DocumentController extends Controller
     
         return response()->json(['gtp' => $gtphistoryData ]);
     }
-
 
     public function getMfpRevisionHistory(Request $request)
     {
@@ -7299,7 +7317,6 @@ class DocumentController extends Controller
         return response()->json(['revision_rawmstp_data' => $rwmstphistoryData]);
     }
 
-
     public function getFPStpRevisionHistory(Request $request)
     {
         $documentId = $request->query('document_id');
@@ -7347,7 +7364,6 @@ class DocumentController extends Controller
 
         return response()->json(['revision_fpstp_data' => $historyData]);
     }
-
 
     public function getINPStpRevisionHistory(Request $request)
     {
@@ -7538,8 +7554,6 @@ class DocumentController extends Controller
     
         return response()->json(['revision_pias_data' => $historyData]);
     }
-    
-    
 
     public function getRecordsByType(Request $request)
     {
@@ -7556,7 +7570,6 @@ class DocumentController extends Controller
         }
         return response()->json($formattedRecords);
     }    
-    
 
     public function viewAttachments($id)
     {
@@ -7704,7 +7717,6 @@ class DocumentController extends Controller
     
         return view($viewName, compact('data', 'attachments'));
     }
-
 
     public function annexureviewPdf($id)
     {
@@ -7919,6 +7931,17 @@ class DocumentController extends Controller
             $sopNumber = "{$document->sop_type_short}/{$document->department_id}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
         }
 
+        // $printHistory = (object) [
+        //     'document_printed_by'     => Auth::user()->name,
+        //     'document_printed_copies' => $NoofCopies,
+        //     'issuance_date'           => $IssueDate,
+        //     'issuance_to'             => $IssuanceTo,
+        //     'issued_copies'           => $IssuedCopies,
+        //     'issued_reason'           => $reasonIssue,
+        //     'department'              => $depart,
+        //     'created_at'              => now(),
+        // ];
+
         if ($controls) {
             set_time_limit(30);
             $document = Document::find($id);
@@ -8017,8 +8040,19 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
                     $download->issue_copies = $issue_copies;
                     $download->print_reason = $print_reason;
+                    $download->document_number = $documentNo;
+                    $download->document_printed_copies = $NoofCopies;
+
+                    // $download->document_printed_by = Auth::user()->name;
+                    // $download->issuance_date = $IssueDate;
+
+                    $download->issuance_to = $IssuanceTo;
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = $reasonIssue;
+                    $download->department = $depart;
         
                     $download->save();
 
@@ -8040,8 +8074,17 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
                     $download->issue_copies = $issue_copies;
                     $download->print_reason = $print_reason;
+                    $download->document_number = $documentNo;
+                    $download->document_printed_copies = $NoofCopies;
+                    // $download->document_printed_by = Auth::user()->name;
+                    // $download->issuance_date = $IssueDate;
+                    $download->issuance_to = $IssuanceTo;
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = $reasonIssue;
+                    $download->department = $depart;
 
                     $download->save();
 
@@ -8062,8 +8105,19 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
                     $download->issue_copies = $issue_copies;
                     $download->print_reason = $print_reason;
+                    $download->document_number = $documentNo;
+                    $download->document_printed_copies = $NoofCopies;
+
+                    // $download->document_printed_by = Auth::user()->name;
+                    // $download->issuance_date = $IssueDate;
+
+                    $download->issuance_to = $IssuanceTo;
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = $reasonIssue;
+                    $download->department = $depart;
 
                     $download->save();
 
@@ -8085,8 +8139,16 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
                     $download->issue_copies = $issue_copies;
                     $download->print_reason = $print_reason;
+                    $download->document_number = $documentNo;
+                    $download->document_printed_copies = $NoofCopies;
+                    $download->issuance_to = $IssuanceTo;
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = $reasonIssue;
+                    $download->department = $depart;
+
                     $download->save();
 
                     // download PDF file with download method
@@ -8107,8 +8169,15 @@ class DocumentController extends Controller
                     $download->user_id = Auth::user()->id;
                     $download->role_id = Auth::user()->role;
                     $download->date = Carbon::now()->format('d-m-Y');
+
                     $download->issue_copies = $issue_copies;
                     $download->print_reason = $print_reason;
+                    $download->document_number = $documentNo;
+                    $download->document_printed_copies = $NoofCopies;
+                    $download->issuance_to = $IssuanceTo;
+                    $download->issued_copies = $IssuedCopies;
+                    $download->issued_reason = $reasonIssue;
+                    $download->department = $depart;
          
                     $download->save();
 
@@ -8352,8 +8421,6 @@ class DocumentController extends Controller
         }
     }
 
-
-
     public function import(Request $request)
     {
         // $request->validate([
@@ -8393,8 +8460,6 @@ class DocumentController extends Controller
 
         return back();
     }    
-
-
 
     public function revision(Request $request, $id){
 
@@ -8863,455 +8928,4 @@ class DocumentController extends Controller
 
     }
 
-    // public function printPDF($id)
-    // {
-
-    //     // $document_annexures = DocumentAnnexure::where([
-    //     //     'document_id' => $id,
-    //     //     'is_child' => 0
-    //     // ])->get();
-
-    //     $issue_copies = request('issue_copies');
-    //     $print_reason = request('print_reason');
-    //     $document_print_by = request('user_id');
-    //     $documentNo = request('document_number');
-    //     $NoofCopies = request('document_printed_copies');
-    //     $IssueDate = request('date');
-    //     $IssuanceTo = request('issuance_to');
-    //     $IssuedCopies = request('issued_copies');
-    //     $reasonIssue = request('issued_reason');
-    //     $depart = request('department');
-    //     $date = request('date');
-
-
-
-    //     if (intval($issue_copies) < 1) {
-    //         return "Cannot issue less than 1 copies! Requested $issue_copies no. of copies.";
-    //     }
-    //     $new = Document::find($id);
-    //     $addNew = $new->id;
-
-    //     $ModalData = new PrintHistory;
-    //     $ModalData->issue_copies = $issue_copies;
-    //     $ModalData->print_reason = $print_reason;
-    //     $ModalData->user_id = $document_print_by;
-    //     $ModalData->role_id = Auth::user()->role;
-    //     $ModalData->document_id = $addNew;
-    //     $ModalData->document_number = $documentNo;
-    //     $ModalData->document_printed_copies = $NoofCopies;
-    //     $ModalData->date = $IssueDate;
-    //     $ModalData->issuance_to = $IssuanceTo;
-    //     $ModalData->issued_copies = $IssuedCopies;
-    //     $ModalData->issued_reason = $reasonIssue;
-    //     $ModalData->department = $depart;
-    //     $ModalData->save();
-
-    //     $roles = Auth::user()->userRoles()->select('role_id')->distinct()->pluck('role_id')->toArray();
-    //     $controls = PrintControl::whereIn('role_id', $roles)->first();
-
-
-    //     if ($controls) {
-    //         set_time_limit(250);
-
-
-    //         $document = Document::find($id);
-    //         $data = Document::find($id);
-    //         $data->department = Department::find($data->department_id);
-    //         $data['originator'] = User::where('id', $data->originator_id)->value('name');
-    //         $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
-    //         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
-    //         $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
-    //         $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-    //         $data['document_division'] = Division::where('id', $data->division_id)->value('name');
-    //         $data['issue_copies'] = $issue_copies;
-
-    //         $data['year'] = Carbon::parse($data->created_at)->format('Y');
-    //         // $document = Document::where('id', $id)->get();
-    //         // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-
-    //         $pdf = App::make('dompdf.wrapper');
-    //         $time = Carbon::now();
-
-
-    //         $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document', 'issue_copies', 'print_reason'))
-    //             ->setOptions([
-    //                 'defaultFont' => 'sans-serif',
-    //                 'isHtml5ParserEnabled' => true,
-    //                 'isRemoteEnabled' => true,
-    //                 'isPhpEnabled' => true,
-    //             ]);
-
-    //         $pdf->setPaper('A4');
-    //         $pdf->render();
-    //         $canvas = $pdf->getDomPDF()->getCanvas();
-    //         $canvas2 = $pdf->getDomPDF()->getCanvas();
-    //         $height = $canvas->get_height();
-    //         $width = $canvas->get_width();
-
-
-    //         $canvas2->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) use ($issue_copies, $canvas2) {
-    //             // $page_switch_at = floor($pageCount/$issue_copies);
-
-    //             $current_copy = round($pageNumber / $issue_copies) < 1 ? 1 : ceil($pageNumber / $issue_copies);
-    //             $current_copy = $current_copy > $issue_copies ? $issue_copies : $current_copy;
-    //             $text = "Issued Copy $current_copy of $issue_copies";
-    //             $pageWidth = $canvas->get_width();
-    //             $pageHeight = $canvas->get_height();
-    //             $size = 10;
-    //             $width = $fontMetrics->getTextWidth($text, null, $size);
-    //             $canvas2->text($pageWidth - $width - 50, $pageHeight - 30, $text, null, $size);
-    //         });
-
-    //         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-    //         $canvas->page_text(
-    //             $width / 4,
-    //             $height / 2,
-    //             $data->status,
-    //             null,
-    //             25,
-    //             [0, 0, 0],
-    //             2,
-    //             6,
-    //             -20
-    //         );
-
-
-    //         if ($controls->daily != 0) {
-    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
-    //             if ($user + 1 <= $controls->daily) {
-    //                 //Downlad History
-    //                 $download = new PrintHistory;
-    //                 $download->document_id = $id;
-    //                 $download->user_id = Auth::user()->id;
-    //                 $download->role_id = Auth::user()->role;
-    //                 $download->date = Carbon::now()->format('d-m-Y');
-    //                 $download->print_reason = $print_reason;
-    //                 $download->issue_copies = $issue_copies;
-    //                 $download->save();
-
-
-    //                 // download PDF file with download method
-
-    //                 return $pdf->stream('SOP' . $id . '.pdf');
-    //             } else {
-    //                 toastr()->error('You breach your daily print limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->weekly != 0) {
-    //             $weekDate = Carbon::now()->subDays(7)->format('d-m-Y');
-    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->weekly) {
-    //                 //Downlad History
-    //                 $download = new PrintHistory;
-    //                 $download->document_id = $id;
-    //                 $download->user_id = Auth::user()->id;
-    //                 $download->role_id = Auth::user()->role;
-    //                 $download->date = Carbon::now()->format('d-m-Y');
-    //                 $download->print_reason = $print_reason;
-    //                 $download->issue_copies = $issue_copies;
-    //                 $download->save();
-
-    //                 // download PDF file with download method
-    //                 return $pdf->stream('SOP' . $id . '.pdf');
-    //             } else {
-    //                 toastr()->error('You breach your weekly print limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->monthly != 0) {
-    //             $weekDate = Carbon::now()->subDays(30)->format('d-m-Y');
-    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->monthly) {
-    //                 //Downlad History
-    //                 $download = new PrintHistory;
-    //                 $download->document_id = $id;
-    //                 $download->user_id = Auth::user()->id;
-    //                 $download->role_id = Auth::user()->role;
-    //                 $download->date = Carbon::now()->format('d-m-Y');
-    //                 $download->print_reason = $print_reason;
-    //                 $download->issue_copies = $issue_copies;
-    //                 $download->save();
-
-    //                 // download PDF file with download method
-
-    //                 return $pdf->stream('SOP' . $id . '.pdf');
-    //             } else {
-    //                 toastr()->error('You breach your monthly print limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->quatarly != 0) {
-    //             $weekDate = Carbon::now()->subDays(90)->format('d-m-Y');
-    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->quatarly) {
-    //                 //Downlad History
-    //                 $download = new PrintHistory;
-    //                 $download->document_id = $id;
-    //                 $download->user_id = Auth::user()->id;
-    //                 $download->role_id = Auth::user()->role;
-    //                 $download->date = Carbon::now()->format('d-m-Y');
-    //                 $download->print_reason = $print_reason;
-    //                 $download->issue_copies = $issue_copies;
-    //                 $download->save();
-
-    //                 // download PDF file with download method 
-
-    //                 return $pdf->stream('SOP' . $id . '.pdf');
-    //             } else {
-    //                 toastr()->error('You breach your quaterly print limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->yearly != 0) {
-    //             $weekDate = Carbon::now()->subDays(365)->format('d-m-Y');
-    //             $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->yearly) {
-    //                 //Downlad History
-    //                 $download = new PrintHistory;
-    //                 $download->document_id = $id;
-    //                 $download->user_id = Auth::user()->id;
-    //                 $download->role_id = Auth::user()->role;
-    //                 $download->date = Carbon::now()->format('d-m-Y');
-    //                 $download->print_reason = $print_reason;
-    //                 $download->issue_copies = $issue_copies;
-
-    //                 $download->save();
-
-    //                 // download PDF file with download method
-
-    //                 return $pdf->stream('SOP' . $id . '.pdf');
-    //             } else {
-    //                 toastr()->error('You breach your yearly print limit.');
-
-    //                 return back();
-    //             }
-    //         } else {
-    //             toastr()->error('There is no controls provide for your role.');
-
-    //             return back();
-    //         }
-    //     } else {
-    //         toastr()->error('There is no controls provide for your role.');
-
-    //         return back();
-    //     }
-    // }
-
-    // public function printDownloadPDF($id)
-    // {
-
-    //     $issue_copies = request('issue_copies');
-    //     $print_reason = request('print_reason');
-    //     $document_print_by = request('user_id');
-    //     $IssueDate = request('date');
-    //     $IssuedCopies = request('issued_copies');
-    //     $date = request('date');
-
-
-    //     if (intval($issue_copies) < 1) {
-    //         return "Cannot issue less than 1 copies! Requested $issue_copies no. of copies.";
-    //     }
-    //     $new = Document::find($id);
-    //     $addNew = $new->id;
-
-    //     $ModalData = new DownloadHistory();
-    //     $ModalData->issue_copies = $issue_copies;
-    //     $ModalData->user_id = $document_print_by;
-    //     $ModalData->document_id = $addNew;
-    //     $ModalData->issued_copies = $IssuedCopies;
-    //     $ModalData->save();
-
-    //     // dd($ModalData = new DownloadHistory());
-
-    //     $roles = Auth::user()->userRoles()->select('role_id')->distinct()->pluck('role_id')->toArray();
-    //     $controls = PrintControl::whereIn('role_id', $roles)->first();
-
-
-    //     if ($controls) {
-    //         set_time_limit(250);
-
-    //         $document = Document::find($id);
-    //         $data = Document::find($id);
-    //         $data->department = Department::find($data->department_id);
-    //         $data['originator'] = User::where('id', $data->originator_id)->value('name');
-    //         $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
-    //         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
-    //         $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
-    //         $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-    //         $data['document_division'] = Division::where('id', $data->division_id)->value('name');
-    //         $data['issue_copies'] = $issue_copies;
-
-    //         $data['year'] = Carbon::parse($data->created_at)->format('Y');
-    //         // $document = Document::where('id', $id)->get();
-    //         // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-
-    //         $pdf = App::make('dompdf.wrapper');
-    //         $time = Carbon::now();
-
-
-    //         $pdf = PDF::loadview('frontend.documents.download_document', compact('data', 'time', 'document', 'issue_copies', 'print_reason'))
-    //             ->setOptions([
-    //                 'defaultFont' => 'sans-serif',
-    //                 'isHtml5ParserEnabled' => true,
-    //                 'isRemoteEnabled' => true,
-    //                 'isPhpEnabled' => true,
-    //             ]);
-
-    //         $pdf->setPaper('A4');
-    //         $pdf->render();
-    //         $canvas = $pdf->getDomPDF()->getCanvas();
-    //         $canvas2 = $pdf->getDomPDF()->getCanvas();
-    //         $height = $canvas->get_height();
-    //         $width = $canvas->get_width();
-
-
-    //         $canvas2->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) use ($issue_copies, $canvas2) {
-    //             // $page_switch_at = floor($pageCount/$issue_copies);
-
-    //             $current_copy = round($pageNumber / $issue_copies) < 1 ? 1 : ceil($pageNumber / $issue_copies);
-    //             $current_copy = $current_copy > $issue_copies ? $issue_copies : $current_copy;
-    //             $text = "Issued Copy $current_copy of $issue_copies";
-    //             $pageWidth = $canvas->get_width();
-    //             $pageHeight = $canvas->get_height();
-    //             $size = 10;
-    //             $width = $fontMetrics->getTextWidth($text, null, $size);
-    //             $canvas2->text($pageWidth - $width - 50, $pageHeight - 30, $text, null, $size);
-    //         });
-
-    //         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-    //         $canvas->page_text(
-    //             $width / 4,
-    //             $height / 2,
-    //             $data->status,
-    //             null,
-    //             25,
-    //             [0, 0, 0],
-    //             2,
-    //             6,
-    //             -20
-    //         );
-
-
-    //         if ($controls->daily != 0) {
-    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
-    //             if ($user + 1 <= $controls->daily) {
-    //                 //Downlad History
-    //                 $download = new PrintHistory;
-    //                 $download->document_id = $id;
-    //                 $download->user_id = Auth::user()->id;
-    //                 $download->role_id = Auth::user()->role;
-    //                 $download->date = Carbon::now()->format('d-m-Y');
-    //                 $download->print_reason = $print_reason;
-    //                 $download->issue_copies = $issue_copies;
-    //                 $download->save();
-
-
-    //                 // download PDF file with download method
-
-    //                 return $pdf->stream('SOP' . $id . '.pdf');
-    //             } else {
-    //                 toastr()->error('You breach your daily print limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->weekly != 0) {
-    //             $weekDate = Carbon::now()->subDays(7)->format('d-m-Y');
-    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->weekly) {
-    //                 //Downlad History
-    //                 $download = new PrintHistory;
-    //                 $download->document_id = $id;
-    //                 $download->user_id = Auth::user()->id;
-    //                 $download->role_id = Auth::user()->role;
-    //                 $download->date = Carbon::now()->format('d-m-Y');
-    //                 $download->print_reason = $print_reason;
-    //                 $download->issue_copies = $issue_copies;
-    //                 $download->save();
-
-    //                 // download PDF file with download method
-    //                 return $pdf->stream('SOP' . $id . '.pdf');
-    //             } else {
-    //                 toastr()->error('You breach your weekly print limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->monthly != 0) {
-    //             $weekDate = Carbon::now()->subDays(30)->format('d-m-Y');
-    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->monthly) {
-    //                 //Downlad History
-    //                 $download = new PrintHistory;
-    //                 $download->document_id = $id;
-    //                 $download->user_id = Auth::user()->id;
-    //                 $download->role_id = Auth::user()->role;
-    //                 $download->date = Carbon::now()->format('d-m-Y');
-    //                 $download->print_reason = $print_reason;
-    //                 $download->issue_copies = $issue_copies;
-    //                 $download->save();
-
-    //                 // download PDF file with download method
-
-    //                 return $pdf->stream('SOP' . $id . '.pdf');
-    //             } else {
-    //                 toastr()->error('You breach your monthly print limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->quatarly != 0) {
-    //             $weekDate = Carbon::now()->subDays(90)->format('d-m-Y');
-    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->quatarly) {
-    //                 //Downlad History
-    //                 $download = new PrintHistory;
-    //                 $download->document_id = $id;
-    //                 $download->user_id = Auth::user()->id;
-    //                 $download->role_id = Auth::user()->role;
-    //                 $download->date = Carbon::now()->format('d-m-Y');
-    //                 $download->print_reason = $print_reason;
-    //                 $download->issue_copies = $issue_copies;
-    //                 $download->save();
-
-    //                 // download PDF file with download method
-
-    //                 return $pdf->stream('SOP' . $id . '.pdf');
-    //             } else {
-    //                 toastr()->error('You breach your quaterly print limit.');
-
-    //                 return back();
-    //             }
-    //         } elseif ($controls->yearly != 0) {
-    //             $weekDate = Carbon::now()->subDays(365)->format('d-m-Y');
-    //             $user = DownloadHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->whereBetween('date', [$weekDate, Carbon::now()->format('d-m-Y')])->count();
-    //             if ($user + 1 <= $controls->yearly) {
-    //                 //Downlad History
-    //                 $download = new PrintHistory;
-    //                 $download->document_id = $id;
-    //                 $download->user_id = Auth::user()->id;
-    //                 $download->role_id = Auth::user()->role;
-    //                 $download->date = Carbon::now()->format('d-m-Y');
-    //                 $download->print_reason = $print_reason;
-    //                 $download->issue_copies = $issue_copies;
-
-    //                 $download->save();
-
-    //                 // download PDF file with download method
-
-    //                 return $pdf->stream('SOP' . $id . '.pdf');
-    //             } else {
-    //                 toastr()->error('You breach your yearly print limit.');
-
-    //                 return back();
-    //             }
-    //         } else {
-    //             toastr()->error('There is no controls provide for your role.');
-
-    //             return back();
-    //         }
-    //     } else {
-    //         toastr()->error('There is no controls provide for your role.');
-
-    //         return back();
-    //     }
-    // }
 }

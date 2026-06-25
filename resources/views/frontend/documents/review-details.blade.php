@@ -82,7 +82,7 @@
                             <div class="bottom-block">
                                 <div>
                                     <div class="head">Document Number</div>
-                                    <div>000{{ $document->id }}</div>
+                                    <div>000{{ $document->record }}</div>
                                 </div>
                                 {{-- <div>
                                     <div class="head">Department</div>
@@ -117,8 +117,10 @@
                     </div>
 
                     @if (Helpers::checkRoles(4) && Helpers::checkRoles_check_hods($document) && ($document->stage >= 2))
+                        @if($document->document_type_id == 'EOP')
                         <div class="col-8">
                             <div class="inner-block tracker">
+                                
                                 <div class="d-flex justify-content-between align-items-center hods">
                                     <div class="main-title">
                                         Record Workflow
@@ -128,13 +130,13 @@
                                             @if ($stagereview && empty($stagereview_submit))
                                                 @if($document->stage < 3)
                                                 <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                    More Info Required&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                                 </button>
                                                 @endif
                                             @endif
                                         @elseif($document->stage == 2)
                                             <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                                Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                More Info Required&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                             </button>
                                         @endif
 
@@ -144,7 +146,7 @@
                                                     Review&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                                 </button>
                                                 <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                    More Info Required&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                                 </button>
                                                 <button data-bs-toggle="modal" data-bs-target="#cancel-record">
                                                     Cancel&nbsp;<i class="fa-regular fa-circle-xmark"></i>
@@ -158,6 +160,7 @@
                                     </div>
 
                                 </div>
+                                
                                 <div class="status">
                                     <div class="head">Current Status</div>
                                     <div class="progress-bars">
@@ -186,6 +189,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     @endif
 
                     @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) && $document->stage == 4)
@@ -201,7 +205,7 @@
                                                 Review&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                             </button>
                                             <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                                Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                More Info Required&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                             </button>
                                         @endif
                                     </div>
@@ -253,7 +257,7 @@
                                         @if ($stageapprove && empty($stageapprove_submit))
                                              @if ($stageapprove->stage != 'Approved')
                                                 <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                                    Reject&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                                    More Info Required&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                                 </button>
                                             @endif
                                         @endif
@@ -263,7 +267,7 @@
                                                 Approve&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                             </button>
                                             <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                                Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                More Info Required&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                             </button>
                                         @endif
                                     </div>
@@ -327,7 +331,7 @@
                     @if ($stageEffective && empty($stageEffective_submit))
                         @if ($stageEffective->stage != 'Effective')
                             <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                                Reject&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                More Info Required&nbsp;<i class="fa-regular fa-paper-plane"></i>
                             </button>
                         @endif
                     @endif
@@ -336,7 +340,7 @@
                         Effective&nbsp;<i class="fa-regular fa-paper-plane"></i>
                     </button>
                     <button data-bs-toggle="modal" data-bs-target="#review-cancel">
-                        Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                        More Info Required&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                     </button>
                 </div>
             </div>
@@ -388,7 +392,7 @@
                     
                     <div class="col-4">
                         <div>
-                            @if($document->document_type_id == 'SOP')
+                            @if($document->document_type_id == 'EOP')
                             <div class="inner-block person-table" >
                                 <div class="main-title mb-0" >
                                     HOD
@@ -408,7 +412,7 @@
                             </div>
                             @endif
 
-                            @if($document->document_type_id == 'SOP')
+                            @if($document->document_type_id == 'EOP')
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     Reviewers
@@ -861,7 +865,7 @@
             <div class="modal-content">
 
                 <!-- Modal Header -->
-                 @if($document->document_type_id == 'SOP')
+                 @if($document->document_type_id == 'EOP')
                 <div class="modal-header">
                     <h4 class="modal-title">Reviewers</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -879,7 +883,7 @@
                         <div class="reviewer-table table-responsive">
                             <table class="table table-bordered">
                                 <thead>
-                                    @if($document->document_type_id == 'SOP')
+                                    @if($document->document_type_id == 'EOP')
                                     <tr>
                                         <th>Reviewers</th>
                                         <th>Department</th>
@@ -947,7 +951,7 @@
                     @endif
                     @if ($document->reviewers_group)
                         <div class="modal-header">
-                        @if($document->document_type_id == 'SOP')
+                        @if($document->document_type_id == 'EOP')
                             <h4 class="modal-title">Reviewer Group</h4>
                         @else
                         <h4 class="modal-title">Reviewer Group</h4>

@@ -676,39 +676,8 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="related_records">Action Item Related Records</label>
-                                            <select multiple name="related_records" placeholder="Select Reference Records"
-                                                data-search="false" data-silent-initial-value-set="true"
-                                                id="related_records">
-                                                <option {{ $data->related_records == '31' ? 'selected' : '' }}
-                                                    value="31">QMS-EMEA/PROD/2023/31</option>
-                                                <option {{ $data->related_records == '32' ? 'selected' : '' }}
-                                                    value="32">QMS-EMEA/PROD/2023/32</option>
-                                                <option {{ $data->related_records == '33' ? 'selected' : '' }}
-                                                    value="33">QMS-EMEA/PROD/2023/33</option>
-                                                <option {{ $data->related_records == '34' ? 'selected' : '' }}
-                                                    value="34">QMS-EMEA/PROD/2023/34</option>
-                                                <option {{ $data->related_records== '35' ? 'selected' : '' }}
-                                                    value="35">QMS-EMEA/PROD/2023/35</option>
-                                                <option {{ $data->related_records == '36' ? 'selected' : '' }}
-                                                    value="36">QMS-EMEA/PROD/2023/36</option>
-                                                <option {{ $data->related_records == '37' ? 'selected' : '' }}
-                                                    value="37">QMS-EMEA/PROD/2023/37</option>
-                                                <option {{ $data->related_records == '38' ? 'selected' : '' }}
-                                                    value="38">QMS-EMEA/PROD/2023/38</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
+                           
                                 @if ($data->stage == 1)
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="description">Description <span class="text-danger">*</span></label>
-                                            <textarea class="summernote" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description" id="" required>{{ $data->description }}</textarea>
-                                        </div>
-                                    </div> --}}
-
                                     <div class="col-md-12">
                                         <div class="group-input">
                                         {!! quillEditor(
@@ -727,13 +696,7 @@
                                     </div>
 
                                 @else
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="description">Description</label>
-                                            <textarea class="summernote" readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description" id="" >{{ $data->description }}</textarea>
-                                        </div>
-                                    </div> --}}
-
+                           
                                     <div class="col-md-12">
                                         <div class="group-input">
                                         {!! quillEditor(

@@ -341,7 +341,19 @@
             margin-top: 20px;
         }
 
+        /* header table td{
+            font-size: 12px;
+            line-height: 1.3;
+        } */
 
+        header .doc-num{
+            /* font-weight: bold; */
+        }
+
+        /* header table{
+            table-layout: fixed;
+            border-collapse: collapse;
+        } */
 
         .other-container {
             margin: 0 0 0 0;
@@ -564,49 +576,49 @@
             margin: 5px auto;
         }
         
-.quill-pdf-content{
-    width:100%;
-    font-size:12px;
-    line-height:1.4;
-}
+        .quill-pdf-content{
+            width:100%;
+            font-size:12px;
+            line-height:1.4;
+        }
 
-.quill-pdf-content p{
-    margin:5px 0;
-}
+        .quill-pdf-content p{
+            margin:5px 0;
+        }
 
-.quill-pdf-content table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:10px;
-    margin-bottom:10px;
-}
+        .quill-pdf-content table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
 
-.quill-pdf-content table,
-.quill-pdf-content th,
-.quill-pdf-content td{
-    border:1px solid #000;
-}
+        .quill-pdf-content table,
+        .quill-pdf-content th,
+        .quill-pdf-content td{
+            border:1px solid #000;
+        }
 
-.quill-pdf-content td,
-.quill-pdf-content th{
-    padding:5px;
-    vertical-align:top;
-}
+        .quill-pdf-content td,
+        .quill-pdf-content th{
+            padding:5px;
+            vertical-align:top;
+        }
 
-.quill-pdf-content img{
-    max-width:100%;
-    height:auto;
-}
+        .quill-pdf-content img{
+            max-width:100%;
+            height:auto;
+        }
 
-.quill-pdf-content ul,
-.quill-pdf-content ol{
-    padding-left:20px;
-}
+        .quill-pdf-content ul,
+        .quill-pdf-content ol{
+            padding-left:20px;
+        }
 
-.quill-pdf-content strong,
-.quill-pdf-content b{
-    font-weight:bold;
-}
+        .quill-pdf-content strong,
+        .quill-pdf-content b{
+            font-weight:bold;
+        }
     </style>
 
 </head>
@@ -634,59 +646,74 @@
             <tbody>
                 <tr>
                     <td class="doc-num">
-                        {{-- {{ Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type) : '-' }} --}}
                         STANDARD OPERATING PROCEDURE
                     </td>
                 </tr>
             </tbody>
         </table>
+       <table style="width:100%; border-collapse:collapse; border-left:1px solid; border-right:1px solid #000; border-bottom:1px solid #000;" class="border border-top-none">
+            <!-- Department Row -->
+            <tr>
+                <td class="w-20" style="border:1px solid; font-weight:bold; text-align:left; padding:6px; ">
+                    Department:
+                </td>
 
-        <table class="border border-top-none"
-            style="border-collapse: collapse; width: 100%; text-align: left;">
-            <tbody>
-                <tr>
-                    <td style="width: 20%; padding: 5px; text-align: left" class="doc-num">Department:</td>
-                    <td style="width: 35%; padding: 5px; text-align: left">
-                        {{ Helpers::getFullDepartmentName($data->department_id) }}</td>
-                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Page No.:</td>
-                    <td style="width: 23%; padding: 5px; text-align: left"></td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" border="1"
-            style="border-collapse: collapse; width: 100%; text-align: left;">
-            <tbody>
+                <td class="w-35" style="border:1px solid; text-align:left; padding:6px;">
+                    {{ Helpers::getFullDepartmentName($data->department_id) }}
+                </td>
 
-                <tr style="height:10px">
-                    <td rowspan="2" style="width: 20%; padding: 5px; text-align: left" class="doc-num">Title:</td>
-                    <td rowspan="2" style="width: 35%; padding: 5px; text-align: left">{{ $data->document_name }}</td>
-                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">SOP No.:</td>
+                <td style="border:1px solid; font-weight:bold; text-align:left; padding:6px;">
+                    Page No.
+                </td>
 
-                    <td style="width: 23%; padding: 5px; text-align: left">
+                <td class="w-25" style="border:1px solid; text-align:center; padding:6px;">
                     
-                    
+                </td>
+            </tr>
+
+            <!-- Title + SOP -->
+            <tr>
+                <td rowspan="2"
+                    style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px; vertical-align:middle;">
+                    Title:
+                </td>
+
+                <td rowspan="2"
+                    style="border:1px solid #000; text-align:left; padding:6px; vertical-align:middle;">
+                    {{ $data->document_name }}
+                </td>
+
+                <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
+                    SOP No.:
+                </td>
+
+                <td style="border:1px solid #000; text-align:left; padding:6px;">
                     @if($document->revised == 'Yes')
                         @php
                             $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                         @endphp
 
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @endif
-                    @else                        
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-00
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-00
-                            @endif
+                        @if(in_array($document->sop_type_short,['EOP','IOP']))
+                            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                        @else
+                            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                        @endif
+                    @else
+                        @if(in_array($document->sop_type_short,['EOP','IOP']))
+                            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-00
+                        @else
+                            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-00
+                        @endif
                     @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
-                    <td style="width: 23%; padding: 5px; text-align: left">
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
+                    Effective Date:
+                </td>
+
+                <td style="border:1px solid #000; text-align:left; padding:6px;">
                     @if ($data->training_required == 'yes')
                         @if ($data->stage >= 11)
                             {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
@@ -696,61 +723,54 @@
                             {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                         @endif
                     @endif
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="border border-top-none" border="1"
-            style="border-collapse: collapse; width: 100%; text-align: left;">
-            <tbody>
+                </td>
+            </tr>
 
-                <tr>
-                    <td rowspan="2" style="width: 20%; padding: 5px; text-align: left" class="doc-num">Area:</td>
-                    <td rowspan="2" style="width: 35%; padding: 5px; text-align: left">
-                        {{ Helpers::getFullDepartmentName($data->department_id) }}</td>
-                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Next Review Date:</td>
-                    <td style="width: 23%; padding: 5px; text-align: left">
-                        {{-- {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }} --}}
-                        @if($data->stage >= 11)
-                            {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }}
-                        @else
-                            
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Supersedes No.:</td>
-                    <td style="width: 23%; padding: 5px; text-align: left">
+            <!-- Area + Review -->
+            <tr>
+                <td rowspan="2"
+                    style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px; vertical-align:middle;">
+                    Area:
+                </td>
+
+                <td rowspan="2"
+                    style="border:1px solid #000; text-align:left; padding:6px; vertical-align:middle;">
+                    {{ Helpers::getFullDepartmentName($data->department_id) }}
+                </td>
+
+                <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
+                    Next Review Date:
+                </td>
+
+                <td style="border:1px solid #000; text-align:left; padding:6px;">
+                    @if($data->stage >= 11)
+                        {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }}
+                    @endif
+                </td>
+            </tr>
+
+            <tr>
+                <td style="border:1px solid #000; font-weight:bold; text-align:left; padding:6px;">
+                    Supersedes No.:
+                </td>
+
+                <td style="border:1px solid #000; text-align:left; padding:6px;">
+                    @if($document->revised == 'Yes')
                         @php
-                            $temp = DB::table('document_types')
-                                ->where('name', $document->document_type_name)
-                                ->value('typecode');
+                            $revisionNumber = str_pad(max(0, $document->revised_doc - 1), 2, '0', STR_PAD_LEFT);
                         @endphp
-                        {{-- @if ($document->revised === 'Yes')
-                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+
+                        @if(in_array($document->sop_type_short,['EOP','IOP']))
+                            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
                         @else
-                        Nil
-                        @endif --}}
-
-
-                        @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = str_pad(max(0, $document->revised_doc - 1), 2, '0', STR_PAD_LEFT);
-                            @endphp
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @endif
-                        @else                        
-                            Nil
+                            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record,3,'0',STR_PAD_LEFT) }}-{{ $revisionNumber }}
                         @endif
+                    @else
+                        Nil
+                    @endif
+                </td>
+            </tr>
 
-
-
-                    </td>
-                </tr>
-            </tbody>
         </table>
     </header>
     
@@ -771,7 +791,7 @@
                             ->join('users', 'stage_manages.user_id', '=', 'users.id')
                             ->select('stage_manages.*', 'users.name as user_name')
                             ->where('document_id', $document->id)
-                            ->where('stage', 'HOD Review-Submit')
+                            ->where('stage', 'Review-Submit')
                             ->where('deleted_at', null)
                             ->get();
                     @endphp
@@ -1501,10 +1521,6 @@
                                         <td class="w-70 text-left">
 
                                             @if($document->revised == 'Yes')
-                                                {{-- @php
-                                                    $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-                                                @endphp --}}
-
                                                     @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
                                                         {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                                     @else
@@ -1597,7 +1613,7 @@
                     @endphp
                     <div class="block mb-40">
                         <div class="block-head">
-                            Originator
+                            Prepared By
                         </div>
                         <div class="block-content">
                             <table class="table-bordered">
@@ -1627,6 +1643,7 @@
                             </table>
                         </div>
                     </div>
+                    @if($data->document_type_id != 'SOP')
                     <div class="block mb-40">
                         <div class="block-head">
                             HOD
@@ -1758,9 +1775,10 @@
                             </table>
                         </div>
                     </div>
+                    @endif
                     <div class="block mb-40">
                         <div class="block-head">
-                            Reviews
+                            Checked By
                         </div>
                         <div class="block-content">
                             <table class="table-bordered">
@@ -1829,8 +1847,6 @@
                                                         {{ $comment->comment }}
                                                     @endif
                                                 </td>
-                                                {{-- <td class="text-left w-25">{{ !$comment || $signatureReviewerData->comment == null ? " " : $signatureReviewerData->comment }}</td> --}}
-
                                             </tr>
                                         @endfor
                                     @endif
@@ -1894,20 +1910,13 @@
                                     @endif
 
                                 </tbody>
-                                {{-- <tbody>
-                                    <tr>
-                                        <td class="text-left w-25">Vivek</td>
-                                        <td class="text-left w-25">Quality Control</td>
-                                        <td class="text-left w-25">12-12-2023 11:12PM</td>
-                                        <td class="text-left w-25">vivek@gmail.com</td>
-                                    </tr>
-                                </tbody> --}}
                             </table>
                         </div>
                     </div>
+                    
                     <div class="block mb-40">
                         <div class="block-head">
-                            Approvals
+                            Approved By
                         </div>
                         <div class="block-content">
                             <table class="table-bordered">

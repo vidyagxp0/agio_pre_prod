@@ -1888,7 +1888,7 @@
                         @if($document->document_type_id == 'SOP')
                             <div class="col-md-6">
                                 <div class="group-input">
-                                    <label for="reviewers">Reviewers</label>
+                                    <label for="reviewers">Checked By</label>
 
                                     <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
                                         name="reviewers[]" placeholder="Select Reviewers" multiple
@@ -1912,9 +1912,6 @@
                                         @endforeach
                                         @endif
                                     </select>
-
-
-
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reviewers' &&
@@ -1978,8 +1975,6 @@
                                         @endif
                                     </select>
 
-
-
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reviewers' &&
@@ -2016,13 +2011,6 @@
 
                             </div>
                         @endif
-
-
-
-                
-                        
-                        
-
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="approvers">Approvers</label>
@@ -2085,7 +2073,7 @@
 
                             </div>
 
-                        @if($document->document_type_id == 'SOP')
+                        {{-- @if($document->document_type_id == 'SOP')
                             <div class="col-md-6">  
                                 <div class="group-input">
                                     <label for="hods">HOD's</label>
@@ -2152,7 +2140,7 @@
                                     </select>
                                 </div>
                             </div>
-                        @endif 
+                        @endif  --}}
                      </div>
                     </div>
                     <div class="button-block">
@@ -14603,6 +14591,8 @@
                                             <th class="copy-num">Number of Retrieved Copies</th>
                                             <th class="copy-long">Reason for Retrieval</th>
                                             <th class="copy-long">Remarks</th>
+                                            <th class="copy-name">Document Distributed By</th>
+                                            <th class="copy-name">Document Distributed On</th>
                                             <th class="copy-long">Action</th>
 
                                         </tr>

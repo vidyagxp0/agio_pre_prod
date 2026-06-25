@@ -338,7 +338,7 @@ if($submenu=="Process"){
 
 
 
-                {{-- <li class="nav-item {{ $mainmenu == 'Control Management' ? 'menu-open' : '' }} ">
+                <li class="nav-item {{ $mainmenu == 'Control Management' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="Control Management"){
@@ -377,7 +377,7 @@ if($submenu=="Download Control"){
                         </li>
 
                     </ul>
-                </li> --}}
+                </li>
 
   {{-- <li class="nav-item {{ $mainmenu == 'Product & Material' ? 'menu-open' : '' }} ">
                     <a href="#"

@@ -40,22 +40,28 @@
                                         Audit Trail
                                     </button>
 
-                                    @if ($document->status !== 'Obsolete')
+                                    @if ($document->status !== 'Effective' && $document->status !== 'Obsolete')
                                         <button onclick="location.href='{{ route('documents.edit', $document->id) }}';">Edit
                                         </button>
                                         {{-- <button>Cancel</button> --}}
                                     @endif
-                                    @if (Helpers::checkControlAccess())
+                                    {{-- @if (Helpers::checkControlAccess())
                                         <button
                                             onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
                                         </button>
-                                    @endif
-                                    @if (Helpers::checkControlAccess())
+                                    @endif --}}
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print-modal1">
+                                        Download
+                                    </button>
+                                    {{-- @if (Helpers::checkControlAccess())
                                         <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';"
                                             target="__blank">
                                             Print
                                         </button>
-                                    @endif
+                                    @endif --}}
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#print-modal">
+                                        Print
+                                    </button>
                                     @if (Helpers::checkControlAccess())
                                         <button onclick="location.href='{{ url('documents/printAnnexurePDF', $document->id) }}';"
                                             target="__blank">
@@ -85,7 +91,7 @@
                                         @if ($document->revised === 'Yes')
                                             000{{ $document->revised_doc }}
                                         @else
-                                            000{{ $document->id }}
+                                            000{{ $document->record }}
                                         @endif
                                     </div>
                                 </div>
@@ -108,7 +114,7 @@
                                     @if ($document->last_modify)
                                         <div>{{ $document->last_modify->user_name }}</div>
                                     @else
-                                        <div>{{ $document->oreginator->name }}</div>
+                                        <div>{{ $document->oreginator?->name }}</div>
                                     @endif
                                 </div>
                                 <div>
@@ -133,7 +139,7 @@
                                     Record Workflow
                                 </div>
 
-                                @if($document->document_type_id == 'SOP')
+                                @if($document->document_type_id == 'EOP')
                                         
                                     @if ($document->stage == 1)
                                         <input type="hidden" name="stage_id" value="2" />
@@ -183,7 +189,7 @@
                                     @if ($document->stage == 1)
                                         <input type="hidden" name="stage_id" value="4" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
-                                            Send For Review<i class="fa-regular fa-paper-plane"></i>
+                                            Send For Checking<i class="fa-regular fa-paper-plane"></i>
                                         </button>
                                     @endif
 
@@ -224,7 +230,7 @@
                                 <div class="head">Current Status</div>
                                 @if ($document->stage < 14)
                                     <div class="progress-bars">
-                                        @if($document->document_type_id == 'SOP')
+                                        @if($document->document_type_id == 'EOP')
                                             @if ($document->stage >= 1)
                                                 <div class="active">Draft</div>
                                             @else
@@ -234,13 +240,14 @@
                                                <div class="active">In-HOD Review</div>
                                             @else
                                                 <div class="">In-HOD Review</div>
-                                            @endif
+                                            @endif 
                                             @if ($document->stage >= 3)
                                                 <div class="active">HOD Review Complete</div>
                                             @else
                                                 <div class="">HOD Review Complete</div>
                                             @endif
                                         
+                                            {{--  Not required for SOP document --}}
                                             @if ($document->stage >= 4)
                                                 <div class="active">In-Review</div>
                                             @else
@@ -266,9 +273,9 @@
                                             @endif
                                             @if ($document->training_required == 'yes')
                                                 @if ($document->stage >= 8)
-                                                    <div class="active">Pending-Training</div>
+                                                    <div class="active">Under-Training</div>
                                                 @else
-                                                    <div class="">Pending-Training</div>
+                                                    <div class="">Under-Training</div>
                                                 @endif
                                                 @if ($document->stage >= 9)
                                                     <div class="active">Training-Complete</div>
@@ -303,28 +310,24 @@
                                             @endif
                                         
                                             @if ($document->stage >= 4)
-                                                <div class="active">For checking</div>
+                                                <div class="active">For Checking</div>
                                             @else
-                                                <div class="">For checking</div>
+                                                <div class="">For Checking</div>
                                             @endif
-                                            @if ($document->stage == 9)
+                                            {{-- @if ($document->stage == 9)
                                                 <div class="active">Rejected</div>
-                                            @endif
+                                            @endif --}}
                                             @if ($document->stage >= 5)
-                                                <div class="active">Checked By</div>
-                                                {{-- && $document->stage < 10 --}}
+                                                <div class="active">Checked</div>
                                             @else
-                                                <div class="">Checked By</div>
+                                                <div class="">Checked</div>
                                             @endif
                                             @if ($document->stage >= 6)
                                                 <div class="active">For-Approval</div>
-                                                {{-- && $document->stage < 10 --}}
                                             @else
                                                 <div class="">For-Approval</div>
                                             @endif
-                                            {{-- @if ($document->stage == 10)
-                                            <div class="active">Rejected</div>
-                                            @endif --}}
+               
                                             @if ($document->stage >= 7)
                                                 <div class="active">Approved</div>
                                             @else
@@ -332,9 +335,9 @@
                                             @endif
                                             @if ($document->training_required == 'yes')
                                                 @if ($document->stage >= 8)
-                                                    <div class="active">Pending-Training</div>
+                                                    <div class="active">Under-Training</div>
                                                 @else
-                                                    <div class="">Pending-Training</div>
+                                                    <div class="">Under-Training</div>
                                                 @endif
                                                 @if ($document->stage >= 9)
                                                     <div class="active">Training-Complete</div>
@@ -381,7 +384,7 @@
 
                     <div class="col-4">
                         <div>
-                            @if($document->document_type_id == 'SOP')
+                            @if($document->document_type_id == 'EOP')
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     HOD
@@ -401,7 +404,7 @@
                             </div>
                             @endif
 
-                            @if($document->document_type_id == 'SOP')
+                            @if($document->document_type_id == 'EOP')
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     Reviewers
@@ -803,6 +806,9 @@
                                         $user = DB::table('users')
                                             ->where('id', $hod_data[$i])
                                             ->first();
+                                        if (!$user) {
+                                            continue;
+                                        }
                                         $user->department = DB::table('departments')
                                             ->where('id', $user->departmentid)
                                             ->value('name');
@@ -822,8 +828,8 @@
                                             ->first();
                                     @endphp
                                     <tr>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->department }}</td>
+                                        <td>{{ $user->name ?? 'N/A' }}</td>
+                                        <td>{{ $user->department ?? 'N/A' }}</td>
                                         @if ($user->status)
                                             <td>HOD Review complete <i class="fa-solid fa-circle-check text-success"></i>
                                             </td>
@@ -899,7 +905,7 @@
                                         @endphp
                                         <tr>
                                             <td>
-                                                <div>{{ $user->name }}</div>
+                                                <div>{{ $user->name ?? 'N/A' }}</div>
                                                 {{-- @if (count($users) > 0)
                                             <ul>
                                                 @for ($j = 0; $j < count($users); $j++)
@@ -923,7 +929,7 @@
                                     @endif --}}
                                             </td>
 
-                                            <td>{{ $user->department }}
+                                            <td>{{ $user->department ?? 'N/A' }}
                                                 @if (count($users) > 1)
                                                     <ul>
                                                         @for ($j = 0; $j < count($users); $j++)
@@ -1022,7 +1028,7 @@
                 <div class="modal-content">
 
                     <!-- Modal Header -->
-                     @if($document->document_type_id == 'SOP')
+                     @if($document->document_type_id == 'EOP')
                     <div class="modal-header">
                         <h4 class="modal-title">Reviewers</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -1067,7 +1073,7 @@
                         <div class="reviewer-table table-responsive">
                             <table class="table table-bordered">
                                 <thead>
-                                    @if($document->document_type_id == 'SOP')
+                                    @if($document->document_type_id == 'EOP')
                                     <tr>
                                         <th>Reviewers</th>
                                         <th>Department</th>
@@ -1093,6 +1099,9 @@
                                             $user = DB::table('users')
                                                 ->where('id', $rev_data[$i])
                                                 ->first();
+                                            if (!$user) {
+                                                continue;
+                                            }
                                             $user->department = DB::table('departments')
                                                 ->where('id', $user->departmentid)
                                                 ->value('name');
@@ -1130,7 +1139,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        @if($document->document_type_id == 'SOP')
+                        @if($document->document_type_id == 'EOP')
                         <div class="modal-header">
                             <h4 class="modal-title">Reviewer Group</h4>
                         </div>
@@ -1351,6 +1360,9 @@
                                         $user = DB::table('users')
                                             ->where('id', $rev_data[$i])
                                             ->first();
+                                        if (!$user) {
+                                            continue;
+                                        }
                                         $user->department = DB::table('departments')
                                             ->where('id', $user->departmentid)
                                             ->value('name');
@@ -1612,7 +1624,7 @@
                     </div>
 
 
-                @if($document->document_type_id == 'SOP')
+                @if($document->document_type_id == 'EOP')
                     @if ($document->stage == 1)
                         <input type="hidden" name="stage_id" value="2" />
                     @endif
@@ -1797,6 +1809,210 @@
             </div>
         </div>
     </div>
+
+
+    <!-- updated print-model -->
+<div class="modal fade" id="print-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Print Document</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('document.print.pdf', $document->id) }}" method="GET" target="_blank">
+                @csrf
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="group-input mb-3">
+                        <label for="print_document_title">Document Title</label>
+                        <input type="text" name="document_name" class="form-control w-100" maxlength="255" value="{{$document->document_name}}" readonly>
+                    </div>
+                    @php
+                    $doc_number = '';
+                    $doc_number = Helpers::getDivisionName($document->division_id)
+                    . '/' . ($document->document_type_name ? $temp . ' /' : '')
+                    . $document->created_at->format('Y')
+                    . '/000' . $document->id . 'R1.0';
+                    @endphp
+
+                    <div class="group-input mb-3">
+                        <label for="print_document_number">Document Number</label>
+                        <input type="text" name="document_number" value="{{ $doc_number }}" class="form-control w-100" maxlength="255" readonly>
+                    </div>
+                    @php
+                    $currentUser = Auth::user();
+                    @endphp
+                    <div class="group-input mb-3">
+                        <label for="Document_Printed_By">Document Printed By</label>
+                        <input type="text" id="Document_Printed_By" name="user_name" class="form-control w-100" value="{{ $currentUser->name }}" readonly>
+                        <input type="hidden" name="user_id" value="{{ $currentUser->id }}">
+                        @error('document_printed_by')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="group-input mb-3">
+                        <label for="issue_copies">No. Of Copies <span class="text-danger">*</span></label>
+                        <input type="number" id="issue_copies" name="issue_copies" value="1" min="1" class="form-control w-100" required>
+                    </div>
+                    <div class="group-input mb-3">
+                        <label for="print_reason">Print Reason<span class="text-danger">*</span></label>
+                        <textarea name="print_reason" class="form-control w-100" maxlength="255" required></textarea>
+                    </div>
+
+                    @php
+                    $users = DB::table('users')->get();
+                    @endphp
+
+                    <div class="group-input mb-3">
+                        <textarea name="date" class="form-control w-100" maxlength="255" hidden>{{$document->create_at}}</textarea>
+                    </div>
+
+                    <div class="group-input new-date-data-field mb-3">
+                        <label for="Number_of_Print_Copies" style="font-weight: normal;">Issuance Date</label>
+                        <div class="input-date">
+                            <div class="calenderauditee">
+                                <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" class="form-control w-100" />
+                                <input type="date" name="date" class="hide-input" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" oninput="handleDateInput(this, `date' + serialNumber +'`)" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group-input mb-3">
+                        <label for="Issued  To" style="position: relative; left: 16px;">Issued To</label>
+                        <select id="select-state" placeholder="Select..." name="issuance_to" class="form-control" style="width: 95%; position: relative; left: 16px;">
+                            <option value="">Select a value</option>
+                            @foreach ($users as $data)
+                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('issuance_to')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="group-input mb-3">
+                        <label for="Department Location" style="position: relative; left: 16px;"> Department/Location</label>
+                        <select id="select-state" placeholder="Select..." name="department" class="form-control" style="width: 95%; position: relative; left: 13px;">
+                            <option value='0'>-- Select --</option>
+                            <option value='1'>Calibration Lab</option>
+                            <option value='2'>Engineering</option>
+                            <option value='3'>Facilities</option>
+                            <option value='4'>LAB</option>
+                            <option value='5'>Labeling</option>
+                            <option value='6'>Manufacturing</option>
+                            <option value='7'>Quality Assurance</option>
+                            <option value="8">Quality Control</option>
+                            <option value="9"> Regulatory Affairs</option>
+                            <option value="10">Security</option>
+                            <option value="11">Training</option>
+                            <option value="12">IT</option>
+                            <option value="13">Application Engineering</option>
+                            <option value="14">Trading</option>
+                            <option value="15">Research</option>
+                            <option value="16">Sales</option>
+                            <option value="17">Finance</option>
+                            <option value="18">System</option>
+                            <option value="19">Administrative</option>
+                            <option value="20">M&A</option>
+                            <option value="21">R&D</option>
+                            <option value="22">Human Resources</option>
+                            <option value="23">Banking</option>
+                            <option value="24">Marketing</option>
+                        </select>
+                    </div>
+
+                    <div class="group-input mb-3"><label for="issued_copies" style="position: relative; left: 16px;">Number of Issued Copies</label>
+                        <input type="text" id="issued_copies" name="issued_copies" class="form-control" maxlength="255" style="width: 95%; position: relative; left: 16px;">
+                    </div>
+                    <div class="group-input mb-3">
+                        <label for="Reason_for_Issuance" style="position: relative; left: 16px;">Reason for Issuance</label>
+                        <textarea name="issued_reason" class="form-control" maxlength="255" style="width: 95%; position: relative; left: 16px;"></textarea>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary rounded">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('issue_copies').addEventListener('input', function() {
+        const issueCopies = document.getElementById('issue_copies').value;
+        document.getElementById('issued_copies').value = issueCopies;
+    });
+</script>
+
+
+    <!--updated print-model print as word-->
+    <div class="modal fade" id="print-modal1">
+        <div class=" modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Download Document</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('document.print.downloadpdf', $document->id) }}" method="GET" target="_blank">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+
+                        @php
+                        $currentUser = Auth::user();
+                        @endphp
+                        <div class="group-input mb-3">
+                            <label for="Document_Printed_By">Document Printed By</label>
+                            <input type="text" id="Document_Printed_By" name="user_name" class="form-control w-100" value="{{ $currentUser->name }}" readonly>
+                            <input type="hidden" name="user_id" value="{{ $currentUser->id }}">
+                            @error('document_printed_by')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="group-input mb-3">
+                            <label for="issue_copies">No. Of Copies <span class="text-danger">*</span></label>
+                            <input type="number" id="issue_copie" name="issue_copies" value="1" min="1" class="form-control w-100" required>
+                        </div>
+
+                        @php
+                        $users = DB::table('users')->get();
+                        @endphp
+                        <div class="group-input mb-3">
+                            <textarea name="date" class="form-control w-100" maxlength="255" hidden>{{$document->create_at}}</textarea>
+                        </div>
+
+                        <div class="group-input mb-3"><label for="issued_copies" style="position: relative; left: 16px;">Number of Issued Copies</label>
+                            <input type="text" id="issued_copie" name="issued_copies" class="form-control" maxlength="255" style="width: 95%; position: relative; left: 16px;">
+                        </div>
+
+                        <div class="group-input mb-3">
+                            <label for="print_reason">Download Reason<span class="text-danger">*</span></label>
+                            <textarea name="print_reason" class="form-control w-100" maxlength="255"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary rounded">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('issue_copie').addEventListener('input', function() {
+            const issueCopies = document.getElementById('issue_copie').value;
+            document.getElementById('issued_copie').value = issueCopies;
+        });
+    </script>
+
     <style>
         .group-input input {
             width: 60%;
