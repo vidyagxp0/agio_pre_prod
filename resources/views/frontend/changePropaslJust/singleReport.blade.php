@@ -438,7 +438,7 @@
                             <tr>
                                 <th width="5%">Sr.No.</th>
                                 <th width="55%">Particular</th>
-                                <th width="40%">Yes/No</th>
+                          <th width="40%" style="text-align: center;">Yes/No</th>
                             </tr>
                         </thead>
 
@@ -508,7 +508,7 @@
             </div>
 
             <div class="block">
-                <div class="block-head">HOD/Designee Attachment</div>
+                <div class="block-head">HOD/Designee Attachments</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -584,7 +584,7 @@
             </div>
 
             <div class="block">
-                <div class="block-head">QA/CQA Head / Designee Attachment</div>
+                <div class="block-head">QA/CQA Head Approval Attachments</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -638,21 +638,31 @@
                         <td class="w-30">@if ($data->HOD_Review_Comments) {{ $data->HOD_Review_Comments }} @else Not Applicable @endif</td>
                     </tr>
 
+                     <tr>
+                        <th class="w-20">Cancel By</th>
+                        <td class="w-30">@if ($data->hod_cancelled_by) {{ $data->hod_cancelled_by }} @else Not Applicable @endif</td>
+                        <th class="w-20">Cancel On</th>
+                        <td class="w-30">@if ($data->hod_cancelled_on) {{ $data->hod_cancelled_on }} @else Not Applicable @endif</td>
+                        <th class="w-20">Cancel Comment</th>
+                        <td class="w-30">@if ($data->hod_cancel_comment) {{ $data->hod_cancel_comment }} @else Not Applicable @endif</td>
+                    </tr>
+                    
+
                     <tr>
-                        <th class="w-20">QA/CQA Review By</th>
+                        <th class="w-20">QA/CQA Review Complete By</th>
                         <td class="w-30">@if ($data->qa_cqa_Review_Complete_By) {{ $data->qa_cqa_Review_Complete_By }} @else Not Applicable @endif</td>
-                        <th class="w-20">QA/CQA Review On</th>
+                        <th class="w-20">QA/CQA Review Complete On</th>
                         <td class="w-30">@if ($data->qa_cqa__Review_Complete_On) {{ $data->qa_cqa__Review_Complete_On }} @else Not Applicable @endif</td>
-                        <th class="w-20">QA/CQA Review Comment</th>
+                        <th class="w-20">QA/CQA Review Complete Comment</th>
                         <td class="w-30">@if ($data->qa_cqa__Review_Comments) {{ $data->qa_cqa__Review_Comments }} @else Not Applicable @endif</td>
                     </tr>
                 
                     <tr>
-                        <th class="w-20">QA/CQA Head/Designee Complete By</th>
+                        <th class="w-20">QA/CQA Head/Designee Approval Complete By</th>
                         <td class="w-30">@if ($data->qa_cqa_head_Review_Complete_By) {{ $data->qa_cqa_head_Review_Complete_By }} @else Not Applicable @endif</td>
-                        <th class="w-20">QA/CQA Head/Designee Complete On</th>
+                        <th class="w-20">QA/CQA Head/Designee Approval Complete On</th>
                         <td class="w-30">@if ($data->qa_cqa_head_Review_Complete_On) {{ $data->qa_cqa_head_Review_Complete_On }} @else Not Applicable @endif</td>
-                        <th class="w-20">QA/CQA Head/Designee Complete Comment</th>
+                        <th class="w-20">QA/CQA Head/Designee Approval Complete Comment</th>
                         <td class="w-30">@if ($data->qa_cqa_head_Review_Comments) {{ $data->qa_cqa_head_Review_Comments }} @else Not Applicable @endif</td>
                     </tr>
 
