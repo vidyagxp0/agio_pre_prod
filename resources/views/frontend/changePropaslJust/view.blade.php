@@ -306,6 +306,9 @@
                     } else if (stage == 0) {
                         tabToActivate = 'CCForm5';
                     }
+                    else if (stage == 6) {
+                        tabToActivate = 'CCForm5';
+                    }
 
                     if (tabToActivate) {
                         const tabContent = document.getElementById(tabToActivate);
@@ -1268,6 +1271,30 @@
                                 </div>
                             </div>
 
+
+                               <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for=" Rejected By">Cancel By</label>
+                                    <div class="static">
+                                        {{ !empty($data->cancelled_by) ? $data->cancelled_by : 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Rejected On">Cancel On</label>
+                                    <div class="static">
+                                        {{ !empty($data->cancelled_on) ? $data->cancelled_on : 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Rejected On">Cancel Comment</label>
+                                    <div class="static">
+                                        {{ !empty($data->cancel_comment) ? $data->cancel_comment : 'Not Applicable' }}
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="HOD /Designee Review comment By">HOD/Designee Review By</label>
@@ -1289,6 +1316,29 @@
                                     <label for="HOD /Designee Review comment By">HOD/Designee Review Comment</label>
                                     <div class="static">
                                         {{ !empty($data->HOD_Review_Comments) ? $data->HOD_Review_Comments : 'Not Applicable' }}
+                                    </div>
+                                </div>
+                            </div>
+
+                                <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="Cancel hod By">Cancel By</label>
+                                    <div class="static">
+                                        {{ !empty($data->hod_cancelled_by) ? $data->hod_cancelled_by : 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="HOD cancel On">Cancel On</label>
+                                    <div class="static">
+                                        {{ !empty($data->hod_cancelled_on) ? $data->hod_cancelled_on : 'Not Applicable' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label for="HOD CancelOn">Cancel Comment</label>
+                                    <div class="static">
+                                        {{ !empty($data->hod_cancel_comment) ? $data->hod_cancel_comment : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
@@ -1323,7 +1373,7 @@
 
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for=" Rejected By">QA/CQA Head/Designee Complete By</label>
+                                    <label for=" Rejected By">QA/CQA Head/Designee Approval Complete By</label>
                                     <div class="static">
                                         {{ !empty($data->qa_cqa_head_Review_Complete_By) ? $data->qa_cqa_head_Review_Complete_By : 'Not Applicable' }}
                                     </div>
@@ -1331,7 +1381,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">QA/CQA Head/Designee Complete On</label>
+                                    <label for="Rejected On">QA/CQA Head/Designee Approval Complete On</label>
                                     <div class="static">
                                         {{ !empty($data->qa_cqa_head_Review_Complete_On) ? $data->qa_cqa_head_Review_Complete_On : 'Not Applicable' }}
                                     </div>
@@ -1339,82 +1389,47 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On">QA/CQA Head/Designee Complete Comment</label>
+                                    <label for="Rejected On">QA/CQA Head/Designee Approval Complete Comment</label>
                                     <div class="static">
                                         {{ !empty($data->qa_cqa_head_Review_Comments) ? $data->qa_cqa_head_Review_Comments : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
 
-
-                            <div class="col-lg-4">
+                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for=" Rejected By">Cancel By</label>
+                                    <label for=" Rejected By">Rejected By</label>
                                     <div class="static">
-                                        {{ !empty($data->cancelled_by) ? $data->cancelled_by : 'Not Applicable' }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">Cancel On</label>
-                                    <div class="static">
-                                        {{ !empty($data->cancelled_on) ? $data->cancelled_on : 'Not Applicable' }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="Rejected On">Cancel Comment</label>
-                                    <div class="static">
-                                        {{ !empty($data->cancel_comment) ? $data->cancel_comment : 'Not Applicable' }}
+                                        {{ !empty($data->rejected_by) ? $data->rejected_by : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Cancel hod By">HOD Cancel By</label>
+                                    <label for="Rejected On">Rejected On</label>
                                     <div class="static">
-                                        {{ !empty($data->hod_cancelled_by) ? $data->hod_cancelled_by : 'Not Applicable' }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="HOD cancel On">HOD Cancel On</label>
-                                    <div class="static">
-                                        {{ !empty($data->hod_cancelled_on) ? $data->hod_cancelled_on : 'Not Applicable' }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="HOD CancelOn">HOD Cancel Comment</label>
-                                    <div class="static">
-                                        {{ !empty($data->hod_cancel_comment) ? $data->hod_cancel_comment : 'Not Applicable' }}
+                                        {{ !empty($data->rejected_on) ? $data->rejected_on : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Cancel hod By">Rejected By</label>
-                                    <div class="static">
-                                        {{ !empty($data->rejected_by) ? $data->rejected_by : 'Not Applicable' }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="HOD cancel On">Rejected On</label>
-                                    <div class="static">
-                                        {{ !empty($data->rejected_on) ? $data->rejected_on : 'Not Applicable' }}</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="group-input">
-                                    <label for="HOD CancelOn">Rejected Comment</label>
+                                    <label for="Rejected On">Rejected Comment</label>
                                     <div class="static">
                                         {{ !empty($data->reject_comment) ? $data->reject_comment : 'Not Applicable' }}
                                     </div>
                                 </div>
                             </div>
+
+
+                          
+
+
+                         
+
+                        
+
+                         
 
 
                         </div>

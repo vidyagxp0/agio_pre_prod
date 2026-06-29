@@ -608,57 +608,57 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for=" Rejected By">Review By</label>
+                            <label for=" Rejected By">HOD/Designee Review By</label>
                             <div class="static"></div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="Rejected On">Review On</label>
+                            <label for="Rejected On">HOD/Designee Review On</label>
                             <div class="static"></div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="Rejected On">Review Comment</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="group-input">
-                            <label for=" Rejected By"> Approved By</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="group-input">
-                            <label for="Rejected On">Approved On</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="group-input">
-                            <label for="Rejected On">Approved Comment</label>
+                            <label for="Rejected On">HOD/Designee Review Comment</label>
                             <div class="static"></div>
                         </div>
                     </div>
 
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for=" Rejected By"> CQA Approval Complete By</label>
+                            <label for=" Rejected By"> QA/CQA Review Complete By By</label>
                             <div class="static"></div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="Rejected On"> CQA Approval Complete On</label>
+                            <label for="Rejected On">QA/CQA Review Complete By On</label>
                             <div class="static"></div>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="Rejected On">CQA Approval Complete Comment</label>
+                            <label for="Rejected On">QA/CQA Review Complete By Comment</label>
+                            <div class="static"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for=" Rejected By">QA/CQA Head/Designee Complete By</label>
+                            <div class="static"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Rejected On">QA/CQA Head/Designee Complete On</label>
+                            <div class="static"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Rejected On">QA/CQA Head/Designee Complete Comment</label>
                             <div class="static"></div>
                         </div>
                     </div>

@@ -3683,7 +3683,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                file-input
+                              
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Closure Attachments">Initiator Update Attachments</label>
