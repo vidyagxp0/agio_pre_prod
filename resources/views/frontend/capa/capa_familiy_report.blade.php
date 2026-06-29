@@ -724,6 +724,10 @@
                                 <div>
                                    <table>
                                     <tr>
+                                        <th class="w-20">Classification of Change</th>
+                                        <td class="w-80">@if($data->severity_level2){{ $data->severity_level2 }}@else Not Applicable @endif</td>
+                                    </tr>
+                                    <tr>
                                         <th class="w-20">QA/CQA Approval Comment</th>
                                         <td class="w-80">@if($data->qah_cq_comments){{ $data->qah_cq_comments }}@else Not Applicable @endif</td>
 

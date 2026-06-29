@@ -1750,6 +1750,7 @@ class CapaController extends Controller
         $capa->hod_remarks = $request->hod_remarks;
         $capa->hod_final_review = $request->hod_final_review;
         $capa->qa_cqa_qa_comments = $request->qa_cqa_qa_comments;
+        $capa->severity_level2 = $request->severity_level2;
         $capa->qah_cq_comments = $request->qah_cq_comments;
         $capa->initiator_comment = $request->initiator_comment;
         $capa->effectivness_check = $request->effectivness_check;
@@ -3014,6 +3015,26 @@ $capa->closure_attachment = json_encode(array_values($files));
             } else {
                 $history->action_name = "Update";
             }
+            $history->save();
+        }
+
+        if ($lastDocument->severity_level2 != $capa->severity_level2) {
+            $lastDocumentAuditTrail = CapaAuditTrial::where('capa_id', $id)
+                ->where('activity_type', 'Classification of Change')
+                ->exists();
+            $history = new CapaAuditTrial;
+            $history->capa_id = $id;
+            $history->activity_type = 'Classification of Change';
+            $history->previous = $lastDocument->severity_level2;
+            $history->current = $capa->severity_level2;
+            $history->comment = $request->type_chnage_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
             $history->save();
         }
 
