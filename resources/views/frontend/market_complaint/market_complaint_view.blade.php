@@ -3422,8 +3422,8 @@
                     <div class="file-attachment-field">
                         <div class="file-attachment-list" id="investigation_attach">
 
-                            @if ($data->investigation_attach)
-                                @foreach (json_decode($data->investigation_attach) as $file)
+                            {{-- @if ($data->investigation_attach)
+                                @foreach (json_decode($data->?investigation_attach) as $file)
                                     <h6 type="button" class="file-container text-dark"
                                         style="background-color: rgb(243, 242, 240);">
                                         <b>{{ $file }}</b>
@@ -3436,8 +3436,31 @@
                                                 style="color:red; font-size:20px;"></i></a>
                                     </h6>
                                 @endforeach
-                            @endif
+                            @endif --}}
+
+                            @php
+                                $files = json_decode($data->investigation_attach ?? '[]', true);
+
+                                if (!is_array($files)) {
+                                    $files = [];
+                                }
+                            @endphp
+
+                            @foreach($files as $file)
+                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                    <b>{{ $file }}</b>
+
+                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                    </a>
+
+                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                    </a>
+                                </h6>
+                            @endforeach
                         </div>
+                        
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="investigation_attach" {{ $data->stage == 3 && $istab4 ? '' : 'disabled' }}
