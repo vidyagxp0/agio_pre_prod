@@ -724,7 +724,7 @@
                                 <div>
                                    <table>
                                     <tr>
-                                        <th class="w-20">Classification of Change</th>
+                                        <th class="w-20">Categorization of CAPA</th>
                                         <td class="w-80">@if($data->severity_level2){{ $data->severity_level2 }}@else Not Applicable @endif</td>
                                     </tr>
                                     <tr>

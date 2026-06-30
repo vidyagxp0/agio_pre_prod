@@ -1696,8 +1696,8 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="severity-level">Classification of Change
-                                                        @if($data->stage == 3) <span class="text-danger">*</span>@endif
+                                                    <label for="severity-level">Categorization of CAPA
+                                                        @if($data->stage == 4) <span class="text-danger">*</span>@endif
                                                     </label>
 
                                                     @if(!$lockdatafileds4)
