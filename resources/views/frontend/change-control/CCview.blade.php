@@ -1269,7 +1269,7 @@
 
                                             <div class="col-12">
                                     <div class="group-input">
-                                        <label for="in_attachment">Initial Attachment</label>
+                                        <label for="in_attachment">Initial Attachment12345678</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="in_attachment">
@@ -1281,7 +1281,7 @@
                                                                 <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <input type="hidden" name="existing_in_attachment[]" value="{{ $file }}">
                                                         </h6>
@@ -1351,7 +1351,7 @@
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
@@ -1464,7 +1464,7 @@
                                                                             data-remove-id="riskAssessmentFile-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                            style="color:red; font-size:20px; margin-right: 4px;"></i></a>
                                                                 </h6>
                                                             @endforeach
                                                         @endif
@@ -1550,7 +1550,7 @@
                                                                             <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                                         </a>
                                                                         <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                                         </a>
                                                                         <input type="hidden" name="existing_change_details_attachments[]" value="{{ $file }}">
                                                                     </h6>
@@ -1620,7 +1620,7 @@
                                                         const removeLink = document.createElement('a');
                                                         removeLink.classList.add('remove-file');
                                                         removeLink.dataset.fileName = fileName;
-                                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                                         removeLink.addEventListener('click', function() {
                                                             fileContainer.style.display = 'none';
                                                         });
@@ -1675,7 +1675,7 @@
                                                                 <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <input type="hidden" name="existing_hod_assessment_attachment[]" value="{{ $file }}">
                                                         </h6>
@@ -1745,7 +1745,7 @@
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
@@ -2051,7 +2051,7 @@
 
                                     <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_head">QA/CQA Initial Attachments</label>
+                                        <label for="qa_head">QA/CQA     s</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="qa_head">
@@ -2063,7 +2063,7 @@
                                                                 <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <input type="hidden" name="existing_qa_head[]" value="{{ $file }}">
                                                         </h6>
@@ -2133,7 +2133,7 @@
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
@@ -7581,7 +7581,7 @@
                                                     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i></a>
-                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i></a>
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -7723,7 +7723,7 @@
                                                     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i></a>
-                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i></a>
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -7872,7 +7872,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px;"></i></a>
-                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i></a>
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -8020,7 +8020,7 @@
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px;"></i></a>
-                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i></a>
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -8261,7 +8261,7 @@
                                                                 <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <input type="hidden" name="existing_qa_final_attach[]" value="{{ $file }}">
                                                         </h6>
@@ -8331,7 +8331,7 @@
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
@@ -8389,7 +8389,7 @@
                                                                 <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <input type="hidden" name="existing_RA_attachment_second[]" value="{{ $file }}">
                                                         </h6>
@@ -8459,7 +8459,7 @@
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
@@ -8511,7 +8511,7 @@
                                                                 <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <input type="hidden" name="existing_qa_cqa_attach[]" value="{{ $file }}">
                                                         </h6>
@@ -8581,7 +8581,7 @@
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
@@ -8691,7 +8691,7 @@
                                                                 <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <input type="hidden" name="existing_intial_update_attach[]" value="{{ $file }}">
                                                         </h6>
@@ -8761,7 +8761,7 @@
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
@@ -8812,7 +8812,7 @@
                                                                 <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <input type="hidden" name="existing_hod_final_review_attach[]" value="{{ $file }}">
                                                         </h6>
@@ -8882,7 +8882,7 @@
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
@@ -8933,7 +8933,7 @@
                                                                 <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <input type="hidden" name="existing_tran_attach[]" value="{{ $file }}">
                                                         </h6>
@@ -9003,7 +9003,7 @@
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });
@@ -9192,7 +9192,7 @@
                                                                 <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <input type="hidden" name="existing_attach_list[]" value="{{ $file }}">
                                                         </h6>
@@ -9262,7 +9262,7 @@
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px; margin-right: 4px;"></i>';
                                             removeLink.addEventListener('click', function() {
                                                 fileContainer.style.display = 'none';
                                             });

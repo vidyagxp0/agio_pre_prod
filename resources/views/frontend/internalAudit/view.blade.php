@@ -1453,7 +1453,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             style="background-color: rgb(243, 242, 240);">
                             <b>{{ $file }}</b>
                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                             </a>
                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -1568,7 +1568,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                     <b>{{ $file }}</b>
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                            style="font-size:20px; margin-right:4px;"></i></a>
                                                                     <a type="button" class="remove-file"
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
@@ -2034,7 +2034,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             @foreach (json_decode($data->file_attachment) as $file)
                                                             <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i></a>
                                                                 <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                             </h6>
                                                        @endforeach
@@ -2221,7 +2221,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         @foreach (json_decode($data->file_attachment_guideline) as $file)
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgba(233, 224, 224, 0.92);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                    @endforeach
@@ -2700,7 +2700,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                     <b>{{ $file }}</b>
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                            style="font-size:20px; margin-right:4px;"></i></a>
                                                                     <a type="button" class="remove-file"
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
@@ -3072,7 +3072,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             @foreach (json_decode($data->Audit_file) as $file)
                                                             <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i></a>
                                                                 <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                             </h6>
                                                        @endforeach
@@ -3425,7 +3425,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                        style="font-size:20px; margin-right:4px;"></i></a>
                                                                 <a type="button" class="remove-file"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
@@ -3461,7 +3461,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                        style="font-size:20px; margin-right:4px;"></i></a>
                                                                 <a type="button" class="remove-file"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
@@ -3537,7 +3537,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                        style="font-size:20px; margin-right:4px;"></i></a>
                                                                 <a type="button" class="remove-file"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
@@ -5861,7 +5861,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}"
                                                             target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
@@ -7844,7 +7844,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}"
                                                             target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
@@ -9794,7 +9794,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -10009,7 +10009,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -11883,7 +11883,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}"
                                                             target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
@@ -12219,7 +12219,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}"
                                                             target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
@@ -12253,7 +12253,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}"
                                                             target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
@@ -12521,7 +12521,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}"
                                                             target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
@@ -12796,7 +12796,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -13136,7 +13136,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -13388,7 +13388,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}"
                                                             target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
@@ -13553,7 +13553,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -13721,7 +13721,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -14079,7 +14079,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -14356,7 +14356,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -14733,7 +14733,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -14922,7 +14922,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -15102,7 +15102,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                        style="font-size:20px; margin-right:4px;"></i></a>
                                                                 <a type="button" class="remove-file"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
