@@ -683,7 +683,7 @@
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -751,7 +751,7 @@
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>';
                                 
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
@@ -875,7 +875,7 @@
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -943,7 +943,7 @@
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>';
                                 
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
@@ -1163,7 +1163,7 @@
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -1231,7 +1231,7 @@
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>';
                                 
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
@@ -1302,7 +1302,7 @@
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}">
                                                                 <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
@@ -1370,7 +1370,7 @@
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right: 4px;"></i>';
                                 
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
