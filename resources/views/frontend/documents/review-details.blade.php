@@ -202,7 +202,7 @@
                                     <div class="buttons"> 
                                         @if (empty($stagereview))
                                             <button data-bs-toggle="modal" data-bs-target="#review-sign">
-                                                Review&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                                Checked&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                             </button>
                                             <button data-bs-toggle="modal" data-bs-target="#review-cancel">
                                                 More Info Required&nbsp;<i class="fa-regular fa-circle-xmark"></i>

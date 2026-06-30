@@ -131,11 +131,12 @@
 </script>
 <style>
     #short_width {
-        display: inline-block;
+        display: table-cell;
         width: 600px !important;
-        white-space: nowrap;
+        /* white-space: nowrap; */
         overflow: hidden !important;
         text-overflow: ellipsis;
+          word-break: break-all !important;
     }
 
     .table-container {
@@ -201,12 +202,12 @@
                                     <thead class="table-header11">
                                         <tr>
                                             <th style="width: 5%">ID</th>
-                                            <th style="width: 8%">Record No.</th>
+                                            <th style="width: 6%">Record No.</th>
                                             <th style="width: 5%">Parent ID</th>
-                                            <th style="width: 6%">Division</th>
+                                            <th style="width: 5%">Division</th>
                                             <th style="width: 8%">Process</th>
-                                            <th style="width: 40%">Short Description</th>
-                                            <th style="width: 8%">Date Opened</th>
+                                            <th style="width: 45%">Short Description</th>
+                                            <th style="width: 6%">Date Opened</th>
                                             <th style="width: 8%">Originator</th>
                                             <th style="width: 6%"> Due Date</th>
                                             <th style="width: 10%">Status</th>

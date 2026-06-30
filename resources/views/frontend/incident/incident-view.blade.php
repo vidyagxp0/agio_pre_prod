@@ -3147,45 +3147,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                     </div>
                                                 </div> -->
 
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="QRM Required">QRM Required ? <span class="text-danger">*</span></label>
-                                                <select
-                                                    name="qrm_required"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    id="qrm_required" value="{{ $data->qrm_required }}">
-                                                    <option value="select">-- Select --</option>
-                                                    <option @if ($data->qrm_required == 'yes') selected @endif value='yes'>
-                                                        Yes</option>
-                                                    <option @if ($data->qrm_required == 'no') selected @endif value='no'>
-                                                        No</option>
-                                                </select>
-                                                <!-- @error('qrm_required')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror -->
-                                            </div>
-                                        </div> --}}
-
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Investigation required">Investigation Required? <span
-                                                        class="text-danger">*</span></label>
-                                                <select
-                                                    name="Investigation_required"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    id="Investigation_required" value="{{ $data->Investigation_required }}">
-                                                    <option value="select">-- Select --</option>
-                                                    <option @if ($data->Investigation_required == 'yes') selected @endif value='yes'>
-                                                        Yes</option>
-                                                    <option @if ($data->Investigation_required == 'no') selected @endif value='no'>
-                                                        No</option>
-                                                </select>
-                                                @error('Investigation_required')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        @if ($data->stage == 3)
-
+                               
                                             @if ($data->stage == 3)
                                                 <div class="col-md-12">
                                                     <div class="group-input">
@@ -3259,53 +3221,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                            </div>
-
-                                            {{-- <div class="col-md-12">
-                                                <div class="group-input">
-                                                    <label for="QAInitialRemark">QA Initial Remarks <span
-                                                            class="text-danger">*</span></label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                            does not require completion</small></div>
-                                                    <textarea @if ($data->stage == 3) required @endif class="summernote QAInitialRemark"
-                                                        name="QAInitialRemark"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} id="summernote-6">{{ $data->QAInitialRemark }}</textarea>
-                                                </div>
-                                                @error('QAInitialRemark')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div> --}}
-                                            {{-- <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="QA Initial Attachments">QA Initial Attachments </label>
-                                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                                            documents</small></div>
-                                                    <div class="file-attachment-field">
-                                                        <div disabled class="file-attachment-list" id="Initial_attachment">
-                                                            @if ($data->Initial_attachment)
-                                                                @foreach (json_decode($data->Initial_attachment) as $file)
-                                                                    <h6 type="button" class="file-container text-dark"
-                                                                        style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                                            target="_blank"><i class="fa fa-eye text-primary"
-                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file"
-                                                                            data-file-name="{{ $file }}"><i
-                                                                                class="fa-solid fa-circle-xmark"
-                                                                                style="color:red; font-size:20px;"></i></a>
-                                                                    </h6>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input type="file" id="myfile"
-                                                                name="Initial_attachment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                oninput="addMultipleFiles(this, 'Initial_attachment')" multiple>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                   --}}
+                                            </div>                                       
 
                                     <div class="button-block">
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
@@ -3326,63 +3242,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button">
                                             <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                                 Exit </a> </button>
-                                        {{--@if (
-                                            $data->stage == 2 ||
-                                                $data->stage == 3 ||
-                                                $data->stage == 4 ||
-                                                $data->stage == 5 ||
-                                                $data->stage == 6 ||
-                                                $data->stage == 7)--}}
-                                            {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
-                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                data-bs-target="#launch_extension">
-                                                Launch Extension
-                                            </a> --}}
-                                        {{--@endif--}}
-                                        <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                            data-bs-target="#effectivenss_extension">
-                                                            Launch Effectiveness Check
-                                                        </a> -->
+                                       
                                     </div>
                                 </div>
                             </div>
-                            {{-- <script>
-                                var checkValue = false;
-                                $(document).ready(function() {
-                                    $('#incident_category').change(function() {
-                                        if ($(this).val() === 'major' || $(this).val() === 'critical') {
-                                            checkValue = true;
-                                            $('#Investigation_required').val('yes').prop('disabled', true);
-                                            $('#capa_required').val('yes').prop('disabled', true);
-                                            $('#qrm_required').val('yes').prop('disabled', true);
-                                            $('#Customer_notification').val('yes').prop('disabled', true);
-                                            var asteriskIcon = document.getElementById('asteriskInviinvestication');
-                                            var a steriskIcon2 = document.getElementById('asterikCustomer_notification');
-                                            asteriskIcon.style.display = 'inline';
-                                            asteriskIcon2.style.display = 'inline';
-                                        } else {
-                                            $('#Customer_notification').prop('disabled', false);
-                                            $('#Investigation_required').prop('disabled', false);
-                                            $('#capa_required').prop('disabled', false);
-                                            $('#qrm_required').prop('disabled', false);
-                                            var asteriskIcon = document.getElementById('asteriskInviinvestication');
-                                            var asteriskIcon2 = document.getElementById('asterikCustomer_notification');
-                                            asteriskIcon.style.display = 'none';
-                                            asteriskIcon2.style.display = 'none';
-                                        }
-                                    });
-                                });
-
-                                // Enable the field before submitting the form
-                                $('form').submit(function() {
-                                    $('#Investigation_required').prop('disabled', false);
-                                    // $('#capa_required').prop('disabled', false);
-                                    // $('#qrm_required').prop('disabled', false);
-                                    $('#Customer_notification').prop('disabled', false);
-                                });
-                            </script> --}}
-
-{{--Add new tab--}}
 
                     <!-- ----------QA HEAD Designee Approval-------- -->
                     <div id="CCForm3" class="inner-block cctabcontent">
@@ -3551,15 +3414,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                data-bs-target="#launch_extension">
-                                                Launch Extension
-                                            </a> -->
-                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#effectivenss_extension">
-                                        Launch Effectiveness Check
-                                    </a> --}}
+                         
                             </div>
                         </div>
                     </div>
@@ -3633,13 +3488,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                          @endif
                                         </div>
                                         <br>
-                                        {{-- <div class="col-md-12 mb-3">
-                                            <div class="group-input">
-                                                <label for="Closure">Closure</label>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                                <textarea class="tiny" name="closure_ini" {{ $data->closure_ini }}></textarea>
-                                            </div>
-                                        </div> --}}
 
                                         <!-- GMP Impact -->
                                         <div class="main-group">
@@ -3655,11 +3503,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <input type="hidden" name="affected_documents" value="{{ $data->affected_documents }}">
                                             @endif
                                         </div>
-
-
-                                        <!-- Additional Testing Required -->
-
-
 
                                     </div>
                                 </div>
@@ -3691,7 +3534,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <label for="Closure Attachments">Initiator Update Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
-                                        {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Initator_attachments">
 
@@ -3709,7 +3551,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
                                                 @endforeach
-                                            {{-- @endif --}}
                                             @endif
                                             </div>
                                             <div class="add-btn">
@@ -3786,51 +3627,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 });
                                             </script>
                                
-                                         
-                                <!-- <div class="col-12 sub-head">
-                                    Effectiveness Check Details
-                                </div> -->
-                                <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Effectiveness Check Required">Effectiveness Check
-                                            Required?</label>
-                                        <select name="effect_check" onChange="setCurrentDate(this.value)">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
-                                        {{-- <input type="date" name="effect_check_date"> --}}
-                                        <div class="calenderauditee">
-                                            <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                                                placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="effect_check_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'effect_check_date')" />
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-6">
-                                    <div class="group-input">
-                                        <label for="Effectiveness_checker">Effectiveness Checker</label>
-                                        <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
-                                            <option value="">Select a person</option>
-                                            @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                        <textarea name="effective_check_plan"></textarea>
-                                    </div>
-                                </div> -->
-
 
                             </div>
                             <div class="button-block">
@@ -3927,51 +3723,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                             });
                                         </script>
 
-                                        <!-- <div class="col-12 sub-head">
-                                            Effectiveness Check Details
-                                        </div> -->
-                                        <!-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Effectiveness Check Required">Effectiveness Check
-                                                    Required?</label>
-                                                <select name="effect_check" onChange="setCurrentDate(this.value)">
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option value="yes">Yes</option>
-                                                    <option value="no">No</option>
-                                                </select>
-                                            </div>
-                                        </div> -->
-                                        <!-- <div class="col-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
-                                                {{-- <input type="date" name="effect_check_date"> --}}
-                                                <div class="calenderauditee">
-                                                    <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                                                        placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="effect_check_date" class="hide-input"
-                                                        oninput="handleDateInput(this, 'effect_check_date')" />
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                        <!-- <div class="col-6">
-                                            <div class="group-input">
-                                                <label for="Effectiveness_checker">Effectiveness Checker</label>
-                                                <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
-                                                    <option value="">Select a person</option>
-                                                    @foreach ($users as $value)
-                                                        <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div> -->
-                                        <!-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                                <textarea name="effective_check_plan"></textarea>
-                                            </div>
-                                        </div> -->
-
-
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
@@ -4010,38 +3761,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                     @enderror
                                 </div>
 
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA attachments">QA Final Review Attachments </label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div disabled class="file-attachment-list" id="QA_Final_attachments">
-                                                @if ($data->qa_final_ra_attachments)
-                                                    @foreach (json_decode($data->qa_final_ra_attachments) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input  type="file" id="myfile"
-                                                    name="qa_final_ra_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'QA_Final_attachments')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA attachments">QA Final Review Attachments</label>
@@ -4114,9 +3833,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
-                                {{--<button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                                    type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                    class="nextButton" onclick="nextStep()">Next</button>--}}
                                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="button"> <a
                                         href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -4128,16 +3844,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         $data->stage == 5 ||
                                         $data->stage == 6 ||
                                         $data->stage == 7)
-                                    {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
-                                        class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#launch_extension">
-                                        Launch Extension
-                                    </a> --}}
                                 @endif
-                                <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                data-bs-target="#effectivenss_extension">
-                                                                Launch Effectiveness Check
-                                                            </a> -->
                             </div>
                         </div>
                     </div>
@@ -4147,36 +3854,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                {{-- <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Post Categorization Of Incident">Post Categorization Of Incident</label>
-                                        <div><small class="text-primary">Please Refer Intial Incident category before
-                                                updating.</small></div>
-                                        <select
-                                            name="Post_Categorization"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                            id="Post_Categorization" value="Post_Categorization">
-                                            <option value=""> -- Select --</option>
-                                            <option @if ($data->Post_Categorization == 'major') selected @endif value="major">Major
-                                            </option>
-                                            <option @if ($data->Post_Categorization == 'minor') selected @endif value="minor">Minor
-                                            </option>
-                                            <option @if ($data->Post_Categorization == 'critical') selected @endif value="critical">Critical
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div> --}}
 
-                                {{-- <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Investigation Of Revised Categorization">Justification for Revised Category
-                                        </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require
-                                                completion</small></div>
-                                        <textarea  class="tiny"
-                                            name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                            id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Closure Comments">Closure Comments <span class="text-danger">
@@ -4211,38 +3889,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="closure attachment">Closure Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div disabled class="file-attachment-list" id="closure_attachment">
-                                                @if ($data->closure_attachment)
-                                                    @foreach (json_decode($data->closure_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input  type="file" id="myfile"
-                                                    name="closure_attachment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
+                        
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="closure attachment">Closure Attachments</label>
@@ -4327,16 +3974,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                         $data->stage == 5 ||
                                         $data->stage == 6 ||
                                         $data->stage == 7)
-                                    {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
-                                        class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#launch_extension">
-                                        Launch Extension
-                                    </a> --}}
                                 @endif
-                                <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                data-bs-target="#effectivenss_extension">
-                                                                Launch Effectiveness Check
-                                                            </a> -->
+                       
                             </div>
                         </div>
                     </div>
@@ -4408,49 +4047,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                         @endif
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required By :-</label>
-                                        <div class="static">{{ $data->hod_more_info_required_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required On :-</label>
-                                        <div class="static">{{ $data->hod_more_info_required_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required Comments-</label>
-                                        <div class="static">{{ $data->hod_more_info_required_comment }}</div>
-                                    </div>
-                                </div> --}}
-                                {{--<div class="sub-head">
-                                    cancelled
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit by">cancelled By :-</label>
-                                        <div class="static">{{ $data->Hod_Cancelled_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="cancelled on">cancelled On :-</label>
-                                        <div class="static">{{ $data->Hod_Cancelled_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">Cancelled Comments-</label>
-                                        <div class="static">{{ $data->Hod_Cancelled_cmt }}</div>
-                                    </div>
-                                </div>--}}
-
 
                                 <div class="sub-head">QA Initial Review Complete</div>
                                 <div class="col-lg-3">
@@ -4483,28 +4079,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                         @endif
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required By :-</label>
-                                        <div class="static">{{ $data->qa_more_info_required_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required On :-</label>
-                                        <div class="static">{{ $data->qa_more_info_required_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required Comments-</label>
-                                        <div class="static">{{ $data->qa_more_info_required_comment }}</div>
-                                    </div>
-                                </div> --}}
-
 
                                 <div class="sub-head">QAH/Designee Approval Complete</div>
                                 <div class="col-lg-3">
@@ -4538,30 +4112,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required By :-</label>
-                                        <div class="static">{{ $data->qah_more_info_required_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required On :-</label>
-                                        <div class="static">{{ $data->qah_more_info_required_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required Comments-</label>
-                                        <div class="static">{{ $data->qah_more_info_required_comment }}</div>
-                                    </div>
-                                </div> --}}
-
-
-
                                 <div class="sub-head">Pending Initiator Update Complete</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
@@ -4593,28 +4143,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                         @endif
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required By :-</label>
-                                        <div class="static">{{ $data->initiator_more_info_required_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required On :-</label>
-                                        <div class="static">{{ $data->initiator_more_info_required_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required Comments-</label>
-                                        <div class="static">{{ $data->initiator_more_info_required_comment }}</div>
-                                    </div>
-                                </div> --}}
-
 
                                 <div class="sub-head">HOD Final Review Complete</div>
                                 <div class="col-lg-3">
@@ -4647,33 +4175,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         @endif
                                     </div>
                                 </div>
-
-                                {{-- <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required By :-</label>
-                                        <div class="static">{{ $data->hod_final_more_info_required_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required On :-</label>
-                                        <div class="static">{{ $data->hod_final_more_info_required_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required Comments-</label>
-                                        <div class="static">{{ $data->hod_final_more_info_required_comment }}</div>
-                                    </div>
-                                </div> --}}
                                 
-
-                                {{--@php
-                                dd($data->QA_Final_Review_Complete_By);
-                                @endphp--}}
                                 <div class="sub-head">QA Final Review Complete</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
@@ -4705,53 +4207,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                         @endif
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required By :-</label>
-                                        <div class="static">{{ $data->Hod_more_info_req_by}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required On :-</label>
-                                        <div class="static">{{ $data->Hod_more_info_req_on}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required Comments-</label>
-                                        <div class="static">{{ $data->Hod_more_info_req_cmt}}</div>
-                                    </div>
-                                </div> --}}
-
-
-
-
-                                {{-- <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required By :-</label>
-                                        <div class="static">{{ $data->Qa_final_more_info_req_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required On :-</label>
-                                        <div class="static">{{ $data->Qa_final_more_info_req_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required Comments-</label>
-                                        <div class="static">{{ $data->Qa_final_more_info_req_cmt }}</div>
-                                    </div>
-                                </div> --}}
-
 
                                 <div class="sub-head">Approved</div>
                                 <div class="col-lg-3">
@@ -4784,115 +4239,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         @endif
                                     </div>
                                 </div>
-                            {{-- 
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required By :-</label>
-                                        <div class="static">{{ $data->approved_more_info_req_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required On :-</label>
-                                        <div class="static">{{ $data->approved_more_info_req_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required Comments-</label>
-                                        <div class="static">{{ $data->approved_more_info_req_cmt }}</div>
-                                    </div>
-                                </div> --}}
 
-
-
-                                {{-- <div class="sub-head">Initiator Update</div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="CFT Review Complete By">Initiator Update Complete By :-</label>
-                                        <div class="static">{{ $data->pending_initiator_approved_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="CFT Review Complete On">Initiator Update Complete On :-</label>
-                                        <div class="static">{{ $data->pending_initiator_approved_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="CFT Review Comments">Initiator Update Comments :-</label>
-                                        <div class="">{{ $data->pending_initiator_approved_comment }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required By :-</label>
-                                        <div class="static">{{ $data->more_info_req_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required On :-</label>
-                                        <div class="static">{{ $data->more_info_req_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required Comments-</label>
-                                        <div class="static">{{ $data->more_info_req_cmt }}</div>
-                                    </div>
-                            </div> --}}
-
-
-
-
-                                {{-- <div class="sub-head">QA Final Approval</div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="Approved By">QA Final Approved By :-</label>
-                                        <div class="static">{{ $data->QA_final_approved_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="Approved On">QA Final Approved On :-</label>
-                                        <div class="static">{{ $data->QA_final_approved_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                        <label for="Approved Comments">QA Final Approved Comments :-</label>
-                                        <div class="">{{ $data->QA_final_approved_comment }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required By :-</label>
-                                        <div class="static">{{ $data->more_info_req_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required On :-</label>
-                                        <div class="static">{{ $data->more_info_req_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="submit on">More Information
-                                            Required Comments-</label>
-                                        <div class="static">{{ $data->more_info_req_cmt }}</div>
-                                    </div>
-                                </div> --}}
                                 <div class="sub-head">Cancel</div>
                                 <div class="col-lg-3">
                                     <div class="group-input">
@@ -4926,19 +4273,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
                             <div class="button-block">
-                                {{-- <button
-                                    type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
-                                    class="saveButton saveAuditFormBtn d-flex" style="align-items: center;">
-                                    <div class="spinner-border spinner-border-sm auditFormSpinner" style="display: none"
-                                        role="status">
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
-                                    Save
-                                </button> --}}
+                         
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;"
                                 class="backButton" onclick="previousStep()" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Back</button>
 
-                                {{-- <button type="submit"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Submit</button> --}}
                                 <button type="button"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}> <a
                                         href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
@@ -4947,153 +4285,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
 
 
-
-
-{{-- <div id="CCForm17" class="inner-block cctabcontent">
-    <div class="inner-block-content">
-        <div class="row">
-            <div class="col-md-12">
-                @if ($data->stage == 2)
-                    <div class="group-input">
-                        <label for="HOD Remarks">HOD Remarks <span
-                                class="text-danger">*</span></label>
-                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                does not require completion</small></div>
-                        <textarea class="tiny" name="HOD_Remarks" id="summernote-4" required>{{ $data->HOD_Remarks }}</textarea>
-                    </div>
-                @else
-                    <div class="group-input">
-                        <label for="HOD Remarks">HOD Remarks</label>
-                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                does not require completion</small></div>
-                        <textarea readonly class="tiny" name="HOD_Remarks" id="summernote-4">{{ $data->HOD_Remarks }}</textarea>
-                    </div>
-                @endif
-                @error('HOD_Remarks')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="col-12">
-                @if ($data->stage == 2)
-                    <div class="group-input">
-                        <label for="Inv Attachments">HOD Attachments</label>
-                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                documents</small></div>
-                        <div class="file-attachment-field">
-                            <div disabled class="file-attachment-list" id="hod_attachments">
-                                @if ($data->hod_attachments)
-                                    @foreach (json_decode($data->hod_attachments) as $file)
-                                        <h6 class="file-container text-dark"
-                                            style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $file }}</b>
-                                            <a href="{{ asset('upload/' . $file) }}"
-                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a class="remove-file"
-                                                data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark"
-                                                    style="color:red; font-size:20px;"></i></a>
-                                        </h6>
-                                    @endforeach
-                                @endif
-                            </div>
-
-                            <div class="add-btn">
-                                <div>Add</div>
-                                <input
-                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                    type="file" id="hod_attachments"
-                                    name="hod_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
-                            </div>
-                        </div>
-                    </div>
-                @else
-                    <div class="group-input">
-                        <label for="Inv Attachments">HOD Attachments</label>
-                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                documents</small></div>
-                        <div class="file-attachment-field">
-                            <div disabled class="file-attachment-list" id="hod_attachments">
-                                @if ($data->hod_attachments)
-                                    @foreach (json_decode($data->hod_attachments) as $file)
-                                        <h6 class="file-container text-dark"
-                                            style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $file }}</b>
-                                            <a href="{{ asset('upload/' . $file) }}"
-                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a class="remove-file"
-                                                data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark"
-                                                    style="color:red; font-size:20px;"></i></a>
-                                        </h6>
-                                    @endforeach
-                                @endif
-                            </div>
-                            <div class="add-btn">
-                                <div>Add</div>
-                                <input disabled
-                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                    type="file" id="hod_attachments"
-                                    name="hod_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-            </div>
-
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    // Event listener for the remove file button
-                    $(document).on('click', '.remove-file', function() {
-                        $(this).closest('.file-container').remove();
-                    });
-                });
-            </script>
-
-        </div>
-        <div class="button-block">
-
-            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
-                class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
-                id="ChangesaveButton02">
-                <div class="spinner-border spinner-border-sm auditFormSpinner"
-                    style="display: none" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                Save
-            </button>
-            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                type="button"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                class="nextButton" onclick="nextStep()">Next</button>
-            <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
-                type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                    Exit </a>
-            </button>
-            @if (
-                $data->stage == 2 ||
-                    $data->stage == 3 ||
-                    $data->stage == 4 ||
-                    $data->stage == 5 ||
-                    $data->stage == 6 ||
-                    $data->stage == 7)
-                -- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;"
-                    type="button" class="button  launch_extension" data-bs-toggle="modal"
-                    data-bs-target="#launch_extension">
-                    Launch Extension
-                </a> -
-            @endif
-             <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                            data-bs-target="#effectivenss_extension">
-                            Launch Effectiveness Check
-                        </a>
-        </div>
-    </div>
-</div> --}}
                             {{-- Qa Initiator  Approved --}}
                             <script>
                                 function selectOne(checkbox) {
@@ -5265,8 +4456,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
 
                             <script>
-                                // $(document).ready(function () {
-                                // $('#Root_Cause_Category_Select').change(function () {
+                   
                                 $(document).on('change', '.Root_Cause_Category_Select', function() {
                                     console.log('this', $(this))
                                     console.log('change')
@@ -6008,655 +5198,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
 
                         <div class="sub-head"> Root Cause </div>
-
-                      {{--  <div class="col-lg-12">
-                            <div class="group-input" id="documentsRowname">
-                                <label for="audit-agenda-grid">
-                                    Root Cause
-                                    <button type="button" name="audit-agenda-grid" id="rootCauseAdd">+</button>
-                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#root-cause"
-                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                        (Launch Instruction)
-                                    </span>
-                                </label>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="rootCauseAddTable" style="width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 4%">SR NO.</th>
-                                                <th style="width: 12%"> Root Cause Category</th>
-                                                <th style="width: 16%">Root Cause Sub-Category</th>
-                                                <th style="width: 16%">If Others</th>
-
-                                                <th style="width: 16%"> Probability</th>
-                                                <th style="width: 16%"> Remarks</th>
-
-                                                <th style="width: 8%">Action</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            @if ($rootCauseData && is_array($rootCauseData))
-                                                @foreach ($rootCauseData as $index => $root_cause_dat)
-                                                    <tr>
-                                                        <td>
-                                                            <input disabled type="text"
-                                                                name="rootCauseData[{{ $loop->index }}][serial]"
-                                                                value="{{ $loop->index + 1 }}">
-                                                        </td>
-                                                        <td>
-                                                            <select name="rootCauseData[{{ $loop->index }}][rootCauseCategory]"
-                                                                id="Root_Cause_Category_Select"
-                                                                class="Root_Cause_Category_Select">
-                                                                <option value="">-- Select --</option>
-
-                                                                <option value="M-Machine(Equipment)"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Machine(Equipment)' ? 'selected' : '' }}>
-                                                                    M-Machine(Equipment)</option>
-                                                                <option value="M-Maintenance"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Maintenance' ? 'selected' : '' }}>
-                                                                    M-Maintenance</option>
-                                                                <option value="M-Man Power (physical work)"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Man Power (physical work)' ? 'selected' : '' }}>
-                                                                    M-Man Power (physical work)</option>
-                                                                <option value="M-Management"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == '"M-Management' ? 'selected' : '' }}>
-                                                                    M-Management</option>
-                                                                <option value="M-Material (Raw,Consumables etc.)"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Material (Raw,Consumables etc.)' ? 'selected' : '' }}>
-                                                                    M-Material (Raw,Consumables etc.)</option>
-                                                                <option value="M-Method (Process/Inspection)"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Method (Process/Inspection)' ? 'selected' : '' }}>
-                                                                    M-Method (Process/Inspection)</option>
-                                                                <option value="M-Mother Nature (Environment)"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'M-Mother Nature (Environment)' ? 'selected' : '' }}>
-                                                                    M-Mother Nature (Environment)</option>
-                                                                <option value="P-Place/Plant"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Place/Plant' ? 'selected' : '' }}>
-                                                                    P-Place/Plant</option>
-                                                                <option value="P-Policies"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Policies' ? 'selected' : '' }}>
-                                                                    P-Policies</option>
-                                                                <option value="P-Price"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Price' ? 'selected' : '' }}>
-                                                                    P-Price </option>
-                                                                <option value="P-Procedures"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Procedures' ? 'selected' : '' }}>
-                                                                    P-Procedures</option>
-                                                                <option value="P-Process"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Process' ? 'selected' : '' }}>
-                                                                    P-Process </option>
-                                                                <option value="P-Product"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'P-Product' ? 'selected' : '' }}>
-                                                                    P-Product</option>
-                                                                <option value="S-Suppliers"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'S-Suppliers' ? 'selected' : '' }}>
-                                                                    S-Suppliers</option>
-                                                                <option value="S-Surroundings"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'S-Surroundings' ? 'selected' : '' }}>
-                                                                    S-Surroundings</option>
-                                                                <option value="S-Systems"
-                                                                    {{ array_key_exists('rootCauseCategory', $root_cause_dat) && $root_cause_dat['rootCauseCategory'] == 'S-Systems' ? 'selected' : '' }}>
-                                                                    S-Systems</option>
-
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <select
-                                                                name="rootCauseData[{{ $loop->index }}][rootCauseSubCategory]"
-                                                                id="Root_Cause_Sub_Category_Select"
-                                                                class="Root_Cause_Sub_Category_Select">
-                                                                <option value="">-- Select --</option>
-
-                                                                <option value="Infrequent_Audits"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent_Audits' ? 'selected' : '' }}>
-                                                                    Infrequent Audits </option>
-                                                                <option
-                                                                    value="No_Preventive_Maintenance {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No_Preventive_Maintenance' ? 'selected' : '' }}">
-                                                                    No Preventive Maintenance </option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Poor_Maintenance_or_Design"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor_Maintenance_or_Design' ? 'selected' : '' }}>
-                                                                    Poor Maintenance or Design </option>
-                                                                <option value="Maintenance Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>
-                                                                    Maintenance Needs Improvement </option>
-                                                                <option value="Scheduling Problem"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Scheduling Problem' ? 'selected' : '' }}>
-                                                                    Scheduling Problem </option>
-                                                                <option value="System Deficiency"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'System Deficiency' ? 'selected' : '' }}>
-                                                                    System Deficiency </option>
-                                                                <option value="Technical Error"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Technical Error' ? 'selected' : '' }}>
-                                                                    Technical Error </option>
-                                                                <option value="Tolerable Failure"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Tolerable Failure' ? 'selected' : '' }}>
-                                                                    Tolerable Failure </option>
-                                                                <option value="Calibration Issues"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Calibration Issues' ? 'selected' : '' }}>
-                                                                    Calibration Issues </option>
-
-                                                                <option value="Infrequent_Audits"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent_Audits' ? 'selected' : '' }}>
-                                                                    Infrequent Audits </option>
-                                                                <option
-                                                                    value="No_Preventive_Maintenance {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No_Preventive_Maintenance' ? 'selected' : '' }}">
-                                                                    No Preventive Maintenance </option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Maintenance Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>
-                                                                    Maintenance Needs Improvement </option>
-                                                                <option value="Scheduling Problem"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Scheduling Problem' ? 'selected' : '' }}>
-                                                                    Scheduling Problem </option>
-                                                                <option value="System Deficiency"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'System Deficiency' ? 'selected' : '' }}>
-                                                                    System Deficiency </option>
-                                                                <option value="Technical Error"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Technical Error' ? 'selected' : '' }}>
-                                                                    Technical Error </option>
-                                                                <option value="Tolerable Failure"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Tolerable Failure' ? 'selected' : '' }}>
-                                                                    Tolerable Failure </option>
-
-
-                                                                <option value="Failure_to_Follow_SOP"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Failure_to_Follow_SOP' ? 'selected' : '' }}>
-                                                                    Failure to Follow SOP</option>
-                                                                <option value="Human_Machine_Interface"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Human_Machine_Interface' ? 'selected' : '' }}>
-                                                                    Human-Machine Interface</option>
-                                                                <option value="Misunderstood_Verbal_Communication"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Misunderstood_Verbal_Communication' ? 'selected' : '' }}>
-                                                                    Misunderstood Verbal Communication </option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Personnel Error"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Personnel Error' ? 'selected' : '' }}>
-                                                                    Personnel Error</option>
-                                                                <option value="Personnel not Qualified"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Personnel not Qualified' ? 'selected' : '' }}>
-                                                                    Personnel not Qualified</option>
-                                                                <option value="Practice Needed"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Practice Needed' ? 'selected' : '' }}>
-                                                                    Practice Needed</option>
-                                                                <option value="Teamwork Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Teamwork Needs Improvement' ? 'selected' : '' }}>
-                                                                    Teamwork Needs Improvement</option>
-                                                                <option value="Attention"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Attention' ? 'selected' : '' }}>
-                                                                    Attention</option>
-                                                                <option value="Understanding"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Understanding' ? 'selected' : '' }}>
-                                                                    Understanding</option>
-                                                                <option value="Procedural"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Procedural' ? 'selected' : '' }}>
-                                                                    Procedural</option>
-                                                                <option value="Behavioral"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Behavioral' ? 'selected' : '' }}>
-                                                                    Behavioral</option>
-                                                                <option value="Skill"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Skill' ? 'selected' : '' }}>
-                                                                    Skill</option>
-
-                                                                <option value="Inattention to task"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Inattention to task' ? 'selected' : '' }}>
-                                                                    Inattention to task</option>
-                                                                <option value="Lack of Process"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Lack of Process' ? 'selected' : '' }}>
-                                                                    Lack of Process</option>
-                                                                <option value="Methods"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Methods' ? 'selected' : '' }}>
-                                                                    Methods</option>
-                                                                <option value="No or poor management involvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No or poor management involvement' ? 'selected' : '' }}>
-                                                                    No or Poor Management Involvement</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Personnel not Qualified"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Personnel not Qualified' ? 'selected' : '' }}>
-                                                                    Personnel not Qualified</option>
-                                                                <option value="Poor employee involvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor employee involvement' ? 'selected' : '' }}>
-                                                                    Poor employee involvement</option>
-                                                                <option value="Poor recognition of hazard"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor recognition of hazard' ? 'selected' : '' }}>
-                                                                    Poor recognition of hazard</option>
-                                                                <option value="Previously identified hazards were not eliminated"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>
-                                                                    Previously identified hazards were not eliminated</option>
-                                                                <option value="Stress demands"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Stress demands' ? 'selected' : '' }}>
-                                                                    Stress demands</option>
-                                                                <option value="Task hazards not guarded properly"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Task hazards not guarded properly' ? 'selected' : '' }}>
-                                                                    Task hazards not guarded properly</option>
-                                                                <option value="Training or education lacking"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Training or education lacking' ? 'selected' : '' }}>
-                                                                    Training or education lacking</option>
-
-                                                                <option value="Defective equipment or tool"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Defective equipment or tool' ? 'selected' : '' }}>
-                                                                    Defective equipment or tool</option>
-                                                                <option value="Defective raw material"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Defective raw material' ? 'selected' : '' }}>
-                                                                    Defective raw material</option>
-                                                                <option value="Incorrect tool selection"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Incorrect tool selection' ? 'selected' : '' }}>
-                                                                    Incorrect tool selection</option>
-                                                                <option value="Lack of raw material"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Lack of raw material' ? 'selected' : '' }}>
-                                                                    Lack of raw material</option>
-                                                                <option value="Machine / Equipment"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Machine / Equipment' ? 'selected' : '' }}>
-                                                                    Machine / Equipment</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Poor equipment or tool placement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor equipment or tool placement' ? 'selected' : '' }}>
-                                                                    Poor equipment or tool placement</option>
-                                                                <option value="Poor maintenance or design"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor maintenance or design' ? 'selected' : '' }}>
-                                                                    Poor maintenance or design</option>
-                                                                <option value="Wrong type for job"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong type for job' ? 'selected' : '' }}>
-                                                                    Wrong type for job</option>
-
-                                                                <option value="Instruction Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>
-                                                                    Instruction Needs Improvement</option>
-                                                                <option value="Learning Objective Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>
-                                                                    Learning Objective Needs Improvement</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Poor employee involvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor employee involvement' ? 'selected' : '' }}>
-                                                                    Poor employee involvement</option>
-                                                                <option value="Poor recognition of hazard"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor recognition of hazard' ? 'selected' : '' }}>
-                                                                    Poor recognition of hazard</option>
-                                                                <option value="Previously identified hazards were not eliminated"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>
-                                                                    Previously identified hazards were not eliminated</option>
-                                                                <option value="Scheduling Problem"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Scheduling Problem' ? 'selected' : '' }}>
-                                                                    Scheduling Problem</option>
-                                                                <option value="Training or education lacking"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Training or education lacking' ? 'selected' : '' }}>
-                                                                    Training or education lacking</option>
-                                                                <option value="Wrong Sequence"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Sequence' ? 'selected' : '' }}>
-                                                                    Wrong Sequence</option>
-
-                                                                <option value="Forces of nature"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Forces of nature' ? 'selected' : '' }}>
-                                                                    Forces of nature</option>
-                                                                <option value="Job design or layout of work"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Job design or layout of work' ? 'selected' : '' }}>
-                                                                    Job design or layout of work</option>
-                                                                <option value="Orderly workplace"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Orderly workplace' ? 'selected' : '' }}>
-                                                                    Orderly workplace</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Physical demands of the task"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Physical demands of the task' ? 'selected' : '' }}>
-                                                                    Physical demands of the task</option>
-                                                                <option value="Surfaces poorly maintained"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>
-                                                                    Surfaces poorly maintained</option>
-
-                                                                <option value="Forces of nature"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Forces of nature' ? 'selected' : '' }}>
-                                                                    Forces of nature</option>
-                                                                <option value="Job design or layout of work"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Job design or layout of work' ? 'selected' : '' }}>
-                                                                    Job design or layout of work</option>
-                                                                <option value="Orderly workplace"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Orderly workplace' ? 'selected' : '' }}>
-                                                                    Orderly workplace</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Physical demands of the task"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Physical demands of the task' ? 'selected' : '' }}>
-                                                                    Physical demands of the task</option>
-                                                                <option value="Surfaces poorly maintained"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>
-                                                                    Surfaces poorly maintained</option>
-
-                                                                <option value="Instruction Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>
-                                                                    Instruction Needs Improvement</option>
-                                                                <option value="Learning Objective Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>
-                                                                    Learning Objective Needs Improvement</option>
-                                                                <option value="No Standard / Policy"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Standard / Policy' ? 'selected' : '' }}>
-                                                                    No Standard / Policy</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Wrong Revision Used"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Revision Used' ? 'selected' : '' }}>
-                                                                    Wrong Revision Used</option>
-
-                                                                <option value="No Budget"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Budget' ? 'selected' : '' }}>
-                                                                    No Budget</option>
-                                                                <option value="No Preparation"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Preparation' ? 'selected' : '' }}>
-                                                                    No Preparation</option>
-                                                                <option value="No Standard / Policy"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Standard / Policy' ? 'selected' : '' }}>
-                                                                    No Standard / Policy</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Wrong Estimation"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Estimation' ? 'selected' : '' }}>
-                                                                    Wrong Estimation</option>
-
-                                                                <option value="Learning Objective Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>
-                                                                    Learning Objective Needs Improvement</option>
-                                                                <option value="Management system"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Management system' ? 'selected' : '' }}>
-                                                                    Management system</option>
-                                                                <option value="No or poor procedures"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No or poor procedures' ? 'selected' : '' }}>
-                                                                    No or poor procedures</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Poor communication"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor communication' ? 'selected' : '' }}>
-                                                                    Poor communication</option>
-                                                                <option value="Poor employee involvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor employee involvement' ? 'selected' : '' }}>
-                                                                    Poor employee involvement</option>
-                                                                <option value="Practices are not the same as written procedures"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Practices are not the same as written procedures' ? 'selected' : '' }}>
-                                                                    Practices are not the same as written procedures</option>
-                                                                <option value="Previously identified hazards were not eliminated"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>
-                                                                    Previously identified hazards were not eliminated</option>
-                                                                <option value="Procedure Difficult to Use"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Procedure Difficult to Use' ? 'selected' : '' }}>
-                                                                    Procedure Difficult to Use</option>
-                                                                <option value="Training or education lacking"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Training or education lacking' ? 'selected' : '' }}>
-                                                                    Training or education lacking</option>
-                                                                <option value="Wrong Revision Used"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Revision Used' ? 'selected' : '' }}>
-                                                                    Wrong Revision Used</option>
-
-                                                                <option value="Instruction Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Instruction Needs Improvement' ? 'selected' : '' }}>
-                                                                    Instruction Needs Improvement</option>
-                                                                <option value="Learning Objective Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Learning Objective Needs Improvement' ? 'selected' : '' }}>
-                                                                    Learning Objective Needs Improvement</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Poor employee involvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor employee involvement' ? 'selected' : '' }}>
-                                                                    Poor employee involvement</option>
-                                                                <option value="Poor recognition of hazard"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor recognition of hazard' ? 'selected' : '' }}>
-                                                                    Poor recognition of hazard</option>
-                                                                <option value="Previously identified hazards were not eliminated"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Previously identified hazards were not eliminated' ? 'selected' : '' }}>
-                                                                    Previously identified hazards were not eliminated</option>
-                                                                <option value="Scheduling Problem"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Scheduling Problem' ? 'selected' : '' }}>
-                                                                    Scheduling Problem</option>
-                                                                <option value="Training or education lacking"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Training or education lacking' ? 'selected' : '' }}>
-                                                                    Training or education lacking</option>
-                                                                <option value="Wrong Sequence"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong Sequence' ? 'selected' : '' }}>
-                                                                    Wrong Sequence</option>
-
-                                                                <option value="Defective equipment or tool"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Defective equipment or tool' ? 'selected' : '' }}>
-                                                                    Defective equipment or tool</option>
-                                                                <option value="OtherDefective raw material"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Defective raw material' ? 'selected' : '' }}>
-                                                                    Defective raw material</option>
-                                                                <option value="Incorrect tool selection"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Incorrect tool selection' ? 'selected' : '' }}>
-                                                                    Incorrect tool selection</option>
-                                                                <option value="Lack of raw material"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Lack of raw material' ? 'selected' : '' }}>
-                                                                    Lack of raw material</option>
-                                                                <option value="Machine / Equipment"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Machine / Equipment' ? 'selected' : '' }}>
-                                                                    Machine / Equipment</option>
-                                                                <option value="Poor equipment or tool placement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor equipment or tool placement' ? 'selected' : '' }}>
-                                                                    Poor equipment or tool placement</option>
-                                                                <option value="Poor maintenance or design"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor maintenance or design' ? 'selected' : '' }}>
-                                                                    Poor maintenance or design</option>
-                                                                <option value="Wrong type for job"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Wrong type for job' ? 'selected' : '' }}>
-                                                                    Wrong type for job</option>
-
-                                                                <option value="Infrequent Audits"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent Audits' ? 'selected' : '' }}>
-                                                                    Infrequent Audits</option>
-                                                                <option value="Misunderstood Verbal Communication"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Misunderstood Verbal Communication' ? 'selected' : '' }}>
-                                                                    Misunderstood Verbal Communication</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Personnel not Qualified"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Personnel not Qualified' ? 'selected' : '' }}>
-                                                                    Personnel not Qualified</option>
-                                                                <option value="Shift Change Communication"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Shift Change Communication' ? 'selected' : '' }}>
-                                                                    Shift Change Communication</option>
-                                                                <option value="Task Not Analyzed"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Task Not Analyzed' ? 'selected' : '' }}>
-                                                                    Task Not Analyzed</option>
-
-                                                                <option value="Forces of nature"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Forces of nature' ? 'selected' : '' }}>
-                                                                    Forces of nature</option>
-                                                                <option value="Job design or layout of work"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Job design or layout of work' ? 'selected' : '' }}>
-                                                                    Job design or layout of work</option>
-                                                                <option value="Orderly workplace"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Orderly workplace' ? 'selected' : '' }}>
-                                                                    Orderly workplace</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Physical demands of the task"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Physical demands of the task' ? 'selected' : '' }}>
-                                                                    Physical demands of the task</option>
-                                                                <option value="Surfaces poorly maintained"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Surfaces poorly maintained' ? 'selected' : '' }}>
-                                                                    Surfaces poorly maintained</option>
-
-                                                                <option value="Infrequent Audits"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Infrequent Audits' ? 'selected' : '' }}>
-                                                                    Infrequent Audits</option>
-                                                                <option value="No Preventive Maintenance"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'No Preventive Maintenance' ? 'selected' : '' }}>
-                                                                    No Preventive Maintenance</option>
-                                                                <option value="Other"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Other' ? 'selected' : '' }}>
-                                                                    Other</option>
-                                                                <option value="Poor maintenance or design"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Poor maintenance or design' ? 'selected' : '' }}>
-                                                                    Poor maintenance or design</option>
-                                                                <option value="Maintenance Needs Improvement"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Maintenance Needs Improvement' ? 'selected' : '' }}>
-                                                                    Maintenance Needs Improvement</option>
-                                                                <option value="Scheduling Problem"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Scheduling Problem' ? 'selected' : '' }}>
-                                                                    Scheduling Problem</option>
-                                                                <option value="System Deficiency"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'System Deficiency' ? 'selected' : '' }}>
-                                                                    System Deficiency</option>
-                                                                <option value="Technical Error"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Technical Error' ? 'selected' : '' }}>
-                                                                    Technical Error</option>
-                                                                <option value="Tolerable Failure"
-                                                                    {{ array_key_exists('rootCauseSubCategory', $root_cause_dat) && $root_cause_dat['rootCauseSubCategory'] == 'Tolerable Failure' ? 'selected' : '' }}>
-                                                                    Tolerable Failure</option>
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="Document_Remarks"
-                                                                name="rootCauseData[{{ $loop->index }}][ifOthers]"
-                                                                value="{{ array_key_exists('ifOthers', $root_cause_dat) ? $root_cause_dat['ifOthers'] : '' }}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="Document_Remarks"
-                                                                name="rootCauseData[{{ $loop->index }}][probability]"
-                                                                value="{{ array_key_exists('probability', $root_cause_dat) ? $root_cause_dat['probability'] : '' }}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="Document_Remarks"
-                                                                name="rootCauseData[{{ $loop->index }}][remarks]"
-                                                                value="{{ array_key_exists('remarks', $root_cause_dat) ? $root_cause_dat['remarks'] : '' }}">
-                                                        </td>
-                                                        <td><input type="text" class="Removebtn" name="Action[]"></td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                                <td><input disabled type="text" name="rootCauseData[0][serial]"
-                                                        value="1"></td>
-                                                <td><select name="rootCauseData[0][rootCauseCategory]"
-                                                        id="Root_Cause_Category_Select" class="Root_Cause_Category_Select">
-                                                        <option value="">-- Select --</option>
-
-                                                        <option value="M-Machine(Equipment)">M-Machine(Equipment)</option>
-                                                        <option value="M-Maintenance">M-Maintenance</option>
-                                                        <option value="M-Man Power (physical work)">M-Man Power (physical work)
-                                                        </option>
-                                                        <option value="M-Management">M-Management</option>
-                                                        <option value="M-Material (Raw,Consumables etc.)">M-Material
-                                                            (Raw,Consumables etc.)
-                                                        </option>
-                                                        <option value="M-Method (Process/Inspection)">M-Method
-                                                            (Process/Inspection)</option>
-                                                        <option value="M-Mother Nature (Environment)">M-Mother Nature
-                                                            (Environment)</option>
-                                                        <option value="P-Place/Plant">P-Place/Plant</option>
-                                                        <option value="P-Policies">P-Policies</option>
-                                                        <option value="P-Price">P-Price </option>
-                                                        <option value="P-Procedures">P-Procedures</option>
-                                                        <option value="P-Process">P-Process </option>
-                                                        <option value="P-Product">P-Product</option>
-                                                        <option value="S-Suppliers">S-Suppliers</option>
-                                                        <option value="S-Surroundings">S-Surroundings</option>
-                                                        <option value="S-Systems">S-Systems</option>
-
-                                                    </select></td>
-                                                <td><select name="rootCauseData[0][rootCauseSubCategory]"
-                                                        id="Root_Cause_Sub_Category_Select"
-                                                        class="Root_Cause_Sub_Category_Select">
-                                                        <option value="">-- Select --</option>
-
-                                                        <option value="infrequent_audits">Infrequent Audits </option>
-                                                        <option value="No_Preventive_Maintenance">No Preventive Maintenance
-                                                        </option>
-                                                        <option value="Other">Other</option>
-                                                        <option value="Poor_Maintenance_or_Design">Poor Maintenance or Design
-                                                        </option>
-                                                        <option value="Maintenance_Needs_Improvement">Maintenance Needs
-                                                            Improvement </option>
-                                                        <option value="Scheduling_Problem">Scheduling Problem </option>
-                                                        <option value="system_deficiency">System Deficiency </option>
-                                                        <option value="technical_error">Technical Error </option>
-                                                        <option value="tolerable_failure">Tolerable Failure </option>
-                                                        <option value="calibration_issues">Calibration Issues </option>
-
-                                                        <option value="Infrequent_Audits">Infrequent Audits</option>
-                                                        <option value="No_Preventive_Maintenance">No Preventive Maintenance
-                                                        </option>
-                                                        <option value="Other">Other</option>
-                                                        <option value="Maintenance_Needs_Improvement">Maintenance Needs
-                                                            Improvement</option>
-                                                        <option value="Scheduling_Problem ">Scheduling Problem </option>
-                                                        <option value="System_Deficiency">System Deficiency </option>
-                                                        <option value="Technical_Error ">Technical Error </option>
-                                                        <option value="Tolerable_Failure">Tolerable Failure </option>
-
-
-                                                        <option value="Failure_to_Follow_SOP">Failure to Follow SOP</option>
-                                                        <option value="Human_Machine_Interface">Human-Machine Interface</option>
-                                                        <option value="Misunderstood_Verbal_Communication">Misunderstood Verbal
-                                                            Communication
-                                                        </option>
-                                                        <option value="Other">Other</option>
-                                                        <option value="Personnel Error">Personnel Error</option>
-                                                        <option value="Personnel not Qualified">Personnel not Qualified</option>
-                                                        <option value="Practice Needed">Practice Needed</option>
-                                                        <option value="Teamwork Needs Improvement">Teamwork Needs Improvement
-                                                        </option>
-                                                        <option value="Attention">Attention</option>
-                                                        <option value="Understanding">Understanding</option>
-                                                        <option value="Procedural">Procedural</option>
-                                                        <option value="Behavioral">Behavioral</option>
-                                                        <option value="Skill">Skill</option>
-
-                                                        <option value="Inattention to task">Inattention to task</option>
-                                                        <option value="Lack of Process">Lack of Process</option>
-                                                        <option value="Methods">Methods</option>
-                                                        <option value="No or Poor Management Involvement">No or Poor Management
-                                                            Involvement
-                                                        </option>
-                                                        <option value="Other">Other</option>
-                                                        <option value="Personnel not Qualified">Personnel not Qualified</option>
-                                                        <option value="Poor employee involvement">Poor employee involvement
-                                                        </option>
-                                                        <option value="Poor recognition of hazard">Poor recognition of hazard
-                                                        </option>
-                                                        <option value="Previously identified hazards were not eliminated">
-                                                            Previously identified
-                                                            hazards were not eliminated</option>
-                                                        <option value="Stress demands">Stress demands</option>
-                                                        <option value="Task hazards not guarded properly">Task hazards not guarded
-                                                            properly
-                                                        </option>
-                                                        <option value="Personnel not Qualified">Personnel not Qualified</option>
-
-                                                    </select></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="rootCauseData[0][ifOthers]"></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="rootCauseData[0][probability]"></td>
-                                                <td><input type="text" class="Document_Remarks"
-                                                        name="rootCauseData[0][remarks]"></td>
-                                                <td><input type="text" class="Removebtn" name="Action[]" readonly></td>
-                                            @endif
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        --}}
-
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Capa Required">CAPA Required ? <span
@@ -6670,9 +5211,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <option @if ($data->capa_required == 'no') selected @endif value='no'>
                                         No</option>
                                 </select>
-                                <!-- @error('capa_required')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror -->
+                         
                             </div>
                         </div>
 
@@ -6684,124 +5223,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
 
-                        {{-- <div class="row">
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="short_description_required">Product Quality Impact</label>
-                                    <select name="product_quality_imapct" id="product_quality_imapct">
-                                        <option value="0">-- Select --</option>
-                                        <option @if ($data->product_quality_imapct == 'yes') selected @endif value="yes">Yes</option>
-                                        <option @if ($data->product_quality_imapct == 'no') selected @endif value="no">No</option>
-                                        <option @if ($data->product_quality_imapct == 'na') selected @endif value="na">NA </option>
-
-                                    </select>
-                                </div>
-                                @error('product_quality_imapct')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="process_performance_impact">Process Performance Impact</label>
-                                    <select name="process_performance_impact" id="process_performance_impact">
-                                        <option value="0">-- Select --</option>
-                                        <option @if ($data->process_performance_impact == 'yes') selected @endif value="yes">Yes</option>
-                                        <option @if ($data->process_performance_impact == 'no') selected @endif value="no">No</option>
-                                        <option @if ($data->process_performance_impact == 'na') selected @endif value="na">NA </option>
-
-                                    </select>
-                                </div>
-                                @error('process_performance_impact')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div> --}}
-
-
-                        {{-- <div class="row">
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="process_performance_impact">Yield Impact</label>
-                                    <select name="yield_impact" id="yield_impact">
-                                        <option value="0">-- Select --</option>
-                                        <option @if ($data->yield_impact == 'yes') selected @endif value="yes">Yes</option>
-                                        <option @if ($data->yield_impact == 'no') selected @endif value="no">No</option>
-                                        <option @if ($data->yield_impact == 'na') selected @endif value="na">NA </option>
-                                    </select>
-                                </div>
-                                @error('yield_impact')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="additionl_testing_required">Addtitional Testing Required</label>
-                                    <select name="additionl_testing_required" id="additionl_testing_required">
-                                        <option value="0">-- Select --</option>
-                                        <option @if ($data->additionl_testing_required == 'yes') selected @endif value="yes">Yes</option>
-                                        <option @if ($data->additionl_testing_required == 'no') selected @endif value="no">No</option>
-                                        <option @if ($data->additionl_testing_required == 'na') selected @endif value="na">NA </option>
-                                    </select>
-                                </div>
-                                @error('additionl_testing_required')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="row">
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="any_similar_incident_in_past"> Any Similar Incident In Past</label>
-                                    <select name="any_similar_incident_in_past" id="any_similar_incident_in_past">
-                                        <option value="0">-- Select --</option>
-                                        <option @if ($data->any_similar_incident_in_past == 'yes') selected @endif value="yes">Yes</option>
-                                        <option @if ($data->any_similar_incident_in_past == 'no') selected @endif value="no">No</option>
-                                        <option @if ($data->any_similar_incident_in_past == 'na') selected @endif value="na">NA </option>
-                                    </select>
-                                </div>
-                                @error('any_similar_incident_in_past')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            {{-- <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="classification_by_qa"> Classification By QA</label>
-                                    <select name="classification_by_qa" id="classification_by_qa">
-                                        <option value="0">-- Select --</option>
-                                        <option @if ($data->classification_by_qa == 'yes') selected @endif value="yes">Yes</option>
-                                        <option @if ($data->classification_by_qa == 'no') selected @endif value="no">No</option>
-                                        <option @if ($data->classification_by_qa == 'na') selected @endif value="na">NA </option>
-                                    </select>
-                                </div>
-                                @error('classification_by_qa')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div> --
-                        </div> --}}
-
-
-
-                        {{-- <div class="row">
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="gmp_impact">GMP Impact</label>
-                                    <select name="gmp_impact" id="gmp_impact">
-                                        <option value="0">-- Select --</option>
-                                        <option @if ($data->gmp_impact == 'yes') selected @endif value="yes">Yes</option>
-                                        <option @if ($data->gmp_impact == 'no') selected @endif value="no">No</option>
-                                        <option @if ($data->gmp_impact == 'na') selected @endif value="na">NA </option>
-                                    </select>
-                                </div>
-                                @error('yield_impact')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div> --}}
-
+                    
                         <div class="button-block">
                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"
                                 class="saveButton" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
@@ -6817,16 +5239,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     $data->stage == 5 ||
                                     $data->stage == 6 ||
                                     $data->stage == 7)
-                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
-                                    class="button  launch_extension" data-bs-toggle="modal"
-                                    data-bs-target="#launch_extension">
-                                    Launch Extension
-                                </a> --}}
+                        
                             @endif
-                            <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                            data-bs-target="#effectivenss_extension">
-                                                            Launch Effectiveness Check
-                                                        </a> -->
                         </div>
                     </div>
                 </div>
@@ -6835,49 +5249,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div id="CCForm10" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-                            {{-- @if ($capaExtension && $capaExtension->capa_proposed_due_date)
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="capa_proposed_due_date"><b>Proposed Due Date</b></label>
-                                        <input disabled type="text" name="capa_proposed_due_date"
-                                            id="capa_proposed_due_date"
-                                            value="{{ Helpers::getdateFormat($capaExtension->capa_proposed_due_date) }}">
-                                    </div>
-                                </div>
-                            @else
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="capa_proposed_due_date"><b>Proposed Due Date</b></label>
-                                        <input disabled type="text" name="capa_proposed_due_date"
-                                            id="capa_proposed_due_date">
-                                    </div>
-                                </div>
-                            @endif --}}
-                            <!-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="CAPA_Number"><b>CAPA No</b></label>
-                                            <input disabled type="text" name="capa_number">
-                                        </div>
-                                    </div> -->
-                            <!-- <div class="col-lg-12">
-                                                    <div class="group-input">
-                                                        <label for="Department1"> Other's 1 Department <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                                        <select name="Other1_Department_person"
-                                                        @if ($data->stage == 4) disabled @endif id="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                                            <option value="0">-- Select --</option>
-                                                            <option @if ($data1->Other1_Department_person == 'Production') selected @endif
-                                                                value="Production">Production</option>
-                                                            <option  @if ($data1->Other1_Department_person == 'Warehouse') selected @endif
-                                                            value="Warehouse"> Warehouse</option>
-                                                            <option  @if ($data1->Other1_Department_person == 'Project management') selected @endif
-                                                                            value="Project management">Project management</option>
-
-                                                        </select>
-
-                                                    </div>
-                                                </div> -->
-
-
+                   
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group"><b>Name of the Department</b><span
@@ -7025,12 +5397,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Audit Schedule End Date">Target Completion Date</label>
-                                    {{-- <div class="calenderauditee">
-                                <input readonly type="text" id="Capa_reported_date"  value="{{ date('d-M-Y') }}" name="capa_completed_date" style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))"/>
-                                    <input type="date" value="{{ $data->capa_completed_date }}" name="capa_completed_date"
-                                    max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" value=""
-                                        oninput="handleDateInput(this, 'Capa_reported_date')" />
-                                </div> --}}
+                        
                                     <div class="calenderauditee">
                                         <input type="text" id="capa_completed_date" readonly placeholder="DD-MM-YYYY"
                                             value="{{ $data->capa_completed_date ? \Carbon\Carbon::parse($data->capa_completed_date)->format('d-M-Y') : '' }}" />
@@ -7151,9 +5518,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                             </div>
                                         </div>
                                     @endif
-
-
-
                                 </div>
                             </div>
 
@@ -7184,24 +5548,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                         $data->stage == 5 ||
                                         $data->stage == 6 ||
                                         $data->stage == 7)
-                                    {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
-                                        class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#launch_extension">
-                                        Launch Extension
-                                    </a> --}}
                                 @endif
-                                <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                            data-bs-target="#effectivenss_extension">
-                                                            Launch Effectiveness Check
-                                                        </a> -->
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
 
                 <!-- Effectiveness Check-->
 
@@ -7656,16 +6007,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     $data->stage == 5 ||
                                     $data->stage == 6 ||
                                     $data->stage == 7)
-                                {{-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;;" type="button"
-                                    class="button  launch_extension" data-bs-toggle="modal"
-                                    data-bs-target="#launch_extension">
-                                    Launch Extension
-                                </a> --}}
                             @endif
-                            <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                            data-bs-target="#effectivenss_extension">
-                                                            Launch Effectiveness Check
-                                                        </a> -->
+                     
                         </div>
                     </div>
                 </div>
@@ -7676,13 +6019,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </form>
             <div class="sticky-buttons">
                 <div>
-                    {{-- <a type="button" class="" data-toggle="modal" data-target="#myModal3">
 
-                        <svg width="18" height="24" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
-                            <path fill="#ffffff"
-                                d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34M332.1 128H256V51.9zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288zm220.1-208c-5.7 0-10.6 4-11.7 9.5c-20.6 97.7-20.4 95.4-21 103.5c-.2-1.2-.4-2.6-.7-4.3c-.8-5.1.3.2-23.6-99.5c-1.3-5.4-6.1-9.2-11.7-9.2h-13.3c-5.5 0-10.3 3.8-11.7 9.1c-24.4 99-24 96.2-24.8 103.7c-.1-1.1-.2-2.5-.5-4.2c-.7-5.2-14.1-73.3-19.1-99c-1.1-5.6-6-9.7-11.8-9.7h-16.8c-7.8 0-13.5 7.3-11.7 14.8c8 32.6 26.7 109.5 33.2 136c1.3 5.4 6.1 9.1 11.7 9.1h25.2c5.5 0 10.3-3.7 11.6-9.1l17.9-71.4c1.5-6.2 2.5-12 3-17.3l2.9 17.3c.1.4 12.6 50.5 17.9 71.4c1.3 5.3 6.1 9.1 11.6 9.1h24.7c5.5 0 10.3-3.7 11.6-9.1c20.8-81.9 30.2-119 34.5-136c1.9-7.6-3.8-14.9-11.6-14.9h-15.8z" />
-                        </svg>
-                    </a> --}}
                 </div>
             </div>
             </div>
@@ -7876,14 +6213,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <form action="{{ route('launch-extension-qrm', $data->id) }}" method="post">
                             @csrf
                             <div class="modal-body">
-                                <!-- <div class="group-input">
-                                        <label for="username">Username <span class="text-danger">*</span></label>
-                                        <input class="extension_modal_signature" type="text" name="username" required>
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="password">Password <span class="text-danger">*</span></label>
-                                        <input class="extension_modal_signature" type="password" name="password" required>
-                                    </div> -->
+ 
                                 <div class="group-input">
                                     <label for="password">Proposed Due Date(QRM)</label>
                                     <input class="extension_modal_signature" type="date" name="qrm_proposed_due_date"
@@ -7941,14 +6271,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             <!-- Modal body -->
                             <div class="modal-body">
 
-                                <!-- <div class="group-input">
-                                        <label for="username">Username <span class="text-danger">*</span></label>
-                                        <input class="extension_modal_signature" type="text" name="username" required>
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="password">Password <span class="text-danger">*</span></label>
-                                        <input class="extension_modal_signature" type="password" name="password" required>
-                                    </div> -->
                                 <div class="group-input">
                                     <label for="password">Proposed Due Date(Investigation)</label>
                                     <input class="extension_modal_signature" type="date"
@@ -8008,14 +6330,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             <!-- Modal body -->
                             <div class="modal-body">
 
-                                <!-- <div class="group-input">
-                                        <label for="username">Username <span class="text-danger">*</span></label>
-                                        <input class="extension_modal_signature" type="text" name="username" required>
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="password">Password <span class="text-danger">*</span></label>
-                                        <input class="extension_modal_signature" type="password" name="password" required>
-                                    </div> -->
                                 <div class="group-input">
                                     <label for="password">Proposed Due Date (CAPA)</label>
                                     <input class="extension_modal_signature" type="date" name="capa_proposed_due_date"
@@ -8074,14 +6388,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
-                                <!-- <div class="group-input">
-                                        <label for="username">Username <span class="text-danger">*</span></label>
-                                        <input class="extension_modal_signature" type="text" name="username" required>
-                                    </div>
-                                    <div class="group-input">
-                                        <label for="password">Password <span class="text-danger">*</span></label>
-                                        <input class="extension_modal_signature" type="password" name="password" required>
-                                    </div> -->
+                
                                 <div class="group-input">
                                     <label for="password">Proposed Due Date (Incident)</label>
                                     <input class="extension_modal_signature" type="date" name="dev_proposed_due_date"
@@ -8537,24 +6844,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             </script>
 
-                <script>
-                    var editor = new FroalaEditor('.froala', {
-                        key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
-                        imageUploadParam: 'image_param',
-                        imageUploadMethod: 'POST',
-                        imageMaxSize: 20 * 1024 * 1024,
-                        imageUploadURL: "{{ secure_url('api/upload-files') }}",
-                        fileUploadParam: 'image_param',
-                        fileUploadURL: "{{ secure_url('api/upload-files')}}",
-                        videoUploadParam: 'image_param',
-                        videoUploadURL: "{{ secure_url('api/upload-files') }}",
-                        videoMaxSize: 500 * 1024 * 1024,
-                    });
-                    
-                    $(".froala-disabled").FroalaEditor("edit.off");
-                </script>
-
-
 
             <script>
                 VirtualSelect.init({
@@ -8665,12 +6954,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 });
             </script>
-            {{--<script>
-                document.getElementById('initiator_group').addEventListener('change', function() {
-                    var selectedValue = this.value;
-                    document.getElementById('initiator_group_code').value = selectedValue;
-                });
-            </script>--}}
+ 
             <script>
                 var maxLength = 255;
                 $('#docname').keyup(function() {
@@ -8860,11 +7144,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
 
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">
                                     Submit
@@ -8909,11 +7188,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
 
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -8957,11 +7231,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
 
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -9003,11 +7272,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
 
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -9049,11 +7313,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
 
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -9095,11 +7354,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
 
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -9229,11 +7483,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
 
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -9274,11 +7523,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
 
-                            <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
-                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                            <button>Close</button>
-                                        </div> -->
+              
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
@@ -9386,12 +7631,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             </script>
-            {{-- <script>
-                document.getElementById('initiator_group').addEventListener('change', function() {
-                    var selectedValue = this.value;
-                    document.getElementById('initiator_group_code').value = selectedValue;
-                });
-            </script> --}}
+ 
              <script>
                 // JavaScript
                 document.getElementById('initiator_group').addEventListener('change', function() {

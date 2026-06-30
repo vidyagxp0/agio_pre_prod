@@ -14,14 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::table('download_histories', function (Blueprint $table) {
-            $table->string('issue_copies')->default(0)->nullable();
-            $table->longText('print_reason')->nullable();
-            $table->text('document_printed_copies')->nullable();
-            $table->string('issuance_to')->nullable();
-            $table->text('issued_copies')->nullable();
-            $table->text('issued_reason')->nullable();
-            $table->text('department')->nullable();
-            $table->text('document_number')->nullable();
+            // $table->string('issue_copies')->default(0)->nullable();
+            // $table->longText('print_reason')->nullable();
+            // $table->text('document_printed_copies')->nullable();
+            // $table->string('issuance_to')->nullable();
+            // $table->text('issued_copies')->nullable();
+            // $table->text('issued_reason')->nullable();
+            // $table->text('department')->nullable();
+            // $table->text('document_number')->nullable();
         });
     }
 

@@ -180,24 +180,16 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-6">
-                                    <!-- <div class="group-input">
-                                        <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" placeholder="Record Number" readonly>
-                                    </div> -->
 
                                     <div class="group-input">
                                         <label for="Record Number">Record Number</label>
                                         @if (!empty($parent_division_id))
-                                        {{-- <input disabled type="text" name="record"
-                                            value="{{ Helpers::getDivisionName($parent_division_id) }}/CC/{{ date('Y') }}/{{ $record_number }}">              --}}
                                              <input type="hidden" name="record" id="record" >
                                               <input disabled type="text" name="record" id="record" placeholder="Record Number">
 
                                         @else  
                                          <input type="hidden" name="record" id="record" >
-                                        {{--<input disabled type="text" name="record"
-                                            value=" {{ Helpers::getDivisionName(!empty($parent_division_id) ? $parent_division_id : session()->get('division')) }}/CC/{{ date('Y') }}/{{ $record_number }}">--}}
-                                               <input disabled type="text" name="record" id="record" placeholder="Record Number">
+                                         <input disabled type="text" name="record" id="record" placeholder="Record Number">
                                         @endif
                                     </div>
                                 </div>
@@ -205,7 +197,6 @@
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         @if (!empty($parent_division_id))
-
                                          <input readonly type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName($parent_division_id) }}">
                                             <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
@@ -220,7 +211,6 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                         <input disabled type="text" name="division_code"
                                             value="{{ Auth::user()->name }}">
                                     </div>
@@ -233,37 +223,7 @@
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
-
-                                <!-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Assigned To <span class="text-danger">*</span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
-                                            <option value="">Select a value</option>
-                                            @foreach ($hod as $data)
-                                                @if (Helpers::checkUserRolesassign_to($data))
-                                                    <option @if (old('assign_to') == $data->id) selected @endif
-                                                        value="{{ $data->id }}">{{ $data->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                        @error('assign_to')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Microbiology">CFT Reviewer</label>
-                                        <select name="Microbiology">
-                                            <option value="" selected>-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </div>
-                                </div> -->
-
+                            
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
@@ -278,23 +238,6 @@
                                         </select>
                                     </div>
                                 </div> -->
-
-                                <!-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Due Date"> Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                            <input disabled type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                class="hide-input" oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
-
-
-                                    </div>
-                                </div> -->
-
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -380,41 +323,6 @@
                                     });
                                 </script>
 
-
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="initiator-group">Initiation Department
-                                          </label>
-                                                <select name="Initiator_Group" id="initiator_group">
-                                                        <option value="">Select Initiation Department</option>
-                                                        <option value="CQA" >Corporate Quality Assurance</option>
-                                                        <option value="QA" >Quality Assurance</option>
-                                                        <option value="QC" >Quality Control</option>
-                                                        <option value="QM" >Quality Control (Microbiology department)</option>
-                                                        <option value="PG" >Production General</option>
-                                                        <option value="PL" >Production Liquid Orals</option>
-                                                        <option value="PT" >Production Tablet and Powder</option>
-                                                        <option value="PE" >Production External (Ointment, Gels, Creams and Liquid)</option>
-                                                        <option value="PC" >Production Capsules</option>
-                                                        <option value="PI" >Production Injectable</option>
-                                                        <option value="EN" >Engineering</option>
-                                                        <option value="HR" >Human Resource</option>
-                                                        <option value="ST" >Store</option>
-                                                        <option value="IT" >Electronic Data Processing</option>
-                                                        <option value="FD" >Formulation  Development</option>
-                                                        <option value="AL" >Analytical research and Development Laboratory</option>
-                                                        <option value="PD">Packaging Development</option>
-                                                        <option value="PU">Purchase Department</option>
-                                                        <option value="DC">Document Cell</option>
-                                                        <option value="RA">Regulatory Affairs</option>
-                                                        <option value="PV">Pharmacovigilance</option>
-                                                    </select>
-                                        {{-- @error('Initiator_Group')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror --}}
-                                    </div>
-                                </div> -->
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiation Department Code</label>
@@ -422,18 +330,6 @@
                                             value="" readonly>
                                     </div>
                                 </div>
-
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="short-desc">Short Description <span
-                                                class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please mention brief summary</small></div>
-                                        <textarea name="short_description" id="short_description">{{ old('short_description') }}</textarea>
-                                        @error('short_description')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>  --}}
 
                                 <script>
                                     $(document).ready(function() {
