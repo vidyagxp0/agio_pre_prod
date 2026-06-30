@@ -2039,8 +2039,9 @@ dd($pre);
                                                 <label>Classification by QA:</label>
                                             </div>
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" disabled> Critical</label>
-                                            <label><input type="checkbox" name="classification_by_qa" value="Non-critical" onclick="selectOne(this)" disabled> Non-Critical</label>
+                                            <label><input type="checkbox" name="classification_by_qa" value="Minor" onclick="selectOne(this)" disabled>Minor</label>
+                                             <label><input type="checkbox" name="classification_by_qa" value="Major" onclick="selectOne(this)" disabled>Major</label>
+                                            <label><input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" disabled>Critical</label>
                                         </div>
                                         </div>
                                     </div>

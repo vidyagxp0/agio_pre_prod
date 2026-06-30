@@ -77,6 +77,7 @@ class ChangeProposalJustController extends Controller
         $data->division_id = $request->division_id;
         $data->intiation_date = $request->intiation_date;
         $data->cpdescription = $request->cpdescription;
+        $data->impassesment = $request->impassesment;
         $data->status = 'Opened';
         $data->stage = 1;
 
@@ -693,7 +694,7 @@ class ChangeProposalJustController extends Controller
         if ($lastDocument->qa_cqa_head_Attachment != $data->qa_cqa_head_Attachment || !empty($request->qa_cqa_head_Attachment_comment)) {
             $history = new ChangeProposalAuditTrial;
             $history->cpjg_id = $id;
-            $history->activity_type = 'QA/CQA Review Attachments';
+            $history->activity_type = 'QA/CQA Head Approval Attachments';
             $history->previous =   str_replace(',', ', ', $lastDocument->qa_cqa_head_Attachment);
             $history->current =str_replace(',', ', ',  $data->qa_cqa_head_Attachment);
             $history->comment = $request->qa_cqa_head_Attachment_comment;
@@ -730,9 +731,42 @@ class ChangeProposalJustController extends Controller
             if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $data = ChangeProposalJust::find($id);
                 $lastDocument = ChangeProposalJust::find($id);
-
-                if ($data->stage == 1) {
+    $changeProposalGrid = ChangeProposalJustGrid::where('cpjg_id', $id)->where('identifier', 'change_proposal_grid')->first();
                 
+                if ($data->stage == 1) {
+              
+             
+           
+
+                    // Main fields validation
+    if (empty($data->cpdescription) || empty($data->impassesment)) {
+
+        Session::flash('swal', [
+            'type' => 'warning',
+            'title' => 'Mandatory Fields!',
+            'message' => 'Please fill all required fields.'
+        ]);
+
+        return back();
+    }
+
+    // Grid record check
+    $changeProposalGrid = ChangeProposalJustGrid::where('cpjg_id', $id)
+        ->where('identifier', 'change_proposal_grid')
+        ->first();
+
+    if (!$changeProposalGrid) {
+
+        Session::flash('swal', [
+            'type' => 'warning',
+            'title' => 'Mandatory Fields!',
+            'message' => 'Please add at least one row in the Change Proposal Details Grid.'
+        ]);
+
+        return back();
+    }
+
+              
                     $data->stage = "2";
                     $data->status = "HOD/Designee Review";
                     $data->submit_by = Auth::user()->name;
@@ -754,9 +788,9 @@ class ChangeProposalJustController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Review";
+                    $history->change_to =   "HOD/Designee Review";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'In Review';
+                    $history->stage = 'HOD/Designee Review';
                     if (is_null($lastDocument->submit_by) || $lastDocument->submit_by === '') {
                         $history->action_name = 'New';
                     } else {
@@ -764,37 +798,31 @@ class ChangeProposalJustController extends Controller
                     }
                     $history->save();
 
-                    // $list = Helpers::getHodUserList($data->division_id)
-                    // ->unique('user_id')
-                    // ->values();
-                    // foreach ($list as $u) {
-                    //         $email = Helpers::getUserEmail($u->user_id);
+                    $list = Helpers::getHodUserList($data->division_id);
 
-                    //      if (!empty($email)) {
-                    //     try{
-
-                    //             $data = [
-                    //                 'data'    => $data,
-                    //                 'site'    => "Extension",
-                    //                 'history' => "Submit",
-                    //                 'process' => 'Extension',
-                    //                 'comment' => $request->comment,
-                    //                 'user'    => Auth::user()->name
-                    //             ];
-
-                    //             SendMail::dispatch(
-                    //                 $data,
-                    //                 $email,
-                    //                 $data,
-                    //                 'Extension'
-                    //             );
-
-                    //         } catch (\Exception $e) {
-                    //             \Log::error('Mail Error: ' . $e->getMessage());
-                    //         }
-                    //         }
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
                         
-                    // }
+                            if ($email !== null) {
+                                try {
+                                    $maildata = [
+                                        'data' => $data,
+                                        'site' => "CPJ",
+                                        'history' => "submit",
+                                        'process' => 'Change Proposal And Justification',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($maildata, $email, $data, 'Change Proposal And Justification');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+                   
 
                     $data->update();
                     return back();
@@ -821,7 +849,7 @@ class ChangeProposalJustController extends Controller
                 }
                 
                     $data->stage = "3";
-                    $data->status = "QA CQA Review";
+                    $data->status = "QA/CQA Review";
                     $data->HOD_Review_Complete_By = Auth::user()->name;
                     $data->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $data->HOD_Review_Comments = $request->comment;
@@ -836,7 +864,7 @@ class ChangeProposalJustController extends Controller
                     }
                     $history->current = $data->HOD_Review_Complete_By . ' , ' . $data->HOD_Review_Complete_On;
                     $history->comment = $request->comment;
-                    $history->action = 'Review';
+                    $history->action = 'HOD Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -851,38 +879,44 @@ class ChangeProposalJustController extends Controller
                     }
                     $history->save();
 
-                    // $usersmail = collect()
-                    // ->merge(Helpers::getQAApproverUserList($data->division_id))
-                    // ->merge(Helpers::getCQAApproverUsersList($data->division_id))
-                    // ->unique('user_id')
-                    // ->values();
-                    // foreach ($usersmail as $u) {
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if (!empty($email)) {
-                    //                 try{
+                    $QARevlist = Helpers::getQAUserList($data->division_id);
 
-                    //             $data = [
-                    //                 'data'    => $data,
-                    //                 'site'    => "Extension",
-                    //                 'history' => "Review",
-                    //                 'process' => 'Extension',
-                    //                 'comment' => $request->comment,
-                    //                 'user'    => Auth::user()->name
-                    //             ];
+                    $CQARevlist = Helpers::getCQAUsersList($data->division_id);
 
-                    //             SendMail::dispatch(
-                    //                 $data,
-                    //                 $email,
-                    //                 $data,
-                    //                 'Extension'
-                    //             );
+                    $usersmerge = collect($QARevlist)->merge($CQARevlist);
 
-                    //         } catch (\Exception $e) {
-                    //             \Log::error('Mail Error: ' . $e->getMessage());
-                    //         }
-                    //        }
-                    // }
+                    $usersmerge = $usersmerge->unique('user_id');
 
+                    foreach ($usersmerge as $u) 
+                    {
+
+                        $email = Helpers::getUserEmail($u->user_id);
+
+                        if ($email !== null) {
+
+                            try {
+
+                                $Maildata = [
+                                        'data' => $data,
+                                        'site' => "CPJ",
+                                        'history' => "Hod Review Complete",
+                                        'process' => 'Change Proposal And Justification',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $Maildata,
+                                    $email,
+                                    $data,
+                                    'Change Proposal And Justification'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                        }
+                    }
 
                     $data->update();
                     return back();
@@ -909,14 +943,14 @@ class ChangeProposalJustController extends Controller
                 }
                     
                     $data->stage = "4";
-                    $data->status = "QA/CQA Head/Designee";
+                    $data->status = "QA/CQA Head / Designee Approval";
                     $data->qa_cqa_Review_Complete_By = Auth::user()->name;
                     $data->qa_cqa__Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $data->qa_cqa__Review_Comments = $request->comment;
 
                     $history = new ChangeProposalAuditTrial();
                     $history->cpjg_id = $id;
-                    $history->activity_type = 'Approval By, Approval On';
+                    $history->activity_type = 'QA/CQA Review Complete By, QA/CQA Review Complete By On';
                     if (is_null($lastDocument->qa_cqa_Review_Complete_By) || $lastDocument->qa_cqa_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -924,14 +958,14 @@ class ChangeProposalJustController extends Controller
                     }
                     $history->current = $data->qa_cqa_Review_Complete_By . ' , ' . $data->qa_cqa__Review_Complete_On;
                     $history->comment = $request->comment;
-                    $history->action = 'Review';
+                    $history->action = 'QA/CQA Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Approved";
+                    $history->change_to =   "QA/CQA Head / Designee Approval";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'In Approved';
+                    $history->stage = 'QA/CQA Head / Designee Approval';
                     if (is_null($lastDocument->qa_cqa_Review_Complete_By) || $lastDocument->qa_cqa_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -939,40 +973,47 @@ class ChangeProposalJustController extends Controller
                     }
                     $history->save();
 
-                    // $usersmail = collect()
-                    // ->merge(Helpers::getQAApproverUserList($data->division_id))
-                    // ->merge(Helpers::getCQAApproverUsersList($data->division_id))
-                    // ->unique('user_id')
-                    // ->values();
-                    // foreach ($usersmail as $u) {
-                    //    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if (!empty($email)) {
-                    //                 try{
 
-                    //             $data = [
-                    //                 'data'    => $data,
-                    //                 'site'    => "Extension",
-                    //                 'history' => "Review",
-                    //                 'process' => 'Extension',
-                    //                 'comment' => $request->comment,
-                    //                 'user'    => Auth::user()->name
-                    //             ];
+                      $QARevlist = Helpers::getCQAHeadDesignUsersList($data->division_id);
 
-                    //             SendMail::dispatch(
-                    //                 $data,
-                    //                 $email,
-                    //                 $data,
-                    //                 'Extension'
-                    //             );
+                    $CQARevlist = Helpers::getCQAHeadUserList($data->division_id);
 
-                    //         } catch (\Exception $e) {
-                    //             \Log::error('Mail Error: ' . $e->getMessage());
-                    //         }
-                    //        }
-                    //    // }
-                    // }
+                    $usersmerge = collect($QARevlist)->merge($CQARevlist);
 
+                    $usersmerge = $usersmerge->unique('user_id');
+
+                    foreach ($usersmerge as $u) 
+                    {
+
+                        $email = Helpers::getUserEmail($u->user_id);
+
+                        if ($email !== null) {
+
+                            try {
+
+                                $Maildata = [
+                                        'data' => $data,
+                                        'site' => "CPJ",
+                                        'history' => "QA/CQA Review Complete",
+                                        'process' => 'Change Proposal And Justification',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $Maildata,
+                                    $email,
+                                    $data,
+                                    'Change Proposal And Justification'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+                        }
+                    }
+
+                  
 
                     $data->update();
                     return back();
@@ -1007,7 +1048,7 @@ class ChangeProposalJustController extends Controller
 
                     $history = new ChangeProposalAuditTrial();
                     $history->cpjg_id = $id;
-                    $history->activity_type = 'Complete By, Complete On';
+                    $history->activity_type = 'QA/CQA Head/Designee Approval Complete By, QA/CQA Head/Designee Approval Complete On';
                     if (is_null($lastDocument->qa_cqa_head_Review_Complete_By) || $lastDocument->qa_cqa_head_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1015,14 +1056,14 @@ class ChangeProposalJustController extends Controller
                     }
                     $history->current = $data->qa_cqa_head_Review_Complete_By . ' , ' . $data->qa_cqa_head_Review_Complete_On;
                     $history->comment = $request->comment;
-                    $history->action = 'Review';
+                    $history->action = 'QA/CQA Head/Designee Approval Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Approved";
+                    $history->change_to =   "Closed - Done";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'In Approved';
+                    $history->stage = 'Closed - Done';
                     if (is_null($lastDocument->qa_cqa_head_Review_Complete_By) || $lastDocument->qa_cqa_head_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1030,40 +1071,52 @@ class ChangeProposalJustController extends Controller
                     }
                     $history->save();
 
-                    // $usersmail = collect()
-                    // ->merge(Helpers::getQAApproverUserList($data->division_id))
-                    // ->merge(Helpers::getCQAApproverUsersList($data->division_id))
-                    // ->unique('user_id')
-                    // ->values();
-                    // foreach ($usersmail as $u) {
-                    //    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if (!empty($email)) {
-                    //                 try{
 
-                    //             $data = [
-                    //                 'data'    => $data,
-                    //                 'site'    => "Extension",
-                    //                 'history' => "Review",
-                    //                 'process' => 'Extension',
-                    //                 'comment' => $request->comment,
-                    //                 'user'    => Auth::user()->name
-                    //             ];
+                      $usersmerge = collect()
+                      
+                ->merge(Helpers::getCQAUsersList($data->division_id))
+                ->merge(Helpers::getHodUserList($data->division_id))
+                ->merge(Helpers::getQAHeadUserList($data->division_id))
+                ->merge(Helpers::getCQAHeadUserList($data->division_id))
+                ->merge(Helpers::getQAUserList($data->division_id))
+                ->merge(Helpers::getInitiatorUserList($data->division_id))
+              
+                ->unique('user_id');
 
-                    //             SendMail::dispatch(
-                    //                 $data,
-                    //                 $email,
-                    //                 $data,
-                    //                 'Extension'
-                    //             );
+                $emails = $usersmerge
+                ->map(function ($u) {
+                    return Helpers::getUserEmail($u->user_id);
+                })
+                ->filter()    
+                ->unique()     
+                ->values();
 
-                    //         } catch (\Exception $e) {
-                    //             \Log::error('Mail Error: ' . $e->getMessage());
-                    //         }
-                    //        }
-                    //    // }
-                    // }
+               foreach ($emails as $email) {
+                  try {
 
+                                $maildata = [
+                                    'data'    => $data,
+                                    'site'    => "Change Proposal And Justification",
+                                    'history' => "QA/CQA Head / Designee Approval Complete",
+                                    'process' => 'Change Proposal And Justification',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $maildata,
+                                    $email,
+                                    $data,
+                                    'Change Proposal And Justification'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+            }
+
+
+                  
 
                     $data->update();
                     return back();
@@ -1119,6 +1172,46 @@ class ChangeProposalJustController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
+
+                    $usersmerge = collect()
+                      
+                        ->merge(Helpers::getCQAUsersList($data->division_id))
+                        ->merge(Helpers::getQAUserList($data->division_id))
+                       
+                        ->unique('user_id');
+
+                        $emails = $usersmerge
+                        ->map(function ($u) {
+                            return Helpers::getUserEmail($u->user_id);
+                        })
+                        ->filter()    
+                        ->unique()     
+                        ->values();
+
+                    foreach ($emails as $email) {
+                        try {
+
+                                $maildata = [
+                                    'data'    => $data,
+                                    'site'    => "Change Proposal And Justification",
+                                    'history' => "More Info Required",
+                                    'process' => 'Change Proposal And Justification',
+                                    'comment' => $request->comment,
+                                    'user'    => Auth::user()->name
+                                ];
+
+                                SendMail::dispatch(
+                                    $maildata,
+                                    $email,
+                                    $data,
+                                    'Change Proposal And Justification'
+                                );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail Error: ' . $e->getMessage());
+                            }
+            }
+
 
                     // $list = Helpers::getHodUserList($data->division_id)->unique('user_id')
                     // ->values();
@@ -1182,9 +1275,9 @@ class ChangeProposalJustController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Review";
+                    $history->change_to =   "HOD/Designee Review";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'In Review';
+                    $history->stage = 'HOD/Designee Review';
                     // if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
                     // $history->action_name = 'New';
                     // } else {
@@ -1193,36 +1286,32 @@ class ChangeProposalJustController extends Controller
                     $history->action_name = 'Not Applicable';
                     $history->save();
 
-                    // $list = Helpers::getHodUserList($data->division_id)->unique('user_id')
-                    // ->values();
-                    // foreach ($list as $u) {
-                    //    // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //        $email = Helpers::getUserEmail($u->user_id);
-                    //            if ($email !== null) {
-                    //                try{
+                     $list = Helpers::getHodUserList($data->division_id);
 
-                    //                     $data = [
-                    //                         'data'    => $data,
-                    //                         'site'    => "Extension",
-                    //                         'history' => "More Info Required",
-                    //                         'process' => 'Extension',
-                    //                         'comment' => $request->comment,
-                    //                         'user'    => Auth::user()->name
-                    //                     ];
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    $maildata = [
+                                        'data' => $data,
+                                        'site' => "CPJ",
+                                        'history' => "More Info Required",
+                                        'process' => 'Change Proposal And Justification',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
 
-                    //                     SendMail::dispatch(
-                    //                         $data,
-                    //                         $email,
-                    //                         $data,
-                    //                         'Extension'
-                    //                     );
+                                    SendMail::dispatch($maildata, $email, $data, 'Change Proposal And Justification');
 
-                    //                 } catch (\Exception $e) {
-                    //                     \Log::error('Mail Error: ' . $e->getMessage());
-                    //                 }
-                    //        }
-                    //    // }
-                    // }
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+
+                    
                     $data->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -1262,6 +1351,33 @@ class ChangeProposalJustController extends Controller
                     // }
                     $history->action_name = 'Not Applicable';
                     $history->save();
+
+                    $list = Helpers::getInitiatorUserList($data->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    $maildata = [
+                                        'data' => $data,
+                                        'site' => "CPJ",
+                                        'history' => "More Info Required",
+                                        'process' => 'Change Proposal And Justification',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($maildata, $email, $data, 'Change Proposal And Justification');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+
+
                     // $list = Helpers::getInitiatorUserList($data->division_id)->unique('user_id')
                     // ->values();
                     // foreach ($list as $u) {
@@ -1347,6 +1463,30 @@ class ChangeProposalJustController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
+
+                      $list = Helpers::getHodUserList($cpjdata->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    $maildata = [
+                                        'data' => $cpjdata,
+                                        'site' => "CPJ",
+                                        'history' => "Cancel",
+                                        'process' => 'Change Proposal And Justification',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($maildata, $email, $cpjdata, 'Change Proposal And Justification');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
+                            }
+                        }
                 //  $list = Helpers::getInitiatorUserList($cpjdata->division_id)
                 //     ->unique('user_id')
                 //     ->values(); // Notify HOD
@@ -1432,6 +1572,30 @@ class ChangeProposalJustController extends Controller
                         $history->action_name = 'Update';
                     }
                     $history->save();
+
+                     $list = Helpers::getHodUserList($cpjdata->division_id);
+
+                        foreach ($list as $u) {
+                            $email = Helpers::getUserEmail($u->user_id);
+                        
+                            if ($email !== null) {
+                                try {
+                                    $maildata = [
+                                        'data' => $cpjdata,
+                                        'site' => "CPJ",
+                                        'history' => "Cancel",
+                                        'process' => 'Change Proposal And Justification',
+                                        'comment' => $request->comment,
+                                        'user'=> Auth::user()->name
+                                    ];
+
+                                    SendMail::dispatch($maildata, $email, $cpjdata, 'Change Proposal And Justification');
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail Error: ' . $e->getMessage());
+                                }
+                            }
+                        }
                 //  $list = Helpers::getInitiatorUserList($cpjdata->division_id)
                 //     ->unique('user_id')
                 //     ->values(); // Notify HOD
@@ -1551,7 +1715,7 @@ class ChangeProposalJustController extends Controller
 
                                         $data = [
                                             'data'    => $cpjdata,
-                                            'site'    => "Change Proposal And Justification",
+                                            'site' => "CPJ",
                                             'history' => "Reject",
                                             'process' => 'Change Proposal And Justification',
                                             'comment' => $request->comment,

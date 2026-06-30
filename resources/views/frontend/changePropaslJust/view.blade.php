@@ -153,7 +153,7 @@
                             </button>
                         @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 43) || (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 9) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 65) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA/CQA Head/Designe Approval Complete
+                                QA/CQA Head/Designee Approval Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
@@ -454,15 +454,19 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Impact Assesment">Description of Change</label>
-                                        <textarea name="impassesment" {{ $istab1 ? "" : "readonly" }}>{{ $data->impassesment }}</textarea>
+                                        <label for="Impact Assesment">Description of Change @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                                   @endif</label>
+                                        <textarea name="impassesment" {{ $istab1 ? "required" : "readonly" }}>{{ $data->impassesment }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
-                                            Change Proposal And Justification Details Grid
+                                            Change Proposal And Justification Details Grid @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                                   @endif
                                             <button type="button" id="traceblity_add" {{ $istab1 ? "" : "disabled" }}>+</button>
                                         </label>
                                         <div class="table-responsive">
@@ -488,25 +492,25 @@
                                                                 <input disabled type="text"
                                                                     name="change_proposal_grid[{{ $index }}][serial]"
                                                                     value="{{ $loop->iteration }}"
-                                                                    {{ $istab1 ? '' : 'readonly' }}>
+                                                                    {{ $istab1 ? 'required' : 'readonly' }}>
                                                                 </td>
 
                                                                 <td>
                                                                     <textarea
                                                                         name="change_proposal_grid[{{ $index }}][existing_system]"
-                                                                        {{ $istab1 ? '' : 'readonly' }}>{{ $item['existing_system'] ?? '' }}</textarea>
+                                                                        {{ $istab1 ? 'required' : 'readonly' }}>{{ $item['existing_system'] ?? '' }}</textarea>
                                                                 </td>
 
                                                                 <td>
                                                                     <textarea
                                                                         name="change_proposal_grid[{{ $index }}][proposed_change]"
-                                                                        {{ $istab1 ? '' : 'readonly' }}>{{ $item['proposed_change'] ?? '' }}</textarea>
+                                                                        {{ $istab1 ? 'required' : 'readonly' }}>{{ $item['proposed_change'] ?? '' }}</textarea>
                                                                 </td>
 
                                                                 <td>
                                                                     <textarea
                                                                         name="change_proposal_grid[{{ $index }}][justification]"
-                                                                        {{ $istab1 ? '' : 'readonly' }}>{{ $item['justification'] ?? '' }}</textarea>
+                                                                        {{ $istab1 ? 'required' : 'readonly' }}>{{ $item['justification'] ?? '' }}</textarea>
                                                                 </td>
 
                                                                 <td>
@@ -526,44 +530,86 @@
                                     </div>
                                 </div>
 
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#traceblity_add').click(function(e) {
-                                            e.preventDefault();
+                             <script>
+$(document).ready(function () {
 
-                                            function generateTableRow(serialNumber) {
-                                                var html =
-                                                    '<tr>' +
+    $('#traceblity_add').on('click', function (e) {
+        e.preventDefault();
 
-                                                    '<td><input disabled type="text" name="change_proposal_grid[' + serialNumber +
-                                                    '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+        let rowCount = $('#traceblity tbody tr').length;
 
-                                                    '<td><input type="text" name="change_proposal_grid[' + serialNumber +
-                                                    '][existing_system]" {{ $istab1 ? "" : "readonly" }}></td>' +
+        let html = `
+            <tr>
+                <td>
+                    <input type="text"
+                           name="change_proposal_grid[${rowCount}][serial]"
+                           value="${rowCount + 1}"
+                           readonly>
+                </td>
 
-                                                    '<td><input type="text" name="change_proposal_grid[' + serialNumber +
-                                                    '][proposed_change]" {{ $istab1 ? "" : "readonly" }}></td>' +
+                <td>
+                    <textarea
+                        name="change_proposal_grid[${rowCount}][existing_system]"
+                        {{ $istab1 ? 'required' : 'readonly' }}></textarea>
+                </td>
 
-                                                    '<td><input type="text" name="change_proposal_grid[' + serialNumber +
-                                                    '][justification]" {{ $istab1 ? "" : "readonly" }}></td>' +
+                <td>
+                    <textarea
+                        name="change_proposal_grid[${rowCount}][proposed_change]"
+                        {{ $istab1 ? 'required' : 'readonly' }}></textarea>
+                </td>
 
-                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                <td>
+                    <textarea
+                        name="change_proposal_grid[${rowCount}][justification]"
+                        {{ $istab1 ? 'required' : 'readonly' }}></textarea>
+                </td>
 
-                                                    '</tr>';
+                <td>
+                    <button type="button" class="removeRowBtn">Remove</button>
+                </td>
+            </tr>
+        `;
 
-                                                return html;
-                                            }
+        $('#traceblity tbody').append(html);
+    });
 
-                                            var tableBody = $('#traceblity tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount);
-                                            tableBody.append(newRow);
-                                        });
-                                    });
-                                </script>
+    // Remove Row
+    $(document).on('click', '.removeRowBtn', function () {
+        $(this).closest('tr').remove();
+
+        // Re-serial numbering
+        $('#traceblity tbody tr').each(function (index) {
+            $(this).find('td:first input').val(index + 1);
+            $(this).find('td:first input').attr(
+                'name',
+                `change_proposal_grid[${index}][serial]`
+            );
+
+            $(this).find('textarea').eq(0).attr(
+                'name',
+                `change_proposal_grid[${index}][existing_system]`
+            );
+
+            $(this).find('textarea').eq(1).attr(
+                'name',
+                `change_proposal_grid[${index}][proposed_change]`
+            );
+
+            $(this).find('textarea').eq(2).attr(
+                'name',
+                `change_proposal_grid[${index}][justification]`
+            );
+        });
+    });
+
+});
+</script>
 
                                 <div class="sub-head">
-                                    Impact Assessment
+                                    Impact Assessment @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                                   @endif
                                 </div>
 
                                 @php
@@ -757,13 +803,13 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-remove-id="REFEFile-{{ $loop->index }}"
                                                                 data-file-name="{{ $file }}"
                                                                 style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                     class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
+                                                                    style="color:red; font-size:20px; margin-right:4px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -888,13 +934,13 @@
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-remove-id="EFREFEFile-{{ $loop->index }}"
                                                             data-file-name="{{ $file }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
+                                                                style="color:red; font-size:20px; margin-right:4px;"></i></a>
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -1016,13 +1062,13 @@
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a class="remove-file"
                                                             data-remove-id="QAREFEFile-{{ $loop->index }}"
                                                             data-file-name="{{ $file }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
+                                                                style="color:red; font-size:20px; margin-right:4px;"></i></a>
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -1147,13 +1193,13 @@
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a class="remove-file"
                                                             data-remove-id="QAREFEFile-{{ $loop->index }}"
                                                             data-file-name="{{ $file }}"
                                                             style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
+                                                                style="color:red; font-size:20px; margin-right:4px;"></i></a>
                                                     </h6>
                                                 @endforeach
                                             @endif
