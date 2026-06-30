@@ -693,7 +693,7 @@ class ChangeProposalJustController extends Controller
         if ($lastDocument->qa_cqa_head_Attachment != $data->qa_cqa_head_Attachment || !empty($request->qa_cqa_head_Attachment_comment)) {
             $history = new ChangeProposalAuditTrial;
             $history->cpjg_id = $id;
-            $history->activity_type = 'QA/CQA Review Attachments';
+            $history->activity_type = 'QA/CQA Head Approval Attachments';
             $history->previous =   str_replace(',', ', ', $lastDocument->qa_cqa_head_Attachment);
             $history->current =str_replace(',', ', ',  $data->qa_cqa_head_Attachment);
             $history->comment = $request->qa_cqa_head_Attachment_comment;
@@ -754,9 +754,9 @@ class ChangeProposalJustController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Review";
+                    $history->change_to =   "HOD/Designee Review";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'In Review';
+                    $history->stage = 'HOD/Designee Review';
                     if (is_null($lastDocument->submit_by) || $lastDocument->submit_by === '') {
                         $history->action_name = 'New';
                     } else {
@@ -821,7 +821,7 @@ class ChangeProposalJustController extends Controller
                 }
                 
                     $data->stage = "3";
-                    $data->status = "QA CQA Review";
+                    $data->status = "QA/CQA Review";
                     $data->HOD_Review_Complete_By = Auth::user()->name;
                     $data->HOD_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $data->HOD_Review_Comments = $request->comment;
@@ -836,7 +836,7 @@ class ChangeProposalJustController extends Controller
                     }
                     $history->current = $data->HOD_Review_Complete_By . ' , ' . $data->HOD_Review_Complete_On;
                     $history->comment = $request->comment;
-                    $history->action = 'Review';
+                    $history->action = 'HOD Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -909,14 +909,14 @@ class ChangeProposalJustController extends Controller
                 }
                     
                     $data->stage = "4";
-                    $data->status = "QA/CQA Head/Designee";
+                    $data->status = "QA/CQA Head / Designee Approval";
                     $data->qa_cqa_Review_Complete_By = Auth::user()->name;
                     $data->qa_cqa__Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $data->qa_cqa__Review_Comments = $request->comment;
 
                     $history = new ChangeProposalAuditTrial();
                     $history->cpjg_id = $id;
-                    $history->activity_type = 'Approval By, Approval On';
+                    $history->activity_type = 'QA/CQA Review Complete By, QA/CQA Review Complete By On';
                     if (is_null($lastDocument->qa_cqa_Review_Complete_By) || $lastDocument->qa_cqa_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -924,14 +924,14 @@ class ChangeProposalJustController extends Controller
                     }
                     $history->current = $data->qa_cqa_Review_Complete_By . ' , ' . $data->qa_cqa__Review_Complete_On;
                     $history->comment = $request->comment;
-                    $history->action = 'Review';
+                    $history->action = 'QA/CQA Review Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Approved";
+                    $history->change_to =   "QA/CQA Head / Designee Approval";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'In Approved';
+                    $history->stage = 'QA/CQA Head / Designee Approval';
                     if (is_null($lastDocument->qa_cqa_Review_Complete_By) || $lastDocument->qa_cqa_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1007,7 +1007,7 @@ class ChangeProposalJustController extends Controller
 
                     $history = new ChangeProposalAuditTrial();
                     $history->cpjg_id = $id;
-                    $history->activity_type = 'Complete By, Complete On';
+                    $history->activity_type = 'QA/CQA Head/Designee Approval Complete By, QA/CQA Head/Designee Approval Complete On';
                     if (is_null($lastDocument->qa_cqa_head_Review_Complete_By) || $lastDocument->qa_cqa_head_Review_Complete_By === '') {
                         $history->previous = "Null";
                     } else {
@@ -1015,14 +1015,14 @@ class ChangeProposalJustController extends Controller
                     }
                     $history->current = $data->qa_cqa_head_Review_Complete_By . ' , ' . $data->qa_cqa_head_Review_Complete_On;
                     $history->comment = $request->comment;
-                    $history->action = 'Review';
+                    $history->action = 'QA/CQA Head/Designee Approval Complete';
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Approved";
+                    $history->change_to =   "Closed - Done";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'In Approved';
+                    $history->stage = 'Closed - Done';
                     if (is_null($lastDocument->qa_cqa_head_Review_Complete_By) || $lastDocument->qa_cqa_head_Review_Complete_By === '') {
                         $history->action_name = 'New';
                     } else {
@@ -1182,9 +1182,9 @@ class ChangeProposalJustController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->change_to =   "In Review";
+                    $history->change_to =   "HOD/Designee Review";
                     $history->change_from = $lastDocument->status;
-                    $history->stage = 'In Review';
+                    $history->stage = 'HOD/Designee Review';
                     // if (is_null($lastDocument->more_info_inapproved_by) || $lastDocument->more_info_inapproved_by === '') {
                     // $history->action_name = 'New';
                     // } else {

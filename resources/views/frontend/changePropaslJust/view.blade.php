@@ -153,7 +153,7 @@
                             </button>
                         @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 43) || (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 9) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 65) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA/CQA Head/Designe Approval Complete
+                                QA/CQA Head/Designee Approval Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
