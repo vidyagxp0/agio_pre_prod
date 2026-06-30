@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Carbon\Carbon;
 
 class SendReminderMailJob implements ShouldQueue
 {
@@ -30,25 +31,37 @@ class SendReminderMailJob implements ShouldQueue
     }
 
     public function handle()
-    {
-        Log::info('JOB_RUNNING', [
-            'record_number' => $this->emailRecordNumber
-        ]);
+{
+    $remainingDays = Carbon::today()->diffInDays(
+        Carbon::parse($this->record->due_date),
+        false
+    );
 
-        Mail::send('mail.due_reminder', [
-            'user' => $this->user,
-            'record' => $this->record,
-            'processName' => $this->processName,
-            'recordUrl' => $this->recordUrl,
-            'dueDate' => $this->record->due_date,
-            'recordNumber' => $this->emailRecordNumber // ✅ correct
-        ], function ($message) {
-            $message->to($this->user->email)
-                    ->subject('⚠️ Reminder: Due Date Near');
-        });
+    Mail::send('mail.due_reminder', [
 
-        Log::info('JOB_FINAL_DATA', [
-            'emailRecordNumber' => $this->emailRecordNumber
-        ]);
-    }
+        'user' => $this->user,
+        'record' => $this->record,
+        'processName' => $this->processName,
+        'recordUrl' => $this->recordUrl,
+        'dueDate' => $this->record->due_date,
+        'recordNumber' => $this->emailRecordNumber,
+        'remainingDays' => $remainingDays,
+        
+
+    ], function ($message) use ($remainingDays) {
+
+        $subject = "⚠️ {$this->processName}";
+
+        if ($remainingDays > 0) {
+            $subject .= " - Due in {$remainingDays} Day(s)";
+        } elseif ($remainingDays == 0) {
+            $subject .= " - Due Today";
+        } else {
+            $subject .= " - Overdue";
+        }
+
+        $message->to($this->user->email)
+                ->subject($subject);
+    });
+}
 }

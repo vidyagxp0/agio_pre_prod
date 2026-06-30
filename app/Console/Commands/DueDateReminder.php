@@ -89,13 +89,33 @@ class DueDateReminder extends Command
                 }
 
                 // Users fetch karo
+                // $users = $this->resolveReminderUser($record, $processName);
+                // $recordUrl = $this->getRecordUrl($processName, $record);
+
+                // if ($users->isEmpty()) {
+                //     Log::warning('NO_USERS_FOUND', [
+                //         'record_id' => $record->id
+                //     ]);
+                //     continue;
+                // }
+
                 $users = $this->resolveReminderUser($record, $processName);
+
+                // Always convert to Collection
+                if (!$users instanceof \Illuminate\Support\Collection) {
+                    $users = collect($users);
+                }
+
                 $recordUrl = $this->getRecordUrl($processName, $record);
 
                 if ($users->isEmpty()) {
+
                     Log::warning('NO_USERS_FOUND', [
-                        'record_id' => $record->id
+                        'process'   => $processName,
+                        'record_id' => $record->id,
+                        'stage'     => $record->stage,
                     ]);
+
                     continue;
                 }
 
@@ -641,9 +661,9 @@ class DueDateReminder extends Command
 
         $urls = [
             'Action Item' => '/rcms/actionItem/',
-            'Change Control' => '/rcms/changeControl/',
+            'Change Control' => '/rcms/CC/',
             'CAPA' => '/capashow/',
-            'Deviation' => '/rcms/deviation/',
+            'Deviation' => '/rcms/devshow/',
             'Change Proposal And Justification' => '/rcms/changeProposal/',
             'Effectiveness-Check' => '/rcms/effectiveness/',
             'Extension' => '/extension_newshow/',
