@@ -2904,8 +2904,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         <label>Classification by QA: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Critical' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Critical
-                                                    <input type="checkbox" name="classification_by_qa" value="Non-critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Non-critical' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Non-Critical
+                                                    <input type="checkbox" name="classification_by_qa" value="Minor" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Minor' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Minor
+                                                    <input type="checkbox" name="classification_by_qa" value="Major" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Major' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Major
+                                                    <input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Critical' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}>Critical
                                                 </div>
                                                  @if ($data->stage != 3)
                                                     <input type="hidden" name="classification_by_qa" value="{{ $data->classification_by_qa }}">
@@ -2939,67 +2940,35 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror --}}
                                         </div>
-                                             {{-- <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="QA Initial Attachments">QA Initial Review Attachments </label>
-                                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                                            documents</small></div>
-                                                    <div class="file-attachment-field">
-                                                        <div disabled class="file-attachment-list" id="Initial_attachment">
-                                                            @if ($data->Initial_attachment)
-                                                                @foreach (json_decode($data->Initial_attachment) as $file)
-                                                                    <h6 type="button" class="file-container text-dark"
-                                                                        style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                                            target="_blank"><i class="fa fa-eye text-primary"
-                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file"
-                                                                            data-file-name="{{ $file }}"><i
-                                                                                class="fa-solid fa-circle-xmark"
-                                                                                style="color:red; font-size:20px;"></i></a>
-                                                                    </h6>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input type="file" id="myfile"
-                                                                name="Initial_attachment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                                oninput="addMultipleFiles(this, 'Initial_attachment')" multiple>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                             </div>   --}}
-                                             <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="QA Initial Attachments">QA Initial Review Attachments</label>
-                                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                    <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="file-list">
-                                                            @if ($data->Initial_attachment)
-                                                                @foreach(json_decode($data->Initial_attachment) as $file)
-                                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" data-file-name3="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                        <input type="hidden" name="existing_Initial_attachment[]" value="{{ $file }}">
-                                                                    </h6>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
 
-                                                        <!-- Updated the ID of the input -->
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input type="file" id="file-input" name="Initial_attachment[]" multiple {{ $data->stage == 3 ? '' : 'disabled' }}  {{ $data->stage == 3 && $QArole ? '' : 'disabled' }}>
-                                                        </div>
-                                                    </div>
-                                                </div>
+
+                                          <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments">QA Initial Review Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="QA_Desinee_attachments1">
+                                                @if ($data->Initial_attachment)
+                                                @foreach (json_decode($data->Initial_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file" data-file-name9="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        <input type="hidden" name="existing_Initial_attachment[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
                                             </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Initial_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'QA_Desinee_attachments1')" multiple {{ $data->stage == 3 ? '' : 'disabled' }}  {{ $data->stage == 3 && $QArole ? '' : 'readonly' }}>
+                                            </div>
+                                        </div>
 
-                                            <!-- Hidden field to keep track of files to be deleted -->
-                                            <input type="hidden" id="deleted_Initial_attachment" name="deleted_Initial_attachment" value="">
+
+                                          <input type="hidden" id="deleted_Initial_attachment" name="deleted_Initial_attachment" value="">
 
                                             <script>
                                                 document.addEventListener('DOMContentLoaded', function() {
@@ -3064,7 +3033,40 @@ document.addEventListener('DOMContentLoaded', function() {
                                                 });
                                             </script>
 
-                                                                 {{-- <div class="col-md-12">
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                const removeButtons = document.querySelectorAll('.remove-file');
+
+                                                removeButtons.forEach(button => {
+                                                    button.addEventListener('click', function() {
+                                                        const fileName = this.getAttribute('data-file-name9');
+                                                        const fileContainer = this.closest('.file-container');
+
+                                                        // Hide the file container
+                                                        if (fileContainer) {
+                                                            fileContainer.style.display = 'none';
+                                                            // Remove hidden input associated with this file
+                                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                            if (hiddenInput) {
+                                                                hiddenInput.remove();
+                                                            }
+
+                                                            // Add the file name to the deleted files list
+                                                            const deletedFilesInput = document.getElementById('deleted_Initial_attachment');
+                                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                            deletedFiles.push(fileName);
+                                                            deletedFilesInput.value = deletedFiles.join(',');
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+
+                                            
+                                   
+                                           {{-- <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="QAInitialRemark">QA Initial Remarks <span
                                                             class="text-danger">*</span></label>

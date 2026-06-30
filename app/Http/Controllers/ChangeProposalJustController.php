@@ -731,9 +731,42 @@ class ChangeProposalJustController extends Controller
             if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $data = ChangeProposalJust::find($id);
                 $lastDocument = ChangeProposalJust::find($id);
-
-                if ($data->stage == 1) {
+    $changeProposalGrid = ChangeProposalJustGrid::where('cpjg_id', $id)->where('identifier', 'change_proposal_grid')->first();
                 
+                if ($data->stage == 1) {
+              
+             
+           
+
+                    // Main fields validation
+    if (empty($data->cpdescription) || empty($data->impassesment)) {
+
+        Session::flash('swal', [
+            'type' => 'warning',
+            'title' => 'Mandatory Fields!',
+            'message' => 'Please fill all required fields.'
+        ]);
+
+        return back();
+    }
+
+    // Grid record check
+    $changeProposalGrid = ChangeProposalJustGrid::where('cpjg_id', $id)
+        ->where('identifier', 'change_proposal_grid')
+        ->first();
+
+    if (!$changeProposalGrid) {
+
+        Session::flash('swal', [
+            'type' => 'warning',
+            'title' => 'Mandatory Fields!',
+            'message' => 'Please add at least one row in the Change Proposal Details Grid.'
+        ]);
+
+        return back();
+    }
+
+              
                     $data->stage = "2";
                     $data->status = "HOD/Designee Review";
                     $data->submit_by = Auth::user()->name;
