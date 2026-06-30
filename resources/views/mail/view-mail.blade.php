@@ -299,6 +299,8 @@
                                     {{ $data->description_gi }}
                                     @elseif($process == 'Market Complaint')
                                     {{ $data->description_gi }}
+                                     @elseif($process == 'Change Proposal And Justification')
+                                    {{ $data->cpdescription }}
                                     @else
                                     {{ $data->short_description }}
                                     @endif
