@@ -1054,7 +1054,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -1130,7 +1130,7 @@
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>';
 
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
@@ -2429,7 +2429,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
@@ -2462,7 +2462,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -2535,7 +2535,7 @@
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // You might need to adjust this to handle local previews
                                             viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>';
 
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
@@ -2614,7 +2614,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -2650,7 +2650,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -2725,7 +2725,7 @@
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // Adjust this to handle local previews
                                             viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>';
 
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
@@ -2821,7 +2821,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -2856,7 +2856,7 @@
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgba(255, 255, 255, 0);">
                                                             <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
@@ -2974,7 +2974,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -3010,7 +3010,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -3085,7 +3085,7 @@
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // Adjust this to handle local previews
                                             viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>';
 
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
@@ -3160,7 +3160,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -3196,7 +3196,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -3270,7 +3270,7 @@
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // Adjust this if needed for local previews
                                             viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>';
 
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
@@ -3336,7 +3336,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -3425,7 +3425,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -3461,7 +3461,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank">
                                                                 <i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i>
+                                                                    style="font-size:20px; margin-right:4px;"></i>
                                                             </a>
                                                             <a type="button" class="remove-file"
                                                                 data-file-name="{{ $file }}">
@@ -3536,7 +3536,7 @@
                                             const viewLink = document.createElement('a');
                                             viewLink.href = '#'; // Adjust this to handle local previews if needed
                                             viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>';
 
                                             const removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');

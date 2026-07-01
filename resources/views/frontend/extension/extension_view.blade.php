@@ -729,7 +729,7 @@
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}"
                                                         target="_blank"><i class="fa fa-eye text-primary"
-                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            style="font-size:20px; margin-right:4px;"></i></a>
                                                     <a class="remove-file"
                                                         data-file-name="{{ $file }}"><i
                                                             class="fa-solid fa-circle-xmark"
@@ -769,7 +769,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a type="button" class="remove-file"
                                                                 data-remove-id="REFEFile-{{ $loop->index }}"
                                                                 data-file-name="{{ $file }}"
@@ -842,7 +842,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><i class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             <a class="remove-file"
                                                 data-file-name="{{ $file }}"><i
                                                     class="fa-solid fa-circle-xmark"
@@ -881,7 +881,7 @@
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:4px;"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-remove-id="EFREFEFile-{{ $loop->index }}"
                                                             data-file-name="{{ $file }}"
@@ -947,7 +947,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a class="remove-file"
                                                                 data-remove-id="QAREFEFile-{{ $loop->index }}"
                                                                 data-file-name="{{ $file }}"
@@ -1014,7 +1014,7 @@
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                                             <a class="remove-file"
                                                                 data-remove-id="QAREFEFile-{{ $loop->index }}"
                                                                 data-file-name="{{ $file }}"
