@@ -4306,8 +4306,11 @@ Not Applicable
                     </td>
                 </tr>
                 </table>   
+                  @php
+                        $commnetData = DB::table('change_control_comments')->where('cc_id', $data->id)->first();
+                    @endphp
                 <table>
-
+                  
 
 
 
@@ -4384,15 +4387,16 @@ Not Applicable
                     </td>
                 </tr>
                </table>   
+               
                 <table>
                     <tr>
                     <th class="w-20">Closure Approved By : </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->closure_approved_by ?? 'Not Applicable' }}</div>
+                        <div class="static">{{ $commnetData->closure_approved_by ?? 'Not Applicable' }}</div>
                     </td>
                     <th class="w-20">Closure Approved On : </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->closure_approved_on ?? 'Not Applicable' }}</div>
+                        <div class="static">{{ $commnetData->closure_approved_on ?? 'Not Applicable' }}</div>
                     </td>
                 </tr>
                 </table>   
@@ -4400,7 +4404,7 @@ Not Applicable
                     <tr>
                     <th class="w-20">Closure Approved Comment :</th>
                     <td class="w-80">
-                        <div class="static">{{ $data->closure_approved_comment ?? 'Not Applicable' }}</div>
+                        <div class="static">{{ $commnetData->closure_approved_comment ?? 'Not Applicable' }}</div>
                     </td>
                 </tr>
             </table>

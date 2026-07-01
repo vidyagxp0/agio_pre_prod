@@ -265,15 +265,15 @@
 
                 <table>
                     <tr>
-                        <th>Short Description</th>
-                        <td>{{ $cpj->cpdescription ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-30">{{ $cpj->cpdescription ?? 'Not Applicable' }}</td>
                     </tr>
                 </table>
 
                 <table>
                     <tr>
-                        <th>Description of Change</th>
-                        <td>{{ $cpj->impassesment ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Description of Change</th>
+                        <td class="w-30">{{ $cpj->impassesment ?? 'Not Applicable' }}</td>
                     </tr>
                 </table>
             </div>
@@ -453,13 +453,7 @@
             {{-- PAGE BREAK --}}
             <div style="page-break-after: always;"></div>
 
-            @endforeach
-
-        @else
-            <div class="block">
-                <div class="block-head">No Change Proposal Found</div>
-            </div>
-        @endif
+         
 
     </div>
 
@@ -521,6 +515,18 @@
                 </table>
             </div>
 </div>
+
+   @endforeach
+
+        @else
+            <div class="block">
+                <div class="block-head">No Change Proposal Found</div>
+            </div>
+        @endif
+
+        <center>
+            <h3>Change Control Report</h3>
+        </center>
 
 
 
@@ -3471,12 +3477,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
         
         <div class="block">
                 <div class="head">
@@ -3986,7 +3986,9 @@
                 </table>   
                 <table>
 
-
+  @php
+                        $commnetData = DB::table('change_control_comments')->where('cc_id', $data->id)->first();
+                    @endphp
 
 
                 <tr>
@@ -4066,11 +4068,11 @@
                     <tr>
                     <th class="w-20">Closure Approved By : </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->closure_approved_by ?? 'Not Applicable' }}</div>
+                        <div class="static">{{ $commnetData->closure_approved_by ?? 'Not Applicable' }}</div>
                     </td>
                     <th class="w-20">Closure Approved On : </th>
                     <td class="w-30">
-                        <div class="static">{{ $data->closure_approved_on ?? 'Not Applicable' }}</div>
+                        <div class="static">{{ $commnetData->closure_approved_on ?? 'Not Applicable' }}</div>
                     </td>
                 </tr>
                 </table>   
@@ -4078,7 +4080,7 @@
                     <tr>
                     <th class="w-20">Closure Approved Comment :</th>
                     <td class="w-80">
-                        <div class="static">{{ $data->closure_approved_comment ?? 'Not Applicable' }}</div>
+                        <div class="static">{{ $commnetData->closure_approved_comment ?? 'Not Applicable' }}</div>
                     </td>
                 </tr>
             </table>
