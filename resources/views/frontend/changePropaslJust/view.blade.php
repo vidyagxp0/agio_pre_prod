@@ -531,86 +531,91 @@
                                 </div>
 
                              <script>
-$(document).ready(function () {
+                                $(document).ready(function () {
 
-    $('#traceblity_add').on('click', function (e) {
-        e.preventDefault();
+                                    $('#traceblity_add').on('click', function (e) {
+                                        e.preventDefault();
 
-        let rowCount = $('#traceblity tbody tr').length;
+                                        let rowCount = $('#traceblity tbody tr').length;
 
-        let html = `
-            <tr>
-                <td>
-                    <input type="text"
-                           name="change_proposal_grid[${rowCount}][serial]"
-                           value="${rowCount + 1}"
-                           readonly>
-                </td>
+                                        let html = `
+                                            <tr>
+                                                <td>
+                                                    <input type="text"
+                                                        name="change_proposal_grid[${rowCount}][serial]"
+                                                        value="${rowCount + 1}"
+                                                        readonly>
+                                                </td>
 
-                <td>
-                    <textarea
-                        name="change_proposal_grid[${rowCount}][existing_system]"
-                        {{ $istab1 ? 'required' : 'readonly' }}></textarea>
-                </td>
+                                                <td>
+                                                    <textarea
+                                                        name="change_proposal_grid[${rowCount}][existing_system]"
+                                                        {{ $istab1 ? 'required' : 'readonly' }}></textarea>
+                                                </td>
 
-                <td>
-                    <textarea
-                        name="change_proposal_grid[${rowCount}][proposed_change]"
-                        {{ $istab1 ? 'required' : 'readonly' }}></textarea>
-                </td>
+                                                <td>
+                                                    <textarea
+                                                        name="change_proposal_grid[${rowCount}][proposed_change]"
+                                                        {{ $istab1 ? 'required' : 'readonly' }}></textarea>
+                                                </td>
 
-                <td>
-                    <textarea
-                        name="change_proposal_grid[${rowCount}][justification]"
-                        {{ $istab1 ? 'required' : 'readonly' }}></textarea>
-                </td>
+                                                <td>
+                                                    <textarea
+                                                        name="change_proposal_grid[${rowCount}][justification]"
+                                                        {{ $istab1 ? 'required' : 'readonly' }}></textarea>
+                                                </td>
 
-                <td>
-                    <button type="button" class="removeRowBtn">Remove</button>
-                </td>
-            </tr>
-        `;
+                                                
 
-        $('#traceblity tbody').append(html);
-    });
+                                                <td>
+                                                    <button type="button" class="removeRowBtn"  {{ $data->stage == 1 ? '' : 'disabled' }}>Remove</button>
+                                                </td>
+                                            </tr>
+                                        `;
 
-    // Remove Row
-    $(document).on('click', '.removeRowBtn', function () {
-        $(this).closest('tr').remove();
+                                        $('#traceblity tbody').append(html);
+                                    });
 
-        // Re-serial numbering
-        $('#traceblity tbody tr').each(function (index) {
-            $(this).find('td:first input').val(index + 1);
-            $(this).find('td:first input').attr(
-                'name',
-                `change_proposal_grid[${index}][serial]`
-            );
+                                    // Remove Row
+                                    $(document).on('click', '.removeRowBtn', function () {
+                                        @if($data->stage != 1)
+                                            return false;
+                                        @endif
+                                        $(this).closest('tr').remove();
 
-            $(this).find('textarea').eq(0).attr(
-                'name',
-                `change_proposal_grid[${index}][existing_system]`
-            );
+                                        // Re-serial numbering
+                                        $('#traceblity tbody tr').each(function (index) {
+                                            $(this).find('td:first input').val(index + 1);
+                                            $(this).find('td:first input').attr(
+                                                'name',
+                                                `change_proposal_grid[${index}][serial]`
+                                            );
 
-            $(this).find('textarea').eq(1).attr(
-                'name',
-                `change_proposal_grid[${index}][proposed_change]`
-            );
+                                            $(this).find('textarea').eq(0).attr(
+                                                'name',
+                                                `change_proposal_grid[${index}][existing_system]`
+                                            );
 
-            $(this).find('textarea').eq(2).attr(
-                'name',
-                `change_proposal_grid[${index}][justification]`
-            );
-        });
-    });
+                                            $(this).find('textarea').eq(1).attr(
+                                                'name',
+                                                `change_proposal_grid[${index}][proposed_change]`
+                                            );
 
-});
-</script>
+                                            $(this).find('textarea').eq(2).attr(
+                                                'name',
+                                                `change_proposal_grid[${index}][justification]`
+                                            );
+                                        });
+                                    });
 
-                                <div class="sub-head">
-                                    Impact Assessment @if($data->stage ==1)
-                                            <span class="text-danger">*</span>
-                                                   @endif
-                                </div>
+                                });
+                                </script>
+
+                        <div class="sub-head">
+                            Impact Assessment @if($data->stage ==1)
+                                    <span class="text-danger">*</span>
+                                            @endif
+                        </div>
 
                                 @php
                                     $questions = [
