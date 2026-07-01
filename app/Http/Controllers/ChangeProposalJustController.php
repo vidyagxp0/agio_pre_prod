@@ -98,9 +98,9 @@ class ChangeProposalJustController extends Controller
         // =========================
         // 🔹 GRID SAVE
         // =========================
-        // if ($request->has('change_proposal_grid')) {
+        if ($request->has('change_proposal_grid')) {
 
-        // GRID SAVE
+       // GRID SAVE
             if (!empty($request->change_proposal_grid))  {
                 ChangeProposalJustGrid::updateOrCreate(
                     [
@@ -113,6 +113,9 @@ class ChangeProposalJustController extends Controller
                 );
             }
 
+
+
+ 
             if (!empty($request->checklist)) {
 
                 $cleanData = [];
@@ -276,6 +279,10 @@ class ChangeProposalJustController extends Controller
             $history->save();
         }
 
+                
+            }
+
+
 
         toastr()->success('Document created');
         return redirect('rcms/qms-dashboard');
@@ -319,23 +326,7 @@ class ChangeProposalJustController extends Controller
         $data->qa_comment = $request->qa_comment;
         $data->qa_cqa_head_comment = $request->qa_cqa_head_comment;
 
-        // $cpFiles = [];
-
-        // if (!empty($data->cpAttachment)) {
-        //     $cpFiles = json_decode($data->cpAttachment, true) ?? [];
-        // }
-
-        // if ($request->hasFile('cpAttachment')) {
-        //     foreach ($request->file('cpAttachment') as $file) {
-        //         $name = time().'_cpj_'.rand(1,100).'.'.$file->getClientOriginalExtension();
-        //         $file->move(public_path('upload/'), $name);
-        //         $cpFiles[] = $name;
-        //     }
-        // }
-
-        // $data->cpAttachment = !empty($cpFiles) ? json_encode($cpFiles) : null;
-
-
+      
         
 
      if (!empty($request->cpAttachment) || !empty($request->deleted_cpAttachment)) {
@@ -451,81 +442,214 @@ class ChangeProposalJustController extends Controller
             $allFiles = array_merge($existingFiles, $newFiles);
             $data->qa_cqa_head_Attachment = json_encode($allFiles);
         }
-    //    $hodFiles = [];
-
-    //     if (!empty($data->hodAttachment)) {
-    //         $hodFiles = json_decode($data->hodAttachment, true) ?? [];
-    //     }
-
-    //     if ($request->hasFile('hodAttachment')) {
-    //         foreach ($request->file('hodAttachment') as $file) {
-    //             $name = time().'_hod_'.rand(1,100).'.'.$file->getClientOriginalExtension();
-    //             $file->move(public_path('upload/'), $name);
-    //             $hodFiles[] = $name;
-    //         }
-    //     }
-
-    //     $data->hodAttachment = !empty($hodFiles) ? json_encode($hodFiles) : null;
-
-        //  $qaFiles = [];
-
-        //     if (!empty($data->qaAttachment)) {
-        //         $qaFiles = json_decode($data->qaAttachment, true) ?? [];
-        //     }
-
-        //     if ($request->hasFile('qaAttachment')) {
-        //         foreach ($request->file('qaAttachment') as $file) {
-        //             $name = time().'_qa_'.rand(1,100).'.'.$file->getClientOriginalExtension();
-        //             $file->move(public_path('upload/'), $name);
-        //             $qaFiles[] = $name;
-        //         }
-        //     }
-
-        //     $data->qaAttachment = !empty($qaFiles) ? json_encode($qaFiles) : null;
-
-            //  $cqaFiles = [];
-
-            // if (!empty($data->qa_cqa_head_Attachment)) {
-            //     $cqaFiles = json_decode($data->qa_cqa_head_Attachment, true) ?? [];
-            // }
-
-            // if ($request->hasFile('qa_cqa_head_Attachment')) {
-            //     foreach ($request->file('qa_cqa_head_Attachment') as $file) {
-            //         $name = time().'_cqa_'.rand(1,100).'.'.$file->getClientOriginalExtension();
-            //         $file->move(public_path('upload/'), $name);
-            //         $cqaFiles[] = $name;
-            //     }
-            // }
-
-            // $data->qa_cqa_head_Attachment = !empty($cqaFiles) ? json_encode($cqaFiles) : null;
-            
+       
         $data->save();
 
          
-            $cpjg_id = $data->id;
+           $cpjg_id = $data->id;
 
-        $changeProposalGridData = ChangeProposalJustGrid::where([
-            'cpjg_id' => $cpjg_id,
-            'identifier' => 'change_proposal_grid'
-        ])->firstOrNew();
+        // $changeProposalGridData = ChangeProposalJustGrid::where([
+        //     'cpjg_id' => $cpjg_id,
+        //     'identifier' => 'change_proposal_grid'
+        // ])->firstOrNew();
 
-        $changeProposalGridData->cpjg_id = $cpjg_id; // 🔥 IMPORTANT
-        $changeProposalGridData->identifier = 'change_proposal_grid';
-        $changeProposalGridData->data = $request->change_proposal_grid;
-        $changeProposalGridData->save();
+        // $changeProposalGridData->cpjg_id = $cpjg_id; // 🔥 IMPORTANT
+        // $changeProposalGridData->identifier = 'change_proposal_grid';
+        // $changeProposalGridData->data = $request->change_proposal_grid;
+        // $changeProposalGridData->save();
 
-       if ($request->has('checklist')) {
+/////////////////////////////////
 
-            ChangeProposalJustGrid::updateOrCreate(
-                [
-                    'cpjg_id' => $cpjg_id,
-                    'identifier' => 'stage3_checklist'
-                ],
-                [
-                    'data' => $request->checklist
-                ]
-            );
+
+
+
+// Get Old Data
+$existingGrid = ChangeProposalJustGrid::where([
+    'cpjg_id' => $cpjg_id,
+    'identifier' => 'change_proposal_grid'
+])->first();
+
+$existingGridData = $existingGrid ? $existingGrid->data : [];
+
+// Field Names
+$fieldNames = [
+    'existing_system' => 'Current Practice',
+    'proposed_change' => 'Proposed Change',
+    'justification'   => 'Justification / Reason for Change',
+];
+
+
+// dd($request->change_proposal_grid ,$existingGrid->data);
+ 
+
+
+if (is_array($request->change_proposal_grid)) {
+
+    foreach ($request->change_proposal_grid as $index => $newRow) {
+
+        $oldRow = $existingGridData[$index] ?? [];
+
+        foreach (['existing_system', 'proposed_change', 'justification'] as $field) {
+
+            $oldValue = $oldRow[$field] ?? '';
+            $newValue = $newRow[$field] ?? '';
+
+            if ($oldValue != $newValue) {
+
+                $audit = new ChangeProposalAuditTrial();
+
+                $audit->cpjg_id = $cpjg_id;
+                $audit->activity_type = $fieldNames[$field] . ' (Row ' . ($index + 1) . ')';
+                $audit->previous = $oldValue ?: 'Null';
+                $audit->current = $newValue ?: 'Null';
+                $audit->comment = '';
+
+                $audit->user_id = Auth::id();
+                $audit->user_name = Auth::user()->name;
+                $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+
+                $audit->origin_state = $data->status;
+                $audit->change_from = $data->status;
+                $audit->change_to = 'Not Applicable';
+
+                $audit->action_name = empty($oldValue) ? 'New' : 'Update';
+
+                $audit->save();
+            }
         }
+    }
+}
+
+// ==========================
+// Save Grid
+// ==========================
+
+$grid = ChangeProposalJustGrid::firstOrNew([
+    'cpjg_id' => $cpjg_id,
+    'identifier' => 'change_proposal_grid'
+]);
+
+$grid->cpjg_id = $cpjg_id;
+$grid->identifier = 'change_proposal_grid';
+$grid->data = $request->change_proposal_grid;
+$grid->save();
+
+
+
+
+/////////////////////////////
+
+
+
+
+
+
+
+
+
+    //    if ($request->has('checklist')) {
+
+    //         ChangeProposalJustGrid::updateOrCreate(
+    //             [
+    //                 'cpjg_id' => $cpjg_id,
+    //                 'identifier' => 'stage3_checklist'
+    //             ],
+    //             [
+    //                 'data' => $request->checklist
+    //             ]
+    //         );
+    //     }
+
+
+
+
+$existingChecklist = ChangeProposalJustGrid::where([
+    'cpjg_id' => $cpjg_id,
+    'identifier' => 'stage3_checklist'
+])->first();
+
+$existingChecklistData = $existingChecklist ? $existingChecklist->data : [];
+
+
+
+if ($request->has('checklist')) {
+
+    foreach ($request->checklist as $key => $newItem) {
+
+        $oldItem = $existingChecklistData[$key] ?? [];
+
+        // Question
+        $question = $newItem['question'] ?? ($oldItem['question'] ?? $key);
+
+        // YES / NO Questions
+        if (isset($newItem['response'])) {
+
+            $oldValue = $oldItem['response'] ?? '';
+            $newValue = $newItem['response'] ?? '';
+
+            if ($oldValue != $newValue) {
+
+                $audit = new ChangeProposalAuditTrial();
+
+                $audit->cpjg_id = $cpjg_id;
+                // $audit->activity_type = $question;
+                $audit->activity_type = "Impact Assessment ({$question})";
+                $audit->previous = $oldValue ?: 'Null';
+                $audit->current = $newValue ?: 'Null';
+                $audit->comment = '';
+                $audit->user_id = Auth::id();
+                $audit->user_name = Auth::user()->name;
+                $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $audit->origin_state = $data->status;
+                $audit->change_from = $data->status;
+                $audit->change_to = 'Not Applicable';
+                $audit->action_name = empty($oldValue) ? 'New' : 'Update';
+                $audit->save();
+            }
+        }
+
+        // Last Question (Manual Response)
+        if (isset($newItem['manual_response'])) {
+
+            $oldValue = $oldItem['manual_response'] ?? '';
+            $newValue = $newItem['manual_response'] ?? '';
+
+            if ($oldValue != $newValue) {
+
+                $audit = new ChangeProposalAuditTrial();
+
+                $audit->cpjg_id = $cpjg_id;
+                // $audit->activity_type = $question;
+                $audit->activity_type = "Impact Assessment ({$question})";
+                $audit->previous = $oldValue ?: 'Null';
+                $audit->current = $newValue ?: 'Null';
+                $audit->comment = '';
+                $audit->user_id = Auth::id();
+                $audit->user_name = Auth::user()->name;
+                $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $audit->origin_state = $data->status;
+                $audit->change_from = $data->status;
+                $audit->change_to = 'Not Applicable';
+                $audit->action_name = empty($oldValue) ? 'New' : 'Update';
+                $audit->save();
+            }
+        }
+    }
+
+    // =========================
+    // SAVE CHECKLIST
+    // =========================
+
+    ChangeProposalJustGrid::updateOrCreate(
+        [
+            'cpjg_id' => $cpjg_id,
+            'identifier' => 'stage3_checklist'
+        ],
+        [
+            'data' => $request->checklist
+        ]
+    );
+}
 
 
         if ($lastDocument->cpdescription != $data->cpdescription) {
@@ -1709,23 +1833,7 @@ class ChangeProposalJustController extends Controller
                 $lastDocument = ChangeProposalJust::find($id);
 
         if ($cpjdata->stage == 4) {
-                if (empty($cpjdata->qa_cqa_head_comment))
-                {
-                    Session::flash('swal', [
-                        'type' => 'warning',
-                        'title' => 'Mandatory Fields!',
-                        'message' => 'QA/CQA Head / Designee ApprovalTab is yet to be filled'
-                    ]);
-
-                    return redirect()->back();
-                }
-                 else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for Closed-Done State'
-                    ]);
-                }
+                
             $cpjdata->stage = "6";
             $cpjdata->status = "Closed - Reject";
 

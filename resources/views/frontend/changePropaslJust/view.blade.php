@@ -144,7 +144,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
-                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 48) || (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 63) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))))
+                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 48) || (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 7) || (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 63) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18)))))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Review Complete
                             </button>
@@ -352,7 +352,7 @@
                                 @php
                                 $istab1 = ($data->stage == 1 && (($data->initiator_id == Auth::user()->id) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 3)));
                                 $istab2 = ($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 4)  || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18)));
-                                $istab3 = ($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 48) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 63) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18)));
+                                $istab3 = ($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 48) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 63) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 7)));
                                 $istab4 = ($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 43) || (Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 9) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 65) || Helpers::check_roles($data->division_id, 'Change Proposal And Justification', 18))))
                                 @endphp
 

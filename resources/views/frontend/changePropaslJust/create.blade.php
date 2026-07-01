@@ -401,11 +401,11 @@
                                                                     <select name="checklist[{{ $key }}][response]"
                                                                         style="width:100%; border:1px solid #000; background:#f0f0f0;">
                                                                         <option value="No" 
-                                                                            {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? '' : 'selected' }}>
+                                                                            {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? '' : 'selected' }} disabled>
                                                                             No
                                                                         </option>
                                                                         <option value="Yes"
-                                                                            {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? 'selected' : '' }}>
+                                                                            {{ isset($savedChecklist[$key]['response']) && $savedChecklist[$key]['response'] == 'Yes' ? 'selected' : '' }} disabled >
                                                                             Yes
                                                                         </option>
                                                                     </select>
@@ -414,7 +414,7 @@
                                                                     <textarea name="checklist[{{ $key }}][manual_response]" 
                                                                         rows="3"
                                                                         style="width:100%; border:1px solid #ccc; padding:5px;"
-                                                                        placeholder="Enter your comments or remarks here...">{{ isset($savedChecklist[$key]['manual_response']) ? $savedChecklist[$key]['manual_response'] : '' }}</textarea>
+                                                                        placeholder="Enter your comments or remarks here..." disabled >{{ isset($savedChecklist[$key]['manual_response']) ? $savedChecklist[$key]['manual_response'] : '' }}</textarea>
                                                                 @endif
                                                             </td>
                                                         </tr>
