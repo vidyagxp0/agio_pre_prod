@@ -8,9 +8,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
-{{--@php
-dd($pre);
-@endphp--}}
     <style>
         textarea.note-codable {
             display: none !important;
@@ -40,18 +37,6 @@ dd($pre);
         .Activity-type {
             margin-bottom: 7px;
         }
-
-        /* .sub-head {
-                    margin-left: 280px;
-                    margin-right: 280px;
-                    color: #4274da;
-                    border-bottom: 2px solid #4274da;
-                    padding-bottom: 5px;
-                    margin-bottom: 20px;
-                    font-weight: bold;
-                    font-size: 1.2rem;
-
-                } */
 
         .create-entity {
             background: #323c50;
@@ -84,9 +69,6 @@ dd($pre);
             gap: 20px;
         }
 
-        /* .modal-header{
-                    background: gainsboro !important;
-                } */
         .main_head_modal li {
             margin-bottom: 10px;
         }
@@ -129,11 +111,6 @@ dd($pre);
             margin-bottom: 3px;
         }
 
-        /* .saveButton:disabled{
-                        background: black!important;
-                        border:  black!important;
-
-                    } */
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -217,15 +194,6 @@ dd($pre);
             }
         }
     </script>
-    <!-- <script>
-        function addWhyField(con_class, name) {
-            let mainBlock = document.querySelector('.why-why-chart')
-            let container = mainBlock.querySelector(`.${con_class}`)
-            let textarea = document.createElement('textarea')
-            textarea.setAttribute('name', name);
-            container.append(textarea)
-        }
-    </script> -->
 
     <script>
         console.log('Script working')
@@ -660,21 +628,9 @@ dd($pre);
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Head/Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initiator Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm14')">HOD Final Review</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Closure Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
-
-
-
-                {{-- <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button> --}}
-                {{-- <button class="cctablinks " id="Investigation_button" style="display: none" --}}
-                    {{-- onclick="openCity(event, 'CCForm9')">Investigation</button> --}}
-                {{-- <button id="QRM_button" class="cctablinks" style="display: none"
-                    onclick="openCity(event, 'CCForm11')">QRM</button> --}}
-
-                {{-- <button id="CAPA_button" class="cctablinks" style="display: none"
-                    onclick="openCity(event, 'CCForm10')">CAPA</button> --}}
 
             </div>
             <form class="formSubmit" id="auditform" action="{{ route('incident-store') }}" method="post" enctype="multipart/form-data">
@@ -721,7 +677,6 @@ dd($pre);
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                         <input disabled type="text" value="{{ Auth::user()->name }}">
 
                                     </div>
@@ -744,19 +699,7 @@ dd($pre);
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-12 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Due Date">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
-                                    </div>
-                                </div> --}}
+                         
                                 <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Due Date<span
@@ -798,79 +741,6 @@ dd($pre);
                                     // Set the formatted due date value to the input field
                                     document.getElementById('due_date').value = dueDateFormatted;
                                 </script>
-
-                                {{-- <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group"><b>Department</b><span
-                                                class="text-danger">*</span></label>
-                                        <select name="Initiator_Group" id="initiator_group" required>
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
-                                                Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>
-                                                Quality
-                                                Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>
-                                                Central
-                                                Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
-                                                Manufacturing</option>
-                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
-                                                Sourcing Group</option>
-                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>
-                                                Central
-                                                Stores</option>
-                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
-                                                Information Technology Group</option>
-                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
-                                                Molecular Medicine</option>
-                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>
-                                                Central
-                                                Laboratory</option>
-
-                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
-                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
-                                                Quality Assurance</option>
-                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
-                                                Quality Management</option>
-                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
-                                                Administration</option>
-                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
-                                                Accounting</option>
-                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
-                                                Logistics</option>
-                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
-                                                Senior Management</option>
-                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
-                                                Business Administration</option>
-                                        </select>
-                                        @error('Initiator_Group')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div> --}}
-
-        {{--new department--}}
-
-                        {{--<div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description">Initiator Department <span
-                                        class="text-danger"></span></label>
-                                <select name="Initiator_Group" id="Initiator_Group">
-                                    <option selected disabled value="">---select---</option>
-                                    @foreach (Helpers::getInitiatorGroups() as $code => $Initiator_Group)
-                                        <option value="{{ $Initiator_Group }}"
-                                            data-code="{{ $code }}"
-                                            @if (isset($data->Initiator_Group) && $data->Initiator_Group == $Initiator_Group)
-                                                    selected
-                                                @endif>
-                                            {{ $647Initiator_Group }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>--}}
 
                         {{-- new department --}}
                         <div class="col-lg-6">
@@ -922,147 +792,13 @@ dd($pre);
                                 });
                             </script>
 
-<div class="col-lg-6">
-    <div class="group-input">
-        <label for="Initiator Group Code">Initiation Department Code</label>
-        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
-            value="" readonly>
-    </div>
-</div>
-
-                        {{-- <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group"><b>Initiation Department
-                                </b> <span
-                                        class="text-danger">*</span></label>
-                                <select name="Initiator_Group" id="initiator_group">
-                                        <option value="">Select Department</option>
-                                        <option value="CQA">Corporate Quality Assurance</option>
-                                        <option value="QA">Quality Assurance</option>
-                                        <option value="QC">Quality Control</option>
-                                        <option value="QM">Quality Control (Microbiology department)</option>
-                                        <option value="PG">Production General</option>
-                                        <option value="PL">Production Liquid Orals</option>
-                                        <option value="PT">Production Tablet and Powder</option>
-                                        <option value="PE">Production External (Ointment, Gels, Creams and
-                                            Liquid)</option>
-                                        <option value="PC">Production Capsules</option>
-                                        <option value="PI">Production Injectable</option>
-                                        <option value="EN">Engineering</option>
-                                        <option value="HR">Human Resource</option>
-                                        <option value="ST">Store</option>
-                                        <option value="IT">Electronic Data Processing</option>
-                                        <option value="FD">Formulation Development</option>
-                                        <option value="AL">Analytical research and Development Laboratory
-                                        </option>
-                                        <option value="PD">Packaging Development</option>
-                                        <option value="PU">Purchase Department</option>
-                                        <option value="DC">Document Cell</option>
-                                        <option value="RA">Regulatory Affairs</option>
-                                        <option value="PV">Pharmacovigilance</option>
-
-                                </select>
-                            </div>
-
-                        </div> --}}
-
-
-                        {{-- <div class="col-lg-6">
+                        <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiation Department Code</label>
-                                <input readonly type="text" name="initiator_group_code"
-                                    id="initiator_group_code"
-                                    value="{{ $data->initiator_group_code ?? '' }}">
+                                <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
+                                    value="" readonly>
                             </div>
-                        </div> --}}
-
-                                {{--<div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="initiator-group">Initiation Department </label>
-                                        <select name="Initiator_Group" id="Initiator_group">
-                                                <option value="">Select Department</option>
-                                                <option value="CQA">Corporate Quality Assurance</option>
-                                                <option value="QA">Quality Assurance</option>
-                                                <option value="QC">Quality Control</option>
-                                                <option value="QM">Quality Control (Microbiology department)</option>
-                                                <option value="PG">Production General</option>
-                                                <option value="PL">Production Liquid Orals</option>
-                                                <option value="PT">Production Tablet and Powder</option>
-                                                <option value="PE">Production External (Ointment, Gels, Creams and
-                                                    Liquid)</option>
-                                                <option value="PC">Production Capsules</option>
-                                                <option value="PI">Production Injectable</option>
-                                                <option value="EN">Engineering</option>
-                                                <option value="HR">Human Resource</option>
-                                                <option value="ST">Store</option>
-                                                <option value="IT">Electronic Data Processing</option>
-                                                <option value="FD">Formulation Development</option>
-                                                <option value="AL">Analytical research and Development Laboratory
-                                                </option>
-                                                <option value="PD">Packaging Development</option>
-                                                <option value="PU">Purchase Department</option>
-                                                <option value="DC">Document Cell</option>
-                                                <option value="RA">Regulatory Affairs</option>
-                                                <option value="PV">Pharmacovigilance</option>
-                                        </select>--}}
-                                        {{-- @error('Initiator_Group')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror --}}
-                                    {{--</div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Department Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" readonly>
-                                    </div>
-                                </div>--}}
-
-                                {{-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="short_description_required">Equipment Name</label>
-                                        <select name="equipment_name" id="equipment_name" required>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no"> No</option>
-                                            <option value="na">NA</option>
-                                        </select>
-                                    </div>
-                                    @error('equipment_name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="instrument_name">Instrument Name</label>
-                                        <select name="instrument_name" id="instrument_name" required>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no"> No</option>
-                                            <option value="na">NA</option>
-                                        </select>
-                                    </div>
-                                    @error('instrument_name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="facility_name">Facility Name</label>
-                                        <select name="inc_facility_name" id="inc_facility_name" required>
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes">Yes</option>
-                                            <option value="no"> No</option>
-                                            <option value="na">NA</option>
-                                        </select>
-                                    </div>
-                                    @error('inc_facility_name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
+                        </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1135,45 +871,11 @@ dd($pre);
                                     });
                                 </script>
 
-                                {{-- <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        var selectField = document.getElementById('short_description_required');
-                                        var inputsToToggle = [];
-
-                                        // Add elements with class 'facility-name' to inputsToToggle
-                                        var facilityNameInputs = document.getElementsByClassName('nature_of_repeat');
-
-                                        for (var i = 0; i < facilityNameInputs.length; i++) {
-                                            inputsToToggle.push(facilityNameInputs--NameInputs[i]);
-                                        }
-
-                                        selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'Yes';
-
-                                            inputsToToggle.forEach(function(input) {
-                                                if (!isRequired) {
-                                                    document.getElementById('nature_of_repeat_block').style.display = 'none';
-                                                } else {
-                                                    document.getElementById('nature_of_repeat_block').style.display = 'block';
-                                                }
-                                                input.required = isRequired;
-                                                console.log(input.required, isRequired, 'input req');
-                                            });
-
-                                            // Show or hide the asterisk icon based on the selected value
-                                            var asteriskIcon = document.getElementById('asteriskInviRecurring');
-                                            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                        });
-                                    });
-                                </script> --}}
-
-
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Incident date">Incident Observed On (Date)</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="incident_date" readonly placeholder="DD-MM-YYYY" />
-                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
                                             <input type="date" name="incident_date"
                                                 max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'incident_date')" />
@@ -1193,24 +895,13 @@ dd($pre);
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                {{--<div class="col-lg-6 new-time-data-field">
-                                    <div class="group-input input-time">
-                                        <label for="incident_time">Incident Observed On (Time)</label>
-                                        <input type="text" name="incident_time" id="incident_time">
-                                    </div>
-                                    @error('incident_date')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>--}}
 
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time delayJustificationBlock">
                                         <label for="incident_time">Delay Justification</label>
                                         <textarea id="Delay_Justification" name="Delay_Justification"></textarea>
                                     </div>
-                                    {{-- @error('incident_date')
-                                        <div class="text-danger">{{  $message  }}</div>
-                                    @enderror --}}
+                       
                                 </div>
 
                                 <script>
@@ -1254,59 +945,59 @@ dd($pre);
                                     </div>
                                 </div>
                                 <script>
-                                                $(document).ready(function () {
+                                    $(document).ready(function () {
 
-                                                    // Run on load
-                                                    checkDateDifference();
+                                        // Run on load
+                                        checkDateDifference();
 
-                                                    // Run when user changes anything
-                                                    $('#incident_date, #incident_time').on('change input', function () {
-                                                        checkDateDifference();
-                                                    });
+                                        // Run when user changes anything
+                                        $('#incident_date, #incident_time').on('change input', function () {
+                                            checkDateDifference();
+                                        });
 
-                                                });
+                                    });
 
-                                                function checkDateDifference() {
+                                    function checkDateDifference() {
 
-                                                    let incidentDate = $('#incident_date').val();
-                                                    let incidentTime = $('#incident_time').val();
-                                                    let reportedDateTime = $('#incident_reported_datetime').val();
+                                        let incidentDate = $('#incident_date').val();
+                                        let incidentTime = $('#incident_time').val();
+                                        let reportedDateTime = $('#incident_reported_datetime').val();
 
-                                                    // Debug logs (remove later)
-                                                    console.log("Observed Date:", incidentDate);
-                                                    console.log("Observed Time:", incidentTime);
-                                                    console.log("Reported:", reportedDateTime);
+                                        // Debug logs (remove later)
+                                        console.log("Observed Date:", incidentDate);
+                                        console.log("Observed Time:", incidentTime);
+                                        console.log("Reported:", reportedDateTime);
 
-                                                    if (!incidentDate || !incidentTime || !reportedDateTime) {
-                                                        $('.delayJustificationBlock').hide();
-                                                        return;
-                                                    }
+                                        if (!incidentDate || !incidentTime || !reportedDateTime) {
+                                            $('.delayJustificationBlock').hide();
+                                            return;
+                                        }
 
-                                                    // Combine observed datetime
-                                                    let observedDateTime = moment(
-                                                        incidentDate + " " + incidentTime,
-                                                        "YYYY-MM-DD HH:mm"
-                                                    );
+                                        // Combine observed datetime
+                                        let observedDateTime = moment(
+                                            incidentDate + " " + incidentTime,
+                                            "YYYY-MM-DD HH:mm"
+                                        );
 
-                                                    // Reported datetime
-                                                    let reported = moment(
-                                                        reportedDateTime,
-                                                        "YYYY-MM-DD HH:mm:ss"
-                                                    );
+                                        // Reported datetime
+                                        let reported = moment(
+                                            reportedDateTime,
+                                            "YYYY-MM-DD HH:mm:ss"
+                                        );
 
-                                                    // Exact hour difference
-                                                    let diffInHours = reported.diff(observedDateTime, 'hours', true);
+                                        // Exact hour difference
+                                        let diffInHours = reported.diff(observedDateTime, 'hours', true);
 
-                                                    console.log("Diff Hours:", diffInHours);
+                                        console.log("Diff Hours:", diffInHours);
 
-                                                    // FINAL CONDITION ✅
-                                                    if (diffInHours > 24) {
-                                                        $('.delayJustificationBlock').show();
-                                                    } else {
-                                                        $('.delayJustificationBlock').hide();
-                                                    }
-                                                }
-                                            </script>
+                                        // FINAL CONDITION ✅
+                                        if (diffInHours > 24) {
+                                            $('.delayJustificationBlock').show();
+                                        } else {
+                                            $('.delayJustificationBlock').hide();
+                                        }
+                                    }
+                                </script>
 
 
                                 <div class="col-lg-6">
@@ -1319,36 +1010,9 @@ dd($pre);
                                             <option value="Process">Process</option>
                                             <option value="Other">Other</option>
                                            
-                                           
-                                          
-
                                         </select>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="audit type">Incident Related To </label>
-                                        <select name="audit_type[]" id="audit_type" multiple class="form-control">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="Facility">Facility</option>
-                                            <option value="Equipment/Instrument">Equipment/ Instrument </option>
-                                            <option value="Documentationerror">Documentation error </option>
-                                            <option value="STP/ADS_instruction">STP/ADS instruction </option>
-                                            <option value="Packaging&Labelling">Packaging & Labelling  </option>
-                                            <option value="Material_System">Material System  </option>
-                                            <option value="Laboratory_Instrument/System"> Laboratory Instrument /System</option>
-                                            <option value="Utility_System"> Utility System</option>
-                                            <option value="Computer_System"> Computer System</option>
-                                            <option value="Document">Document</option>
-                                            <option value="Data integrity">Data integrity</option>
-                                            <option value="SOP Instruction">SOP Instruction</option>
-                                            <option value="BMR/ECR Instruction">BMR/ECR Instruction</option>
-                                            <option value="Water System">Water System</option>
-                                            <option value="Other">Any other (specify) </option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-
 
                                 <div class="col-lg-6" id="others_block" style="display: none;">
                                     <div class="group-input">
@@ -1614,11 +1278,6 @@ dd($pre);
                                                     {{--Batch--}}
                                             <button type="button" name="audit-agenda-grid"
                                                 id="Product_Details">+</button>
-                                            {{-- <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal2"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span> --}}
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="Product_Details_Details"
@@ -1698,17 +1357,6 @@ dd($pre);
                                     });
                                 </script>
                                 
-                                {{-- <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Description Incident">Description of Incident</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="" name="Description_incident" id="summernote-1"> </textarea>
-                                    </div>
-                                    @error('Description_incident[]')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
                                 <div class="col-md-12">
                                           <label>
                                             Description of Incident <span class="text-danger"></span>
@@ -1719,17 +1367,6 @@ dd($pre);
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                {{-- <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Description Incident">Investigation</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="" name="investigation"> </textarea>
-                                    </div>
-                                    @error('investigation[]')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
 
                                 <div class="col-md-12">
                                           <label>
@@ -1754,40 +1391,6 @@ dd($pre);
                                     @enderror
                                 </div>
 
-                                {{-- <div class="col-6">
-                                <div class="group-input">
-                                        <label for="ImmediateAction">Immediate Action (if any)</label>
-                                        <textarea class="" id="Immediate_Action" name="Immediate_Action[]"></textarea>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Immediate Action">Immediate Action (if any)</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="tiny" name="Immediate_Action[]" id="summernote-2"></textarea>
-                                    </div>
-                                    @error('record')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
-                                {{-- <div class="col-6">
-                                <div class="group-input">
-                                        <label for="Preliminary Impact">Preliminary Impact of Incident</label>
-                                        <textarea class="" id="Preliminary_Impact" name="Preliminary_Impact[]"></textarea>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Preliminary Impact">Preliminary Impact of Incident </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required>  </textarea>
-                                    </div>
-                                    @error('Preliminary_Impact')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Initial Attachment</label>
@@ -1882,15 +1485,6 @@ dd($pre);
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                data-bs-target="#launch_extension">
-                                                Launch Extension
-                                            </a> -->
-                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#effectivenss_extension">
-                                        Launch Effectiveness Check
-                                    </a> --}}
                             </div>
                         </div>
                     </div>
@@ -1906,12 +1500,7 @@ dd($pre);
                             padding: 10px;
                         }
 
-                        /* .divider {
-                            width: 2px;
-                            background-color: black;
-                            height: 100%;
-                        } */
-
+                
                         .radio-group {
                             display: flex;
                             flex-direction: column;
@@ -2089,15 +1678,7 @@ dd($pre);
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                data-bs-target="#launch_extension">
-                                                Launch Extension
-                                            </a> -->
-                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#effectivenss_extension">
-                                        Launch Effectiveness Check
-                                    </a> --}}
+                            
                             </div>
                         </div>
                     </div>
@@ -2147,24 +1728,10 @@ dd($pre);
                                 <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                     <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                         Exit </a> </button>
-                                <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                data-bs-target="#launch_extension">
-                                                Launch Extension
-                                            </a> -->
-                                {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#effectivenss_extension">
-                                        Launch Effectiveness Check
-                                    </a> --}}
+                         
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
 
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
