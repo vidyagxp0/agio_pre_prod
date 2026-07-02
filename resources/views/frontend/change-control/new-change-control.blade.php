@@ -429,7 +429,7 @@
                                         </div>
 
                                         @php
-                                            $changeProposalRecords = DB::table('change_proposal_justs')->where('division_id', !empty($parent_division_id) ? $parent_division_id : session()->get('division'))->get();
+                                            $changeProposalRecords = DB::table('change_proposal_justs')->where('status', 'Closed - Done')->where('division_id', !empty($parent_division_id) ? $parent_division_id : session()->get('division'))->get();
                                         @endphp
                                         <div class="col-lg-6">
                                             <div class="group-input">
