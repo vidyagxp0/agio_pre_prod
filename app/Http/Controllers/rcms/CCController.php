@@ -57,8 +57,6 @@ class CCController extends Controller
     {
 
         $riskData = RiskLevelKeywords::all();
-        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
@@ -100,16 +98,6 @@ class CCController extends Controller
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
-        // if ($division) {
-        //     $last_cc = CC::where('division_id', $division->id)->latest()->first();
-
-        //     if ($last_cc) {
-        //         $record_number = $last_cc->record_number ? str_pad($last_cc->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
-        //     } else {
-        //         $record_number = '0001';
-        //     }
-        // }
-
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -121,12 +109,7 @@ class CCController extends Controller
 
     public function store(Request $request)
     {
-        // $openState->assign_to = $request->assign_to;
-        // $openState->Division_Code = $request->div_code;
-        //$openState->qa_eval_attach = json_encode($request->qa_eval_attach);
-        // $openState->Microbiology = $request->Microbiology;
-        // $openState->due_date = Carbon::now()->addDays(30)->format('d-M-Y');
-        // $openState->supervisor_comment = $request->supervisor_comment;
+
         $lastAi = CC::orderBy('record', 'desc')->first();
 
         $record_number = $lastAi ? $lastAi->record + 1 : 1;
@@ -2718,7 +2701,7 @@ class CCController extends Controller
         $data = CC::find($id);
 
 
-        $changeProposalRecords = ChangeProposalJust::where('division_id', $data->division_id)->get();
+        $changeProposalRecords = ChangeProposalJust::where('division_id', $data->division_id)->where('status', 'Closed - Done')->get();
 
         $cftReviewerIds = explode(',', $data->reviewer_person_value);
         $cc_lid = $data->id;
@@ -14236,22 +14219,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                
                             }
                         }
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+              
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -14571,8 +14539,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $history->stage_id = $changeControl->stage;
         $history->status = "Send HOD Review";
         $history->save();
-      
-
          
         toastr()->success('Document Sent');
         return back();
@@ -14794,7 +14760,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
     public function stagecancel(Request $request, $id)
     {
        
-        
         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $openState = CC::find($id);
@@ -14805,7 +14770,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $changeControl->cancelled_by = Auth::user()->name;
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
             $changeControl->cancelled_comment = $request->comments;
-
 
             //child cancel if parent cancel
 
@@ -14851,8 +14815,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 }
 
 
-
-
                 $childExtensions = extension_new::where('parent_id', $id)
                     ->where('parent_type', 'CC')
                     ->get();
@@ -14893,7 +14855,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         $history->save();
                     }
                 }
-
 
                  
                 $childCapas = Capa::where('parent_id', $id)
@@ -14936,8 +14897,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         $history->save();
                     }
                 }
-
-
 
 
              $childroot = RootCauseAnalysis::where('parent_id', $id)
@@ -14988,7 +14947,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
             }
         }
-                
 
             ////////////////////////
 
@@ -15075,10 +15033,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $parent_id = $id;
         $parent_name = "CC";
         $parent_type = "CC";
-        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        // $record = ((RecordNumber::first()->value('counter')) + 1);
-        // $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -15094,9 +15049,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $old_record = CC::select('id', 'division_id', 'record')->get();
         $relatedRecords = Helpers::getAllRelatedRecords();
         $parent_due_date=CC::where('id', $id)->value('due_date');
-
-
-        // $data =$parent_data1;
 
         if ($request->revision == "Action-Item") {
             $p_record = CC::find($id);
@@ -15257,10 +15209,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         return view('frontend.rcms.CC.audit-trial', compact('audit', 'document', 'today','users'));
     }
 
-
-
-
-
     public function audit_trail_filter(Request $request,$id)
                 {
                    $query= RcmDocHistory::query();
@@ -15280,10 +15228,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $stage = ['Submit By, Submit On','HOD Assessment Complete By,
                                  HOD Assessment Complete On','QA/CQA Initial Assessment Complete By, QA/CQA Initial Assessment Complete On','CFT Assessment Complete By','RA Approval By, RA Approval On','RA Approval Complete By, RA Approval Complete On','Rejected By, Rejected On','QA/CQA Final Review Complete By, QA/CQA Final Review Complete On','QA/CQA Head/Manager Designee Approval By, QA/CQA Head/Manager Designee ApprovalOn','Initiator Updated Complete By, Initiator Updated Complete On','HOD Final Review Complete By, HOD Final Review Complete On', 'Implementation verification by QA/CQA Complete By, Implementation verification by QA/CQA Complete On','QA/CQA Head/Manager Designee Approval By, QA/CQA Head/Manager Designee Approval On','Pending Initiator Update By, Pending Initiator Update On','Approved By, Approved On','HOD Final Review Complete By, HOD Final Review Complete On','Implementation verification by QA/CQA By, Implementation verification by CQA/QA On','QA/CQA Closure Approval By, Closure Approval On','More Info Required By, More Info Required On'];
-
-
-
-
 
                                 $query->whereIn('activity_type',$stage);
                                 break;
@@ -15338,8 +15282,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                  return response()->json(['html' => $responseHtml]);
 
-
-
                 }
     public function auditDetails($id)
     {
@@ -15349,7 +15291,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $doc->origiator_name = User::find($doc->initiator_id);
         return view('frontend.rcms.CC.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
     }
-
 
 
     public function summery_pdf($id)
@@ -15551,7 +15492,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $preRiskAssessment = RiskAssessment::where('cc_id', $data->id)->get(); // Adjust this condition based on your actual requirement
 
-
             $docdetail = Docdetail::where('cc_id', $data->id)->first();
             $review = Qareview::where('cc_id', $data->id)->first();
             $evaluation = Evaluation::where('cc_id', $data->id)->first();
@@ -15564,16 +15504,9 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $affectedDoc = json_decode($json_decode->data, true);
             $commnetData = DB::table('change_control_comments')->where('cc_id', $data->id)->first();
 
-
-
-
-
             $cft_teamIdsArray = explode(',', $data->reviewer_person_value);
             $cft_teamNames = User::whereIn('id', $cft_teamIdsArray)->pluck('name')->toArray();
             $cft_teamNamesString = implode(', ', $cft_teamNames);
-
-
-
 
             // pdf related work
             $pdf = App::make('dompdf.wrapper');
@@ -15616,8 +15549,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                 $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
             });
-
-
 
             return $pdf->stream('change_control' . $id . '.pdf');
         }
@@ -15676,8 +15607,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                         ->where('identifier', 'stage3_checklist')
                         ->value('data'); // 👈 IMPORTANT
                 }
-
-            // dd($cpj);
                 
             foreach ($RootCause as $rca) {
 
@@ -15775,21 +15704,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $canvas->text(($canvas->get_width() - $width - 110), ($canvas->get_height() - 763), $text, $font, $size);
             });
 
-
-
             return $pdf->stream('change_control' . $id . '.pdf');
         }
     }
 
-
-
-
-
     public function parent_child()
     {
-
-
-
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
@@ -15819,8 +15739,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             6,
             -20
         );
-
-
 
         return $pdf->stream('SOP.pdf');
     }
@@ -15858,16 +15776,6 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
     public function getDocumentDetail($documentId)
     {
         $docdetail = Document::where('id', $documentId)->first();
-
-        // $sopIds = explode(',', $docdetail->sops);
-        // $sops = Document::whereIn('id', $sopIds)->get();
-
-        // $sopNumbers = $sops->map(function ($sop) {
-        //     return $sop->sop_type_short . '/' . 
-        //            $sop->department_id . '/000' . 
-        //            $sop->id . '/R' . 
-        //            $sop->major;
-        // });
 
         if ($training) {
             return response()->json([
