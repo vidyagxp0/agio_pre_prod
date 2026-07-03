@@ -992,7 +992,7 @@
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
                                             </div>
 
-
+                                            @if($data->created_at >= '2026-07-02')
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="change_related_to">Reference Change Proposal and Justification
@@ -1027,6 +1027,7 @@
                                                     @endif
                                                 </div>
                                             </div>
+                                            @endif
 
                                              <div class="col-lg-6">
                                                 <div class="group-input">

@@ -76,11 +76,6 @@
             display: none;
         }
     </style>
-
-    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
-        type='text/css' />
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
-    </script>
         
         <script>
             function addWhyField(con_class, name) {
@@ -103,36 +98,7 @@
                 row.querySelector('.initial-rpn').value = result;
             }
         </script>
-        {{--  <script>
-            function calculateResidualResult(selectElement) {
-                let row = selectElement.closest('tr');
-                let R = parseFloat(row.querySelector('.residual-fieldR').value) || 0;
-                let P = parseFloat(row.querySelector('.residual-fieldP').value) || 0;
-                let N = parseFloat(row.querySelector('.residual-fieldN').value) || 0;
-                let result = R * P * N;
-                row.querySelector('.residual-rpn').value = result;
-            }
-        </script>  --}}
-        {{--  <script>
-            function calculateRiskAnalysis(selectElement) {
-                // Get the row containing the changed select element
-                let row = selectElement.closest('tr');
-
-                // Get values from select elements within the row
-                let R = parseFloat(document.getElementById('analysisR').value) || 0;
-                let P = parseFloat(document.getElementById('analysisP').value) || 0;
-                let N = parseFloat(document.getElementById('analysisN').value) || 0;
-
-                // Perform the calculation
-                let result = R * P * N;
-
-                // Update the result field within the row
-                document.getElementById('analysisRPN').value = result;
-            }
-        </script>  --}}
-
-
-
+        
         <script>
             function calculateRiskAnalysis(selectElement) {
                 // Get values from select elements
@@ -224,10 +190,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">CFT Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA/CQA Head Approval</button>
-                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button> --}}
-                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button> --}}
-                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button> --}}
-                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Risk Mitigation</button> --}}
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                 </div>
 
@@ -249,11 +212,6 @@
                                             <input type="hidden" name="record_number" id="record" >
                                            <input disabled type="text" name="record_number" id="record" placeholder="Record Number">
                                       
-
-
-                                           {{--   <input readonly type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ $record_number }}">
-                                           <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -268,7 +226,6 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator"><b>Initiator</b></label>
-                                            {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
                                             <input disabled type="text" name="initiator_id"
                                                 value="{{ Auth::user()->name }}">
                                         </div>
@@ -280,7 +237,6 @@
                                                 name="intiation_date">
                                             <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
 
-                                            {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                         </div>
                                     </div>
 
@@ -334,41 +290,6 @@
                                         });
                                     </script>
 
-
-
-                                    <!-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Initiator Group"><b>Initiator Department</b></label>
-                                            <select name="Initiator_Group" id="initiator_group">
-                                                <option value="">-- Select --</option>
-                                                <optio value="">Select Initiation Department</option>
-                                                    <option value="CQA">Corporate Quality Assurance</option>
-                                                    <option value="QA">Quality Assurance</option>
-                                                    <option value="QC">Quality Control</option>
-                                                    <option value="QM">Quality Control (Microbiology department)
-                                                    </option>
-                                                    <option value="PG">Production General</option>
-                                                    <option value="PL">Production Liquid Orals</option>
-                                                    <option value="PT">Production Tablet and Powder</option>
-                                                    <option value="PE">Production External (Ointment, Gels, Creams and
-                                                        Liquid)</option>
-                                                    <option value="PC">Production Capsules</option>
-                                                    <option value="PI">Production Injectable</option>
-                                                    <option value="EN">Engineering</option>
-                                                    <option value="HR">Human Resource</option>
-                                                    <option value="ST">Store</option>
-                                                    <option value="IT">Electronic Data Processing</option>
-                                                    <option value="FD">Formulation Development</option>
-                                                    <option value="AL">Analytical research and Development Laboratory
-                                                    </option>
-                                                    <option value="PD">Packaging Development</option>
-                                                    <option value="PU">Purchase Department</option>
-                                                    <option value="DC">Document Cell</option>
-                                                    <option value="RA">Regulatory Affairs</option>
-                                                    <option value="PV">Pharmacovigilance</option>
-                                            </select>
-                                        </div>
-                                    </div> -->
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group Code">Initiator Department Code</label>
@@ -378,14 +299,6 @@
                                     </div>
 
 
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Short Description">Short Description<span
-                                                    class="text-danger">*</span></label><span id="rchars">255</span>
-                                            characters remaining
-                                            <input name="short_description" id="short_description"></input>
-                                        </div>
-                                    </div> --}}
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Short Description">Short Description<span
@@ -398,40 +311,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="severity-level">Severity Level</label>
-                                            <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
-                                            <select name="severity2_level">
-                                                <option value="0">-- Select --</option>
-                                                <option value="minor">Minor</option>
-                                                <option value="major">Major</option>
-                                                <option value="critical">Critical</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Department(s)">Department(s)</label>
-                                           <select name="departments[]" placeholder="Select Departments" data-search="false"
-                                                    data-silent-initial-value-set="true" id="departments_2" multiple>
-                                                <option value="">Select Department</option>
-                                                <option value="QA">QA</option>
-                                                <option value="QC">QC</option>
-                                                <option value="R&D">R&D</option>
-                                                <option value="Wet Chemistry Area">Wet Chemistry Area</option>
-                                                <option value="Warehouse">Warehouse</option>
-                                                <option value="Molecular Area">Molecular Area</option>
-                                                <option value="Microbiology Area">Microbiology Area</option>
-                                                <option value="Instrumental Area">Instrumental Area</option>
-                                                <option value="Administration">Administration</option>
-                                                <option value="Financial Department">Financial Department</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
-
-
-
+                                   
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="search">Source of Risk/Opportunity<span
@@ -480,77 +360,51 @@
                                     </script>
 
 
-<div class="col-lg-6">
-    <div class="group-input">
-        <label for="Type..">Type</label>
-        <select name="type" id="type">
-            <option value="">Enter Your Selection Here</option>
-            <option value="Business Risk">Business Risk</option>
-            <option value="Customer Related">Customer-Related Risk (Complaint)</option>
-            <option value="Opportunity">Opportunity</option>
-            <option value="Market">Market</option>
-            <option value="Operational Risk">Operational Risk</option>
-            <option value="Strategic Risk">Strategic Risk</option>
-            <option value="Other">Other</option> <!-- Ensure the value matches here -->
-        </select>
-    </div>
-</div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Type..">Type</label>
+                                            <select name="type" id="type">
+                                                <option value="">Enter Your Selection Here</option>
+                                                <option value="Business Risk">Business Risk</option>
+                                                <option value="Customer Related">Customer-Related Risk (Complaint)</option>
+                                                <option value="Opportunity">Opportunity</option>
+                                                <option value="Market">Market</option>
+                                                <option value="Operational Risk">Operational Risk</option>
+                                                <option value="Strategic Risk">Strategic Risk</option>
+                                                <option value="Other">Other</option> <!-- Ensure the value matches here -->
+                                            </select>
+                                        </div>
+                                    </div>
 
-<div id="typeOfError" class="group-input col-6" style="display: none;">
-    <label for="otherFieldsUser">Other (Type)</label>
-   
-    <textarea name="other_type" class="form-control"></textarea>
-                                        
-</div>
+                                    <div id="typeOfError" class="group-input col-6" style="display: none;">
+                                        <label for="otherFieldsUser">Other (Type)</label>
+                                    
+                                        <textarea name="other_type" class="form-control"></textarea>
+                                                                            
+                                    </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        // Initially hide the field
-        $('#typeOfError').hide();
-
-        $('select[name=type]').change(function() {
-            const selectedVal = $(this).val();
-            if (selectedVal === 'Other') { // Match this value with the option value
-                $('#typeOfError').show();
-            } else {
-                $('#typeOfError').hide();
-            }
-        });
-
-        // Optionally, check the current value when the page loads in case of form errors
-        if ($('select[name=type]').val() === 'Other') { // Correct the value check
-            $('#typeOfError').show();
-        }
-    });
-</script>
-
-
-                                    {{-- <script>
+                                    <script>
                                         $(document).ready(function() {
+                                            // Initially hide the field
+                                            $('#typeOfError').hide();
+
                                             $('select[name=type]').change(function() {
                                                 const selectedVal = $(this).val();
-                                                if (selectedVal === 'Other_data') {
+                                                if (selectedVal === 'Other') { // Match this value with the option value
                                                     $('#typeOfError').show();
-                                                    $('#other_type').attr('name', 'type');
-                                                    $(this).attr('name', '');
                                                 } else {
                                                     $('#typeOfError').hide();
-                                                    $('#other_type').attr('name', '');
-                                                    $(this).attr('name', 'type');
                                                 }
                                             });
 
                                             // Optionally, check the current value when the page loads in case of form errors
-                                            if ($('select[name=type]').val() === 'Other_data') {
+                                            if ($('select[name=type]').val() === 'Other') { // Correct the value check
                                                 $('#typeOfError').show();
-                                                $('#other_type').attr('name', 'type');
-                                                $('select[name=type]').attr('name', '');
                                             }
                                         });
-                                    </script> --}}
-
+                                    </script>
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -563,62 +417,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Zone">Zone</label>
-                                            <select name="zone" id="zone">
-                                                <option value="">Enter Your Selection Here</option>
-                                                <option value="Asia">Asia</option>
-                                                <option value="Europe">Europe</option>
-                                                <option value="Africa">Africa</option>
-                                                <option value="Central_America">Central America</option>
-                                                <option value="South_America">South America</option>
-                                                <option value="Oceania">Oceania</option>
-                                                <option value="North_America">North America</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Country">Country</label>
-                                            <select name="country" class="countries" id="country">
-                                                <option value="">Select Country</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="State/District">State/District</label>
-                                            <select name="state" class="states" id="state">
-                                                <option value="">Select State</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="City">City</label>
-                                            <select name="city" class="cities" id="city">
-                                                <option value="">Select City</option>
-
-                                            </select>
-                                        </div>
-                                    </div> --}}
-                                    {{-- <div class="col-6">
-                                        <div class="group-input">
-                                            <label for="Description">Risk/Opportunity Description</label>
-                                            <textarea name="description" id="description"></textarea>
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="col-6">
-                                        <div class="group-input">
-                                            <label for="Description">Other</label>
-                                            <textarea name="others_comment" id="others_comment"></textarea>
-                                        </div>
-                                    </div> --}}
-
-
+                   
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Purpose</label>
@@ -641,22 +440,22 @@
                                         </div>
                                     </div>
 
-
-                                    <!-- <div class="col-12">
+                                    <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Comments">Brief Description / Procedure </label>
-                                            <textarea name="Brief_description" id="comments"></textarea>
-                                        </div>
-                                    </div> -->
+                                            {!! quillEditor(
+                                                'Brief_description',
+                                                '',
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="comments">Brief Description / Procedure</label>
-                                        <div class="relative-container">
-                                           <textarea name="Brief_description" class="summernote-1"></textarea>
+                                                '
+                                                <label>
+                                                    Brief Description / Procedure
+                                                </label>
+                                                ',
+
+                                                false
+                                            ) !!}
                                         </div>
                                     </div>
-                                </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
@@ -664,18 +463,12 @@
                                             <textarea name="document_used_risk" id="comments"></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Comments">Risk/Opportunity Comments</label>
-                                            <textarea name="comments" id="comments"></textarea>
-                                        </div>
-                                    </div> --}}
+                
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="CAPA Attachments">Initial Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
-                                            {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="risk_attachment"></div>
                                                 <div class="add-btn">
@@ -721,7 +514,6 @@
                                     <div class="col-6">
                                         <div id="rootCause" class="group-input" style="display: none;">
                                             <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
-                                            {{-- <input type="text" id="summernote" name="other_root_cause_methodology" class="form-control"/> --}}
                                             <textarea name="other_root_cause_methodology" id="summernote"></textarea>
                                         </div>
                                     </div>
@@ -785,8 +577,6 @@
                                                             <th>Probability (P)</th>
                                                             <th>Detection (D)</th>
                                                             <th>Risk Level (RPN)</th>
-
-                                                            {{--  <th>Risk Acceptance (Y/N)</th>  --}}
 
                                                             <th>Control Measures recommended/ Risk mitigation proposed</th>
                                                             <th>Severity (S)</th>
@@ -861,193 +651,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                {{--
-                                    <div class="col-12" id="why-why-chart-section" style="display:none;">
-                                        <div class="group-input">
-                                            <label for="why-why-chart">
-                                                Why-Why Chart
-                                                <span class="text-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#why_chart-instruction-modal"
-                                                    style="font-size: 0.8rem; font-weight: 400;">
-                                                    (Launch Instruction)
-                                                </span>
-                                            </label>
-                                            <div class="why-why-chart">
-                                                <table class="table table-bordered">
-                                                    <tbody>
-                                                        <tr style="background: #f4bb22">
-                                                            <th style="width:150px;">Problem Statement :</th>
-                                                            <td>
-                                                                <textarea name="why_problem_statement"></textarea>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="why-row">
-                                                            <th style="width:150px; color: #393cd4;">
-                                                                Why 1 <span
-                                                                    onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
-                                                            </th>
-                                                            <td>
-                                                                <div class="why_1_block">
-                                                                    <textarea name="why_1[]"></textarea>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="why_1_block">
-                                                                    @if (!empty($whyChart->why_1))
-                                                                        @foreach (unserialize($whyChart->why_1) as $key => $measure)
-                                                                            <div class="why-field-wrapper" style="">
-                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_1[]">{{ $measure }}</textarea>
-                                                                                <span class="remove-field"
-                                                                                    onclick="removeWhyField(this)"
-                                                                                    style="cursor: pointer; color: red;">
-                                                                                    Remove
-                                                                                </span>
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr class="why-row">
-                                                            <th style="width:150px; color: #393cd4;">
-                                                                Why 2 <span
-                                                                    onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
-                                                            </th>
-
-                                                            <td>
-                                                                <div class="why_2_block">
-                                                                    <textarea name="why_2[]"></textarea>
-                                                                </div>
-                                                            </td>
-
-                                                            <td>
-                                                                <div class="why_2_block">
-
-                                                                    @if (!empty($whyChart->why_2))
-                                                                        @foreach (unserialize($whyChart->why_2) as $key => $measure)
-                                                                            <div class="why-field-wrapper" style="">
-                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_2[]">{{ $measure }}</textarea>
-                                                                                <span class="remove-field"
-                                                                                    onclick="removeWhyField(this)"
-                                                                                    style="cursor: pointer; color: red;">
-                                                                                    Remove
-                                                                                </span>
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-
-                                                        </tr>
-
-                                                        <tr class="why-row">
-                                                            <th style="width:150px; color: #393cd4;">
-                                                                Why 3 <span
-                                                                    onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
-                                                            </th>
-
-                                                            <td>
-                                                                <div class="why_3_block">
-                                                                    <textarea name="why_3[]"></textarea>
-                                                                </div>
-                                                            </td>
-
-                                                            <td>
-                                                                <div class="why_3_block">
-                                                                    
-
-                                                                    @if (!empty($whyChart->why_3))
-                                                                        @foreach (unserialize($whyChart->why_3) as $key => $measure)
-                                                                            <div class="why-field-wrapper" style="">
-                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_3[]">{{ $measure }}</textarea>
-                                                                                <span class="remove-field"
-                                                                                    onclick="removeWhyField(this)"
-                                                                                    style="cursor: pointer; color: red;">
-                                                                                    Remove
-                                                                                </span>
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr class="why-row">
-                                                            <th style="width:150px; color: #393cd4;">
-                                                                Why 4 <span
-                                                                    onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
-                                                            </th>
-
-
-                                                            <td>
-                                                                <div class="why_4_block">
-                                                                    <textarea name="why_4[]"></textarea>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="why_4_block">
-                                                                    
-
-                                                                    @if (!empty($whyChart->why_4))
-                                                                        @foreach (unserialize($whyChart->why_4) as $key => $measure)
-                                                                            <div class="why-field-wrapper" style="">
-                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_4[]">{{ $measure }}</textarea>
-                                                                                <span class="remove-field"
-                                                                                    onclick="removeWhyField(this)"
-                                                                                    style="cursor: pointer; color: red;">
-                                                                                    Remove
-                                                                                </span>
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="why-row">
-                                                            <th style="width:150px; color: #393cd4;">
-                                                                Why 5 <span
-                                                                    onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
-                                                            </th>
-
-                                                            <td>
-                                                                <div class="why_5_block">
-                                                                    <textarea name="why_5[]"></textarea>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="why_5_block">
-                                                                  
-
-                                                                    @if (!empty($whyChart->why_5))
-                                                                        @foreach (unserialize($whyChart->why_5) as $key => $measure)
-                                                                            <div class="why-field-wrapper" style="">
-                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_5[]">{{ $measure }}</textarea>
-                                                                                <span class="remove-field"
-                                                                                    onclick="removeWhyField(this)"
-                                                                                    style="cursor: pointer; color: red;">
-                                                                                    Remove
-                                                                                </span>
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr style="background: #0080006b;">
-                                                            <th style="width:150px;">Root Cause :</th>
-                                                            <td>
-                                                                <textarea name="why_root_cause"></textarea>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                --}}
-
-
+                                
                                     <div class="col-12" id="why-why-chart-section" style="display:none;">
                                         <div class="group-input">
                                             <label for="why-why-chart">
@@ -1218,16 +822,21 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="root_cause_description">Root Cause Description</label>
-                                            <textarea name="root_cause_description"></textarea>
-                                        </div>
-                                    </div> --}}
+                           
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="investigation_summary">Risk Assessment Summary</label>
-                                            <textarea name="investigation_summary" disabled></textarea>
+                                            {!! quillEditor(
+                                                'investigation_summary',
+                                                '',
+                                                
+                                                '
+                                                <label>
+                                                    Risk Assessment Summary
+                                                </label>
+                                                ',
+
+                                                true
+                                            ) !!}
                                         </div>
                                     </div>
 
@@ -1239,64 +848,12 @@
                                     </div>
 
                                 </div>
-                                {{-- <div class="sub-head">
-                                    Risk Analysis
-                                </div>
-                                <div class="row">
-                                   <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Severity Rate">Severity Rate</label>
-                                        <select name="severity_rate" class="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value='1'>1-Insignificant</option>
-                                            <option value='2'>2-Minor</option>
-                                            <option value='3'>3-Major</option>
-                                            <option value='4'>4-Critical</option>
-                                            <option value='5'>5-Catastrophic</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Occurrence">Occurrence</label>
-                                        <select name="occurrence" class="occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value='1'>1-Very rare</option>
-                                            <option value='2'>2-Unlikely</option>
-                                            <option value='3'>3-Possibly</option>
-                                            <option value='4'>4-Likely</option>
-                                            <option value='5'>5-Almost certain (every time)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Detection">Detection</label>
-                                        <select name="detection" class="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value='1'>1-Always detected</option>
-                                            <option value='2'>2-Likely to detect</option>
-                                            <option value='3'>3-Possible to detect</option>
-                                            <option value='4'>4-Unlikely to detect</option>
-                                            <option value='5'>5-Not detectable</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="RPN">RPN</label>
-                                        <div><small class="text-primary">Auto - Calculated</small></div>
-                                        <input type="text" name="rpn" id="analysisRPN" value="" readonly>
-                                    </div>
-                                </div> --}}
-
-
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Attachments">Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
-                                        {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="risk_ana_attach"></div>
                                             <div class="add-btn">
@@ -1319,8 +876,6 @@
                             </div>
                         </div>
 
-
-
                         <!-------------------------------------------- Hod/ Designee------------------------------------------------->
 
                         <div id="CCForm12" class="inner-block cctabcontent">
@@ -1328,20 +883,7 @@
                                 <div class="sub-head">
                                     HOD/Designee
                                 </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Microbiology-Person">CFT Reviewer Selection</label>
-                                        <select multiple name="cft_reviewer[]" placeholder="Select CFT Reviewers"
-                                            data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($cft as $data1)
-                                                @if (Helpers::checkUserRolesMicrobiology_Person($data1))
-                                                    <option value="{{ $data1->id }}"> {{ $data1->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
+                                
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="group-input">
@@ -1353,31 +895,11 @@
                                         </div>
                                     </div>
 
-
-                                    {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">Hod / Designee Attachment</label>
-                                        <div>
-                                            <small class="text-primary">
-                                                Please Attach all relevant or supporting documents
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="hod_design_attach"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="hod_design_attach" name="hod_design_attach[]" oninput="addMultipleFiles(this,'qa_cqa_attachments')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="CAPA Attachments"> HOD/Designee Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
-                                            {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="hod_design_attach"></div>
                                                 <div class="add-btn">
@@ -1472,12 +994,7 @@
                                             <textarea class="summernote Production_Table_Assessment" name="Production_Table_Assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 productionTable">
-                                        <div class="group-input">
-                                            <label for="Production Tablet feedback">Production Tablet Feedback</label>
-                                            <textarea class="summernote Production_Table_Feedback" name="Production_Table_Feedback" id="summernote-18"></textarea>
-                                        </div>
-                                    </div> --}}
+                               
                                     <div class="col-12 productionTable">
                                         <div class="group-input">
                                             <label for="Production Tablet attachment">Production Tablet/Capsule/Powder
@@ -1579,14 +1096,7 @@
                                                 id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 productionInjection">
-                                        <div class="group-input">
-                                            <label for="Production Injection feedback">Production Injection Feedback (By
-                                                Production
-                                                Injection) </label>
-                                            <textarea class="summernote Production_Injection_Feedback" name="Production_Injection_Feedback" id="summernote-18"></textarea>
-                                        </div>
-                                    </div> --}}
+                                    
                                     <div class="col-12 productionInjection">
                                         <div class="group-input">
                                             <label for="Production Injection attachment">Production Injection
@@ -1690,13 +1200,7 @@
                                             <textarea class="summernote ResearchDevelopment_assessment" name="ResearchDevelopment_assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 researchDevelopment">
-                                        <div class="group-input">
-                                            <label for="Research Development feedback">Research & Development
-                                                Feedback</label>
-                                            <textarea class="summernote ResearchDevelopment_feedback" name="ResearchDevelopment_feedback" id="summernote-18"></textarea>
-                                        </div>
-                                    </div> --}}
+                                    
                                     <div class="col-12 researchDevelopment">
                                         <div class="group-input">
                                             <label for="Research Development attachment">Research & Development
@@ -1792,12 +1296,7 @@
                                             <textarea class="" name="Human_Resource_assessment" id="summernote-35"></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 human_resources">
-                                        <div class="group-input">
-                                            <label for="productionfeedback">Human Resource Feedback</label>
-                                            <textarea class="" name="Human_Resource_feedback" id="summernote-36"></textarea>
-                                        </div>
-                                    </div> --}}
+                                  
                                     <div class="col-lg-12 human_resources">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Human Resource
@@ -1823,7 +1322,6 @@
                                                 By</label>
                                             <input type="text" name="Human_Resource_by" id="Human_Resource_by"
                                                 disabled>
-
                                         </div>
                                     </div>
                                     <div class="col-lg-6 new-date-data-field human_resources">
@@ -1912,14 +1410,7 @@
                                                 id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 CQA">
-                                        <div class="group-input">
-                                            <label for="Corporate Quality Assurance feedback">Corporate Quality Assurance
-                                                Feedback</label>
-                                            <textarea class="summernote CorporateQualityAssurance_feedback" name="CorporateQualityAssurance_feedback"
-                                                id="summernote-18"></textarea>
-                                        </div>
-                                    </div> --}}
+                                 
                                     <div class="col-12 CQA">
                                         <div class="group-input">
                                             <label for="Corporate Quality Assurance attachment">Corporate Quality Assurance
@@ -2022,12 +1513,7 @@
                                             <textarea class="summernote Store_assessment" name="Store_assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 store">
-                                        <div class="group-input">
-                                            <label for="Store feedback">Store Feedback</label>
-                                            <textarea class="summernote Store_feedback" name="Store_feedback" id="summernote-18"></textarea>
-                                        </div>
-                                    </div> --}}
+                                 
                                     <div class="col-12 store">
                                         <div class="group-input">
                                             <label for="Store attachment">Store Attachments</label>
@@ -2119,16 +1605,7 @@
                                     </textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 engineering">
-                                        <div class="group-input">
-                                            <label for="productionfeedback">Engineering Feedback</label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does
-                                                    not require completion</small></div>
-                                            <textarea class="" name="Engineering_feedback" id="summernote-26">
-                                    </textarea>
-                                        </div>
-                                    </div> --}}
+                                
                                     <div class="col-lg-12 engineering">
                                         <div class="group-input">
                                             <label for="Audit Attachments">Engineering Attachments</label>
@@ -2245,12 +1722,7 @@
                                             <textarea class="summernote RegulatoryAffair_assessment" name="RegulatoryAffair_assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 RegulatoryAffair">
-                                        <div class="group-input">
-                                            <label for="Regulatory Affair feedback">Regulatory Affair Feedback</label>
-                                            <textarea class="summernote RegulatoryAffair_feedback" name="RegulatoryAffair_feedback" id="summernote-18"></textarea>
-                                        </div>
-                                    </div> --}}
+                               
                                     <div class="col-12 RegulatoryAffair">
                                         <div class="group-input">
                                             <label for="Regulatory Affair attachment">Regulatory Affair Attachments</label>
@@ -2348,16 +1820,7 @@
                                     </textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 quality_assurance">
-                                        <div class="group-input">
-                                            <label for="Quality Assurance Feedback">Quality Assurance Feedback</label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does
-                                                    not require completion</small></div>
-                                            <textarea class="" name="QualityAssurance_feedback" id="summernote-24">
-                                    </textarea>
-                                        </div>
-                                    </div> --}}
+                             
                                     <div class="col-lg-12 quality_assurance">
                                         <div class="group-input">
                                             <label for="Quality Assurance Attachments">Quality Assurance
@@ -2464,13 +1927,7 @@
                                             <textarea class="summernote ProductionLiquid_assessment" name="ProductionLiquid_assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 productionLiquid">
-                                        <div class="group-input">
-                                            <label for="Production Liquid feedback">Production Liquid/External Preparation
-                                                Feedback</label>
-                                            <textarea class="summernote ProductionLiquid_feedback" name="ProductionLiquid_feedback" id="summernote-18"></textarea>
-                                        </div>
-                                    </div> --}}
+                                
                                     <div class="col-12 productionLiquid">
                                         <div class="group-input">
                                             <label for="Production Liquid attachment">Production Liquid/External
@@ -2675,12 +2132,7 @@
                                             <textarea class="summernote Microbiology_assessment" name="Microbiology_assessment" id="summernote-17"></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 Microbiology">
-                                        <div class="group-input">
-                                            <label for="Microbiology feedback">Microbiology Feedback</label>
-                                            <textarea class="summernote Microbiology_feedback" name="Microbiology_feedback" id="summernote-18"></textarea>
-                                        </div>
-                                    </div> --}}
+                                  
                                     <div class="col-12 Microbiology">
                                         <div class="group-input">
                                             <label for="Microbiology attachment">Microbiology Attachments</label>
@@ -2776,13 +2228,7 @@
                                                         </textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 environmental_health">
-                                        <div class="group-input">
-                                            <label for="productionfeedback">Safety Feedback</label>
-                                            <textarea class="" name="Health_Safety_feedback" id="summernote-34">
-                                                        </textarea>
-                                        </div>
-                                    </div> --}}
+                                
                                     <div class="col-lg-12 environmental_health">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Safety Attachments</label>
@@ -2826,106 +2272,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="sub-head">
-                                    Contract Giver
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('.ContractGiver').hide();
-
-                                        $('[name="ContractGiver_Review"]').change(function() {
-                                            if ($(this).val() === 'yes') {
-
-                                                $('.ContractGiver').show();
-                                                $('.ContractGiver span').show();
-                                            } else {
-                                                $('.ContractGiver').hide();
-                                                $('.ContractGiver span').hide();
-                                            }
-                                        });
-                                    });
-                                </script>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Contract Giver"> Contract Giver Required ? </label>
-                                        <select name="ContractGiver_Review" id="ContractGiver_Review" disabled>
-                                            <option value="">-- Select --</option>
-                                            <option value='yes'>
-                                                Yes</option>
-                                            <option value='no'>
-                                                No</option>
-                                            <option value='na'>
-                                                NA</option>
-                                        </select>
-
-                                    </div>
-                                </div>
-                                @php
-                                    $division = DB::table('q_m_s_divisions')
-                                        ->where('name', Helpers::getDivisionName(session()->get('division')))
-                                        ->first();
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_roles_id' => 22, 'q_m_s_divisions_id' => $division->id])
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-                                <div class="col-lg-6 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver notification">Contract Giver Person</label>
-                                        <select name="ContractGiver_Person" class="ContractGiver_Person"
-                                            id="ContractGiver_Person">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">
-                                                    {{ $user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver assessment">Impact Assessment (By Contract
-                                            Giver)</label>
-                                        <textarea class="summernote ContractGiver_assessment" name="ContractGiver_assessment" id="summernote-17"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-3 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver feedback">Contract Giver Feedback</label>
-                                        <textarea class="summernote ContractGiver_feedback" name="ContractGiver_feedback" id="summernote-18"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver attachment">Contract Giver Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="ContractGiver_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="ContractGiver_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'ContractGiver_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 store">
-                                    <div class="group-input">
-                                        <label for="Contract Giver Completed By">Contract Giver Completed
-                                            By</label>
-                                        <input readonly type="text" name="ContractGiver_by" id="ContractGiver_by">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 store">
-                                    <div class="group-input ">
-                                        <label for="Contract Giver Completed On">Contract Giver Completed On</label>
-                                        <input type="date"id="ContractGiver_on" name="ContractGiver_on">
-                                    </div>
-                                </div> --}}
-
+                                    
                                     <script>
                                         $(document).ready(function() {
                                             $('.other1_reviews').hide();
@@ -3003,9 +2350,6 @@
                                                     Administration</option>
                                                 <option value="Information Technology">Information Technology</option>
                                                 <option value="Regulatory Affairs">Project management</option>
-
-
-
                                             </select>
 
                                         </div>
@@ -3017,13 +2361,7 @@
                                         </textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 other1_reviews">
-                                        <div class="group-input">
-                                            <label for="productionfeedback"> Other's 1 Feedback</label>
-                                            <textarea class="" name="Other1_feedback" id="summernote-42">
-                                        </textarea>
-                                        </div>
-                                    </div> --}}
+                               
                                     <div class="col-lg-12 other1_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Other's 1 Attachments</label>
@@ -3146,13 +2484,7 @@
                                         </textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 Other2_reviews">
-                                        <div class="group-input">
-                                            <label for="Feedback2"> Other's 2 Feedback</label>
-                                            <textarea class="" name="Other2_feedback" id="summernote-44">
-                                        </textarea>
-                                        </div>
-                                    </div> --}}
+                                  
                                     <div class="col-lg-12 Other2_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Other's 2 Attachments</label>
@@ -3277,13 +2609,7 @@
                                         </textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 Other3_reviews">
-                                        <div class="group-input">
-                                            <label for="productionfeedback"> Other's 3 Feedback</label>
-                                            <textarea class="" name="Other3_feedback" id="summernote-46">
-                                        </textarea>
-                                        </div>
-                                    </div> --}}
+                                
                                     <div class="col-lg-12 Other3_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Other's 3 Attachments</label>
@@ -3408,13 +2734,7 @@
                                         </textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 Other4_reviews">
-                                        <div class="group-input">
-                                            <label for="feedback4"> Other's 4 Feedback</label>
-                                            <textarea class="" name="Other4_feedback" id="summernote-48">
-                                        </textarea>
-                                        </div>
-                                    </div> --}}
+                               
                                     <div class="col-lg-12 Other4_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Other's 4 Attachments</label>
@@ -3540,13 +2860,7 @@
                                         </textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12 mb-3 Other5_reviews">
-                                        <div class="group-input">
-                                            <label for="productionfeedback"> Other's 5 Feedback</label>
-                                            <textarea class="" name="Other5_feedback" id="summernote-50">
-                                        </textarea>
-                                        </div>
-                                    </div> --}}
+                             
                                     <div class="col-lg-12 Other5_reviews">
                                         <div class="group-input">
                                             <label for="Audit Attachments"> Other's 5 Attachments</label>
@@ -3597,15 +2911,7 @@
                                         style=" justify-content: center; width: 4rem; margin-left: 1px;">
                                         <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
                                             Exit </a> </button>
-                                    <!-- <a style="  justify-content: center; width: 10rem; margin-left: 1px;" type="button"
-                                                                                                class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                data-bs-target="#launch_extension">
-                                                                                                Launch Extension
-                                                                                            </a> -->
-                                    {{-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                        data-bs-target="#effectivenss_extension">
-                                        Launch Effectiveness Check
-                                    </a> --}}
+                         
                                 </div>
 
                             </div>
@@ -4184,12 +3490,7 @@
                                             <input type="text" name="estimated_cost" id="estimated_cost">
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Supervisor">Supervisor</label>
-
-                                        </div>
-                                    </div> --}}
+                                  
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Currency">Currency</label>
@@ -4219,35 +3520,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Team Members">Team Members</label>
-                                            <select multiple name="team_members2[]" placeholder="Select Team Members"
-                                                data-search="false" data-silent-initial-value-set="true" id="team_members">
-                                                <option value="">select team member</option>
-                                                <option value="1">Amit Guru</option>
-                                                <option value="2">Anshul Patel</option>
-                                                <option value="3">Vikash Prajapati</option>
-                                                <option value="4">Amit Patel</option>
-                                                <option value="5">Shaleen Mishra</option>
-                                                <option value="6">Madhulika Mishra</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Training Requirement">Training Requirement</label>
-                                            <select multiple name="training_require" placeholder="Select Training Requirement"
-                                                data-search="false" data-silent-initial-value-set="true"
-                                                id="training_require">
-                                                <option value="">ABC</option>
-                                                <option value="1">ABC</option>
-                                                <option value="1">ABC</option>
-                                                <option value="1">ABC</option>
-
-                                            </select>
-                                        </div>
-                                    </div> --}}
+                                   
                                     <div class="col-6">
                                         <div class="group-input">
                                             <label for="Justification / Rationale">Justification / Rationale</label>
@@ -4506,21 +3779,7 @@
                                 <div class="col-12">
                                     <div class="sub-head">Risk Mitigation</div>
                                 </div>
-                                {{-- <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="mitigation-required">Mitigation Required</label>
-                                            <div class="check-input">
-
-                                                <select name="mitigation_required">
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option value="yes">yes</option>
-                                                    <option value="no">No</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div> --}}
-
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Department(s)">Mitigation Required</label>
@@ -4606,32 +3865,7 @@
                                         <textarea name="risk_analysis"></textarea>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="severity">Severity</label>
-                                            <select name="severity">
-                                                <option value="">-- Select --</option>
-                                                <option value="Negligible">Negligible</option>
-                                                <option value="Minor">Minor</option>
-                                                <option value="Moderate">Moderate</option>
-                                                <option value="Major">Major</option>
-                                                <option value="Fatal">Fatal</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
-                                {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="occurance">Occurance</label>
-                                            <select name="occurance">
-                                                <option value="">-- Select --</option>
-                                                <option value="Extremely_Unlikely">Extremely Unlikely</option>
-                                                <option value="Rare">Rare</option>
-                                                <option value="Unlikely">Unlikely</option>
-                                                <option value="Likely">Likely</option>
-                                                <option value="Very_Likely">Very Likely</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
+                                
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
@@ -4812,11 +4046,7 @@
             });
         </script>
 
-        {{--  <script>
-            $(document).on('click', '.removeRowBtn', function() {
-                $(this).closest('tr').remove();
-            })
-            </script>  --}}
+ 
 
         <script>
             var maxLength = 255;
@@ -4978,31 +4208,7 @@
                 ele: '#reference_record, #notify_to'
             });
 
-            $('#summernote').summernote({
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear', 'italic']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
-            });
-
-            $('.summernote').summernote({
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear', 'italic']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
-            });
-
-            let referenceCount = 1;
+                        let referenceCount = 1;
 
             function addReference() {
                 referenceCount++;
@@ -5023,23 +4229,7 @@
             }
         </script>
 
-       <script>
-         var editor = new FroalaEditor('.summernote-1', {
-            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
-            imageUploadParam: 'image_param',
-            imageUploadMethod: 'POST',
-            imageMaxSize: 20 * 1024 * 1024,
-            imageUploadURL: "{{ secure_url('api/upload-files') }}",
-            fileUploadParam: 'image_param',
-            fileUploadURL: "{{ secure_url('api/upload-files')}}",
-            videoUploadParam: 'image_param',
-            videoUploadURL: "{{ secure_url('api/upload-files') }}",
-            videoMaxSize: 500 * 1024 * 1024,
-         });
-         
-          $(".summernote-1-disabled").FroalaEditor("edit.off");
-       </script>
-
+      
         <script>
             function addRiskAssessmentdata2(tableId) {
                 var table = document.getElementById(tableId);
