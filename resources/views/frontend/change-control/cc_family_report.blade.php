@@ -185,7 +185,42 @@
                 color: gray;
             }
     </style>
+<style>
+    .change-grid {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
 
+    .change-grid th,
+    .change-grid td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        font-size: 11px;
+        vertical-align: top;
+        text-align: left;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        line-height: 0.8;
+    }
+
+    .change-grid th {
+        background: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .change-grid .sr-no {
+        width: 8%;
+    }
+
+    .change-grid .text-col {
+        width: 30.66%;
+    }
+
+    .pdf-text {
+        white-space: pre-line;
+    }
+</style>
 <body>
 
     <header>
@@ -287,24 +322,33 @@
 
             <div class="block">
                 <div class="block-head">Change Proposal And Justification Details Grid</div>
-                <table>
+                <table class="change-grid">
                     <tr>
-                        <th>Sr No</th>
-                        <th>Current Practice</th>
-                        <th>Proposed Change</th>
-                        <th>Justification</th>
+                        <th class="sr-no">Sr No</th>
+                        <th class="text-col">Current Practice</th>
+                        <th class="text-col">Proposed Change</th>
+                        <th class="text-col">Justification</th>
                     </tr>
 
-                  @if(!empty($grid))
-                    @foreach($grid as $key => $row)
-                        <tr>
-                            <td>{{ $key+1 }}</td>
-                            <td>{{ $row['existing_system'] ?? '' }}</td>
-                            <td>{{ $row['proposed_change'] ?? '' }}</td>
-                            <td>{{ $row['justification'] ?? '' }}</td>
-                        </tr>
-                    @endforeach
-                @endif
+                    @if(!empty($grid))
+                        @foreach($grid as $key => $row)
+                            <tr>
+                                <td class="sr-no">{{ $key + 1 }}</td>
+
+                                <td class="pdf-text">
+                                    {!! nl2br(e($row['existing_system'] ?? '')) !!}
+                                </td>
+
+                                <td class="pdf-text">
+                                    {!! nl2br(e($row['proposed_change'] ?? '')) !!}
+                                </td>
+
+                                <td class="pdf-text">
+                                    {!! nl2br(e($row['justification'] ?? '')) !!}
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </table>
             </div>
 

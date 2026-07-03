@@ -9,165 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<!-- <style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-    }
-
-    .w-10 {
-        width: 10%;
-    }
-
-    .w-20 {
-        width: 20%;
-    }
-
-    .w-25 {
-        width: 25%;
-    }
-
-    .w-30 {
-        width: 30%;
-    }
-
-    .w-40 {
-        width: 40%;
-    }
-
-    .w-50 {
-        width: 50%;
-    }
-
-    .w-60 {
-        width: 60%;
-    }
-
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    header table,
-    header th,
-    header td,
-    footer table,
-    footer th,
-    footer td,
-    .border-table table,
-    .border-table th,
-    .border-table td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        vertical-align: middle;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-    }
-
-    footer .head,
-    header .head {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
-    }
-
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
-    }
-
-    footer {
-        width: 100%;
-        position: fixed;
-        display: block;
-        bottom: -40px;
-        left: 0;
-        font-size: 0.9rem;
-    }
-
-    footer td {
-        text-align: center;
-    }
-
-    .inner-block {
-        padding: 10px;
-    }
-
-    .inner-block tr {
-        font-size: 0.8rem;
-    }
-
-    .inner-block .block {
-        margin-bottom: 30px;
-    }
-
-    .inner-block .block-head {
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #4274da;
-        margin-bottom: 10px;
-        color: #4274da;
-    }
-
-    .inner-block th,
-    .inner-block td {
-        vertical-align: baseline;
-    }
-
-    .table_bg {
-        background: #4274da57;
-    }
-
-    .Summer {
-        font-weight: bold;
-        font-size: 0.8rem;
-        margin-left: 10px;
-    }
-
-    .div-data {
-        font-size: 0.8rem;
-        margin-left: 10px;
-        margin-bottom: 10px;
-
-    }
-</style> -->
-
 <style>
     @page {
          margin: 160px 35px 100px; /* top header, side margin, bottom footer */
@@ -280,6 +121,50 @@
         word-wrap: break-word;
     }
 </style>
+<style>
+    table.change-grid {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    .change-grid th,
+    .change-grid td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        font-size: 11px;
+        vertical-align: top;
+        text-align: left;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        line-height: 1;
+    }
+
+    .change-grid th {
+        background: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .sr-no {
+        width: 8%;
+    }
+
+    .current-practice {
+        width: 31%;
+    }
+
+    .proposed-change {
+        width: 31%;
+    }
+
+    .justification {
+        width: 30%;
+    }
+
+    .pdf-text {
+        white-space: pre-line;
+    }
+</style>
 <body>
     <header>
         <table>
@@ -382,48 +267,47 @@
                             Change Proposal And Justification Details Grid
                         </div>
                         <div class="border-table">
-                            <table style="margin-top: 20px; width:100%;table-layout:fixed;">
+                            <table class="change-grid">
                                 <thead>
-                                    <tr class="table_bg">
-                                        <th style="width: 5%">Sr. No.</th>
-                                        <th style="width: 12%">Current Practice</th>
-                                        <th style="width: 16%">Proposed Change</th>
-                                        <th style="width: 15%">Justification / reason for change</th>
-                                        {{-- <th style="width: 8%">Action</th> --}}
+                                    <tr>
+                                        <th class="sr-no">Sr. No.</th>
+                                        <th class="current-practice">Current Practice</th>
+                                        <th class="proposed-change">Proposed Change</th>
+                                        <th class="justification">Justification / reason for change</th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
-                                        @php $productsdetails = 1; @endphp
-                                        @if (!empty($changeProposalGrid) && is_array($changeProposalGrid->data))
+                                    @php $productsdetails = 1; @endphp
 
-                                            @foreach ($changeProposalGrid->data as $index => $detail)
-                                                <tr>
-                                                    <td>{{ $productsdetails++ }}</td>
-                                                    <td class="w-20">
-                                                        {{ isset($detail['existing_system']) ? $detail['existing_system'] : '' }} </td>
-                                                    <td class="w-20">
-                                                        {{ isset($detail['proposed_change']) ? $detail['proposed_change'] : '' }} </td>
-                                                    <td class="w-20">
-                                                        {{ isset($detail['justification']) ? $detail['justification'] : '' }}
-                                                    </td>
-                                                    
-                                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
-
-                                                </tr>
-                                            @endforeach
-                                        @else
+                                    @if (!empty($changeProposalGrid) && is_array($changeProposalGrid->data))
+                                        @foreach ($changeProposalGrid->data as $detail)
                                             <tr>
-                                                <td>1</td>
+                                                <td>{{ $productsdetails++ }}</td>
 
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                {{-- <td>Not Applicable</td> --}}
+                                                <td class="pdf-text">
+                                                    {!! nl2br(e($detail['existing_system'] ?? '')) !!}
+                                                </td>
 
+                                                <td class="pdf-text">
+                                                    {!! nl2br(e($detail['proposed_change'] ?? '')) !!}
+                                                </td>
+
+                                                <td class="pdf-text">
+                                                    {!! nl2br(e($detail['justification'] ?? '')) !!}
+                                                </td>
                                             </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Not Applicable</td>
+                                            <td>Not Applicable</td>
+                                            <td>Not Applicable</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
                             </div>
                         </div>
 

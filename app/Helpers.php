@@ -70,26 +70,7 @@ class Helpers
             return "01-Jan-1999";
         }
     }
-    // public static function getdateFormat($date)
-    // {
-    //     $date = Carbon::parse($date);
-    //     $formatted_date = $date->format("d-M-Y");
-    //     return $formatted_date;
-    // }
-    // public static function getdateFormat($date)
-    // {
-    //     if(empty($date)) {
-    //         return ''; // or any default value you prefer
-    //     }
-    //     // else{
-    //     else{
-    //         $date = Carbon::parse($date);
-    //         $formatted_date = $date->format("d-M-Y");
-    //         return $formatted_date;
-    //     }
-
-    // }
-
+    
     public static function getdateFormat($date)
 {
     if (empty($date) || !strtotime($date)) {
@@ -148,42 +129,7 @@ class Helpers
         $existingRecordsCount = $model::where('parent_type', $parentType)->count();
         return $existingRecordsCount > $count;
     }
-    // public static function getHodUserList(){
-    //     return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
-    // }
-    // public static function getQAUserList(){
-
-    //     return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
-    // }
-    // public static function getInitiatorUserList(){\
-    //     return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->get();
-    // }
-    // public static function getApproverUserList(){
-    //     return $ApproverUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'1'])->get();
-    // }
-    // public static function getReviewerUserList(){
-    //     return $ReviewerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'2'])->get();
-    // }
-    // public static function getCFTUserList(){
-
-
-    //     return $CFTUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'5'])->get();
-    // }
-    // public static function getTrainerUserList(){
-
-
-    //     return $TrainerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'6'])->get();
-    // }
-    // public static function getActionOwnerUserList(){
-
-
-    //     return $ActionOwnerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'8'])->get();
-    // }
-    // public static function getQAHeadUserList(){
-
-
-    //     return $QAHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'9'])->get();
-    // }
+   
     public static function getQCHeadUserList(){
 
         return $QCHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'10'])->get();
@@ -193,42 +139,7 @@ class Helpers
 
         return $LeadAuditeeUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'11'])->get();
     }
-    // public static function getLeadAuditorUserList(){
-
-
-    //     return $LeadAuditorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'12'])->get();
-    // }
-    // public static function getAuditManagerUserList(){
-
-
-    //     return $AuditManagerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'13'])->get();
-    // }
-    // public static function getSupervisorUserList(){
-
-
-    //     return $SupervisorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'14'])->get();
-    // }
-    // public static function getResponsibleUserList(){
-
-
-    //     return $ResponsibleUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'15'])->get();
-    // }
-    // public static function getWorkGroupUserList(){
-
-
-    //     return $WorkGroupUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'16'])->get();
-    // }
-    // public static function getViewUserList(){
-
-
-    //     return $ViewUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'17'])->get();
-    // }
-    // public static function getFPUserList(){
-
-
-    //     return $FPUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'18'])->get();
-    // }
-
+    
     public static function checkRoles($role)
     {
 
@@ -239,12 +150,6 @@ class Helpers
         }else{
             return false;
         }
-        // if (strpos(Auth::user()->role, $role) !== false) {
-        //    return true;
-        // }else{
-        //     return false;
-        // }
-        // }
     }
 
     public static function checkTMSRoles($role)
@@ -257,11 +162,7 @@ class Helpers
         }else{
             return false;
         }
-        // if (strpos(Auth::user()->role, $role) !== false) {
-        //    return true;
-        // }else{
-        //     return false;
-        // }
+
     }
 
 
@@ -330,24 +231,6 @@ class Helpers
             return false;
         }
     }
-
-    // public static function checkRoles_check_approvers($document)
-    // {
-    //     if ($document->approvers) {
-    //         $datauser = explode(',', $document->approvers);
-    //         for ($i = 0; $i < count($datauser); $i++) {
-    //             if ($datauser[$i] == Auth::user()->id) {
-    //                 if($document->stage >= 10){
-    //                     return true;
-    //                 } else {
-    //                     return false;
-    //                 }
-    //             }
-    //         }
-    //     } else {
-    //         return false;
-    //     }
-    // }
 
 
     public static function checkRoles_check_hods($document)
@@ -963,24 +846,6 @@ class Helpers
         return $document_types;
     }
 
-
-    //  public static function getDueDate123($date, $addDays = false, $format = null)
-    //     {
-    //         try {
-    //             if ($date) {
-    //                 $format = $format ? $format : 'd M Y';
-    //                 $dateInstance = Carbon::parse($date);
-    //                 if ($addDays) {
-    //                     $dateInstance->addDays(30);
-    //                 }
-    //                 return $dateInstance->format($format);
-    //         }
-    //         } catch (\Exception $e) {
-    //             return 'NA';
-    //         }
-    //     }
-
-
     public static function getDepartmentWithString($id)
     {
         $response = [];
@@ -991,8 +856,6 @@ class Helpers
     }
     public static function getInitiatorEmail($id)
     {
-
-
         return   DB::table('users')->where('id',$id)->value('email');
     }
 
@@ -1994,28 +1857,17 @@ class Helpers
     public static function getNameById($id){
         return   Employee::where('id',$id)->value('employee_name');
     }
-//     public static function check_roles_initiatorcheck($requiredRoleId, $userId)
-// {
-//     $user = User::find($userId);
 
-//     if (!$user || empty($user->role)) {
-//         return false;
-//     }
-
-//     $roles = array_map('trim', explode(',', $user->role));
-
-//     return in_array($requiredRoleId, $roles);
-// }
-public static function check_roles_initiatorcheck($requiredRoleId, $userId)
-{
+    public static function check_roles_initiatorcheck($requiredRoleId, $userId)
+    {
 
 
-    return DB::table('user_roles')
-        ->where('user_id', $userId)
-        ->where('q_m_s_roles_id', $requiredRoleId)
-        ->exists();
-}
-public static function check_roles_qms_new($role_id, $process_name)
+        return DB::table('user_roles')
+            ->where('user_id', $userId)
+            ->where('q_m_s_roles_id', $requiredRoleId)
+            ->exists();
+    }
+    public static function check_roles_qms_new($role_id, $process_name)
     {
         $processIds = QMSProcess::where([
             'division_id' => Auth::user()->division_id,
@@ -2294,30 +2146,6 @@ public static function check_roles_qms_new($role_id, $process_name)
             str_pad($data->record, 4, '0', STR_PAD_LEFT);
     }
 
-//     private function getRecordUrl($processKey, $record)
-// {
-//     $baseUrl = config('app.url'); // https://yourdomain.com
-    
-//     switch ($processKey) {
-//         case 'Action Item':
-//            return $baseUrl . '/rcms/actionItem/' . $record->id;
-            
-//         case 'change_control':
-//             return $baseUrl . '/change-control/view/' . $record->id;
-            
-//         case 'capa':
-//             return $baseUrl . '/capa/view/' . $record->id;
-            
-//         case 'deviation':
-//             return $baseUrl . '/deviation/view/' . $record->id;
-            
-//         case 'change_proposal':
-//             return $baseUrl . '/change-proposal/view/' . $record->id;
-            
-//         default:
-//             return $baseUrl . '/dashboard';
-//     }
-// }
 
 }
 
