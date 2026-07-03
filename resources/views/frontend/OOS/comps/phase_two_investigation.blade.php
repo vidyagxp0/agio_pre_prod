@@ -198,7 +198,7 @@
                                 <b>{{ $file }}</b>
                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                         class="fa fa-eye text-primary"
-                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                        style="font-size:20px; margin-right:4px;"></i></a>
                                  <a type="button"
                                     class="remove-file"
                                     data-field-name="file_attachments_pII"
@@ -344,14 +344,30 @@
                     <input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="OOS_review_similar" value="{{ $data->OOS_review_similar }}" {{ $istab13 ? '' : 'readonly' }}>
                 </div>
             </div>
+
+
             <div class="col-md-12 mb-4">
+                {!! quillEditor(
+                    'impact_assessment_IIA',
+                    $data->impact_assessment_IIA ? $data->impact_assessment_IIA : "",
+
+                    '
+                    <label for="Description Deviation">
+                       Impact Assessment.
+                    </label>
+                    ',
+
+                    !$istab13
+                ) !!}
+            </div>
+            <!-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Impact Assessment.</label>
                     <textarea class="summernote" name="impact_assessment_IIA" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                   {{$data->impact_assessment_IIA ? $data->impact_assessment_IIA : ""}}
                 </textarea>
                 </div>
-            </div>
+            </div> -->
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Start Date">Phase IIB Inv. Required? <span class="text-danger">*</span></label>
@@ -383,7 +399,7 @@
                                 <b>{{ $file }}</b>
                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                         class="fa fa-eye text-primary"
-                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                        style="font-size:20px; margin-right:4px;"></i></a>
                                 <a type="button"
                                         class="remove-file"
                                         data-field-name="attachments_piiqcr"

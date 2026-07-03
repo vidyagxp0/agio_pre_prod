@@ -8,14 +8,28 @@
         </div>
         <div class="row">
        
-            <div class="col-md-12 mb-4">
+            <!-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation"> Approval Comments<span class="text-danger">*</span> </label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                  
                     <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
                                 {{ $data->reopen_approval_comments_uaa ?? '' }}
                                 </textarea>
                 </div>
+            </div> -->
+
+
+            <div class="col-md-12 mb-4">
+                {!! quillEditor(
+                    'reopen_approval_comments_uaa',
+                    $data->reopen_approval_comments_uaa ?? '',
+                    '
+                    <label for="reopen_approval_comments_uaa">
+                        Approval Comments<span class="text-danger">*</span> 
+                    </label>
+                    ',
+                    !$istab20
+                ) !!}
             </div>
 
             {{-- <div class="col-12">
@@ -105,26 +119,54 @@
                     @endif
                 </div>
             </div>
-            <div class="col-md-12 mb-4">
+
+
+             <div class="col-md-12 mb-4">
+                {!! quillEditor(
+                    'other_action_bd',
+                    $data->other_action_bd ?? '',
+                    '
+                    <label for="other_action_bd">
+                       Other Action (Specify)
+                    </label>
+                    ',
+                    !$istab20
+                ) !!}
+            </div>
+            <!-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Other Action (Specify)</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="other_action_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
+                        <textarea class="summernote" name="other_action_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                             {{$data->other_action_bd ??  ''}}
                                 </textarea>
                 </div>
-            </div>
+            </div> -->
             <!-- Other Parameters Results -->
-            <div class="col-md-12 mb-4">
+
+             <div class="col-md-12 mb-4">
+                {!! quillEditor(
+                    'other_parameters_results_bd',
+                    $data->other_parameters_results_bd ?? '',
+                    '
+                    <label for="other_parameters_results_bd">
+                        Other Parameters Results
+                    </label>
+                    ',
+                    !$istab20
+                ) !!}
+            </div>
+            <!-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Other Parameters Results</label>
                     <textarea class="summernote" name="other_parameters_results_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                             {{ $data->other_parameters_results_bd ?? '' }}
                         </textarea>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Trend of Previous Batches -->
+
+            
             {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Trend of Previous Batches</label>
@@ -203,15 +245,27 @@
                 </div>
 
             </div> --}}
-            <div class="col-md-12 mb-4">
+            <!-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify For Delay In Activity</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
+                     <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                                     {{ $data->justify_for_delay_in_activity_bd ?? '' }}
                                 </textarea>
                 </div>
 
+            </div> -->
+
+            <div class="col-md-12 mb-4">
+                {!! quillEditor(
+                    'justify_for_delay_in_activity_bd',
+                    $data->justify_for_delay_in_activity_bd ?? '',
+                    '
+                    <label for="justify_for_delay_in_activity_bd">
+                       Justify For Delay In Activity
+                    </label>
+                    ',
+                    !$istab20
+                ) !!}
             </div>
             <div class="col-12">
                 <div class="group-input">
@@ -229,7 +283,7 @@
                                 <b>{{ $file }}</b>
                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                         class="fa fa-eye text-primary"
-                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                        style="font-size:20px; margin-right:4px;"></i></a>
                                 <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                         class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a> -->
 

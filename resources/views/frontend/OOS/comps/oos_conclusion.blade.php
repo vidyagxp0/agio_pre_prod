@@ -1,20 +1,51 @@
-@php
+<!-- @php
    $istab8 = $data->stage == 8 && (Helpers::check_roles($data->division_id, 'OOS/OOT', 39) || Helpers::check_roles($data->division_id, 'OOS/OOT', 43) || Helpers::check_roles($data->division_id, 'OOS/OOT', 42) || Helpers::check_roles($data->division_id, 'OOS/OOT', 9) || Helpers::check_roles($data->division_id, 'OOS/OOT', 65) || Helpers::check_roles($data->division_id, 'OOS/OOT', 18));
-@endphp  
+@endphp   -->
+@php
+$canEditConclusion =
+                            (
+                                $data->assign_cause_found == "Yes" ||
+                                $data->phase_ib_assi_cause == "Yes" ||
+                                $data->phase_ii_a_assi_cause == "Yes" ||
+                                in_array($data->stage, [8,17,18,19,20,22,26,27])
+                            )
+                            &&
+                            (
+                                Helpers::check_roles($data->division_id, 'OOS/OOT', 39) ||
+                                Helpers::check_roles($data->division_id, 'OOS/OOT', 43) ||
+                                Helpers::check_roles($data->division_id, 'OOS/OOT', 42) ||
+                                Helpers::check_roles($data->division_id, 'OOS/OOT', 9) ||
+                                Helpers::check_roles($data->division_id, 'OOS/OOT', 65) ||
+                                Helpers::check_roles($data->division_id, 'OOS/OOT', 18)
+                            );
+@endphp
 <div id="CCForm8" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
             OOS/OOT Conclusion
         </div>
         <div class="row">
-            <div class="col-md-12 mb-4">
+            <!-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Conclusion Comments @if($data->stage == 20 || $data->stage == 8) <span class="text-danger">*</span>@endif</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" data-stage="8" name="conclusion_comments_oosc" id="summernote-1"  >
                         {{ $data->conclusion_comments_oosc ?? '' }}
                         </textarea>
                 </div>
+            </div> -->
+
+            <div class="col-md-12 mb-4">
+                {!! quillEditor(
+                    'conclusion_comments_oosc',
+                    $data->conclusion_comments_oosc ?? '',
+                    '<label for="conclusion_comments_oosc">
+                        Conclusion Comments ' .
+                        (($data->stage == 20 || $data->stage == 8)
+                            ? '<span class="text-danger">*</span>'
+                            : '') .
+                    '</label>',
+                    !$canEditConclusion
+                ) !!}
             </div>
 
 
@@ -49,14 +80,27 @@
                 </div>
             </div>
 
-            <div class="col-md-12 mb-4">
+            <!-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify for Averaging Results @if($data->stage == 20 ||$data->stage == 8) <span class="text-danger">*</span>@endif</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" data-stage="8" name="justifi_for_averaging_results_oosc" id="summernote-1">
+                     <textarea class="summernote" data-stage="8" name="justifi_for_averaging_results_oosc" id="summernote-1">
                                 {{ $data->justifi_for_averaging_results_oosc ?? '' }}
                             </textarea>
                 </div>
+            </div> -->
+
+            <div class="col-md-12 mb-4">
+                {!! quillEditor(
+                    'justifi_for_averaging_results_oosc',
+                    $data->justifi_for_averaging_results_oosc ?? '',
+                    '<label for="justifi_for_averaging_results_oosc">
+                       Justify for Averaging Results' .
+                        (($data->stage == 20 || $data->stage == 8)
+                            ? '<span class="text-danger">*</span>'
+                            : '') .
+                    '</label>',
+                    !$canEditConclusion
+                ) !!}
             </div>
 
             <div class="col-lg-6">
@@ -120,24 +164,54 @@
                 </div>
             </div>
 
-            <div class="col-md-12 mb-4">
+            <!-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if CAPA not required</label>
                     <textarea class="summernote" data-stage="8" name="justify_if_capa_not_required_oosc" id="summernote-1" >
                                 {{ $data->justify_if_capa_not_required_oosc ?? '' }}
                             </textarea>
                 </div>
+            </div> -->
+
+             <div class="col-md-12 mb-4">
+                {!! quillEditor(
+                    'justify_if_capa_not_required_oosc',
+                    $data->justify_if_capa_not_required_oosc ?? '',
+                     '<label for="justify_if_capa_not_required_oosc">
+                      Justify if CAPA not required ' .
+                        (($data->stage == 20 || $data->stage == 8)
+                            ? '<span class="text-danger">*</span>'
+                            : '') .
+                    '</label>',
+                    !$canEditConclusion
+                ) !!}
             </div>
 
 
-            <div class="col-md-12 mb-4">
+              <div class="col-md-12 mb-4">
+                {!! quillEditor(
+                    'action_on_affected_batch',
+                    $data->action_on_affected_batch ?? '',
+                     '<label for="action_on_affected_batch">
+                      Action On affected batches ' .
+                        (($data->stage == 20 || $data->stage == 8)
+                            ? '<span class="text-danger">*</span>'
+                            : '') .
+                    '</label>',
+                    !$canEditConclusion
+                ) !!}
+            </div>
+
+
+
+            <!-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Action On affected batches</label>
                     <textarea class="summernote" data-stage="8" name="action_on_affected_batch" id="summernote-1" >
                             {{ $data->action_on_affected_batch ? $data->action_on_affected_batch : '' }}
                         </textarea>
                 </div>
-            </div>
+            </div> -->
 
             <div class="col-lg-12">
                 <div class="group-input">
@@ -155,7 +229,7 @@
                                 <b>{{ $file }}</b>
                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                         class="fa fa-eye text-primary"
-                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                        style="font-size:20px; margin-right:4px;"></i></a>
                                 
 
                                 <a type="button"
