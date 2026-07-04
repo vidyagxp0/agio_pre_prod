@@ -317,6 +317,11 @@
                             $checklist = $checklistData->data ?? [];
                         @endphp
 
+
+               <div class="block">
+                        <div class="block-head">
+                         Impact Assessment 
+                        </div>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -352,6 +357,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>    
 
             {{-- ================= INITIATOR ATTACHMENT ================= --}} 
             <div class="block">

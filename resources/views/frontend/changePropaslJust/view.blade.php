@@ -611,6 +611,13 @@
                                 });
                                 </script>
 
+                                <style>
+.readonly-select {
+    background: #f5f5f5;
+    pointer-events: none;
+}
+</style>
+
                         <div class="sub-head">
                             Impact Assessment @if($data->stage ==1)
                                     <span class="text-danger">*</span>
@@ -759,7 +766,10 @@
                                                             @if(!$isLastQuestion)
 
                                                                 {{-- YES / NO --}}
-                                                                <select name="checklist[{{ $key }}][response]" style="width:100%; border:1px solid #000;">
+                                                               <select
+                                                                        name="checklist[{{ $key }}][response]"
+                                                                        class="impact-select {{ !$istab1 ? 'readonly-select' : '' }}"
+                                                                        style="width:100%; border:1px solid #000;">
 
                                                                     <option value="No"
                                                                         {{ isset($saved['response']) && $saved['response'] == 'No' ? 'selected' : '' }}>
@@ -778,7 +788,7 @@
                                                                 {{-- LAST QUESTION (Manual Input) --}}
                                                                 <textarea 
                                                                     name="checklist[{{ $key }}][manual_response]"
-                                                                    rows="3"
+                                                                    rows="3"   {{ $istab1 ? '' : 'readonly' }}
                                                                     style="width:100%; border:1px solid #ccc; padding:8px; border-radius:5px;"
                                                                     placeholder="Enter additional comments..."
                                                                 >{{ $saved['manual_response'] ?? '' }}</textarea>
