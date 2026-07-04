@@ -1923,7 +1923,7 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 17) {
-                if (empty($changestage->Summary_Of_Inv_IIB &&  $changestage->Assignable_Cause111 )) {
+                if (empty(trim(strip_tags($changestage->Summary_Of_Inv_IIB)) &&  $changestage->Assignable_Cause111 )) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
@@ -2513,17 +2513,36 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 20) {
-               if (!$changestage->reopen_approval_comments_uaa) {
-                    // Flash message for warning (field not filled)
-                    Session::flash('swal', [
-                        'title' => 'Mandatory Fields Required!',
-                        'message' => 'Approval Comments is yet to be filled!',
-                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
-                    ]);
+            //     $approvalComments = trim(strip_tags($changestage->reopen_approval_comments_uaa));
+                
+            //    if (!$changestage->approvalComments) {
+            //         // Flash message for warning (field not filled)
+            //         Session::flash('swal', [
+            //             'title' => 'Mandatory Fields Required!',
+            //             'message' => 'Approval Comments is yet to be filled!',
+            //             'type' => 'warning',  // Type can be success, error, warning, info, etc.
+            //         ]);
 
-                    return redirect()->back();
-                }
-                elseif (!$changestage->conclusion_comments_oosc ||!$changestage->justifi_for_averaging_results_oosc ||!$changestage->justify_if_capa_not_required_oosc ||!$changestage->action_on_affected_batch   ) {
+            //         return redirect()->back();
+            //     }
+
+                $approvalComments = trim(strip_tags($changestage->reopen_approval_comments_uaa));
+
+                    if (empty($approvalComments)) {
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Approval Comments is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    }
+                    elseif (
+                        empty(trim(strip_tags($changestage->conclusion_comments_oosc))) ||
+                        empty(trim(strip_tags($changestage->justifi_for_averaging_results_oosc))) ||
+                        empty(trim(strip_tags($changestage->justify_if_capa_not_required_oosc))) ||
+                        empty(trim(strip_tags($changestage->action_on_affected_batch)))
+                    ) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
@@ -5441,7 +5460,10 @@ class OOSController extends Controller
                     return redirect()->back();
                 }
 
-                elseif (!$changestage->conclusion_comments_oosc ||!$changestage->justifi_for_averaging_results_oosc ||!$changestage->justify_if_capa_not_required_oosc ||!$changestage->action_on_affected_batch   ) {
+                elseif (empty(trim(strip_tags($changestage->conclusion_comments_oosc))) ||
+                        empty(trim(strip_tags($changestage->justifi_for_averaging_results_oosc))) ||
+                        empty(trim(strip_tags($changestage->justify_if_capa_not_required_oosc))) ||
+                        empty(trim(strip_tags($changestage->action_on_affected_batch))) ) {
                     // Flash message for warning (field not filled)
                      Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
@@ -5555,7 +5577,10 @@ class OOSController extends Controller
 
                     return redirect()->back();
                 }
-            elseif (!$changestage->conclusion_comments_oosc ||!$changestage->justifi_for_averaging_results_oosc ||!$changestage->justify_if_capa_not_required_oosc ||!$changestage->action_on_affected_batch   ) {
+            elseif ( empty(trim(strip_tags($changestage->conclusion_comments_oosc))) ||
+                        empty(trim(strip_tags($changestage->justifi_for_averaging_results_oosc))) ||
+                        empty(trim(strip_tags($changestage->justify_if_capa_not_required_oosc))) ||
+                        empty(trim(strip_tags($changestage->action_on_affected_batch)))   ) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
@@ -5660,7 +5685,11 @@ class OOSController extends Controller
 
                     return redirect()->back();
                 }
-            elseif (!$changestage->conclusion_comments_oosc ||!$changestage->justifi_for_averaging_results_oosc ||!$changestage->justify_if_capa_not_required_oosc ||!$changestage->action_on_affected_batch   ) {
+              
+            elseif ( empty(trim(strip_tags($changestage->conclusion_comments_oosc))) ||
+                        empty(trim(strip_tags($changestage->justifi_for_averaging_results_oosc))) ||
+                        empty(trim(strip_tags($changestage->justify_if_capa_not_required_oosc))) ||
+                        empty(trim(strip_tags($changestage->action_on_affected_batch)))) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',

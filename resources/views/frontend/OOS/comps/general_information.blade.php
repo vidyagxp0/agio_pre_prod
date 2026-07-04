@@ -371,7 +371,7 @@ $(document).on('click', '.remove-file', function () {
                                         <b>{{ $file }}</b>
                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                 class="fa fa-eye text-primary"
-                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                style="font-size:20px; margin-right:4px;"></i></a>
                                         <a type="button"
                                             class="remove-file"
                                             data-field-name="initial_attachment_gi"

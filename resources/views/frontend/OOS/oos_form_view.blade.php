@@ -799,7 +799,7 @@
                                                 <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                     </a>
                                                    
                                                      <a type="button"
@@ -884,7 +884,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             
 
                                             <a type="button"
@@ -969,7 +969,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                     class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                         </h6>
@@ -8460,7 +8460,7 @@
                                                     <b>{{ is_string($file) ? $file : 'Invalid file' }}</b>
                                                     @if (is_string($file))
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:4px;"></i>
                                                         </a>
                                                        
                                                         <a type="button"
@@ -8548,7 +8548,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                     class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a> -->
 
@@ -8634,7 +8634,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                            
                                             <a type="button"
                                                 class="remove-file"
@@ -8734,7 +8734,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                     class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                         </h6>
@@ -8812,7 +8812,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                     class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a> -->
 
@@ -8898,7 +8898,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                     class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a> -->
 
@@ -9054,7 +9054,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             
                                                 <a type="button"
                                                     class="remove-file"
@@ -9229,7 +9229,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                            
 
                                             <a type="button"
@@ -9336,7 +9336,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                           
                                             <a type="button"
                                                 class="remove-file"
@@ -9385,12 +9385,28 @@
                     </div>
                     <div class="row">
                          <!-- Others Field -->
-                         <div class="col-lg-12 new-time-data-field">
+                         <!-- <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Summary Of Investigation<span class="text-danger">*</span></label>
                                 <textarea class="summernote" id="summernote-1" name="Summary_Of_Inv_IIB" {{ $data->stage == 17 ? 'required' : 'readonly' }}>{{ $data->Summary_Of_Inv_IIB }}</textarea>
                             </div>
+                        </div> -->
+
+                        <div class="col-md-12 mb-4">
+                            {!! quillEditor(
+                                'Summary_Of_Inv_IIB',
+                                $data->Summary_Of_Inv_IIB ? $data->Summary_Of_Inv_IIB : "",
+
+                                '
+                                <label for="Description Deviation">
+                                    Summary Of Investigation<span class="text-danger">*</span>
+                                </label>
+                                ',
+
+                                !$istab17
+                            ) !!}
                         </div>
+                      
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">CAPA Required</label>
@@ -9445,7 +9461,36 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-lg-12 new-time-data-field">
+
+                       
+
+
+                        <div class="col-md-12 mb-4">
+                            {!! quillEditor(
+                                'result_of_rep_test_IIB',
+                                $data->result_of_rep_test_IIB ?? '',
+                                '
+                                <label for="result_of_rep_test_IIB">
+                                    Results Of Repeat Testing IIB Inv.
+                                </label>
+                                ',
+                                !$istab17
+                            ) !!}
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            {!! quillEditor(
+                                'Laboratory_Investigation_Hypothesis',
+                                $data->Laboratory_Investigation_Hypothesis ?? '',
+                                '
+                                <label for="Laboratory_Investigation_Hypothesis">
+                                    Laboratory Investigation Hypothesis Details
+                                </label>
+                                ',
+                                !$istab17
+                            ) !!}
+                        </div>
+                        <!-- <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Results Of Repeat Testing IIB Inv.</label>
                                 <textarea class="summernote" id="summernote-1" name="result_of_rep_test_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->result_of_rep_test_IIB }}</textarea>
@@ -9462,14 +9507,28 @@
                                 <label for="If Others">Outcome Of Laboratory Investigation</label>
                                 <textarea class="summernote" id="summernote-1" name="Outcome_of_Laboratory" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Outcome_of_Laboratory }}</textarea>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="col-lg-12 new-time-data-field">
+                        <div class="col-md-12 mb-4">
+                            {!! quillEditor(
+                                'Evaluation_IIB',
+                                $data->Evaluation_IIB ?? '',
+                                '
+                                <label for="Evaluation_IIB">
+                                   Evaluation
+                                </label>
+                                ',
+                                !$istab17
+                            ) !!}
+                        </div>
+                        <!-- <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Evaluation</label>
                                 <textarea class="summernote" id="summernote-1" name="Evaluation_IIB" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Evaluation_IIB }}</textarea>
                             </div>
-                        </div>
+                        </div> -->
+
+                        
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
                                 <label for="If Others">Assignable Cause <span class="text-danger">*</span></label>
@@ -9483,18 +9542,43 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-lg-12 new-time-data-field">
+
+                          <div class="col-md-12 mb-4">
+                            {!! quillEditor(
+                                'If_assignable_cause',
+                                $data->If_assignable_cause ?? '',
+                                '
+                                <label for="If_assignable_cause">
+                                 If Assignable Cause Identified Perform Re-testing
+                                </label>
+                                ',
+                                !$istab17
+                            ) !!}
+                        </div>
+                        <!-- <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If Assignable Cause Identified Perform Re-testing</label>
                                 <textarea class="summernote" id="summernote-1" name="If_assignable_cause" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_cause }}</textarea>
                             </div>
+                        </div> -->
+                          <div class="col-md-12 mb-4">
+                            {!! quillEditor(
+                                'If_assignable_error',
+                                $data->If_assignable_error ?? '',
+                                '
+                                <label for="If_assignable_error">
+                                If Assignable Cause Is Not Identified Proceed As Per Phase III Investigation
+                                </label>
+                                ',
+                                !$istab17
+                            ) !!}
                         </div>
-                        <div class="col-lg-12 new-time-data-field">
+                        <!-- <div class="col-lg-12 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">If Assignable Cause Is Not Identified Proceed As Per Phase III Investigation</label>
                                 <textarea class="summernote" id="summernote-1" name="If_assignable_error" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->If_assignable_error }}</textarea>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Audit Attachments">Phase IIB inv. Attachment</label>
@@ -9511,7 +9595,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             
 
                                             <a type="button"
@@ -9634,7 +9718,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             
                                             <a type="button"
                                                 class="remove-file"
@@ -9722,7 +9806,7 @@
                                             <b>{{ $file }}</b>
                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                     class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    style="font-size:20px; margin-right:4px;"></i></a>
                                             <!-- <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
                                                     class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a> -->
                                             <a type="button"
