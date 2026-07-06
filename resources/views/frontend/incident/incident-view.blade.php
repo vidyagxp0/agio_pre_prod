@@ -2672,9 +2672,11 @@
                                                         <label>Classification by QA: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="classification_by_qa" value="Minor" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Minor' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Minor
+                                                        <input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Critical' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Critical
+                                                        <input type="checkbox" name="classification_by_qa" value="Non-critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Non-critical' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Non-Critical
+                                                    {{-- <input type="checkbox" name="classification_by_qa" value="Minor" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Minor' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Minor
                                                     <input type="checkbox" name="classification_by_qa" value="Major" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Major' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}> Major
-                                                    <input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Critical' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}>Critical
+                                                    <input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Critical' ? 'checked' : '' }}   {{ $data->stage == 3 && $QArole ? '' : 'class=readonly-checkbox' }}>Critical --}}
                                                 </div>
                                                  @if ($data->stage != 3)
                                                     <input type="hidden" name="classification_by_qa" value="{{ $data->classification_by_qa }}">
