@@ -50,14 +50,6 @@
 
 
     {{-- ======================================
-                    PRELOADER
-    ======================================= --}}
-    {{-- <div id="preloader">
-        <span class="loader"></span>
-    </div> --}}
-
-
-    {{-- ======================================
                     HEADER
     ======================================= --}}
 
@@ -135,35 +127,35 @@
 
         <style>
             .bottom-links a {
-text-decoration: none;
-/* padding: 10px 15px; */
-display: inline-block;
-border-bottom: 3px solid transparent; /* Default border hidden */
-transition: border-color 0.3s ease-in-out;
-color: #333; /* Default text color */
-}
+                text-decoration: none;
+                /* padding: 10px 15px; */
+                display: inline-block;
+                border-bottom: 3px solid transparent; /* Default border hidden */
+                transition: border-color 0.3s ease-in-out;
+                color: #333; /* Default text color */
+                }
 
 
 
-.bottom-links a.active {
-border-bottom: 2px solid #0f43cf; /* Active link color */
-font-weight: bold;
-color: #333;
-}
+                .bottom-links a.active {
+                border-bottom: 2px solid #0f43cf; /* Active link color */
+                font-weight: bold;
+                color: #333;
+                }
 
         </style>
 
         <script>
-           document.addEventListener("DOMContentLoaded", function () {
-    let links = document.querySelectorAll(".bottom-links a");
-    let currentUrl = window.location.pathname;
+            document.addEventListener("DOMContentLoaded", function () {
+                let links = document.querySelectorAll(".bottom-links a");
+                let currentUrl = window.location.pathname;
 
-    links.forEach(link => {
-        if (link.href.includes(currentUrl)) {
-            link.classList.add("active");
-        }
-    });
-});
+                links.forEach(link => {
+                    if (link.href.includes(currentUrl)) {
+                        link.classList.add("active");
+                    }
+                });
+            });
 
 
         </script>

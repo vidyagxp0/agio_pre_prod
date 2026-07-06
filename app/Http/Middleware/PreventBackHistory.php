@@ -15,17 +15,14 @@ class PreventBackHistory
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
-    {
-        {
-            $response = $next($request);
-            if ($response instanceof Response) {
-                $response->headers->set('Cache-Control', 'nocache, no-store, max-age=0, must-revalidate');
-                $response->headers->set('Pragma', 'no-cache');
-                $response->headers->set('Expires', 'Sun, 02 Jan 1990 00:00:00 GMT');
-            }
+public function handle(Request $request, Closure $next)
+{
+    $response = $next($request);
 
-            return $response;
-        }
-    }
+    $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    $response->headers->set('Pragma', 'no-cache');
+    $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+
+    return $response;
+}
 }
