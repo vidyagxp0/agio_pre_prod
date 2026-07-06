@@ -656,16 +656,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="rls">Record Number</label>
-                                                    <!-- <div class="static">
-                                                        @if($data->stage == 3)
-                                                            <input type="hidden" name="record_number"  value="{{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
-                                                        @endif
-                                                        @if($data->record_number != null)
-                                                            <input type="text" placeholder="{{ $data->record_number }}" readonly >
-                                                        @else
-                                                            <input type="text" placeholder="Record Number" readonly >
-                                                        @endif
-                                                    </div> -->
+                                          
 
 
 
@@ -2828,15 +2819,7 @@
                                                         <textarea class="tiny" name="Production_Table_Assessment" id="summernote-17">{{ $data1->Production_Table_Assessment }}</textarea>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="col-md-12 mb-3 productionTable">
-                                                    <div class="group-input">
-                                                        <label for="Production Tablet feedback">Production Tablet/Capsule/Powder Feedback
-                                                                   </label>
-                                                        <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                                does not require completion</small></div>
-                                                        <textarea class="tiny" name="Production_Table_Feedback" id="summernote-18">{{ $data1->Production_Table_Feedback }}</textarea>
-                                                    </div>
-                                                </div> -->
+                                        
                                             @else
                                                 <div class="col-md-12 mb-3 productionTable">
                                                     <div class="group-input">
@@ -7405,72 +7388,7 @@
                                         });
                                     });
                                 </script>
-{{--
-                            @else
-                                <div class="sub-head">
-                                    Other's 1 (Additional Person Review From Departments If Required)
-                                </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Review Required1">Other's 1 Review Required?</label>
-                                        <select disabled name="Other1_review" id="Other1_review">
-                                            <option value="">-- Select --</option>
-                                            <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
-                                            <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
-                                            <option value="NA" @if ($data1->Other1_review == 'NA' || empty($data1->Other1_review)) selected @endif>NA</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-
-                                @php
-                                    $userRoles = DB::table('user_roles')
-                                        ->where(['q_m_s_divisions_id' => $data->division_id])
-                                        ->select('user_id')
-                                        ->distinct()
-                                        ->get();
-                                    $userRoleIds = $userRoles->pluck('user_id')->toArray();
-                                    $users = DB::table('users')->whereIn('id', $userRoleIds)->get(); // Fetch user data based on user IDs
-                                @endphp
-
-                                <div class="col-lg-12 Other1_reviews">
-                                    <div class="group-input">
-                                        <label for="Department1">Other's 1 Department
-                                            <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span>
-                                        </label>
-                                        <select name="Other1_Department_person" id="Other1_Department_person" @if ($data->stage == 4) disabled @endif>
-                                            <option value="">-- Select --</option>
-                                            @foreach (Helpers::getDepartments() as $key => $name)
-                                                <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>{{ $name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment12">Impact Assessment (By Other's 1)</label>
-                                        <textarea disabled class="tiny" name="Other1_assessment" id="summernote-41">{{ $data1->Other1_assessment }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Feedback1">Other's 1 Feedback</label>
-                                        <textarea disabled class="tiny" name="Other1_feedback" id="summernote-42">{{ $data1->Other1_feedback }}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <div class="group-input">
-                                        <label for="Review Completed By1">Other's 1 Review Completed By</label>
-                                        <input disabled type="text" value="{{ $data1->Other1_by }}" name="Other1_by" id="Other1_by">
-                                    </div>
-                                </div>
-
-
-                            @endif --}}
                             <div class="sub-head">
                                 Other's 2 (Additional Person Review From Departments If Required)
                             </div>
@@ -7564,12 +7482,7 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="col-md-12 mb-3 Other2_reviews">
-                                <div class="group-input">
-                                    <label for="Feedback2"> Other's 2 Feedback</label>
-                                    <textarea class="tiny" name="Other2_feedback" id="summernote-44" @if ($data->stage != 4 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_feedback }}</textarea>
-                                </div>
-                            </div> -->
+               
 
                             <div class="col-12 Other2_reviews">
                                 <div class="group-input">
@@ -7706,12 +7619,7 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="col-md-12 mb-3 Other3_reviews">
-                                <div class="group-input">
-                                    <label for="feedback3">Other's 3 Feedback</label>
-                                    <textarea class="tiny" name="Other3_feedback" id="summernote-46" @if ($data->stage != 4 || Auth::user()->name != $data1->Other3_person) readonly @endif>{{ $data1->Other3_feedback }}</textarea>
-                                </div>
-                            </div> -->
+                       
 
                             <div class="col-12 Other3_reviews">
                                 <div class="group-input">
@@ -7823,17 +7731,6 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="col-lg-6 Other4_reviews">
-                                <div class="group-input">
-                                    <label for="hod_Other4_person">HOD Other's 4 Person <span id="asterisko4" class="text-danger">*</span></label>
-                                    <select name="hod_Other4_person" id="hod_Other4_person" @if ($data->stage == 4) disabled @endif>
-                                        <option value="">-- Select --</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}" @if ($data5->hod_Other4_person == $user->name) selected @endif>{{ $user->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div> --}}
 
                             <div class="col-lg-12 Other4_reviews">
                                 <div class="group-input">
@@ -7854,14 +7751,7 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="col-md-12 mb-3 Other4_reviews">
-                                <div class="group-input">
-                                    <label for="feedback4">Other's 4 Status of Action Item</label>
-                                    <textarea class="tiny" name="Other4_feedback" id="summernote-48"
-                                        @if ($data->stage != 4 || Auth::user()->name != $data1->Other4_person) readonly @endif>{{ $data1->Other4_feedback }}</textarea>
-                                </div>
-                            </div> -->
-
+                  
                             <div class="col-12 Other4_reviews">
                                 <div class="group-input">
                                     <label for="Audit Attachments">Other's 4 Attachments</label>
@@ -7972,17 +7862,6 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="col-lg-6 Other5_reviews">
-                                <div class="group-input">
-                                    <label for="hod_Other5_person">HOD Other's 5 Person <span id="asterisko5" class="text-danger">*</span></label>
-                                    <select name="hod_Other5_person" id="hod_Other5_person" @if ($data->stage == 4) disabled @endif>
-                                        <option value="">-- Select --</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->name }}" @if ($data5->hod_Other5_person == $user->name) selected @endif>{{ $user->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div> --}}
 
                             <div class="col-lg-12 Other5_reviews">
                                 <div class="group-input">
@@ -8002,13 +7881,6 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="col-md-12 mb-3 Other5_reviews">
-                                <div class="group-input">
-                                    <label for="productionfeedback">Other's 5 Status of Action Item</label>
-                                    <textarea class="tiny" name="Other5_feedback" id="summernote-50"
-                                    @if ($data->stage != 4 || Auth::user()->name != $data1->Other5_person) readonly @endif>{{ $data1->Other5_feedback }}</textarea>
-                                </div>
-                            </div> -->
 
                             <div class="col-12 Other5_reviews">
                                 <div class="group-input">
@@ -8082,21 +7954,6 @@
                                             <div class="sub-head">
                                                 QA/CQA Final Review
                                             </div>
-                                         {{--
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="RA notification">RA Approval required
-                                                        @if($data->stage==5) <span class="text-danger">*</span>@endif
-                                                    </label>
-                                                    <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
-                                                            {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                        <option value="">--Select--</option>
-                                                        <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
-                                                        <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
-                                                    </select>
-                                                 </div>
-                                            </div>
-                                           --}}
 
 
                                             <div class="col-lg-6">
@@ -8126,41 +7983,7 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                        {{-- <script>
-                                        $(document).ready(function () {
-                                            // Initially check dropdown and textarea
-                                            toggleElements($('#RA_head_required').val(), $('#ra_tab_comments').val());
-
-                                            // On dropdown value change
-                                            $('#RA_head_required').change(function () {
-                                                toggleElements($(this).val(), $('#ra_tab_comments').val());
-                                            });
-
-                                            // On textarea input
-                                            $('#ra_tab_comments').on('input', function () {
-                                                toggleElements($('#RA_head_required').val(), $(this).val());
-                                            });
-
-                                            // Function to toggle button visibility and stage
-                                            function toggleElements(selectValue, textareaValue) {
-                                                if (selectValue === 'Yes') {
-                                                    // Show the button if textarea is empty
-                                                    if (textareaValue.trim() === '') {
-                                                        $('#approval-button').show();
-                                                    } else {
-                                                        $('#approval-button').hide();
-                                                    }
-
-                                                    // Show the stage
-                                                    $('#pending-ra-stage').show();
-                                                } else {
-                                                    // Hide the button and stage when "No" is selected
-                                                    $('#approval-button').hide();
-                                                    $('#pending-ra-stage').hide();
-                                                }
-                                            }
-                                        });
-                                        </script> --}}
+                                        
                                         <script>
                                             $(document).ready(function () {
                                                 toggleElements($('#RA_head_required').val());
@@ -8181,25 +8004,7 @@
                                             });
                                             
                                         </script>
-                                        {{--
-                                             <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="RA notification">QA/CQA Head Approval Person
-                                                    @if($data->stage==5) <span class="text-danger">*</span>@endif
-                                                    <select name="QA_CQA_person" class="QA_CQA_person"
-                                                        id="QA_CQA_person"  {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        @foreach ($users as $user)
-                                                            <option value="{{ $user->name }}" @if ($user->name == $cc_cfts->QA_CQA_person) selected @endif>
-                                                                {{ $user->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                         --}}
-
-
-
+                                       
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="QA_CQA_person">QA/CQA Head Approval Person
@@ -8234,10 +8039,6 @@
                                                     @endif
                                                 </div>
                                             </div>
-
-
-
-
 
 
                                         <div class="group-input">
@@ -8608,65 +8409,7 @@
                                     </div>
                                 </div>
 
-                                <!-- <div id="CCForm4" class="inner-block cctabcontent">
-                                    <div class="inner-block-content">
-                                        <div class="sub-head">
-                                            Evaluation Detail
-                                        </div>
-                                        <div class="group-input">
-                                            <label for="qa-eval-comments">QA Evaluation Comments</label>
-                                            <textarea name="qa_eval_comments" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $evaluation->qa_eval_comments }}</textarea>
-                                        </div>
-
-                                        @if ($data1->qa_final_attach)
-                                            @foreach (json_decode($data1->qa_final_attach) as $file)
-                                                <input id="productionInjectionAttachmentFile-{{ $loop->index }}" type="hidden"
-                                                    name="existinProductionInjectionFile[{{ $loop->index }}]"
-                                                    value="{{ $file }}">
-                                            @endforeach
-                                        @endif
-                                        <div class="group-input">
-                                            <label for="qa-eval-attach">QA Evaluation Attachments</label>
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="qa_eval_attach">
-                                                    @if ($evaluation->qa_eval_attach)
-                                                        @foreach (json_decode($evaluation->qa_eval_attach) as $file)
-                                                            <h6 type="button" class="file-container text-dark"
-                                                                style="background-color: rgb(243, 242, 240);">
-                                                                <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px; margin-right: 4px;"></i></a>
-                                                                <a type="button" class="remove-file" data-remove-id="existinProductionLiquidFile-{{ $loop->index }}"
-                                                                    data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark"
-                                                                        style="color:red; font-size:20px;"></i></a>
-                                                            </h6>
-                                                        @endforeach
-                                                    @endif
-                                                </div>
-                                                <div class="add-btn">
-                                                    <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                        type="file" id="myfile" name="qa_eval_attach[]"
-                                                        oninput="addMultipleFiles(this, 'qa_eval_attach')" multiple {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                        <div class="button-block">
-                                            <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                            <button type="button" style=" justify-content: center; width: 4rem; margin-left: 1px;;">
-                                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit</a>
-                                            </button>
-                                        </div>
-                                </div>                                 -->
-
-
-
+                                
                                 <div id="CCForm5" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
@@ -9276,61 +9019,10 @@
                                         }
                                     }
                                 </script>
-                            <!-- <div class="sub-head">
-                                                    Effectiveness Check Information
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="group-input">
-                                                            <label for="effective-check">Effectivess Check Required?</label>
-                                                            <select name="effective_check" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                                <option value="">-- Select --</option>
-                                                                <option {{ $closure->effective_check == 'yes' ? 'selected' : '' }}
-                                                                    value="yes">Yes</option>
-                                                                <option {{ $closure->effective_check == 'no' ? 'selected' : '' }}
-                                                                    value="no">No</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-lg-6 new-date-data-field">
-                                                        <div class="group-input input-date">
-                                                            <label for="effective-check-date">Effectiveness Check Creation Date</label>
-                                                           <div class="calenderauditee">
-                                                                  <input type="text"  id="effective_check_date"  readonly value="{{ Helpers::getdateFormat($data->effective_check_date) }}"
-                                                                   name="effective_check_date"  placeholder="DD-MMM-YYYY" />
-                                                                  <input type="date" name="effective_check_date" value="{{ $data->effective_check_date }}"  class="hide-input"
-                                                                   oninput="handleDateInput(this, 'effective_check_date')"/ {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                     </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="group-input">
-                                                            <label for="Effectiveness_checker">Effectiveness Checker</label>
-                                                            <select name="Effectiveness_checker" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                                <option value="">Enter Your Selection Here</option>
-                                                                @foreach ($users as $datas)
-    <option {{ $info->Effectiveness_checker == $datas->id ? 'selected' : '' }}
-                                                                         value="{{ $datas->id }}">{{ $datas->name }}
-                                                                    </option>
-    @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="group-input">
-                                                            <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                                            <textarea name="effective_check_plan" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->effective_check_plan }}</textarea>
-                                                        </div>
-                                                    </div> -->
-                            <!-- <div class="col-12 sub-head">
-                                Extension Justification
-                            </div> -->
+                            
                             <div class="col-12">
                                 <div class="group-input">
-                                    <!-- <label for="due_date_extension">Due Date Extension
-                                        Justification</label>
-                                    <textarea name="due_date_extension" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}> {{ $due_date_extension }}</textarea> -->
+                                   
                                 </div>
 
                     <div class="button-block">
@@ -9375,12 +9067,6 @@
 
 
 
-
-
-
-
-
-
                         <div class="sub-head">HOD Assessment Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -9400,32 +9086,6 @@
                                 <div class="">{{ $data->hod_review_comment ?? 'Not Applicable' }}</div>
                             </div>
                         </div>
-
-
-                    {{--
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="submit by">More Info Require By :-</label>
-                                <div class="">{{ $dataMore->HodToOpenedBy ?? 'Not Applicable'  }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="submit on">More Info Require On :-</label>
-                                <div class="">{{ $dataMore->HodToOpenedOn ?? 'Not Applicable'  }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                <label for="submit comment">More Info Require Comment :-</label>
-                                <div class="">{{ $dataMore->HodToOpenedComment ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                    --}}
-
-
-
-
 
 
                         <div class="sub-head">Cancel</div>
@@ -9449,28 +9109,6 @@
                         </div>
 
 
-
-                        {{--  <div class="sub-head">Sent to Initiator (From HOD)</div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="HOD Review Complete By">Initiator Complete By :-</label>
-                                <div class="static">{{ $data->hod_to_initiator_by }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="HOD Review Complete On">Initiator Complete On :-</label>
-                                <div class="static">{{ $data->hod_to_initiator_on }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style=" ">
-                                <label for="HOD Review Comments">Initiator Comment :-</label>
-                                <div class="">{{ $data->hod_to_initiator_comment }}</div>
-                            </div>
-                        </div>  --}}
-
-
                         <div class="sub-head">QA/CQA Initial Assessment Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -9491,48 +9129,7 @@
                             </div>
                         </div>
 
-                        {{--
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="submit by">More Info Require By :-</label>
-                                <div class="">{{ $dataMore->QaInitialToHodBy ?? 'Not Applicable'  }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="submit on">More Info Require On :-</label>
-                                <div class="">{{ $dataMore->QaInitialToHodOn ?? 'Not Applicable'  }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                <label for="submit comment">More Info Require Comment :-</label>
-                                <div class="">{{ $dataMore->QaInitialToHodComment ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                         --}}
-
-
-                        {{--  <div class="sub-head">Sent to HOD (From QA Initial)</div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="HOD Review Complete By">HOD Complete By :-</label>
-                                <div class="static">{{ $data->QA_initialTo_HOD_by }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="HOD Review Complete On">HOD Complete On :-</label>
-                                <div class="static">{{ $data->QA_initialTo_HOD_on }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style=" ">
-                                <label for="HOD Review Comments">HOD Comments :-</label>
-                                <div class="">{{ $data->QA_initialTo_HOD_comment }}</div>
-                            </div>
-                        </div>  --}}
-
+                      
                         <div class="sub-head">CFT Assessment Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -9554,87 +9151,9 @@
                         </div>
 
 
-                    {{--
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="submit by">More Info Require By :-</label>
-                                <div class="">{{ $dataMore->cftToQaInitialBy ?? 'Not Applicable'  }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="submit on">More Info Require On :-</label>
-                                <div class="">{{ $dataMore->cftToQaInitialOn ?? 'Not Applicable'  }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
-                                <label for="submit comment">More Info Require Comment :-</label>
-                                <div class="">{{ $dataMore->cftToQaInitialComment ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                     --}}
-
-                        {{--  <div class="sub-head">Sent to QA Initial (From CFT)</div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="HOD Review Complete By">QA Initial Complete By :-</label>
-                                <div class="static">{{ $data->cft_to_qaInitial_by }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="HOD Review Complete On">QA Initial Complete On :-</label>
-                                <div class="static">{{ $data->cft_to_qaInitial_on }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style=" ">
-                                <label for="HOD Review Comments">QA Initial Comments :-</label>
-                                <div class="">{{ $data->cft_to_qaInitial_comment }}</div>
-                            </div>
-                        </div>  --}}
-
+                    
                         <div class="sub-head">QA/CQA Final Review</div>
-                       {{-- <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="CFT Review Complete By">Sent To QA/CQA Initial By :-</label>
-                                <div class="">{{ $data->qa_final_to_qainital_by ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="CFT Review Complete On">Sent To QA/CQA Initial On :-</label>
-                                <div class="">{{ $data->qa_final_to_qainital_on  ?? 'Not Applicable'}}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments">Sent To QA/CQA Initial Comment :-</label>
-                                <div class="">{{ $data->qa_final_to_qainital_comment ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="CFT Review Complete By">Sent To Send Hod By :-</label>
-                                <div class="">{{ $data->qa_final_to_HOD_by ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="CFT Review Complete On">Sent To  Send Hod On :-</label>
-                                <div class="">{{ $data->qa_final_to_HOD_on  ?? 'Not Applicable'}}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments">Sent To  Send Hod Comment :-</label>
-                                <div class="">{{ $data->qa_final_to_HOD_comment ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                        --}}
+                      
 
                           <!-- <div class="sub-head"> QA/CQA Final Review Complete</div> -->
                         @if($data->QA_final_review_by)
@@ -9684,29 +9203,7 @@
                         @endif
 
 
-                      {{--  <div class="sub-head">RA Approval Required</div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="CFT Review Complete By">RA Approval Required By :-</label>
-                                <div class="">{{ $data->RA_review_required_by ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="CFT Review Complete On">RA Approval Required On :-</label>
-                                <div class="">{{ $data->RA_review_required_on  ?? 'Not Applicable'}}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="CFT Review Comments">RA Approval Required Comment :-</label>
-                                <div class="">{{ $data->RA_review_required_comment ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                      --}}
-
-
-
+                      
                         <div class="sub-head">RA Approval Complete</div>
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -9726,10 +9223,6 @@
                                 <div class="">{{ $data->RA_review_completed_comment ?? 'Not Applicable' }}</div>
                             </div>
                         </div>
-
-
-
-
 
 
                         <div class="sub-head"> QA/CQA Head/Manager Designee Approval </div>
@@ -9752,27 +9245,7 @@
                             </div>
                         </div>
 
-                         {{--
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="QA Final Review Complete By">  More Info Required  By :-</label>
-                                <div class="">{{ $dataMore->QaHeadToQaFinalBy ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="group-input">
-                                <label for="QA Final Review Complete On">More Info Required On :-</label>
-                                <div class="">{{ $dataMore->QaHeadToQaFinalOn ?? 'Not Applicable' }}</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
-                                <label for="QA Final Review Comments"> More Info Required Comment :-</label>
-                                <div class="">{{ $dataMore->QaHeadToQaFinalComment  ?? 'Not Applicable'}}</div>
-                            </div>
-                        </div>
-                        --}}
-
+                        
                         <!-- <div class="sub-head"> Rejected </div> -->
                         <div class="col-lg-3">
                             <div class="group-input">
@@ -9828,37 +9301,6 @@
                         </div>
                     </div>
 
-                   {{--
-                     <div class="col-lg-3">
-                        <div class="group-input">
-                            <label for="QA Final Review Complete By">More Info Required By :-</label>
-                            <div class="">
-                                {{ isset($data->QaClouseToPostImplementationBy) ? $data->QaClouseToPostImplementationBy : 'Not Applicable' }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3">
-                        <div class="group-input">
-                            <label for="QA Final Review Complete On">More Info Required On :-</label>
-                            <div class="">
-                                {{ isset($data->QaClouseToPostImplementationOn) ? $data->QaClouseToPostImplementationOn : 'Not Applicable' }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input" style="width:1620px; height:100px; padding:5px;">
-                            <label for="QA Final Review Comments">More Info Required Comment :-</label>
-                            <div class="">
-                                {{ isset($data->QaClouseToPostImplementationComment) ? $data->QaClouseToPostImplementationComment : 'Not Applicable' }}
-                            </div>
-                        </div>
-                    </div>
-
-                   --}}
-
-
                         <div class="sub-head">HOD Final Review Complete
                         </div>
                    <div class="col-lg-3">
@@ -9901,37 +9343,6 @@
                                 <div class="">{{ isset($commnetData->send_for_final_qa_head_approval_comment) ? $commnetData->send_for_final_qa_head_approval_comment :'Not Applicable' }}</div>
                             </div>
                         </div>
-
-
-                     {{--
-                     <div class="col-lg-3">
-                        <div class="group-input">
-                            <label for="QA Final Review Complete By">More Info Required By :-</label>
-                            <div class="">
-                                {{ isset($data->QaClouseToPostImplementationBy) ? $data->QaClouseToPostImplementationBy : 'Not Applicable' }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3">
-                        <div class="group-input">
-                            <label for="QA Final Review Complete On">More Info Required On :-</label>
-                            <div class="">
-                                {{ isset($data->QaClouseToPostImplementationBy) ? $data->QaClouseToPostImplementationBy : 'Not Applicable' }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input" style="width:1620px; height:100px; padding:5px;">
-                            <label for="QA Final Review Comments">More Info Required Comment :-</label>
-                            <div class="">
-                                {{ isset($data->QaClouseToPostImplementationComment) ? $data->QaClouseToPostImplementationComment : 'Not Applicable' }}
-                            </div>
-                        </div>
-                    </div>
-                    --}}
-
 
 
 
@@ -10213,12 +9624,7 @@
                                     <input type="radio" name="revision" id="minor" value="Capa">
                                     CAPA
                                 </label>
-                                <!-- @if(Helpers::getChildData($data->id, 'CC') < 3)
-                                <label for="minor">
-                                    <input type="radio" name="revision" id="minor" value="Extension">
-                                    Extension
-                                </label>
-                                @endif -->
+                   
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Action-Item">
                                     Action Item

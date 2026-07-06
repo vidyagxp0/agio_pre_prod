@@ -73,7 +73,7 @@ class ChangeProposalJustController extends Controller
         $data->initiator_id = Auth::id();
         $data->record = $record;
         $data->division_code = $request->division_code;
-        $data->department =  Helpers::getUserDepartmentFromDB(Auth::user()->departmentid);
+        $data->department =  $request->department;
         $data->division_id = $request->division_id;
         $data->intiation_date = $request->intiation_date;
         $data->cpdescription = $request->cpdescription;
@@ -458,198 +458,198 @@ class ChangeProposalJustController extends Controller
         // $changeProposalGridData->data = $request->change_proposal_grid;
         // $changeProposalGridData->save();
 
-/////////////////////////////////
+        /////////////////////////////////
 
 
 
 
-// Get Old Data
-$existingGrid = ChangeProposalJustGrid::where([
-    'cpjg_id' => $cpjg_id,
-    'identifier' => 'change_proposal_grid'
-])->first();
+        // Get Old Data
+        $existingGrid = ChangeProposalJustGrid::where([
+            'cpjg_id' => $cpjg_id,
+            'identifier' => 'change_proposal_grid'
+        ])->first();
 
-$existingGridData = $existingGrid ? $existingGrid->data : [];
+        $existingGridData = $existingGrid ? $existingGrid->data : [];
 
-// Field Names
-$fieldNames = [
-    'existing_system' => 'Current Practice',
-    'proposed_change' => 'Proposed Change',
-    'justification'   => 'Justification / Reason for Change',
-];
-
-
-// dd($request->change_proposal_grid ,$existingGrid->data);
- 
+        // Field Names
+        $fieldNames = [
+            'existing_system' => 'Current Practice',
+            'proposed_change' => 'Proposed Change',
+            'justification'   => 'Justification / Reason for Change',
+        ];
 
 
-if (is_array($request->change_proposal_grid)) {
-
-    foreach ($request->change_proposal_grid as $index => $newRow) {
-
-        $oldRow = $existingGridData[$index] ?? [];
-
-        foreach (['existing_system', 'proposed_change', 'justification'] as $field) {
-
-            $oldValue = $oldRow[$field] ?? '';
-            $newValue = $newRow[$field] ?? '';
-
-            if ($oldValue != $newValue) {
-
-                $audit = new ChangeProposalAuditTrial();
-
-                $audit->cpjg_id = $cpjg_id;
-                $audit->activity_type = $fieldNames[$field] . ' (Row ' . ($index + 1) . ')';
-                $audit->previous = $oldValue ?: 'Null';
-                $audit->current = $newValue ?: 'Null';
-                $audit->comment = '';
-
-                $audit->user_id = Auth::id();
-                $audit->user_name = Auth::user()->name;
-                $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-
-                $audit->origin_state = $data->status;
-                $audit->change_from = $data->status;
-                $audit->change_to = 'Not Applicable';
-
-                $audit->action_name = empty($oldValue) ? 'New' : 'Update';
-
-                $audit->save();
-            }
-        }
-    }
-}
-
-// ==========================
-// Save Grid
-// ==========================
-
-$grid = ChangeProposalJustGrid::firstOrNew([
-    'cpjg_id' => $cpjg_id,
-    'identifier' => 'change_proposal_grid'
-]);
-
-$grid->cpjg_id = $cpjg_id;
-$grid->identifier = 'change_proposal_grid';
-$grid->data = $request->change_proposal_grid;
-$grid->save();
+        // dd($request->change_proposal_grid ,$existingGrid->data);
+        
 
 
+        if (is_array($request->change_proposal_grid)) {
 
+            foreach ($request->change_proposal_grid as $index => $newRow) {
 
-/////////////////////////////
+                $oldRow = $existingGridData[$index] ?? [];
 
+                foreach (['existing_system', 'proposed_change', 'justification'] as $field) {
 
+                    $oldValue = $oldRow[$field] ?? '';
+                    $newValue = $newRow[$field] ?? '';
 
+                    if ($oldValue != $newValue) {
 
+                        $audit = new ChangeProposalAuditTrial();
 
+                        $audit->cpjg_id = $cpjg_id;
+                        $audit->activity_type = $fieldNames[$field] . ' (Row ' . ($index + 1) . ')';
+                        $audit->previous = $oldValue ?: 'Null';
+                        $audit->current = $newValue ?: 'Null';
+                        $audit->comment = '';
 
+                        $audit->user_id = Auth::id();
+                        $audit->user_name = Auth::user()->name;
+                        $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
 
+                        $audit->origin_state = $data->status;
+                        $audit->change_from = $data->status;
+                        $audit->change_to = 'Not Applicable';
 
+                        $audit->action_name = empty($oldValue) ? 'New' : 'Update';
 
-    //    if ($request->has('checklist')) {
-
-    //         ChangeProposalJustGrid::updateOrCreate(
-    //             [
-    //                 'cpjg_id' => $cpjg_id,
-    //                 'identifier' => 'stage3_checklist'
-    //             ],
-    //             [
-    //                 'data' => $request->checklist
-    //             ]
-    //         );
-    //     }
-
-
-
-
-$existingChecklist = ChangeProposalJustGrid::where([
-    'cpjg_id' => $cpjg_id,
-    'identifier' => 'stage3_checklist'
-])->first();
-
-$existingChecklistData = $existingChecklist ? $existingChecklist->data : [];
-
-
-
-if ($request->has('checklist')) {
-
-    foreach ($request->checklist as $key => $newItem) {
-
-        $oldItem = $existingChecklistData[$key] ?? [];
-
-        // Question
-        $question = $newItem['question'] ?? ($oldItem['question'] ?? $key);
-
-        // YES / NO Questions
-        if (isset($newItem['response'])) {
-
-            $oldValue = $oldItem['response'] ?? '';
-            $newValue = $newItem['response'] ?? '';
-
-            if ($oldValue != $newValue) {
-
-                $audit = new ChangeProposalAuditTrial();
-
-                $audit->cpjg_id = $cpjg_id;
-                // $audit->activity_type = $question;
-                $audit->activity_type = "Impact Assessment ({$question})";
-                $audit->previous = $oldValue ?: 'Null';
-                $audit->current = $newValue ?: 'Null';
-                $audit->comment = '';
-                $audit->user_id = Auth::id();
-                $audit->user_name = Auth::user()->name;
-                $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $audit->origin_state = $data->status;
-                $audit->change_from = $data->status;
-                $audit->change_to = 'Not Applicable';
-                $audit->action_name = empty($oldValue) ? 'New' : 'Update';
-                $audit->save();
+                        $audit->save();
+                    }
+                }
             }
         }
 
-        // Last Question (Manual Response)
-        if (isset($newItem['manual_response'])) {
+        // ==========================
+        // Save Grid
+        // ==========================
 
-            $oldValue = $oldItem['manual_response'] ?? '';
-            $newValue = $newItem['manual_response'] ?? '';
+        $grid = ChangeProposalJustGrid::firstOrNew([
+            'cpjg_id' => $cpjg_id,
+            'identifier' => 'change_proposal_grid'
+        ]);
 
-            if ($oldValue != $newValue) {
+        $grid->cpjg_id = $cpjg_id;
+        $grid->identifier = 'change_proposal_grid';
+        $grid->data = $request->change_proposal_grid;
+        $grid->save();
 
-                $audit = new ChangeProposalAuditTrial();
 
-                $audit->cpjg_id = $cpjg_id;
-                // $audit->activity_type = $question;
-                $audit->activity_type = "Impact Assessment ({$question})";
-                $audit->previous = $oldValue ?: 'Null';
-                $audit->current = $newValue ?: 'Null';
-                $audit->comment = '';
-                $audit->user_id = Auth::id();
-                $audit->user_name = Auth::user()->name;
-                $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $audit->origin_state = $data->status;
-                $audit->change_from = $data->status;
-                $audit->change_to = 'Not Applicable';
-                $audit->action_name = empty($oldValue) ? 'New' : 'Update';
-                $audit->save();
-            }
-        }
-    }
 
-    // =========================
-    // SAVE CHECKLIST
-    // =========================
 
-    ChangeProposalJustGrid::updateOrCreate(
-        [
+        /////////////////////////////
+
+
+
+
+
+
+
+
+
+            //    if ($request->has('checklist')) {
+
+            //         ChangeProposalJustGrid::updateOrCreate(
+            //             [
+            //                 'cpjg_id' => $cpjg_id,
+            //                 'identifier' => 'stage3_checklist'
+            //             ],
+            //             [
+            //                 'data' => $request->checklist
+            //             ]
+            //         );
+            //     }
+
+
+
+
+        $existingChecklist = ChangeProposalJustGrid::where([
             'cpjg_id' => $cpjg_id,
             'identifier' => 'stage3_checklist'
-        ],
-        [
-            'data' => $request->checklist
-        ]
-    );
-}
+        ])->first();
+
+        $existingChecklistData = $existingChecklist ? $existingChecklist->data : [];
+
+
+
+        if ($request->has('checklist')) {
+
+            foreach ($request->checklist as $key => $newItem) {
+
+                $oldItem = $existingChecklistData[$key] ?? [];
+
+                // Question
+                $question = $newItem['question'] ?? ($oldItem['question'] ?? $key);
+
+                // YES / NO Questions
+                if (isset($newItem['response'])) {
+
+                    $oldValue = $oldItem['response'] ?? '';
+                    $newValue = $newItem['response'] ?? '';
+
+                    if ($oldValue != $newValue) {
+
+                        $audit = new ChangeProposalAuditTrial();
+
+                        $audit->cpjg_id = $cpjg_id;
+                        // $audit->activity_type = $question;
+                        $audit->activity_type = "Impact Assessment ({$question})";
+                        $audit->previous = $oldValue ?: 'Null';
+                        $audit->current = $newValue ?: 'Null';
+                        $audit->comment = '';
+                        $audit->user_id = Auth::id();
+                        $audit->user_name = Auth::user()->name;
+                        $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $audit->origin_state = $data->status;
+                        $audit->change_from = $data->status;
+                        $audit->change_to = 'Not Applicable';
+                        $audit->action_name = empty($oldValue) ? 'New' : 'Update';
+                        $audit->save();
+                    }
+                }
+
+                // Last Question (Manual Response)
+                if (isset($newItem['manual_response'])) {
+
+                    $oldValue = $oldItem['manual_response'] ?? '';
+                    $newValue = $newItem['manual_response'] ?? '';
+
+                    if ($oldValue != $newValue) {
+
+                        $audit = new ChangeProposalAuditTrial();
+
+                        $audit->cpjg_id = $cpjg_id;
+                        // $audit->activity_type = $question;
+                        $audit->activity_type = "Impact Assessment ({$question})";
+                        $audit->previous = $oldValue ?: 'Null';
+                        $audit->current = $newValue ?: 'Null';
+                        $audit->comment = '';
+                        $audit->user_id = Auth::id();
+                        $audit->user_name = Auth::user()->name;
+                        $audit->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $audit->origin_state = $data->status;
+                        $audit->change_from = $data->status;
+                        $audit->change_to = 'Not Applicable';
+                        $audit->action_name = empty($oldValue) ? 'New' : 'Update';
+                        $audit->save();
+                    }
+                }
+            }
+
+            // =========================
+            // SAVE CHECKLIST
+            // =========================
+
+            ChangeProposalJustGrid::updateOrCreate(
+                [
+                    'cpjg_id' => $cpjg_id,
+                    'identifier' => 'stage3_checklist'
+                ],
+                [
+                    'data' => $request->checklist
+                ]
+            );
+        }
 
 
         if ($lastDocument->cpdescription != $data->cpdescription) {
@@ -1278,7 +1278,7 @@ if ($request->has('checklist')) {
 
                                 $maildata = [
                                     'data'    => $data,
-                                    'site'    => "Change Proposal And Justification",
+                                    'site'    => "CPJ",
                                     'history' => "QA/CQA Head / Designee Approval Complete",
                                     'process' => 'Change Proposal And Justification',
                                     'comment' => $request->comment,
@@ -1375,7 +1375,7 @@ if ($request->has('checklist')) {
 
                                 $maildata = [
                                     'data'    => $data,
-                                    'site'    => "Change Proposal And Justification",
+                                    'site'    => "CPJ",
                                     'history' => "More Info Required",
                                     'process' => 'Change Proposal And Justification',
                                     'comment' => $request->comment,

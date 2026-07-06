@@ -381,10 +381,12 @@
                                             value="{{ Helpers::getInitiatorName($data->initiator_id) }}">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator">Initiation Department</label>
-                                        <input disabled type="text" value="{{ Helpers::getUserDepartmentFromDB(Auth::user()->departmentid) }}">
+                                        <label for="Initiator"><b>Initiation Department</b></label>
+                                        <input readonly type="text" name="department"
+                                            value="{{ $data->department }}">
                                     </div>
                                 </div>
                                 @php
@@ -403,38 +405,7 @@
                                     </div>
                                 </div>
                                 
-                                {{-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Due Date">Due Date <span class="text-danger">*</span></label>
-                                        <div class="calenderauditee">
-                                            <!-- Display formatted date -->
-                                            <input disabled type="text" id="due_date_display" readonly
-                                                placeholder="DD-MMM-YYYY"
-                                                value="{{ $data->due_date ? \Carbon\Carbon::parse($data->due_date)->format('d-M-Y') : '' }}" />
-                                            <!-- Hidden actual date -->
-                                            <input type="date" name="due_date"
-                                                value="{{ $data->due_date }}"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date_display')" required />
-                                        </div>
-                                    </div>
-                                </div> --}}
-
-                                {{-- <script>
-                                    function handleDateInput(dateInput, displayId) {
-                                        const date = new Date(dateInput.value);
-                                        if (dateInput.value) {
-                                            const options = { day: '2-digit', month: 'short', year: 'numeric' };
-                                            document.getElementById(displayId).value =
-                                                date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                        } else {
-                                            document.getElementById(displayId).value = '';
-                                        }
-                                    }
-                                </script> --}}
-
-
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -484,7 +455,6 @@
                                                     @php
                                                         $traceabilityIndex = 1;
                                                     @endphp
-                                                    {{-- @if (!empty($traceability_gi)) --}}
                                                     @if (!empty($changeProposalGrid) && is_array($changeProposalGrid->data))
                                                         @foreach ($changeProposalGrid->data as $index => $item)
                                                             <tr>

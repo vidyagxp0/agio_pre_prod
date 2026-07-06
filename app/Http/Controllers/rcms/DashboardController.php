@@ -43,55 +43,40 @@ use App\Models\ChangeProposalJust;
 
 class DashboardController extends Controller
 {
-    // public function index(){
-    //     if(Helpers::checkRoles(3)){
-    //         $data = CC::where('initiator_id',Auth::user()->id)->orderbyDESC('id')->get();
-    //         $child = [];
-    //         $childs = [];
-    //         foreach($data as $datas){
-    //             $datas->originator = User::where('id',$datas->initiator_id)->value('name');
-    //             $datas->actionItem = ActionItem::where('cc_id',$datas->id)->get();
-    //             $datas->extension = Extension::where('cc_id',$datas->id)->get();
 
-
-    //         }
-
-
-    //         return view('frontend.rcms.dashboard',compact('data'));
-    //     }
-    // }
 
     public function index(Request $request)
     {
         $table = [];
+        $limit = min(max((int) $request->get('limit', 500), 50), 2000);
 
-        $datas = CC::orderByDesc('id')->get();
-        $datas1 = ActionItem::orderByDesc('id')->get();
-        $datas2 = extension_new::orderByDesc('id')->get();
-        $datas3 = EffectivenessCheck::orderByDesc('id')->get();
-        $datas4 = InternalAudit::orderByDesc('id')->get();
-        $datas5 = Capa::orderByDesc('id')->get();
-        $datas6 = RiskManagement::orderByDesc('id')->get();
-        $datas7 = ManagementReview::orderByDesc('id')->get();
-        $datas8 = LabIncident::orderByDesc('id')->get();
-        $datas9 = Auditee::orderByDesc('id')->get();
-        $datas10 = AuditProgram::orderByDesc('id')->get();
-        $datas11 = RootCauseAnalysis::orderByDesc('id')->get();
-        $datas12 = Observation::orderByDesc('id')->get();
-        $datas13 = OOS::orderByDesc('id')->get();
-        $datas14 = MarketComplaint::orderByDesc('id')->get();
+        $datas = CC::orderByDesc('id')->limit($limit)->get();
+        $datas1 = ActionItem::orderByDesc('id')->limit($limit)->get();
+        $datas2 = extension_new::orderByDesc('id')->limit($limit)->get();
+        $datas3 = EffectivenessCheck::orderByDesc('id')->limit($limit)->get();
+        $datas4 = InternalAudit::orderByDesc('id')->limit($limit)->get();
+        $datas5 = Capa::orderByDesc('id')->limit($limit)->get();
+        $datas6 = RiskManagement::orderByDesc('id')->limit($limit)->get();
+        $datas7 = ManagementReview::orderByDesc('id')->limit($limit)->get();
+        $datas8 = LabIncident::orderByDesc('id')->limit($limit)->get();
+        $datas9 = Auditee::orderByDesc('id')->limit($limit)->get();
+        $datas10 = AuditProgram::orderByDesc('id')->limit($limit)->get();
+        $datas11 = RootCauseAnalysis::orderByDesc('id')->limit($limit)->get();
+        $datas12 = Observation::orderByDesc('id')->limit($limit)->get();
+        $datas13 = OOS::orderByDesc('id')->limit($limit)->get();
+        $datas14 = MarketComplaint::orderByDesc('id')->limit($limit)->get();
 
-        $deviation = Deviation::orderByDesc('id')->get();
-        $ooc = OutOfCalibration::orderByDesc('id')->get();
-        $failureInvestigation = FailureInvestigation::orderByDesc('id')->get();
-        $datas15 = Ootc::orderByDesc('id')->get();
-        $datas16 = errata::orderByDesc('id')->get();
-        $datas17 = OOS_micro::orderByDesc('id')->get();
+        $deviation = Deviation::orderByDesc('id')->limit($limit)->get();
+        $ooc = OutOfCalibration::orderByDesc('id')->limit($limit)->get();
+        $failureInvestigation = FailureInvestigation::orderByDesc('id')->limit($limit)->get();
+        $datas15 = Ootc::orderByDesc('id')->limit($limit)->get();
+        $datas16 = errata::orderByDesc('id')->limit($limit)->get();
+        $datas17 = OOS_micro::orderByDesc('id')->limit($limit)->get();
 
-        $datas25 = NonConformance::orderByDesc('id')->get();
-        $incident = Incident::orderByDesc('id')->get();
-        $resampling = Resampling::orderByDesc('id')->get();
-        $changeProposalData = ChangeProposalJust::orderByDesc('id')->get();
+        $datas25 = NonConformance::orderByDesc('id')->limit($limit)->get();
+        $incident = Incident::orderByDesc('id')->limit($limit)->get();
+        $resampling = Resampling::orderByDesc('id')->limit($limit)->get();
+        $changeProposalData = ChangeProposalJust::orderByDesc('id')->limit($limit)->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
             $recordNumber = $data->record ? Helpers::CCRecordNumber($data->id) : '-';

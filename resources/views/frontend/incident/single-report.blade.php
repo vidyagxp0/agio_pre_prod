@@ -9,151 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-{{-- <style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-    }
-
-    .w-10 {
-        width: 10%;
-    }
-
-    .w-20 {
-        width: 20%;
-    }
-
-    .w-25 {
-        width: 25%;
-    }
-
-    .w-30 {
-        width: 30%;
-    }
-
-    .w-40 {
-        width: 40%;
-    }
-
-    .w-50 {
-        width: 50%;
-    }
-
-    .w-60 {
-        width: 60%;
-    }
-
-    .w-70 {
-        width: 70%;
-    }
-
-    .w-80 {
-        width: 80%;
-    }
-
-    .w-90 {
-        width: 90%;
-    }
-
-    .w-100 {
-        width: 100%;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    header table,
-    header th,
-    header td,
-    footer table,
-    footer th,
-    footer td,
-    .border-table table,
-    .border-table th,
-    .border-table td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        font-size: 0.9rem;
-        vertical-align: middle;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    th,
-    td {
-        padding: 10px;
-        text-align: left;
-    }
-
-    footer .head,
-    header .head {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-
-    @page {
-        size: A4;
-        margin-top: 160px;
-        margin-bottom: 60px;
-    }
-
-    header {
-        position: fixed;
-        top: -140px;
-        left: 0;
-        width: 100%;
-        display: block;
-    }
-
-    footer {
-        width: 100%;
-        position: fixed;
-        display: block;
-        bottom: -40px;
-        left: 0;
-        font-size: 0.9rem;
-    }
-
-    footer td {
-        text-align: center;
-    }
-
-    .inner-block {
-        padding: 10px;
-    }
-
-    .inner-block tr {
-        font-size: 0.8rem;
-    }
-
-    .inner-block .block {
-        margin-bottom: 30px;
-    }
-
-    .inner-block .block-head {
-        font-weight: bold;
-        font-size: 1.1rem;
-        padding-bottom: 5px;
-        border-bottom: 2px solid #4274da;
-        margin-bottom: 10px;
-        color: #4274da;
-    }
-
-    .inner-block th,
-    .inner-block td {
-        vertical-align: baseline;
-    }
-
-    .table_bg {
-        background: #4274da57;
-    }
-</style> --}}
 
 <style>
     @page {
@@ -446,20 +301,6 @@
                             @endif
                         </td>
 
-                        {{--@php
-                            $facilityIds = explode(',', $data->Facility);
-                            $users = $facilityIds ? DB::table('users')->whereIn('id', $facilityIds)->get() : [];
-                        @endphp
-
-                        <td>
-                            @if ($facilityIds && count($users) > 0)
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" selected>{{ $user->name }}</option>
-                                @endforeach
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>--}}
 
                     </tr>
                 </table>
@@ -566,18 +407,7 @@
                                     </tr>
                                 @endforeach
 
-                                    {{-- @if (!empty($remarks))
-                                        @foreach ($remarks as $key => $remark)
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ $facility_names[$key] ?? '' }}</td>
-                                                <td>{{ $id_numbers[$key] ?? '' }}</td>
-                                                <td>{{ $remark ?? '' }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr><td colspan="4">No Data Available</td></tr>
-                                    @endif --}}
+              
                                 </tbody>
                             </table>
                         </div>
@@ -609,7 +439,6 @@
                                     <th style="width: 12%">Document Name</th>
                                     <th style="width: 16%">Remarks</th>
 
-                                    {{-- <th style="width: 8%">Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -630,19 +459,6 @@
                                     </tr>
                                 @endforeach
 
-
-                                    {{-- @if (!empty($document_names))
-                                        @foreach ($document_names as $key => $doc_name)
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ $doc_name ?? '' }}</td>
-                                                <td>{{ $document_numbers[$key] ?? '' }}</td>
-                                                <td>{{ $document_remarks[$key] ?? '' }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr><td colspan="4">No Data Available</td></tr>
-                                    @endif --}}
                                 </tbody>
                             </table>
                         </div>
@@ -696,18 +512,6 @@
                                     </tr>
                                 @endforeach
 
-                                    {{-- @if (!empty($product_names))
-                                        @foreach ($product_names as $key => $product)
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ $product ?? '' }}</td>
-                                                <td>{{ $product_stages[$key] ?? '' }}</td>
-                                                <td>{{ $batch_numbers[$key] ?? '' }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr><td colspan="4">No Data Available</td></tr>
-                                    @endif --}}
                                 </tbody>
                             </table>
                         </div>
@@ -780,8 +584,6 @@
                         </td>
                     </tr>
                 </table>
-
-                
 
 
                 <table>
@@ -1288,10 +1090,6 @@
                 </table>
             </div>
 
-
-{{--@php
-    dd($data->Disposition_Batch);
-@endphp--}}
 
             {{--<div class="border-table">--}}
                 <div class="block-head">

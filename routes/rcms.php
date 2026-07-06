@@ -56,7 +56,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
 
     // Route::middleware(['rcms'])->group(
-        Route::middleware(['rcms', 'active-account'])->group(
+        Route::middleware(['rcms', 'active-account','prevent-back-history', 'user-activity'])->group(
         function () {
 
         Route::get('/change-password', [UserLoginController::class, 'showChangePasswordForm'])->name('password.change.form');

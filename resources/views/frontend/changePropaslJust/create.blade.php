@@ -98,7 +98,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator">Initiation Department</label>
-                                        <input disabled type="text" value="{{ Helpers::getUserDepartmentFromDB(Auth::user()->departmentid) }}">
+                                        <input disabled type="text" name="department" value="{{ Helpers::getUserDepartmentFromDB(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
 

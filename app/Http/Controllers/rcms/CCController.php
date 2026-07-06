@@ -2769,8 +2769,6 @@ class CCController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
-
 
 
         $lastDocCft = CcCft::where('cc_id', $id)->first();
@@ -2778,7 +2776,8 @@ class CCController extends Controller
 
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
-        $cc_cfts = CcCft::find($id);
+        // $cc_cfts = CcCft::find($id);
+        $cc_cfts = CcCft::where('cc_id', $id)->first();
         $lastDocument_review  = Qareview::find($id);
         $lastCft = CcCft::where('cc_id', $openState->id)->first();
         $review = Qareview::where('cc_id', $openState->id)->first();
@@ -3511,72 +3510,71 @@ class CCController extends Controller
                 $Cft->Other5_person = $request->Other5_person;
                 $Cft->Other5_Department_person = $request->Other5_Department_person;
             }
-            $Cft->RA_assessment = $request->RA_assessment;
-            $Cft->RA_feedback = $request->RA_feedback;
+            $Cft->RA_assessment = $request->RA_assessment ?? $Cft->RA_assessment;
+            $Cft->RA_feedback = $request->RA_feedback ?? $Cft->RA_feedback;
 
-            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment;
-            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback;
+            $Cft->Production_Injection_Assessment = $request->Production_Injection_Assessment ?? $Cft->Production_Injection_Assessment;
+            $Cft->Production_Injection_Feedback = $request->Production_Injection_Feedback ?? $Cft->Production_Injection_Feedback;
 
-            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment;
-            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback;
+            $Cft->Production_Table_Assessment = $request->Production_Table_Assessment ?? $Cft->Production_Table_Assessment;
+            $Cft->Production_Table_Feedback = $request->Production_Table_Feedback ?? $Cft->Production_Table_Feedback;
 
-            $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback;
-            $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment;
+            $Cft->ProductionLiquid_feedback = $request->ProductionLiquid_feedback ?? $Cft->ProductionLiquid_feedback;
+            $Cft->ProductionLiquid_assessment = $request->ProductionLiquid_assessment ?? $Cft->ProductionLiquid_assessment;
 
-            $Cft->Store_feedback = $request->Store_feedback;
-            $Cft->Store_assessment = $request->Store_assessment;
+            $Cft->Store_feedback = $request->Store_feedback ?? $Cft->Store_feedback;
+            $Cft->Store_assessment = $request->Store_assessment ?? $Cft->Store_assessment;
 
-            $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback;
-            $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment;
+            $Cft->ResearchDevelopment_feedback = $request->ResearchDevelopment_feedback ?? $Cft->ResearchDevelopment_feedback;
+            $Cft->ResearchDevelopment_assessment = $request->ResearchDevelopment_assessment ?? $Cft->ResearchDevelopment_assessment;
 
-            $Cft->Microbiology_feedback = $request->Microbiology_feedback;
-            $Cft->Microbiology_assessment = $request->Microbiology_assessment;
+            $Cft->Microbiology_feedback = $request->Microbiology_feedback ?? $Cft->Microbiology_feedback;
+            $Cft->Microbiology_assessment = $request->Microbiology_assessment ?? $Cft->Microbiology_assessment;
 
-            $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback;
-            $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment;
+            $Cft->RegulatoryAffair_feedback = $request->RegulatoryAffair_feedback ?? $Cft->RegulatoryAffair_feedback;
+            $Cft->RegulatoryAffair_assessment = $request->RegulatoryAffair_assessment ?? $Cft->RegulatoryAffair_assessment;
 
-            $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback;
-            $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment;
+            $Cft->CorporateQualityAssurance_feedback = $request->CorporateQualityAssurance_feedback ?? $Cft->CorporateQualityAssurance_feedback;
+            $Cft->CorporateQualityAssurance_assessment = $request->CorporateQualityAssurance_assessment ?? $Cft->CorporateQualityAssurance_assessment;
 
-            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback;
-            $Cft->ContractGiver_assessment = $request->ContractGiver_assessment;
+            $Cft->ContractGiver_feedback = $request->ContractGiver_feedback ?? $Cft->ContractGiver_feedback;
+            $Cft->ContractGiver_assessment = $request->ContractGiver_assessment ?? $Cft->ContractGiver_assessment;
 
-            $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
-            $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
+            $Cft->Quality_Control_assessment = $request->Quality_Control_assessment ?? $Cft->Quality_Control_assessment;
+            $Cft->Quality_Control_feedback = $request->Quality_Control_feedback ?? $Cft->Quality_Control_feedback;
 
-            $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
-            $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
+            $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment ?? $Cft->QualityAssurance_assessment;
+            $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback ?? $Cft->QualityAssurance_feedback;
 
-            $Cft->Engineering_assessment = $request->Engineering_assessment;
-            $Cft->Engineering_feedback = $request->Engineering_feedback;
+            $Cft->Engineering_assessment = $request->Engineering_assessment ?? $Cft->Engineering_assessment;
+            $Cft->Engineering_feedback = $request->Engineering_feedback ?? $Cft->Engineering_feedback;
 
-            $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
-            $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
+            $Cft->Health_Safety_assessment = $request->Health_Safety_assessment ?? $Cft->Health_Safety_assessment;
+            $Cft->Health_Safety_feedback = $request->Health_Safety_feedback ?? $Cft->Health_Safety_feedback;
 
-            $Cft->Human_Resource_assessment = $request->Human_Resource_assessment;
-            $Cft->Human_Resource_feedback = $request->Human_Resource_feedback;
+            $Cft->Human_Resource_assessment = $request->Human_Resource_assessment ?? $Cft->Human_Resource_assessment;
+            $Cft->Human_Resource_feedback = $request->Human_Resource_feedback ?? $Cft->Human_Resource_feedback;
 
-            $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
-            $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
+            $Cft->Information_Technology_assessment = $request->Information_Technology_assessment ?? $Cft->Information_Technology_assessment;
+            $Cft->Information_Technology_feedback = $request->Information_Technology_feedback ?? $Cft->Information_Technology_feedback;
 
-            $Cft->Project_management_assessment = $request->Project_management_assessment;
-            $Cft->Project_management_feedback = $request->Project_management_feedback;
+            $Cft->Project_management_assessment = $request->Project_management_assessment ?? $Cft->Project_management_assessment;
+            $Cft->Project_management_feedback = $request->Project_management_feedback ?? $Cft->Project_management_feedback;
 
-            $Cft->Other1_assessment = $request->Other1_assessment;
-            $Cft->Other1_feedback = $request->Other1_feedback;
+            $Cft->Other1_assessment = $request->Other1_assessment ?? $Cft->Other1_assessment;
+            $Cft->Other1_feedback = $request->Other1_feedback ?? $Cft->Other1_feedback;
 
-            $Cft->Other2_Assessment = $request->Other2_Assessment;
-            $Cft->Other2_feedback = $request->Other2_feedback;
+            $Cft->Other2_Assessment = $request->Other2_Assessment ?? $Cft->Other2_Assessment;
+            $Cft->Other2_feedback = $request->Other2_feedback ?? $Cft->Other2_feedback;
 
-            $Cft->Other3_Assessment = $request->Other3_Assessment;
-            $Cft->Other3_feedback = $request->Other3_feedback;
+            $Cft->Other3_Assessment = $request->Other3_Assessment ?? $Cft->Other3_Assessment;
+            $Cft->Other3_feedback = $request->Other3_feedback ?? $Cft->Other3_feedback;
 
-            $Cft->Other4_Assessment = $request->Other4_Assessment;
-            $Cft->Other4_feedback = $request->Other4_feedback;
+            $Cft->Other4_Assessment = $request->Other4_Assessment ?? $Cft->Other4_Assessment;
+            $Cft->Other4_feedback = $request->Other4_feedback ?? $Cft->Other4_feedback;
 
-            $Cft->Other5_Assessment = $request->Other5_Assessment;
-            $Cft->Other5_feedback = $request->Other5_feedback;
-
+            $Cft->Other5_Assessment = $request->Other5_Assessment ?? $Cft->Other5_Assessment;
+            $Cft->Other5_feedback = $request->Other5_feedback ?? $Cft->Other5_feedback;
 
             if (!empty ($request->RA_attachment)) {
                 $files = [];
@@ -9176,8 +9174,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     $history->stage = 'Plan Proposed';
 
                     $history->save();
-
-                   $list = Helpers::getHodUserList($changeControl->division_id);
+                    $list = Helpers::getHodUserList($changeControl->division_id);
 
                         foreach ($list as $u) {
 
@@ -9336,7 +9333,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "HOD Assessment Complete",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -9551,7 +9548,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                                 try {
                                      $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "QA/CQA Initial Assessment Complete",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -10458,7 +10455,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                               $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "CFT Review Complete",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -10581,7 +10578,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                   $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "RA Approval Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -10735,7 +10732,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "RA Approval Complete",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -10866,7 +10863,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Rejected",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -11169,7 +11166,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Rejected",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -11309,7 +11306,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "QAH/CQA Head Approval Complete",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -11459,7 +11456,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Approved",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -11585,7 +11582,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Initiator Updated Completed",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -11785,66 +11782,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                 $history->stage = 'Plan Proposed';
                 $history->save();
 
-                // $list = Helpers::getQAUserList($changeControl->division_id); // Notify QA Person
-                // // foreach ($list as $u) {
-                // //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                // //         $email = Helpers::getUserEmail($u->user_id);
-                // //             if ($email !== null) {
-                // //                 try {
-                // //                     Mail::send(
-                // //                         'mail.view-mail',
-                // //                         ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                // //                         function ($message) use ($email, $changeControl) {
-                // //                             $message->to($email)
-                // //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
-                // //                         }
-                // //                     );
-                // //                 } catch(\Exception $e) {
-                // //                     info('Error sending mail', [$e]);
-                // //                 }
-                // //         }
-                // //     // }
-                // // }
-
-                // foreach ($list as $u) {
-                //     $email = Helpers::getUserEmail($u->user_id);
-                //     if ($email !== null) {
-                //         $data = ['data' => $changeControl, 'site'=>"CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name];
-
-                //         SendMail::dispatch($data, $email, $changeControl, 'Change Control');
-                //     }
-                // }
-
-                // $list = Helpers::getCQAUsersList($changeControl->division_id); // Notify CQA Person
-                // // foreach ($list as $u) {
-                // //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
-                // //         $email = Helpers::getUserEmail($u->user_id);
-                // //             if ($email !== null) {
-                // //                 try {
-                // //                     Mail::send(
-                // //                         'mail.view-mail',
-                // //                         ['data' => $changeControl, 'site' => "CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name],
-                // //                         function ($message) use ($email, $changeControl) {
-                // //                             $message->to($email)
-                // //                             ->subject("Agio Notification: Change Control, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Final Review Complete Performed");
-                // //                         }
-                // //                     );
-                // //                 } catch(\Exception $e) {
-                // //                     info('Error sending mail', [$e]);
-                // //                 }
-                // //         }
-                // //     // }
-                // // }
-
-                // foreach ($list as $u) {
-                //     $email = Helpers::getUserEmail($u->user_id);
-                //     if ($email !== null) {
-                //         $data = ['data' => $changeControl, 'site'=>"CC", 'history' => "HOD Final Review Complete", 'process' => 'Change Control', 'comment' => $request->comment, 'user'=> Auth::user()->name];
-
-                //         SendMail::dispatch($data, $email, $changeControl, 'Change Control');
-                //     }
-                // }
-
+                
                  $usersmerge = collect()
                 ->merge(Helpers::getQAUserList($changeControl->division_id))
                 ->merge(Helpers::getCQAUsersList($changeControl->division_id))
@@ -11861,7 +11799,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "HOD Final Review Complete",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -11968,7 +11906,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Send For Final QA/CQA Head Approval",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -12100,7 +12038,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Approved",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -12351,7 +12289,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Initiator Updated Complete",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -12454,7 +12392,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Send For Final Approval",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -12603,7 +12541,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "HOD Final Review Complete",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -12754,7 +12692,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Send For Final QA/CQA Head Approval",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -13024,7 +12962,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Closure Approved",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -13160,7 +13098,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -13286,7 +13224,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Send For Final QA/CQA Head Approval",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -13387,7 +13325,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -13483,7 +13421,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -13605,7 +13543,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -13686,7 +13624,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -13858,7 +13796,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -14009,7 +13947,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -14106,7 +14044,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -14199,7 +14137,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "More Info Required",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -14305,7 +14243,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Sent To initiator",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -14454,7 +14392,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Send To HOD",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -14660,7 +14598,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Send To QA/CQA Initial",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,
@@ -14992,7 +14930,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
                                 $data = [
                                     'data'    => $changeControl,
-                                    'site'    => "Change Control",
+                                    'site' => "CC",
                                     'history' => "Cancel",
                                     'process' => 'Change Control',
                                     'comment' => $request->comments,

@@ -23,7 +23,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Due Date Reminder (Daily Check)
-        $schedule->command('reminder:due-date')->everyMinute();
+        // $schedule->command('reminder:due-date')->everyMinute();
+           $schedule->command('reminder:due-date')
+        ->dailyAt('00:00');
 
         // Existing Scheduled Emails
         $scheduledEmails = DB::table('subscribes')->get();
